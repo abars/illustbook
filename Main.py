@@ -1,23 +1,10 @@
 #!-*- coding:utf-8 -*-
 #!/usr/bin/env python
-#
-# Copyright 2007 Google Inc.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#	 http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-#
 
-#from google.appengine.dist import use_library
-#use_library('django', '1.2')
+#---------------------------------------------------
+#メイン関数とポータル関係
+#copyright 2010-2012 ABARS all rights reserved.
+#---------------------------------------------------
 
 import cgi
 import os
@@ -111,6 +98,7 @@ from StackFeed import StackFeed
 from StackFeedTweet import StackFeedTweet
 from ApiObject import ApiObject
 from CounterWorker import CounterWorker
+from ShowIcon import ShowIcon
 
 #-----------------------------------------------------------------
 #ポータル
@@ -279,41 +267,27 @@ class LinkPage(webapp.RequestHandler):
 		self.response.out.write(template.render(path, template_values))
 
 #-----------------------------------------------------------------
-#掲示板メイン
+#削除系
 #-----------------------------------------------------------------
 
-class Image (webapp.RequestHandler):
-	def get(self):
-		try:
-			entry = db.get(self.request.get("img_id"))
-		except:
-			entry=None
-		if(entry==None):
-			self.error(404)
-			return
-		if entry.image:
-			if(entry.illust_mode==4) :
-				self.response.headers['Content-Type'] = "image/png"
-			else:
-				self.response.headers['Content-Type'] = "image/jpeg"
-			self.response.out.write(entry.image)
-		else:
-			self.error(404)
+#class Image (webapp.RequestHandler):
+#	def get(self):
+#		try:
+#			entry = db.get(self.request.get("img_id"))
+#		except:
+#			entry=None
+#		if(entry==None):
+#			self.error(404)
+#			return
+#		if entry.image:
+#			if(entry.illust_mode==4) :
+#				self.response.headers['Content-Type'] = "image/png"
+#			else:
+#				self.response.headers['Content-Type'] = "image/jpeg"
+#			self.response.out.write(entry.image)
+#		else:
+#			self.error(404)
 
-class ShowIcon (webapp.RequestHandler):
-	def get(self):
-		user_id=self.request.get("key")
-		bookmark=ApiObject.get_bookmark_of_user_id(user_id)
-		if(bookmark==None):
-			self.redirect(str("/static_files/empty_user.png"));
-			return
-		if bookmark.icon:
-			#self.response.headers['Content-Type'] = str(bookmark.icon_content_type)
-			#self.response.out.write(bookmark.icon)
-			ImageFile.serve_icon(self,bookmark,user_id)
-		else:
-			self.redirect(str("/static_files/empty_user.png"));
-			
 class DelBbs(webapp.RequestHandler):
 	def get(self):
 		bbs=None
@@ -428,60 +402,60 @@ class DelThread(webapp.RequestHandler):
 		url=MappingId.get_usr_url("./",bbs)
 		self.redirect(str(url))
 
-class UploadImage(webapp.RequestHandler):
-	def post(self):
-		self.response.headers ['Content-type'] = "text/html;charset=utf-8"  
-		bbs = db.get(self.request.get("bbs_key"))
-		user = users.get_current_user()
+#class UploadImage(webapp.RequestHandler):
+#	def post(self):
+#		self.response.headers ['Content-type'] = "text/html;charset=utf-8"  
+#		bbs = db.get(self.request.get("bbs_key"))
+#		user = users.get_current_user()
+#
+#		if(bbs.bbs_mode==BbsConst.BBS_MODE_ONLY_ADMIN):
+#			if(OwnerCheck.check(bbs,user)):
+#				self.response.out.write("[error]")
+#				return
+#		try:
+#			timage=ThreadImage()
+#			timage.bbs_key=db.get(self.request.get("bbs_key"))
+#			timage.image=db.Blob(self.request.body)			
+#			timage.illust_mode=1
+#			timage.put()
+#			self.response.out.write(str(timage.key()))
+#		except:
+#			self.response.out.write("[error]")
 
-		if(bbs.bbs_mode==BbsConst.BBS_MODE_ONLY_ADMIN):
-			if(OwnerCheck.check(bbs,user)):
-				self.response.out.write("[error]")
-				return
-		try:
-			timage=ThreadImage()
-			timage.bbs_key=db.get(self.request.get("bbs_key"))
-			timage.image=db.Blob(self.request.body)			
-			timage.illust_mode=1
-			timage.put()
-			self.response.out.write(str(timage.key()))
-		except:
-			self.response.out.write("[error]")
 
+#class UploadThumbnail(webapp.RequestHandler):
+#	def post(self):
+#		self.response.headers ['Content-type'] = "text/html;charset=utf-8"  
 
-class UploadThumbnail(webapp.RequestHandler):
-	def post(self):
-		self.response.headers ['Content-type'] = "text/html;charset=utf-8"  
+#		#self.response.out.write("[error]")
+#		#return
 
-		#self.response.out.write("[error]")
-		#return
-
-		try:
-			timage=db.get(self.request.get("image_key"))
-			timage.thumbnail=db.Blob(self.request.body)
-			timage.put()
-			self.response.out.write(str(timage.key()))
-		except:
-			self.response.out.write("[error]")
+#		try:
+#			timage=db.get(self.request.get("image_key"))
+#			timage.thumbnail=db.Blob(self.request.body)
+#			timage.put()
+#			self.response.out.write(str(timage.key()))
+#		except:
+#			self.response.out.write("[error]")
 			
-class RealImage(webapp.RequestHandler):
-	def get(self):
-		try:
-			entry = db.get(self.request.get("img_id"))
-		except:
-			entry=None
-		if(entry==None):
-			self.error(404)
-			return
-		
-		template_values = {
-			'blog': entry,
-			'url': 'edit',
-			'url_linktext': 'edit blogs',
-			}
-
-		path = os.path.join(os.path.dirname(__file__), 'html/mes_image.html')
-		self.response.out.write(template.render(path, template_values))
+#class RealImage(webapp.RequestHandler):
+#	def get(self):
+#		try:
+#			entry = db.get(self.request.get("img_id"))
+#		except:
+#			entry=None
+#		if(entry==None):
+#			self.error(404)
+#			return
+#		
+#		template_values = {
+#			'blog': entry,
+#			'url': 'edit',
+#			'url_linktext': 'edit blogs',
+#			}
+#
+#		path = os.path.join(os.path.dirname(__file__), 'html/mes_image.html')
+#		self.response.out.write(template.render(path, template_values))
 
 class CheckId(webapp.RequestHandler):
 	def get(self):
@@ -541,10 +515,10 @@ application = webapp.WSGIApplication(
 																			(r'/(.*)/index.xml',RssFeed),
 																			('/guide', GuidePage),
 																			('/bbs_index', RedirectBbs),
-																			('/img', Image),
+#																			('/img', Image),
 																			(r'/css/(.*)\.(css)',CssDesign), 
 																			(r'/css/(.*)\.(key)',CssDesign), 
-																			('/image', RealImage),
+#																			('/image', RealImage),
 																			(r'/(img)/(.*)\.(jpg)',ImageFile), 
 																			(r'/(img)/(.*)\.(png)',ImageFile), 
 																			(r'/(img)/(.*)\.(txt)',ImageFile), 
@@ -558,8 +532,8 @@ application = webapp.WSGIApplication(
 																			('/del_ent', DelEn),
 																			('/vis_ent', VisibilityChangeEntry),
 																			('/del_bbs', DelBbs),
-																			('/upl_img', UploadImage),
-																			('/upl_thumbnail', UploadThumbnail),
+#																			('/upl_img', UploadImage),
+#																			('/upl_thumbnail', UploadThumbnail),
 																			('/upl_all', AddNewThread),
 																			('/draw', DrawWindow),
 																			('/draw_beta', DrawWindow),

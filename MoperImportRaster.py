@@ -1,6 +1,10 @@
 #!-*- coding:utf-8 -*-
 #!/usr/bin/env python
-#MOPERで使う静止画像をインポート
+
+#---------------------------------------------------
+#モッパーから静止画像をインポート
+#copyright 2010-2012 ABARS all rights reserved.
+#---------------------------------------------------
 
 from google.appengine.ext import webapp
 
