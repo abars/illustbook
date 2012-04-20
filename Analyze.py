@@ -1,0 +1,56 @@
+from google.appengine.ext import db
+
+class Analyze(db.Model):
+	bbs_key =db.ReferenceProperty()
+	ip = db.StringProperty()
+	adr = db.StringListProperty()
+	content = db.StringListProperty()
+	date = db.DateTimeProperty(auto_now=True)
+	
+	def init_analyze(self,key):
+		self.ip="0"
+		self.bbs_key=key
+	
+	def reset(self):
+		self.content=[]
+		self.adr=[]
+	
+	@staticmethod
+	def get_request_referer(request):
+		if("Referer" in request.headers):
+			if request.headers['Referer']:
+				return request.headers['Referer']
+		return ""
+	
+	def add_referer(self,referer,url,content_name):
+		n=256
+		
+		#hot referer
+		if(referer):
+			adr_len=len(self.adr)
+			while(adr_len>=n):
+				self.adr.pop(0)
+				adr_len=adr_len-1
+			self.adr.append(referer)
+		
+		#hot entry
+		if url:
+			content_len=len(self.content)
+			while(content_len>=n):
+				self.content.pop(0)
+				content_len=content_len-1
+			self.content.append(content_name+"@"+url)
+		
+		try:
+			self.put()#db.put_async(self)
+		except:
+			a=None
+	
+	def get_referer(self):
+		ret=""
+		for data in self.adr:
+			ret+=data+"#"
+		ret+="<>"
+		for data in self.content:
+			ret+=data+"#"
+		return ret		

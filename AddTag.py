@@ -1,0 +1,76 @@
+#!-*- coding:utf-8 -*-
+#!/usr/bin/env python
+#タグ追加
+#
+
+import cgi
+import os
+import sys
+import re
+import datetime
+import random
+import logging
+
+from google.appengine.ext.webapp import template
+from google.appengine.api import users
+from google.appengine.ext import webapp
+from google.appengine.ext.webapp.util import run_wsgi_app
+from google.appengine.ext import db
+from google.appengine.api import images
+from google.appengine.api import memcache
+
+from Bbs import Bbs
+from MesThread import MesThread
+from MappingThreadId import MappingThreadId
+from Alert import Alert
+from SetUtf8 import SetUtf8
+from RecentTag import RecentTag
+
+class AddTag(webapp.RequestHandler):
+	def get(self):
+		SetUtf8.set()
+
+		thread=None
+		try:
+			thread = db.get(self.request.get("thread_key"))	
+		except:
+			thread=None
+		if(not thread):
+			self.response.out.write(Alert.alert_msg("スレッドが見つかりません。",self.request.host));
+			return
+
+#		user = users.get_current_user()
+#		if(not(user)):
+#			self.response.out.write(Alert.alert_msg("タグを付ける場合はログインが必須です。",self.request.host));
+#			return
+		
+		mode = self.request.get("mode")
+		
+		if(not thread.tag_list):
+			thread.tag_list=[]
+		
+		tag=self.request.get("tag")
+		
+		if(tag==""):
+			self.response.out.write(Alert.alert_msg("タグを入力して下さい。",self.request.host));
+			return;
+
+		if(mode=="add"):
+			if(thread.tag_list.count(tag)>0):
+				thread.tag_list.remove(tag)
+				thread.tag_list.insert(0,tag)
+			else:
+				thread.tag_list.insert(0,tag)
+		else:
+			try:
+				thread.tag_list.remove(tag)
+			except:
+				self.response.out.write(Alert.alert_msg("タグ"+tag+"が見つかりません。",self.request.host));
+		thread.put()
+		
+		bbs=db.get(self.request.get("bbs_key"))
+		thread=db.get(self.request.get("thread_key"))
+
+		url=MappingThreadId.get_thread_url("./",bbs,thread)
+		self.redirect(str(url))
+		

@@ -1,0 +1,217 @@
+#!-*- coding:utf-8 -*-
+#!/usr/bin/env python
+#スレッドの表示
+
+import cgi
+import os
+import sys
+import re
+import datetime
+import random
+import logging
+
+from google.appengine.ext.webapp import template
+from google.appengine.api import users
+from google.appengine.ext import webapp
+from google.appengine.ext.webapp.util import run_wsgi_app
+from google.appengine.ext import db
+from google.appengine.api import images
+from google.appengine.api import memcache
+
+from Bbs import Bbs
+from Counter import Counter
+from Alert import Alert
+from MappingId import MappingId
+from SetUtf8 import SetUtf8
+from Entry import Entry
+from OwnerCheck import OwnerCheck
+from RecentCommentCache import RecentCommentCache
+from CssDesign import CssDesign
+from BbsConst import BbsConst
+from MappingThreadId import MappingThreadId
+from MaintenanceCheck import MaintenanceCheck
+from ShowBbs import ShowBbs
+from CounterWorker import CounterWorker
+from ApiObject import ApiObject
+
+class ShowThread(webapp.RequestHandler):
+	def get(self,bbs_key,thread_key):
+		SetUtf8.set()
+
+		#BBSを取得
+		bbs_key=MappingId.mapping(bbs_key)
+		bbs=ApiObject.get_cached_object(bbs_key)
+		if(bbs == None):
+			self.response.out.write(Alert.alert_msg_notfound(self.request.host))		
+			return
+
+		#BBSが削除されていた場合
+		if(bbs.del_flag) :
+			self.response.out.write(Alert.alert_msg("このBBSは削除されました。",self.request.host))
+			return
+		
+		#ページ番号を取得
+		col_num = 10
+		page = 1
+		if self.request.get("page"):
+			page = int(self.request.get("page"))
+		
+		#メンテナンス画面
+		is_maintenance=0
+		if(MaintenanceCheck.is_appengine_maintenance()):
+			is_maintenance=1
+
+		#オーダー取得
+		order="update"
+		if(bbs.default_comment_order==1):
+			order="new"
+		if self.request.get("order"):
+			order=self.request.get("order")
+		
+		#スレッド取得
+		thread=ShowThread.get_thread(bbs,thread_key)
+		if(thread == None):
+			self.response.out.write(Alert.alert_msg_notfound(self.request.host))
+			return
+
+		#コメントはログインを必須にしない
+		if(bbs.comment_login_require) :
+			bbs.comment_login_require=0
+			bbs.put()
+		
+		#コメント数を更新
+		if(bbs.page_comment_n):
+			col_num=bbs.page_comment_n
+		
+		#コメントの一覧を取得
+		query=ShowThread.get_comment_query(thread,order)
+		entry_num = query.count()
+		if(entry_num==0):
+			com_list_ = []
+		else:
+			com_list_ = query.fetch(limit=col_num, offset=(page-1)*col_num)
+		
+		#現在のスレッドへのURLを取得
+		host_url="http://"+MappingId.mapping_host(self.request.host)+"/"
+		
+		#編集モードか
+		user = users.get_current_user()
+		edit_flag = 0
+		if(not OwnerCheck.check(bbs,user)):
+			edit_flag = 1
+
+		logined=0
+		if(user):
+			logined=1
+
+		owner=user
+		if(OwnerCheck.check(bbs,user)):
+			owner=None
+
+		admin_user=OwnerCheck.is_admin(user)
+
+		#ページリンクを作成
+		page_url_base = MappingId.get_usr_url(host_url,bbs)+thread_key+'.html?page='
+		page_list=ShowThread.create_page_list(page,entry_num,col_num)
+		
+		#レスを取得
+		com_list=ShowThread.get_response(com_list_,thread)
+		
+		#サイドバーのコメントを取得
+		#side_comment=RecentCommentCache.get_entry(bbs)
+
+		#コメントフォームを取得する
+		show_comment_form=1
+		if(bbs.comment_login_require and not(logined)):
+			show_comment_form=0
+
+		#掲示板のデザインを取得
+		design=CssDesign.get_design_object(self,bbs,host_url,1)
+		
+		#描画
+		template_values = {
+			'host': host_url,
+			'usrhost': MappingId.get_usr_url(host_url,bbs),
+			'bbs': bbs,
+			'thread': thread,
+			'com_list':com_list,
+			'edit_flag':edit_flag,
+			'url': 'edit',
+			'url_linktext': 'edit blogs',
+			'bbs_key': bbs_key,
+			'page':page,
+			'page_url_base':page_url_base,
+			'page_list':page_list,
+#			'side_comment':side_comment,
+			'logined':logined,
+			'user':user,
+			'owner':owner,
+			'show_comment_form':show_comment_form,
+			'template_path':design["template_path"],
+			'css_name':design["css_name"],
+			'is_iphone':design["is_iphone"],
+			'template_base_color':design["template_base_color"],
+			'admin_user':admin_user,
+			'order':order,
+			'is_maintenance':is_maintenance,
+			'redirect_url': self.request.path
+			}
+
+		path = os.path.join(os.path.dirname(__file__), design["base_name"])
+		self.response.out.write(template.render(path, template_values))
+
+		CounterWorker.update_counter(self,bbs,thread,owner)
+
+	@staticmethod
+	def get_thread(bbs,thread_key):
+		thread = MappingThreadId.mapping(bbs,thread_key)
+		if(thread == None):
+			return None
+		
+		MappingThreadId.assign(bbs,thread,True)
+		return thread
+	
+	@staticmethod
+	def create_page_list(page,entry_num,col_num):
+		page_start = page-2
+		if(page_start <= 0):
+			page_start = 1
+		page_end=page_start+4
+		max_page=(entry_num-1)/col_num+1
+		if(not max_page):
+			max_page=1
+		if(page_end > max_page):
+			page_end=max_page
+			if(page_end-4 >= 1):
+				page_start=page_end-4
+		page_list=range(page_start, (page_end+1))
+		return page_list
+	
+	@staticmethod
+	def get_comment_query(thread,order):
+		query = Entry.all()
+		query.filter('thread_key =', thread)
+		query.filter("del_flag =",1)
+		if(order=="new"):
+			query.order('-create_date')
+		else:
+			query.order('-date')
+		return query
+
+	@staticmethod
+	def get_response(com_list_,thread):
+		#コメントソート
+		if(thread.illust_mode):
+			com_list_.reverse()
+		
+		#レスを取得
+		com_list=[]
+		for com in com_list_:
+			res_list=[]
+			for res in com.res_list:
+				res_list.append(db.get(res))
+			com_list.append({'com':com, 'res_list':res_list})
+		return com_list
+
+
+

@@ -1,0 +1,14 @@
+#!-*- coding:utf-8 -*-
+#!/usr/bin/env python
+#ユニークチェック用(get_or_insertで使用)
+
+from google.appengine.ext import db
+from google.appengine.api import users
+
+from Bbs import Bbs
+from MesThread import MesThread
+
+class MappingThreadIdUniqueCheck(db.Model):
+	bbs = db.ReferenceProperty(Bbs)
+	thread = db.ReferenceProperty(MesThread)
+	salt = db.StringProperty()
