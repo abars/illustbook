@@ -31,13 +31,11 @@ class MappingId():
 			return 0
 		if(check_id=="code"):
 			return 0
-		if(check_id=="code_moper"):
-			return 0
-		if(check_id=="code_beta"):
+		if(check_id=="flash"):
 			return 0
 		if(check_id=="static_files"):
 			return 0
-		if(check_id=="pressure"):
+		if(check_id=="static_files_stable"):
 			return 0
 		if(check_id=="twitter"):
 			return 0

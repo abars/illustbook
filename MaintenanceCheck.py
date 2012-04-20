@@ -26,6 +26,7 @@ from google.appengine.runtime.apiproxy_errors import CapabilityDisabledError
 from google.appengine.api import apiproxy_stub_map
 
 class MaintenanceCheck:
+	#メンテナンス中はTrueが返る
 	@staticmethod
 	def is_appengine_maintenance():
 		datastore_readonly = memcache.get("appengine_datastore_readonly")
@@ -39,6 +40,8 @@ class MaintenanceCheck:
 			)
 		return datastore_readonly
 
+	#検証用に強制的にメンテナンスモードにする
+	#putをフックすることでライト禁止をシミュレートする
 	@staticmethod
 	def make_datastore_readonly():
 		"""Throw ReadOnlyError on put and delete operations."""
