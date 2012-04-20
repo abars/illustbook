@@ -1,0 +1,5 @@
+queue:
+- name: feed
+  rate: 1/s
+- name: counter
+  rate: 1/s
