@@ -9,6 +9,13 @@
 GoogleAppEngineで動く掲示板システムです。
 MITライセンスです。
 
+動作環境
+-------
+
+GoogleAppEngine
+Python2.7
+Django1.2
+
 動作方法
 -------
 
