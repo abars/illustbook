@@ -49,7 +49,6 @@ from Response import Response
 from MesThread import MesThread
 from BbsConst import BbsConst
 from ThreadImage import ThreadImage
-from Favorite import Favorite
 from TopPage import TopPage
 from TopPageCache import TopPageCache
 
@@ -61,8 +60,6 @@ from SpamDelete import SpamDelete
 from AddNewThread import AddNewThread
 from Alert import Alert
 from OwnerCheck import OwnerCheck
-from NewsAccount import NewsAccount
-from NewsUpdate import NewsUpdate
 from UpdateBbs import UpdateBbs
 from AddEntry import AddEntry
 from Admin import Admin
@@ -174,7 +171,7 @@ class MainPage(webapp.RequestHandler):
 		#if(self.request.get("mode")=="family"):
 		#	path = os.path.join(os.path.dirname(__file__), 'portal/family_index.html')
 		#else:
-		path = os.path.join(os.path.dirname(__file__), 'portal/general_index.html')
+		path = os.path.join(os.path.dirname(__file__), 'html/portal/general_index.html')
 		self.response.out.write(template.render(path, template_values))
 
 class Questionnaire(webapp.RequestHandler):
@@ -187,7 +184,7 @@ class Questionnaire(webapp.RequestHandler):
 		#if(self.request.get("mode")=="family"):
 		#	path = os.path.join(os.path.dirname(__file__), 'portal/family_questionnaire.html')
 		#else:
-		path = os.path.join(os.path.dirname(__file__), 'portal/general_questionnaire.html')
+		path = os.path.join(os.path.dirname(__file__), 'html/portal/general_questionnaire.html')
 		self.response.out.write(template.render(path, template_values))
 		
 class Profile(webapp.RequestHandler):
@@ -200,7 +197,7 @@ class Profile(webapp.RequestHandler):
 		#if(self.request.get("mode")=="family"):
 		#	path = os.path.join(os.path.dirname(__file__), 'portal/family_profile.html')
 		#else:
-		path = os.path.join(os.path.dirname(__file__), 'portal/general_profile.html')
+		path = os.path.join(os.path.dirname(__file__), 'html/portal/general_profile.html')
 		self.response.out.write(template.render(path, template_values))
 
 class Support(webapp.RequestHandler):
@@ -213,7 +210,7 @@ class Support(webapp.RequestHandler):
 		#if(self.request.get("mode")=="family"):
 		#	path = os.path.join(os.path.dirname(__file__), 'portal/family_support.html')
 		#else:
-		path = os.path.join(os.path.dirname(__file__), 'portal/general_support.html')
+		path = os.path.join(os.path.dirname(__file__), 'html/portal/general_support.html')
 		self.response.out.write(template.render(path, template_values))
 
 class Terms(webapp.RequestHandler):
@@ -231,7 +228,7 @@ class Terms(webapp.RequestHandler):
 		#if(self.request.get("mode")=="family"):
 		#	path = os.path.join(os.path.dirname(__file__), 'portal/family_terms.html')
 		#else:
-		path = os.path.join(os.path.dirname(__file__), 'portal/general_terms.html')
+		path = os.path.join(os.path.dirname(__file__), 'html/portal/general_terms.html')
 		self.response.out.write(template.render(path, template_values))
 
 class Community(webapp.RequestHandler):
@@ -248,7 +245,7 @@ class Community(webapp.RequestHandler):
 		#if(self.request.get("mode")=="family"):
 		#	path = os.path.join(os.path.dirname(__file__), 'portal/family_community.html')
 		#else:
-		path = os.path.join(os.path.dirname(__file__), 'portal/general_community.html')
+		path = os.path.join(os.path.dirname(__file__), 'html/portal/general_community.html')
 		self.response.out.write(template.render(path, template_values))
 
 class GuidePage(webapp.RequestHandler):
@@ -261,13 +258,13 @@ class GuidePage(webapp.RequestHandler):
 		#if(self.request.get("mode")=="family"):
 		#	path = os.path.join(os.path.dirname(__file__), 'portal/family_guide.html')
 		#else:
-		path = os.path.join(os.path.dirname(__file__), 'portal/general_guide.html')
+		path = os.path.join(os.path.dirname(__file__), 'html/portal/general_guide.html')
 		self.response.out.write(template.render(path, template_values))
 
 class LinkPage(webapp.RequestHandler):
 	def get(self):
-		news=NewsAccount.get_news()
-
+		news=""
+		
 		#iPhoneモードかどうか
 		is_iphone=CssDesign.is_iphone(self)
 	
@@ -281,7 +278,7 @@ class LinkPage(webapp.RequestHandler):
 		#if(self.request.get("mode")=="family"):
 		#	path = os.path.join(os.path.dirname(__file__), 'portal/family_link.html')
 		#else:
-		path = os.path.join(os.path.dirname(__file__), 'portal/general_link.html')
+		path = os.path.join(os.path.dirname(__file__), 'html/portal/general_link.html')
 		self.response.out.write(template.render(path, template_values))
 
 #-----------------------------------------------------------------
@@ -486,7 +483,7 @@ class RealImage(webapp.RequestHandler):
 			'url_linktext': 'edit blogs',
 			}
 
-		path = os.path.join(os.path.dirname(__file__), 'mes_image.html')
+		path = os.path.join(os.path.dirname(__file__), 'html/mes_image.html')
 		self.response.out.write(template.render(path, template_values))
 
 class CheckId(webapp.RequestHandler):
@@ -594,8 +591,6 @@ application = webapp.WSGIApplication(
 																			('/link',LinkPage),
 																			('/spam_check',SpamCheck),
 																			('/spam_delete',SpamDelete),
-																			('/news_account',NewsAccount),
-																			('/news_update',NewsUpdate),
 																			('/admin',Admin),
 																			('/localtool',LocalTool),
 																			('/localtool_draw',LocalToolDraw),

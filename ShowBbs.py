@@ -169,7 +169,7 @@ class ShowBbs(webapp.RequestHandler):
 			'redirect_url': self.request.path
 		}
 
-		path = os.path.join(os.path.dirname(__file__), design["base_name"])
+		path = os.path.join(os.path.dirname(__file__), "html/"+design["base_name"])
 		self.response.out.write(template.render(path, template_values))
 		
 		if(is_maintenance):

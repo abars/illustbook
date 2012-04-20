@@ -267,7 +267,7 @@ class NicoTracker(webapp.RequestHandler):
 			'is_anim_icon': is_anim_icon
 			}
 		
-		path = os.path.join(os.path.dirname(__file__), 'nico_tracker.html')
+		path = os.path.join(os.path.dirname(__file__), 'html/nico_tracker.html')
 		render=template.render(path, template_values)
 		self.response.out.write(render)		
 

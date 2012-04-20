@@ -56,5 +56,5 @@ class MoveAccount(webapp.RequestHandler):
             'exec_move': exec_move
 		}
 
-		path = os.path.join(os.path.dirname(__file__), 'mes_move_account.html')
+		path = os.path.join(os.path.dirname(__file__), 'html/mes_move_account.html')
 		self.response.out.write(template.render(path, template_values))

@@ -65,5 +65,5 @@ class EditThread(webapp.RequestHandler):
 			'template_base_color':design["template_base_color"],
 		}
 
-		path = os.path.join(os.path.dirname(__file__), 'mes_edit_thread.html')
+		path = os.path.join(os.path.dirname(__file__), 'html/mes_edit_thread.html')
 		self.response.out.write(template.render(path, template_values))

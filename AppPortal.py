@@ -207,9 +207,9 @@ class AppPortal(webapp.RequestHandler):
 			'redirect_url': main.request.path
 		}
 		
-		url='portal/general_app.html'
+		url='html/portal/general_app.html'
 		if(is_run or is_plugin):
-			url='portal/app/app_run.html'
+			url='html/portal/app/app_run.html'
 		
 		path = os.path.join(os.path.dirname(__file__), url)
 		main.response.out.write(template.render(path, template_values))

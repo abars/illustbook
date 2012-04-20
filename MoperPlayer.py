@@ -51,5 +51,5 @@ class MoperPlayer(webapp.RequestHandler):
 		'width': width,
 		'height': height
 		}		  
-		path = os.path.join(os.path.dirname(__file__), 'moper_embedded.htm')
+		path = os.path.join(os.path.dirname(__file__), 'html/moper_embedded.htm')
 		self.response.out.write(template.render(path, template_values))

@@ -38,7 +38,7 @@ class SearchUser(webapp.RequestHandler):
 			'threads':thread,
 			'name':name
 			}
-		path = os.path.join(os.path.dirname(__file__), 'search.htm')
+		path = os.path.join(os.path.dirname(__file__), 'html/search.htm')
 		render=template.render(path, template_values)
 		self.response.out.write(render)		
 

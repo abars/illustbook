@@ -92,9 +92,9 @@ class DrawWindow(webapp.RequestHandler):
 		}
 		
 		if(ipad or iphone):
-			path = os.path.join(os.path.dirname(__file__), 'draw_window_ipad.htm')
+			path = os.path.join(os.path.dirname(__file__), 'html/draw_window_ipad.htm')
 		else:
-			path = os.path.join(os.path.dirname(__file__), 'draw_window_beta.htm')
+			path = os.path.join(os.path.dirname(__file__), 'html/draw_window_beta.htm')
 		
 		self.response.out.write(template.render(path, template_values))
 

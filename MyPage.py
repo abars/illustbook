@@ -29,7 +29,6 @@ from Response import Response
 from MesThread import MesThread
 from BbsConst import BbsConst
 from ThreadImage import ThreadImage
-from Favorite import Favorite
 from TopPage import TopPage
 from TopPageCache import TopPageCache
 
@@ -42,12 +41,9 @@ from SpamDelete import SpamDelete
 from AddNewThread import AddNewThread
 from Alert import Alert
 from OwnerCheck import OwnerCheck
-from NewsAccount import NewsAccount
-from NewsUpdate import NewsUpdate
 from UpdateBbs import UpdateBbs
 from AddEntry import AddEntry
 from Admin import Admin
-from AddNewBbs import AddNewBbs
 from PageGenerate import PageGenerate
 from SearchUser import SearchUser
 from Applause import Applause
@@ -68,7 +64,6 @@ from Embedded import Embedded
 from AnalyzeAccess import AnalyzeAccess
 from CssDesign import CssDesign
 from ImageFile import ImageFile
-from AddRes import AddRes
 from UpdateThread import UpdateThread
 from EditThread import EditThread
 from ViolationTerms import ViolationTerms
@@ -251,10 +246,7 @@ class MyPage(webapp.RequestHandler):
 			'redirect_url': self.request.path
 		}
 		
-		#if(self.request.get("mode")=="family"):
-		#	path = os.path.join(os.path.dirname(__file__), 'portal/family_mypage.html')
-		#else:
-		path = os.path.join(os.path.dirname(__file__), 'portal/general_mypage.html')
+		path = os.path.join(os.path.dirname(__file__), 'html/portal/general_mypage.html')
 		self.response.out.write(template.render(path, template_values))
 		
 		if(user and bookmark):

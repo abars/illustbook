@@ -21,6 +21,6 @@ class LocalTool(webapp.RequestHandler):
 		template_values = {
 			'host': host_url,
 		}
-		path = os.path.join(os.path.dirname(__file__), 'localtool.htm')
+		path = os.path.join(os.path.dirname(__file__), 'html/localtool.htm')
 		render=template.render(path, template_values)
 		self.response.out.write(render)		

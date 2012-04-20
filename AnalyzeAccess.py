@@ -97,6 +97,6 @@ class AnalyzeAccess(webapp.RequestHandler):
 			'analyze_data':analyze,
 			'user': user
 			}
-		path = os.path.join(os.path.dirname(__file__), 'mes_analyze.html')
+		path = os.path.join(os.path.dirname(__file__), 'html/mes_analyze.html')
 		self.response.out.write(template.render(path, template_values))
 
