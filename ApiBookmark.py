@@ -51,15 +51,6 @@ class ApiBookmark(webapp.RequestHandler):
 		thread_key_list=ApiObject.offset_and_limit(req,thread_key_list)
 
 		return ApiObject.create_thread_object_list(req,thread_key_list,"bookmark")
-		
-		#2012/03/24まで
-		#dic=[]
-		#for thread in bookmark.thread_key_list:
-		#	one_dic=ApiObject.create_thread_object(req,thread)
-		#	if(one_dic==None):
-		#		continue
-		#	dic.append(one_dic)
-		#return dic
 
 	@staticmethod
 	def bookmark_get_bbs_list(req,user_id):

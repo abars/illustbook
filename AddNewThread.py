@@ -201,18 +201,3 @@ class AddNewThread(webapp.RequestHandler):
 			url+=str(new_thread.key())
 		url+=".html"
 		return url
-	
-	#def tweet(self,bbs,new_thread,url):
-		#tweet
-	#	try:
-	#		if(not bbs.disable_news and not self.request.get("thread_key")):
-	#			if(new_thread.illust_mode==1 or new_thread.illust_mode==2):
-	#				footer=""
-	#				tweet=""+bbs.bbs_name+"に"+new_thread.title+"が投稿されたよ！"+footer	
-	#				if(self.request.host == "www.illustbook.net" or self.request.host == "illust-book.appspot.com"):
-	#					TweetRss.tweet(tweet,url);
-	#				else:
-	#					logging.getLogger().setLevel(logging.DEBUG)
-	#					logging.debug(tweet)
-	#	except:
-	#		tweet_error_disable=1

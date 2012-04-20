@@ -42,11 +42,6 @@ class AddTag(webapp.RequestHandler):
 			self.response.out.write(Alert.alert_msg("スレッドが見つかりません。",self.request.host));
 			return
 
-#		user = users.get_current_user()
-#		if(not(user)):
-#			self.response.out.write(Alert.alert_msg("タグを付ける場合はログインが必須です。",self.request.host));
-#			return
-		
 		mode = self.request.get("mode")
 		
 		if(not thread.tag_list):
