@@ -1,6 +1,11 @@
 #!-*- coding:utf-8 -*-
 #!/usr/bin/env python
+
+#---------------------------------------------------
 #スレッドの表示
+#copyright 2010-2012 ABARS all rights reserved.
+#---------------------------------------------------
+
 
 import cgi
 import os

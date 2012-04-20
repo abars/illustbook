@@ -103,9 +103,9 @@ class AppPortal(webapp.RequestHandler):
 			app.support_forum=thread
 			app.put()
 
-		if(not app.support_forum.score):
-			app.support_forum.score = None
-			app.support_forum.put()
+		#if(not app.support_forum.score):
+		#	app.support_forum.score = None
+		#	app.support_forum.put()
 		
 		return False
 	
