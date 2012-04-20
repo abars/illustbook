@@ -1,6 +1,11 @@
 #!-*- coding:utf-8 -*-
 #!/usr/bin/env python
 
+#---------------------------------------------------
+#HRDで整合性を取るためにput後、インデックスが更新されるまで待機する
+#copyright 2010-2012 ABARS all rights reserved.
+#---------------------------------------------------
+
 from google.appengine.ext import db
 
 import logging
@@ -33,19 +38,3 @@ class SyncPut():
 		#試行回数をロギング
 		if(try_count>=3):
 			logging.error("put_sync_retry:"+str(try_count))
-
-#-----------------------------------------------
-#AppEngineのHRDデータストアで整合性を取る
-#-----------------------------------------------
-
-#AppEngineのHRDデータストアはMSデータストアとは異なり、データの整合性が保証されません。
-#そのため、putした直後にqueryを投げると、putした要素を取得できません。
-#これは、<A HREF="http://d.hatena.ne.jp/sinmetal/20111124/1322098969">インデックスの更新に数十ms～2sec程度</A>かかるためです。
-#ということで、put_sync的なメソッドがあるといいのですが、無かったので作りました。
-
-#整合性を取りたいオブジェクトをobj.put()する代わりにSyncPut.put_sync(obj)を使います。
-#コンセプトとしては、put()した後、インデックスに反映されるまでquery()を投げ続けます。
-
-#乱数とオブジェクトのキーからsandとなる文字列を作っておき、
-#sandでfilterすることで、最新の情報に更新されたかを確認しています。
-

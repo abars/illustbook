@@ -1,7 +1,10 @@
 #!-*- coding:utf-8 -*-
 #!/usr/bin/env python
-#
-# MyPage
+
+#---------------------------------------------------
+#マイページ、ソーシャル風
+#copyright 2010-2012 ABARS all rights reserved.
+#---------------------------------------------------
 
 import cgi
 import os
@@ -24,17 +27,13 @@ from Analyze import Analyze
 from Bbs import Bbs
 from Entry import Entry
 from Counter import Counter
-from RankingScore import RankingScore
 from Response import Response
 from MesThread import MesThread
 from BbsConst import BbsConst
 from ThreadImage import ThreadImage
-from TopPage import TopPage
-from TopPageCache import TopPageCache
 
 from SetUtf8 import SetUtf8
 from RecentCommentCache import RecentCommentCache
-from ApplauseCache import ApplauseCache
 from MappingId import MappingId
 from SpamCheck import SpamCheck
 from SpamDelete import SpamDelete

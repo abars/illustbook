@@ -1,7 +1,10 @@
 #!-*- coding:utf-8 -*-
 #!/usr/bin/env python
-#
-# PERPETUATION API
+
+#---------------------------------------------------
+#データ保存系の公開API
+#copyright 2010-2012 ABARS all rights reserved.
+#---------------------------------------------------
 
 import cgi
 import os

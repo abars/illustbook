@@ -1,9 +1,12 @@
 #!-*- coding:utf-8 -*-
 #!/usr/bin/env python
-# DataStoreのスキーマを変更する
 
-#from google.appengine.dist import use_library
-#use_library('django', '1.2')
+#---------------------------------------------------
+# DataStoreのスキーマを変更する
+# HRDの移植用だったのでもういらない
+#copyright 2010-2012 ABARS all rights reserved.
+#---------------------------------------------------
+
 
 import cgi
 import os

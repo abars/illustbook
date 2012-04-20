@@ -44,13 +44,10 @@ from Analyze import Analyze
 from Bbs import Bbs
 from Entry import Entry
 from Counter import Counter
-from RankingScore import RankingScore
 from Response import Response
 from MesThread import MesThread
 from BbsConst import BbsConst
 from ThreadImage import ThreadImage
-from TopPage import TopPage
-from TopPageCache import TopPageCache
 
 from SetUtf8 import SetUtf8
 from RecentCommentCache import RecentCommentCache

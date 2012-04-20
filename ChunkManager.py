@@ -1,6 +1,10 @@
 #!-*- coding:utf-8 -*-
 #!/usr/bin/env python
+
+#---------------------------------------------------
 #1MBを超えるファイルをチャンク分割して保存する
+#copyright 2010-2012 ABARS all rights reserved.
+#---------------------------------------------------
 
 from Chunk import Chunk
 from google.appengine.ext import db

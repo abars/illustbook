@@ -32,6 +32,7 @@ class BbsConst:
 	#memcacheコントロール
 	OBJECT_CACHE_HEADER="ocache14_"	#この値を変更することで全てのキャッシュが無効になる
 	OBJECT_BOOKMARK_CACHE_HEADER="bookmark_"
+	OBJECT_ENTRY_CACHE_HEADER="entry_"
 	OBJECT_BBS_ID_MAPPING_HEADER="map_bbs_"
 	OBJECT_THREAD_ID_MAPPING_HEADER="map_thread_"
 	

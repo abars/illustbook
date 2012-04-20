@@ -1,31 +1,23 @@
 #!-*- coding:utf-8 -*-
 #!/usr/bin/env python
-#
-# Copyright 2007 Google Inc.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-#
+
+#---------------------------------------------------
+#最近投稿されたコメントの一覧を作成する
+#copyright 2010-2012 ABARS all rights reserved.
+#---------------------------------------------------
 
 from google.appengine.ext import db
 from google.appengine.api import memcache
 
 from Entry import Entry
 from MesThread import MesThread
+from BbsConst import BbsConst
 
 class RecentCommentCache():
 	@staticmethod
 	def get_entry(bbs):
-		key="recent_entry8_"
+		key=BbsConst.OBJECT_CACHE_HEADER+BbsConst.OBJECT_ENTRY_CACHE_HEADER
+		
 		display_n=8
 		if(bbs):
 			key+=str(bbs.key())
@@ -66,8 +58,7 @@ class RecentCommentCache():
 		
 	@staticmethod
 	def invalidate(bbs):
+		key=BbsConst.OBJECT_CACHE_HEADER+BbsConst.OBJECT_ENTRY_CACHE_HEADER
 		if(bbs):
-			key="recent_entry8_"+str(bbs.key())
-			memcache.delete(key)
-		key="recent_entry8_"
+			memcache.delete(key+str(bbs.key()))
 		memcache.delete(key)

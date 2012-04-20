@@ -1,6 +1,10 @@
 #!-*- coding:utf-8 -*-
 #!/usr/bin/env python
+
+#---------------------------------------------------
 #掲示板の管理人かどうかを確認する
+#copyright 2010-2012 ABARS all rights reserved.
+#---------------------------------------------------
 
 from BbsConst import BbsConst
 from google.appengine.api import users

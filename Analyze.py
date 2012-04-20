@@ -1,3 +1,11 @@
+#!-*- coding:utf-8 -*-
+#!/usr/bin/env python
+
+#---------------------------------------------------
+#掲示板ごとのアクセス解析ログ(リファラの格納)
+#copyright 2010-2012 ABARS all rights reserved.
+#---------------------------------------------------
+
 from google.appengine.ext import db
 
 class Analyze(db.Model):

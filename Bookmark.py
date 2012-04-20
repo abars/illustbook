@@ -1,3 +1,11 @@
+#!-*- coding:utf-8 -*-
+#!/usr/bin/env python
+
+#---------------------------------------------------
+#ブックマーク情報、だったのがマイページのユーザ情報管理構造体に進化
+#copyright 2010-2012 ABARS all rights reserved.
+#---------------------------------------------------
+
 from google.appengine.ext import db
 from google.appengine.api import users
 from google.appengine.api import memcache

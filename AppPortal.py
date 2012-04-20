@@ -1,7 +1,10 @@
 #!-*- coding:utf-8 -*-
 #!/usr/bin/env python
-#
-# Application
+
+#---------------------------------------------------
+#イラストブックアプリ　ポータル
+#copyright 2010-2012 ABARS all rights reserved.
+#---------------------------------------------------
 
 import cgi
 import os
@@ -28,7 +31,6 @@ from ApiObject import ApiObject
 from MesThread import MesThread
 from MappingId import MappingId
 from BbsConst import BbsConst
-from RankingScore import RankingScore
 from CssDesign import CssDesign
 
 class AppPortal(webapp.RequestHandler):
@@ -102,10 +104,7 @@ class AppPortal(webapp.RequestHandler):
 			app.put()
 
 		if(not app.support_forum.score):
-			score=RankingScore()
-			score.init_score(app.support_forum.key(),app.support_forum.illust_mode)
-			score.put()	#キーの確保
-			app.support_forum.score = score.key()
+			app.support_forum.score = None
 			app.support_forum.put()
 		
 		return False

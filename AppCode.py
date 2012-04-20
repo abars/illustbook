@@ -1,4 +1,10 @@
-#application
+#!-*- coding:utf-8 -*-
+#!/usr/bin/env python
+
+#---------------------------------------------------
+#イラストブックアプリのコード
+#copyright 2010-2012 ABARS all rights reserved.
+#---------------------------------------------------
 
 from google.appengine.ext import db
 from google.appengine.api import users

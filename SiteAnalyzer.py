@@ -1,6 +1,10 @@
 #!-*- coding:utf-8 -*-
 #!/usr/bin/env python
-# SiteAnalyze
+
+#---------------------------------------------------
+#イラストブック全体の統計情報
+#copyright 2010-2012 ABARS all rights reserved.
+#---------------------------------------------------
 
 import os
 import time
@@ -32,12 +36,6 @@ class SiteAnalyzer(webapp.RequestHandler):
 	@staticmethod
 	def get_cache():
 		cache=TopPageCache.get_or_insert(key_name="top_page_cache")
-		#query=TopPageCache.all()
-		#if(query.count()==0):
-		#	cache=TopPageCache()
-		#else:
-		#	cache=query[0]
-		#	cache.remove()
 		return cache
 
 	def get(self):
@@ -63,12 +61,6 @@ class SiteAnalyzer(webapp.RequestHandler):
 
 		#書き込み
 		day_str=NicoTracker.get_day_string(datetime.datetime.today())
-		
-		#cache.entry_cnt_list=[]
-		#cache.illust_cnt_list=[]
-		#cache.bbs_cnt_list=[]
-		#cache.user_cnt_list=[]
-		#cache.day_list=[]
 		
 		cache.entry_cnt_list.insert(0,entry_cnt)
 		cache.illust_cnt_list.insert(0,illust_cnt)

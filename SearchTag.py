@@ -1,6 +1,10 @@
 #!-*- coding:utf-8 -*-
 #!/usr/bin/env python
-#タグで検索する
+
+#---------------------------------------------------
+#タグを検索
+#copyright 2010-2012 ABARS all rights reserved.
+#---------------------------------------------------
 
 import cgi
 import os

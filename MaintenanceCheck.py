@@ -1,6 +1,10 @@
 #!-*- coding:utf-8 -*-
 #!/usr/bin/env python
-#メンテナンス中かどうかの取得
+
+#---------------------------------------------------
+#AppEngineがメンテナンス中かどうかを取得する
+#copyright 2010-2012 ABARS all rights reserved.
+#---------------------------------------------------
 
 import cgi
 import os

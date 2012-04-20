@@ -1,4 +1,11 @@
-# -*- coding: utf-8 -*-
+#!-*- coding:utf-8 -*-
+#!/usr/bin/env python
+
+#---------------------------------------------------
+#UTCに変換する
+#copyright 2010-2012 ABARS all rights reserved.
+#---------------------------------------------------
+
 import datetime
 import sys
 

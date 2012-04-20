@@ -1,7 +1,10 @@
 #!-*- coding:utf-8 -*-
 #!/usr/bin/env python
-#
-# JS API
+
+#---------------------------------------------------
+#公開JavaScript API
+#copyright 2010-2012 ABARS all rights reserved.
+#---------------------------------------------------
 
 import cgi
 import os
@@ -26,7 +29,6 @@ from SetUtf8 import SetUtf8
 from Alert import Alert
 from MesThread import MesThread
 from MappingId import MappingId
-from ApplauseCache import ApplauseCache
 from Bbs import Bbs
 from CssDesign import CssDesign
 from ApiPerpetuation import ApiPerpetuation

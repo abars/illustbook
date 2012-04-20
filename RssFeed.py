@@ -1,7 +1,10 @@
 #!-*- coding:utf-8 -*-
 #!/usr/bin/env python
-#
-# RSS配信
+
+#---------------------------------------------------
+#RSSを作成する
+#copyright 2010-2012 ABARS all rights reserved.
+#---------------------------------------------------
 
 from google.appengine.ext import webapp
 from google.appengine.ext import db

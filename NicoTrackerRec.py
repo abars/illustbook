@@ -1,3 +1,11 @@
+#!-*- coding:utf-8 -*-
+#!/usr/bin/env python
+
+#---------------------------------------------------
+#ニコニコトラッカーの計測データ
+#copyright 2010-2012 ABARS all rights reserved.
+#---------------------------------------------------
+
 from google.appengine.ext import db
 from google.appengine.api import users
 

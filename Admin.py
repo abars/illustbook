@@ -1,7 +1,10 @@
 #!-*- coding:utf-8 -*-
 #!/usr/bin/env python
+
+#---------------------------------------------------
 #管理ページ
-#
+#copyright 2010-2012 ABARS all rights reserved.
+#---------------------------------------------------
 
 import re
 import os

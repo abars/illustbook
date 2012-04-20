@@ -1,6 +1,11 @@
 #!-*- coding:utf-8 -*-
 #!/usr/bin/env python
-# Thread Id Mapping
+
+#---------------------------------------------------
+#スレッドにそれっぽい名前を付ける、20121001.htmlみたいな
+#copyright 2010-2012 ABARS all rights reserved.
+#---------------------------------------------------
+
 
 from google.appengine.ext import db
 from google.appengine.api import memcache

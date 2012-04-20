@@ -1,6 +1,10 @@
 #!-*- coding:utf-8 -*-
 #!/usr/bin/env python
-#MOPERツール
+
+#---------------------------------------------------
+#MOPER編集ツール
+#copyright 2010-2012 ABARS all rights reserved.
+#---------------------------------------------------
 
 import os
 

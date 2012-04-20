@@ -1,7 +1,10 @@
 #!-*- coding:utf-8 -*-
 #!/usr/bin/env python
+
+#---------------------------------------------------
 #拍手
-#
+#copyright 2010-2012 ABARS all rights reserved.
+#---------------------------------------------------
 
 import cgi
 import os
@@ -21,14 +24,12 @@ from google.appengine.api import memcache
 
 from Bbs import Bbs
 from Entry import Entry
-from RankingScore import RankingScore
 from Response import Response
 from MesThread import MesThread
 from BbsConst import BbsConst
 from ThreadImage import ThreadImage
 from SpamCheck import SpamCheck
 from Alert import Alert
-from ApplauseCache import ApplauseCache
 from OwnerCheck import OwnerCheck
 from RecentCommentCache import RecentCommentCache
 from MappingId import MappingId
@@ -72,4 +73,4 @@ class Applause(webapp.RequestHandler):
 			if(thread.short):
 				thread_url=thread.short
 			self.redirect(str(MappingId.get_usr_url("./",bbs)+thread_url+".html"))
-		ApplauseCache.invalidate_new()
+		

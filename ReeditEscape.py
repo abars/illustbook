@@ -1,7 +1,10 @@
 #!-*- coding:utf-8 -*-
 #!/usr/bin/env python
-#再編集用にテキストをエスケープする
-#
+
+#---------------------------------------------------
+#再編集用のテキストエスケープ
+#copyright 2010-2012 ABARS all rights reserved.
+#---------------------------------------------------
 
 from google.appengine.ext.webapp import template
 from google.appengine.api import users

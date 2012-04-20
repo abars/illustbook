@@ -1,6 +1,10 @@
 #!-*- coding:utf-8 -*-
 #!/usr/bin/env python
-#CSSを取得
+
+#---------------------------------------------------
+#掲示板の設定に応じてCSSを取得する
+#copyright 2010-2012 ABARS all rights reserved.
+#---------------------------------------------------
 
 import os
 import re

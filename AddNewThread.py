@@ -25,14 +25,12 @@ from google.appengine.api import memcache
 
 from Bbs import Bbs
 from Entry import Entry
-from RankingScore import RankingScore
 from Response import Response
 from MesThread import MesThread
 from BbsConst import BbsConst
 from ThreadImage import ThreadImage
 from SpamCheck import SpamCheck
 from Alert import Alert
-from ApplauseCache import ApplauseCache
 from OwnerCheck import OwnerCheck
 from RecentCommentCache import RecentCommentCache
 from ImageFile import ImageFile
@@ -90,12 +88,8 @@ class AddNewThread(webapp.RequestHandler):
 			new_thread = MesThread()
 			new_thread.put()	#キーの確保
 			
-			score=RankingScore()
-			score.init_score(new_thread.key(),new_thread.illust_mode)
-			score.put()	#キーの確保
+			new_thread.score = None
 			
-			new_thread.score = score.key()
-
 			new_thread.comment_cnt=0
 
 			bbs.illust_n=bbs.illust_n+1
@@ -152,8 +146,6 @@ class AddNewThread(webapp.RequestHandler):
 			if(user):
 				new_thread.user_id=user.user_id()	#必ずプロフィールにマップ
 
-			#ApplauseCache.invalidate_new()
-
 		#一括投稿モード（新エディタ）
 		if(self.request.get('mode')=="illust_all" and new_thread.illust_mode!=BbsConst.ILLUSTMODE_TEXT):
 			timage=ThreadImage()
@@ -175,7 +167,6 @@ class AddNewThread(webapp.RequestHandler):
 			timage.put()
 			new_thread.image_key=timage#db.Key(str(timage.key()))
 			ImageFile.invalidate_cache(str(timage.key()))
-			#ApplauseCache.invalidate_new()
 
 		#url assign
 		MappingThreadId.assign(bbs,new_thread,False)

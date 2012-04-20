@@ -1,7 +1,10 @@
 #!-*- coding:utf-8 -*-
 #!/usr/bin/env python
+
+#---------------------------------------------------
 #ページ番号生成
-#
+#copyright 2010-2012 ABARS all rights reserved.
+#---------------------------------------------------
 
 class PageGenerate:
 	@staticmethod

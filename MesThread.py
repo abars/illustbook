@@ -1,12 +1,15 @@
 #!-*- coding:utf-8 -*-
 #!/usr/bin/env python
+
+#---------------------------------------------------
 #スレッド構造体
+#copyright 2010-2012 ABARS all rights reserved.
+#---------------------------------------------------
 
 from google.appengine.ext import db
 from google.appengine.api import users
 from google.appengine.api import memcache
 
-from RankingScore import RankingScore
 from Bbs import Bbs
 from ThreadImage import ThreadImage
 from BbsConst import BbsConst
@@ -32,7 +35,7 @@ class MesThread(db.Model):
 	applause_ip3 = db.StringProperty()
 	applause_ip4 = db.StringProperty()
 	draw_time=db.IntegerProperty()
-	score=db.ReferenceProperty(RankingScore)
+	#score=db.ReferenceProperty(RankingScore)
 	category = db.StringProperty()
 	postscript = db.TextProperty()
 	adult = db.IntegerProperty()

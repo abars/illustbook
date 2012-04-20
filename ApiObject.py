@@ -1,7 +1,10 @@
 #!-*- coding:utf-8 -*-
 #!/usr/bin/env python
-#
-# WEB API
+
+#---------------------------------------------------
+#オブジェクト管理、キャッシュ機構含む、一番重要
+#copyright 2010-2012 ABARS all rights reserved.
+#---------------------------------------------------
 
 import cgi
 import os
@@ -23,13 +26,23 @@ from SetUtf8 import SetUtf8
 from Alert import Alert
 from MesThread import MesThread
 from MappingId import MappingId
-from ApplauseCache import ApplauseCache
 from Bbs import Bbs
 from BbsConst import BbsConst
 from Bookmark import Bookmark
 from StackFeedData import StackFeedData
+from UTC import UTC
+from JST import JST
 
 class ApiObject(webapp.RequestHandler):
+
+#-------------------------------------------------------------------
+#日付計算
+#-------------------------------------------------------------------
+
+	@staticmethod
+	def get_date_str(value):
+		tmp=value.replace(tzinfo=UTC()).astimezone(JST())
+		return ""+str(tmp.year)+"/"+str(tmp.month)+"/"+str(tmp.day)
 
 #-------------------------------------------------------------------
 #user object
@@ -199,7 +212,7 @@ class ApiObject(webapp.RequestHandler):
 				thumbnail_url+=".gif"
 			else:
 				thumbnail_url+=".jpg"
-		create_date=ApplauseCache.get_date_str(thread.create_date)
+		create_date=ApiObject.get_date_str(thread.create_date)
 
 		thread_url="http://"+req.request.host+"/"
 		if(bbs.short):
@@ -375,7 +388,7 @@ class ApiObject(webapp.RequestHandler):
 				thread=ApiObject._create_thread_object_core(req,thread_object,bbs_object,only_image)
 
 		#発生日取得
-		create_date=ApplauseCache.get_date_str(feed.create_date)
+		create_date=ApiObject.get_date_str(feed.create_date)
 		
 		#オブジェクトを返す
 		one_dic={"mode":feed.feed_mode,"from_user":from_user,"to_user":to_user,"follow_user":follow_user,"bbs":bbs,"thread":thread,"message":feed.message,"create_date":create_date,"key":str(feed.key())}
