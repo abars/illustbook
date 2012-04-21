@@ -13,9 +13,9 @@ http://www.illustbook.net/
 動作環境
 -------
 
-GoogleAppEngine
+GoogleAppEngine1.6.4
 
-Python2.7
+Python2.7(concurrent)
 
 Django1.2
 
