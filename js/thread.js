@@ -61,3 +61,10 @@
 				objID.className='close';
 			}
 		}
+		
+		function AddBookmark(host,thread_key){
+		if(confirm("このイラストをブックマークしますか？")){
+			window.location.href=host+'add_bookmark?mode=add&thread_key='+thread_key;
+		}
+	}
+
