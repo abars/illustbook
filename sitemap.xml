@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+
+<url>
+  <loc>http://www.illustbook.net/</loc>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>http://www.illustbook.net/guide</loc>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://www.illustbook.net/community</loc>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://www.illustbook.net/questionnaire</loc>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://www.illustbook.net/support</loc>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://www.illustbook.net/profile</loc>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://www.illustbook.net/mypage</loc>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://www.illustbook.net/sitemap</loc>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://www.illustbook.net/link</loc>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://www.illustbook.net/terms</loc>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://www.illustbook.net/commu/</loc>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://www.illustbook.net/sample/</loc>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://www.illustbook.net/anything/</loc>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://www.illustbook.net/moper/</loc>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://www.illustbook.net/support/</loc>
+  <priority>0.64</priority>
+</url>
+</urlset>
