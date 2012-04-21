@@ -1,13 +1,12 @@
-イラストブック
+BBS system of illustbook.net
 =============
-
-イラストブックの掲示板システムです。
 
 概要
 -------
 
 GoogleAppEngineで動く掲示板システムです。
 MITライセンスです。
+実際にhttp://www.illustbook.net/で運用しています。
 
 動作環境
 -------
