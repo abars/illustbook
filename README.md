@@ -1,4 +1,4 @@
-BBS system of illustbook.net
+お絵かき掲示板システム of illustbook.net
 =============
 
 概要
@@ -6,7 +6,9 @@ BBS system of illustbook.net
 
 GoogleAppEngineで動く掲示板システムです。
 MITライセンスです。
-実際にhttp://www.illustbook.net/で運用しています。
+実際に
+http://www.illustbook.net/
+で運用しています。
 
 動作環境
 -------
