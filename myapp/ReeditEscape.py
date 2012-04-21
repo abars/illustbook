@@ -17,7 +17,7 @@ from google.appengine.api import memcache
 import re
 import os
 
-from MesThread import MesThread
+from myapp.MesThread import MesThread
 
 class ReeditEscape:
 	@staticmethod

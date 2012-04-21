@@ -24,19 +24,19 @@ from google.appengine.ext import db
 from google.appengine.api import images
 from google.appengine.api import memcache
 
-from Bbs import Bbs
-from Counter import Counter
-from Alert import Alert
-from MappingId import MappingId
-from SetUtf8 import SetUtf8
-from Entry import Entry
-from OwnerCheck import OwnerCheck
-from RecentCommentCache import RecentCommentCache
-from CssDesign import CssDesign
-from BbsConst import BbsConst
-from MappingThreadId import MappingThreadId
-from MesThread import MesThread
-from RecentTag import RecentTag
+from myapp.Bbs import Bbs
+from myapp.Counter import Counter
+from myapp.Alert import Alert
+from myapp.MappingId import MappingId
+from myapp.SetUtf8 import SetUtf8
+from myapp.Entry import Entry
+from myapp.OwnerCheck import OwnerCheck
+from myapp.RecentCommentCache import RecentCommentCache
+from myapp.CssDesign import CssDesign
+from myapp.BbsConst import BbsConst
+from myapp.MappingThreadId import MappingThreadId
+from myapp.MesThread import MesThread
+from myapp.RecentTag import RecentTag
 
 class SearchTag(webapp.RequestHandler):
 	@staticmethod

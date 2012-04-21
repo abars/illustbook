@@ -9,9 +9,9 @@
 from google.appengine.ext import db
 from google.appengine.api import memcache
 
-from Entry import Entry
-from MesThread import MesThread
-from BbsConst import BbsConst
+from myapp.Entry import Entry
+from myapp.MesThread import MesThread
+from myapp.BbsConst import BbsConst
 
 class RecentCommentCache():
 	@staticmethod

@@ -8,8 +8,8 @@
 
 from google.appengine.ext import webapp
 
-from ApiObject import ApiObject
-from ImageFile import ImageFile
+from myapp.ApiObject import ApiObject
+from myapp.ImageFile import ImageFile
 
 class ShowIcon (webapp.RequestHandler):
 	def get(self):

@@ -10,9 +10,9 @@ from google.appengine.ext import db
 from google.appengine.api import users
 from google.appengine.api import memcache
 
-from Bbs import Bbs
-from ThreadImage import ThreadImage
-from BbsConst import BbsConst
+from myapp.Bbs import Bbs
+from myapp.ThreadImage import ThreadImage
+from myapp.BbsConst import BbsConst
 
 class MesThread(db.Model):
 	bbs_key = db.ReferenceProperty(Bbs)

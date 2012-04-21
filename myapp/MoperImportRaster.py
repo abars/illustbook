@@ -14,11 +14,11 @@ from google.appengine.ext.webapp import template
 from google.appengine.ext import webapp
 from google.appengine.ext import db
 
-from MesThread import MesThread
-from Bbs import Bbs
-from MappingId import MappingId
-from SetUtf8 import SetUtf8
-from MoperKeyMapper import MoperKeyMapper
+from myapp.MesThread import MesThread
+from myapp.Bbs import Bbs
+from myapp.MappingId import MappingId
+from myapp.SetUtf8 import SetUtf8
+from myapp.MoperKeyMapper import MoperKeyMapper
 
 class MoperImportRaster (webapp.RequestHandler):
 	@staticmethod

@@ -20,8 +20,8 @@ from google.appengine.ext import db
 from google.appengine.api import images
 from google.appengine.api import memcache
 
-from Entry import Entry
-from Bookmark import Bookmark
+from myapp.Entry import Entry
+from myapp.Bookmark import Bookmark
 
 HTTP_DATE_FMT = "%a, %d %b %Y %H:%M:%S GMT"
 

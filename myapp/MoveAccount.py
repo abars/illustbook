@@ -18,10 +18,10 @@ from google.appengine.ext import db
 from google.appengine.api import images
 from google.appengine.api import memcache
 
-from Bbs import Bbs
-from Counter import Counter
-from Alert import Alert
-from MappingId import MappingId
+from myapp.Bbs import Bbs
+from myapp.Counter import Counter
+from myapp.Alert import Alert
+from myapp.MappingId import MappingId
 
 class MoveAccount(webapp.RequestHandler):
 	def get(self):

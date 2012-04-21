@@ -25,22 +25,22 @@ from google.appengine.ext import db
 from google.appengine.api import images
 from google.appengine.api import memcache
 
-from Bbs import Bbs
-from Counter import Counter
-from Alert import Alert
-from MappingId import MappingId
-from SetUtf8 import SetUtf8
-from OwnerCheck import OwnerCheck
-from MaintenanceCheck import MaintenanceCheck
-from BbsConst import BbsConst
-from MesThread import MesThread
-from PageGenerate import PageGenerate
-from RecentCommentCache import RecentCommentCache
-from Analyze import Analyze
-from Entry import Entry
-from CssDesign import CssDesign
-from ApiObject import ApiObject
-from CounterWorker import CounterWorker
+from myapp.Bbs import Bbs
+from myapp.Counter import Counter
+from myapp.Alert import Alert
+from myapp.MappingId import MappingId
+from myapp.SetUtf8 import SetUtf8
+from myapp.OwnerCheck import OwnerCheck
+from myapp.MaintenanceCheck import MaintenanceCheck
+from myapp.BbsConst import BbsConst
+from myapp.MesThread import MesThread
+from myapp.PageGenerate import PageGenerate
+from myapp.RecentCommentCache import RecentCommentCache
+from myapp.Analyze import Analyze
+from myapp.Entry import Entry
+from myapp.CssDesign import CssDesign
+from myapp.ApiObject import ApiObject
+from myapp.CounterWorker import CounterWorker
 
 class ShowBbs(webapp.RequestHandler):
 	def get(self,bbs_key):

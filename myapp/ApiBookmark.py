@@ -25,15 +25,15 @@ from django.utils import simplejson
 
 webapp.template.register_template_library('templatetags.django_filter')
 
-from SetUtf8 import SetUtf8
-from Alert import Alert
-from MesThread import MesThread
-from MappingId import MappingId
-from Bbs import Bbs
-from BbsConst import BbsConst
-from Bookmark import Bookmark
-from AddBookmark import AddBookmark
-from ApiObject import ApiObject
+from myapp.SetUtf8 import SetUtf8
+from myapp.Alert import Alert
+from myapp.MesThread import MesThread
+from myapp.MappingId import MappingId
+from myapp.Bbs import Bbs
+from myapp.BbsConst import BbsConst
+from myapp.Bookmark import Bookmark
+from myapp.AddBookmark import AddBookmark
+from myapp.ApiObject import ApiObject
 
 class ApiBookmark(webapp.RequestHandler):
 

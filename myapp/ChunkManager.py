@@ -6,7 +6,8 @@
 #copyright 2010-2012 ABARS all rights reserved.
 #---------------------------------------------------
 
-from Chunk import Chunk
+from myapp.Chunk import Chunk
+
 from google.appengine.ext import db
 
 class ChunkManager ():

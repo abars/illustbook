@@ -17,12 +17,12 @@ from google.appengine.api import memcache
 import re
 import os
 
-from Bbs import Bbs
-from MesThread import MesThread
-from OwnerCheck import OwnerCheck
-from Alert import Alert
-from CssDesign import CssDesign
-from ReeditEscape import ReeditEscape
+from myapp.Bbs import Bbs
+from myapp.MesThread import MesThread
+from myapp.OwnerCheck import OwnerCheck
+from myapp.Alert import Alert
+from myapp.CssDesign import CssDesign
+from myapp.ReeditEscape import ReeditEscape
 
 class EditThread(webapp.RequestHandler):
 	def get(self):

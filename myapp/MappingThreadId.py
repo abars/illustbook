@@ -14,15 +14,15 @@ import re
 import random
 import time
 
-from UTC import UTC
-from JST import JST
+from myapp.UTC import UTC
+from myapp.JST import JST
 
-from Bbs import Bbs
-from BbsConst import BbsConst
-from MesThread import MesThread
-from MappingId import MappingId
-from MappingThreadIdUniqueCheck import MappingThreadIdUniqueCheck
-from ApiObject import ApiObject
+from myapp.Bbs import Bbs
+from myapp.BbsConst import BbsConst
+from myapp.MesThread import MesThread
+from myapp.MappingId import MappingId
+from myapp.MappingThreadIdUniqueCheck import MappingThreadIdUniqueCheck
+from myapp.ApiObject import ApiObject
 
 class MappingThreadId():
 	@staticmethod

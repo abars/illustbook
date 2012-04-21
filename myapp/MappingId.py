@@ -11,8 +11,8 @@ from google.appengine.api import memcache
 
 import re
 
-from Bbs import Bbs
-from BbsConst import BbsConst
+from myapp.Bbs import Bbs
+from myapp.BbsConst import BbsConst
 
 class MappingId():
 	@staticmethod

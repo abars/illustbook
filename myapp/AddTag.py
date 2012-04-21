@@ -22,12 +22,12 @@ from google.appengine.ext import db
 from google.appengine.api import images
 from google.appengine.api import memcache
 
-from Bbs import Bbs
-from MesThread import MesThread
-from MappingThreadId import MappingThreadId
-from Alert import Alert
-from SetUtf8 import SetUtf8
-from RecentTag import RecentTag
+from myapp.Bbs import Bbs
+from myapp.MesThread import MesThread
+from myapp.MappingThreadId import MappingThreadId
+from myapp.Alert import Alert
+from myapp.SetUtf8 import SetUtf8
+from myapp.RecentTag import RecentTag
 
 class AddTag(webapp.RequestHandler):
 	def get(self):

@@ -14,14 +14,14 @@ from google.appengine.api import memcache
 from google.appengine.api import users
 from google.appengine.ext import db
 
-from MesThread import MesThread
-from BbsConst import BbsConst
-from Bbs import Bbs
-from SetUtf8 import SetUtf8
-from PageGenerate import PageGenerate
-from MappingId import MappingId
-from ApiFeed import ApiFeed
-from OwnerCheck import OwnerCheck
+from myapp.MesThread import MesThread
+from myapp.BbsConst import BbsConst
+from myapp.Bbs import Bbs
+from myapp.SetUtf8 import SetUtf8
+from myapp.PageGenerate import PageGenerate
+from myapp.MappingId import MappingId
+from myapp.ApiFeed import ApiFeed
+from myapp.OwnerCheck import OwnerCheck
 
 class ViolationTerms(webapp.RequestHandler):
 	def get(self):

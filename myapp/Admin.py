@@ -16,16 +16,16 @@ from google.appengine.api import memcache
 from google.appengine.api import users
 from google.appengine.ext import db
 
-from MesThread import MesThread
-from BbsConst import BbsConst
-from Bbs import Bbs
-from Entry import Entry
-from SetUtf8 import SetUtf8
-from UTC import UTC
-from JST import JST
-from PageGenerate import PageGenerate
-from SiteAnalyzer import SiteAnalyzer
-from OwnerCheck import OwnerCheck
+from myapp.MesThread import MesThread
+from myapp.BbsConst import BbsConst
+from myapp.Bbs import Bbs
+from myapp.Entry import Entry
+from myapp.SetUtf8 import SetUtf8
+from myapp.UTC import UTC
+from myapp.JST import JST
+from myapp.PageGenerate import PageGenerate
+from myapp.SiteAnalyzer import SiteAnalyzer
+from myapp.OwnerCheck import OwnerCheck
 
 webapp.template.register_template_library('templatetags.django_filter')
 

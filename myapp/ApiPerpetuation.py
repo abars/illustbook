@@ -23,12 +23,12 @@ from google.appengine.api.users import User
 
 from django.utils import simplejson
 
-from SetUtf8 import SetUtf8
-from Alert import Alert
-from ApiObject import ApiObject
-from ApiPerpetuationData import ApiPerpetuationData
-from AddBookmark import AddBookmark
-from AppCode import AppCode
+from myapp.SetUtf8 import SetUtf8
+from myapp.Alert import Alert
+from myapp.ApiObject import ApiObject
+from myapp.ApiPerpetuationData import ApiPerpetuationData
+from myapp.AddBookmark import AddBookmark
+from myapp.AppCode import AppCode
 
 class ApiPerpetuation(webapp.RequestHandler):
 

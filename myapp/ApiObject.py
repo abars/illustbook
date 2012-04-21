@@ -22,16 +22,16 @@ from google.appengine.api.users import User
 
 from django.utils import simplejson
 
-from SetUtf8 import SetUtf8
-from Alert import Alert
-from MesThread import MesThread
-from MappingId import MappingId
-from Bbs import Bbs
-from BbsConst import BbsConst
-from Bookmark import Bookmark
-from StackFeedData import StackFeedData
-from UTC import UTC
-from JST import JST
+from myapp.SetUtf8 import SetUtf8
+from myapp.Alert import Alert
+from myapp.MesThread import MesThread
+from myapp.MappingId import MappingId
+from myapp.Bbs import Bbs
+from myapp.BbsConst import BbsConst
+from myapp.Bookmark import Bookmark
+from myapp.StackFeedData import StackFeedData
+from myapp.UTC import UTC
+from myapp.JST import JST
 
 class ApiObject(webapp.RequestHandler):
 

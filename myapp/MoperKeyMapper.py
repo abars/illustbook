@@ -11,7 +11,7 @@
 
 from google.appengine.ext import db
 
-from MesThread import MesThread
+from myapp.MesThread import MesThread
 
 class MoperKeyMapper(db.Model):
 	str_thread_key = db.StringProperty()

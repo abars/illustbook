@@ -23,19 +23,19 @@ from google.appengine.ext import db
 from google.appengine.api import images
 from google.appengine.api import memcache
 
-from Bbs import Bbs
-from Entry import Entry
-from Response import Response
-from MesThread import MesThread
-from BbsConst import BbsConst
-from ThreadImage import ThreadImage
-from SpamCheck import SpamCheck
-from Alert import Alert
-from OwnerCheck import OwnerCheck
-from RecentCommentCache import RecentCommentCache
-from MappingId import MappingId
-from MappingThreadId import MappingThreadId
-from StackFeed import StackFeed
+from myapp.Bbs import Bbs
+from myapp.Entry import Entry
+from myapp.Response import Response
+from myapp.MesThread import MesThread
+from myapp.BbsConst import BbsConst
+from myapp.ThreadImage import ThreadImage
+from myapp.SpamCheck import SpamCheck
+from myapp.Alert import Alert
+from myapp.OwnerCheck import OwnerCheck
+from myapp.RecentCommentCache import RecentCommentCache
+from myapp.MappingId import MappingId
+from myapp.MappingThreadId import MappingThreadId
+from myapp.StackFeed import StackFeed
 
 class AddEntry(webapp.RequestHandler):
 	def post(self):

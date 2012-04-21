@@ -13,11 +13,11 @@ from google.appengine.api import users
 from google.appengine.ext import webapp
 from google.appengine.ext import db
 
-from Alert import Alert
-from Bbs import Bbs
-from OwnerCheck import OwnerCheck
-from BbsConst import BbsConst
-from AppCode import AppCode
+from myapp.Alert import Alert
+from myapp.Bbs import Bbs
+from myapp.OwnerCheck import OwnerCheck
+from myapp.BbsConst import BbsConst
+from myapp.AppCode import AppCode
 
 class EditBbs(webapp.RequestHandler):
 	def get(self):

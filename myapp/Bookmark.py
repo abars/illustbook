@@ -10,8 +10,8 @@ from google.appengine.ext import db
 from google.appengine.api import users
 from google.appengine.api import memcache
 
-from StackFeedData import StackFeedData
-from BbsConst import BbsConst
+from myapp.StackFeedData import StackFeedData
+from myapp.BbsConst import BbsConst
 
 class Bookmark(db.Model):
 	owner = db.UserProperty()	#deleted

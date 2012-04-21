@@ -21,13 +21,13 @@ from google.appengine.ext import db
 from google.appengine.api import urlfetch
 from google.appengine.api import memcache
 
-from SetUtf8 import SetUtf8
-from NicoTrackerRec import NicoTrackerRec
-from NicoTrackerBookmark import NicoTrackerBookmark
+from myapp.SetUtf8 import SetUtf8
+from myapp.NicoTrackerRec import NicoTrackerRec
+from myapp.NicoTrackerBookmark import NicoTrackerBookmark
 
-from UTC import UTC
-from JST import JST
-from Alert import Alert
+from myapp.UTC import UTC
+from myapp.JST import JST
+from myapp.Alert import Alert
 
 #--------------------------------------------------------
 #NicoTracker

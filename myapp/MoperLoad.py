@@ -8,10 +8,10 @@ from google.appengine.ext.webapp import template
 from google.appengine.ext import webapp
 from google.appengine.ext import db
 
-from MesThread import MesThread
-from Bbs import Bbs
-from MappingId import MappingId
-from ChunkManager import ChunkManager
+from myapp.MesThread import MesThread
+from myapp.Bbs import Bbs
+from myapp.MappingId import MappingId
+from myapp.ChunkManager import ChunkManager
 
 class MoperLoad (webapp.RequestHandler):
 	def get(self):

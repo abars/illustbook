@@ -20,9 +20,9 @@ from google.appengine.ext import db
 from google.appengine.api import images
 from google.appengine.api import memcache
 
-from Entry import Entry
-from ImageFile import ImageFile
-from AppPortal import AppPortal
+from myapp.Entry import Entry
+from myapp.ImageFile import ImageFile
+from myapp.AppPortal import AppPortal
 
 class AppImage (webapp.RequestHandler):
 	def get(self, app_id, image_id,):

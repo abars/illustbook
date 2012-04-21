@@ -9,9 +9,9 @@
 from google.appengine.ext import db
 from google.appengine.api import users
 
-from Bbs import Bbs
-from MesThread import MesThread
-from ThreadImage import ThreadImage
+from myapp.Bbs import Bbs
+from myapp.MesThread import MesThread
+from myapp.ThreadImage import ThreadImage
 
 class Entry(db.Model):
 	bbs_key = db.ReferenceProperty(Bbs)

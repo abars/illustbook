@@ -24,14 +24,14 @@ from google.appengine.api.users import User
 
 webapp.template.register_template_library('templatetags.django_filter')
 
-from SetUtf8 import SetUtf8
-from Alert import Alert
-from AppCode import AppCode
-from ApiObject import ApiObject
-from MesThread import MesThread
-from MappingId import MappingId
-from BbsConst import BbsConst
-from CssDesign import CssDesign
+from myapp.SetUtf8 import SetUtf8
+from myapp.Alert import Alert
+from myapp.AppCode import AppCode
+from myapp.ApiObject import ApiObject
+from myapp.MesThread import MesThread
+from myapp.MappingId import MappingId
+from myapp.BbsConst import BbsConst
+from myapp.CssDesign import CssDesign
 
 class AppPortal(webapp.RequestHandler):
 	@staticmethod

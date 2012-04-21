@@ -12,12 +12,12 @@ from google.appengine.api import memcache
 
 from django.utils import feedgenerator
 
-from SetUtf8 import SetUtf8
-from MappingId import MappingId
-from Bbs import Bbs
-from MesThread import MesThread
-from Entry import Entry
-from BbsConst import BbsConst
+from myapp.SetUtf8 import SetUtf8
+from myapp.MappingId import MappingId
+from myapp.Bbs import Bbs
+from myapp.MesThread import MesThread
+from myapp.Entry import Entry
+from myapp.BbsConst import BbsConst
 
 class RssFeed(webapp.RequestHandler):
 	@staticmethod

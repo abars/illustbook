@@ -23,14 +23,14 @@ from google.appengine.api.users import User
 
 webapp.template.register_template_library('templatetags.django_filter')
 
-from SetUtf8 import SetUtf8
-from Alert import Alert
-from AppPortal import AppPortal
-from AppCode import AppCode
-from ApiObject import ApiObject
-from MappingId import MappingId
-from AddBookmark import AddBookmark
-from BbsConst import BbsConst
+from myapp.SetUtf8 import SetUtf8
+from myapp.Alert import Alert
+from myapp.AppPortal import AppPortal
+from myapp.AppCode import AppCode
+from myapp.ApiObject import ApiObject
+from myapp.MappingId import MappingId
+from myapp.AddBookmark import AddBookmark
+from myapp.BbsConst import BbsConst
 
 class DevPortal(webapp.RequestHandler):
 	@staticmethod

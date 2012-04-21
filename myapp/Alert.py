@@ -13,7 +13,7 @@ from google.appengine.ext.webapp import template
 from google.appengine.ext import webapp
 from google.appengine.api import memcache
 
-from MappingId import MappingId
+from myapp.MappingId import MappingId
 
 webapp.template.register_template_library('templatetags.django_filter')
 

@@ -10,10 +10,10 @@ from google.appengine.ext import db
 from google.appengine.api import users
 from google.appengine.api import memcache
 
-from Analyze import Analyze
-from Counter import Counter
-from BbsConst import BbsConst
-from AppCode import AppCode
+from myapp.Analyze import Analyze
+from myapp.Counter import Counter
+from myapp.BbsConst import BbsConst
+from myapp.AppCode import AppCode
 
 class Bbs(db.Model):
 	bbs_name = db.StringProperty()

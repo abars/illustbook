@@ -9,7 +9,7 @@
 from google.appengine.ext import db
 from google.appengine.api import users
 
-from AppCode import AppCode
+from myapp.AppCode import AppCode
 
 class ApiPerpetuationData(db.Model):
 	app_key = db.ReferenceProperty(AppCode)

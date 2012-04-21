@@ -14,14 +14,14 @@ from google.appengine.api import memcache
 from google.appengine.api import users
 from google.appengine.ext import db
 
-from SetUtf8 import SetUtf8;
-from BbsConst import BbsConst;
-from Alert import Alert
-from Entry import Entry
-from SpamCheck import SpamCheck
-from RecentCommentCache import RecentCommentCache
-from MesThread import MesThread
-from OwnerCheck import OwnerCheck
+from myapp.SetUtf8 import SetUtf8;
+from myapp.BbsConst import BbsConst;
+from myapp.Alert import Alert
+from myapp.Entry import Entry
+from myapp.SpamCheck import SpamCheck
+from myapp.RecentCommentCache import RecentCommentCache
+from myapp.MesThread import MesThread
+from myapp.OwnerCheck import OwnerCheck
 
 class SpamDelete(webapp.RequestHandler):
 	def get(self):

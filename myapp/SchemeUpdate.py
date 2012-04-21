@@ -24,11 +24,11 @@ from google.appengine.api import memcache
 
 webapp.template.register_template_library('templatetags.django_filter')
 
-from MesThread import MesThread
-from ThreadImage import ThreadImage
-from BbsConst import BbsConst
-from Bookmark import Bookmark
-from Entry import Entry
+from myapp.MesThread import MesThread
+from myapp.ThreadImage import ThreadImage
+from myapp.BbsConst import BbsConst
+from myapp.Bookmark import Bookmark
+from myapp.Entry import Entry
 
 #-----------------------------------------------------------------
 #オーナー情報更新

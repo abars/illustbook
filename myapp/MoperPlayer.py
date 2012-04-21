@@ -8,10 +8,10 @@ from google.appengine.ext.webapp import template
 from google.appengine.ext import webapp
 from google.appengine.ext import db
 
-from MesThread import MesThread
-from Bbs import Bbs
-from MappingId import MappingId
-from Alert import Alert
+from myapp.MesThread import MesThread
+from myapp.Bbs import Bbs
+from myapp.MappingId import MappingId
+from myapp.Alert import Alert
 
 class MoperPlayer(webapp.RequestHandler):
 	def get(self):

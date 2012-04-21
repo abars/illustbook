@@ -6,7 +6,8 @@
 #copyright 2010-2012 ABARS all rights reserved.
 #---------------------------------------------------
 
-from BbsConst import BbsConst
+from myapp.BbsConst import BbsConst
+
 from google.appengine.api import users
 
 class OwnerCheck:

@@ -13,10 +13,10 @@ from google.appengine.ext.webapp import template
 from google.appengine.ext import webapp
 from google.appengine.ext import db
 
-from MesThread import MesThread
-from Bbs import Bbs
-from MappingId import MappingId
-from SetUtf8 import SetUtf8
+from myapp.MesThread import MesThread
+from myapp.Bbs import Bbs
+from myapp.MappingId import MappingId
+from myapp.SetUtf8 import SetUtf8
 
 webapp.template.register_template_library('templatetags.django_filter')
 

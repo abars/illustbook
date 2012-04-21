@@ -25,13 +25,13 @@ from django.utils import simplejson
 
 webapp.template.register_template_library('templatetags.django_filter')
 
-from SetUtf8 import SetUtf8
-from Alert import Alert
-from MesThread import MesThread
-from MappingId import MappingId
-from Bbs import Bbs
-from CssDesign import CssDesign
-from ApiPerpetuation import ApiPerpetuation
+from myapp.SetUtf8 import SetUtf8
+from myapp.Alert import Alert
+from myapp.MesThread import MesThread
+from myapp.MappingId import MappingId
+from myapp.Bbs import Bbs
+from myapp.CssDesign import CssDesign
+from myapp.ApiPerpetuation import ApiPerpetuation
 
 class ApiJs(webapp.RequestHandler):
 	def get(self):

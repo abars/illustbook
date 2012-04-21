@@ -9,8 +9,8 @@
 from google.appengine.ext import db
 from google.appengine.api import users
 
-from Bbs import Bbs
-from MesThread import MesThread
+from myapp.Bbs import Bbs
+from myapp.MesThread import MesThread
 
 class MappingThreadIdUniqueCheck(db.Model):
 	bbs = db.ReferenceProperty(Bbs)

@@ -23,21 +23,21 @@ from google.appengine.ext import db
 from google.appengine.api import images
 from google.appengine.api import memcache
 
-from Bbs import Bbs
-from Counter import Counter
-from Alert import Alert
-from MappingId import MappingId
-from SetUtf8 import SetUtf8
-from Entry import Entry
-from OwnerCheck import OwnerCheck
-from RecentCommentCache import RecentCommentCache
-from CssDesign import CssDesign
-from BbsConst import BbsConst
-from MappingThreadId import MappingThreadId
-from MaintenanceCheck import MaintenanceCheck
-from ShowBbs import ShowBbs
-from CounterWorker import CounterWorker
-from ApiObject import ApiObject
+from myapp.Bbs import Bbs
+from myapp.Counter import Counter
+from myapp.Alert import Alert
+from myapp.MappingId import MappingId
+from myapp.SetUtf8 import SetUtf8
+from myapp.Entry import Entry
+from myapp.OwnerCheck import OwnerCheck
+from myapp.RecentCommentCache import RecentCommentCache
+from myapp.CssDesign import CssDesign
+from myapp.BbsConst import BbsConst
+from myapp.MappingThreadId import MappingThreadId
+from myapp.MaintenanceCheck import MaintenanceCheck
+from myapp.ShowBbs import ShowBbs
+from myapp.CounterWorker import CounterWorker
+from myapp.ApiObject import ApiObject
 
 class ShowThread(webapp.RequestHandler):
 	def get(self,bbs_key,thread_key):

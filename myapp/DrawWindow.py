@@ -13,12 +13,12 @@ from google.appengine.ext import webapp
 from google.appengine.ext import db
 from google.appengine.api import users
 
-from MesThread import MesThread
-from Bbs import Bbs
-from MappingId import MappingId
-from Alert import Alert
-from ReeditEscape import ReeditEscape
-from CssDesign import CssDesign
+from myapp.MesThread import MesThread
+from myapp.Bbs import Bbs
+from myapp.MappingId import MappingId
+from myapp.Alert import Alert
+from myapp.ReeditEscape import ReeditEscape
+from myapp.CssDesign import CssDesign
 
 class DrawWindow(webapp.RequestHandler):
 	def get(self):
@@ -96,9 +96,9 @@ class DrawWindow(webapp.RequestHandler):
 		}
 		
 		if(ipad or iphone):
-			path = os.path.join(os.path.dirname(__file__), 'html/draw_window_ipad.htm')
+			path = os.path.join(os.path.dirname(__file__), '../html/draw_window_ipad.htm')
 		else:
-			path = os.path.join(os.path.dirname(__file__), 'html/draw_window_beta.htm')
+			path = os.path.join(os.path.dirname(__file__), '../html/draw_window_beta.htm')
 		
 		self.response.out.write(template.render(path, template_values))
 

@@ -21,16 +21,16 @@ from google.appengine.ext import db
 from google.appengine.api import urlfetch
 from google.appengine.api import memcache
 
-from SetUtf8 import SetUtf8
-from UTC import UTC
-from JST import JST
-from Alert import Alert
-from NicoTracker import NicoTracker
-from TopPageCache import TopPageCache
-from Bbs import Bbs
-from MesThread import MesThread
-from Entry import Entry
-from Bookmark import Bookmark
+from myapp.SetUtf8 import SetUtf8
+from myapp.UTC import UTC
+from myapp.JST import JST
+from myapp.Alert import Alert
+from myapp.NicoTracker import NicoTracker
+from myapp.TopPageCache import TopPageCache
+from myapp.Bbs import Bbs
+from myapp.MesThread import MesThread
+from myapp.Entry import Entry
+from myapp.Bookmark import Bookmark
 
 class SiteAnalyzer(webapp.RequestHandler):
 	@staticmethod

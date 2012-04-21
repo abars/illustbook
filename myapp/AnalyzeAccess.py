@@ -14,11 +14,11 @@ from google.appengine.ext import webapp
 from google.appengine.ext import db
 from google.appengine.api import users
 
-from MesThread import MesThread
-from Bbs import Bbs
-from MappingId import MappingId
-from SetUtf8 import SetUtf8
-from Alert import Alert
+from myapp.MesThread import MesThread
+from myapp.Bbs import Bbs
+from myapp.MappingId import MappingId
+from myapp.SetUtf8 import SetUtf8
+from myapp.Alert import Alert
 
 class AnalyzeAccess(webapp.RequestHandler):
 	def get(self):
