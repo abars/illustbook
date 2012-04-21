@@ -25,6 +25,6 @@ class Comic(webapp.RequestHandler):
 		'host': host_url,
 		'page': page
 		}		  
-		path = os.path.join(os.path.dirname(__file__), 'html/comic.htm')
+		path = os.path.join(os.path.dirname(__file__), '../html/comic.htm')
 		self.response.out.write(template.render(path, template_values))
 

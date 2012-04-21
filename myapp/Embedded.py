@@ -57,6 +57,6 @@ class Embedded(webapp.RequestHandler):
 			'img':img,
 			'moper':moper
 			}
-		path = os.path.join(os.path.dirname(__file__), 'html/mes_embedded.html')
+		path = os.path.join(os.path.dirname(__file__), '../html/mes_embedded.html')
 		self.response.out.write(template.render(path, template_values))
 		

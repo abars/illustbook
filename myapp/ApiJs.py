@@ -59,6 +59,6 @@ class ApiJs(webapp.RequestHandler):
 		}
 
 		self.response.content_type = 'text/javascript'
-		path = os.path.join(os.path.dirname(__file__), "api/illustbook.js")
+		path = os.path.join(os.path.dirname(__file__), "../api/illustbook.js")
 		self.response.out.write(template.render(path, template_values))
 

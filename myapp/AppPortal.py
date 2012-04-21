@@ -74,7 +74,7 @@ class AppPortal(webapp.RequestHandler):
 	
 	@staticmethod
 	def load_sample_app(filename):
-		code = open('api/'+filename).read()
+		code = open('./api/'+filename).read()
 		return code
 	
 	@staticmethod
@@ -206,9 +206,9 @@ class AppPortal(webapp.RequestHandler):
 			'redirect_url': main.request.path
 		}
 		
-		url='html/portal/general_app.html'
+		url='../html/portal/general_app.html'
 		if(is_run or is_plugin):
-			url='html/portal/app/app_run.html'
+			url='../html/portal/app/app_run.html'
 		
 		path = os.path.join(os.path.dirname(__file__), url)
 		main.response.out.write(template.render(path, template_values))

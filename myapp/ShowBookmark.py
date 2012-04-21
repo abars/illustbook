@@ -70,7 +70,7 @@ class ShowBookmark(webapp.RequestHandler):
 			'redirect_url': self.request.path
 		}
 		
-		path = os.path.join(os.path.dirname(__file__), 'html/portal/general_show_bookmark.html')
+		path = os.path.join(os.path.dirname(__file__), '../html/portal/general_show_bookmark.html')
 		self.response.out.write(template.render(path, template_values))
 		
 

@@ -1,4 +1,5 @@
-# -*- coding: utf-8 -*-
+#!-*- coding:utf-8 -*-
+#!/usr/bin/env python
 
 #---------------------------------------------------
 #テンプレートエンジンから参照する関数
@@ -14,10 +15,10 @@ from google.appengine.ext import db
 from google.appengine.ext import webapp
 register = webapp.template.create_template_register()
 
-from UTC import UTC
-from JST import JST
-from Bookmark import Bookmark
-from ApiObject import ApiObject
+from myapp.UTC import UTC
+from myapp.JST import JST
+from myapp.Bookmark import Bookmark
+from myapp.ApiObject import ApiObject
 
 #-----------------------------------------------------------------
 # 時間取得

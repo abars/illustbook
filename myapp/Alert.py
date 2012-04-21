@@ -25,7 +25,7 @@ class Alert(webapp.RequestHandler):
 		'host': host_url,
 		'alert_msg': msg
 		}
-		path = os.path.join(os.path.dirname(__file__), 'html/mes_alert.html')
+		path = os.path.join(os.path.dirname(__file__), '../html/mes_alert.html')
 		return template.render(path, template_values)
 	
 	@staticmethod

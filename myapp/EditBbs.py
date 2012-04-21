@@ -55,5 +55,5 @@ class EditBbs(webapp.RequestHandler):
 			'redirect_url': self.request.path
 		}
 
-		path = os.path.join(os.path.dirname(__file__), 'html/portal/general_edit_bbs.html')
+		path = os.path.join(os.path.dirname(__file__), '../html/portal/general_edit_bbs.html')
 		self.response.out.write(template.render(path, template_values))
