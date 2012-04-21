@@ -98,6 +98,7 @@ from myapp.StackFeedTweet import StackFeedTweet
 from myapp.ApiObject import ApiObject
 from myapp.CounterWorker import CounterWorker
 from myapp.ShowIcon import ShowIcon
+from myapp.CheckId import CheckId
 
 #-----------------------------------------------------------------
 #ポータル
@@ -152,9 +153,6 @@ class MainPage(webapp.RequestHandler):
 			'redirect_url': self.request.path
 		}
 
-		#if(self.request.get("mode")=="family"):
-		#	path = os.path.join(os.path.dirname(__file__), 'portal/family_index.html')
-		#else:
 		path = os.path.join(os.path.dirname(__file__), 'html/portal/general_index.html')
 		self.response.out.write(template.render(path, template_values))
 
@@ -165,9 +163,7 @@ class Questionnaire(webapp.RequestHandler):
 			'user': users.get_current_user(),
 			'redirect_url': self.request.path
 		}
-		#if(self.request.get("mode")=="family"):
-		#	path = os.path.join(os.path.dirname(__file__), 'portal/family_questionnaire.html')
-		#else:
+
 		path = os.path.join(os.path.dirname(__file__), 'html/portal/general_questionnaire.html')
 		self.response.out.write(template.render(path, template_values))
 		
@@ -178,9 +174,7 @@ class Profile(webapp.RequestHandler):
 			'user': users.get_current_user(),
 			'redirect_url': self.request.path
 		}
-		#if(self.request.get("mode")=="family"):
-		#	path = os.path.join(os.path.dirname(__file__), 'portal/family_profile.html')
-		#else:
+
 		path = os.path.join(os.path.dirname(__file__), 'html/portal/general_profile.html')
 		self.response.out.write(template.render(path, template_values))
 
@@ -191,16 +185,12 @@ class Support(webapp.RequestHandler):
 			'user': users.get_current_user(),
 			'redirect_url': self.request.path
 		}
-		#if(self.request.get("mode")=="family"):
-		#	path = os.path.join(os.path.dirname(__file__), 'portal/family_support.html')
-		#else:
+
 		path = os.path.join(os.path.dirname(__file__), 'html/portal/general_support.html')
 		self.response.out.write(template.render(path, template_values))
 
 class Terms(webapp.RequestHandler):
 	def get(self):
-
-		#iPhoneモードかどうか
 		is_iphone=CssDesign.is_iphone(self)
 
 		template_values = {
@@ -209,9 +199,7 @@ class Terms(webapp.RequestHandler):
 			'user': users.get_current_user(),
 			'redirect_url': self.request.path
 		}
-		#if(self.request.get("mode")=="family"):
-		#	path = os.path.join(os.path.dirname(__file__), 'portal/family_terms.html')
-		#else:
+
 		path = os.path.join(os.path.dirname(__file__), 'html/portal/general_terms.html')
 		self.response.out.write(template.render(path, template_values))
 
@@ -226,9 +214,7 @@ class Community(webapp.RequestHandler):
 			'user': users.get_current_user(),
 			'redirect_url': self.request.path
 		}
-		#if(self.request.get("mode")=="family"):
-		#	path = os.path.join(os.path.dirname(__file__), 'portal/family_community.html')
-		#else:
+
 		path = os.path.join(os.path.dirname(__file__), 'html/portal/general_community.html')
 		self.response.out.write(template.render(path, template_values))
 
@@ -239,9 +225,7 @@ class GuidePage(webapp.RequestHandler):
 			'user': users.get_current_user(),
 			'redirect_url': self.request.path
 		}
-		#if(self.request.get("mode")=="family"):
-		#	path = os.path.join(os.path.dirname(__file__), 'portal/family_guide.html')
-		#else:
+
 		path = os.path.join(os.path.dirname(__file__), 'html/portal/general_guide.html')
 		self.response.out.write(template.render(path, template_values))
 
@@ -249,7 +233,6 @@ class LinkPage(webapp.RequestHandler):
 	def get(self):
 		news=""
 		
-		#iPhoneモードかどうか
 		is_iphone=CssDesign.is_iphone(self)
 	
 		template_values = {
@@ -259,33 +242,13 @@ class LinkPage(webapp.RequestHandler):
 			'user': users.get_current_user(),
 			'redirect_url': self.request.path
 		}
-		#if(self.request.get("mode")=="family"):
-		#	path = os.path.join(os.path.dirname(__file__), 'portal/family_link.html')
-		#else:
+
 		path = os.path.join(os.path.dirname(__file__), 'html/portal/general_link.html')
 		self.response.out.write(template.render(path, template_values))
 
 #-----------------------------------------------------------------
 #削除系
 #-----------------------------------------------------------------
-
-#class Image (webapp.RequestHandler):
-#	def get(self):
-#		try:
-#			entry = db.get(self.request.get("img_id"))
-#		except:
-#			entry=None
-#		if(entry==None):
-#			self.error(404)
-#			return
-#		if entry.image:
-#			if(entry.illust_mode==4) :
-#				self.response.headers['Content-Type'] = "image/png"
-#			else:
-#				self.response.headers['Content-Type'] = "image/jpeg"
-#			self.response.out.write(entry.image)
-#		else:
-#			self.error(404)
 
 class DelBbs(webapp.RequestHandler):
 	def get(self):
@@ -401,73 +364,6 @@ class DelThread(webapp.RequestHandler):
 		url=MappingId.get_usr_url("./",bbs)
 		self.redirect(str(url))
 
-#class UploadImage(webapp.RequestHandler):
-#	def post(self):
-#		self.response.headers ['Content-type'] = "text/html;charset=utf-8"  
-#		bbs = db.get(self.request.get("bbs_key"))
-#		user = users.get_current_user()
-#
-#		if(bbs.bbs_mode==BbsConst.BBS_MODE_ONLY_ADMIN):
-#			if(OwnerCheck.check(bbs,user)):
-#				self.response.out.write("[error]")
-#				return
-#		try:
-#			timage=ThreadImage()
-#			timage.bbs_key=db.get(self.request.get("bbs_key"))
-#			timage.image=db.Blob(self.request.body)			
-#			timage.illust_mode=1
-#			timage.put()
-#			self.response.out.write(str(timage.key()))
-#		except:
-#			self.response.out.write("[error]")
-
-
-#class UploadThumbnail(webapp.RequestHandler):
-#	def post(self):
-#		self.response.headers ['Content-type'] = "text/html;charset=utf-8"  
-
-#		#self.response.out.write("[error]")
-#		#return
-
-#		try:
-#			timage=db.get(self.request.get("image_key"))
-#			timage.thumbnail=db.Blob(self.request.body)
-#			timage.put()
-#			self.response.out.write(str(timage.key()))
-#		except:
-#			self.response.out.write("[error]")
-			
-#class RealImage(webapp.RequestHandler):
-#	def get(self):
-#		try:
-#			entry = db.get(self.request.get("img_id"))
-#		except:
-#			entry=None
-#		if(entry==None):
-#			self.error(404)
-#			return
-#		
-#		template_values = {
-#			'blog': entry,
-#			'url': 'edit',
-#			'url_linktext': 'edit blogs',
-#			}
-#
-#		path = os.path.join(os.path.dirname(__file__), 'html/mes_image.html')
-#		self.response.out.write(template.render(path, template_values))
-
-class CheckId(webapp.RequestHandler):
-	def get(self):
-		SetUtf8.set()
-		short=self.request.get('id')
-		if(MappingId.key_format_check(short)):
-			self.response.out.write(Alert.alert_msg("IDは半角英数である必要があります。",self.request.host))
-			return
-		if(MappingId.check_capability(short,"")==0):
-			self.response.out.write(Alert.alert_msg("ID:"+short+"は既に登録されていて利用できません。",self.request.host))
-			return
-		self.response.out.write(Alert.alert_msg("ID:"+short+"は利用可能です。",self.request.host))
-
 #-----------------------------------------------------------------
 #リダイレクト
 #-----------------------------------------------------------------
@@ -505,97 +401,88 @@ class RedirectBbs(webapp.RequestHandler):
 		self.redirect(str(url))
 
 application = webapp.WSGIApplication(
-																			[('/', MainPage),
-																			(r'/usr/(.*)/(.*)\.html',ShowThread),
-																			(r'/usr/(.*)/',ShowBbs),
-																			(r'/usr/(.*)/index.xml',RssFeed),
-																			(r'/(.*)/(.*)\.html',ShowThread),
-																			(r'/(.*)/',ShowBbs),
-																			(r'/(.*)/index.xml',RssFeed),
-																			('/guide', GuidePage),
-																			('/bbs_index', RedirectBbs),
-#																			('/img', Image),
-																			(r'/css/(.*)\.(css)',CssDesign), 
-																			(r'/css/(.*)\.(key)',CssDesign), 
-#																			('/image', RealImage),
-																			(r'/(img)/(.*)\.(jpg)',ImageFile), 
-																			(r'/(img)/(.*)\.(png)',ImageFile), 
-																			(r'/(img)/(.*)\.(txt)',ImageFile), 
-																			('/(thumbnail)/([^\.]*)\.(jpg)', ImageFile),
-																			('/(thumbnail)/([^\.]*)\.(gif)', ImageFile),
-																			('/(thumbnail)/([^\.]*)\.(png)', ImageFile),
-																			('/add_thread', AddNewThread),
-																			('/add_bbs', AddNewBbs),
-																			('/show_thread', RedirectThread),
-																			('/add_entry', AddEntry),
-																			('/del_ent', DelEn),
-																			('/vis_ent', VisibilityChangeEntry),
-																			('/del_bbs', DelBbs),
-#																			('/upl_img', UploadImage),
-#																			('/upl_thumbnail', UploadThumbnail),
-																			('/upl_all', AddNewThread),
-																			('/draw', DrawWindow),
-																			('/draw_beta', DrawWindow),
-																			('/del_thread', DelThread),
-																			('/edit_bbs', EditBbs),
-																			('/update_bbs', UpdateBbs),
-																			('/edit_thread', EditThread),
-																			('/update_thread', UpdateThread),
-																			('/add_res', AddRes),
-																			('/add_tag', AddTag),
-																			('/del_res', DelRes),
-																			('/add_bookmark', AddBookmark),
-																			('/(mypage)',MyPage),
-																			('/(regist)',MyPage),
-																			('/ajax_ranking_update',SiteAnalyzer),
-																			('/applause',Applause),
-																			('/analyze',AnalyzeAccess),
-																			('/check_id',CheckId),
-																			('/embedded',Embedded),
-																			('/draw_moper',MoperDraw),
-																			('/upload_moper',MoperUpload),
-																			('/moper_load',MoperLoad),
-																			('/moper_player',MoperPlayer),
-																			('/moper_import_raster',MoperImportRaster),
-																			('/moper_guide',MoperGuide),
-																			('/link',LinkPage),
-																			('/spam_check',SpamCheck),
-																			('/spam_delete',SpamDelete),
-																			('/admin',Admin),
-																			('/localtool',LocalTool),
-																			('/localtool_draw',LocalToolDraw),
-																			('/questionnaire',Questionnaire),
-																			('/community',Community),
-																			('/profile',Profile),
-																			('/support',Support),
-																			('/terms',Terms),
-																			('/search',SearchUser),
-																			('/search_tag',SearchTag),
-																			('/move_account',MoveAccount),
-																			('/violation',ViolationTerms),
-																			('/nico_tracker',NicoTracker),
-																			('/update_profile',UpdateProfile),
-																			('/show_bookmark',ShowBookmark),
-																			('/show_icon',ShowIcon),
-																			('/comic',Comic),
-																			('/scheme_update',SchemeUpdate),
-																			('/app',AppPortal),
-																			('/app/(.*)/img/(.*)',AppImage),
-																			('/api_feed',ApiFeed),
-																			('/api_user',ApiUser),
-																			('/api_bookmark',ApiBookmark),
-																			('/api_perpetuation',ApiPerpetuation),
-																			('/api_js',ApiJs),
-																			('/dev',DevPortal),
-																			('/stack_feed_worker',StackFeed),
-																			('/counter_worker',CounterWorker),
-																			('/feed_tweet',StackFeedTweet)
-																			],
-																		 	debug=False)
-																			
-#for python2.5
-#def main():
-#	run_wsgi_app(application)
+	[('/', MainPage),
+	(r'/usr/(.*)/(.*)\.html',ShowThread),
+	(r'/usr/(.*)/',ShowBbs),
+	(r'/usr/(.*)/index.xml',RssFeed),
+	(r'/(.*)/(.*)\.html',ShowThread),
+	(r'/(.*)/',ShowBbs),
+	(r'/(.*)/index.xml',RssFeed),
+	('/guide', GuidePage),
+	('/bbs_index', RedirectBbs),
+	(r'/css/(.*)\.(css)',CssDesign), 
+	(r'/css/(.*)\.(key)',CssDesign), 
+	(r'/(img)/(.*)\.(jpg)',ImageFile), 
+	(r'/(img)/(.*)\.(png)',ImageFile), 
+	(r'/(img)/(.*)\.(txt)',ImageFile), 
+	('/(thumbnail)/([^\.]*)\.(jpg)', ImageFile),
+	('/(thumbnail)/([^\.]*)\.(gif)', ImageFile),
+	('/(thumbnail)/([^\.]*)\.(png)', ImageFile),
+	('/add_thread', AddNewThread),
+	('/add_bbs', AddNewBbs),
+	('/show_thread', RedirectThread),
+	('/add_entry', AddEntry),
+	('/del_ent', DelEn),
+	('/vis_ent', VisibilityChangeEntry),
+	('/del_bbs', DelBbs),
+	('/upl_all', AddNewThread),
+	('/draw', DrawWindow),
+	('/draw_beta', DrawWindow),
+	('/del_thread', DelThread),
+	('/edit_bbs', EditBbs),
+	('/update_bbs', UpdateBbs),
+	('/edit_thread', EditThread),
+	('/update_thread', UpdateThread),
+	('/add_res', AddRes),
+	('/add_tag', AddTag),
+	('/del_res', DelRes),
+	('/add_bookmark', AddBookmark),
+	('/(mypage)',MyPage),
+	('/(regist)',MyPage),
+	('/ajax_ranking_update',SiteAnalyzer),
+	('/applause',Applause),
+	('/analyze',AnalyzeAccess),
+	('/check_id',CheckId),
+	('/embedded',Embedded),
+	('/draw_moper',MoperDraw),
+	('/upload_moper',MoperUpload),
+	('/moper_load',MoperLoad),
+	('/moper_player',MoperPlayer),
+	('/moper_import_raster',MoperImportRaster),
+	('/moper_guide',MoperGuide),
+	('/link',LinkPage),
+	('/spam_check',SpamCheck),
+	('/spam_delete',SpamDelete),
+	('/admin',Admin),
+	('/localtool',LocalTool),
+	('/localtool_draw',LocalToolDraw),
+	('/questionnaire',Questionnaire),
+	('/community',Community),
+	('/profile',Profile),
+	('/support',Support),
+	('/terms',Terms),
+	('/search',SearchUser),
+	('/search_tag',SearchTag),
+	('/move_account',MoveAccount),
+	('/violation',ViolationTerms),
+	('/nico_tracker',NicoTracker),
+	('/update_profile',UpdateProfile),
+	('/show_bookmark',ShowBookmark),
+	('/show_icon',ShowIcon),
+	('/comic',Comic),
+	('/scheme_update',SchemeUpdate),
+	('/app',AppPortal),
+	('/app/(.*)/img/(.*)',AppImage),
+	('/api_feed',ApiFeed),
+	('/api_user',ApiUser),
+	('/api_bookmark',ApiBookmark),
+	('/api_perpetuation',ApiPerpetuation),
+	('/api_js',ApiJs),
+	('/dev',DevPortal),
+	('/stack_feed_worker',StackFeed),
+	('/counter_worker',CounterWorker),
+	('/feed_tweet',StackFeedTweet)
+	],debug=False)
 
 if __name__ == "__main__":
 	main()
