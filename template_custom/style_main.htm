@@ -1,0 +1,41 @@
+/*-------------------------------------
+ユーザ変更可能要素
+*/
+
+{% if user_css %}	
+	{{user_css.css_code|safe}}
+{% else %}
+	{% include 'style_user.htm' %}
+{% endif %}
+
+/*-------------------------------------
+システム要素
+*/
+
+/* 画像リンクボーダー */
+img {
+	max-width:100%;
+	border: none;
+}
+
+/* floatクリア */
+.clr {
+	clear: both;
+	height: 0px;
+	font-size: 0px;
+	line-height: 0em;
+}
+
+/* 画像からのリンク */
+a.decnone_top_logo,a.imagelink {
+	border-bottom: 0px;
+}
+
+/*-------------------------------------
+iPhoneの場合
+*/
+
+{% if is_iphone %}
+	{% include 'style_iphone.htm' %}
+{% endif %}
+

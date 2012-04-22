@@ -1,0 +1,244 @@
+/* リンク */
+a {
+	color:{% if bbs.font_color %}#{{ bbs.font_color }};{% else %}#333333;{% endif %}
+	text-decoration: none;
+}
+
+a.declink {
+	border-bottom: 1px dashed;
+}
+
+a:hover,a.declink:hover {
+	border-bottom: 1px solid;
+}
+
+/* 区切り */
+hr {
+	border:0;
+	border-top:1px dashed #b5ae9d;
+}
+
+/* body要素 */
+body {
+	margin:0;
+	padding:0;
+	background-color:{% if bbs.bg_color %} #{{ bbs.bg_color }}; {% else %} #ffffff; {% endif %}
+{% if bbs.background_image %}
+	background-image:url("{{bbs.background_image}}");
+{% endif %}
+{% if bbs.font_size %}
+	font-size:{{bbs.font_size}}pt;
+{%else%}
+	line-height:20px;
+	font-size:10pt;
+{%endif%}
+	font-family:Georgia, Geneva;
+}
+
+/* メインコンテナ */
+#container {
+{%if bbs.content_width %}
+	width:{{bbs.content_width}}px;
+{%else%}
+	width:800px;
+{%endif%}
+	margin:0px auto 0px auto;
+}
+
+/* 掲示板タイトルとロゴ */
+#header {
+	color:{% if bbs.font_color %}#{{ bbs.font_color }};{% else %}#333333;{% endif %}
+{% if not bbs.bottom_image %}
+	margin-top:10px;
+	padding-top:0px;
+	padding-left:10px;
+{% endif %}
+}
+
+/* コンテンツヘッダ(イラストを描く〜ログイン） */
+#contents-header {
+	padding:10px;
+	margin-top:10px;
+	background-color:{% if bbs.menu_bg_color %}#{{ bbs.menu_bg_color }};{% else %}#ffffff;{% endif %}
+	color:{% if bbs.menu_font_color %}#{{ bbs.menu_font_color }};{% else %}#333333;{% endif %} 
+}
+
+#contents-header-size {
+	float: left;
+	padding-right: 20px;
+}
+
+#contents-header-edit {
+	float: left;
+}
+
+#contents-header-edit a{
+	color:{% if bbs.menu_font_color %}#{{ bbs.menu_font_color }};{% else %}#333333;{% endif %} 
+}
+
+#contents-header-login {
+	float: right;
+	width: 80px;
+}
+
+/* コンテンツ（イラスト一覧） */
+#contents {
+	padding-top:10px;
+}
+
+/* コンテンツフッタ（コピーライト） */
+#contents-footer {
+	text-align:center;
+	color:{% if bbs.font_color %}#{{ bbs.font_color }};{% else %}#333333;{% endif %}
+}
+
+/* イラスト一覧 */
+#main_2col {
+	float:left;
+{%if bbs.content_width %}
+	width:{{bbs.content_width|add:"-240"}}px;
+{%else%}
+	width:560px;
+{%endif%}
+	margin-right: 10px;
+}
+
+#main_1col {
+}
+
+/* サイドバー */
+#side {
+	float:left;
+	width:210px;
+	margin-top:0px;
+	padding:10px;
+	background-color:{% if bbs.side_color %}#{{ bbs.side_color }};{% else %}#ffffff;{% endif %}
+}
+
+#side,#side a {
+	color:{% if bbs.side_font_color %}#{{ bbs.side_font_color }};{% else %}#333333;{% endif %} 
+}
+
+#side h4 {
+	font-size: 100%;
+	font-style: normal;
+	font-weight: normal;
+	margin-top:0px;
+	padding-bottom:4px;
+	border-bottom:1px dashed #b5ae9d;
+}
+
+#free,#category,#affiliate,#comment,#counter,#menu {
+	margin-bottom:30px;
+}
+
+/* エントリー（イラスト） */
+.entry {
+	padding:10px;
+	margin-bottom:20px;
+}
+
+/* エントリーヘッダ・フッタ（ソートとページ番号） */
+#entry-head,.entry,#entry-bottom {
+	background-color:{% if bbs.content_bg_color %}#{{ bbs.content_bg_color }};{% else %}#ffffff;{% endif %}
+}
+
+#entry-head,.entry,#entry-bottom,.entry a {
+	color:{% if bbs.content_font_color %}#{{ bbs.content_font_color }};{% else %}#333333;{% endif %} 
+}
+
+#entry-head {
+	padding:10px;
+	margin-bottom:10px;
+}
+
+#entry-bottom {
+	padding:10px;
+	margin-bottom: 0px;
+}
+
+/* RSSアイコン */
+#rss {
+	float: right;
+}
+
+/* イラスト情報要素 */
+.entry-title {
+	padding: 5px;
+	border-bottom: dotted 1px #999999;
+}
+
+.entry-title h3 {
+	float: left;
+	font-size: 100%;
+	font-style: normal;
+	font-weight: normal;
+	padding: 0;
+	margin: 0;
+}
+
+.entry-title .clap {
+	float: right;
+	width: 80px;
+	font-weight: bold;
+}
+
+.entry-illust {
+	padding: 20px 0;
+	text-align: center;
+}
+
+.entry-name {
+}
+
+.entry-comment {
+}
+
+.entry-button {
+}
+
+/* ページ番号 */
+#page-head {
+	float: left;
+}
+
+#page-bottom {
+	float: left;
+}
+
+.page-current {
+	display: inline-block;
+	color: #ffffff;
+	background-color: {% if bbs.button_active_color %}#{{bbs.button_active_color}};{% else %}#333333;{% endif %}
+	width:20px;
+	text-align:center;
+}
+
+#page-head a, #page-bottom a {
+	display: inline-block;
+	color: #ffffff;
+	background-color: {% if bbs.button_color %}#{{bbs.button_color}};{% else %}#999999;{% endif %}
+	width:20px;
+	text-align:center;
+}
+
+#page-head a:hover, #page-bottom a:hover {
+	background-color: {% if bbs.button_active_color %}#{{bbs.button_active_color}};{% else %}#333333;{% endif %}
+	text-decoration: none;
+	border-bottom: 0px dashed;
+}
+
+/* ボタン */
+.menubutton,.menubutton_active{
+	color: #fff;
+	border:0px;
+	text-align: center;
+}
+
+.menubutton{
+	background-color: {% if bbs.button_color %}#{{bbs.button_color}};{% else %}#999999;{% endif %}
+}
+
+.menubutton_active{
+	background-color: {% if bbs.button_active_color %}#{{bbs.button_active_color}};{% else %}#333333;{% endif %}
+}
