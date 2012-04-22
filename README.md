@@ -24,7 +24,7 @@ Django1.2
 
 html　テンプレートエンジンに入力するhtmlファイル
 
-js　JavaScript(staticdir)
+js　クライアントサイドのJavaScript(staticdir)
 
 myapp　サーバサイドのPythonコード
 
