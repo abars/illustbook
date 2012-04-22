@@ -19,6 +19,21 @@ Python2.7(concurrent)
 
 Django1.2
 
+フォルダ構成
+-------
+
+html　テンプレートエンジンに入力するhtmlファイル
+
+js　JavaScript(staticdir)
+
+myapp　サーバサイドのPythonコード
+
+static_files　各種静的ファイル(staticdir)
+
+template　掲示板の標準デザインテンプレート(staticdir)
+
+templatetags　djangoのカスタムフィルタ
+
 動作方法
 -------
 
