@@ -52,7 +52,7 @@
 {% include "web/floating_menu.html" %}
 
 <div id="container">
-	{% if not is_iphone %}
+	{% if not is_iphone and header_enable %}
 	<div id="header">
 		<h1><a href="{{host}}"><img src="static_files_stable/general/images/top/head3.jpg" alt="あなたのイラストから始まるコミュニティ　イラストブック" width="950" height="195" /></a></h1>
 	</div>

@@ -48,7 +48,6 @@ from myapp.AddEntry import AddEntry
 from myapp.Admin import Admin
 from myapp.AddNewBbs import AddNewBbs
 from myapp.PageGenerate import PageGenerate
-from myapp.SearchUser import SearchUser
 from myapp.Applause import Applause
 from myapp.RssFeed import RssFeed
 from myapp.ShowThread import ShowThread
@@ -158,7 +157,7 @@ class MainPage(webapp.RequestHandler):
 
 class Portal(webapp.RequestHandler):
 	@staticmethod
-	def get(req,mode):
+	def get(req,mode,header_enable):
 		is_iphone=CssDesign.is_iphone(req)
 
 		template_values = {
@@ -166,7 +165,8 @@ class Portal(webapp.RequestHandler):
 			'is_iphone': is_iphone,
 			'user': users.get_current_user(),
 			'redirect_url': req.request.path,
-			'mode': mode
+			'mode': mode,
+			'header_enable': header_enable
 		}
 
 		path = os.path.join(os.path.dirname(__file__), 'html/portal.html')
@@ -174,31 +174,31 @@ class Portal(webapp.RequestHandler):
 
 class Questionnaire(webapp.RequestHandler):
 	def get(self):
-		Portal.get(self,"questionnaire")
+		Portal.get(self,"questionnaire",True)
 
 class Profile(webapp.RequestHandler):
 	def get(self):
-		Portal.get(self,"profile")
+		Portal.get(self,"profile",True)
 
 class Support(webapp.RequestHandler):
 	def get(self):
-		Portal.get(self,"support")
+		Portal.get(self,"support",True)
 
 class Terms(webapp.RequestHandler):
 	def get(self):
-		Portal.get(self,"terms")
+		Portal.get(self,"terms",False)
 
 class Community(webapp.RequestHandler):
 	def get(self):
-		Portal.get(self,"community")
+		Portal.get(self,"community",True)
 
 class GuidePage(webapp.RequestHandler):
 	def get(self):
-		Portal.get(self,"guide")
+		Portal.get(self,"guide",True)
 
 class LinkPage(webapp.RequestHandler):
 	def get(self):
-		Portal.get(self,"link")
+		Portal.get(self,"link",False)
 
 #-----------------------------------------------------------------
 #削除系
@@ -415,7 +415,6 @@ application = webapp.WSGIApplication(
 	('/profile',Profile),
 	('/support',Support),
 	('/terms',Terms),
-	('/search',SearchUser),
 	('/search_tag',SearchTag),
 	('/move_account',MoveAccount),
 	('/violation',ViolationTerms),

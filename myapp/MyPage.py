@@ -44,7 +44,6 @@ from myapp.UpdateBbs import UpdateBbs
 from myapp.AddEntry import AddEntry
 from myapp.Admin import Admin
 from myapp.PageGenerate import PageGenerate
-from myapp.SearchUser import SearchUser
 from myapp.Applause import Applause
 from myapp.RssFeed import RssFeed
 from myapp.ShowThread import ShowThread
