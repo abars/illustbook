@@ -1,0 +1,229 @@
+@charset "utf-8";
+
+/*-- reset  --*/
+
+html, body, ul, ol, li, dl, dt, dd, form, fieldset, legend {
+	margin: 0;
+	padding: 0;
+}
+
+html {   
+	overflow-y: scroll;   
+}   
+
+body {
+	color: #333333;
+	font-family: "ＭＳ Ｐゴシック", "Arial", "Osaka", "ヒラギノ角ゴPro W3";
+	font-size: 62.5%;
+	background-color: #C5DE94;
+	text-align: center;
+	background-image: url(../images/top/bg.jpg);
+	background-repeat: repeat-y;
+	background-position: top center;
+}
+
+h1, h2, h3, h4, h5, h6, p, li, dt, dd {
+	font-style: normal;
+	font-weight: normal;
+	letter-spacing: 0.1em;
+	font-size: 1.2em;
+	line-height: 1.2em;
+	padding: 0;
+	margin: 0;
+}
+
+h1, h2, h3 {
+    color: #E47911;
+}
+
+fieldset, img {
+	border: 0;
+}
+
+li {
+	list-style: none;
+	letter-spacing: 0.1em;
+}
+
+sup {
+	vertical-align: text-top;
+}
+
+sub {
+	vertical-align: text-bottom;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+caption, th, td {
+	text-align: left;
+	vertical-align: top;
+	font-weight: normal;
+	font-style: normal;
+	letter-spacing: 0.1em;
+	font-size: 1.2em;
+}
+
+input, textarea, select { 
+	font-size: 1.2em;
+}
+
+strong {
+	font-weight: bold;
+}
+
+small {
+	font-size: 12px;
+}
+
+a {
+	color: #333333;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+.clr {
+	clear: both;
+	height: 0px;
+	font-size: 0px;
+	line-height: 0em;
+}
+
+
+.center {
+	text-align: center;
+}
+
+.right {
+	text-align: right;
+}
+
+.nowrap {
+	white-space: nowrap;
+}
+
+img.swap {
+}
+
+img.vbtm {
+	vertical-align: bottom;
+}
+
+
+/*-- global  --*/
+
+#container {
+	width: 950px;
+/*	background-image: url(../images/top/bg.gif);
+	background-repeat: repeat-y; */
+	margin: 0 auto;
+	padding: 0 0 20px 0;
+	text-align: left;
+}
+
+#container p {
+	padding-bottom: 10px;
+}
+
+/*-- header  --*/
+
+#header {
+	padding: 0 0 0 0;
+}
+
+#header img {
+	vertical-align: middle;
+}
+
+/*-- global menu  --*/
+
+#g-menu {
+	text-align: center;
+	padding-bottom: 30px;
+}
+
+#g-menu img {
+	vertical-align: top;
+}
+
+#g-menu ul {
+}
+
+#g-menu li{
+	list-style: none;
+	float: left;
+}
+
+
+/*-- contents  --*/
+
+#contents {
+	padding: 0 30px;
+	margin-bottom: 30px;
+	text-align: left;
+}
+
+#contents h1 {
+	padding-bottom: 20px;
+}
+
+#pan {
+	padding: 10px 0 5px 2px;
+	background-image: url(../images/top/btm_line.jpg);
+	background-repeat: no-repeat;
+	background-position: bottom left;
+}
+
+
+/*-- footer  --*/
+
+#footer {
+	padding: 0 20px 0 60px;
+	text-align: right;
+}
+
+#footer ul {
+	margin-bottom: 10px;
+}
+
+#footer li {
+	display: inline;
+	margin-left: 20px;
+}
+
+/*-- button  --*/
+
+hr {border:0; border-top:1px solid #cccccc;}
+.update { padding:10px; margin-bottom:20px;	font-size: 1.3em;}
+a.declink {
+  color: #004B91;
+  border-bottom: 1px solid;
+}
+
+.pagebutton{
+color: #fff;
+border-top:0px double #9cf;
+border-left:0px double #9cf;
+border-right:0px double #4080BF;
+border-bottom:0px double #4080BF;
+background-color: #a4cce5;
+text-align: center;
+font-size: 62.5%;
+}
+
+.pagebutton_active{
+color: #fff;
+border-top:0px double #9cf;
+border-left:0px double #9cf;
+border-right:0px double #4080BF;
+border-bottom:0px double #4080BF;
+background-color: #2299cc;
+text-align: center;
+font-size: 62.5%;
+}

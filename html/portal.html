@@ -53,16 +53,16 @@
 <div id="container">
 	{% if not is_iphone and header_enable %}
 	<div id="header">
-		<h1><a href="{{host}}"><img src="static_files_stable/general/images/top/head3.jpg" alt="あなたのイラストから始まるコミュニティ　イラストブック" width="950" height="195" /></a></h1>
+		<h1><a href="{{host}}"><img src="static_files/general/images/top/head3.jpg" alt="あなたのイラストから始まるコミュニティ　イラストブック" width="950" height="195" /></a></h1>
 	</div>
 	<div id="g-menu">
 		<ul>
-			<li><a href="{{host}}"><img src="static_files_stable/general/images/top/m_home.gif" alt="ホーム" width="132" height="45" class="swap" /></a></li>
-			<li><a href="{{host}}guide"><img src="static_files_stable/general/images/top/m_howto{% ifequal mode "guide" %}_on{% endifequal %}.gif" alt="イラストブックの使い方" width="195" height="45" class="swap" /></a></li>
-			<li><a href="{{host}}community"><img src="static_files_stable/general/images/top/m_community{% ifequal mode "community" %}_on{% endifequal %}.gif" alt="コミュニティ" width="152" height="45" class="swap" /></a></li>
-			<li><a href="{{host}}questionnaire"><img src="static_files_stable/general/images/top/m_enq{% ifequal mode "questionnaire" %}_on{% endifequal %}.gif" alt="アンケート" width="124" height="45" class="swap" /></a></li>
-			<li><a href="{{host}}support"><img src="static_files_stable/general/images/top/m_support{% ifequal mode "support" %}_on{% endifequal %}.gif" alt="よくある質問・サポート" width="209" height="45" class="swap" /></a></li>
-			<li><a href="{{host}}profile"><img src="static_files_stable/general/images/top/m_profile{% ifequal mode "profile" %}_on{% endifequal %}.gif" alt="会社概要" width="138" height="45" class="swap" /></a></li>
+			<li><a href="{{host}}"><img src="static_files/general/images/top/m_home.gif" alt="ホーム" width="132" height="45" class="swap" /></a></li>
+			<li><a href="{{host}}guide"><img src="static_files/general/images/top/m_howto{% ifequal mode "guide" %}_on{% endifequal %}.gif" alt="イラストブックの使い方" width="195" height="45" class="swap" /></a></li>
+			<li><a href="{{host}}community"><img src="static_files/general/images/top/m_community{% ifequal mode "community" %}_on{% endifequal %}.gif" alt="コミュニティ" width="152" height="45" class="swap" /></a></li>
+			<li><a href="{{host}}questionnaire"><img src="static_files/general/images/top/m_enq{% ifequal mode "questionnaire" %}_on{% endifequal %}.gif" alt="アンケート" width="124" height="45" class="swap" /></a></li>
+			<li><a href="{{host}}support"><img src="static_files/general/images/top/m_support{% ifequal mode "support" %}_on{% endifequal %}.gif" alt="よくある質問・サポート" width="209" height="45" class="swap" /></a></li>
+			<li><a href="{{host}}profile"><img src="static_files/general/images/top/m_profile{% ifequal mode "profile" %}_on{% endifequal %}.gif" alt="会社概要" width="138" height="45" class="swap" /></a></li>
 		</ul>
 		<div class="clr"></div>
 	</div>
@@ -71,17 +71,17 @@
 	{% endif %}
 	<div id="contents">
 		{% ifequal mode "questionnaire" %}
-			<h1><img src="static_files_stable/general/images/enq/title_enq.gif" alt="アンケート" width="880" height="46" /></h1>
+			<h1><img src="static_files/general/images/enq/title_enq.gif" alt="アンケート" width="880" height="46" /></h1>
 			<iframe src="https://spreadsheets.google.com/embeddedform?formkey=dGxzRGw0TnRYQmhPVC1JOTJfS1NhcEE6MQ" width="100%" height="1503" frameborder="0" marginheight="0" marginwidth="0">読み込み中...</iframe>
 		{% endifequal %}
 
 		{% ifequal mode "profile" %}
-			<h1><img src="static_files_stable/general/images/profile/title_profile.gif" alt="会社概要" width="880" height="40" /></h1>
+			<h1><img src="static_files/general/images/profile/title_profile.gif" alt="会社概要" width="880" height="40" /></h1>
 			{% include "web/profile.html" %}
 		{% endifequal %}
 
 		{% ifequal mode "community" %}
-			<h1><img src="static_files_stable/general/images/community/title_community.gif" alt="コミュニティ" width="880" height="40" /></h1>
+			<h1><img src="static_files/general/images/community/title_community.gif" alt="コミュニティ" width="880" height="40" /></h1>
 			{% include "web/community.html" %}
 		{% endifequal %}
 
@@ -102,18 +102,18 @@
 				{% include "web/tab.css" %}
 				<p class="bar">リンク</p>
 			{% else %}
-				<h1><img src="static_files_stable/general/images/top/title_link.gif" alt="リンク" width="880" height="40" /></h1>
+				<h1><img src="static_files/general/images/top/title_link.gif" alt="リンク" width="880" height="40" /></h1>
 			{% endif %}
 			<p>{% include "web/link.html" %}</p>
 		{% endifequal %}
 
 		{% ifequal mode "guide" %}
-			<h1><img src="static_files_stable/general/images/howto/title_howto.gif" alt="イラストブックの使い方" width="880" height="40" /></h1>
+			<h1><img src="static_files/general/images/howto/title_howto.gif" alt="イラストブックの使い方" width="880" height="40" /></h1>
 			{%include "web/guide.html"%}
 		{% endifequal %}
 
 		{% ifequal mode "support" %}
-			<h1><img src="static_files_stable/general/images/support/title_support.gif" alt="よくある質問・サポート" width="880" height="41" /></h1>
+			<h1><img src="static_files/general/images/support/title_support.gif" alt="よくある質問・サポート" width="880" height="41" /></h1>
 			{%include "web/support.html" %}
 		{% endifequal %}
 
@@ -122,14 +122,14 @@
 				{% include "web/tab.css" %}
 				<p class="bar">ご利用規約</p>
 			{% else %}
-				<h1><img src="static_files_stable/general/images/top/title_guide.gif" alt="ご利用規約" width="880" height="40" /></h1>
+				<h1><img src="static_files/general/images/top/title_guide.gif" alt="ご利用規約" width="880" height="40" /></h1>
 			{% endif %}
 			{% include "web/terms.html" %}
 			<p>&nbsp;</p>
 			{% if is_iphone %}
 				<p class="bar">プライバシーポリシー</p>
 			{% else %}
-				<h1><img src="static_files_stable/general/images/top/title_privacy.gif" alt="プライバシーポリシー" width="880" height="36" /></h1>	
+				<h1><img src="static_files/general/images/top/title_privacy.gif" alt="プライバシーポリシー" width="880" height="36" /></h1>	
 			{% endif %}
 			{% include "web/privacy.html" %}
 		{% endifequal %}

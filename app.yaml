@@ -24,11 +24,7 @@ handlers:
 
 - url: /static_files
   static_dir: static_files
-  expiration: "10m"
-
-- url: /static_files_stable
-  static_dir: static_files_stable
-  expiration: "7d"
+  expiration: "1d"
 
 - url: /template
   static_dir: template

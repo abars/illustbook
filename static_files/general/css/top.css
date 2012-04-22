@@ -1,0 +1,195 @@
+@charset "utf-8";
+
+/* Toppage */
+
+#main {
+	float: left;
+	width: 635px;
+}
+
+#side {
+	float: right;
+	width: 240px;
+}
+
+h3 {
+}
+
+#toha {
+	background-image: url(../images/top/top_toha_bg.gif);
+	background-repeat: no-repeat;
+	padding: 0 15px 0 20px;
+	height: 120px;
+	margin-bottom: 20px;
+}
+
+#toha h2 {
+	float: left;
+	width: 52px;
+	padding: 15px 40px 20px 0;
+}
+
+#toha p {
+	float: left;
+	width: 505px;
+	padding: 20px 0;
+	font-size: 1.3em;
+	line-height: 1.4em;
+}
+
+#howto {
+	background-image: url(../images/top/top_howto_bg.gif);
+	background-repeat: no-repeat;
+	height: 300px;
+	padding: 0 5px 20px 0;
+}
+
+#howto-l {
+	float: left;
+	width: 405px;
+}
+
+#howto-r {
+	float: right;
+	width: 210px;
+	padding-top: 25px;
+}
+
+#howto-l dl {
+	position: relative; 
+	width: 390px;
+	left: 15px;
+}
+
+#howto-l dt {
+	position: absolute; 
+	left: 0;
+	width: 2.5em; 
+	padding-top: 2px;
+}
+
+#howto-l dd {
+	padding-left: 2.5em; 
+	padding-bottom: 10px;
+	padding-top: 5px;
+}
+
+#howto-r p {
+	line-height: 1.3em;
+}
+
+#howto-entry {
+	background-image: url(../images/top/top_entry_bg.jpg);
+	background-repeat: no-repeat;
+	height: 180px;
+}
+
+#howto-entry img {
+	margin: 20px 5px 0 7px;
+}
+
+#howto-entry p.txt {
+	padding: 0 30px 0 20px;
+}
+
+#howto-entry strong {
+	color: #FF6699;
+}
+
+#clap {
+	background-image: url(../images/top/top_clap_bg.jpg);
+	background-repeat: repeat-x;
+	height: 184px;
+}
+
+#clap-area {
+	padding: 5px 0 0 0;
+}
+
+#clap-area p {
+	letter-spacing: 0;
+}
+
+#clap-prev {
+	float: left;
+	width: 25px;
+	padding-top: 50px;
+	margin-right:5px;
+}
+
+#clap-next {
+	float: right;
+	width: 25px;
+	padding-top: 50px;
+}
+
+.clap-thum {
+	float: left;
+	width: 70px;
+	margin: 0 12px;
+	text-align: center;
+	color: #dddddd;
+}
+
+.clap-thum img {
+	margin-bottom: 5px;
+}
+
+.clap-thum a {
+	color: #dddddd;
+}
+
+#new {
+	background-image: url(../images/top/top_new_bg.gif);
+	background-repeat: no-repeat;
+	height: 352px;
+	margin-bottom: 20px;
+}
+
+#anime {
+	background-image: url(../images/top/top_anime_bg.gif);
+	background-repeat: no-repeat;
+	height: 275px;
+}
+
+#new dl, #anime dl {
+	position: relative;
+	left: 8px;
+	width: 220px;
+	margin-bottom: 3px;
+}
+
+#new dt, #anime dt {
+	position: absolute; 
+	left: 0;
+	width: 60px;
+	height: 60px;
+	padding-top: 6px;
+	padding-bottom: 4px;
+}
+
+#new dd, #anime dd {
+	height: 60px;
+	padding-left: 65px; 
+	padding-top: 8px;
+	padding-bottom: 4px;
+	border-bottom: dotted 1px #cccccc;
+	letter-spacing: 0;
+}
+
+#new dd {
+	border-bottom: dotted 1px #669999;
+}
+
+#anime dd {
+	border-bottom: dotted 1px #C3B263;
+}
+
+.page {
+	text-align: right;
+	padding-right: 10px;
+}
+
+.page a {
+	color: #666666;
+}
