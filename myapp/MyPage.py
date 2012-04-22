@@ -245,7 +245,7 @@ class MyPage(webapp.RequestHandler):
 			'redirect_url': self.request.path
 		}
 		
-		path = os.path.join(os.path.dirname(__file__), '../html/portal/general_mypage.html')
+		path = os.path.join(os.path.dirname(__file__), '../html/mypage.html')
 		self.response.out.write(template.render(path, template_values))
 		
 		if(user and bookmark):

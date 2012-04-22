@@ -67,7 +67,7 @@ class AppPortal(webapp.RequestHandler):
 				self.response.headers['Content-Type'] = str(app.icon_content_type)
 				self.response.out.write(app.icon)
 			else:
-				self.redirect(str("./static_files/app_icon.png"))
+				self.redirect(str("./static_files/app/app_icon.png"))
 			return
 		
 		AppPortal.ret(self,mode,app_key)
@@ -206,9 +206,9 @@ class AppPortal(webapp.RequestHandler):
 			'redirect_url': main.request.path
 		}
 		
-		url='../html/portal/general_app.html'
+		url='../html/app.html'
 		if(is_run or is_plugin):
-			url='../html/portal/app/app_run.html'
+			url='../html/app/app_run.html'
 		
 		path = os.path.join(os.path.dirname(__file__), url)
 		main.response.out.write(template.render(path, template_values))

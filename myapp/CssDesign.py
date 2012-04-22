@@ -23,15 +23,11 @@ webapp.template.register_template_library('templatetags.django_filter')
 class CssDesign (webapp.RequestHandler):
 	@staticmethod
 	def get_bbs_base_name(css):
-		#if(not css or css == 0):
-		#	return "mes_show_bbs.html"
-		return "mes_show_bbs2.html"
+		return "bbs.html"
 
 	@staticmethod
 	def get_thread_base_name(css):
-		#if(not css or css == 0):
-		#	return "mes_show_thread.html"
-		return "mes_show_thread2.html"
+		return "thread.html"
 
 	@staticmethod
 	def get_template_path(host_url,css):

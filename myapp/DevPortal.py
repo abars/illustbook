@@ -38,7 +38,7 @@ class DevPortal(webapp.RequestHandler):
 		template_values = {
 			'bbs': bbs
 		}
-		path = os.path.join(os.path.dirname(__file__), '../html/template_custom/style_user.htm')
+		path = os.path.join(os.path.dirname(__file__), '../template_custom/style_user.htm')
 		return template.render(path, template_values)
 
 	@staticmethod
@@ -313,11 +313,11 @@ class DevPortal(webapp.RequestHandler):
 			'redirect_url': req.request.path
 		}
 		
-		url='../html/portal/general_dev.html'
+		url='../html/dev.html'
 		if(page=="edit"):
-			url='../html/portal/dev/dev_edit.html'
+			url='../html/dev/dev_edit.html'
 		if(page=="info"):
-			url='../html/portal/dev/dev_info.html'
+			url='../html/dev/dev_info.html'
 		
 		path = os.path.join(os.path.dirname(__file__), url)
 		req.response.out.write(template.render(path, template_values))

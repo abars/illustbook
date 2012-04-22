@@ -67,10 +67,11 @@ class ShowBookmark(webapp.RequestHandler):
 			'search_app': app,
 			'is_iphone': is_iphone,
 			'user': users.get_current_user(),
-			'redirect_url': self.request.path
+			'redirect_url': self.request.path,
+			'mode': 'bookmark'
 		}
 		
-		path = os.path.join(os.path.dirname(__file__), '../html/portal/general_show_bookmark.html')
+		path = os.path.join(os.path.dirname(__file__), '../html/portal.html')
 		self.response.out.write(template.render(path, template_values))
 		
 

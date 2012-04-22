@@ -153,98 +153,52 @@ class MainPage(webapp.RequestHandler):
 			'redirect_url': self.request.path
 		}
 
-		path = os.path.join(os.path.dirname(__file__), 'html/portal/general_index.html')
+		path = os.path.join(os.path.dirname(__file__), 'html/index.html')
 		self.response.out.write(template.render(path, template_values))
+
+class Portal(webapp.RequestHandler):
+	@staticmethod
+	def get(req,mode):
+		is_iphone=CssDesign.is_iphone(req)
+
+		template_values = {
+			'host': "./",
+			'is_iphone': is_iphone,
+			'user': users.get_current_user(),
+			'redirect_url': req.request.path,
+			'mode': mode
+		}
+
+		path = os.path.join(os.path.dirname(__file__), 'html/portal.html')
+		req.response.out.write(template.render(path, template_values))
 
 class Questionnaire(webapp.RequestHandler):
 	def get(self):
-		template_values = {
-			'host' : './',
-			'user': users.get_current_user(),
-			'redirect_url': self.request.path
-		}
+		Portal.get(self,"questionnaire")
 
-		path = os.path.join(os.path.dirname(__file__), 'html/portal/general_questionnaire.html')
-		self.response.out.write(template.render(path, template_values))
-		
 class Profile(webapp.RequestHandler):
 	def get(self):
-		template_values = {
-			'host': "./",
-			'user': users.get_current_user(),
-			'redirect_url': self.request.path
-		}
-
-		path = os.path.join(os.path.dirname(__file__), 'html/portal/general_profile.html')
-		self.response.out.write(template.render(path, template_values))
+		Portal.get(self,"profile")
 
 class Support(webapp.RequestHandler):
 	def get(self):
-		template_values = {
-			'host': "./",
-			'user': users.get_current_user(),
-			'redirect_url': self.request.path
-		}
-
-		path = os.path.join(os.path.dirname(__file__), 'html/portal/general_support.html')
-		self.response.out.write(template.render(path, template_values))
+		Portal.get(self,"support")
 
 class Terms(webapp.RequestHandler):
 	def get(self):
-		is_iphone=CssDesign.is_iphone(self)
-
-		template_values = {
-			'host': "./",
-			'is_iphone': is_iphone,
-			'user': users.get_current_user(),
-			'redirect_url': self.request.path
-		}
-
-		path = os.path.join(os.path.dirname(__file__), 'html/portal/general_terms.html')
-		self.response.out.write(template.render(path, template_values))
+		Portal.get(self,"terms")
 
 class Community(webapp.RequestHandler):
 	def get(self):
-		new_mode=False
-		if(self.request.get("new")):
-			new_mode=True
-		template_values = {
-			'host': "./",
-			'new': new_mode,
-			'user': users.get_current_user(),
-			'redirect_url': self.request.path
-		}
-
-		path = os.path.join(os.path.dirname(__file__), 'html/portal/general_community.html')
-		self.response.out.write(template.render(path, template_values))
+		Portal.get(self,"community")
 
 class GuidePage(webapp.RequestHandler):
 	def get(self):
-		template_values = {
-			'host': "./",
-			'user': users.get_current_user(),
-			'redirect_url': self.request.path
-		}
-
-		path = os.path.join(os.path.dirname(__file__), 'html/portal/general_guide.html')
-		self.response.out.write(template.render(path, template_values))
+		Portal.get(self,"guide")
 
 class LinkPage(webapp.RequestHandler):
 	def get(self):
-		news=""
-		
-		is_iphone=CssDesign.is_iphone(self)
-	
-		template_values = {
-			'host': './',
-			'news': news,
-			'is_iphone': is_iphone,
-			'user': users.get_current_user(),
-			'redirect_url': self.request.path
-		}
-
-		path = os.path.join(os.path.dirname(__file__), 'html/portal/general_link.html')
-		self.response.out.write(template.render(path, template_values))
+		Portal.get(self,"link")
 
 #-----------------------------------------------------------------
 #削除系
