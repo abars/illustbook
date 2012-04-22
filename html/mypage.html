@@ -23,29 +23,12 @@
 {% include "web/floating_menu.html" %}
 
 <div id="container">
-	{% if 0 %}
-	<div id="header">
-		<h1><a href="{{host}}"><img src="static_files_stable/general/images/top/head3.jpg" alt="あなたのイラストから始まるコミュニティ　イラストブック" width="950" height="195" /></a></h1>
-	</div>
-	<div id="g-menu">
-		<ul>
-			<li><a href="{{host}}"><img src="static_files_stable/general/images/top/m_home.gif" alt="ホーム" width="132" height="45" class="swap" /></a></li>
-			<li><a href="{{host}}guide"><img src="static_files_stable/general/images/top/m_howto.gif" alt="イラストブックの使い方" width="195" height="45" class="swap" /></a></li>
-			<li><a href="{{host}}community"><img src="static_files_stable/general/images/top/m_community.gif" alt="コミュニティ" width="152" height="45" class="swap" /></a></li>
-			<li><a href="{{host}}questionnaire"><img src="static_files_stable/general/images/top/m_enq.gif" alt="アンケート" width="124" height="45" class="swap" /></a></li>
-			<li><a href="{{host}}support"><img src="static_files_stable/general/images/top/m_support.gif" alt="よくある質問・サポート" width="209" height="45" class="swap" /></a></li>
-			<li><a href="{{host}}profile"><img src="static_files_stable/general/images/top/m_profile.gif" alt="会社概要" width="138" height="45" class="swap" /></a></li>
-		</ul>
-		<div class="clr"></div>
-	</div>
-	{% else %}
-		{% if not is_iphone %}
-			<p>&nbsp</p>
-		{% endif %}
+	{% if not is_iphone %}
+		<p>&nbsp</p>
 	{% endif %}
 	<div id="contents">
 		{% if not user and not is_iphone and not view_mode%}
-		<h1><img src="static_files_stable/general/images/entry/title_entry.gif" alt="登録して使う" width="880" height="40" /></h1>
+		<h1><img src="static_files/general/images/entry/title_entry.gif" alt="登録して使う" width="880" height="40" /></h1>
 		{% endif %}
 		{% if not is_iphone %}
 			{% include "web/border_table.css" %}

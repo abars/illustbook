@@ -32,6 +32,8 @@ static_files　各種静的ファイル(staticdir)
 
 template　掲示板の標準デザインテンプレート(staticdir)
 
+template_custom　掲示板のユーザカスタムデザインテンプレート
+
 templatetags　djangoのカスタムフィルタ
 
 動作方法
