@@ -78,6 +78,6 @@ class MoperDraw(webapp.RequestHandler):
 		'author': author,
 		'title': title
 		}
-		path = os.path.join(os.path.dirname(__file__), '../html/moper.htm')
+		path = os.path.join(os.path.dirname(__file__), '../html/tools/draw_window_moper.htm')
 		self.response.out.write(template.render(path, template_values))
 

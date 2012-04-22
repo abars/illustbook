@@ -1,0 +1,64 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+{% if ipad %}
+	<meta name="viewport" content="width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0">
+{% else %}
+	<meta name="viewport" content="width=480px,user-scalable=no,minimum-scale=0.667,maximum-scale=0.667">
+{% endif %}
+
+<title>{{bbs.bbs_name}}へのイラストの新規投稿</title>
+<script language="JavaScript" src="./js/ilbpaint_ipad.js"></script>
+<script language="JavaScript" src="./js/cookie.js"></script>
+
+</head>
+
+<body bgcolor="#ffffff" onload="loadCookie();ipad_init();" style="overflow:hidden;margin:0px;padding:0px;" onselectstart="return false">
+
+<div style="width:100%;height:100%;">
+	<div id="toolbox" style="position:relative;z-index:10;background-color:#ffffff;">
+		<div id="toolmenu" style="margin-top:10px;padding-bottom:10px;"></div>
+		<div id="pensize_form" style="padding-bottom:10px;display:none;"></div>
+
+		<div id="palette_form" style="padding-bottom:10px;width:100%;display:none;z-index:10;background-color:#ffffff;">
+			<div id="palette" style="margin-left:2px;"></div>
+			<br clear="all">
+			<div id="alpha" style="margin-top:10px;margin-left:2px;"></div>
+			<br clear="all">
+		</div>
+
+		<div id="upload_form" style="padding-bottom:10px;width:100%;display:none;left:0px;z-index:10;background-color:#ffffff;">
+			<table>
+			<tr><td>
+				<table>
+					<tr><td>タイトル</td><td><input id="title"></td></tr>
+					<tr><td>投稿者名（必須）</td><td><input id="name">
+					</td></tr>
+					<tr><td>削除キー</td><td><input id="delete_key"></td></tr>
+				</table>
+					{% if logined %}
+						<input id="link_to_profile" name="link_to_profile" type="checkbox" checked>プロフィールにリンク
+					{% else %}
+						プロフィールにリンクするには<BR>ログインして下さい
+					{% endif %}
+			</td><td>
+				コメント<BR><textarea id="comment" cols=40 rows=6 style="width:100%;"></textarea><BR>
+<input type="button" value="イラストを投稿する" onclick="javascript:g_upload.upload('{{bbs_key}}','{{thread_key}}','{{reply}}');">
+			</td></tr>
+			</table>
+		</div>
+	</div>
+
+	<div id="canvas_event" style="width:100%;height:10%;background-color:#eeeeee">
+		<div id="canvas_div" style="position:relative;width:{{canvas_width}}px;height:{{canvas_height}}px;">
+			<canvas id="canvas_back" width="{{canvas_width}}px" height="{{canvas_height}}px" style="position: absolute; top: 0; left: 0;background-color:#ffffff;z-index: 0;"></canvas>
+			<canvas id="canvas_drawing" width="{{canvas_width}}px" height="{{canvas_height}}px"  style="position: absolute; top: 0; left: 0;z-index: 1;"></canvas>
+		</div>
+	</div>
+</div>
+
+<canvas id="canvas_thumbnail" width="100" height="100" style="background-color:#ffffff;display:none;">
+
+</body>
+</html>

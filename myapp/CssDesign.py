@@ -163,7 +163,7 @@ class CssDesign (webapp.RequestHandler):
 			'is_iphone':is_iphone
 		}
 
-		path = os.path.join(os.path.dirname(__file__), '../html/template_custom/style_main.htm')
+		path = os.path.join(os.path.dirname(__file__), '../template_custom/style_main.htm')
 		res=template.render(path, template_values)
 		
 		self.response.headers['Content-Type']= 'text/css'

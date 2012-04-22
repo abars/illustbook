@@ -32,6 +32,6 @@ class LocalToolDraw(webapp.RequestHandler):
 	  		'canvas_height': self.request.get("canvas_height"),
 	  		'celsys': celsys
 		}
-		path = os.path.join(os.path.dirname(__file__), '../html/localtool_draw.htm')
+		path = os.path.join(os.path.dirname(__file__), '../html/tools/localtool_draw.htm')
 		render=template.render(path, template_values)
 		self.response.out.write(render)		

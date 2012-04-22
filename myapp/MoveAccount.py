@@ -28,9 +28,9 @@ class MoveAccount(webapp.RequestHandler):
 		user = users.get_current_user()
 		bbs=db.get(self.request.get("bbs_key"))
 
-		url="http://www.illustbook.net/move_account?bbs_key="+self.request.get("bbs_key")
-		login = users.create_login_url(url)
-		logout = users.create_logout_url(url)
+		url=self.request.path+"?bbs_key="+self.request.get("bbs_key")
+		#login = users.create_login_url(url)
+		#logout = users.create_logout_url(url)
 		
 		moveok=0
 		if(user and bbs.move_account):
@@ -50,9 +50,10 @@ class MoveAccount(webapp.RequestHandler):
 			'host': "./",
             'user': user,
             'bbs': bbs,
-            'login': login,
-            'logout': logout,
+#            'login': login,
+#            'logout': logout,
             'moveok': moveok,
+            'redirect_url': url,
             'exec_move': exec_move
 		}
 

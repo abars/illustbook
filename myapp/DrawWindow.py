@@ -75,6 +75,9 @@ class DrawWindow(webapp.RequestHandler):
 			summary=""
 			author=""
 
+		#掲示板のデザインを取得
+		design=CssDesign.get_design_object(self,bbs,host_url,1)
+		
 		template_values = {
 		'host': host_url,
 		'bbs': bbs,
@@ -92,13 +95,17 @@ class DrawWindow(webapp.RequestHandler):
 		'author': author,
 		'title': title,
 		'ipad': ipad,
-		'logined': logined
+		'logined': logined,
+		'template_path':design["template_path"],
+		'css_name':design["css_name"],
+		'is_iphone':design["is_iphone"],
+		'template_base_color':design["template_base_color"],
 		}
 		
 		if(ipad or iphone):
-			path = os.path.join(os.path.dirname(__file__), '../html/draw_window_ipad.htm')
+			path = os.path.join(os.path.dirname(__file__), '../html/tools/draw_window_ipad.htm')
 		else:
-			path = os.path.join(os.path.dirname(__file__), '../html/draw_window_flash.htm')
+			path = os.path.join(os.path.dirname(__file__), '../html/tools/draw_window_flash.htm')
 		
 		self.response.out.write(template.render(path, template_values))
 

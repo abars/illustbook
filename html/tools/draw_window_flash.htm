@@ -1,0 +1,175 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+{% if template_path %}
+	<link rel="stylesheet" type="text/css" media="screen,print" href="{{css_name}}" />
+	<link rel="stylesheet" type="text/css" media="screen,print" href="{{host}}template/common/style_common2.css" />
+{% else %}
+	{% if css_key %}
+		<link rel="stylesheet" type="text/css" href="{{host}}css/{{css_key}}.key" media="screen,print" />
+	{% else %}
+		<link rel="stylesheet" type="text/css" href="{{host}}css/{{bbs.key}}.css" media="screen,print" />
+	{% endif %}
+{% endif %}
+<title>{{bbs.bbs_name}}へのイラストの新規投稿</title>
+
+<style type="text/css">
+
+html,body{
+	height: 100%;
+	overflow: hidden;
+}
+
+* {
+	margin:0px;
+	padding:0px;
+}
+
+object, embed {	
+	vertical-align: top;
+}
+
+</style>
+
+<script language="JavaScript" src="./js/wacom_tablet_plugin.js"></script>
+<script language="JavaScript" src="./js/cookie.js"></script>
+<script language="JavaScript" src="./js/upload_ilb.js"></script>
+<script language="JavaScript" src="./js/unloadlock.js"></script>
+<script language="JavaScript" src="./js/rediter.js"></script>
+<script><!--
+	function init(){
+		//リッチエディタを準備
+		rediter_init('rediter','{{summary|safe}}','10pt',false);
+		if(document.getElementById("title")){
+			document.getElementById("title").value='{{title|safe}}';
+		}
+		
+		//タブレットを準備
+		initWacom();
+		
+		//クッキー読込
+		loadCookie();
+
+		//上書き保存時のみ上書きモードを表示
+		{% ifequal canvas_url ""%}
+		{% else %}
+			{% ifequal reply "0"%}
+				document.getElementById("overwrite").style.visibility="visible";
+			{% endifequal %}
+		{% endifequal %}
+		
+		//絵でコメント時はpngにできない
+		{% ifequal reply "1" %}
+			document.getElementById("thread_option").style.display="none";
+		{% endifequal %}
+	}
+	
+	//Size指定による
+	function get_flex_object(){
+		if (navigator.appName.indexOf("Microsoft") != -1 && !document["fromJavaScript"]) {
+			flex_object=window["fromJavaScript"];
+		} else {
+			flex_object=document["fromJavaScript"];
+		}
+		return flex_object;
+	}
+
+	function open_submit_window(){
+		get_flex_object().width="1px";
+		get_flex_object().height="1px";
+		document.getElementById("loading_window").style.display="none";
+		document.getElementById("submit_window").style.display="block";
+	}
+
+	function close_submit_window(){
+		get_flex_object().width="100%";
+		get_flex_object().height="100%";
+		document.getElementById("submit_window").style.display="none";
+	}
+--></script>
+</head>
+
+<body bgcolor=#ffffff onload="init();">
+
+<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=10,0,0,0" id="fromJavaScript" width=100% height=100%>
+<param name="allowScriptAccess" value="always" />
+<param name="movie" value="flash/IllustBook.swf" />
+<param name="quality" value="high" />
+<param name="allowFullScreen" value="true" />
+<param  name="wmode"  value="direct" />
+<param name="FlashVars" value="celsys={{celsys}}&draw_time={{draw_time}}&local_mode=0&width={{canvas_width}}&height={{canvas_height}}&bbs_key={{bbs_key}}&thread_key={{thread_key}}&canvas_url={{canvas_url}}&host={{host}}&reply={{reply}}{% if bbs.tool_bg_color %}&bg_color={{bbs.tool_bg_color}}{%endif%}&delete_when_upload_success={{bbs.delete_when_upload_success}}" />
+<embed src="flash/IllustBook.swf" allowFullScreen="true"  FlashVars="celsys={{celsys}}&draw_time={{draw_time}}&local_mode=0&width={{canvas_width}}&height={{canvas_height}}&bbs_key={{bbs_key}}&thread_key={{thread_key}}&canvas_url={{canvas_url}}&host={{host}}&reply={{reply}}{% if bbs.tool_bg_color %}&bg_color={{bbs.tool_bg_color}}{%endif%}&delete_when_upload_success={{bbs.delete_when_upload_success}}" quality="high" width=100% height=100% bgcolor="#ffffff" name="fromJavaScript" allowScriptAccess="always" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" wmode="direct" />
+</object>
+
+<div id="loading_window" style="position:absolute;left:8px;top:8px;z-index:-1;">
+	<p>イラブペイントを読込中</p>
+</div>
+
+<div id="submit_window" style="position:absolute;left:0px;top:0px;margin:0px;padding:0px;z-index:1;display:none;width:100%;height:100%;overflow: auto;">
+	<div id="container">
+		<div id="contents">
+			<div id="main">
+				<div class="entry">
+					<input class="pagebutton" type="button" onclick="close_submit_window();" value="イラスト作成画面に戻る" onmouseover="this.className='pagebutton_active'" onmouseout="this.className='pagebutton'"><BR><BR>
+
+					<H4>イラストを投稿する</H4><BR>
+					<p>イラストを掲示板に投稿します。以下のフォームにイラストの情報を入力して、投稿ボタンを押して下さい。投稿の際、非表示レイヤーは非表示の状態で、反転は反転された状態で投稿されます。また、投稿後はレイヤー情報が失われます。再編集をする必要がある場合は、イラスト作成画面のファイルメニューから、ファイルに保存して下さい。イラスト作成画面のツールの使い方は<A HREF="{{host}}guide" TARGET="_BLANK" class="declink">”イラストブックの使い方”</A>のページを参照して下さい。</p>
+					<p>&nbsp</p>
+					<p>&nbsp</p>
+
+					<H4>イラストの情報</H4><BR>
+					<table class="table_color" style="width:100%;">
+					{% ifequal reply "1" %}
+					{% else %}
+					<tr><td>タイトル</td><td><input id="title" style="width:100%;"></td></tr>
+					{% endifequal %}
+					<tr><td>投稿者名（必須）</td><td><input id="name" style="width:100%;"></td></tr>
+					<tr><td>ホームページアドレス</td><td><input id="homepage_addr" value="http://" style="width:100%;"></td></tr>
+					<tr><td>削除キー</td><td><input id="delete_key" style="width:100%;"></td></tr>
+					<tr><td>カテゴリ</td><td>
+					<select id="category" style="margin-bottom:0px;">
+					<option value="" selected="selected">設定しない</option>{% for category in category_list %}{% ifequal category "" %}{% else %}<option value="{{category}}">{{category}}</option>{% endifequal %}{% endfor %}
+					</select>
+					</td></tr>
+					<tr><td>オプション</td><td>
+						<div id="thread_option" style="float:left;">
+							<input type="checkbox" id="no_illust">文字だけで投稿する　
+							<input type="checkbox" id="alpha_png_mode" onClick="SetToAlphaPngMode();">アルファ付きPNGで投稿する　
+						</div>
+						<div>
+						{% if logined %}
+							<input  type="checkbox" id="link_to_profile"checked>プロフィールにリンク
+						{% else %}
+							プロフィールにリンクするにはログインして下さい
+						{% endif %}
+						</div>
+					</td></tr>
+					</table>
+
+					<p>&nbsp</p>
+					<p>&nbsp</p>
+
+					<H4>イラストのコメント</H4><BR>
+
+					<div id="rediter_comment" style="float:left"></div>
+					<div id="rediter_fontsize" style="float:left"></div>  
+					<div id="rediter_palette" style="float:left"></div>
+					<div id="rediter_button" style="float:left"></div><BR clear="both">
+					<iframe id="rediter_iframe" width=100% height=300px></iframe><BR>
+
+					<p>&nbsp</p>
+
+					<input class="pagebutton" type="button" onclick="close_submit_window();uploadImage(0);" value="イラストを投稿する" onmouseover="this.className='pagebutton_active'" onmouseout="this.className='pagebutton'">
+					<input id="overwrite" class="pagebutton" type="button" onclick="close_submit_window();uploadImage(1);" value="イラストを上書き投稿する" onmouseover="this.className='pagebutton_active'" onmouseout="this.className='pagebutton'" style="visibility:hidden;">
+
+				</div>
+		</div>
+	</div>
+</div>
+
+<div id="wacomPlugin">
+</div>
+
+</body>
+</html>

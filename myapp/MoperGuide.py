@@ -21,5 +21,5 @@ class MoperGuide(webapp.RequestHandler):
 		template_values = {
 			'temp': 0,
 		}
-		path = os.path.join(os.path.dirname(__file__), '../html/moper_guide.html')
+		path = os.path.join(os.path.dirname(__file__), '../html/moper/moper_guide.html')
 		self.response.out.write(template.render(path, template_values))
