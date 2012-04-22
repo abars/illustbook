@@ -197,7 +197,7 @@ class Admin(webapp.RequestHandler):
 			'monthly':monthly,
 			#'monthly6':monthly6,
 			}
-		path = os.path.join(os.path.dirname(__file__), '../html/admin.htm')
+		path = os.path.join(os.path.dirname(__file__), '../html/admin.html')
 		render=template.render(path, template_values)
 		self.response.out.write(render)		
 

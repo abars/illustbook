@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+{% include "./bbs_thread/meta.html" %}
+<title>{{bbs.bbs_name}}</title>
+{% if template_path%}
+	<link rel="stylesheet" type="text/css" media="screen,print" href="{{css_name}}" />
+	<link rel="stylesheet" type="text/css" media="screen,print" href="{{host}}template/common/style_common2.css" />
+{% else %}
+	{% if css_key %}
+		<link rel="stylesheet" type="text/css" href="{{host}}css/{{css_key}}.key" media="screen,print" />
+	{% else %}
+		<link rel="stylesheet" type="text/css" href="{{host}}css/{{bbs.key}}.css" media="screen,print" />
+	{% endif %}
+{% endif %}
+</head>
+<body>
+{% include "portal/web/floating_menu.html" %}
+<div id="container">
+	<!-- メンテナンス中 -->
+	{% if is_maintenance %}
+		メンテナンスモードで稼動しています。現在、新規投稿はできません。<BR>
+	{% endif %}
+
+	<!-- ヘッダ -->
+	<div id="header">
+		{% include "bbs/bbs_header.html" %}
+	</div>
+
+	<!-- トップメニュー -->
+	{% include "bbs/bbs_top_menu.html" %}
+
+	<!-- コンテンツ -->
+	<div id="contents">
+		<!-- メインエリア -->
+		{% if template_path %}
+			<div id="main">
+		{% else %}
+			{% if bbs.in_frame_mode %}
+			<div id="main_1col">
+			{% else %}
+			<div id="main_2col">
+		{% endif %}
+		{% endif %}
+			<!-- 並びかえ・ページ -->
+			<div id="entry-head">
+				<div id="page-head">
+					{% include "bbs/bbs_order.htm" %}
+				</div>
+				<div id="rss">
+					{% include "bbs/bbs_rss.html" %}
+				</div>
+				<div class="clr"></div>
+			</div>
+
+			{% ifequal bbs.bbs_mode 3 %}
+				<!--スレッド掲示板の広告-->
+				{% if not is_iphone %}
+					<div class="entry">
+						{% include 'bbs_thread/adsense.html' %}
+					</div>
+				{% endif %}
+			{% endifequal %}
+
+			{% if bbs.disable_content_image  %}
+				{% if not is_iphone %}
+					<div class="entry">
+						{% include 'bbs_thread/adsense.html' %}
+					</div>
+				{% endif %}
+			{% endif %}
+	
+			<!--イラストが存在しない場合-->
+			{% include "bbs/bbs_no_illust.html" %}
+	
+			<!--イラストループ-->
+			{% ifequal order "thumbnail" %}
+				<!-- サムネイル -->
+					{% include 'bbs/bbs_show_thumbnail.html' %}
+			{% else%}
+				<!-- エントリー -->
+				{% for thread in threads %}
+					{% ifequal forloop.counter 2 %}
+						<!--広告を一つ目の記事の後に入れる-->
+						{% ifequal bbs.bbs_mode 3 %}
+						{% else %}
+							{% if not is_iphone or not template_path%}
+								{% if not bbs.disable_content_image %}
+									<div class="entry">
+									{% include 'bbs_thread/adsense.html' %}
+									</div>
+								{% endif %}
+							{% endif %}
+						{% endifequal %}
+					{%endifequal%}
+			
+					<!--イラスト一つ-->
+					{% include "bbs/bbs_entry2.html" %}
+				{% endfor %}
+			{% endifequal%}
+			
+			<!-- 並びかえ・ページ -->
+			<div id="entry-bottom">
+				<div id="page-bottom">
+					{% include "bbs/bbs_order.htm" %}
+				</div>　
+			</div>
+
+			<!-- サイドバー非表示時の要素 -->
+			{% include 'bbs/bbs_new_thread.html'%}　
+			{% include 'bbs/bbs_new_comment.html'%}　
+		</div>
+
+		<!-- サイドバー -->
+		{% include "bbs/bbs_sidebar.htm" %}
+		<div class="clr"></div>
+	</div>
+	<!-- フッタ -->
+	{% include 'footer.html' %}
+</div>
+
+<script language="javascript" src="{{host}}js/bbs.js" type="text/javascript"></script>
+
+</body>
+</html>

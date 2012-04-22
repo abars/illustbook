@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+	<title>イラストブック　-　アカウントの移動</title>
+	<link rel="stylesheet" type="text/css" media="screen,print" href="{{host}}static_files_stable/general/css/common.css" />
+</head>
+
+<body>
+	
+<div id="container">
+　<div id="contents">
+　
+　<div id="main">
+{%if exec_move %}
+
+<p>移行が完了しました。</p>
+<p><A HREF="./usr/{{bbs.key}}/" class="declink">掲示板に戻る</A></p>
+
+{%else%}
+
+<H1>管理アカウントの移行</H1>
+<p>管理アカウントの移行を行います。</p>
+<p>移行を行うと以前のアカウントでは管理できなくなります。</p>
+<p>不明点は<A HREF="mailto:abarsceo@gmail.com">abarsceo@gmail.com</A>までお問い合わせ下さい。</p>
+
+<p>&nbsp</p>
+
+<H1>移行対象情報</H1>
+
+<p>掲示板名：{{bbs.bbs_name}}</p>
+{%if bbs.move_account %}
+<p>移行モード：移行モードになっています。</p>
+{%else%}
+<p>移行モード：移行モードになっていません。ブックの設定から移行モードに変更して下さい。</p>
+{%endif%}
+{%if user %}
+<p>移行先：{{user.email}} (<A HREF="{{redirect_url|logout_url}}" class="declink">ログアウト</A>)</p>
+<p>判定：{% if moveok %}移行可能{%else%}移行不可能</p>
+<p>&nbsp</p>
+<p><A HREF="{{redirect_url|logout_url}}" class="declink">ログアウト</A>して正式な移行先アカウントでログインして下さい。</p>
+{%endif%}
+{% else %}
+<p>移行先のユーザでログインして下さい。</p>
+<p>&nbsp</p>
+<p><A HREF="{{redirect_url|login_url}}" class="declink">ログインする</A></p>
+{% endif %}
+{%if moveok %}
+<p>&nbsp</p>
+<p><A HREF="./move_account?bbs_key={{bbs.key}}&mode=exec" class="declink">移行を実行する</A></p>
+{% endif%}
+
+{% endif %}
+　</div>
+　
+	</div>
+
+	</div>
+	</body>
+</html>
+

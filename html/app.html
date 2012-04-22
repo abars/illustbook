@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+{% if is_portal %}イラストブックマーケット{% endif %}
+{% if is_play %}{{app.app_name}}{% endif %}
+{% if is_code %}{{app.app_name}}(コードビュー){% endif %}
+ - イラストブック</title>
+{%include "web/meta.html" %}
+{% if is_iphone %}
+	{% if is_portal %}
+		<meta name="viewport" content="width=device-width">
+	{% else %}
+		<meta name="viewport" content="width=480px">
+	{% endif %}
+{% endif %}
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="Copyright" content="Copyright: ABARS" />
+<link rel="stylesheet" type="text/css" media="screen,print" href="static_files_stable/general/css/common.css?version=111119" />
+<!-- SyntaxHighlighter start -->
+<link href='js/ace/shCore.css' rel='stylesheet' type='text/css'/> 
+<link href='http://alexgorbatchev.com/pub/sh/current/styles/shThemeDefault.css' rel='stylesheet' type='text/css'/> 
+<script src='http://alexgorbatchev.com/pub/sh/current/scripts/shCore.js' type='text/javascript'></script> 
+<script src='http://alexgorbatchev.com/pub/sh/current/scripts/shBrushJScript.js' type='text/javascript'></script> 
+<script src='http://alexgorbatchev.com/pub/sh/current/scripts/shBrushXml.js' type='text/javascript'></script> 
+<script src='http://alexgorbatchev.com/pub/sh/current/scripts/shBrushCss.js' type='text/javascript'></script> 
+<!--[if lt IE 9]>
+<script type="text/javascript" src="./js/flashcanvas.js"></script>
+<![endif]-->
+<script language='javascript'> 
+SyntaxHighlighter.config.bloggerMode = true;
+SyntaxHighlighter.config.clipboardSwf = 'http://alexgorbatchev.com/pub/sh/current/scripts/clipboard.swf';
+SyntaxHighlighter.defaults['auto-links'] = false;
+SyntaxHighlighter.all();
+</script>
+<!-- SyntaxHighlighter end -->
+</head>
+<body>
+
+{% include "web/floating_menu.html" %}
+
+<div id="container">
+	{% if not is_iphone %}
+		<p>&nbsp</p>
+	{% endif %}
+	<div id="contents">
+		<div id="main">
+			{% include "./app/border_table.css" %}
+			{% if is_portal %}
+				{% include "./app/app_list.html" %}
+			{% endif %}
+			{% if is_play or is_code %}
+				{% include "./app/app_play.html" %}
+			{% endif %}
+		</div>
+	</div>
+	<div id="footer">
+		<p>{% include "web/footer_link.html" %}</p>
+	</div>
+</div>
+<script language="javascript" src="static_files_stable/general/js/jquery.js" type="text/javascript"></script>
+<script language="javascript" src="static_files_stable/general/js/rollover.js" type="text/javascript"></script>
+</body>
+</html>

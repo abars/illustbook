@@ -1,0 +1,163 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+	<title>イラストブック　-　管理モード</title>
+	<link rel="stylesheet" type="text/css" media="screen,print" href="{{host}}static_files_stable/general/css/common.css" />
+	
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	 <script type="text/javascript">
+		google.load("visualization", "1", {packages:["corechart"]});
+		google.setOnLoadCallback(drawChart);
+		function drawChart() {
+			var data = new google.visualization.DataTable();
+			data.addColumn('string', 'Date');
+			data.addColumn('number', 'Cnt');
+			{{new_bbs_count|safe}}
+			var chart = new google.visualization.LineChart(document.getElementById('new_bbs_count'));
+			chart.draw(data, {width: '90%', height: 300, title: 'レンタル数の推移'});//, vAxis: {minValue: 0}});
+
+			data = new google.visualization.DataTable();
+			data.addColumn('string', 'Date');
+			data.addColumn('number', 'Cnt');
+			{{new_entry_count|safe}}
+			var chart = new google.visualization.LineChart(document.getElementById('new_entry_count'));
+			chart.draw(data, {width: '90%', height: 300, title: 'コメント投稿数の推移'});//, vAxis: {minValue: 0}});
+
+			data = new google.visualization.DataTable();
+			data.addColumn('string', 'Date');
+			data.addColumn('number', 'Cnt');
+			{{new_illust_count|safe}}
+			var chart = new google.visualization.LineChart(document.getElementById('new_illust_count'));
+			chart.draw(data, {width: '90%', height: 300, title: 'イラスト投稿数の推移'});//, vAxis: {minValue: 0}});
+			
+			/*
+			data = new google.visualization.DataTable();
+			data.addColumn('string', 'Date');
+			data.addColumn('number', 'Cnt');
+			{{new_user_count|safe}}
+			var chart = new google.visualization.LineChart(document.getElementById('new_user_count'));
+			chart.draw(data, {width: '90%', height: 300, title: '閲覧ユーザ数の推移', vAxis: {minValue: 0}});
+			*/
+		}
+	 </script>
+
+</head>
+
+<body>
+<div id="container">
+<div id="contents"><BR>
+
+<div class="entry">
+<H1>管理モード</H1>
+<p>このページではイラストブックの統計情報を見ることができます。</p>
+<p>管理アカウントでログインすると、より詳細な管理モードに移行します。</p>
+<p>&nbsp</p>
+</div>
+
+{% if is_admin %}
+<div class="entry">
+<H1>アクティブ率</H1>
+<p>週間アクティブユーザ：{{weekly}}</p>
+<p>月間アクティブユーザ：{{monthly}}</p>
+<p>アクティブユーザは一度でも掲示板を更新したユーザの数です。</p>
+<p>&nbsp</p>
+</div>
+{% endif %}
+
+{% if is_high_admin %}
+
+<div class="entry">
+<H1>新着イラスト一覧</H1>
+<blockquote>
+{% for thread in threads %}
+<a href='{% if thread.bbs_key.short %}./{{thread.bbs_key.short}}/{%else%}./usr/{{thread.bbs_key.key}}/{%endif%}{{thread.key}}.html' class="imagelink"><IMG SRC="{{host}}thumbnail/{{thread.image_key.key}}.jpg" BORDER=0 ALT="{{thread.title}}"></A>
+{% endfor %}
+</blockquote>
+
+<!--ページリスト-->
+
+<div style="clear:left;">
+{%for p in page_list%}
+{%ifequal p page%}
+<input type="button" value="{{p}}" onmouseover="this.className='pagebutton_active'" onmouseout="this.className='pagebutton_active'" class="pagebutton_active"/ >
+{%else%}
+<input type="button" value="{{p}}" onmouseover="this.className='pagebutton_active'" onmouseout="this.className='pagebutton'" class="pagebutton" onclick="window.location.href='{{page_url_base}}{{p}}'"/ >
+{%endifequal %}
+{%endfor%}
+</div>
+
+<p>&nbsp</p>
+</div>
+
+<div class="entry">
+<H1>新着リプライ一覧</H1>
+<blockquote>
+{% for entry in entries %}
+{{entry|reply_with_except:host|safe}}
+{% endfor %}
+</blockquote>
+<p>&nbsp</p>
+</div>
+
+{% endif %}
+
+{% if is_admin %}
+
+<div class="entry">
+<H1>新着モッパー一覧</H1>
+<blockquote>
+{% for thread in moper_threads %}
+<a href='{% if thread.bbs_key.short %}./{{thread.bbs_key.short}}/{%else%}./usr/{{thread.bbs_key.key}}/{%endif%}{{thread.key}}.html' class="imagelink"><IMG SRC="{{host}}thumbnail/{{thread.image_key.key}}.gif" BORDER=0 ALT="{{thread.title}}"></A>
+{% endfor %}
+</blockquote>
+<p>&nbsp</p>
+</div>
+
+<div class="entry">
+<H1>統計情報</H1>
+<div id="new_bbs_count"></div>
+<div id="new_illust_count"></div>
+<div id="new_entry_count"></div>
+<!-- <div id="new_user_count"></div> -->
+</div>
+
+{% endif %}
+
+{% if is_high_admin %}
+
+<div class="entry">
+<H1>最近投稿されたコメント</H1>
+{% for one_comment in comment %}
+<p>
+{{one_comment|admin_comment_with_except|safe}}
+</p>
+<HR>
+{% endfor%}
+<p>&nbsp</p>
+</div>
+
+<div class="entry">
+<H1>スパムチェック管理システム</H1>
+<p><A HREF="./spam_check" class="declink">こちら</A>からどうぞ。</p>
+<p>&nbsp</p>
+</div>
+
+{% endif %}
+
+{% if not is_admin %}
+
+<div class="entry">
+<H1>エラー</H1>
+<p>{{account}}では参照できません。</p>
+<p><A HREF="{{url_login}}" class="declink">ログイン</A>　<A HREF="{{url_logout}}" class="declink">ログアウト</A></p>
+<p>&nbsp</p>
+</div>
+
+{%endif%}
+
+</div>
+
+</div>
+</body>
+</html>
+

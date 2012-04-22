@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+{% if is_iphone %}
+<meta name="viewport" content="width=device-width">
+{% endif %}
+<title>{% if view_mode %}「{{bookmark.name}}」のプロフィール{%else%}{% if user %}マイページ{%else%}登録して使う{%endif%}{%endif%}｜イラストブック</title>
+{%include "web/meta.html" %}
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="Copyright" content="Copyright: ABARS" />
+{% if is_iphone %}
+	{% include "web/css_iphone.html" %}
+{% else %}
+	{% include "web/css.html" %}
+{% endif %}
+<script language="javascript" src="api_js" type="text/javascript"></script>
+<script language="javascript" src="js/mypage.js" type="text/javascript"></script>
+</head>
+<body onload="mypage_init('{{tab}}',{% if user %}1{%else%}0{%endif%},{% if view_mode %}1{% else %}0{% endif %},{{edit_mode}},{{feed_page}},{{is_admin}});">
+
+{% include "web/floating_menu.html" %}
+
+<div id="container">
+	{% if 0 %}
+	<div id="header">
+		<h1><a href="{{host}}"><img src="static_files_stable/general/images/top/head3.jpg" alt="あなたのイラストから始まるコミュニティ　イラストブック" width="950" height="195" /></a></h1>
+	</div>
+	<div id="g-menu">
+		<ul>
+			<li><a href="{{host}}"><img src="static_files_stable/general/images/top/m_home.gif" alt="ホーム" width="132" height="45" class="swap" /></a></li>
+			<li><a href="{{host}}guide"><img src="static_files_stable/general/images/top/m_howto.gif" alt="イラストブックの使い方" width="195" height="45" class="swap" /></a></li>
+			<li><a href="{{host}}community"><img src="static_files_stable/general/images/top/m_community.gif" alt="コミュニティ" width="152" height="45" class="swap" /></a></li>
+			<li><a href="{{host}}questionnaire"><img src="static_files_stable/general/images/top/m_enq.gif" alt="アンケート" width="124" height="45" class="swap" /></a></li>
+			<li><a href="{{host}}support"><img src="static_files_stable/general/images/top/m_support.gif" alt="よくある質問・サポート" width="209" height="45" class="swap" /></a></li>
+			<li><a href="{{host}}profile"><img src="static_files_stable/general/images/top/m_profile.gif" alt="会社概要" width="138" height="45" class="swap" /></a></li>
+		</ul>
+		<div class="clr"></div>
+	</div>
+	{% else %}
+		{% if not is_iphone %}
+			<p>&nbsp</p>
+		{% endif %}
+	{% endif %}
+	<div id="contents">
+		{% if not user and not is_iphone and not view_mode%}
+		<h1><img src="static_files_stable/general/images/entry/title_entry.gif" alt="登録して使う" width="880" height="40" /></h1>
+		{% endif %}
+		{% if not is_iphone %}
+			{% include "web/border_table.css" %}
+		{% endif %}
+		{% include "web/tab.css" %}
+		{% include "web/mypage.html" %}
+		<div id="pan"> 
+			{% if not user %}
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			<p><a href="{{host}}">イラストブック ホーム</a> &gt; 登録して使う</p>
+			{% endif %}
+		</div>
+	</div>
+	<div id="footer">
+		<ul>
+			{% include "web/footer_sitemap.html" %}
+		</ul>
+		<p>{% include "web/footer_link.html" %}</p>
+	</div>
+</div>
+</body>
+</html>

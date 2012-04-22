@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+{% if is_iphone %}
+<meta name="viewport" content="width=device-width">
+{% endif %}
+
+<title>
+{% ifequal mode "support" %}よくある質問・サポート{% endifequal %}
+{% ifequal mode "terms" %}ご利用規約{% endifequal %}
+{% ifequal mode "guide" %}イラストブックの使い方{% endifequal %}
+{% ifequal mode "questionnaire" %}アンケート{% endifequal %}
+{% ifequal mode "community" %}コミュニティ{% endifequal %}
+{% ifequal mode "profile" %}会社概要{% endifequal %}
+{% ifequal mode "link" %}リンク{% endifequal %}
+｜イラストブック</title>
+
+{% ifequal mode "bookmark" %}
+	{% if tag %}
+	<title>イラストブック - タグ「{{tag}}」を含むイラスト</title>
+	{% else %}
+	<title>「
+	{% if search_app %}{{search_app.app_name}}{%endif %}
+	{% if search_thread %}{{search_thread.title}}{% endif%}
+	{% if search_bbs %}{{search_bbs.bbs_name}}{% endif %}
+	」をブックマークしているユーザ ｜イラストブック</title>
+	{% endif %}
+	<script language="javascript" src="js/mypage.js" type="text/javascript"></script>
+{% endifequal %}
+
+{% ifequal mode "" %}
+{% endifequal %}
+
+{%include "web/meta.html" %}
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="Copyright" content="Copyright: ABARS" />
+{% if is_iphone %}
+	{% include "web/css_iphone.html" %}
+{% else %}
+	{% include "web/css.html" %}
+{% endif %}
+</head>
+
+{% ifequal mode "bookmark" %}
+	<body onload="request_user_list('{{search_thread.key}}','{{search_bbs.key}}','{{search_app.key}}');">
+{% else %}
+	<body>
+{% endifequal %}
+
+{% include "web/floating_menu.html" %}
+
+<div id="container">
+	{% if not is_iphone %}
+	<div id="header">
+		<h1><a href="{{host}}"><img src="static_files_stable/general/images/top/head3.jpg" alt="あなたのイラストから始まるコミュニティ　イラストブック" width="950" height="195" /></a></h1>
+	</div>
+	<div id="g-menu">
+		<ul>
+			<li><a href="{{host}}"><img src="static_files_stable/general/images/top/m_home.gif" alt="ホーム" width="132" height="45" class="swap" /></a></li>
+			<li><a href="{{host}}guide"><img src="static_files_stable/general/images/top/m_howto{% ifequal mode "guide" %}_on{% endifequal %}.gif" alt="イラストブックの使い方" width="195" height="45" class="swap" /></a></li>
+			<li><a href="{{host}}community"><img src="static_files_stable/general/images/top/m_community{% ifequal mode "community" %}_on{% endifequal %}.gif" alt="コミュニティ" width="152" height="45" class="swap" /></a></li>
+			<li><a href="{{host}}questionnaire"><img src="static_files_stable/general/images/top/m_enq{% ifequal mode "questionnaire" %}_on{% endifequal %}.gif" alt="アンケート" width="124" height="45" class="swap" /></a></li>
+			<li><a href="{{host}}support"><img src="static_files_stable/general/images/top/m_support{% ifequal mode "support" %}_on{% endifequal %}.gif" alt="よくある質問・サポート" width="209" height="45" class="swap" /></a></li>
+			<li><a href="{{host}}profile"><img src="static_files_stable/general/images/top/m_profile{% ifequal mode "profile" %}_on{% endifequal %}.gif" alt="会社概要" width="138" height="45" class="swap" /></a></li>
+		</ul>
+		<div class="clr"></div>
+	</div>
+	{% else %}
+		<p>&nbsp</p>
+	{% endif %}
+	<div id="contents">
+		{% ifequal mode "questionnaire" %}
+			<h1><img src="static_files_stable/general/images/enq/title_enq.gif" alt="アンケート" width="880" height="46" /></h1>
+			<iframe src="https://spreadsheets.google.com/embeddedform?formkey=dGxzRGw0TnRYQmhPVC1JOTJfS1NhcEE6MQ" width="100%" height="1503" frameborder="0" marginheight="0" marginwidth="0">読み込み中...</iframe>
+		{% endifequal %}
+
+		{% ifequal mode "profile" %}
+			<h1><img src="static_files_stable/general/images/profile/title_profile.gif" alt="会社概要" width="880" height="40" /></h1>
+			{% include "web/profile.html" %}
+		{% endifequal %}
+
+		{% ifequal mode "community" %}
+			<h1><img src="static_files_stable/general/images/community/title_community.gif" alt="コミュニティ" width="880" height="40" /></h1>
+			{% include "web/community.html" %}
+		{% endifequal %}
+
+		{% ifequal mode "bookmark" %}
+			{% if not is_iphone %}
+				{% include "web/border_table.css" %}
+			{% endif %}
+			{% include "web/tab.css" %}
+			{% if tag %}
+				{% include "web/search_tag.html" %}
+			{% else %}
+				{%include "web/show_bookmark.html" %}
+			{% endif %}
+		{% endifequal %}
+
+		{% ifequal mode "link" %}
+			{% if is_iphone %}
+				{% include "web/tab.css" %}
+				<p class="bar">リンク</p>
+			{% else %}
+				<h1><img src="static_files_stable/general/images/top/title_link.gif" alt="リンク" width="880" height="40" /></h1>
+			{% endif %}
+			<p>{% include "web/link.html" %}</p>
+		{% endifequal %}
+
+		{% ifequal mode "guide" %}
+			<h1><img src="static_files_stable/general/images/howto/title_howto.gif" alt="イラストブックの使い方" width="880" height="40" /></h1>
+			{%include "web/guide.html"%}
+		{% endifequal %}
+
+		{% ifequal mode "support" %}
+			<h1><img src="static_files_stable/general/images/support/title_support.gif" alt="よくある質問・サポート" width="880" height="41" /></h1>
+			{%include "web/support.html" %}
+		{% endifequal %}
+
+		{% ifequal mode "terms" %}
+			{% if is_iphone %}
+				{% include "web/tab.css" %}
+				<p class="bar">ご利用規約</p>
+			{% else %}
+				<h1><img src="static_files_stable/general/images/top/title_guide.gif" alt="ご利用規約" width="880" height="40" /></h1>
+			{% endif %}
+			{% include "web/terms.html" %}
+			<p>&nbsp;</p>
+			{% if is_iphone %}
+				<p class="bar">プライバシーポリシー</p>
+			{% else %}
+				<h1><img src="static_files_stable/general/images/top/title_privacy.gif" alt="プライバシーポリシー" width="880" height="36" /></h1>	
+			{% endif %}
+			{% include "web/privacy.html" %}
+		{% endifequal %}
+		
+		<p>&nbsp;</p>
+		<p>&nbsp;</p>
+		<div id="pan"> 
+			<p><a href="{{host}}">イラストブック ホーム</a> &gt; 
+				{% ifequal mode "support" %}よくある質問・サポート{% endifequal %}
+				{% ifequal mode "terms" %}ご利用規約{% endifequal %}
+				{% ifequal mode "guide" %}イラストブックの使い方{% endifequal %}
+				{% ifequal mode "questionnaire" %}アンケート{% endifequal %}
+				{% ifequal mode "community" %}コミュニティ{% endifequal %}
+				{% ifequal mode "profile" %}会社概要{% endifequal %}
+				{% ifequal mode "link" %}リンク{% endifequal %}
+				{% ifequal mode "bookmark" %}ブックマーク{% endifequal %}
+			</p>
+		</div>
+	</div>
+	<div id="footer">
+		<ul>
+			{% include "web/footer_sitemap.html" %}
+		</ul>
+		<p>{% include "web/footer_link.html" %}</p>
+	</div>
+</div>
+</body>
+</html>

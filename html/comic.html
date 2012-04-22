@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>漫画で分かるイラストブック | イラストブック</title>
+</head>
+
+<body bgcolor=#ffffff>
+
+<CENTER>
+<A HREF="{{host}}comic"><IMG src="{{host}}static_files/comic/banar.png"></A><BR>
+
+<A HREF="{{host}}mypage">
+さっそくイラストブックを使ってみる
+</A>
+　
+<BR>
+
+{% ifequal page 4 %}
+<A HREF="{{host}}guide"><IMG src="{{host}}static_files/comic/00
+{{page}}.png"></A>
+{% else %}
+<A HREF="{{host}}comic?page={{page|add:"1"}}"><IMG src="{{host}}static_files/comic/00
+{{page}}.png"></A>
+{% endifequal %}
+<BR>
+
+{% ifequal page 1 %}
+{% else %}
+<A HREF="{{host}}comic?page={{page|add:"-1"}}">前のページ</A>　
+{% endifequal %}
+
+{% ifequal page 4 %}
+{% else %}
+<A HREF="{{host}}comic?page={{page|add:"1"}}">次のページ</A>
+{% endifequal %}
+
+<BR>
+<BR>
+
+&copy 2011 <A HREF="http://www.geocities.jp/tarowy85/makol.html">まことじ</A>　<A HREF="{{host}}">イラストブック</A><BR>
+
+</CENTER>
+
+</body>
+</html>

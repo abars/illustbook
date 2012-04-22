@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+	<title>イラストブック　-　埋め込みタグを取得</title>
+	<link rel="stylesheet" type="text/css" media="screen,print" href="{{host}}static_files_stable/general/css/common.css" />
+<body>
+<div id="container">
+<div id="contents">
+
+<p>&nbsp</p>
+
+<div class="entry">
+<H1>埋め込みタグを取得</H1>
+
+<p>画像サイズやタグの改変はご自由にどうぞ。</p>
+<p>&nbsp</p>
+</div>
+
+<div class="entry">
+<H1>埋め込みタグ</H1>
+<textarea rows=8 cols=60>{% ifequal thread.illust_mode 2 %}{{moper}}{% else %}<A HREF='{{link}}'><IMG SRC='{{img}}' BORDER=0></A>{% endifequal %}</textarea>
+<p>&nbsp</p>
+</div>
+
+<div class="entry">
+<H1>タグの使用例</H1>
+{% ifequal thread.illust_mode 2 %}
+{{moper|safe}}
+{% else %}
+<A HREF='{{link}}'><IMG SRC='{{img}}' BORDER=0></A>
+{% endifequal %}
+<p>&nbsp</p>
+</div>
+
+</div>
+</div>
+
+</body>
+</html>
+

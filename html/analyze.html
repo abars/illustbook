@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+	<title>イラストブック　-　{{page_name}}のアクセス解析</title>
+	<link rel="stylesheet" type="text/css" media="screen,print" href="{{host}}static_files_stable/general/css/common.css" />
+</head>
+
+<body onload="update('{{analyze_data|safe}}');">
+<div id="container">
+<div id="contents">
+
+<p>&nbsp</p>
+
+<div class="entry">
+<H1>{{page_name}}のアクセス解析</H1>
+</div>
+
+<div class="entry">
+<H1>アクセス元</H1>
+<div id="access"></div>
+<p>&nbsp</p>
+</div>
+
+<div class="entry">
+<H1>人気コンテンツ</H1>
+<div id="content"></div>
+<p>&nbsp</p>
+</div>
+
+<div class="entry">
+<H1>検索語</H1>
+<div id="search"></div>
+<p>&nbsp</p>
+</div>
+
+{% if bbs %}
+<div class="entry"><br />
+<p><A HREF="./usr/{{bbs.key}}/" class="declink">{{page_name}}へ戻る</A>
+{% if user %}
+　<A HREF="./analyze?bbs_key={{bbs.key}}&mode=delete" class="declink">解析結果の初期化</A>
+{% endif %}
+</p>
+</div>
+{% endif %}
+
+</div>
+</div>
+
+<script language="javascript" src="{{host}}js/analyze.js" type="text/javascript"></script>
+
+</body>
+</html>
+

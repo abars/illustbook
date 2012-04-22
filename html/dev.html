@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+{% ifequal page "intro"%}プラットフォームの基本{% endifequal%}
+{% ifequal page "js"%}JavaScript API{% endifequal%}
+{% ifequal page "json"%}JSON API{% endifequal%}
+{% ifequal page "top"%}デベロッパーポータル{% endifequal%}
+{% ifequal page "css"%}CSS{% endifequal%}
+ - イラストブック</title>
+{%include "web/meta.html" %}
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="Copyright" content="Copyright: ABARS" />
+
+<link rel="stylesheet" type="text/css" media="screen,print" href="static_files_stable/general/css/common.css?version=111119" />
+<script language="javascript" src="static_files_stable/general/js/jquery.js" type="text/javascript"></script>
+<script language="javascript" src="static_files_stable/general/js/rollover.js" type="text/javascript"></script>
+
+<!-- SyntaxHighlighter start -->
+<link href='js/ace/shCore.css' rel='stylesheet' type='text/css'/> 
+<link href='http://alexgorbatchev.com/pub/sh/current/styles/shThemeDefault.css' rel='stylesheet' type='text/css'/> 
+<script src='http://alexgorbatchev.com/pub/sh/current/scripts/shCore.js' type='text/javascript'></script> 
+<script src='http://alexgorbatchev.com/pub/sh/current/scripts/shBrushJScript.js' type='text/javascript'></script> 
+<script src='http://alexgorbatchev.com/pub/sh/current/scripts/shBrushXml.js' type='text/javascript'></script> 
+<script src='http://alexgorbatchev.com/pub/sh/current/scripts/shBrushCss.js' type='text/javascript'></script> 
+<script language='javascript'> 
+SyntaxHighlighter.config.bloggerMode = true;
+SyntaxHighlighter.config.clipboardSwf = 'http://alexgorbatchev.com/pub/sh/current/scripts/clipboard.swf';
+SyntaxHighlighter.defaults['auto-links'] = false;
+SyntaxHighlighter.all();
+</script>
+<!-- SyntaxHighlighter end -->
+</head>
+<body>
+
+{% include "web/floating_menu.html" %}
+
+<div id="container">
+	<p>&nbsp</p>
+	<div id="contents">
+		<div id="main">
+			{%ifequal page "top" %}
+				{% include "./dev/dev.html" %}
+			{%endifequal %}
+			{%ifequal page "intro" %}
+				{% include "./dev/dev_intro.html" %}
+			{%endifequal %}
+			{%ifequal page "js" %}
+				{% include "./dev/dev_js.html" %}
+			{%endifequal %}
+			{%ifequal page "json" %}
+				{% include "./dev/dev_json.html" %}
+			{%endifequal %}
+			{%ifequal page "css" %}
+				{% include "./dev/dev_css.html" %}
+			{%endifequal %}
+			{%ifequal page "top" %}
+			{%else%}
+				<p>&nbsp</p>
+				{%ifequal page "intro" %} 
+					<p><A HREF="./dev?page=json" class="declink">次のページ(JSON API)</a></p>
+				{%endifequal%}
+				{%ifequal page "json" %} 
+					<p><A HREF="./dev?page=js" class="declink">次のページ(JavaScript API)</a></p>
+					<p><A HREF="./dev?page=intro" class="declink">前のページ(プラットフォームの概要)</a>
+				{%endifequal%}
+				{%ifequal page "js" %} 
+					<p><A HREF="./dev?page=css" class="declink">次のページ(CSSリファレンス)</a></p>
+					<p><A HREF="./dev?page=json" class="declink">前のページ(JSON API)</a>
+				{%endifequal%}
+				{%ifequal page "css" %} 
+					<p><A HREF="./dev?page=js" class="declink">前のページ(JavaScript API)</a></p>
+				{%endifequal%}
+				<p><A HREF="./dev" class="declink">デベロッパーポータルへ戻る</a></p>
+			{%endifequal %}
+		</div>
+	</div>
+	<div id="footer">
+		<p>{% include "web/footer_link.html" %}</p>
+	</div>
+</div>
+</body>
+</html>

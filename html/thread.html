@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+{% include "./bbs_thread/meta.html" %}
+<title>{{ bbs.bbs_name }}：{{ thread.title }}</title>
+{% if template_path %}
+	<link rel="stylesheet" type="text/css" media="screen,print" href="{{css_name}}" />
+	<link rel="stylesheet" type="text/css" media="screen,print" href="{{host}}template/common/style_common2.css" />
+{% else %}
+	<link rel="stylesheet" type="text/css" href="{{host}}css/{{bbs.key}}.css" media="screen,print" />
+{% endif %}
+</head>
+
+<body>
+{% include "portal/web/floating_menu.html" %}
+	<div id="container">
+	<!-- メンテナンス中 -->
+		{% if is_maintenance %}
+			メンテナンスモードで稼動しています。現在、新規投稿はできません。<BR>
+		{% endif %}
+
+		<!-- ヘッダ -->
+		{% if template_path %}
+			<div id="header">
+				<h1><A HREF="{{usrhost}}">{{bbs.bbs_name}}</A></h1>
+			</div>
+		{% endif %}
+		
+		<!-- コンテンツ -->
+		{% include 'thread/thread_top_menu.html' %}
+		
+		<div id="contents">
+			<!-- メインエリア -->
+			{% if template_path %}
+			<div id="main">
+			{% else %}
+			<div id="main_1col">
+			{% endif %}
+				{% if template_path %}
+				<div id="entry-head">
+				</div>
+				{% endif %}
+				
+				<!-- イラスト -->
+				{% include "thread/thread_content.html" %}
+
+				<!-- 広告 -->
+				<div class="entry" {% if is_iphone and template_path %}style="margin-left:-6px;width:320px;"{% endif %}>
+					{% include 'bbs_thread/adsense.html' %}
+				</div>
+
+				<!-- タグ -->
+				{% include "thread/thread_tag.html" %}
+							
+				<!-- コメント一覧 -->
+				{% if not bbs.disable_comment %}
+					{% include "thread/thread_comment.html" %}
+					{% include "thread/thread_comment_form.html" %}
+				{% endif %}
+
+				<!-- スレッドメニュー -->
+				{% include "thread/thread_menu.htm" %}
+			</div>
+
+			<div class="clr"></div>
+		</div>
+
+		<!-- フッタ -->
+		{%include "footer.html"%}
+	</div>
+
+	<script language="javascript" src="{{host}}js/thread.js" type="text/javascript"></script>
+	<script language="javascript" src="{{host}}js/tag.js" type="text/javascript"></script>
+</body>
+
+</html>
+
