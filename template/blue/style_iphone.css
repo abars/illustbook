@@ -1,0 +1,298 @@
+@charset "utf-8";
+
+/*-- 初期化および全体設定 --*/
+
+html, body, ul, ol, li, dl, dt, dd, form, fieldset, legend {
+	margin: 0;
+	padding: 0;
+}
+
+html {   
+	overflow-y: scroll;   
+}   
+
+body {
+	color: #666666;
+	font-family: "ＭＳ Ｐゴシック", "Arial", "Osaka", "ヒラギノ角ゴPro W3";
+	font-size: 62.5%;
+	background-color: #CEDEE8;
+	text-align: center;
+	background-image: url(images/bg_iphone.gif);
+	background-repeat: no-repeat;
+	background-position: top right;
+}
+
+h1, h2, h3, h4, h5, h6, p, li, dt, dd {
+	font-style: normal;
+	font-weight: normal;
+	letter-spacing: 0.1em;
+	font-size: 1.2em;
+	line-height: 1.2em;
+	padding: 0;
+	margin: 0;
+}
+
+fieldset, img {
+	border: 0;
+}
+
+li {
+	list-style: none;
+}
+
+sup {
+	vertical-align: text-top;
+}
+
+sub {
+	vertical-align: text-bottom;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+caption, th, td {
+	text-align: left;
+	vertical-align: top;
+	font-weight: normal;
+	font-style: normal;
+	letter-spacing: 0.1em;
+	font-size: 1.2em;
+}
+
+input, textarea, select { 
+	font-size: 1.2em;
+	letter-spacing: 0.1em;
+}
+
+strong {
+	font-weight: bold;
+}
+
+small {
+	font-size: 1.0em;
+}
+
+a {
+	color: #333333;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+.clr {
+	clear: both;
+	height: 0px;
+	font-size: 0px;
+	line-height: 0em;
+}
+
+.center {
+	text-align: center;
+}
+
+.right {
+	text-align: right;
+}
+
+.nowrap {
+	white-space: nowrap;
+}
+
+#container {
+	width: 320px;
+	margin: 0 auto;
+	padding-bottom: 10px;
+	text-align: left;
+}
+
+/*-- ヘッダ --*/
+
+#header {
+	padding: 5px;
+}
+
+#header a{
+	color: #4B759E;
+}
+
+#header h1 {
+	color: #4B759E;
+	font-weight: bold;
+	font-size: 2.0em;
+	padding-bottom: 10px;
+}
+
+#header h2 {
+	color: #4B759E;
+	font-size: 1.2em;
+}
+
+#login {
+	text-align: right;
+}
+
+
+/*-- コンテンツ  --*/
+
+#contents-header {
+	background-image: url(images/header_iphone.jpg);
+	background-repeat: no-repeat;
+	height: 65px;
+	padding: 0 0px;
+    padding-top:15px;
+    color: #ffffff;
+}
+
+#contents-header a{
+    color: #ffffff;
+}
+
+#contents-header-size {
+	background-image: url(images/header_campus_iphone.jpg);
+	background-position: 2px 0px;
+	background-repeat: no-repeat;
+	height: 40px;
+	text-align: right;
+}
+
+#contents-header-size img {
+	vertical-align: middle;
+	margin: 0 3px;
+}
+
+#contents-header-size input {
+	width: 50px;
+	padding: 3px;
+	font-size: 1.2em;
+	margin-top: 7px;
+}
+
+#contents-header-edit {
+	text-align: right;
+	padding: 5px 0;
+}
+
+#contents-header-edit img {
+	margin-right: 1px;
+}
+
+#contents {
+	background-color: #ffffff;
+	border-left: solid 1px #6699CC;
+	border-right: solid 1px #6699CC;
+}
+
+/*-- メインエリア  --*/
+
+#main {
+	padding: 5px;
+}
+
+#entry-head {
+}
+
+#page-head {
+}
+
+#page-head a, #page-bottom a {
+	display: inline-block;
+	font-size: 1.4em;
+	color: #ffffff;
+	background-color: #6699CC;
+	padding: 3px 5px;
+	margin-left: 5px;
+}
+
+#page-head a:hover, #page-bottom a:hover {
+	background-color: #9ECBEB;
+	text-decoration: none;
+}
+
+#rss {
+	text-align: right;
+	padding-top: 10px;
+}
+
+#rss img {
+	margin-right: 5px;
+}
+
+/*-- エントリー  --*/
+
+.entry {
+	padding: 20px 0;
+	font-size: 1.2em;
+}
+
+.entry-title {
+}
+
+.entry-title h3 {
+	padding: 5px;
+	border-bottom: dotted 1px #999999;
+	margin-bottom: 5px;
+}
+
+.entry-title .clap {
+	text-align: right;
+	font-weight: bold;
+}
+
+.entry-title .clap img {
+	margin-right: 5px;
+	vertical-align: middle;
+}
+
+.entry-illust {
+	padding: 20px 0;
+	text-align: center;
+}
+
+.entry-name {
+	padding-bottom: 10px;
+}
+
+.entry-name img {
+	margin-right: 5px;
+	vertical-align: text-bottom;
+}
+
+.entry-name p {
+	padding-bottom: 2px;
+}
+
+.entry-comment {
+	padding-bottom: 10px;
+}
+
+.entry-button {
+	padding-bottom: 10px;
+}
+
+.entry-button img {
+	margin-right: 5px;
+}
+
+
+/*-- フッタ --*/
+
+#contents-footer {
+	background-image: url(images/footer_iphone.jpg);
+	text-align: center;
+	color: #ffffff;
+	height: 40px;
+	font-size: 0.85em;
+}
+
+#contents-footer p {
+	padding-top: 12px;
+}
+
+#contents-footer a{
+    color: #ffffff;
+}

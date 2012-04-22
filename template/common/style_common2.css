@@ -1,0 +1,30 @@
+@charset "utf-8";
+
+.menubutton,.menubutton_active{
+color: #000000;
+font-size: 80%;
+border-top:1px double #b8bbc2;
+border-left:1px double #b8bbc2;
+border-right:1px double #b8bbc2;
+border-bottom:1px double #b8bbc2;
+background-color: #f2f2f2;
+}
+
+.menubutton_active{
+background-color: #a2a2a2;
+}
+
+hr {border:0; border-top:1px dotted #999999;}
+
+img {
+ max-width:100%;
+ border: none;
+}
+
+#twtr-widget-1 h4{
+    background-image: none;
+}
+
+td {
+	font-size: 100%;
+}

@@ -1,0 +1,22 @@
+@charset "utf-8";
+
+.pagebutton,.pagebutton_active{
+color: #000000;
+font-size: 80%;
+border-top:1px double #b8bbc2;
+border-left:1px double #b8bbc2;
+border-right:1px double #b8bbc2;
+border-bottom:1px double #b8bbc2;
+background-color: #f2f2f2;
+}
+
+.pagebutton_active{
+background-color: #a2a2a2;
+}
+
+hr {border:0; border-top:1px dotted #999999;}
+
+img {
+ max-width:100%;
+ border: none;
+}

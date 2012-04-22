@@ -1,0 +1,287 @@
+@charset "utf-8";
+
+/*-- 初期化および全体設定 --*/
+
+html, body, ul, ol, li, dl, dt, dd, form, fieldset, legend {
+	margin: 0;
+	padding: 0;
+}
+
+html {   
+	overflow-y: scroll;   
+}   
+
+body {
+	color: #666666;
+	font-family: "ＭＳ Ｐゴシック", "Arial", "Osaka", "ヒラギノ角ゴPro W3";
+	font-size: 62.5%;
+	background-color: #FFFFFF;
+	text-align: center;
+}
+
+h1, h2, h3, h4, h5, h6, p, li, dt, dd {
+	font-style: normal;
+	font-weight: normal;
+	letter-spacing: 0.1em;
+	font-size: 1.2em;
+	line-height: 1.2em;
+	padding: 0;
+	margin: 0;
+}
+
+fieldset, img {
+	border: 0;
+}
+
+li {
+	list-style: none;
+}
+
+sup {
+	vertical-align: text-top;
+}
+
+sub {
+	vertical-align: text-bottom;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+caption, th, td {
+	text-align: left;
+	vertical-align: top;
+	font-weight: normal;
+	font-style: normal;
+	letter-spacing: 0.1em;
+}
+
+input, textarea, select { 
+	font-size: 1.2em;
+	letter-spacing: 0.1em;
+}
+
+strong {
+	font-weight: bold;
+}
+
+small {
+	font-size: 1.0em;
+}
+
+a {
+	color: #666666;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+.clr {
+	clear: both;
+	height: 0px;
+	font-size: 0px;
+	line-height: 0em;
+}
+
+.center {
+	text-align: center;
+}
+
+.right {
+	text-align: right;
+}
+
+.nowrap {
+	white-space: nowrap;
+}
+
+#container {
+	width: 800px;
+	margin: 0 auto;
+	padding-bottom: 20px;
+	text-align: left;
+}
+
+/*-- ヘッダ --*/
+
+#header {
+	padding: 20px;
+}
+
+#header a {
+    color: #536566;
+}
+
+#header h1 {
+	color: #536566;
+	font-size: 2.8em;
+	padding-bottom: 10px;
+}
+
+#header h2 {
+	color: #536566;
+	font-size: 1.6em;
+}
+
+/*-- コンテンツ  --*/
+
+#contents-header {
+	background-image: url(images/header.jpg);
+	background-repeat: no-repeat;
+	height: 40px;
+	padding: 0 10px;
+}
+
+#contents-header-size {
+	float: left;
+	width: 350px;
+	height: 40px;
+	background-image: url(images/header_campus.jpg);
+	background-repeat: no-repeat;
+	text-align: right;
+}
+
+#contents-header-size img {
+	vertical-align: middle;
+	margin: 0 3px;
+}
+
+#contents-header-size input {
+	width: 70px;
+	padding: 3px;
+	font-size: 1.4em;
+	margin-top: 7px;
+}
+
+#contents-header-edit {
+	float: left;
+	width: 330px;
+	padding-top: 7px;
+	padding-left: 10px;
+    color: #ffffff;
+}
+
+#contents-header-edit a {
+    color: #ffffff;
+}
+
+#contents-header-login {
+	float: left;
+	width: 80px;
+	padding-top: 7px;
+}
+
+#contents {
+	background-color: #ffffff;
+	border-left: solid 1px #CAD7D9;
+	border-right: solid 1px #CAD7D9;
+	padding: 20px;
+}
+
+/*-- メインエリア  --*/
+
+#main {
+	padding: 0 20px;
+}
+
+#entry-head {
+}
+
+#page-head {
+	float: left;
+	width: 350px;
+}
+
+#page-head a, #page-bottom a {
+	display: inline-block;
+	font-size: 1.4em;
+	color: #ffffff;
+	background-color: #CAD7D9;
+	padding: 3px 5px;
+	margin-left: 5px;
+}
+
+#page-head a:hover, #page-bottom a:hover {
+	background-color: #536566;
+	text-decoration: none;
+}
+
+#rss {
+	float: right;
+	width: 150px;
+}
+
+#rss img {
+	margin-right: 5px;
+}
+
+/*-- エントリー  --*/
+
+.entry {
+	padding: 20px 0;
+	font-size: 1.2em;
+}
+
+.entry-title {
+	padding: 5px;
+	border-bottom: dotted 1px #999999;
+}
+
+.entry-title h3 {
+	float: left;
+	width: 410px;
+}
+
+.entry-title .clap {
+	float: right;
+	width: 80px;
+	font-weight: bold;
+}
+
+.entry-title .clap img {
+	margin-right: 5px;
+	vertical-align: middle;
+}
+
+.entry-illust {
+	padding: 20px 0;
+	text-align: center;
+}
+
+.entry-name {
+	padding-bottom: 10px;
+}
+
+.entry-name img {
+	margin-right: 5px;
+	vertical-align: text-bottom;
+}
+
+.entry-comment {
+	padding-bottom: 10px;
+}
+
+.entry-button {
+	padding-bottom: 10px;
+}
+
+/*-- フッタ --*/
+
+#contents-footer {
+	background-image: url(images/footer.jpg);
+	text-align: center;
+	color: #ffffff;
+	height: 40px;
+}
+
+#contents-footer a{
+    color: #ffffff;
+}
+
+#contents-footer p {
+	padding-top: 12px;
+}

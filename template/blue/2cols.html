@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>ミーコのイラストブック</title>
+<meta name="Keywords" content="" />
+<meta name="Description" content="" />
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="Copyright" content="" />
+<link rel="stylesheet" type="text/css" media="screen,print" href="style_2col.css" />
+</head>
+<body>
+<div id="container">
+	<!-- ヘッダ -->
+	<div id="header">
+		<h1>ミーコのイラストブック</h1>
+		<h2>ミーコのブックへようこそ！ <br />
+			まだまだ作品も少ないですが、これから毎日アップしていきますので、応援ヨロシクで～す！</h2>
+	</div>
+	<!-- コンテンツ -->
+	<div id="contents-header">
+		<div id="contents-header-size">
+			<input type="text" name="text" />
+			<img src="images/header_batsu.gif" alt="×" width="15" height="17" />
+			<input type="text" name="text" />
+			<img src="images/header_px.gif" alt="px" width="17" height="17" /></div>
+		<div id="contents-header-edit"> <img src="images/header_edit1.jpg" alt="イラストを描く" width="103" height="28" /><img src="images/header_edit2.jpg" alt="動画を描く" width="103" height="28" /><img src="images/header_edit3.jpg" alt="デザインの編集" width="103" height="28" /></div>
+		<div id="contents-header-login"><img src="images/header_login.jpg" alt="ログイン" width="87" height="28" /></div>
+		<div class="clr"></div>
+	</div>
+	<div id="contents">
+		<!-- メインエリア -->
+		<div id="main">
+			<!-- 並びかえ・ページ -->
+			<div id="entry-head">
+				<div id="page-head">
+					<select name="sort">
+						<option value="新着順">新着順</option>
+						<option value="更新順">更新順</option>
+						<option value="コメント数">コメント数</option>
+						<option value="拍手順">拍手順</option>
+						<option value="サムネイル">サムネイル</option>
+					</select>
+					<a href="#1">1</a><a href="#2">2</a><a href="#3">3</a><a href="#4">4</a><a href="#5">5</a>
+				</div>
+				<div id="rss"><img src="images/i_rss.jpg" alt="RSS" width="44" height="20" /><img src="images/i_tweet.jpg" alt="tweet" width="96" height="20" /></div>
+				<div class="clr"></div>
+			</div>
+			<!-- エントリー -->
+			<div class="entry">
+				<div class="entry-title">
+					<h3>どや顔</h3>
+					<div class="clap"><img src="images/i_crap.gif" alt="拍手" width="53" height="20" />0</div>
+					<div class="clr"></div>
+				</div>
+				<div class="entry-illust"><img src="images/illust01.jpg" alt="どや顔" width="400" height="400" /></div>
+				<div class="entry-name">
+					<p><img src="images/i_name.gif" alt="投稿者" width="64" height="20" />ミーコ&nbsp;&nbsp;<img src="images/i_comment.gif" alt="コメント数" width="64" height="20" />4&nbsp;&nbsp;<img src="images/i_category.gif" alt="カテゴリ" width="64" height="20" />女の子&nbsp;<br />
+							<img src="images/i_day.gif" alt="投稿日" width="64" height="20" />2011年4月18日0時47分</p>
+				</div>
+				<div class="entry-comment">
+					<p>このツールやっぱり凄いなぁ。線がとても引きやすかった～(*´∀｀)お絵かきソフトはもういらないかな。</p>
+				</div>
+				<div class="entry-button"><img src="images/btn_comment1.gif" alt="コメントを書く" width="116" height="20" /><img src="images/btn_comment2.gif" alt="コメントを読む" width="116" height="20" /></div>
+			</div>
+			<!-- エントリー -->
+			<div class="entry">
+				<div class="entry-title">
+					<h3>遠くへ</h3>
+					<div class="clap"><img src="images/i_crap.gif" alt="拍手" width="53" height="20" />4</div>
+					<div class="clr"></div>
+				</div>
+				<div class="entry-illust"><img src="images/illust02.jpg" alt="どや顔" width="400" height="400" /></div>
+				<div class="entry-name">
+					<p><img src="images/i_name.gif" alt="投稿者" width="64" height="20" />ミーコ&nbsp;&nbsp;<img src="images/i_comment.gif" alt="コメント数" width="64" height="20" />4&nbsp;&nbsp;<img src="images/i_category.gif" alt="カテゴリ" width="64" height="20" />女の子&nbsp;<br />
+					<img src="images/i_day.gif" alt="投稿日" width="64" height="20" />2011年4月18日0時47分</p>
+				</div>
+				<div class="entry-comment">
+					<p>このツールやっぱり凄いなぁ。線がとても引きやすかった～(*´∀｀)お絵かきソフトはもういらないかな。</p>
+				</div>
+				<div class="entry-button"><img src="images/btn_comment1.gif" alt="コメントを書く" width="116" height="20" /><img src="images/btn_comment2.gif" alt="コメントを読む" width="116" height="20" /></div>
+			</div>
+			<!-- 並びかえ・ページ -->
+			<div id="page-bottom">
+				<select name="sort">
+					<option value="新着順">新着順</option>
+					<option value="更新順">更新順</option>
+					<option value="コメント数">コメント数</option>
+					<option value="拍手順">拍手順</option>
+					<option value="サムネイル">サムネイル</option>
+				</select>
+				<a href="#1">1</a><a href="#2">2</a><a href="#3">3</a><a href="#4">4</a><a href="#5">5</a>
+			</div>
+		</div>
+		<!-- サイドバー -->
+		<div id="side">
+			<div id="free">
+				<h4>サイドバーフリ-エリア</h4>
+				<p>サイドバーにもフリーエリアがあり、好きなタグを貼付けることができます。プロフィールやBLOGパーツ用にどうぞ。</p>
+			</div>
+			<div id="affiliate">
+				<h4>アフィリエイトの例</h4>
+				<p class="center"><img src="images/affiliate.gif" alt="アフェリエイト" width="119" height="239" /></p>
+				<p>リンクはりつけ可能エリア</p>
+			</div>
+			<div id="comment">
+				<h4>新着コメント</h4>
+				<p>ココ/ いいネ！ブックマークしました。（5月28日6時）</p>
+				<p>ミーコ/ ありがとうございます。（5月28日4時）</p>
+				<p>カノ/ ソンケー（5月26日3時）</p>
+			</div>
+			<div id="counter">
+				<h4>カウンター</h4>
+				<p>今日：63<br />
+					昨日：44<br />
+					合計：2356</p>
+			</div>
+			<div id="menu">
+				<h4>メニュー</h4>
+				<p>クロッキー<br />
+					下絵<br />
+					男子<br />
+					女子</p>
+			</div>
+			<div id="twitter">
+				<h4>Twitter</h4>
+				<div id="twitter-name">
+					<p><img src="images/side_miko.jpg" alt="MikoBook" width="40" height="40" />MikoBook</p>
+				</div>
+				<ul>
+					<li>千年王国お絵かき掲示板に たいがーが投稿されたよ！ http://bit.ly/lJYlCF
+						53 minutes ago ・ reply ・ retweet ・ favorite</li>
+					<li>びよーんにnotitleが投稿されたよ！ http://bit.ly/kwYghF 23 hours ago ・ reply ・ retweet ・ favorite</li>
+					<li>おえかきけいじばんにかりんとうが投稿されたよ！ http://bit.ly/jENu9f yesterday ・ reply ・ retweet ・ favorite</li>
+					<li class="last">notitleが投稿されたよ！ http://bit.ly/kwYghF 23 hours ago ・ reply ・ retweet ・ favorite</li>
+				</ul>
+			</div>
+			<div id="side-footer">
+				<p>Join the Conversation</p>
+			</div>
+		</div>
+		<div class="clr"></div>
+	</div>
+	<!-- フッタ -->
+	<div id="contents-footer">
+		<p>イラストブック &copy; 2010-2011 ABARS all rights reserved.</p>
+	</div>
+</div>
+</body>
+</html>
