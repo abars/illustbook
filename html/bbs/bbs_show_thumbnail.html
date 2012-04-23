@@ -1,0 +1,23 @@
+<div class="entry">
+		イラスト<HR>
+				{% for thread in threads %}
+					<a href='{{usrhost}}{{thread.key}}.html' class='imagelink'>
+					{% if thread.image_key %}
+						{%ifequal thread.illust_mode 2%}
+							<IMG SRC="{{host}}thumbnail/{{thread.image_key.key}}.gif">
+						{%else%}
+							<IMG SRC="{{host}}thumbnail/{{thread.image_key.key}}.jpg">
+						{%endifequal%}
+					{% endif%}
+					</a>
+				{% endfor %}
+</div>
+
+{%if all_entries %}
+<div class="entry">
+リプライ<HR>
+{%for entry in all_entries %}
+{{entry|reply_with_except:host|safe}}
+{%endfor%}
+</div>
+{%endif%}

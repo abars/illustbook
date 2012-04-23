@@ -1,0 +1,12 @@
+	{% if side_comment %}
+		{% for entry in side_comment %}
+			{% ifequal bbs.date_format 2 %}
+				{{entry|comment_with_except_no_hour:host|safe}}
+			{% else %}
+				{{entry|comment_with_except:host|safe}}
+			{% endifequal %}
+			<BR>
+		{%endfor%}
+	{% else %}
+	     まだコメントはありません
+	{% endif %}

@@ -1,0 +1,69 @@
+<!-- 表示順 -->
+	<select id="pageselect" onChange="select_change(this.value,'{{page_url_order_base}}');">
+		{% ifequal order "new" %}
+		<option value="new" selected="selected">新着順</option>
+		{% else %}
+		<option value="new">新着順</option>
+		{% endifequal %}
+		{% ifequal order "update" %}
+		<option value="update" selected="selected">更新順</option>
+		{% else %}
+		<option value="update">更新順</option>
+		{% endifequal %}
+		{% ifequal order "comment" %}
+		<option value="comment" selected="selected">コメント数</option>
+		{% else %}
+		<option value="comment">コメント数</option>
+		{% endifequal %}
+{% ifequal bbs.bbs_mode 3 %}
+{% else %}
+		{% ifequal order "applause" %}
+		<option value="applause" selected="selected">拍手順</option>
+		{% else %}
+		<option value="applause">拍手順</option>
+		{% endifequal %}
+		{% ifequal order "thumbnail" %}
+		<option value="thumbnail" selected="selected">サムネイル</option>
+		{% else %}
+		<option value="thumbnail">サムネイル</option>
+		{% endifequal %}
+{% endifequal %}
+{% if bbs.show_only_movie %}
+		{% ifequal order "illust" %}
+		<option value="illust" selected="selected">ラスターを表示</option>
+		{% else %}
+		<option value="illust">ラスターを表示</option>
+		{% endifequal %}
+{% endif %}
+	</select>
+
+<!-- ページ番号 -->
+		{%for p in page_list%}
+			{%ifequal p page%}
+				{% if template_path %}
+					<a href="{{page_url_base}}{{p}}" style="background-color:#{{template_base_color}};">{{p}}</a>
+				{% else %}
+					<div class="page-current">{{p}}</div>
+				{% endif %}
+			{%else%}
+				<a href="{{page_url_base}}{{p}}">{{p}}</a>
+			{%endifequal %}
+		{%endfor%}
+
+<!-- モバイルの新規イラスト -->
+{% if is_iphone %}
+	{% ifequal bbs.bbs_mode 3 %}
+	{% else %}
+		{% if can_create_new_image %}
+			{% if not bbs.disable_create_new_illust %}
+				<input type="hidden" id="canvas_width" value="{%if bbs.default_canvas_width%}{{bbs.default_canvas_width}}{%else%}400{%endif%}" maxlength=3 size=3/>
+				<input type="hidden" id="canvas_height" value="{%if bbs.default_canvas_height%}{{bbs.default_canvas_height}}{%else%}400{%endif%}" maxlength=3 size=3/>
+				{% if template_path %}
+					<a href="#" onclick="open_draw('','{{bbs.key}}','{{host}}');">描く</A>
+				{% else %}
+						<input type="button" value="描く" onmouseover="this.className='menubutton_active'" onmouseout="this.className='menubutton'" class="menubutton" onclick="open_draw('','{{bbs.key}}','{{host}}');" style="width:40px;" />
+				{% endif %}
+			{% endif %}
+		{% endif %}
+	{% endifequal %}
+{% endif %}

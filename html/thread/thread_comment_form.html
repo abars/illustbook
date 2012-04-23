@@ -1,0 +1,72 @@
+{%if bbs.comment_rule_enable %}
+	<div class="entry">
+	コメントルール<HR>
+	{{bbs.comment_rule|safe}}
+	</div>
+{% endif %}
+
+{%if not bbs.disable_normal_reply %}
+	{%if show_comment_form %}
+<div class="entry">
+		コメントを書き込む<HR>
+		<form action='http://localhost/' enctype="multipart/form-data" method="post" onSubmit="this.action='{{host}}add_entry?bbs_key={{ bbs_key }}&thread_key={{ thread.key }}';">
+			<table class="table_color">
+			<tr><td>名前（必須）</td>
+			<td>
+				<input type="text" name="author" maxlength="50">
+				{% if logined %}
+					<input name="link_to_profile" type="checkbox" checked>プロフィールにリンク
+				{% else %}
+					プロフィールにリンクするにはログインして下さい
+				{% endif %}
+			</td></tr>
+			{% if logined %}
+			{% else %}
+			<tr><td>ホームページアドレス</td>
+			<td>
+				<input type="text" name="homepage_addr" maxlength="50" value="http://">
+			</td></tr>
+			{% endif %}
+			<tr><td>コメント（必須）</td>
+			<td>
+				<textarea name="comment" rows="10" cols="60" style="width:100%;"></textarea>
+			</td></tr>
+			<tr><td></td><td>
+			<input type="submit" value="コメントを書き込む" onmouseover="this.className='menubutton_active'" onmouseout="this.className='menubutton'" class="menubutton">
+			</td></tr>
+		</table>
+	</form>
+</div>
+	{%endif%}
+{%endif%}
+
+{%if show_comment_form %}
+	{%if bbs.enable_illust_reply or bbs.enable_illust_reply_continue %}
+		<div class="entry">
+		絵でコメントを書き込む<HR>
+	{%endif%}
+	
+	{%ifequal bbs.enable_illust_reply 1 %}
+		キャンバスサイズ<input type="text" id="canvas_width" value="{{bbs.illust_reply_width}}" maxlength=3 size=3/>x<input type="text" id="canvas_height" value="{{bbs.illust_reply_height}}" maxlength=3 size=3/>px　
+		<input type="button" value="絵でコメント" onmouseover="this.className='menubutton_active'" onmouseout="this.className='menubutton'" class="menubutton" onClick="open_draw('',1,'{{host}}','{{thread.key}}','{{bbs.key}}',{{thread.illust_mode}});">
+	{% endifequal %}
+	
+	{%ifequal thread.illust_mode 1 %}
+		{%ifequal bbs.enable_illust_reply_continue 1 %}
+			<input type="button" value="絵で続きからコメント" onmouseover="this.className='menubutton_active'" onmouseout="this.className='menubutton'" class="menubutton" onClick="open_draw('{{thread.image}}',1,'{{host}}','{{thread.key}}','{{bbs.key}}',{{thread.illust_mode}});">
+		{% endifequal %}
+	{%endifequal %}
+
+	{%if bbs.enable_illust_reply or bbs.enable_illust_reply_continue %}
+		</div>
+	{%endif%}
+{% endif %}
+
+{%if bbs.comment_login_require %}
+	{% if not logined %}
+		<div class="entry">
+		ログインしてコメントを書き込む<HR>
+		この掲示板では、コメントを書き込む際にログインが必要です。<BR><BR>
+		</div>
+	{% endif %}
+{%endif%}

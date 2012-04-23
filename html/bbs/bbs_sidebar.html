@@ -1,0 +1,133 @@
+	{% if not bbs.in_frame_mode %}
+		{% if not is_iphone %}
+
+<div id="side">
+
+{% for one in sidebar_list %}
+	{% ifequal forloop.counter 1 %}
+		<div id="free">
+	{% else %}
+		<div id="{{one}}">
+	{% endifequal %}
+
+	{%ifequal one "free" %}
+		<h4>
+		{% if bbs.freearea_title %}{{bbs.freearea_title}}{% else %}フリーエリア{% endif %}
+		</h4>
+		<p>{{bbs.freearea|safe}}</p>
+	{%endifequal%}
+
+	{%ifequal one "category" %}
+		<h4>
+		カテゴリ
+		</h4>
+		<p>
+		{% if now_category %}
+		<A HREF="{{page_url_category_base}}" class="decnone">全て</A><BR>
+		{% endif%}
+		{% for category in category_list %}
+			{% ifequal category "" %}
+			{% else %}
+			<A HREF="{{page_url_category_base}}{{category|iriencode}}" class="decnone">{{category}}</A><BR>
+			{% endifequal %}
+		{% endfor %}
+		</p>
+	{%endifequal%}
+
+	{%ifequal one "affiliate" %}
+		<h4>
+		{%if bbs.amazon_title %}{{bbs.amazon_title}}{%else%}管理人のオススメ{%endif%}
+		</h4>
+		<p>{{bbs.amazon|safe}}</p>
+	{%endifequal%}
+
+	{%ifequal one "comment" %}
+		<h4>
+		新着コメント
+		</h4>
+		<p>{% include 'bbs/bbs_recent_comment.html' %}</p>
+	{%endifequal%}
+
+	{%ifequal one "counter" %}
+		<h4>
+		カウンター
+		</h4>
+		<p>
+		今日：{{bbs.counter.today_cnt}}<br>
+		昨日：{{bbs.counter.yesterday_cnt}}<br>
+		一昨日：{{bbs.counter.yesterday_yesterday_cnt}}<br>
+		合計：{{bbs.counter.total_cnt}}<br>
+		</p>
+	{%endifequal%}
+	
+	{%ifequal one "menu" %}
+		{% if bbs.my_homepage or not bbs.disable_analyze%}
+		<h4>
+		メニュー
+		</h4>
+		<p>
+		{% if bbs.my_homepage %}
+			<A HREF="{{bbs.my_homepage}}" class="decnone">ホームページ</A><BR>
+		{% endif %}
+		{% if not bbs.disable_analyze %}
+			<A HREF="{{host}}analyze?bbs_key={{bbs.key}}" class="decnone">アクセス解析</A><BR>
+		{% endif %}
+		</p>
+		{% endif %}
+	{%endifequal%}
+
+	{%ifequal one "twitter" %}
+		<h4>
+		Twitter
+		</h4>
+		<div class="twitter_widget">
+			<script src="http://widgets.twimg.com/j/2/widget.js"></script>
+			<script>
+new TWTR.Widget({
+	version: 2,
+	type: 'profile',
+	rpp: 10,
+	interval: 6000,
+	width: 'auto',
+	height: {{bbs.twitter_height}},
+	theme: {
+		shell: {
+			background: {% if template_path %} 'none' {% else %}'#{{bbs.twitter_shell_color}}' {% endif %},
+			color: 
+			{% if template_path %}
+				{% ifequal bbs.design_template_no 4 %}
+					'#536566'
+				{%else%}
+					'#ffffff'
+				{%endifequal%}
+			{% else %}
+				'#{{bbs.twitter_font_color}}'
+			{% endif %}
+		},
+		tweets: {
+			background: '#{{bbs.twitter_bg_color}}',
+			color: '#{{bbs.twitter_font_color}}',
+			links: '#{{bbs.twitter_font_color}}'
+		}
+	},
+	features: {
+		scrollbar: true,
+		loop: false,
+		live: true,
+		hashtags: true,
+		timestamp: true,
+		avatars: false,
+		behavior: 'all'
+	}
+}).render().setUser('{{bbs.twitter_id}}').start();
+			</script>
+		</div>
+	{%endifequal%}
+
+	</div>
+{% endfor %}
+
+</div>
+
+		{% endif %}
+	{% endif %}

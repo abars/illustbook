@@ -1,0 +1,33 @@
+{% if is_iphone %}
+<script type="text/javascript"><!--
+window.googleAfmcRequest = {
+  client: 'ca-mb-pub-8699119390634135',
+  ad_type: 'text_image',
+  output: 'html',
+  channel: '6675200089',
+  format: '320x50_mb',
+  oe: 'utf8',
+  color_border: '336699',
+  color_bg: 'FFFFFF',
+  color_link: '0000FF',
+  color_text: '000000',
+  color_url: '008000',
+};
+//--></script>
+<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_afmc_ads.js"></script>
+
+{%else%}
+
+<script type="text/javascript"><!--
+google_ad_client = "pub-8699119390634135";
+/* 468x60, 作成済み 10/06/08 */
+google_ad_slot = "5889327883";
+google_ad_width = 468;
+google_ad_height = 60;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+
+{% endif%}

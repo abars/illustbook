@@ -1,0 +1,16 @@
+<div id="contents-header">
+	<div id="contents-header-edit">
+		{% if template_path %}<p>{%endif%}
+		<a href='{{usrhost}}' class="decnone">{{bbs.bbs_name}}へ戻る</a>　
+		{% if thread.cached_image_key %}
+			{%if bbs.disable_draw_time %}{%else%}{%if thread.draw_time %}描画時間{{thread.draw_time|div}}分{% endif %}{%endif%}
+		{%endif%}
+		{% if template_path %}</p>{%endif%}
+	</div>
+	<div id="contents-header-edit" style="float:right;" align="right">
+		{%if not bbs.tweet_disable %}
+		　<a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="Illustbook">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+		{%endif%}
+	</div>
+	<div class="clr"></div>
+</div>

@@ -1,0 +1,12 @@
+{% if thread.adult or thread.violate_terms %}
+	[ご利用規約
+	{% if thread.adult %}
+		(アダルト)
+	{% endif %}
+	{% if thread.violate_terms %}
+	{% endif %}
+	の制約からイラストが非表示になっています]<BR>
+	[ご利用規約は http://www.illustbook.net/terms からご確認頂けます]<BR>
+{% else %}
+	<IMG SRC="{{host}}img/{{thread.cached_image_key}}{% if thread.is_png %}.png{%else%}.jpg{%endif%}" BORDER=0 ALT="{{thread.title}}" {% if is_iphone%} style="max-width:100%;"{%endif%}>
+{% endif %}

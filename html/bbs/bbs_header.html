@@ -1,0 +1,13 @@
+<!--掲示板のタイトル-->
+
+{% if template_path %}
+	<h1><A HREF="{{page_url}}">{{bbs.bbs_name}}</A></h1>
+	<h2>{{bbs.summary|safe}}</h2>
+{% else %}
+		{% if bbs.bottom_image %}
+			<A HREF="{{page_url}}" class="decnone_top_logo"><IMG SRC="{{bbs.bottom_image}}"></A>
+		{% else %}
+			<H3><A HREF="{{page_url}}" class="decnone">{{bbs.bbs_name}}</A></H3>
+			{% if bbs.summary %}{{bbs.summary|safe}}<BR>{% endif %}
+		{% endif %}
+{% endif %}

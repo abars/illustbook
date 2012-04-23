@@ -1,0 +1,19 @@
+{% if template_path %}
+					<table><tr><td width="46px">
+					<A HREF="{{usrhost}}index.xml" class="decnone"><img src="{{template_path}}images/i_rss.jpg" alt="RSS" width="44" height="20" /></A>
+					</td><td>
+					{%if not bbs.tweet_disable %}
+					<a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="Illustbook">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+					{%endif%}
+					</td>
+					</tr></table>
+{% else %}
+					<table><tr><td width="14px">
+					<A HREF="{{usrhost}}index.xml" class="decnone"><img src="{{host}}static_files/rss.png"></A>
+					</td><td>
+					{%if not bbs.tweet_disable %}
+					　<a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="Illustbook">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+					{%endif%}
+					</td>
+					</tr></table>
+{% endif %}

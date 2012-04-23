@@ -45,7 +45,7 @@
 			<!-- 並びかえ・ページ -->
 			<div id="entry-head">
 				<div id="page-head">
-					{% include "bbs/bbs_order.htm" %}
+					{% include "bbs/bbs_order.html" %}
 				</div>
 				<div id="rss">
 					{% include "bbs/bbs_rss.html" %}
@@ -95,24 +95,23 @@
 					{%endifequal%}
 			
 					<!--イラスト一つ-->
-					{% include "bbs/bbs_entry2.html" %}
+					{% include "bbs/bbs_entry.html" %}
 				{% endfor %}
 			{% endifequal%}
 			
 			<!-- 並びかえ・ページ -->
 			<div id="entry-bottom">
 				<div id="page-bottom">
-					{% include "bbs/bbs_order.htm" %}
+					{% include "bbs/bbs_order.html" %}
 				</div>　
 			</div>
 
 			<!-- サイドバー非表示時の要素 -->
 			{% include 'bbs/bbs_new_thread.html'%}　
-			{% include 'bbs/bbs_new_comment.html'%}　
 		</div>
 
 		<!-- サイドバー -->
-		{% include "bbs/bbs_sidebar.htm" %}
+		{% include "bbs/bbs_sidebar.html" %}
 		<div class="clr"></div>
 	</div>
 	<!-- フッタ -->

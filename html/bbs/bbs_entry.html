@@ -1,0 +1,106 @@
+<!--イラスト一つ-->
+<div class="entry">
+
+{% if thread.illust_mode and not bbs.disable_content_image %}
+	<!--イラスト掲示板-->
+	<div class="entry-title">
+		{% if thread.cached_image_key %}
+			<!-- イラスト付きの投稿 -->
+			<h3>{{ thread.title|escape }}</h3>
+		{% else %}
+			<!-- 文字だけの投稿 -->
+			<h3><A href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{%endif%}.html'>{{ thread.title|escape }}</A></h3>
+		{% endif %}
+
+		{% if not bbs.disable_applause %}
+			<div class="clap">
+			{% if template_path%}
+				<A HREF="{{host}}applause?bbs_key={{bbs.key}}&thread_key={{thread.key}}&mode=bbs&order={{order}}&page={{page}}" rel="nofollow"><img src="{{template_path}}images/i_crap.gif" alt="拍手" width="53" height="20"/></A>{%if thread.applause %}{{thread.applause}}{%else%}0{%endif%}
+			{% else %}
+				<input type="button" value="拍手" onmouseover="this.className='menubutton_active'" onmouseout="this.className='menubutton'" class="menubutton" onClick="location.href='{{host}}applause?bbs_key={{bbs.key}}&thread_key={{thread.key}}&mode=bbs&order={{order}}&page={{page}}'">{%if thread.applause %}{{thread.applause}}{%else%}0{%endif%}
+			{% endif %}
+			</div>
+		{% endif %}
+		<div class="clr"></div>
+	</div>
+
+	<!--画像が存在する場合-->
+	{% if thread.cached_image_key %}
+	<div class="entry-illust">
+		<a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{%endif%}.html' class="imagelink">
+		{% include "bbs_thread/image.html" %}
+		{% ifequal thread.illust_mode 2 %}
+		<BR>[クリックで再生]
+		{%endifequal%}
+		</a>
+	</div>
+	{% else %}
+		{% if template_path %}
+			<BR>
+		{% endif %}
+	{% endif %}
+	
+	<!--画像情報-->
+	<div class="entry-name">
+		<p>
+		{% if template_path %}
+			<img src="{{template_path}}images/i_name.gif" alt="投稿者" width="64" height="20" />
+		{% else %}
+			投稿者：
+		{% endif %}
+		{{thread|author_name_thread:host|safe}}
+		{%if not bbs.disable_comment%}
+		{%if is_iphone%} <BR>{%else%}&nbsp;&nbsp;{%endif%}
+		{% if template_path %}
+			<img src="{{template_path}}images/i_comment.gif" alt="コメント数" width="64" height="20" />
+		{% else %}
+			コメント数：
+		{% endif %}
+		<a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{%endif%}.html'>{{thread.comment_cnt}}</A>
+		{% endif %}
+		{%if is_iphone%} <BR>{%else%}&nbsp;&nbsp;{%endif%}
+		{% if template_path %}
+			<img src="{{template_path}}images/i_day.gif" alt="投稿日" width="64" height="20" />
+		{% else %}
+			投稿日：
+		{% endif %}
+		 {{thread.create_date|time_JST_format:bbs.date_format}}</p>
+	</div>
+{% else%}
+	<!--スレッド式掲示板-->
+	{% include "bbs/bbs_thread_list.html" %}
+{% endif %}
+
+<!--コメント表示-->
+{% if thread.illust_mode and bbs.enable_full_flat %}
+	<div class="entry-comment">
+	<p>{{thread.summary|safe}}</p>
+		{% if thread.postscript %}
+		　<p><a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{%endif%}.html' class="declink">続きを読む</a></p>
+		{% endif %}
+	</div>
+	
+	<div class="entry-button">
+	{%if not bbs.disable_comment%}
+	<a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{%endif%}.html' class="declink">
+	{% if template_path %}
+		<img src="{{template_path}}images/btn_comment1.gif" alt="コメントを書く" width="116" height="20" />
+	{% else %}
+		コメントを書く
+	{% endif %}
+	</a>
+	{% if not template_path %}　{% endif %}
+	{% endif %}
+	{%if thread.comment_cnt %}
+	<a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{%endif%}.html' class="declink">
+	{% if template_path %}
+		<img src="{{template_path}}images/btn_comment2.gif" alt="コメントを読む" width="116" height="20" />
+	{% else %}
+		コメントを読む({{thread.comment_cnt}})
+	{% endif %}
+	</a>
+	{% endif %}
+	</div>
+{%endif%}
+
+</div>

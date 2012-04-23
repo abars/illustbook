@@ -1,0 +1,118 @@
+<div class="entry">
+コメント一覧
+{% if com_list %}
+{%else%}
+	<HR>コメントはまだありません。<BR>
+{%endif%}
+
+<TABLE BORDER=0 class="table_color">
+{% for entry in com_list %}
+	{% if entry.com.del_flag %}
+<!-- 基本情報 -->
+		<TR><TD colspan=1 width=100%><hr></TD></TR>
+		<TR><TD>
+		投稿者：
+		{{entry.com|author_name_comment:host|safe}}
+		　投稿日：{% if entry.com.create_date %}{{entry.com.create_date|time_JST_format:bbs.date_format}}{%else%}{{entry.com.date|time_JST_format:bbs.date_format}}{%endif%}
+		
+		{%if edit_flag %}
+			<input type="button" value="削除" onmouseover="this.className='menubutton_active'" onmouseout="this.className='menubutton'" class="menubutton" onClick="confirm_action('{{host}}del_ent?entry_key={{entry.com.key}}&bbs_key={{bbs_key}}&thread_key={{thread.key}}');">
+			{% if bbs.comment_hidden_button %}
+				<input type="button" value="{% if entry.com.hidden_flag %}表示{%else%}非表示{% endif %}" onmouseover="this.className='menubutton_active'" onmouseout="this.className='menubutton'" class="menubutton" onClick="window.location.href='{{host}}vis_ent?entry_key={{entry.com.key}}&bbs_key={{bbs_key}}&thread_key={{thread.key}}';">
+			{% endif %}
+		{%endif%}
+
+		{%ifequal bbs.disable_normal_reply 1 %}
+		{%else%}
+			{%if show_comment_form %}
+				<input type="button" value="返信" onmouseover="this.className='menubutton_active'" onmouseout="this.className='menubutton'" class="menubutton" onClick="show('{{ entry.com.key }}');">
+			{% endif %}
+		{%endifequal%}
+
+<br>
+<!-- 絵で返信 -->
+{% if entry.com.illust_reply %}
+<IMG SRC="{{host}}img/{{entry.com.illust_reply_image_key.key}}.jpg" BORDER=0 {% if is_iphone %} style="max-width:100%;"{%endif%}><BR>
+{% endif %}
+
+<!-- 通常コメント -->
+{% if entry.com.hidden_flag %}
+	このコメントは非表示に設定されています。
+{% else %}
+	{{entry.com.content|safe}}
+{% endif %}
+
+<!-- レス -->
+{% if not entry.com.hidden_flag %}
+{% for res in entry.res_list %}
+<div style="margin:16px 2px 16px 40px;">
+<TABLE BORDER=0 class="table_color" width=100%>
+<TR><TD width=100%><hr></TD></TR>
+</TABLE>
+	投稿者：
+	{{res|author_name_comment:host|safe}}
+	　投稿日：{{res.date|time_JST_format:bbs.date_format}}
+{%if edit_flag %}
+<input type="button" value="削除" onmouseover="this.className='menubutton_active'" onmouseout="this.className='menubutton'" class="menubutton" onClick="confirm_action('{{host}}del_res?entry_key={{entry.com.key}}&res_key={{res.key}}');">
+{% endif %}
+{% if forloop.last %}
+{%if show_comment_form %}
+<input type="button" value="返信" onmouseover="this.className='menubutton_active'" onmouseout="this.className='menubutton'" class="menubutton" onClick="show('{{ entry.com.key }}');">
+{%endif%}
+{% endif %}
+<BR>{{res.content|safe}}<BR><BR>
+</div>
+{% endfor %}
+{% endif %}
+
+<div id="layer_{{ entry.com.key }}" style="display: none;position:relative;" class="close">
+<BR>
+<form action='http://localhost/' enctype="multipart/form-data" method="post" onSubmit="this.action='{{host}}add_res?entry_key={{ entry.com.key }}';">
+<table class="table_color">
+<tr><td>名前（必須）</td>
+<td><input type="text" name="author" maxlength="50">
+{% if logined %}
+	<input name="link_to_profile" type="checkbox" checked>プロフィールにリンク
+{% else %}
+	プロフィールにリンクするにはログインして下さい
+{% endif %}
+</td>
+</tr>
+<tr><td>コメント（必須）</td>
+<td><textarea name="comment" rows="10" cols="40"></textarea></td></tr>
+<tr><td></td><td><input type="submit" value="コメントを投稿する" onmouseover="this.className='menubutton_active'" onmouseout="this.className='menubutton'" class="menubutton"></td></tr>
+</table>
+</form>
+</div>
+</TD></TR>
+{% endif %}
+{% endfor %}
+</TABLE>
+
+<div id="page-bottom">
+<select id="pageselect" onChange="select_change(this.value,'{{page_url_base}}',{{page}});">
+{% ifequal order "new" %}
+	<option value="new" selected="selected">新着順</option>
+{% else %}
+	<option value="new">新着順</option>
+{% endifequal %}
+{% ifequal order "update" %}
+	<option value="update" selected="selected">更新順</option>
+{% else %}
+	<option value="update">更新順</option>
+{% endifequal %}
+</select>
+	{%for p in page_list%}
+		{%ifequal p page%}
+			{% if template_path %}
+				<a href="{{page_url_base}}{{p}}&order={{order}}" style="background-color:#{{template_base_color}};">{{p}}</a>
+			{% else%}
+				<div class="page-current">{{p}}</div>
+			{% endif %}
+		{%else%}
+			<a href="{{page_url_base}}{{p}}&order={{order}}">{{p}}</a>
+		{%endifequal %}
+	{%endfor%}
+</div>　
+
+</div>

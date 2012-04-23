@@ -1,0 +1,69 @@
+<div class="entry">
+	{% if template_path %}
+	<div class="entry-title">
+		<h3>{{ thread.title|escape }}</h3>
+		{% if not bbs.disable_applause %}
+			<div class="clap"><A HREF="{{host}}applause?bbs_key={{bbs_key}}&thread_key={{thread.key}}&mode=thread" rel="nofollow"><img src="{{template_path}}images/i_crap.gif" alt="拍手" width="53" height="20"></A>{%if thread.applause %}{{thread.applause}}{%else%}0{%endif%}</div>
+		{% endif %}
+		<div class="clr"></div>
+	</div><BR>
+	{% else%}
+	{{thread.title}}
+	<HR>
+	{%endif%}
+	
+
+{% if thread.cached_image_key %}
+	{% ifequal thread.illust_mode 2 %}
+		<script type="text/javascript" src="{{host}}moper_player?bbs_key={{bbs_key}}&thread_key={{thread.key}}"></script><BR>
+	{%else%}
+			{% include "bbs_thread/image.html" %}
+			<BR>
+			{% if template_path %}<BR>{%endif%}
+	{% endifequal %}
+{% endif %}
+
+<div class="entry-name">
+{%if template_path %}
+	<img src="{{template_path}}images/i_name.gif" alt="投稿者" width="64" height="20" />
+{%else%}
+	投稿者：
+{%endif%}
+{{thread|author_name_thread:host|safe}}
+　
+
+{% if thread.create_date %}
+	{%if template_path %}
+		<img src="{{template_path}}images/i_day.gif" alt="投稿日" width="64" height="20" />
+	{% else %}
+		投稿日：
+	{% endif%}
+	{{thread.create_date|time_JST_format:bbs.date_format}}　
+{% endif %}
+
+{% if thread.category %}
+	{%if template_path %}
+		<img src="{{template_path}}images/i_category.gif" alt="カテゴリ" width="64" height="20" />
+	{% else %}
+		カテゴリ：
+	{% endif%}
+	<A HREF="{{usrhost}}?category={{thread.category|iriencode}}" class="decnone">{{thread.category}}</A>　
+{%endif%}
+
+{% if thread.cached_image_key %}
+{% if not template_path %}
+{% if not bbs.disable_applause %}
+<input type="button" value="拍手" onmouseover="this.className='menubutton_active'" onmouseout="this.className='menubutton'" class="menubutton" onClick="location.href='{{host}}applause?bbs_key={{bbs_key}}&thread_key={{thread.key}}&mode=thread'">{%if thread.applause %}{{thread.applause}}{%else%}0{%endif%}
+{% endif %}
+{% endif %}
+{% endif %}
+</div>
+
+<div class="entry-comment">
+{{thread.summary|safe}}
+{%if thread.postscript %}
+<BR>{{thread.postscript|safe}}
+{% endif%}
+</div>
+
+</div>
