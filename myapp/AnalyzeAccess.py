@@ -54,6 +54,7 @@ class AnalyzeAccess(webapp.RequestHandler):
 			page_name=bbs.bbs_name;
 
 		analyze=re.sub("\"","\\\"",analyze)
+		analyze=re.sub("\'","\\\'",analyze)
 		
 		host_url ="./"
 		template_values = {
