@@ -76,7 +76,8 @@ function rediter_create_palette(id){
 	rediter_color[6]="0000ff";
 	rediter_color[7]="ff00ff";
 	rediter_color[8]="ff0000";
-	for(var i=0;i<8;i++){
+	rediter_color[8]="ffffff";
+	for(var i=0;i<9;i++){
 		text+="<button onClick='rediter_change_color("+i+",\""+id+"\")' style='border:0px;padding:1px;'>";
 		text+="<div style='width:14px;height:14px;padding:0px;margin:0px;background-color:#"+rediter_color[i];
 		text+=";float:left;'</div>";
