@@ -212,6 +212,8 @@ class ApiObject(webapp.RequestHandler):
 				thumbnail_url+=".gif"
 			else:
 				thumbnail_url+=".jpg"
+		if(bbs.del_flag):
+			thumbnail_url=""
 		create_date=ApiObject.get_date_str(thread.create_date)
 
 		thread_url="http://"+req.request.host+"/"
@@ -227,7 +229,7 @@ class ApiObject(webapp.RequestHandler):
 		image_url=""
 		if(thread.cached_image_key):
 			image_url="http://"+req.request.host+"/img/"+str(thread.cached_image_key)+".jpg"
-		if(bbs.dont_permit_app):	#アプリでの画像データの参照を禁止
+		if(bbs.dont_permit_app or bbs.del_flag):	#アプリでの画像データの参照を禁止
 			image_url=""
 
 		app=0

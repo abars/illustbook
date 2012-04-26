@@ -38,6 +38,10 @@ handlers:
   static_files: sitemap.xml
   upload: sitemap.xml
 
+- url: /favicon.ico
+  static_files: favicon.ico
+  upload: favicon.ico
+
 - url: /.*
   script: Main.application
 
