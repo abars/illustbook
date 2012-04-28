@@ -130,7 +130,7 @@
 		var txt="";
 		txt+="<div id='clap-prev'>";
 		txt+="<a href='javascript:click_page(\""+id+"\","+(page_no[id]-1)+");'>";
-		txt+="<img src='static_files_stable/general/images/top/top_clap_prev.gif' alt='' width='25' height='20' /></a></div>";
+		txt+="<img src='static_files/general/images/top/top_clap_prev.gif' alt='' width='25' height='20' /></a></div>";
 		for(var i=0;i<page_unit[id];i++){
 			var thread=thread_list[id][i+page_unit[id]*(page_no[id]-1)];
 		    if(!thread)
@@ -143,7 +143,7 @@
 
 		txt+="<div id='clap-next'>";
 		txt+="<a href='javascript:click_page(\""+id+"\","+(page_no[id]+1)+");'>";
-		txt+="<img src='static_files_stable/general/images/top/top_clap_next.gif' alt='' width='25' height='20' /></a></div>";
+		txt+="<img src='static_files/general/images/top/top_clap_next.gif' alt='' width='25' height='20' /></a></div>";
 
 		document.getElementById(id).innerHTML=txt;
 
