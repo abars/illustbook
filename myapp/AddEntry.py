@@ -123,10 +123,12 @@ class AddEntry(webapp.RequestHandler):
 		entry.create_date=datetime.datetime.today()
 		entry.date=datetime.datetime.today()
 
-		if(self.request.get('link_to_profile')=="on"):
-			if(user):
-				entry.user_id=user.user_id()
+		#プロフィールにリンクするか
+		link_to_profile=StackFeed.is_link_to_profile(self)
+		if(link_to_profile and user):
+			entry.user_id=user.user_id()
 		
+		#保存
 		entry.put()
 		thread = db.get(self.request.get("thread_key"))
 		thread.put()
@@ -154,4 +156,6 @@ class AddEntry(webapp.RequestHandler):
 		memcache.set("add_entry_double_block",self.request.get("comment"),30)
 		
 		#フィード
+		if(not link_to_profile):
+			user=None
 		StackFeed.feed_new_comment_thread(user,thread)

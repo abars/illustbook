@@ -129,9 +129,10 @@ class AddNewThread(webapp.RequestHandler):
 		else:
 			new_thread.is_png=0
 		
-		if(self.request.get("link_to_profile")):
-			if(self.request.get("link_to_profile")=="on" and user):
-				new_thread.user_id=user.user_id()
+		#プロフィールにリンクするか
+		link_to_profile=StackFeed.is_link_to_profile(self)
+		if(link_to_profile and user):
+			new_thread.user_id=user.user_id()
 		
 		#通常投稿モード(MOPER)
 		if(self.request.get('mode')=="illust"):
@@ -170,7 +171,6 @@ class AddNewThread(webapp.RequestHandler):
 		MappingThreadId.assign(bbs,new_thread,False)
 		
 		#put
-		#new_thread.put()
 		SyncPut.put_sync(new_thread)
 	
 		#ステータスを出力
@@ -180,10 +180,11 @@ class AddNewThread(webapp.RequestHandler):
 		else:
 			self.redirect(str('./bbs_index?bbs_key='+self.request.get('bbs_key')))
 		
-		#tweet
+		#feed
+		if(not link_to_profile):
+			user=None
 		url=self.get_thread_url(bbs,new_thread)
 		StackFeed.feed_new_thread(user,bbs,new_thread)
-		#self.tweet(bbs,new_thread,url)
 	
 	def get_thread_url(self,bbs,new_thread):
 		#thread info

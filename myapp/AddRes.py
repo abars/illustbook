@@ -93,9 +93,10 @@ class AddRes(webapp.RequestHandler):
 			self.response.out.write(Alert.alert_msg("名前を入力して下さい。",self.request.host));
 			return
 
-		if(self.request.get('link_to_profile')=="on"):
-			if(user):
-				response.user_id=user.user_id()
+		#プロフィールにリンクするか
+		link_to_profile=StackFeed.is_link_to_profile(self)
+		if(link_to_profile and user):
+			response.user_id=user.user_id()
 		
 		response.put()
 		
@@ -125,5 +126,7 @@ class AddRes(webapp.RequestHandler):
 		memcache.set("add_res_double_block",self.request.get("comment"),30)
 
 		#フィード
+		if(not link_to_profile):
+			user=None
 		StackFeed.feed_new_response_entry(user,thread,entry)
 

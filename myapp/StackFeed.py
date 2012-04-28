@@ -206,7 +206,15 @@ class StackFeed(webapp.RequestHandler):
 		data_key=str(data.key())
 		user_id=user.user_id()
 		taskqueue.add(url="/stack_feed_worker",params={"mode":"new_message","user_id":user_id,"data":data_key},queue_name="feed")
-
+		
+	@staticmethod
+	def is_link_to_profile(req):
+		link_to_profile=False
+		if(req.request.get("link_to_profile")):
+			if(req.request.get("link_to_profile")=="on"):
+				link_to_profile=True
+		return link_to_profile
+	
 	#-----------------------------------------------
 	#TaskQueueのWorker
 	#-----------------------------------------------
