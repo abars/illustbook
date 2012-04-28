@@ -41,6 +41,7 @@ handlers:
 - url: /favicon.ico
   static_files: favicon.ico
   upload: favicon.ico
+  expiration: "1d"
 
 - url: /.*
   script: Main.application

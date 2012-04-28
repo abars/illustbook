@@ -7,7 +7,7 @@
 	<link rel="stylesheet" type="text/css" media="screen,print" href="{{css_name}}" />
 	<link rel="stylesheet" type="text/css" media="screen,print" href="{{host}}template/common/style_common2.css" />
 {% else %}
-	<link rel="stylesheet" type="text/css" href="{{host}}css/{{bbs.key}}.css" media="screen,print" />
+	<link rel="stylesheet" type="text/css" href="{{host}}css/{{bbs.key}}.css{% if is_iphone %}?is_iphone=1{% endif %}" media="screen,print" />
 {% endif %}
 </head>
 
@@ -45,7 +45,7 @@
 				{% include "thread/thread_content.html" %}
 
 				<!-- 広告 -->
-				<div class="entry" {% if is_iphone and template_path %}style="margin-left:-6px;width:320px;"{% endif %}>
+				<div class="entry" {% if is_iphone %}{% if template_path %}style="margin-left:-6px;width:320px;"{% else %}style="padding-left:0px;padding-right:0px;"{% endif %}{% endif %}>
 					{% include 'bbs_thread/adsense.html' %}
 				</div>
 

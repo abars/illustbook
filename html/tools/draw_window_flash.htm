@@ -94,12 +94,12 @@ object, embed {
 
 <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=10,0,0,0" id="fromJavaScript" width=100% height=100%>
 <param name="allowScriptAccess" value="always" />
-<param name="movie" value="flash/IllustBook.swf" />
+<param name="movie" value="flash/IllustBook{% if is_flex46 %}46{% endif %}.swf" />
 <param name="quality" value="high" />
 <param name="allowFullScreen" value="true" />
 <param  name="wmode"  value="direct" />
 <param name="FlashVars" value="celsys={{celsys}}&draw_time={{draw_time}}&local_mode=0&width={{canvas_width}}&height={{canvas_height}}&bbs_key={{bbs_key}}&thread_key={{thread_key}}&canvas_url={{canvas_url}}&host={{host}}&reply={{reply}}{% if bbs.tool_bg_color %}&bg_color={{bbs.tool_bg_color}}{%endif%}&delete_when_upload_success={{bbs.delete_when_upload_success}}" />
-<embed src="flash/IllustBook.swf" allowFullScreen="true"  FlashVars="celsys={{celsys}}&draw_time={{draw_time}}&local_mode=0&width={{canvas_width}}&height={{canvas_height}}&bbs_key={{bbs_key}}&thread_key={{thread_key}}&canvas_url={{canvas_url}}&host={{host}}&reply={{reply}}{% if bbs.tool_bg_color %}&bg_color={{bbs.tool_bg_color}}{%endif%}&delete_when_upload_success={{bbs.delete_when_upload_success}}" quality="high" width=100% height=100% bgcolor="#ffffff" name="fromJavaScript" allowScriptAccess="always" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" wmode="direct" />
+<embed src="flash/IllustBook{% if is_flex46 %}46{% endif %}.swf" allowFullScreen="true"  FlashVars="celsys={{celsys}}&draw_time={{draw_time}}&local_mode=0&width={{canvas_width}}&height={{canvas_height}}&bbs_key={{bbs_key}}&thread_key={{thread_key}}&canvas_url={{canvas_url}}&host={{host}}&reply={{reply}}{% if bbs.tool_bg_color %}&bg_color={{bbs.tool_bg_color}}{%endif%}&delete_when_upload_success={{bbs.delete_when_upload_success}}" quality="high" width=100% height=100% bgcolor="#ffffff" name="fromJavaScript" allowScriptAccess="always" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" wmode="direct" />
 </object>
 
 <div id="loading_window" style="position:absolute;left:8px;top:8px;z-index:-1;">

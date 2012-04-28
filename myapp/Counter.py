@@ -47,7 +47,7 @@ class Counter(db.Model):
 			self.today_date=now_date
 			updated=True
 		if(updated):
-			self.put()#db.put_async(self)
+			self.put()
 		return updated
 
 

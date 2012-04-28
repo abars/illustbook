@@ -77,7 +77,7 @@ class CounterWorker(webapp.RequestHandler):
 		referer=self.request.get("referer")
 		url=self.request.get("url")
 		remote_addr=self.request.get("remote_addr")
-		
+
 		#カウンタ更新
 		CounterWorker.update_counter_core(bbs,bbs_key,thread,dont_count,referer,url,remote_addr)
 	
@@ -88,6 +88,11 @@ class CounterWorker(webapp.RequestHandler):
 		
 		#カウンタを更新
 		updated_counter=counter.update_counter(remote_addr,dont_count)
+
+		#デバッグ情報
+		#logging.warning("ref:"+referer+" adr:"+remote_addr+" dontcount:"+str(dont_count)+" updated:"+str(updated_counter))
+		
+		#IPが同じだったら終了
 		if(dont_count):
 			return
 		if(not updated_counter):

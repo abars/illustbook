@@ -22,6 +22,7 @@ from myapp.PageGenerate import PageGenerate
 from myapp.MappingId import MappingId
 from myapp.ApiFeed import ApiFeed
 from myapp.OwnerCheck import OwnerCheck
+from myapp.Alert import Alert
 
 class ViolationTerms(webapp.RequestHandler):
 	def get(self):
@@ -29,7 +30,7 @@ class ViolationTerms(webapp.RequestHandler):
 
 		user = users.get_current_user()
 		if(user):
-			if(OwnerCheck.is_admin(user)):
+			if(not OwnerCheck.is_admin(user)):
 				self.response.out.write(Alert.alert_msg("権限がありません。",self.request.host))
 				return
 

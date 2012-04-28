@@ -2,7 +2,7 @@
 ユーザ変更可能要素
 */
 
-{% if user_css %}	
+{% if user_css %}
 	{{user_css.css_code|safe}}
 {% else %}
 	{% include 'style_user.htm' %}
@@ -36,6 +36,24 @@ iPhoneの場合
 */
 
 {% if is_iphone %}
-	{% include 'style_iphone.htm' %}
-{% endif %}
 
+#container {
+ width:320px;
+}
+
+#contents_all,#contents,#main_2col,#main_1col {
+ width:100%;
+ magin-left:0px;
+ margin-right:0px;
+}
+
+.entry{
+ padding-left:6px;
+ padding-right:6px;
+}
+
+#side {
+ display:none;
+}
+
+{% endif %}

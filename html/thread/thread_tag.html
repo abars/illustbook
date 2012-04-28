@@ -8,7 +8,7 @@
 		</TD>
 	{% endfor %}
 	<TD>
-	<input type="text" id="tag" maxlength="10">
+	<input type="text" id="tag" maxlength="10">{% if is_iphone %}<BR>{% endif %}
 	<input type="button" value="タグ追加" onmouseover="this.className='menubutton_active'" onmouseout="this.className='menubutton'" class="menubutton" onclick="AddTag('{{host}}','{{ bbs_key }}','{{ thread.key}}');">
 	<input type="button" value="タグ削除" onmouseover="this.className='menubutton_active'" onmouseout="this.className='menubutton'" class="menubutton" onclick="DelTag('{{host}}','{{ bbs_key }}','{{ thread.key}}');">
 	</TD>

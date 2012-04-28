@@ -8,9 +8,9 @@
 	<link rel="stylesheet" type="text/css" media="screen,print" href="{{host}}template/common/style_common2.css" />
 {% else %}
 	{% if css_key %}
-		<link rel="stylesheet" type="text/css" href="{{host}}css/{{css_key}}.key" media="screen,print" />
+		<link rel="stylesheet" type="text/css" href="{{host}}css/{{css_key}}.key{% if is_iphone %}?is_iphone=1{% endif %}" media="screen,print" />
 	{% else %}
-		<link rel="stylesheet" type="text/css" href="{{host}}css/{{bbs.key}}.css" media="screen,print" />
+		<link rel="stylesheet" type="text/css" href="{{host}}css/{{bbs.key}}.css{% if is_iphone %}?is_iphone=1{% endif %}" media="screen,print" />
 	{% endif %}
 {% endif %}
 </head>
@@ -86,7 +86,7 @@
 						{% else %}
 							{% if not is_iphone or not template_path%}
 								{% if not bbs.disable_content_image %}
-									<div class="entry">
+									<div class="entry" {% if is_iphone %}style="padding-left:0px;padding-right:0px;"{% endif %}>
 									{% include 'bbs_thread/adsense.html' %}
 									</div>
 								{% endif %}
