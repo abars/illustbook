@@ -166,6 +166,7 @@ class ShowBbs(webapp.RequestHandler):
 			'template_path':design["template_path"],
 			'css_name':design["css_name"],
 			'is_iphone':design["is_iphone"],
+			'is_tablet':design["is_tablet"],
 			'template_base_color':design["template_base_color"],
 			'sidebar_list': sidebar_list,
 			'is_maintenance': is_maintenance,

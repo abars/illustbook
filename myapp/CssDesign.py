@@ -105,6 +105,8 @@ class CssDesign (webapp.RequestHandler):
 	@staticmethod
 	def get_design_object(main,bbs,host_url,is_thread):
 		is_iphone=CssDesign.is_iphone(main)
+		is_tablet=CssDesign.is_tablet(main)
+		
 		design_template_no=bbs.design_template_no
 		if(main.request.get("css")):
 			design_template_no=int(main.request.get("css"))
@@ -120,6 +122,7 @@ class CssDesign (webapp.RequestHandler):
 
 		dict={}
 		dict["is_iphone"]=is_iphone
+		dict["is_tablet"]=is_tablet
 		dict["template_path"]=template_path
 		dict["css_name"]=css_name
 		dict["template_base_color"]=template_base_color

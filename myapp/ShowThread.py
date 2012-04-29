@@ -122,9 +122,6 @@ class ShowThread(webapp.RequestHandler):
 		#レスを取得
 		com_list=ShowThread.get_response(com_list_,thread)
 		
-		#サイドバーのコメントを取得
-		#side_comment=RecentCommentCache.get_entry(bbs)
-
 		#コメントフォームを取得する
 		show_comment_form=1
 		if(bbs.comment_login_require and not(logined)):
@@ -147,7 +144,6 @@ class ShowThread(webapp.RequestHandler):
 			'page':page,
 			'page_url_base':page_url_base,
 			'page_list':page_list,
-#			'side_comment':side_comment,
 			'logined':logined,
 			'user':user,
 			'owner':owner,
@@ -155,6 +151,7 @@ class ShowThread(webapp.RequestHandler):
 			'template_path':design["template_path"],
 			'css_name':design["css_name"],
 			'is_iphone':design["is_iphone"],
+			'is_tablet':design["is_tablet"],
 			'template_base_color':design["template_base_color"],
 			'admin_user':admin_user,
 			'order':order,
