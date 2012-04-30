@@ -58,8 +58,8 @@ class ApiBookmark(webapp.RequestHandler):
 		if(bookmark==None):
 			return []
 		dic=[]
-		for bbs_key in bookmark.bbs_key_list:
-			bbs=db.get(bbs_key)
+		bbs_list=ApiObject.get_cached_object_list(bookmark.bbs_key_list)
+		for bbs in bbs_list:
 			one_dic=ApiObject.create_bbs_object(req,bbs)
 			dic.append(one_dic)
 		return dic

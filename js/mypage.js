@@ -297,6 +297,13 @@ function get_bbs_list(oj,id,initial_text){
 	var txt="";
 	for(var i=0;i<oj.length;i++){
 		var bbs=oj[i];
+		txt+="<div style='float:left;width:60px;height:52px;padding-top:2px;'>"
+		if(bbs.thumbnail_url){
+			txt+="<a href='show_bookmark?bbs_key="+bbs.key+"'>";
+			txt+="<img src='"+bbs.thumbnail_url+"' width=50px height=50px class='radius_image'>";
+			txt+="</a>";
+		}
+		txt+="</div><div style='float:left;padding-top:18px;'>";
 		txt+="<p><a href='"+bbs.bbs_url+"'>";
 		txt+=""+bbs.title;
 		if(bbs.bookmark){
@@ -321,6 +328,7 @@ function get_bbs_list(oj,id,initial_text){
 			txt+=add_delete_button(bbs.key,1,"",bbs.title);
 		}
 		txt+="</p>";
+		txt+="</div><br clear='all'>";
 	}
 	if(txt==""){
 		txt="<p>"+initial_text+"</p>";

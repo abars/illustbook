@@ -259,7 +259,10 @@ class ApiObject(webapp.RequestHandler):
 		else:
 			bbs_url+="usr/"+str(bbs.key())+"/"
 		
-		one_dic={"title":bbs.bbs_name,"bbs_url":bbs_url,"bookmark":bookmark_cnt,"key":str(bbs.key())}
+		thumbnail_url=""
+		if(bbs.cached_thumbnail_key):
+			thumbnail_url="http://"+req.request.host+"/thumbnail/"+bbs.cached_thumbnail_key+".jpg"
+		one_dic={"title":bbs.bbs_name,"bbs_url":bbs_url,"bookmark":bookmark_cnt,"key":str(bbs.key()),"thumbnail_url":thumbnail_url}
 		return one_dic
 
 #-------------------------------------------------------------------
@@ -495,23 +498,35 @@ class ApiObject(webapp.RequestHandler):
 		return ApiObject.get_datastore_object(thread)
 	
 	@staticmethod
-	def get_datastore_object(thread):
-		if(type(thread)==db.Key or type(thread)==str):
+	def get_datastore_object(ds_obj):
+		if(type(ds_obj)==db.Key or type(ds_obj)==str):
 			try:
-				thread=db.get(thread);
+				ds_obj=db.get(ds_obj);
 			except:
 				return None
-		if(not thread):
+		if(not ds_obj):
 			return None
-		if(type(thread)==MesThread):
-			image_key=MesThread.image_key.get_value_for_datastore(thread)
+
+		if(type(ds_obj)==MesThread):
+			image_key=MesThread.image_key.get_value_for_datastore(ds_obj)
 			if(image_key):
-				thread.cached_image_key=str(image_key)
-			bbs_key=MesThread.bbs_key.get_value_for_datastore(thread)
+				ds_obj.cached_image_key=str(image_key)
+			bbs_key=MesThread.bbs_key.get_value_for_datastore(ds_obj)
 			if(bbs_key):
-				thread.cached_bbs_key=str(bbs_key)
-		memcache.set(BbsConst.OBJECT_CACHE_HEADER+str(thread.key()),thread,BbsConst.OBJECT_CACHE_TIME)
-		return thread
+				ds_obj.cached_bbs_key=str(bbs_key)
+
+		if(type(ds_obj)==Bbs):
+			try:
+				recent_thread=MesThread.all().filter("bbs_key =",ds_obj).order("-create_date").fetch(limit=1)
+				if(recent_thread):
+					image=recent_thread[0].image_key;
+					if(image):
+						ds_obj.cached_thumbnail_key=str(image.key());
+			except:
+				ds_obj.cached_thumbnail_key=""
+
+		memcache.set(BbsConst.OBJECT_CACHE_HEADER+str(ds_obj.key()),ds_obj,BbsConst.OBJECT_CACHE_TIME)
+		return ds_obj
 
 #-------------------------------------------------------------------
 #json return

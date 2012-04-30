@@ -6,6 +6,17 @@
 var HAND_DEBUG=false;
 
 //-------------------------------------------------
+//スクリプト読込
+//-------------------------------------------------
+
+//function addJS(file){
+//	document.write('<script type="text/javascript" src="'+file+'"></script>');
+//}
+
+//addJS("js/ilbpaint_ipad_color.js");
+//addJS("js/ilbpaint_ipad_layer.js");
+
+//-------------------------------------------------
 //インスタンス化
 //-------------------------------------------------
 

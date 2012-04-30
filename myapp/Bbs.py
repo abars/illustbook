@@ -115,6 +115,8 @@ class Bbs(db.Model):
 	css = db.ReferenceProperty(AppCode)								#CSSデザイン
 	delete_when_upload_success=db.IntegerProperty()			#アップロードに成功した場合にデータを削除するか
 	comment_hidden_button = db.IntegerProperty()				#コメント非表示ボタンを表示するか
+	
+	cached_thumbnail_key = db.StringProperty()					#サムネイルへのKey(動的生成)
 
 	create_date = 	db.DateTimeProperty(auto_now=False)
 	date = db.DateTimeProperty(auto_now=True)
