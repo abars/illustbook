@@ -4,14 +4,10 @@
 {% if thread.illust_mode and not bbs.disable_content_image %}
 	<!--イラスト掲示板-->
 	<div class="entry-title">
-		{% if thread.cached_image_key %}
-			<!-- イラスト付きの投稿 -->
-			<h3>{{ thread.title|escape }}</h3>
-		{% else %}
-			<!-- 文字だけの投稿 -->
-			<h3><A href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{%endif%}.html'>{{ thread.title|escape }}</A></h3>
-		{% endif %}
+		<!-- タイトル -->
+		<h3><A href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{%endif%}.html'>{{ thread.title|escape }}</A></h3>
 
+		<!-- 拍手 -->
 		{% if not bbs.disable_applause %}
 			<div class="clap">
 			{% if template_path%}
