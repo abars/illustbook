@@ -299,7 +299,7 @@ function get_bbs_list(oj,id,initial_text){
 		var bbs=oj[i];
 		txt+="<div style='float:left;width:60px;height:52px;padding-top:2px;'>"
 		if(bbs.thumbnail_url){
-			txt+="<a href='show_bookmark?bbs_key="+bbs.key+"'>";
+			txt+="<a href='"+bbs.bbs_url+"'>";
 			txt+="<img src='"+bbs.thumbnail_url+"' width=50px height=50px class='radius_image'>";
 			txt+="</a>";
 		}
