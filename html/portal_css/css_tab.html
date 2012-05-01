@@ -1,0 +1,85 @@
+<style>
+
+.radius_image{
+	margin:1px;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
+
+.bar{
+	background:#DFEEC3;
+	width:98%;
+	font-size: 14px;
+	padding:4px;
+	margin-bottom: 4px;
+}
+
+#container p {
+	padding-bottom: 4px;
+}
+
+{% if is_iphone %}
+#footer {
+	padding:0px;
+}
+{% endif %}
+	
+td{
+	padding-left:8px;
+	padding-bottom: 8px;
+	padding-top: 8px;
+}
+	
+ul.tab {
+	margin: 0;
+	padding: 0;
+	border-bottom: 2px #DFEEC3 solid;
+}
+
+ul.tab li {
+	float: left;
+	margin: 0 0 0 5px;
+	position: relative;
+	bottom: -2px;
+	list-style-type: none;
+	border: 1px #DFEEC3 solid;
+	border-top: none;
+	border-bottom: 2px #DFEEC3 solid;
+}
+
+ul.tab li.none {
+	border-bottom: 2px #fff solid;
+	font-weight: bold;
+}
+
+ul.tab li a {
+	color: #000;
+	display: block;
+	padding: 3px 10px 5px;
+	text-decoration: none;
+	background: #fff;
+}
+
+ul.tab li a.green {
+	border-top: 2px #DFEEC3 solid;
+}
+
+ul.tab li a:hover {
+	position: relative;
+	bottom: 1px;
+}
+
+.clear:after {
+	content:"";
+	display:block;
+	overflow:hidden;
+}
+.clear:after {
+	clear:both;
+}
+.clear {
+	zoom:1;
+}
+
+</style>

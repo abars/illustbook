@@ -53,6 +53,9 @@ class EditThread(webapp.RequestHandler):
 			'css_name':design["css_name"],
 			'is_iphone':design["is_iphone"],
 			'template_base_color':design["template_base_color"],
+			'user': user,
+			'redirect_url': self.request.path,
+			'edit_thread': True
 		}
 
 		path = os.path.join(os.path.dirname(__file__), '../html/edit_thread.html')

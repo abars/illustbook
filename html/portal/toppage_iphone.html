@@ -1,0 +1,62 @@
+		<div>
+			{% if is_maintenance %}
+				{% include "portal/maintenance.html" %}
+			{% endif %}
+			
+			<center>
+			<div style="padding:10px;">
+			<img src="static_files/banar_180.png">
+			</div>
+			</center>
+
+				<div class="clr"></div>
+
+			<p class="bar">イラストブックとは？</p>
+
+				<div style="padding:4px">
+				<p>お絵かきソフトがなくても誰でもすぐに描ける。それが「イラストブック」です。
+					「イラストブック」は、エイバースが提供する無料のレンタルお絵かき掲示板サイト。「イラストブック」に搭載されたお絵かきツールとあなた専用のお絵かき掲示版を使って、作品を世界中に公開しましょう。 </p>
+				</div>
+				
+				<div class="clr"></div>
+
+			<p>&nbsp</p>
+
+			<p class="bar">早速使ってみる</p>
+
+				<div style="padding:4px;">
+					<p><a href="{{host}}sample/" class="declink">まずはお試し</a></p>
+					<p>サンプルお絵描き掲示板で試し描きをすることができます。</p>
+					<p>&nbsp</p>
+					<p><a href="{{host}}mypage" class="declink">登録して使う</a></p>
+					<p>掲示板のレンタルにはGoogleアカウントを使用します。現在、<strong>{{bbs_n}}人</strong>の方が、イラストブックに登録され、<strong>{{illust_n}}点</strong>の作品が公開されています。</p>
+				</div>
+				<div class="clr"></div>
+		</div>
+
+			<p>&nbsp</p>
+
+			<p class="bar">最近投稿されたイラスト</p>
+
+			<div id="ranking_new" style="padding:10px;"></div>				
+
+			<p class="bar">ブックマークの多いイラスト</p>
+
+			<div id="ranking_moper" style="padding:10px;"></div>				
+
+			<p class="bar">注目のタグ</p>
+
+			<div style="padding:4px;">
+			{% include "search/search_top_tag.html" %}
+			</div>
+			
+			<p>&nbsp</p>
+
+			<p class="bar">サイトマップ</p>
+			<div style="padding:4px;">
+			<p>{% include "portal/footer_sitemap.html" %}</p>
+			</div>
+
+			<p>&nbsp</p>
+
+			<p>{% include "portal/footer_link.html" %}</p>

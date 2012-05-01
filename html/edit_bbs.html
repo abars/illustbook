@@ -3,23 +3,22 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>「{{bbs.bbs_name}}」の編集｜イラストブック</title>
-{%include "web/meta.html" %}
+{%include "meta.html" %}
 <meta http-equiv="Content-Script-Type" content="text/javascript" />
 <meta http-equiv="Content-Style-Type" content="text/css" />
 <meta name="Copyright" content="Copyright: ABARS" />
-{% include "web/css.html" %}
+{% include "portal_css/css_pc.html" %}
 <script language="javascript" src="api_js" type="text/javascript"></script>
 <script language="javascript" src="js/mypage.js" type="text/javascript"></script>
 </head>
 <body onload="init_tab();">
 
-{% include "web/floating_menu.html" %}
+{% include "floating_menu.html" %}
 
 <div id="container">
 	<p>&nbsp</p>
 	<div id="contents">
-		{% include "web/border_table.css" %}
-		{% include "web/edit_bbs.html" %}
+		{% include "edit_bbs/edit_bbs.html" %}
 	</div>
 </div>
 </body>

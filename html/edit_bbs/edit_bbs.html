@@ -1,0 +1,170 @@
+<!------------------------------------------------------>
+<!-- スクリプト                                                                           -->
+<!------------------------------------------------------>
+	
+<script language="javascript">
+	function check_id(){
+		var id=document.getElementById("check_short").value;
+		window.open("{{host}}check_id?id="+id);
+	}
+	
+	function clear_tab(){
+		document.getElementById('basic').style.display="none";
+		document.getElementById('sidebaredit').style.display="none";
+		document.getElementById('url').style.display="none";
+		document.getElementById('twitter').style.display="none";
+		document.getElementById('res').style.display="none";
+		document.getElementById('edit').style.display="none";
+		document.getElementById('content').style.display="none";
+		document.getElementById('category').style.display="none";
+		document.getElementById('counter').style.display="none";
+		
+		document.getElementById("tab_edit").className="tab";
+		document.getElementById("tab_basic").className="tab";
+		document.getElementById("tab_sidebaredit").className="tab";
+		document.getElementById("tab_url").className="tab";
+		document.getElementById("tab_twitter").className="tab";
+		document.getElementById("tab_res").className="tab";
+		document.getElementById("tab_content").className="tab";
+		document.getElementById("tab_category").className="tab";
+		document.getElementById("tab_counter").className="tab";
+	}
+	
+	function clear_design_tab(){
+		document.getElementById('aff').style.display="none";
+		document.getElementById('design').style.display="none";
+		document.getElementById('menubaredit').style.display="none";
+		document.getElementById('sidebardesign').style.display="none";
+		document.getElementById('twitterdesign').style.display="none";
+		document.getElementById('category').style.display="none";
+		document.getElementById('counter').style.display="none";
+
+		document.getElementById("tab_aff").className="tab";
+		document.getElementById("tab_design").className="tab";
+		document.getElementById("tab_menubaredit").className="tab";
+		document.getElementById("tab_sidebardesign").className="tab";
+		document.getElementById("tab_twitterdesign").className="tab";
+		document.getElementById("tab_category").className="tab";
+		document.getElementById("tab_counter").className="tab";
+	}
+	
+	function init_tab(){
+		click_tab("basic");
+		click_design_tab("design");
+		design_template_change("{{bbs.design_template_no}}");
+	}
+	
+	function click_tab(id){
+		clear_tab();
+		document.getElementById(id).style.display="block";
+		document.getElementById("tab_"+id).className="tab_active";
+	}
+	
+	function click_design_tab(id){
+		clear_design_tab();
+		document.getElementById(id).style.display="block";
+		document.getElementById("tab_"+id).className="tab_active";
+	}
+	
+	function design_template_change(no){
+		if(no=="None" || no=="0"){
+			document.getElementById("custom").style.display="block";
+		}else{
+			document.getElementById("custom").style.display="none";
+		}
+
+		//if(no=="32767"){
+		//	document.getElementById("css_editor").style.display="block";
+		//}else{
+		//	document.getElementById("css_editor").style.display="none";
+		//}
+	}
+</script>
+
+<!------------------------------------------------------>
+<!-- CSS                                                                                     -->
+<!------------------------------------------------------>
+
+<style type="text/css">
+	.tab{
+		width:80px;
+		height:32px;
+		padding:2px;
+		margin:0px;
+		margin-top:8px;
+		float:left;
+		color: #000000;
+		border-top: 2px solid #dfeec3;
+		border-left: 1px solid #dfeec3;
+		border-right: 1px solid #dfeec3;
+		border-bottom: 2px solid #dfeec3;
+	}
+
+	.tab_active{
+		width:80px;
+		height:40px;
+		color: #000000;
+		padding: 2px;
+		border-top: 2px solid #dfeec3;
+		border-left: 1px solid #dfeec3;
+		border-right: 1px solid #dfeec3;
+		margin:0px;
+		float:left;
+	}
+
+	.tabin{
+		 clear:both;
+		 background-color:#ffffff;
+		 padding:2px;
+		 margin:0px;
+		 padding-top:8px;
+		 display:none;
+	}
+	
+	.css_design{
+	}
+</style>
+</head>
+
+<!------------------------------------------------------>
+<!-- メイン                                                                                 -->
+<!------------------------------------------------------>
+
+	<!-- トップ -->
+	<div class="entry">
+		<H1><p>{{bbs.bbs_name}}の編集</p></H1>
+		{% if error_str %}
+			<p>フォームの内容にエラーがあります。：{{error_str}}</p>
+		{% endif %}
+		<p>掲示板の情報を更新するには下記のフォームを編集し、ページ下の更新ボタンを押して下さい。</p>
+	</div>
+	
+	<p>&nbsp</p>
+
+		<form action="./update_bbs?bbs_key={{bbs.key}}" enctype="multipart/form-data" method="post">
+			<!-- 基本設定 -->
+			<div class="entry" style="min-height:500px;">
+				<H1><p>基本設定</p></H1>
+				{% include "edit_bbs/edit_basic.html" %}
+				<p>&nbsp</p>
+			</div>
+
+			<!-- カスタム設定 -->
+			<div class="entry" id="custom" style="min-height:400px;">
+				<H1><p>カスタムテンプレートのデザイン設定</p></H1>
+				{% include "edit_bbs/edit_design.html" %}
+				<p>&nbsp</p>
+			</div>
+
+			<!-- 更新 -->
+			<div class="entry">
+				<table><tr><td>
+				<input type="submit" value="設定した情報で掲示板を更新する" onmouseover="this.className='pagebutton_active'" onmouseout="this.className='pagebutton'" class="pagebutton" style="font-size:85%">
+				</td></tr></table>
+			</div>
+		</form>
+		
+		<p>&nbsp</p>
+		
+		{% include "edit_bbs/edit_css.html" %}
+

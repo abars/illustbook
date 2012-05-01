@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+	<title>イラストブック　-　ローカルツール</title>
+	<link rel="stylesheet" type="text/css" media="screen,print" href="{{host}}static_files/general/css/common.css" /
+</head>
+
+<body>
+<div id="container">
+<div id="contents">
+<div id="main">
+
+<p>&nbsp</p>
+<H1>イラストブックローカルツールとは</H1>
+
+<p>イラストブックローカルツールはブラウザ上で使える高機能お絵かきツールです。</p>
+
+<p>&nbsp</p>
+
+<H1>ローカルツールの特徴</H1>
+
+<ul>
+<li>・ブラウザ上で筆圧とレイヤーを使用したお絵かき</li>
+<li>・ローカルからの画像ファイルの読み込み(.gif/.png/.jpg)</li>
+<li>・ローカルへの画像ファイルの書き出し(.png/.jpg)</li>
+<li>・独自形式の読み書き(.ilb)</li>
+</ul>
+
+<p>&nbsp</p>
+
+<p>ローカルで動作し、画像は送信しないため、個人的なファイルの編集に適しています。</p>
+
+<p>&nbsp</p>
+
+<H1>イラストブックローカルツールを開始する</H1>
+
+<form action="./localtool_draw" method="get">
+<p>キャンバス幅：<input type="text" name="canvas_width" value="640"/></p>
+<p>キャンバス高さ：<input type="text" name="canvas_height" value="480" /></p>
+
+<p>&nbsp</p>
+
+<input type="submit" value="ローカルツールを開始する" onmouseover="this.className='pagebutton_active'" onmouseout="this.className='pagebutton'" class="pagebutton" /><BR>
+</form>
+
+<p>&nbsp</p>
+
+</div>
+</div>
+{% include 'footer.htm' %}
+</div>
+{% include 'analytics.htm' %}
+</body>
+</html>
+

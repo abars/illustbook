@@ -6,21 +6,21 @@
 <meta name="viewport" content="width=device-width">
 {% endif %}
 <title>{% if view_mode %}「{{bookmark.name}}」のプロフィール{%else%}{% if user %}マイページ{%else%}登録して使う{%endif%}{%endif%}｜イラストブック</title>
-{%include "web/meta.html" %}
+{%include "meta.html" %}
 <meta http-equiv="Content-Script-Type" content="text/javascript" />
 <meta http-equiv="Content-Style-Type" content="text/css" />
 <meta name="Copyright" content="Copyright: ABARS" />
 {% if is_iphone %}
-	{% include "web/css_iphone.html" %}
+	{% include "portal_css/css_iphone.html" %}
 {% else %}
-	{% include "web/css.html" %}
+	{% include "portal_css/css_pc.html" %}
 {% endif %}
 <script language="javascript" src="api_js" type="text/javascript"></script>
 <script language="javascript" src="js/mypage.js" type="text/javascript"></script>
 </head>
 <body onload="mypage_init('{{tab}}',{% if user %}1{%else%}0{%endif%},{% if view_mode %}1{% else %}0{% endif %},{{edit_mode}},{{feed_page}},{{is_admin}});">
 
-{% include "web/floating_menu.html" %}
+{% include "floating_menu.html" %}
 
 <div id="container">
 	{% if not is_iphone %}
@@ -31,10 +31,10 @@
 		<h1><img src="static_files/general/images/entry/title_entry.gif" alt="登録して使う" width="880" height="40" /></h1>
 		{% endif %}
 		{% if not is_iphone %}
-			{% include "web/border_table.css" %}
+			{% include "portal_css/css_pc_2col.html" %}
 		{% endif %}
-		{% include "web/tab.css" %}
-		{% include "web/mypage.html" %}
+		{% include "portal_css/css_tab.html" %}
+		{% include "mypage/mypage.html" %}
 		<div id="pan"> 
 			{% if not user %}
 			<p>&nbsp;</p>
@@ -45,9 +45,9 @@
 	</div>
 	<div id="footer">
 		<ul>
-			{% include "web/footer_sitemap.html" %}
+			{% include "portal/footer_sitemap.html" %}
 		</ul>
-		<p>{% include "web/footer_link.html" %}</p>
+		<p>{% include "portal/footer_link.html" %}</p>
 	</div>
 </div>
 </body>

@@ -8,20 +8,20 @@
 <meta name="Keywords" content="お絵かき掲示板,お絵かきブログ,無料,お絵かき,レンタル" />
 <meta name="Description" content="イラストブックはお絵かきツールがなくてもすぐに描ける完全無料のレンタルお絵かき掲示板サービスです。" />
 <title>イラストブック - 無料レンタルお絵かき掲示板</title>
-{%include "web/meta.html" %}
+{%include "meta.html" %}
 <meta http-equiv="Content-Script-Type" content="text/javascript" />
 <meta http-equiv="Content-Style-Type" content="text/css" />
 <meta name="Copyright" content="Copyright: ABARS" />
 <link rel="stylesheet" type="text/css" media="screen,print" href="static_files/general/css/top.css" />
 {% if is_iphone %}
-	{% include "web/css_iphone.html" %}
+	{% include "portal_css/css_iphone.html" %}
 {% else %}
-	{% include "web/css.html" %}
+	{% include "portal_css/css_pc.html" %}
 {% endif %}
 </head>
 <body onload="get_ranking({{is_iphone}});">
 
-{% include "web/floating_menu.html" %}
+{% include "floating_menu.html" %}
 
 <div id="container">
 	{% if not is_iphone %}
@@ -42,20 +42,20 @@
 	{% endif %}
 	<div id="contents">
 		{% if is_iphone %}
-			{% include "web/tab.css" %}
-			{% include "web/toppage_iphone.html" %}
+			{% include "portal_css/css_tab.html" %}
+			{% include "portal/toppage_iphone.html" %}
 		{% else %}
-			{% include "web/toppage.html" %}
+			{% include "portal/toppage_pc.html" %}
 		{% endif %}
 	</div>
 
 	{% if not is_iphone %}
 	<div id="footer">
-		{% include "web/top_tag_list.html" %}
+		{% include "search/search_top_tag.html" %}
 		<ul>
-			{% include "web/footer_sitemap.html" %}
+			{% include "portal/footer_sitemap.html" %}
 		</ul>
-		<p>{% include "web/footer_link.html" %}</p>
+		<p>{% include "portal/footer_link.html" %}</p>
 	</div>
 	{% endif %}
 </div>

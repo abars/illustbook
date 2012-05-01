@@ -31,14 +31,14 @@
 	<script language="javascript" src="js/mypage.js" type="text/javascript"></script>
 {% endifequal %}
 
-{%include "web/meta.html" %}
+{%include "meta.html" %}
 <meta http-equiv="Content-Script-Type" content="text/javascript" />
 <meta http-equiv="Content-Style-Type" content="text/css" />
 <meta name="Copyright" content="Copyright: ABARS" />
 {% if is_iphone %}
-	{% include "web/css_iphone.html" %}
+	{% include "portal_css/css_iphone.html" %}
 {% else %}
-	{% include "web/css.html" %}
+	{% include "portal_css/css_pc.html" %}
 {% endif %}
 </head>
 
@@ -48,7 +48,7 @@
 	<body>
 {% endifequal %}
 
-{% include "web/floating_menu.html" %}
+{% include "floating_menu.html" %}
 
 <div id="container">
 	{% if not is_iphone and header_enable %}
@@ -77,61 +77,61 @@
 
 		{% ifequal mode "profile" %}
 			<h1><img src="static_files/general/images/profile/title_profile.gif" alt="会社概要" width="880" height="40" /></h1>
-			{% include "web/profile.html" %}
+			{% include "portal/profile.html" %}
 		{% endifequal %}
 
 		{% ifequal mode "community" %}
 			<h1><img src="static_files/general/images/community/title_community.gif" alt="コミュニティ" width="880" height="40" /></h1>
-			{% include "web/community.html" %}
+			{% include "portal/community.html" %}
 		{% endifequal %}
 
 		{% ifequal mode "bookmark" %}
 			{% if not is_iphone %}
-				{% include "web/border_table.css" %}
+				{% include "portal_css/css_pc_2col.html" %}
 			{% endif %}
-			{% include "web/tab.css" %}
+			{% include "portal_css/css_tab.html" %}
 			{% if tag %}
-				{% include "web/search_tag.html" %}
+				{% include "search/search_tag.html" %}
 			{% else %}
-				{%include "web/show_bookmark.html" %}
+				{%include "search/search_bookmark.html" %}
 			{% endif %}
 		{% endifequal %}
 
 		{% ifequal mode "link" %}
 			{% if is_iphone %}
-				{% include "web/tab.css" %}
+				{% include "portal_css/css_tab.html" %}
 				<p class="bar">リンク</p>
 			{% else %}
 				<h1><img src="static_files/general/images/top/title_link.gif" alt="リンク" width="880" height="40" /></h1>
 			{% endif %}
-			<p>{% include "web/link.html" %}</p>
+			<p>{% include "portal/link.html" %}</p>
 		{% endifequal %}
 
 		{% ifequal mode "guide" %}
 			<h1><img src="static_files/general/images/howto/title_howto.gif" alt="イラストブックの使い方" width="880" height="40" /></h1>
-			{%include "web/guide.html"%}
+			{%include "portal/guide.html"%}
 		{% endifequal %}
 
 		{% ifequal mode "support" %}
 			<h1><img src="static_files/general/images/support/title_support.gif" alt="よくある質問・サポート" width="880" height="41" /></h1>
-			{%include "web/support.html" %}
+			{%include "portal/support.html" %}
 		{% endifequal %}
 
 		{% ifequal mode "terms" %}
 			{% if is_iphone %}
-				{% include "web/tab.css" %}
+				{% include "portal_css/css_tab.html" %}
 				<p class="bar">ご利用規約</p>
 			{% else %}
 				<h1><img src="static_files/general/images/top/title_guide.gif" alt="ご利用規約" width="880" height="40" /></h1>
 			{% endif %}
-			{% include "web/terms.html" %}
+			{% include "portal/terms.html" %}
 			<p>&nbsp;</p>
 			{% if is_iphone %}
 				<p class="bar">プライバシーポリシー</p>
 			{% else %}
 				<h1><img src="static_files/general/images/top/title_privacy.gif" alt="プライバシーポリシー" width="880" height="36" /></h1>	
 			{% endif %}
-			{% include "web/privacy.html" %}
+			{% include "portal/privacy.html" %}
 		{% endifequal %}
 		
 		<p>&nbsp;</p>
@@ -151,9 +151,9 @@
 	</div>
 	<div id="footer">
 		<ul>
-			{% include "web/footer_sitemap.html" %}
+			{% include "portal/footer_sitemap.html" %}
 		</ul>
-		<p>{% include "web/footer_link.html" %}</p>
+		<p>{% include "portal/footer_link.html" %}</p>
 	</div>
 </div>
 </body>

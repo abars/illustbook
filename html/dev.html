@@ -9,7 +9,7 @@
 {% ifequal page "top"%}デベロッパーポータル{% endifequal%}
 {% ifequal page "css"%}CSS{% endifequal%}
  - イラストブック</title>
-{%include "web/meta.html" %}
+{%include "meta.html" %}
 <meta http-equiv="Content-Script-Type" content="text/javascript" />
 <meta http-equiv="Content-Style-Type" content="text/css" />
 <meta name="Copyright" content="Copyright: ABARS" />
@@ -35,7 +35,7 @@ SyntaxHighlighter.all();
 </head>
 <body>
 
-{% include "web/floating_menu.html" %}
+{% include "floating_menu.html" %}
 
 <div id="container">
 	<p>&nbsp</p>
@@ -78,7 +78,7 @@ SyntaxHighlighter.all();
 		</div>
 	</div>
 	<div id="footer">
-		<p>{% include "web/footer_link.html" %}</p>
+		<p>{% include "portal/footer_link.html" %}</p>
 	</div>
 </div>
 </body>

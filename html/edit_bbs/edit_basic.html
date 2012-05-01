@@ -1,0 +1,432 @@
+<div class="tab" onClick="click_tab('basic');" id="tab_basic"><p>基本設定</p></div>
+<div class="tab" onClick="click_tab('content');" id="tab_content"><p>イラスト一覧設定</p></div>
+<div class="tab" onClick="click_tab('sidebaredit');" id="tab_sidebaredit"><p>サイドバー設定</p></div>
+<div class="tab" onClick="click_tab('res');" id="tab_res"><p>コメント設定</p></div>
+<div class="tab" onClick="click_tab('edit');" id="tab_edit"><p>お絵かき設定</p></div>
+<div class="tab" onClick="click_tab('category');" id="tab_category"><p>カテゴリ設定</p></div>
+<div class="tab" onClick="click_tab('counter');" id="tab_counter"><p>カウンター設定</p></div>
+<div class="tab" onClick="click_tab('twitter');" id="tab_twitter"><p>Twitter設定</p></div>
+<div class="tab" onClick="click_tab('url');" id="tab_url"><p>URLの変更</p></div>
+
+<div id="basic" class="tabin">			
+			<TABLE BORDER=0 class="table_color">
+			<TR><TD>掲示板のタイトル</TD><TD><input type="text" name="title" value="{{bbs.bbs_name}}" size="40"></TD></TR>
+			<TR><TD>掲示板の概要</TD><TD><textarea name="bbs_summary"	rows="8" cols="40" style="width:100%;">{{bbs.summary}}</textarea></TD></TR>
+			<TR><TD>掲示板のモード</TD><TD>
+			<select name="mode">
+				{% ifequal bbs.bbs_mode 1 %}
+						<option value="1" selected="selected">お絵描き掲示板モード（誰でも投稿可能）</option>
+				{% else%}
+						<option value="1">お絵描き掲示板モード（誰でも投稿可能）</option>
+				{% endifequal %}
+				
+				{% ifequal bbs.bbs_mode 2 %}
+						<option value="2" selected="selected">お絵かきブログモード（管理人だけ投稿可能）</option>
+				{% else%}
+						<option value="2">お絵かきブログモード（管理人だけ投稿可能）</option>
+				{% endifequal %}
+				
+				{% ifequal bbs.bbs_mode 3 %}
+						<option value="3" selected="selected">スレッド式掲示板モード（イラストなし）</option>
+				{% else%}
+						<option value="3">スレッド式掲示板モード（イラストなし）</option>
+				{% endifequal %}
+			</select></TD></TR>
+
+			<TR><TD>戻り先ホームページアドレス</TD><TD><input type="text" name="my_homepage" value="{{bbs.my_homepage}}" size=48></TD></TR>			
+
+			<TR><TD>イラストをポータルの新着とランキングに表示</TD><TD>
+			<select name="disable_news">
+				{% ifequal bbs.disable_news 1 %}
+						<option value="1" selected="selected">表示しない</option><option value="0">表示する</option>
+				{% else%}
+						<option value="1">表示しない</option><option value="0" selected="selected">表示する</option>
+				{% endifequal %}
+			</select></TD></TR>
+
+			<TR><TD>イラストブックアプリからのイラストの参照</TD><TD>
+			<select name="dont_permit_app">
+				{% ifequal bbs.dont_permit_app 1 %}
+						<option value="1" selected="selected">許可しない</option><option value="0">許可する</option>
+				{% else%}
+						<option value="1">許可しない</option><option value="0" selected="selected">許可する</option>
+				{% endifequal %}
+			</select></TD></TR>
+
+			<TR><TD>デザインテンプレート</TD><TD>
+				<select name="design_template_no" id="design_template_no" onchange="javascript:design_template_change(''+this.value);">
+					<option value="0" {% if not bbs.design_template_no %} selected="selected" {% endif%}>カスタム</option>
+					<option value="32767" {% ifequal bbs.design_template_no 32767 %} selected="selected" {% endifequal%}>CSS</option>
+					<option value="1" {% ifequal bbs.design_template_no 1 %} selected="selected" {% endifequal%}>ブルー</option>
+					<option value="2" {% ifequal bbs.design_template_no 2 %} selected="selected" {% endifequal%}>グリーン</option>
+					<option value="3" {% ifequal bbs.design_template_no 3 %} selected="selected" {% endifequal%}>ピンク</option>
+					<option value="4" {% ifequal bbs.design_template_no 4 %} selected="selected" {% endifequal%}>ホワイト</option>
+				</select>
+				<input type="button" value="プレビュー" onmouseover="this.className='pagebutton_active'" onmouseout="this.className='pagebutton'" class="pagebutton" onclick="window.open('{{host}}usr/{{bbs.key}}/?css='+document.getElementById('design_template_no').value);" style="font-size:85%">
+			</TD></TR>
+			
+			<TR><TD>CSSデザインID</TD><TD>
+				<input name="css" id="css" value="{% if bbs.css and bbs.css.app_id %}{{bbs.css.app_id}}{% endif %}"><BR>デザインテンプレートでCSSを選択した場合のみ有効<BR>
+			</TD></TR>
+			
+			</TABLE>
+	</div>
+	
+	<div id="content" class="tabin">			
+			<TABLE BORDER=0 class="table_color">
+
+			<TR><TD>表示イラスト数(デフォルト5、最大10)</TD><TD><input type="text" name="page_illust_n" maxlength="2" value="{{bbs.page_illust_n}}" size=48></TD></TR>			
+
+			<TR><TD>デフォルト表示順（初期設定は新着順）</TD><TD>
+			<select name="order">	
+			<option value="1" {% ifequal bbs.default_order 1 %}selected="selected"{% endifequal %}>新着順</option>
+			<option value="2" {% ifequal bbs.default_order 2 %}selected="selected"{% endifequal %}>更新順</option>
+			</select>
+			</TD></TR>
+			
+			<TR><TD>イラスト一覧に本文を表示</TD><TD>
+			<select name="enable_full_flat">
+				{% ifequal bbs.enable_full_flat 1 %}
+						<option value="1" selected="selected">有効</option><option value="0">無効</option>
+				{% else%}
+						<option value="1">有効</option><option value="0" selected="selected">無効</option>
+				{% endifequal %}
+			</select></TD></TR>
+
+			<TR><TD>イラスト一覧に画像を表示</TD><TD>
+			<select name="disable_content_image">
+				{% if not bbs.disable_content_image %}
+						<option value="0" selected="selected">有効</option><option value="1">無効</option>
+				{% else%}
+						<option value="0">有効</option><option value="1" selected="selected">無効</option>
+				{% endif %}
+			</select></TD></TR>
+
+			<TR><TD>イラスト一覧に動画のみを表示</TD><TD>
+			<select name="show_only_movie">
+				{% if not bbs.show_only_movie %}
+						<option value="0" selected="selected">無効</option><option value="1">有効</option>
+				{% else%}
+						<option value="0">無効</option><option value="1" selected="selected">有効</option>
+				{% endif %}
+			</select></TD></TR>
+
+			<TR><TD>日付表記</TD><TD>
+			<select name="date_format">	
+			<option value="0" {% if not bbs.date_format  %}selected="selected"{% endif %}>年月日時分</option>
+			<option value="1" {% ifequal bbs.date_format 1 %}selected="selected"{% endifequal %}>年月日時</option>
+			<option value="2" {% ifequal bbs.date_format 2 %}selected="selected"{% endifequal %}>年月日</option>
+			</select>
+			</TD></TR>
+
+			</TABLE>
+	</div>
+
+	<div id="res" class="tabin"> 
+			<TABLE BORDER=0 class="table_color">
+
+			<TR><TD>表示コメント数(デフォルト10、最大50)</TD><TD><input type="text" name="page_comment_n" maxlength="2" value="{{bbs.page_comment_n}}" size=48></TD></TR>		
+
+			<TR><TD>デフォルト表示順（初期設定は更新順）</TD><TD>
+			<select name="comment_order">	
+			<option value="2" {% ifequal bbs.default_comment_order 2 %}selected="selected"{% endifequal %}>更新順</option>
+			<option value="1" {% ifequal bbs.default_comment_order 1 %}selected="selected"{% endifequal %}>新着順</option>
+			</select>
+			</TD></TR>
+
+			<TR><TD>拍手の表示</TD><TD>
+			<select name="disable_applause">	
+			{%if bbs.disable_applause %}
+			<option value="0">表示する</option>
+			<option value="1" selected="selected">表示しない</option>
+			{% else %}
+			<option value="0" selected="selected">表示する</option>
+			<option value="1">表示しない</option>
+			{% endif %}
+			</select>
+			</TD></TR>
+
+			<TR><TD>タグの表示</TD><TD>
+			<select name="disable_tag">	
+			{%if bbs.disable_tag %}
+			<option value="0">表示する</option>
+			<option value="1" selected="selected">表示しない</option>
+			{% else %}
+			<option value="0" selected="selected">表示する</option>
+			<option value="1">表示しない</option>
+			{% endif %}
+			</select>
+			</TD></TR>
+
+			<!--
+			<TR><TD>コメントする場合にログインを必須にする</TD><TD>
+			<select name="comment_login_require">
+				{% ifequal bbs.comment_login_require 1 %}
+						<option value="0">誰でもコメント可能</option><option value="1" selected="selected">ログイン必須</option>
+				{% else%}
+						<option value="0" selected="selected">誰でもコメント可能</option><option value="1">ログイン必須</option>
+				{% endifequal %}
+			</select></TD></TR>
+			-->
+			
+			<TR><TD>新規スレッドの作成（スレッド式掲示板の場合）</TD><TD>
+			<select name="disable_create_new_thread">	
+			{%ifequal bbs.disable_create_new_thread 1 %}
+			<option value="1" selected="selected">管理人のみ作成可能</option>
+			{%else%}
+			<option value="1">管理人のみ作成可能</option>
+			{%endifequal%}
+			{%ifequal bbs.disable_create_new_thread 2 %}
+			<option value="2" selected="selected">ログインしていれば誰でも作成可能</option>
+			{%else%}
+			<option value="2">ログインしていれば誰でも作成可能</option>
+			{%endifequal%}
+			{%if not bbs.disable_create_new_thread %}
+			<option value="0" selected="selected">誰でも作成可能</option>
+			{%else%}
+			<option value="0">誰でも作成可能</option>
+			{%endif%}
+			</select>
+			</TD></TR>
+			
+			<TR><TD>コメントルールの表示</TD><TD>
+			<select name="comment_rule_enable">
+				{% ifequal bbs.comment_rule_enable 1 %}
+						<option value="0">無効</option><option value="1" selected="selected">有効</option>
+				{% else%}
+						<option value="0" selected="selected">無効</option><option value="1">有効</option>
+				{% endifequal %}
+			</select></TD></TR>
+
+			<TR><TD>コメントルール</TD><TD><textarea name="comment_rule"	rows="4" cols="40" style="width:100%;">{{bbs.comment_rule}}</textarea></TD></TR>
+
+			<TR><TD>コメントフォーム</TD><TD>
+			<select name="disable_comment">
+				{% ifequal bbs.disable_comment 1 %}
+						<option value="1" selected="selected">表示しない</option><option value="0">表示する</option>
+				{% else%}
+						<option value="1">表示しない</option><option value="0" selected="selected">表示する</option>
+				{% endifequal %}
+			</select></TD></TR>
+
+			<TR><TD>文字でコメント</TD><TD>
+			<select name="disable_normal_reply">
+				{% ifequal bbs.disable_normal_reply 1 %}
+						<option value="1" selected="selected">無効</option><option value="0">有効</option>
+				{% else%}
+						<option value="1">無効</option><option value="0" selected="selected">有効</option>
+				{% endifequal %}
+			</select></TD></TR>
+
+			<TR><TD>コメント非表示ボタン</TD><TD>
+			<select name="comment_hidden_button">
+				{% ifequal bbs.comment_hidden_button 1 %}
+						<option value="0">使用しない</option><option value="1" selected="selected">使用する</option>
+				{% else%}
+						<option value="0" selected="selected">使用しない</option><option value="1">使用する</option>
+				{% endifequal %}
+			</select></TD></TR>						
+	 </TABLE>
+			</div>
+
+		<div id="edit" class="tabin"> 
+			<TABLE BORDER=0 class="table_color">
+			<TR><TD>イラストを描く</TD><TD>
+			<select name="disable_create_new_illust">
+				{% ifequal bbs.disable_create_new_illust 1 %}
+						<option value="0">有効</option><option value="1" selected="selected">無効</option>
+				{% else%}
+						<option value="0" selected="selected">有効</option><option value="1">無効</option>
+				{% endifequal %}
+			</select></TD></TR>
+
+			<TR><TD>動画を描く</TD><TD>
+			<select name="enable_moper">
+				{% ifequal bbs.enable_moper 1 %}
+						<option value="1" selected="selected">有効</option><option value="0">無効</option>
+				{% else%}
+						<option value="1">有効</option><option value="0" selected="selected">無効</option>
+				{% endifequal %}
+			</select></TD></TR>
+
+			<TR><TD>初期キャンバス幅（デフォルト0)</TD><TD><input type="text" name="default_canvas_width" value="{{bbs.default_canvas_width}}" maxlength="4"></TD></TR>
+			<TR><TD>初期キャンバス高さ（デフォルト0)</TD><TD><input type="text" name="default_canvas_height" value="{{bbs.default_canvas_height}}" maxlength="4"></TD></TR>
+
+			<TR><TD>お絵かきツールの背景色（デフォルトf0f0f0、Noneでデフォルト設定)</TD><TD><input type="text" name="tool_bg_color" value="{{bbs.tool_bg_color}}" maxlength="6"></TD></TR>
+
+			<TR><TD>描画時間表示</TD><TD>
+			<select name="disable_draw_time">
+				{% ifequal bbs.disable_draw_time 1 %}
+						<option value="1" selected="selected">無効</option><option value="0">有効</option>
+				{% else%}
+						<option value="1">無効</option><option value="0" selected="selected">有効</option>
+				{% endifequal %}
+			</select>
+			</TD></TR>
+
+			<TR><TD>続きから描く</TD><TD>
+			<select name="enable_continue_draw">
+				{% ifequal bbs.enable_continue_draw 1 %}
+						<option value="1" selected="selected">有効</option><option value="0">無効</option>
+				{% else%}
+						<option value="1">有効</option><option value="0" selected="selected">無効</option>
+				{% endifequal %}
+			</select></TD></TR>
+
+			<TR><TD>絵でコメント</TD><TD>
+			<select name="enable_illust_reply">
+				{% ifequal bbs.enable_illust_reply 1 %}
+						<option value="1" selected="selected">有効</option><option value="0">無効</option>
+				{% else%}
+						<option value="1">有効</option><option value="0" selected="selected">無効</option>
+				{% endifequal %}
+			</select></TD></TR>
+
+			<TR><TD>絵で続きからコメント</TD><TD>
+			<select name="enable_illust_reply_continue">
+				{% ifequal bbs.enable_illust_reply_continue 1 %}
+						<option value="1" selected="selected">有効</option><option value="0">無効</option>
+				{% else%}
+						<option value="1">有効</option><option value="0" selected="selected">無効</option>
+				{% endifequal %}
+			</select></TD></TR>
+			
+			<TR><TD>絵で返信する場合のキャンバス幅（デフォルト400)</TD><TD><input type="text" name="illust_reply_width" value="{{bbs.illust_reply_width}}" maxlength="4"></TD></TR>
+			<TR><TD>絵で返信する場合のキャンバス高さ（デフォルト200)</TD><TD><input type="text" name="illust_reply_height" value="{{bbs.illust_reply_height}}" maxlength="4"></TD></TR>
+
+			<TR><TD>投稿に成功したら一時保存データを削除</TD><TD>
+			<select name="delete_when_upload_success">
+				{% ifequal bbs.delete_when_upload_success 1 %}
+						<option value="0">無効</option><option value="1" selected="selected">有効</option>
+				{% else%}
+						<option value="0" selected="selected">無効</option><option value="1">有効</option>
+				{% endifequal %}
+			</select>
+			</TD></TR>
+	 </TABLE>
+	 </div>
+	 
+		<div id="sidebaredit" class="tabin"> 	 
+			<TABLE BORDER=0 class="table_color">
+			<TR><TD>サイドバーの表示</TD><TD>
+			<select name="in_frame_mode">
+				{% ifequal bbs.in_frame_mode 1 %}
+						<option value="1" selected="selected">表示しない</option><option value="0">表示する</option>
+				{% else%}
+						<option value="1">表示しない</option><option value="0" selected="selected">表示する</option>
+				{% endifequal %}
+			</select></TD></TR>
+
+			<TR><TD>サイドバーフリーエリアタイトル</TD><TD><input type="text" name="freearea_title" value="{{bbs.freearea_title}}"></TD></TR>
+			<TR><TD>サイドバーフリーエリア</TD><TD><textarea name="freearea"	rows="4" cols="40" style="width:100%;">{{bbs.freearea}}</textarea></TD></TR>
+
+			<TR><TD>アフィリエイトタイトル</TD><TD><input type="text" name="amazon_title" value="{{bbs.amazon_title}}"></TD></TR>
+			<TR><TD>アフィリエイトタグ</TD><TD><textarea name="amazon"	rows="4" cols="40" style="width:100%;">{{bbs.amazon}}</textarea></TD></TR>
+
+			<TR><TD>新着コメント一覧の表示数（デフォルト8、-1で非表示)</TD>
+			<TD><input type="text" name="recent_comment_n" value="{{bbs.recent_comment_n}}" maxlength="4"></TD></TR>
+
+	 </TABLE>
+	 </div>
+
+	<div id="counter" class="tabin"> 	 
+			<TABLE BORDER=0 class="table_color">
+			<TR><TD>カウンター表示</TD><TD>
+			<select name="disable_counter">
+				{% ifequal bbs.disable_counter 1 %}
+						<option value="1" selected="selected">無効</option><option value="0">有効</option>
+				{% else%}
+						<option value="1">無効</option><option value="0" selected="selected">有効</option>
+				{% endifequal %}
+			</select></TD></TR>
+			
+			 <TR><TD>管理人のアクセスでカウンターを加算するか</TD><TD>
+			<select name="dont_count_owner">
+				{% ifequal bbs.dont_count_owner 1 %}
+						<option value="1" selected="selected">加算しない</option><option value="0">加算する</option>
+				{% else%}
+						<option value="1">加算しない</option><option value="0" selected="selected">加算する</option>
+				{% endifequal %}
+			</select></TD></TR>
+			
+			<TR><TD>アクセス解析表示</TD><TD>
+			<select name="disable_analyze">
+				{% ifequal bbs.disable_analyze 1 %}
+						<option value="1" selected="selected">無効</option><option value="0">有効</option>
+				{% else%}
+						<option value="1">無効</option><option value="0" selected="selected">有効</option>
+				{% endifequal %}
+			</select></TD></TR>
+	 </TABLE>
+	 </div>
+
+	<div id="url" class="tabin"> 	 
+			<p>この掲示板のURLは</p>
+			{% if bbs.short %}
+			<blockquote>
+			<A HREF="{{host}}{{bbs.short}}/" TARGET=_BLANK><p>http://www.illustbook.net/{{bbs.short}}/</p></A>
+			</blockquote>
+			<p>です。下記にIDを入力することでURLを変更可能です。</p>
+			{% else %}
+			 <blockquote>
+			<A HREF="{{host}}usr/{{bbs.key}}/" TARGET=_BLANK><p>http://www.illustbook.net/usr/{{bbs.key}}/</p></A>
+			 </blockquote>
+			<p>です。この形式のURLは内部の仕様変更によって変化してしまう可能性があります。下記にIDを入力することでURLを固定化することを推奨させて頂いています。</p>
+			 {% endif %}
+			<BR><BR>
+			
+			<TABLE BORDER=0 class="table_color">
+			<TR><TD>ID(16文字以下)</TD><TD><input type="text" id="check_short" name="short" value="{% if bbs.short %}{{bbs.short}}{% endif %}" maxlength="16"></TD>
+			<TD><input type="button" value="IDを利用可能か確認" onmouseover="this.className='pagebutton_active'" onmouseout="this.className='pagebutton'" class="pagebutton" onclick="check_id();" style="font-size:85%"></TD></TR>
+			</TABLE>
+			
+			<BR><BR>
+			<p>管理人を変更する場合は、次のフォームに変更先のアカウントのメールアドレスを入力して掲示板の更新ボタンを押して下さい。</p>
+			<TABLE BORDER=0 class="table_color">
+			<TR><TD>Gmailメールアドレス</TD><TD><input type="text" name="move_account" value="{% if bbs.move_account %}{{bbs.move_account}}{% endif %}" maxlength="32"></TD>
+			</TABLE>			
+			</div>
+
+<!-- Twitter設定 -->
+
+<div id="twitter" class="tabin"> 	 
+	<TABLE BORDER=0 class="table_color">
+
+		<TR><TD>Tweetボタン</TD><TD>
+		<select name="tweet_disable">
+		{% ifequal bbs.tweet_disable 1 %}
+			<option value="0">表示</option><option value="1" selected="selected">非表示</option>
+		{% else%}
+			<option value="0" selected="selected">表示</option><option value="1">非表示</option>
+		{% endifequal %}
+		</select>
+		</TD></TR>
+
+		<TR><TD>Twitterタイムライン</TD><TD>
+		<select name="twitter_enable">
+		{% ifequal bbs.twitter_enable 1 %}
+		<option value="0">非表示</option><option value="1" selected="selected">有効</option>
+		{% else%}
+		<option value="0" selected="selected">非表示</option><option value="1">表示</option>
+		{% endifequal %}
+		</select>
+		</TD></TR>			
+	
+		<TR><TD>TwitterID</TD><TD><input type="text" name="twitter_id" value="{{bbs.twitter_id}}" maxlength="128"></TD></TR>
+		<TR><TD>高さ（デフォルト300)</TD><TD><input type="text" name="twitter_height" value="{{bbs.twitter_height}}" maxlength="6"></TD></TR>
+	</TABLE>
+</div>
+
+<!-- カテゴリ設定 -->
+
+<div id="category" class="tabin"> 	 
+	<p>現在のカテゴリ(カンマ区切り)</p>
+	<textarea name="category_list" id="category_list" rows="8" cols="40" style="width:80%;">{%if bbs.category_list %}{{bbs.category_list}}{%endif%}</textarea>
+	<p>カテゴリを追加する</p>
+	<table><tr><td>
+	<input type="text" id="category_add" value="">
+	</td><td>
+	<input type="button" value="追加" onmouseover="this.className='pagebutton_active'" onmouseout="this.className='pagebutton'" class="pagebutton" onclick="document.getElementById('category_list').value+=','+document.getElementById('category_add').value" style="font-size:85%">
+	</td></tr></table>
+</div>
+

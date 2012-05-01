@@ -1,0 +1,266 @@
+{% if regist_finish %}
+	<p class="bar">新規登録完了</p>
+	<p>お絵かき掲示板の登録が完了しました。このページの”レンタルしているお絵かき掲示板”からアクセスして下さい。</p>
+	<p>&nbsp</p>
+{% endif %}
+
+<!-- メイン領域 -->
+
+{% if not user %}
+	{% if not view_mode %}
+		<p>&nbsp;</p>		
+		<p>お絵かき掲示板のレンタルを行うにはGoogleアカウントでログインする必要があります。</p>
+		<p><a href='{{redirect_url|login_url}}' class="declink">Googleアカウントをお持ちの方はこちらからログインして下さい。</a></p>
+		<p><a href="https://www.google.com/accounts/NewAccount?hl=ja" class="declink" target="_BLANK">Googleアカウントをお持ちでない方はこちらから新規登録して下さい。</a></p>
+	{% endif %}
+{% endif %}
+
+<div class="profile_box">
+{% if user or view_mode%}
+	<a href="{{host}}mypage{% if view_mode %}?user_id={{bookmark.user_id}}{% endif %}">
+	{% if is_iphone %}
+		<div id="profile" style="float:left;margin:6px;"><img src="./show_icon?key={{bookmark.user_id}}" width=100 height=100 class="radius_image"></div>
+		<div style="float:left;font-size: 18px;padding-top:50px;">
+	{% else %}
+		<div id="profile" style="margin-left:10px;margin-right:10px;margin-top:2px;"><img src="./show_icon?key={{bookmark.user_id}}" width=180 height=180 class="radius_image"><BR></div>
+		<div style="font-size: 18px;width:100%;text-align:center;">
+	{% endif %}
+	{% if bookmark.name%}
+	{{bookmark.name}}
+	{%else%}
+	プロフィール未登録
+	{% endif%}
+	</div>
+	</a>
+	{% if is_iphone %}
+		<br clear="all">
+	{% endif %}
+	
+	<!--フォロワー -->
+	{% if not is_iphone %}
+		{% include "mypage/follower.html" %}
+	{% endif %}
+{% endif %}
+</div>
+
+<div class="left_box">
+
+{% if user or view_mode%}
+
+<script>
+	function display_tab(id){
+		{% if view_mode %}
+			window.location.href="{{host}}mypage?user_id={{bookmark.user_id}}&tab="+id;
+		{% else %}
+			window.location.href="{{host}}mypage?tab="+id;
+		{% endif %}
+		return false;
+	}
+</script>
+
+{% ifequal tab "profile" %}
+<div id="tab_profile">
+	<ul class="tab clear">
+	<li class="none"><a href="#" class="green" onClick="return display_tab('profile');">プロフィール</a></li>
+	<li><a href="#" class="green" onClick="return display_tab('feed');">タイムライン{% if not view_mode %}{{bookmark|new_feed_count}}{% endif %}</a></li>
+	<li><a href="#" class="green" onClick="return display_tab('bbs');">レンタル</a></li>
+	</ul>
+	<BR>
+
+	<p class="bar">投稿したイラスト</p>
+	
+		<TABLE width="100%"><TR><TD>
+		<div id="mypage_submit_thread">Loading</div>
+		</TD></TR></TABLE>
+
+	<p>&nbsp;</p>		
+
+	<p class="bar">ブックマークしているイラスト{% if not view_mode %}(<A HREF="./mypage?edit=2" class="declink">編集</A>){% endif %}</p>
+
+		<TABLE width="100%"><TR><TD>
+		<div id="mypage_bookmark_thread">Loading</div>
+		</TD></TR></TABLE>
+
+	<p>&nbsp;</p>
+	<p class="bar">ブックマークしているお絵かき掲示板{% if not view_mode %}(<A HREF="./mypage?edit=3" class="declink">編集</A>){% endif %}</p>
+
+		<TABLE width="100%"><TR><TD>
+		<div id="mypage_bookmark_bbs">Loading</div>
+		</TD></TR></TABLE>
+
+	<p>&nbsp;</p>
+		
+			<p class="bar">レンタルしているお絵かき掲示板{% if not view_mode %}(<A HREF="./mypage?edit=5" class="declink">編集</A>){% endif %}</p>
+
+		<TABLE width="100%"><TR><TD>
+		<div id="mypage_rental">Loading</div>
+		</TD></TR></TABLE>
+		
+	<p>&nbsp;</p>
+		
+			<p class="bar">プロフィール{% if not view_mode %}(<A HREF="./mypage?edit=1" class="declink">編集</A>){% endif %}</p>
+	
+			<TABLE width="100%"><TR><TD>
+				{% ifequal edit_mode 1%}
+				<form action="./update_profile" enctype="multipart/form-data" method="post">
+				<input type="hidden" name="mode" value="profile">
+				
+				<TABLE>
+				<TR><TD>ユーザ名（必須）</TD><TD>　</TD><TD><input name="name" type="text" value="{{bookmark.name}}" style="width:90%;"></TD></TR>
+				<TR><TD>性別</TD><TD>　</TD><TD>
+				<select name="sex" id="sex">
+					<option value="0" {% ifequal bookmark.sex 0 %} selected="selected" {% endifequal%}>非公開</option>
+					<option value="1" {% ifequal bookmark.sex 1 %} selected="selected" {% endifequal%}>男</option>
+					<option value="2" {% ifequal bookmark.sex 2 %} selected="selected" {% endifequal%}>女</option>
+				</select>
+				</TD></TR>
+				<TR><TD>生まれた年(西暦)</TD><TD>　</TD><TD>
+				<input name="birthday_year" type="text" value="{% if bookmark.birthday_year %}{{bookmark.birthday_year}}{% endif %}" style="width:80px;">年<BR>
+				何も書かなければ非公開になります
+				</TD></TR>
+				<TR><TD>誕生日（半角）</TD><TD>　</TD><TD>
+				<input name="birthday_month" type="text" value="{% if bookmark.birthday_month %}{{bookmark.birthday_month}}{%endif%}" style="width:40px;">月
+				<input name="birthday_day" type="text" value="{% if bookmark.birthday_day %}{{bookmark.birthday_day}}{% endif %}" style="width:40px;">日<BR>
+				何も書かなければ非公開になります
+				</TD></TR>
+				<TR><TD>コメント</TD><TD>　</TD><TD><textarea name="profile" rows="8" cols="40" style="width:90%;">{% if edit_profile %}{{edit_profile}}{% endif %}</textarea></TD></TR>
+				<TR><TD>ホームページ</TD><TD>　</TD><TD><input name="homepage" type="text" value="{% if bookmark.homepage %}{{bookmark.homepage}}{% endif %}" style="width:90%;"></TD></TR>
+				<TR><TD>メール</TD><TD>　</TD><TD><input name="mail" type="text" value="{% if bookmark.mail %}{{bookmark.mail}}{% endif %}" style="width:90%;"></TD></TR>
+				<TR><TD>TwitterID</TD><TD>　</TD><TD><input name="twitter" type="text" value="{% if bookmark.twitter_id %}{{bookmark.twitter_id}}{% endif %}" style="width:90%;"></TD></TR>
+				<TR><TD>アイコン</TD><TD>　</TD><TD>{% if not is_iphone %}<input type="file" name="icon">{% endif %}</TD></TR>
+				</TABLE>
+				{% if is_iphone %}
+				<input type="file" name="icon">
+				{% endif %}
+				<BR>
+
+				<input type="submit" value="プロフィールを更新" onmouseover="this.className='pagebutton_active'" onmouseout="this.className='pagebutton'" class="pagebutton">
+				</form>
+				{% else %}
+					{% if not bookmark.name %}
+						<p>ユーザのプロフィールは設定されていません。</p><BR>
+					{% else %}
+						<TABLE>
+						<TR><TD WIDTH=100px>ユーザ名</TD><TD>　</TD><TD>{{bookmark.name}}</TD></TR>
+						{% if bookmark.sex %}<TR><TD>性別</TD><TD>　</TD><TD>
+							{% ifequal bookmark.sex 1 %}
+								男
+							{%else%}
+								女
+							{%endifequal%}
+						</TD></TR>
+						{% endif %}
+						{% if age %}<TR><TD>年齢</TD><TD>　</TD><TD>{{age}}才</TD></TR>{%endif%}
+						{% if bookmark.birthday_month %}<TR><TD>誕生日</TD><TD>　</TD><TD>{{bookmark.birthday_month}}月{{bookmark.birthday_day}}日</TD></TR>{%endif %}
+						<TR><TD>コメント</TD><TD>　</TD><TD>{{bookmark.profile|safe}}</TD></TR>
+						{% if bookmark.homepage %}<TR><TD>ホームページ</TD><TD>　</TD><TD><A HREF="{{bookmark.homepage}}" class="declink"><div class="linebreak">{{bookmark.homepage}}</div></A></TD></TR>{% endif %}
+						{% if bookmark.mail %}<TR><TD>メール</TD><TD>　</TD><TD><A HREF="mailto:{{bookmark.mail}}" class="declink"><div class="linebreak">{{bookmark.mail|safe}}</div></A></TD></TR>{% endif %}
+						{% if bookmark.twitter_id %}<TR><TD>Twitter</TD><TD>　</TD><TD>{% if bookmark.twitter_id %}<A HREF="https://twitter.com/#!/{{bookmark.twitter_id}}" class="declink"><div class="linebreak">{{bookmark.twitter_id}}</div></A>{% endif %}</TD></TR>{% endif %}
+						{% if is_admin %}{% if bookmark.owner %}<TR><TD>アカウント(＊管理モード)</TD><TD>　</TD><TD>{{bookmark.owner.email}}</TD></TR>{% endif %}{% endif %}
+						</TABLE>
+					{% endif %}
+				{% endifequal %}
+			</TD></TR></TABLE>
+</div>
+{% endifequal %}
+
+	<!--レンタル -->
+{% ifequal tab "bbs" %}
+<div id="tab_bbs">
+	<ul class="tab clear">
+	<li><a href="#" class="green" onClick="return display_tab('profile');">プロフィール</a></li>
+	<li><a href="#" class="green" onClick="return display_tab('feed');">タイムライン{% if not view_mode %}{{bookmark|new_feed_count}}{% endif %}</a></li>
+	<li class="none"><a href="#" class="green" onClick="return display_tab('bbs');">レンタル</a></li>
+	</ul>
+	<BR>
+	
+
+	<p class="bar">お絵かき掲示板の新規レンタル</p>
+
+	{%if user and not view_mode%}
+			<form action="./add_bbs" enctype="multipart/form-data" method="post">
+			<input type="hidden" name="official" value="0">
+			<input type="hidden" name="redirect" value="./regist">
+			<TABLE width="100%">
+				<TR>
+					<TD>タイトル（必須）<br></TD>
+					<TD><input type="text" name="bbs_title" size="38" style="width:90%;"><br></TD>
+				</tr>
+				<tr>
+					<td>概要（必須）</td>
+					<TD><textarea name="bbs_summary" rows="3" cols="40" style="width:90%;"></textarea></TD>
+				</tr>
+				<tr>
+					<td>
+						希望するID(半角英数16文字以下)
+					</td>
+					<TD><input type="text" id="check_short" name="short" value="{% if bbs.short %}{{bbs.short}}{% endif %}" maxlength="16"><input type="button" value="IDを利用可能か確認" onmouseover="this.className='pagebutton_active'" onmouseout="this.className='pagebutton'" class="pagebutton" onclick="check_id('{{host}}');" style="font-size:85%">
+					</TD>
+				</tr>	  
+				<tr>
+					<td>モード</td>
+					<td>
+						<select name="mode">
+							<option value="1">お絵かき掲示板{% if not is_iphone %}（誰でも投稿可能）{% endif %}
+							<option value="2">お絵かきブログ{% if not is_iphone %}（管理人だけ投稿可能）{% endif %}
+							<option value="3">スレッド式掲示板{% if not is_iphone %}（イラストなし）{% endif %}
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<TD>
+					</TD>
+					<TD>
+						<input type="submit" value="お絵かき掲示板を新規レンタルする" onmouseover="this.className='pagebutton_active'" onmouseout="this.className='pagebutton'" class="pagebutton" style="font-size:85%">
+					</TD>
+				</TR>
+			</TABLE>
+			</form>
+			{%else%}
+				<p>レンタルは自分のアカウントでのみ行うことができます。</p>
+			{%endif %}
+		</div>
+{% endifequal %}
+{% endif%}
+
+	<!--タイムライン -->
+{% ifequal tab "feed" %}
+<div id="tab_feed">
+	<ul class="tab clear">
+	<li><a href="#" class="green" onClick="return display_tab('profile');">プロフィール</a></li>
+	<li class="none"><a href="#" class="green" onClick="return display_tab('feed');">タイムライン{% if not view_mode %}{{bookmark|new_feed_count}}{% endif %}</a></li>
+	<li><a href="#" class="green" onClick="return display_tab('bbs');">レンタル</a></li>
+	</ul>
+	
+	<BR>
+	{% include "mypage/feed.html" %}
+</div>
+{% endifequal %}
+
+	<!--フォロワー -->
+	{% if is_iphone %}
+		{% if user %}
+			{% ifequal tab "profile" %}
+				{% include "mypage/follower.html" %}
+			{% endifequal %}
+		{% endif %}
+	{% endif %}
+
+</div>
+
+{% if not is_iphone %}
+<br clear="all">
+{% endif %}
+
+{% if user %}
+	<!--退会 -->
+	{% if not view_mode or is_admin%}
+		{% ifequal tab "profile" %}
+		<TABLE width="100%"><TR><TD>
+		<div align="right">
+			<A HREF="#" onClick="confirm_withdraw('mypage?withdraw=go&user_id={{bookmark.user_id}}');return false;" class="declink">イラストブックから退会する{% if is_admin %}（＊管理モード）{% endif %}</A>
+		</div>
+		</TD></TR></TABLE>
+		{% endifequal %}
+	{% endif %}
+{% endif %}

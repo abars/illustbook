@@ -1,0 +1,129 @@
+<div class="left_box">
+
+{% if not thread_list %}
+	{% if not moper_list %}
+		{% if not text_list %}
+	<p class="bar">タグ「{{tag}}」を含むイラスト</p>
+	<TABLE width="100%">
+	<TR><TD>
+			<p>イラストは見つかりませんでした。</p>
+	</TD></TR>
+	</TABLE>
+	<p>&nbsp</p>
+		{% endif %}
+	{% endif %}
+{% endif %}
+
+{% if thread_list %}
+	<p class="bar">タグ「{{tag}}」を含むイラスト</p>
+	<TABLE width="100%">
+	<TR><TD>
+	{% for thread in thread_list %}
+		{% if not thread.violate_photo %}
+			<a href='{% if thread.bbs_key.short %}./{{thread.bbs_key.short}}/{%else%}./usr/{{thread.bbs_key.key}}/{%endif%}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{%endif%}.html' class="imagelink"><IMG SRC="{{host}}thumbnail/{{thread.image_key.key}}.jpg" BORDER=0 ALT="{{thread.title}}"></A>
+		{% endif %}
+	{% endfor %}
+	</TD></TR>
+	</TABLE>
+	<p>&nbsp</p>
+{% endif %}
+
+{% if moper_list %}
+	<p class="bar">タグ「{{tag}}」を含む動画</p>
+	<TABLE width="100%">
+	<TR><TD>
+	{% for thread in moper_list %}
+		<a href='{% if thread.bbs_key.short %}./{{thread.bbs_key.short}}/{%else%}./usr/{{thread.bbs_key.key}}/{%endif%}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{% endif %}.html' class="imagelink"><IMG SRC="{{host}}thumbnail/{{thread.image_key.key}}.gif" BORDER=0 ALT="{{thread.title}}"></A>
+	{% endfor %}
+	</TD></TR>
+	</TABLE>
+	<p>&nbsp</p>
+{% endif %}
+
+{% if text_list %}
+	<p class="bar">タグ「{{tag}}」を含むスレッド</p>
+	<TABLE width="100%">
+	<TR><TD>
+	{% for thread in text_list %}
+		<p><a href='{% if thread.bbs_key.short %}./{{thread.bbs_key.short}}/{%else%}./usr/{{thread.bbs_key.key}}/{%endif%}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{% endif %}.html' class="imagelink">{{thread.title|safe}}</A></p>
+	{% endfor %}
+	</TD></TR>
+	</TABLE>
+	<p>&nbsp</p>
+{% endif %}
+
+</div>
+
+<div class="right_box">
+<p class="bar">タグ検索</p>
+
+	<TABLE width="100%">
+	<TR><TD>
+
+	<form action="search_tag" method="get">
+	<input name="tag">
+	<input type="submit" value="検索">
+	</form>
+	</TD></TR>
+	</TABLE>
+
+<p>&nbsp</p>
+
+	<p class="bar">スポンサーリンク</p>
+
+{% if is_iphone %}
+<script type="text/javascript"><!--
+window.googleAfmcRequest = {
+  client: 'ca-mb-pub-8699119390634135',
+  ad_type: 'text_image',
+  output: 'html',
+  channel: '6675200089',
+  format: '320x50_mb',
+  oe: 'utf8',
+  color_border: '336699',
+  color_bg: 'FFFFFF',
+  color_link: '0000FF',
+  color_text: '000000',
+  color_url: '008000',
+};
+//--></script>
+<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_afmc_ads.js"></script>
+
+{%else%}
+
+	<TABLE width="100%">
+	<TR><TD>
+	<center>
+	<script type="text/javascript"><!--
+google_ad_client = "ca-pub-8699119390634135";
+/* illustbook_mypage */
+google_ad_slot = "6945191170";
+google_ad_width = 200;
+google_ad_height = 200;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+	</center>
+	</TD></TR>
+	</TABLE>
+
+{% endif %}
+
+	<p>&nbsp</p>
+
+<p class="bar">注目のタグ</p>
+	<TABLE width="100%">
+	<TR><TD>
+<p>
+{% for tag2 in tag_list %}
+	{{tag2|safe}}　
+{% endfor %}
+</p>
+	</TD></TR>
+	</TABLE>
+
+</div>
+
+<br clear="all">

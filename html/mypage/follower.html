@@ -1,0 +1,39 @@
+	<p>&nbsp;</p>		
+
+	<p class="bar">フォローしている{% if not view_mode %}(<A HREF="./mypage?edit=4" class="declink">編集</A>){% endif %}</p>
+
+		<TABLE width="100%"><TR><TD>
+		<div id="mypage_follow">Loading</div>
+		</TD></TR></TABLE>
+
+	<p>&nbsp;</p>
+	<p class="bar">フォローされている</p>
+
+		<TABLE width="100%"><TR><TD>
+		<div id="mypage_follower">Loading</div>
+		</TABLE>
+
+
+
+	<p>&nbsp;</p>
+
+	<p class="bar">アプリ{% if not view_mode %}(<A HREF="./mypage?edit=6" class="declink">編集</A>){% endif %}</p>
+
+		<TABLE width="100%"><TR><TD>
+		<div id="mypage_bookmark_app">Loading</div>
+		</TD></TR></TABLE>
+
+	<p>&nbsp;</p>
+	<p class="bar">メニュー</p>
+	<TABLE width="100%">
+	<TR><TD>
+	{% if view_mode %}
+		{% if bookmark.name %}
+			<p><A HREF="add_bookmark?mode=add_user&user_key={{bookmark.user_id}}" class="declink">{{bookmark.name}}をフォロー</A></p>
+		{% endif %}
+		<p><A HREF="./mypage" class="declink">マイページ</A></p>
+	{% else %}
+		<p><A HREF="./mypage?user_id={{bookmark.user_id}}" class="declink">リンク用URL</A></p>
+	{% endif %}
+	</TD></TR>
+	</TABLE>
