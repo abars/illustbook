@@ -1,10 +1,9 @@
 #for profile appstats
 
-#for python2.5
-#from google.appengine.dist import use_library
-#use_library('django', '1.2')
+import os
 
 def webapp_add_wsgi_middleware(app):
-    from google.appengine.ext.appstats import recording
-    app = recording.appstats_wsgi_middleware(app)
-    return app
+	if os.environ["SERVER_SOFTWARE"].find("Development")!=-1:
+		from google.appengine.ext.appstats import recording
+		app = recording.appstats_wsgi_middleware(app)
+	return app
