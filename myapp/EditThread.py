@@ -45,6 +45,7 @@ class EditThread(webapp.RequestHandler):
 		design=CssDesign.get_design_object(self,bbs,host_url,1)
 		
 		template_values = {
+			'host': './',
 			'bbs': bbs,
 			'thread': thread,
 			'summary': summary,

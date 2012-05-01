@@ -1,7 +1,12 @@
+//--------------------------------------------------------
+//イラストアップロードスクリプト
+//copyright 2010-2012 ABARS all rights reserved.
+//--------------------------------------------------------
+
 	function uploadImage(overwrite){
 		var ret=new Object();
 		ret.name=document.getElementById("name").value;
-		ret.comment=rediter_get_text();//document.getElementById("comment").value;
+		ret.comment=rediter_get_text();
 		ret.adr=document.getElementById("homepage_addr").value;
 		if(document.getElementById("title"))
 			ret.title=document.getElementById("title").value;

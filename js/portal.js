@@ -66,10 +66,10 @@
 		id="ranking_new";
 		on_loaded_core(oj,id);
 		if(is_require_next_thread(page_no[id],id)){
-		    if(auto_retry<=1){
+			if(auto_retry<=1){
 				auto_retry++;
 				request(id);
-		    }
+			}
 		}
 	}
 	
@@ -89,56 +89,59 @@
 			thread_list[id].push(oj[i]);
 		}
 		update(id);
-    }
-    
-    function update(id){
+	}
+	
+	function update(id){
 		if(id=="ranking_applause"){
-		    update_applause(id);
+			update_applause(id);
 		}else{
-		    update_new(id);
+			update_new(id);
 		}
 	}
-    
-    function get_link(thread){
+	
+	function get_link(thread){
 		var txt="";
 		if(!thread)
-		    return txt;
+			return txt;
 		txt+="<a href='"+thread.thread_url+"'>";
 		var size=60
 		if(is_iphone)
 			size=100
 		txt+="<img src='"+thread.thumbnail_url+"' BORDER=0 WIDTH="+size+"px HEIGHT="+size+"px></a>";
 		return txt;
-    }
-    
-    function get_text(thread){
+	}
+	
+	function limit_str(title){
+		if(title.length>11){
+			title=title.substr(0,10)+"…"
+		}
+		return title;
+	}
+	
+	function get_text(thread){
 		var txt="";
 		if(!thread)
-		    return txt;
-		title=thread.title
-		if(title.length>11){
-		    title=title.substr(0,10)+"…"
-		}
-		txt+=""+title+"<BR>";
-		txt+=""+thread.author+"<BR>";
+			return txt;
+		txt+=""+limit_str(thread.title)+"<BR>";
+		txt+=""+limit_str(thread.author)+"<BR>";
 		txt+=""+thread.create_date+"<BR>";
 		txt+=""+thread.applause+"拍手<BR>";
 		return txt;
-    }
-    
-    function update_applause(id){
+	}
+	
+	function update_applause(id){
 		var txt="";
 		txt+="<div id='clap-prev'>";
 		txt+="<a href='javascript:click_page(\""+id+"\","+(page_no[id]-1)+");'>";
 		txt+="<img src='static_files/general/images/top/top_clap_prev.gif' alt='' width='25' height='20' /></a></div>";
 		for(var i=0;i<page_unit[id];i++){
 			var thread=thread_list[id][i+page_unit[id]*(page_no[id]-1)];
-		    if(!thread)
+			if(!thread)
 				continue;
-		    txt+="<div class='clap-thum'>";
-		    txt+=get_link(thread)+"<BR>";
-		    txt+=get_text(thread)+"<BR>";
-		    txt+="</div>";
+			txt+="<div class='clap-thum'>";
+			txt+=get_link(thread)+"<BR>";
+			txt+=get_text(thread)+"<BR>";
+			txt+="</div>";
 		}
 
 		txt+="<div id='clap-next'>";
@@ -147,7 +150,7 @@
 
 		document.getElementById(id).innerHTML=txt;
 
-    }
+	}
 	
 	function update_new(id){
 		var txt="<dl>";
@@ -208,23 +211,23 @@
 		}
 		
 		if(page<1){
-		    page=1;
+			page=1;
 		}
 		
 		if(is_require_next_thread(page,id)){
-		    if(requesting[id]){
+			if(requesting[id]){
 				return;
-		    } 
-		    page_no[id]=page;
-		    update(id);
-		    auto_retry=0;
-		    request(id);
+			} 
+			page_no[id]=page;
+			update(id);
+			auto_retry=0;
+			request(id);
 		}else{
-		    page_no[id]=page;
+			page_no[id]=page;
 			update(id);
 		}
 	}
-    
-    function is_require_next_thread(page,id){
+	
+	function is_require_next_thread(page,id){
 		return (page*page_unit[id]>thread_list[id].length);
-    }
+	}
