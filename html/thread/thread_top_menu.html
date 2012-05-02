@@ -9,7 +9,7 @@
 	</div>
 	<div id="contents-header-edit" style="float:right;" align="right">
 		{%if not bbs.tweet_disable %}
-		　<a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="Illustbook">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+		　{% include "bbs_thread/tweet.html" %}
 		{%endif%}
 	</div>
 	<div class="clr"></div>
