@@ -57,7 +57,7 @@
 				<!--スレッド掲示板の広告-->
 				{% if not is_iphone %}
 					<div class="entry">
-						{% include 'bbs_thread/adsense.html' %}
+						{% include 'adsense/adsense_wide.html' %}
 					</div>
 				{% endif %}
 			{% endifequal %}
@@ -65,7 +65,7 @@
 			{% if bbs.disable_content_image  %}
 				{% if not is_iphone %}
 					<div class="entry">
-						{% include 'bbs_thread/adsense.html' %}
+						{% include 'adsense/adsense_wide.html' %}
 					</div>
 				{% endif %}
 			{% endif %}
@@ -87,7 +87,7 @@
 							{% if not is_iphone or not template_path%}
 								{% if not bbs.disable_content_image %}
 									<div class="entry" {% if is_iphone %}style="padding-left:0px;padding-right:0px;"{% endif %}>
-									{% include 'bbs_thread/adsense.html' %}
+									{% include 'adsense/adsense_wide.html' %}
 									</div>
 								{% endif %}
 							{% endif %}
