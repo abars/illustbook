@@ -70,7 +70,7 @@ class ApiUser(webapp.RequestHandler):
 			query=Bookmark.all().filter("user_list =",user_id)
 			follower=query.fetch(limit=1000)
 		except:
-			follower=None
+			return []
 		dic=[]
 		for bookmark in follower:
 			one_dic=ApiObject.create_user_object(req,bookmark)
@@ -100,7 +100,7 @@ class ApiUser(webapp.RequestHandler):
 
 	@staticmethod
 	def user_get_thread_list(req,user_id):
-		query=db.Query(MesThread)#,keys_only=True)
+		query=db.Query(MesThread)
 
 		query=query.filter("illust_mode IN",[BbsConst.ILLUSTMODE_ILLUST,BbsConst.ILLUSTMODE_MOPER])
 		query=query.filter("user_id =",user_id).order("-create_date")
@@ -113,24 +113,12 @@ class ApiUser(webapp.RequestHandler):
 		if(req.request.get("limit")):
 			limit=int(req.request.get("limit"))
 
-		#thread_key_list=query.fetch(limit=limit,offset=offset)
-		
 		thread_key_list=[]
 		thread_list=query.fetch(limit=limit,offset=offset)
 		for thread in thread_list:
 			thread_key_list.append(str(thread.key()))
 		
 		return ApiObject.create_thread_object_list(req,thread_key_list,"user")
-		
-		#2012/03/24まで
-		#dic=[]
-		#thread_list=ApiObject.get_cached_object_list(thread_key_list)
-		#for thread in thread_list:
-		#	one_dic=ApiObject.create_thread_object(req,thread)
-		#	if(one_dic==None):
-		#		continue
-		#	dic.append(one_dic)
-		#return dic;
 
 	@staticmethod
 	def user_get_timeline(req,user_id):
