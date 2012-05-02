@@ -33,7 +33,7 @@ color: #333;
 {% endif %}
 <div style="float:left;margin-left:8px;padding-top:3px;">
 {% if user %}
-<a href="{{host}}mypage">マイページ{{user|new_feed_count}}</a>｜
+<a href="{{host}}mypage">マイページ</a><a href="{{host}}mypage?tab=feed">{{user|new_feed_count}}</a>｜
 {% if not edit_thread %}
 	{% if thread %}
 		{% if thread.user_id %}
