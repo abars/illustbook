@@ -131,7 +131,10 @@ function Chat(){
 		//コマンドリストを取得
 		this._geting_retry=0;
 		this._geting_count=GET_COMMAND_LIMIT
-		illustbook.request.get("./chat?mode=get_command&offset="+this._geted_count+"&limit="+GET_COMMAND_LIMIT+"&key="+g_chat_key,chat_get_callback);
+		var url="chat?mode=get_command&offset="+this._geted_count+"&limit="+GET_COMMAND_LIMIT+"&key="+g_chat_key;
+		
+		//同じスレッドでGETする
+		illustbook.request.get("./"+url,chat_get_callback);
 	}
 	
 	//コマンドの取得に成功した
@@ -200,7 +203,7 @@ function Chat(){
 			post_data["command"+i]=cmd_list[i];
 		}
 		this._posting_count=cmd_list.length;
-		illustbook.request.post("./chat?mode=post_command&key="+g_chat_key,post_data,chat_post_callback);
+		illustbook.request.post_async("./chat?mode=post_command&key="+g_chat_key,post_data,chat_post_callback);
 	}
 	
 	this._send_success=function(){
