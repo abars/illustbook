@@ -40,7 +40,7 @@ function User(){
 	}
 	
 	this._update_status=function(){
-		var perc=Math.round((this._datastore_size*100)/(1*1024*1024));
+		var perc=this._datastore_size;
 		var txt="<small>容量の"+perc+"%を使用</small>";
 		document.getElementById("status").innerHTML=txt;
 	}
@@ -102,7 +102,7 @@ function User(){
 		//一定時間間隔で送信
 		var now_time=this._get_now_time();
 		var progress=now_time-this._before_send_heart_beat_time;
-		if(progress<HEART_BEAT_SEC/3){
+		if(progress<HEART_BEAT_SEC/4){
 			return;
 		}
 		this._before_send_heart_beat_time=now_time;
@@ -126,7 +126,8 @@ function User(){
 	}
 	
 	this.set_object_size=function(size){
-		this._datastore_size=size;
+		this._datastore_size=Math.round((size*100)/(1*1024*1024));
 		this._update_status();
+		return this._datastore_size
 	}
 }

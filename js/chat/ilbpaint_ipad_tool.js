@@ -135,8 +135,8 @@ function ToolBox(){
 		txt+=this._add_button("g_hand.zoom_in","拡大",s,0);
 		if(!(g_chat.is_chat_mode())){
 			txt+=this._add_button("g_draw_canvas.clear","クリア",s,margin);
-			txt+=this._add_button("ipad_switch_upload_form","投稿",s,margin);
 		}
+		txt+=this._add_button("ipad_switch_upload_form","投稿",s,margin);
 		document.getElementById("toolmenu").innerHTML=txt+"<br clear='both'>";
 
 		//遅延登録が必須
@@ -150,8 +150,8 @@ function ToolBox(){
 			document.getElementById("g_hand.zoom_in").addEventListener("touchstart", function(e){g_hand.zoom_in(true);},false);
 			if(!(g_chat.is_chat_mode())){
 				document.getElementById("g_draw_canvas.clear").addEventListener("touchstart", function(e){g_draw_canvas.clear(true);},false);
-				document.getElementById("ipad_switch_upload_form").addEventListener("touchstart", function(e){ipad_switch_upload_form(true);},false);
 			}
+			document.getElementById("ipad_switch_upload_form").addEventListener("touchstart", function(e){ipad_switch_upload_form(true);},false);
 		}
 	}
 

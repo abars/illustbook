@@ -62,7 +62,8 @@ function Buffer(){
 		if(command==this._local_cmd_list[0]){
 			this.pop_local_command();
 			this._update_local_image();
-			if(eval(command)[0].cmd==CMD_TEXT){	//自分の発言は既に処理されている
+			var cmd=eval(command)[0].cmd;
+			if(cmd==CMD_TEXT){	//自分の発言は既に処理されている
 				return;
 			}
 		}
@@ -102,6 +103,18 @@ function Buffer(){
 				break;
 			case CMD_HEART_BEAT:
 				g_user.get_heart_beat(cmd_object);
+				break;
+			case CMD_NOP:
+				break;
+			case CMD_SNAPSHOT:
+				var image=new Image();
+				image.src="data:image/png;base64,"+cmd_object.snap_shot;
+				image.onload=function(){
+					g_draw_primitive.clear(can_fixed);
+					can_fixed.getContext("2d").drawImage(image,0,0);
+				}
+				//本当はここでコマンドのパースを一時停止しなければならないが、
+				//後で考えることにする
 				break;
 			}
 		}

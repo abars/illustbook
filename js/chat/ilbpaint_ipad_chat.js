@@ -4,12 +4,15 @@
 //-------------------------------------------------
 
 var WATCH_DOG_COUNT=10;			//10回分の時間successが帰って来なかったらfailedと判断する
-var GET_COMMAND_LIMIT=50;			//コマンドを読み込んでくる単位
+var GET_COMMAND_LIMIT=100;		//コマンドを読み込んでくる単位
 var WORKER_INTERVAL=3000;			//3秒に一回通信
+var SNAPSHOT_PERCENT=75;			//使用率が上がった場合にスナップショットを取る
 
 var CMD_DRAW=0;
 var CMD_TEXT=1;
 var CMD_HEART_BEAT=2;
+var CMD_SNAPSHOT=3;
+var CMD_NOP=4;
 
 //-------------------------------------------------
 //グローバルコールバック
@@ -59,11 +62,24 @@ function chat_get_callback(obj){
 //コマンドPOSTコールバック
 function chat_post_callback(obj){
 	if(obj.status=="success"){
-		g_user.set_object_size(obj.size)
 		g_chat._send_success();
+		var percent=g_user.set_object_size(obj.size)
+		if(percent>=SNAPSHOT_PERCENT){
+			g_chat.snapshot();	//スナップショットを作成して容量を削減
+		}
 	}
 	if(obj.status=="failed"){
 		g_chat._send_failed();
+	}
+}
+
+//スナップショットコールバック
+function chat_snapshot_callback(obj){
+	if(obj.status=="success"){
+		g_chat._snapshot_success();
+	}
+	if(obj.status=="failed"){
+		g_chat._snapshot_failed();
 	}
 }
 
@@ -75,6 +91,7 @@ function Chat(){
 	this._geted_count;		//どのネットワークコマンドまでGETしているかの位置
 	this._geting_count;		//今、GETしている数
 	this._geting_retry;			//GETしてからの経過時間
+	this._initial_load;			//初期読込かどうか
 	
 	this._posted_count;		//どのローカルコマンドまでPOSTしているかの位置
 	this._posting_count;		//今、POSTしている数
@@ -115,6 +132,7 @@ function Chat(){
 		this._geted_count=0;
 		this._geting_count=0;
 		this._geting_retry=0;
+		this._initial_load=true;
 	}
 	
 	//サーバから最新のコマンドリストを取得
@@ -139,6 +157,12 @@ function Chat(){
 	
 	//コマンドの取得に成功した
 	this._get_success=function(cmd_list,count){
+		//初期読み込みの完了通知
+		if(count!=GET_COMMAND_LIMIT && this._initial_load){
+			g_buffer._update_comment({"comment":"初期読込が完了しました。"});
+			this._initial_load=false;
+		}
+		
 		//コマンドを1つずつ処理
 		for(var i=0;i<count;i++){
 			var cmd=cmd_list[i];
@@ -269,5 +293,39 @@ function Chat(){
 		g_buffer.push_command(txt);
 
 		document.getElementById("comment").value=""
+	}
+
+//-------------------------------------------------
+//スナップショット作成
+//-------------------------------------------------
+
+	//スナップショットを作成する
+	this.snapshot=function(){
+		g_buffer._update_comment({"comment":"スナップショットを作成します。"});
+		
+		var range=this._geted_count;
+
+		var image=can_fixed.toDataURL("image/png");
+		image = g_upload._header_split(image);
+		
+		g_upload._create_thumbnail();
+		var thumbnail_can=document.getElementById("canvas_thumbnail");
+		var thumbnail = g_upload._header_split(thumbnail_can.toDataURL("image/jpeg",0.95));
+		
+		post_data=new Object();
+		post_data["snap_shot"]=image;
+		post_data["snap_range"]=range;
+
+		post_data["thumbnail"]=thumbnail;
+		
+		illustbook.request.post_async("./chat?mode=post_snapshot&key="+g_chat_key,post_data,chat_snapshot_callback);
+	}
+	
+	this._snapshot_success=function(){
+		g_buffer._update_comment({"comment":"スナップショットの作成に成功。"});
+	}
+	
+	this._snapshot_failed=function(){
+		g_buffer._update_comment({"comment":"スナップショットの作成に失敗。"});
 	}
 }

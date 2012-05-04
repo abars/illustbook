@@ -1,12 +1,12 @@
 <div>
 
-
-<H1>イラブチャット（β）の概要</H1>
-<p>イラブチャット（β）は、PCとiPadで楽しめるお絵かきチャットです。</p>
+<div style="float:left;">
+<H1>イラブチャット（β）</H1>
+<H1>概要</H1>
+<p>イラブチャット（β）はPCとiPadで楽しめるお絵かきチャットです。</p>
 <p>複数人同時にお絵かきとチャットを楽しむことができます。</p>
+<p>また、作成したイラストはイラストブックのお絵描き掲示板に簡単に投稿することができます。</p>
 <p>&nbsp</p>
-
-
 <H1>動作環境</H1>
 <TABLE BORDER=1>
 <TR><TD>PC</TD><TD>HTML5に対応したブラウザ(IE9以降、FireFox、Safari、Chrome)</TD></TR>
@@ -15,9 +15,14 @@
 <p>&nbsp</p>
 <H1>利用ガイド</H1>
 <p>チャットで使用する名前とサムネイルは<A HREF="./mypage" class="declink">マイページ</A>で設定することができます。</p>
-<p>チャットできる容量は1MB以下になりますので、まだ長時間のチャットには対応していません。</p>
 <p>ルームは最終更新から10分が経過すると自動的に削除されます。</p>
 <p>&nbsp</p>
+</div>
+
+<div style="float:right;width:300px;height:300px;background-color:#aaaaaa;">
+ロゴイラストが入る予定 300 x 300px
+</div>
+<br clear="all">
 
 
 <H1>ルームの作成</H1>
@@ -38,7 +43,7 @@
 <H1>稼働中のルーム</H1>
 {% if room_list %}
 	{% for room in room_list %}
-		<p>ルーム名：{% if user %}<A HREF="./chat?mode=tool&key={{room.key}}" class="declink">{% endif %}{{room.name}}{% if user %}</A>{% endif %}　作成者：<A HREF="./mypage?user_id={{room.user_id}}" class="declink">{{room.user_name}}</A>　参加人数：{{room.user_count}}人　最終更新から{{room.from_last_update}}分経過　{% if user %}{% ifequal user.user_id room.user_id %}<A HREF="./chat?mode=delete&key={{room.key}}" class="declink">削除</A>{% endifequal %}{% endif %}</p>
+		<p><img src="./chat?mode=thumbnail&key={{room.key}}" WIDTH=40px HEIGHT=40px>　ルーム名：{% if user %}<A HREF="./chat?mode=tool&key={{room.key}}" class="declink">{% endif %}{{room.name}}{% if user %}</A>{% endif %}　作成者：<A HREF="./mypage?user_id={{room.user_id}}" class="declink">{{room.user_name}}</A>　参加人数：{{room.user_count}}人　最終更新から{{room.from_last_update}}分　作成から{{room.from_created}}分　{% if user %}{% ifequal user.user_id room.user_id %}<A HREF="./chat?mode=delete&key={{room.key}}" class="declink">削除</A>{% endifequal %}{% endif %}</p>
 	{% endfor %}
 {% else %}
 	<p>稼働中のルームはありません。</p>

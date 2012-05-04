@@ -33,6 +33,8 @@ function ipad_init(){
 	g_buffer.init();
 	g_draw_primitive.init();
 	g_user.init();
+	
+	g_buffer._update_comment({"comment":"初期読込を開始します。"});
 }
 
 //-------------------------------------------------
@@ -63,6 +65,8 @@ function ipad_get_instance(){
 	can_work = document.getElementById("canvas_work");
 
 	can_div = document.getElementById("canvas_div"); 
+	
+	g_draw_primitive.fill_white(can_fixed);
 
 	g_button_width=48;//100;
 	g_button_height=48;//20;

@@ -14,6 +14,7 @@ import time
 import datetime
 import random
 import logging
+import base64
 
 from google.appengine.ext.webapp import template
 from google.appengine.api import users
@@ -29,6 +30,7 @@ from myapp.Bookmark import Bookmark
 from myapp.CssDesign import CssDesign
 from myapp.ChatRoom import ChatRoom
 from myapp.ApiObject import ApiObject
+from myapp.Bbs import Bbs
 
 class Chat(webapp.RequestHandler):
 	#ユーザ名を取得する
@@ -57,6 +59,7 @@ class Chat(webapp.RequestHandler):
 		room.command_list=""
 		room.command_cnt=0
 		room.user_count=0
+		room.snap_range=0
 		room.create_date=datetime.datetime.now()
 		room.put()
 		self.redirect("./chat")
@@ -102,6 +105,55 @@ class Chat(webapp.RequestHandler):
 		except:
 			ApiObject.write_json_core(self,{"status":"failed"})
 	
+	#スナップショットを作成
+	def post_snapshot(self):
+		key=self.request.get("key")
+		snap_shot=self.request.get("snap_shot")
+		thumbnail=self.request.get("thumbnail")
+		snap_range=int(self.request.get("snap_range"))
+		try:
+			db.run_in_transaction(Chat.post_snapshot_core,key,snap_shot,snap_range,thumbnail)
+			ApiObject.write_json_core(self,{"status":"success"})
+		except:
+			ApiObject.write_json_core(self,{"status":"failed"})
+
+	@staticmethod
+	def post_snapshot_core(key,snap_shot,snap_range,thumbnail):
+		#スナップショットを格納
+		room=db.get(key)
+		room.thumbnail=db.Blob(base64.b64decode(thumbnail))
+		
+		#既にスナップショットが作成されている
+		if(room.snap_range>=snap_range):
+			return
+
+		#スナップショットまでのコマンドを消去
+		server_command_list=room.command_list.split(" , ")
+		new_command_list=""
+		limit=room.command_cnt
+		for i in range(snap_range,limit):
+			cmd=server_command_list[i-room.snap_range]
+			if(new_command_list==""):
+				new_command_list=cmd
+			else:
+				new_command_list=new_command_list+" , "+cmd
+		
+		#スナップショットコマンドを追加
+		cmd_snapshot=3
+		snapshot_cmd="[{'cmd':"+str(cmd_snapshot)+",'snap_shot':'"+snap_shot+"'}]"
+		if(new_command_list==""):
+			new_command_list=snapshot_cmd
+		else:
+			new_command_list=new_command_list+" , "+snapshot_cmd
+		room.command_list=new_command_list
+
+		room.command_cnt=room.command_cnt+1
+		room.snap_range=snap_range
+		
+		#logging.error("/////////SNAPSHOT:"+new_command_list)
+
+		room.put()
+	
 	@staticmethod
 	def post_command_core(key,cmd,cmd_count,user_count):
 		room=db.get(key)
@@ -129,15 +181,20 @@ class Chat(webapp.RequestHandler):
 		
 		command_list=[]
 		for i in range(offset,offset+limit):
-			one_cmd=server_command_list[i]
-			command_list.append(one_cmd)
+			if(i<room.snap_range):
+				cmd_nop=4
+				nop_command="[{'cmd':"+str(cmd_nop)+"}]";
+				command_list.append(nop_command)
+			else:
+				one_cmd=server_command_list[i-room.snap_range]
+				command_list.append(one_cmd)
 		
 		ApiObject.write_json_core(self,{"status":"success","offset":offset,"count":limit,"command_list":command_list})
 	
 	#ポータル
 	def show_portal(self,user):
 		is_iphone=CssDesign.is_iphone(self)
-		room_list=ChatRoom.all().fetch(limit=10)
+		room_list=ChatRoom.all().order("-create_date").fetch(limit=100)
 		
 		show_room=[]
 		for room in room_list:
@@ -167,6 +224,16 @@ class Chat(webapp.RequestHandler):
 	def get_sec(now):
 		return int(time.mktime(now.timetuple()))
 	
+	#サムネイル取得
+	def thumbnail(self):
+		room=db.get(self.request.get("key"))
+		if(not room.thumbnail):
+			self.redirect("./static_files/empty_user.png")
+			return
+		self.response.headers['Content-Type'] = "image/png"
+		self.response.out.write(room.thumbnail)
+		return
+	
 	#チャットツール
 	def tool(self,user):
 		bbs=None
@@ -184,6 +251,8 @@ class Chat(webapp.RequestHandler):
 		user_id=user.user_id()
 		user_name=self.get_user_name(user)
 		server_time=Chat.get_sec(datetime.datetime.now())
+		
+		bbs_list=Bbs.all().filter("user_id =",user.user_id()).filter("del_flag =",0).fetch(limit=10)
 
 		template_values = {
 		'host': "./",
@@ -202,7 +271,9 @@ class Chat(webapp.RequestHandler):
 		'ipad': ipad,
 		'user_id':user_id,
 		'user_name':user_name,
-		'server_time':server_time
+		'server_time':server_time,
+		'bbs_list':bbs_list,
+		'logined':True
 		}
 		
 		path = os.path.join(os.path.dirname(__file__), '../html/tools/draw_window_ipad.htm')
@@ -213,6 +284,9 @@ class Chat(webapp.RequestHandler):
 		mode=self.request.get("mode")
 		if(mode=="post_command"):
 			self.post_command()
+			return
+		if(mode=="post_snapshot"):
+			self.post_snapshot()
 			return
 		
 	def get(self):
@@ -234,6 +308,9 @@ class Chat(webapp.RequestHandler):
 			return
 		if(mode=="tool"):
 			self.tool(user)
+			return
+		if(mode=="thumbnail"):
+			self.thumbnail()
 			return
 		
 		#ポータル

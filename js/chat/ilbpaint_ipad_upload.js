@@ -22,6 +22,10 @@ function Upload(){
 	}
 	
 	this.upload=function(bbs_key,thread_key,reply){
+		if(bbs_key==""){
+			bbs_key=document.getElementById("bbs_list").value;
+		}
+	
 		this._bbs_key=bbs_key;
 		this._thread_key=thread_key;
 		this._reply=reply;
@@ -68,10 +72,10 @@ function Upload(){
 		this._append("mode","illust_all");
 		this._append("base64","1");
 
-        link_to_profile=document.getElementById("link_to_profile")
-        if(link_to_profile && link_to_profile.checked){
-            this._append("link_to_profile","on");
-        }
+		link_to_profile=document.getElementById("link_to_profile")
+		if(link_to_profile && link_to_profile.checked){
+			this._append("link_to_profile","on");
+		}
 
 		var thumbnail_can=document.getElementById("canvas_thumbnail");
 		var thumbnail = this._header_split(thumbnail_can.toDataURL("image/jpeg",0.95));
@@ -85,7 +89,7 @@ function Upload(){
 		//alert(this._data);
 		
 		var cmd="upl_all";
-		if(reply){
+		if(reply=="1"){
 			cmd="add_entry";
 		}
 	
@@ -111,7 +115,11 @@ function Upload(){
 		if(this._reply=="1"){
 			url_text="usr/"+this._bbs_key+"/"+this._thread_key+".html";
 		}
-		window.location.href=url_text;
+		if(g_chat.is_chat_mode()){
+			window.open(url_text);
+		}else{
+			window.location.href=url_text;
+		}
 	}
 
 	this._avg=function(src,fx,fy,mx,my,rgb){
