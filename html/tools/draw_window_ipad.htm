@@ -8,27 +8,57 @@
 	<meta name="viewport" content="width=480px,user-scalable=no,minimum-scale=0.667,maximum-scale=0.667">
 {% endif %}
 
+{% if chat %}
+<title>お絵かきチャット - イラストブック</title>
+{% else %}
 <title>{{bbs.bbs_name}}へのイラストの新規投稿</title>
-<script language="JavaScript" src="./js/ilbpaint_ipad.js"></script>
+{% endif %}
+
+<script language="JavaScript" src="./api_js"></script>
+<script language="JavaScript" src="./js/chat/ilbpaint_ipad_draw_primitive.js"></script>
+<script language="JavaScript" src="./js/chat/ilbpaint_ipad_draw.js"></script>
+<script language="JavaScript" src="./js/chat/ilbpaint_ipad_chat.js"></script>
+<script language="JavaScript" src="./js/chat/ilbpaint_ipad_buffer.js"></script>
+<script language="JavaScript" src="./js/chat/ilbpaint_ipad_undo.js"></script>
+<script language="JavaScript" src="./js/chat/ilbpaint_ipad_upload.js"></script>
+<script language="JavaScript" src="./js/chat/ilbpaint_ipad_tool.js"></script>
+<script language="JavaScript" src="./js/chat/ilbpaint_ipad_hand.js"></script>
+<script language="JavaScript" src="./js/chat/ilbpaint_ipad_user.js"></script>
+<script language="JavaScript" src="./js/chat/ilbpaint_ipad.js"></script>
+
 <script language="JavaScript" src="./js/cookie.js"></script>
 
 </head>
 
-<body bgcolor="#ffffff" onload="loadCookie();ipad_init();" style="overflow:hidden;margin:0px;padding:0px;" onselectstart="return false">
+<body bgcolor="{% if chat %}#eeeeee{% else %}#ffffff{% endif %}" onload="loadCookie();{% if chat %}chat_init('{{chat}}','{{user_id}}','{{user_name}}',{{server_time}});{% else %}chat_init('local','','',0);{% endif %}ipad_init();" style="overflow:hidden;margin:0px;padding:0px;" onselectstart="return false">
 
 <div style="width:100%;height:100%;">
-	<div id="toolbox" style="position:relative;z-index:10;background-color:#ffffff;">
-		<div id="toolmenu" style="margin-top:10px;padding-bottom:10px;"></div>
-		<div id="pensize_form" style="padding-bottom:10px;display:none;"></div>
-
-		<div id="palette_form" style="padding-bottom:10px;width:100%;display:none;z-index:10;background-color:#ffffff;">
-			<div id="palette" style="margin-left:2px;"></div>
-			<br clear="all">
-			<div id="alpha" style="margin-top:10px;margin-left:2px;"></div>
-			<br clear="all">
+	<div id="toolmenu" style="position:absolute;left:0px;top:0px;width:60px;height:100%;background-color:#ffffff;z-index:10;">
+	</div>
+	<div id="bottom_tool" style="position:absolute;bottom:0px;width:100%;padding-bottom:4px;z-index:10;background-color:#ffffff;">
+		<div id="pensize_form" style="float:left;padding-right:16px;"></div>
+		<BR CLEAR="all">
+		<div id="palette" style="margin-left:2px;margin-bottom:4px;" style="float:left;"></div>
+		<div id="alpha" style="margin-top:10px;margin-left:2px;float:left;display:none;"></div>
+		<BR CLEAR="all">
+		{% if chat %}
+		<div style="float:left;width:60%;margin-top:8px;">
+			<textarea id="comment_list" style="width:100%;height:100px;" readonly="readonly"></textarea>
 		</div>
-
-		<div id="upload_form" style="padding-bottom:10px;width:100%;display:none;left:0px;z-index:10;background-color:#ffffff;">
+		<div style="float:left;margin-left:8px;">
+			<div id="user_list">
+			</div>
+			<div id="status">
+			</div>
+		</div>
+		<BR clear="all">
+		<form action="javascript:return false;" onsubmit="javascript:g_chat.comment();return false;"><input id="comment" type="text" style="width:50%;"></input><input type="submit" value="発言"></input></form>
+		{% else %}
+		<div style="width:100%;height:20px;">　</div>
+		{% endif %}
+	</div>
+	<div id="toolbox" style="position:relative;z-index:10;">
+		<div id="upload_form" style="padding-bottom:10px;margin-left:60px;display:none;left:0px;z-index:10;background-color:#ffffff;">
 			<table>
 			<tr><td>
 				<table>
@@ -40,9 +70,13 @@
 					{% if logined %}
 						<input id="link_to_profile" name="link_to_profile" type="checkbox" checked>プロフィールにリンク
 					{% else %}
-						プロフィールにリンクするには<BR>ログインして下さい
+						プロフィールにリンクするにはログインして下さい
 					{% endif %}
-			</td><td>
+			</td></tr></table>
+			
+			<table>
+			<tr>
+			<td>
 				コメント<BR><textarea id="comment" cols=40 rows=6 style="width:100%;"></textarea><BR>
 <input type="button" value="イラストを投稿する" onclick="javascript:g_upload.upload('{{bbs_key}}','{{thread_key}}','{{reply}}');">
 			</td></tr>
@@ -52,8 +86,10 @@
 
 	<div id="canvas_event" style="width:100%;height:10%;background-color:#eeeeee">
 		<div id="canvas_div" style="position:relative;width:{{canvas_width}}px;height:{{canvas_height}}px;">
-			<canvas id="canvas_back" width="{{canvas_width}}px" height="{{canvas_height}}px" style="position: absolute; top: 0; left: 0;background-color:#ffffff;z-index: 0;"></canvas>
-			<canvas id="canvas_drawing" width="{{canvas_width}}px" height="{{canvas_height}}px"  style="position: absolute; top: 0; left: 0;z-index: 1;"></canvas>
+			<canvas id="canvas_fixed" width="{{canvas_width}}px" height="{{canvas_height}}px" style="position: absolute; top: 0; left: 0;background-color:#ffffff;z-index: 0;"></canvas>
+			<canvas id="canvas_local" width="{{canvas_width}}px" height="{{canvas_height}}px" style="position: absolute; top: 0; left: 0;z-index: 1;"></canvas>
+			<canvas id="canvas_drawing" width="{{canvas_width}}px" height="{{canvas_height}}px"  style="position: absolute; top: 0; left: 0;z-index: 2;"></canvas>
+			<canvas id="canvas_work" width="{{canvas_width}}px" height="{{canvas_height}}px"  style="position: absolute; top: 0; left: 0;z-index: 3; visibility:hidden;"></canvas>
 		</div>
 	</div>
 </div>

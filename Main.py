@@ -98,6 +98,7 @@ from myapp.ApiObject import ApiObject
 from myapp.CounterWorker import CounterWorker
 from myapp.ShowIcon import ShowIcon
 from myapp.CheckId import CheckId
+from myapp.Chat import Chat
 
 #-----------------------------------------------------------------
 #ポータル
@@ -363,6 +364,7 @@ application = webapp.WSGIApplication(
 	(r'/(.*)/',ShowBbs),
 	(r'/(.*)/index.xml',RssFeed),
 	('/guide', GuidePage),
+	('/chat',Chat),
 	('/bbs_index', RedirectBbs),
 	(r'/css/(.*)\.(css)',CssDesign), 
 	(r'/css/(.*)\.(key)',CssDesign), 
