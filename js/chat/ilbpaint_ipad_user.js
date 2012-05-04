@@ -3,7 +3,7 @@
 //copyright 2010-2012 ABARS all rights reserved.
 //-------------------------------------------------
 
-var HEART_BEAT_SEC=20;
+var HEART_BEAT_SEC=60;
 
 var g_server_time_delta=0;
 
@@ -102,7 +102,7 @@ function User(){
 		//一定時間間隔で送信
 		var now_time=this._get_now_time();
 		var progress=now_time-this._before_send_heart_beat_time;
-		if(progress<HEART_BEAT_SEC/4){
+		if(progress<HEART_BEAT_SEC/10){
 			return;
 		}
 		this._before_send_heart_beat_time=now_time;

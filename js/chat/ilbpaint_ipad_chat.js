@@ -7,11 +7,11 @@ var WATCH_DOG_COUNT=10;			//10回分の時間successが帰って来なかった�
 var GET_COMMAND_LIMIT=100;		//コマンドを読み込んでくる単位
 var WORKER_INTERVAL=3000;			//3秒に一回通信
 var SNAPSHOT_PERCENT=75;			//使用率が上がった場合にスナップショットを取る
+var SNAPSHOT_ALERT=0;
 
 var CMD_DRAW=0;
 var CMD_TEXT=1;
 var CMD_HEART_BEAT=2;
-var CMD_SNAPSHOT=3;
 var CMD_NOP=4;
 
 //-------------------------------------------------
@@ -21,6 +21,7 @@ var CMD_NOP=4;
 var g_chat_key=null;	//チャットモードの場合はROOMのKEYが入る
 var g_chat_user_id=null;	//ユーザのID
 var g_chat_user_name="名無しさん";	//ユーザの名前
+var g_initial_snapshot=true;	//最初のスナップショット読込
 
 //チャットモードの場合は最初にinitが呼ばれる
 function chat_init(key,user_id,user_name,server_time){
@@ -64,6 +65,12 @@ function chat_post_callback(obj){
 	if(obj.status=="success"){
 		g_chat._send_success();
 		var percent=g_user.set_object_size(obj.size)
+		if(percent<SNAPSHOT_PERCENT/2){
+			g_chat.reset_snapshot();
+		}
+		if(percent>=SNAPSHOT_PERCENT/2 && percent<SNAPSHOT_PERCENT){
+			g_chat.prepare_snapshot();	//スナップショットデータを準備
+		}
 		if(percent>=SNAPSHOT_PERCENT){
 			g_chat.snapshot();	//スナップショットを作成して容量を削減
 		}
@@ -83,6 +90,15 @@ function chat_snapshot_callback(obj){
 	}
 }
 
+function chat_get_snapshot_callback(obj){
+	if(obj.status=="success"){
+		g_chat._get_snapshot_success(obj);
+	}
+	if(obj.status=="failed"){
+		alert("初期読込に失敗しました。リロードして下さい。");
+	}
+}
+
 //-------------------------------------------------
 //チャットクラス
 //-------------------------------------------------
@@ -98,13 +114,19 @@ function Chat(){
 	this._posting_retry;		//POSTしてからの経過時間
 
 	this._local_packet_count;		//ローカルのユニークパケットID
-
+	
+	this.snapshot_creating;
+	this.snapshot_data;
 	
 	//初期化
 	this.init=function(){
 		this._get_init();
 		this._post_init();
 		this._local_packet_count=0;
+		
+		this.snapshot_creating=false;
+		this.snapshot_data=null;
+		
 		setInterval(chat_worker,WORKER_INTERVAL);
 	}
 	
@@ -143,6 +165,13 @@ function Chat(){
 			if(this._geting_retry>=WATCH_DOG_COUNT){
 				this._get_failed();
 			}
+			return;
+		}
+		
+		//スナップショット取得
+		if(g_initial_snapshot){
+			var url="chat?mode=snap_shot&key="+g_chat_key;
+			illustbook.request.get("./"+url,chat_get_snapshot_callback);
 			return;
 		}
 		
@@ -299,9 +328,18 @@ function Chat(){
 //スナップショット作成
 //-------------------------------------------------
 
-	//スナップショットを作成する
-	this.snapshot=function(){
-		g_buffer._update_comment({"comment":"スナップショットを作成します。"});
+	//スナップショットを準備する
+	//　スナップショットポイントが他のユーザのリードポイントを追い越さないように
+	//　半分の容量の段階で準備しておく
+	//　もしも追い越した場合はNOPでユーザに警告してリロードしてもらう
+	this.prepare_snapshot=function(){
+		if(this.snapshot_data){
+			return;
+		}
+
+		if(SNAPSHOT_ALERT){
+			g_buffer._update_comment({"comment":"スナップショットを準備します。"});
+		}
 		
 		var range=this._geted_count;
 
@@ -315,17 +353,59 @@ function Chat(){
 		post_data=new Object();
 		post_data["snap_shot"]=image;
 		post_data["snap_range"]=range;
-
 		post_data["thumbnail"]=thumbnail;
 		
-		illustbook.request.post_async("./chat?mode=post_snapshot&key="+g_chat_key,post_data,chat_snapshot_callback);
+		this.snapshot_data=post_data;
+	}
+
+	//スナップショットを作成する
+	this.snapshot=function(){
+		if(this._initial_load){
+			return;
+		}
+		if(SNAPSHOT_ALERT){
+			g_buffer._update_comment({"comment":"スナップショットを送信します。"});
+		}
+		this.snapshot_creating=true;
+		illustbook.request.post_async("./chat?mode=post_snapshot&key="+g_chat_key,this.snapshot_data,chat_snapshot_callback);
 	}
 	
 	this._snapshot_success=function(){
-		g_buffer._update_comment({"comment":"スナップショットの作成に成功。"});
+		if(SNAPSHOT_ALERT){
+			g_buffer._update_comment({"comment":"スナップショットの送信に成功。"});
+		}
+		this.snapshot_data=null;
+		this.snapshot_creating=false;
 	}
 	
 	this._snapshot_failed=function(){
-		g_buffer._update_comment({"comment":"スナップショットの作成に失敗。"});
+		if(SNAPSHOT_ALERT){
+			g_buffer._update_comment({"comment":"スナップショットの送信に失敗。"});
+		}
+		this.snapshot_creating=false;
+	}
+	
+	//スナップショットを読み込む
+	this._get_snapshot_success=function(obj){
+		if(SNAPSHOT_ALERT){
+			g_buffer._update_comment({"comment":"スナップショットの読込に成功しました。"});
+		}
+		if(obj.snap_range){
+			this._geted_count=obj.snap_range;
+
+			var image=new Image();
+			image.src="data:image/png;base64,"+obj.snap_shot;
+			image.onload=function(){
+				g_draw_primitive.clear(can_fixed);
+				can_fixed.getContext("2d").drawImage(image,0,0);
+				g_initial_snapshot=false;
+			}
+		}else{
+			g_initial_snapshot=false;
+		}
+	}
+	
+	this.reset_snapshot=function(){
+		this.snapshot_data=null;	//スナップショットデータを初期化
 	}
 }

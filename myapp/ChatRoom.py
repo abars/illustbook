@@ -25,6 +25,7 @@ class ChatRoom(db.Model):
 	from_last_update = db.IntegerProperty()
 	from_created = db.IntegerProperty()
 	thumbnail=db.BlobProperty()
+	snap_shot=db.TextProperty()
 	snap_range=db.IntegerProperty()
 	create_date = 	db.DateTimeProperty(auto_now=False)
 	date = db.DateTimeProperty(auto_now=True)

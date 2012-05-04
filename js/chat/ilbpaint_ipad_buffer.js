@@ -105,17 +105,8 @@ function Buffer(){
 				g_user.get_heart_beat(cmd_object);
 				break;
 			case CMD_NOP:
-				break;
-			case CMD_SNAPSHOT:
-				var image=new Image();
-				image.src="data:image/png;base64,"+cmd_object.snap_shot;
-				image.onload=function(){
-					g_draw_primitive.clear(can_fixed);
-					can_fixed.getContext("2d").drawImage(image,0,0);
-				}
-				//本当はここでコマンドのパースを一時停止しなければならないが、
-				//後で考えることにする
-				break;
+				alert("スナップショットの同期に失敗しました。リロードして下さい。");
+				return;
 			}
 		}
 	}

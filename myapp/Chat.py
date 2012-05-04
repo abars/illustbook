@@ -121,11 +121,13 @@ class Chat(webapp.RequestHandler):
 	def post_snapshot_core(key,snap_shot,snap_range,thumbnail):
 		#スナップショットを格納
 		room=db.get(key)
-		room.thumbnail=db.Blob(base64.b64decode(thumbnail))
 		
 		#既にスナップショットが作成されている
 		if(room.snap_range>=snap_range):
 			return
+
+		#サムネイルを格納
+		room.thumbnail=db.Blob(base64.b64decode(thumbnail))
 
 		#スナップショットまでのコマンドを消去
 		server_command_list=room.command_list.split(" , ")
@@ -139,18 +141,11 @@ class Chat(webapp.RequestHandler):
 				new_command_list=new_command_list+" , "+cmd
 		
 		#スナップショットコマンドを追加
-		cmd_snapshot=3
-		snapshot_cmd="[{'cmd':"+str(cmd_snapshot)+",'snap_shot':'"+snap_shot+"'}]"
-		if(new_command_list==""):
-			new_command_list=snapshot_cmd
-		else:
-			new_command_list=new_command_list+" , "+snapshot_cmd
 		room.command_list=new_command_list
 
-		room.command_cnt=room.command_cnt+1
+		#スナップショットを格納
 		room.snap_range=snap_range
-		
-		#logging.error("/////////SNAPSHOT:"+new_command_list)
+		room.snap_shot=snap_shot
 
 		room.put()
 	
@@ -165,7 +160,12 @@ class Chat(webapp.RequestHandler):
 		room.command_cnt=room.command_cnt+cmd_count
 		room.put()
 		return sys.getsizeof(room.command_list)+sys.getsizeof(room)
-		
+	
+	#スナップショットを取得する
+	def get_snap_shot(self):
+		room=db.get(self.request.get("key"))
+		ApiObject.write_json_core(self,{"status":"success","snap_shot":room.snap_shot,"snap_range":room.snap_range})
+	
 	#コマンドを取得する
 	def get_command(self):
 		room=db.get(self.request.get("key"))
@@ -311,6 +311,9 @@ class Chat(webapp.RequestHandler):
 			return
 		if(mode=="thumbnail"):
 			self.thumbnail()
+			return
+		if(mode=="snap_shot"):
+			self.get_snap_shot()
 			return
 		
 		#ポータル
