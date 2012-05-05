@@ -121,6 +121,9 @@ function ipad_on_mouse_move(e){
 }
 
 function ipad_on_mouse_down(e){
+	if(g_draw_canvas.is_drawing()){	//OnMouseUpが呼ばれなかった
+		ipad_on_mouse_up_core();
+	}
 	if(e.touches){
 		e.preventDefault();
 		if(e.touches.length>=2){
@@ -147,6 +150,10 @@ function ipad_on_mouse_down(e){
 
 function ipad_on_mouse_up(e){
 	e.preventDefault();
+	ipad_on_mouse_up_core();
+}
+
+function ipad_on_mouse_up_core(){
 	if(g_hand.get_prevent_draw()){
 		g_draw_canvas.release_flag();
 	}

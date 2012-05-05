@@ -81,6 +81,10 @@ function DrawCanvas(){
 //マウスイベント
 //-------------------------------------------------
 
+	this.is_drawing=function(){
+		return this._draw_flag;
+	}
+
 	this.on_mouse_down=function(x,y){
 		this._draw_begin();
 		
