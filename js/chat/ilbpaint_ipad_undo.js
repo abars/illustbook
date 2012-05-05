@@ -10,7 +10,7 @@ function UndoRedo(){
 	this._redo_array=new Array();
 	
 	this._get_now_image=function(layer){
-		var image_data = can_local[layer].getContext("2d").getImageData(0,0,can_local[layer].width, can_local[layer].height);
+		var image_data = can_fixed[layer].getContext("2d").getImageData(0,0,can_fixed[layer].width, can_fixed[layer].height);
 		return image_data;
 	}
 
@@ -47,7 +47,9 @@ function UndoRedo(){
 		
 		this._redo_array.push(redo_obj);
 
-		can_local[obj.layer].getContext("2d").putImageData(obj.image,0,0);
+		can_fixed[obj.layer].getContext("2d").putImageData(obj.image,0,0);
+		g_buffer.undo_redo_exec_on_local_tool();
+
 		return false;
 	}
 	
@@ -69,7 +71,9 @@ function UndoRedo(){
 
 		this._undo_array.push(undo_obj);
 		
-		can_local[obj.layer].getContext("2d").putImageData(obj.image,0,0);
+		can_fixed[obj.layer].getContext("2d").putImageData(obj.image,0,0);
+		g_buffer.undo_redo_exec_on_local_tool();
+		
 		return false;
 	}
 }

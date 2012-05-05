@@ -38,9 +38,16 @@ function Buffer(){
 		
 		//チャットモードの場合はローカルバッファに格納
 		this._local_cmd_list.push(command);
-		this._local_time_list.push(this.get_now_time());
 		
-		if(this._get_command_kind(command)==CMD_TEXT){
+		var cmd_kind=this._get_command_kind(command);
+
+		if(cmd_kind==CMD_TEXT){
+			this._local_time_list.push(0);	//チャットはすぐに反映
+		}else{
+			this._local_time_list.push(this.get_now_time());
+		}
+		
+		if(cmd_kind==CMD_TEXT){
 			var cmd_object=eval(command)[0];
 			this._update_comment(cmd_object);	//今回のコメントを先行して反映してしまう
 		}
@@ -58,6 +65,10 @@ function Buffer(){
 			can_local[layer].getContext("2d").drawImage(can_fixed[layer],0,0);
 		}
 		this._command_exec(this._local_cmd_list,can_local,false);
+	}
+	
+	this.undo_redo_exec_on_local_tool=function(){
+		this._update_local_image();
 	}
 	
 	this.get_local_command=function(send_pos){
@@ -170,6 +181,10 @@ function Buffer(){
 			return;
 		}
 		var cmd=this._local_cmd_list[this._local_cmd_list.length-1]
+		var kind=this._get_command_kind(cmd);
+		if(kind==CMD_TEXT){	//チャットはUNDO禁止
+			return;
+		}
 		this._redo_buffer.push(cmd);
 		this._local_cmd_list.splice(this._local_cmd_list.length-1,1)
 		this._local_time_list.splice(this._local_time_list.length-1,1)

@@ -156,7 +156,7 @@ function ToolBox(){
 		if(!ipad_is_pc()){
 			document.getElementById("g_undo_redo.undo").addEventListener("touchstart", function(e){g_undo_redo.undo(true);},false);
 			document.getElementById("g_undo_redo.redo").addEventListener("touchstart", function(e){g_undo_redo.redo(true);},false);
-			document.getElementById("g_tool.set_pen").addEventListener("touchstart", function(e){g_tool/set_pen();},false);
+			document.getElementById("g_tool.set_pen").addEventListener("touchstart", function(e){g_tool.set_pen();},false);
 			document.getElementById("g_tool.set_eraser").addEventListener("touchstart", function(e){g_tool.set_eraser();},false);
 			document.getElementById("g_tool.set_hand").addEventListener("touchstart", function(e){g_tool.set_hand();},false);
 			document.getElementById("g_hand.zoom_out").addEventListener("touchstart", function(e){g_hand.zoom_out(true);},false);
