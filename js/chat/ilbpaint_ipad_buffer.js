@@ -9,10 +9,13 @@ function Buffer(){
 
 	this._local_posted_cnt;		//ローカルコマンドの送信に成功した数
 
+	this._reload_need;				//リロードが必要かどうか
+
 	this.init=function(){
 		this._local_cmd_list=new Array();
 		this._network_cmd_list=new Array();
 		this._local_posted_cnt=0;
+		this._reload_need=false;
 	}
 
 //-------------------------------------------------
@@ -105,9 +108,12 @@ function Buffer(){
 				g_user.get_heart_beat(cmd_object);
 				break;
 			case CMD_NOP:
-				alert("スナップショットの同期に失敗しました。リロードして復帰します。");
-				window.location.reload();
-				return;
+				if(!this._reload_need){
+					alert("スナップショットの同期に失敗しました。リロードして復帰します。");
+					window.location.reload();
+					this._reload_need=true;
+				}
+				break;
 			}
 		}
 	}

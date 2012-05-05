@@ -10,53 +10,42 @@
 	}
 </script>
 
-<div>
-
-<!-- 左 -->
+<div style="float:left;margin-right:10px;">
+<img src="./static_files/chat/logo.png">
+</div>
 
 <div style="float:left;">
-<H1>イラブチャット（β）</H1>
-<H1>概要</H1>
+<p>&nbsp</p>
+<p>&nbsp</p>
+<p>&nbsp</p>
+<H1>イラブチャットの概要</H1>
 <p>イラブチャット（β）はPCとiPadで楽しめるお絵かきチャットです。</p>
 <p>複数人同時にお絵かきとチャットを楽しむことができます。</p>
-<p>また、作成したイラストはイラストブックのお絵描き掲示板に投稿することができます。</p>
-<p>&nbsp</p>
-<H1>動作環境</H1>
-<TABLE BORDER=1>
-<TR><TD>PC</TD><TD>HTML5に対応したブラウザ(IE9以降、FireFox、Safari、Chrome)</TD></TR>
-<TR><TD>iPad</TD><TD>第２世代以降のiPad(第一世代だと速度が遅いです)</TD></TR>
-<TR><TD>Android</TD><TD>3.0ではまともに動きません、4.0は可能性があるかも？</TD></TR>
-</TABLE>
+<p>作成したイラストはイラストブックのお絵描き掲示板に投稿することができます。</p>
+<p>ご利用にはHTML5をサポートしたブラウザが必要です。IEには対応していません。</p>
+</div>
+
+<br clear="all">
+<br clear="all">
+<img src="./static_files/chat/ipad.png"><img src="./static_files/chat/bbs.png">
+
 <p>&nbsp</p>
 <H1>利用ガイド</H1>
 <p>チャットで使用する名前とサムネイルは<A HREF="./mypage" class="declink">マイページ</A>で設定することができます。</p>
 <p>ルームは最終更新から10分が経過すると自動的に削除されます。</p>
+<p>バグ報告や要望は<A HREF="./support/" class="declink">サポート掲示板</A>までどうぞ。</p>
 <p>&nbsp</p>
-<H1>ルームの作成</H1>
-{% if not user %}
-<p>ルームの作成と参加には<A HREF="{{redirect_url|login_url}}" class="declink">Googleアカウントでのログイン</A>が必要です。</H1>
-<p>&nbsp</p>
-{% else %}
-<form action="./chat">
-<input type="hidden" name="mode" value="create">
-<TABLE>
-<TR><TD>ルームの名前（必須）</TD><TD><input type="text" name="name" style="width:200px"></TD></TR>
-<TR><TD>パスワード</TD><TD><input type="text" name="pass" style="width:200px"></TD></TR>
-</TABLE>
-<input type="submit" value="ルームを作成">
-</form>
-<p>&nbsp</p>
-<p>パスワードを設定しない場合は誰でも参加可能になります。</p>
-{% endif %}
 
-<br clear="all">
+<div style="float:left;">
 
 <H1>稼働中のルーム</H1>
 {% if room_list %}
 	{% for room in room_list %}
 		<table>
 		<tr><td>
-			<img src="./chat?mode=thumbnail&key={{room.key}}" WIDTH=40px HEIGHT=40px>
+			<div style="background-color:#aaaaaa;padding:1px;">
+				<img src="./chat?mode=thumbnail&key={{room.key}}" WIDTH=60px HEIGHT=60px>
+			</div>
 		</td>
 		<td>
 		ルーム名：{{room.name}}　作成者：<A HREF="./mypage?user_id={{room.user_id}}" class="declink">{{room.user_name}}</A><BR>
@@ -77,41 +66,33 @@
 {% else %}
 	<p>稼働中のルームはありません。</p>
 {% endif %}
-
 </div>
 
-<!-- 右 -->
-
-<div style="float:right;">
-
-<div style="width:300px;height:250px;background-color:#aaaaaa;">
-ロゴ・イラスト：「イラブチャット」 300 x 250px
-</div>
-
-<br clear="all">
-
-<div style="float:right;width:300px;height:100px;background-color:#aaaaaa;">
-吹き出し：「何とiPadでも描けます！」　300 x 100px
-</div>
-
-<br clear="all">
-<br clear="all">
-
-<div style="float:right;width:300px;height:100px;background-color:#aaaaaa;">
-吹き出し：「描いたイラストはそのまま投稿可能！」　300 x 100px
-</div>
-
-<br clear="all">
-<br clear="all">
-
-<div style="float:right;width:180px;height:150px;background-color:#aaaaaa;">
-「お絵かきチャット始めました！」（冷やし中華始めました的に）（マイページ用） 180 x 150px
+<div style="float:left;margin-left:16px;">
+<H1>ルームの作成</H1>
+{% if not user %}
+<p>ルームの作成と参加には<A HREF="{{redirect_url|login_url}}" class="declink">Googleアカウントでのログイン</A>が必要です。</H1>
+<p>&nbsp</p>
+{% else %}
+<form action="./chat">
+<input type="hidden" name="mode" value="create">
+<TABLE>
+<TR><TD>ルームの名前（必須）</TD><TD><input type="text" name="name" style="width:200px"></TD></TR>
+<TR><TD>パスワード</TD><TD><input type="text" name="pass" style="width:200px"></TD></TR>
+</TABLE>
+<input type="submit" value="ルームを作成">
+</form>
+<p>&nbsp</p>
+<p>パスワードを設定しない場合は誰でも参加可能になります。</p>
+{% endif %}
 </div>
 
 <br clear="all">
 
-</div>
-
-<br clear="all">
-
-</div>
+<p>&nbsp</p>
+<H1>動作環境</H1>
+<TABLE BORDER=1>
+<TR><TD>PC</TD><TD>HTML5に対応したブラウザ(Chrome、Safari、FireFox)(IEは非対応)</TD></TR>
+<TR><TD>iPad</TD><TD>第２世代以降のiPad(第一世代だと速度が遅いです)</TD></TR>
+<TR><TD>Android</TD><TD>3.0ではまともに動きません、4.0は可能性があるかも？</TD></TR>
+</TABLE>

@@ -83,17 +83,20 @@ function ipad_get_instance(){
 //-------------------------------------------------
 
 function ipad_event_init(){
+	var can_event=document.getElementById("canvas_event");
+
 	can_div.addEventListener("mousemove", ipad_on_mouse_move, false);
 	can_div.addEventListener("mousedown", ipad_on_mouse_down , false);
-	can_div.addEventListener("mouseup", ipad_on_mouse_up,false);
+	//can_div.addEventListener("mouseup", ipad_on_mouse_up,false);
+	can_event.addEventListener("mouseup", ipad_on_mouse_up,false);	//画面外でUpされた場合用
 
 	can_div.addEventListener("touchmove", ipad_on_mouse_move, false);
 	can_div.addEventListener("touchstart", ipad_on_mouse_down , false);
-	can_div.addEventListener("touchend", ipad_on_mouse_up,false);
+	//can_div.addEventListener("touchend", ipad_on_mouse_up,false);
+	can_event.addEventListener("touchend", ipad_on_mouse_up,false);
 	
 	can_div.addEventListener("gesturestart", function(e){ e.preventDefault();},false);
 
-	var can_event=document.getElementById("canvas_event");
 	can_event.addEventListener("touchstart", function(e){ e.preventDefault();},false);
 }
 

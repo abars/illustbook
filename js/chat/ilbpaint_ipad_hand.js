@@ -112,7 +112,7 @@ function Hand(){
 		can_div.style.top=""+this._hand_y+"px";
 
 		this._zoom=new_zoom;
-		can_div.style.zoom=this._zoom;
+		can_div.style.zoom=""+(this._zoom*100)+"%";
 	}
 	
 	this.zoom_out=function(){
