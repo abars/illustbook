@@ -17,6 +17,7 @@ from myapp.AppCode import AppCode
 
 class ChatRoom(db.Model):
 	name = db.StringProperty()
+	password = db.StringProperty()
 	user_id = db.StringProperty()	#Owner
 	user_name = db.StringProperty()
 	user_count = db.IntegerProperty()

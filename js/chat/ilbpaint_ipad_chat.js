@@ -22,9 +22,10 @@ var g_chat_key=null;	//チャットモードの場合はROOMのKEYが入る
 var g_chat_user_id=null;	//ユーザのID
 var g_chat_user_name="名無しさん";	//ユーザの名前
 var g_initial_snapshot=true;	//最初のスナップショット読込
+var g_viewmode=false;			//見るだけのモードかどうか
 
 //チャットモードの場合は最初にinitが呼ばれる
-function chat_init(key,user_id,user_name,server_time){
+function chat_init(key,user_id,user_name,server_time,viewmode){
 	//ユーザ情報
 	g_chat_user_id=user_id
 	g_chat_user_name=user_name
@@ -36,6 +37,7 @@ function chat_init(key,user_id,user_name,server_time){
 	
 	//チャットモード
 	g_chat_key=key;
+	g_viewmode=viewmode;
 	
 	//時間設定
 	user_set_time_delta(server_time);
@@ -57,6 +59,10 @@ function chat_get_callback(obj){
 	}
 	if(obj.status=="failed"){
 		g_chat._get_failed();
+	}
+	if(obj.status=="not_found"){
+		alert("ルームが終了されました。イラブチャットポータルに戻ります。");
+		window.location.href="./chat";
 	}
 }
 
@@ -133,11 +139,17 @@ function Chat(){
 	//ワーカー
 	this._worker=function(){
 		//ローカルお絵かきモードの場合はPOSTしない
-		if(g_chat_key==null)
+		if(g_chat_key==null){
 			return;
-
+		}
+		
 		//最新のコマンドを取得する
 		this._get();
+		
+		//ビューモードの場合はGETするだけ
+		if(g_viewmode){
+			return;
+		}
 		
 		//コマンドを送信する
 		this._send();
@@ -275,6 +287,11 @@ function Chat(){
 	//チャットモードかどうか
 	this.is_chat_mode=function(){
 		return g_chat_key!=null
+	}
+	
+	//ビューモードかどうか
+	this.is_view_mode=function(){
+		return g_viewmode;
 	}
 
 	//ユーザID取得

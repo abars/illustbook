@@ -136,7 +136,9 @@ function ToolBox(){
 		if(!(g_chat.is_chat_mode())){
 			txt+=this._add_button("g_draw_canvas.clear","クリア",s,margin);
 		}
-		txt+=this._add_button("ipad_switch_upload_form","投稿",s,margin);
+		if(!(g_chat.is_view_mode())){
+			txt+=this._add_button("ipad_switch_upload_form","投稿",s,margin);
+		}
 		document.getElementById("toolmenu").innerHTML=txt+"<br clear='both'>";
 
 		//遅延登録が必須
@@ -151,7 +153,9 @@ function ToolBox(){
 			if(!(g_chat.is_chat_mode())){
 				document.getElementById("g_draw_canvas.clear").addEventListener("touchstart", function(e){g_draw_canvas.clear(true);},false);
 			}
-			document.getElementById("ipad_switch_upload_form").addEventListener("touchstart", function(e){ipad_switch_upload_form(true);},false);
+			if(!(g_chat.is_view_mode())){
+				document.getElementById("ipad_switch_upload_form").addEventListener("touchstart", function(e){ipad_switch_upload_form(true);},false);
+			}
 		}
 	}
 
@@ -174,10 +178,7 @@ function PenSize(){
 
 	this.init=function(){
 		var txt="";
-		txt+='太さ<input id="slider_size" type="range" min="1" max="100" value="4" onChange="g_pen_size.on_change();"/>　';
 		this._size=4;
-		txt+='透明度<input id="slider_alpha" type="range" min="1" max="100" value="100" onChange="g_alpha.on_change();"/>';
-		document.getElementById("pensize_form").innerHTML=txt+"<br clear='both'>";
 	}
 	
 	this.on_change=function(){

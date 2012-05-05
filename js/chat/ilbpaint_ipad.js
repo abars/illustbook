@@ -34,6 +34,9 @@ function ipad_init(){
 	g_draw_primitive.init();
 	g_user.init();
 	
+	if(g_viewmode){
+		g_buffer._update_comment({"comment":"閲覧モードで起動しました。書き込みはできません。"});
+	}
 	g_buffer._update_comment({"comment":"初期読込を開始します。"});
 }
 
@@ -118,6 +121,9 @@ function ipad_on_mouse_move(e){
 }
 
 function ipad_on_mouse_down(e){
+	if(g_chat.is_view_mode()){
+		return;
+	}
 	if(e.touches){
 		e.preventDefault();
 		if(e.touches.length>=2){

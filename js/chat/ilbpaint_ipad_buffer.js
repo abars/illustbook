@@ -105,7 +105,8 @@ function Buffer(){
 				g_user.get_heart_beat(cmd_object);
 				break;
 			case CMD_NOP:
-				alert("スナップショットの同期に失敗しました。リロードして下さい。");
+				alert("スナップショットの同期に失敗しました。リロードして復帰します。");
+				window.location.reload();
 				return;
 			}
 		}

@@ -51,7 +51,7 @@ function User(){
 			var user=this._user_list[i];
 			var sec=((this._get_now_time()-user.time));
 			if(sec>=HEART_BEAT_SEC){
-				g_buffer._update_comment({"comment":""+user.name+"さんがログアウトしました。"});
+				g_buffer._update_comment({"comment":""+user.name+"さんが退室しました。"});
 				this._user_list.splice(i,1);
 				this._show_all_user();	//ステータス更新
 				return;
@@ -86,7 +86,7 @@ function User(){
 	
 	//ユーザ追加
 	this._add_user=function(name,id,time){
-		g_buffer._update_comment({"comment":""+name+"さんがログインしました。"});
+		g_buffer._update_comment({"comment":""+name+"さんが参加しました。"});
 
 		var obj=new Object();
 		obj.name=name;

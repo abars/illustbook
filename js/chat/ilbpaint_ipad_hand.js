@@ -27,7 +27,7 @@ function Hand(){
 		
 		var cheight=document.getElementById("canvas_event").clientHeight;
 
-		var toolheight=document.getElementById("toolbox").clientHeight;
+		var toolheight=0;//document.getElementById("toolbox").clientHeight;
 		var new_height=(g_window_height-toolheight);
 		document.getElementById("canvas_event").style.height=""+new_height+"px";
 		

@@ -61,6 +61,7 @@ class Chat(webapp.RequestHandler):
 		room.user_count=0
 		room.snap_range=0
 		room.create_date=datetime.datetime.now()
+		room.password=self.request.get("pass")
 		room.put()
 		self.redirect("./chat")
 	
@@ -169,6 +170,10 @@ class Chat(webapp.RequestHandler):
 	#コマンドを取得する
 	def get_command(self):
 		room=db.get(self.request.get("key"))
+		
+		if(room==None):
+			ApiObject.write_json_core(self,{"status":"not_found"})
+			return
 
 		offset=int(self.request.get("offset"))
 		limit=int(self.request.get("limit"))
@@ -243,6 +248,17 @@ class Chat(webapp.RequestHandler):
 		canvas_height=600
 		room_key=self.request.get("key")
 		ipad=CssDesign.is_tablet(self)
+		viewmode=self.request.get("viewmode")
+		password=self.request.get("pass")
+		
+		room=db.get(room_key)
+		if(not room):
+			self.response.out.write(Alert.alert_msg("ルームが見つかりません。",self.request.host))
+			return
+		
+		if(room.password and room.password!=password):
+			self.response.out.write(Alert.alert_msg("ルームのパスワードが一致しません。",self.request.host))
+			return
 		
 		if(not user):
 			self.response.out.write(Alert.alert_msg("ルームへの参加にはログインが必要です。",self.request.host))
@@ -273,7 +289,9 @@ class Chat(webapp.RequestHandler):
 		'user_name':user_name,
 		'server_time':server_time,
 		'bbs_list':bbs_list,
-		'logined':True
+		'logined':True,
+		'viewmode':viewmode,
+		'room_name':room.name
 		}
 		
 		path = os.path.join(os.path.dirname(__file__), '../html/tools/draw_window_ipad.htm')
