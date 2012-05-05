@@ -32,15 +32,35 @@
 
 </head>
 
-<body bgcolor="{% if chat %}#eeeeee{% else %}#ffffff{% endif %}" onload="loadCookie();{% if chat %}chat_init('{{chat}}','{{user_id}}','{{user_name}}',{{server_time}},{{viewmode}});{% else %}chat_init('local','','',0);{% endif %}ipad_init();" style="overflow:hidden;margin:0px;padding:0px;" onselectstart="return false">
+<body bgcolor="{% if chat %}#eeeeee{% else %}#ffffff{% endif %}" onload="loadCookie();{% if chat %}chat_init('{{chat}}','{{user_id}}','{{user_name}}',{{server_time}},{{viewmode}});{% else %}chat_init('local','','',0);{% endif %}ipad_init();" style="overflow:hidden;margin:0px;padding:0px;-webkit-user-select: none;" onselectstart="return false;">
 
 <div style="width:100%;height:100%;">
-	<div id="toolmenu" style="position:absolute;left:0px;top:0px;width:60px;height:100%;background-color:#ffffff;z-index:10;">
+	<div id="toolmenu" style="position:fixed;left:0px;top:0px;width:60px;height:100%;background-color:#ffffff;z-index:10;">
 	</div>
-	<div id="bottom_tool" style="position:absolute;bottom:0px;width:100%;padding-bottom:4px;z-index:10;background-color:#ffffff;">
+	<div id="bottom_tool" style="position:fixed;bottom:0px;width:100%;padding-bottom:4px;z-index:10;background-color:#ffffff;">
 		<div id="pensize_form" style="float:left;padding-right:16px;">
-				太さ<input id="slider_size" type="range" min="1" max="100" value="4" onChange="g_pen_size.on_change();"/>　
-				透明度<input id="slider_alpha" type="range" min="1" max="100" value="100" onChange="g_alpha.on_change();"/>　
+				<select id="slider_size" onChange="g_pen_size.on_change();">
+				<option value="1">太さ1</option>
+				<option value="2" selected>太さ2</option>
+				<option value="4">太さ4</option>
+				<option value="8">太さ8</option>
+				<option value="16">太さ16</option>
+				<option value="32">太さ32</option>
+				<option value="64">太さ64</option>
+				<option value="128">太さ128</option>
+				</select>
+				<select id="slider_alpha" onChange="g_alpha.on_change();">
+				<option value="100" selected>不透明度100</option>
+				<option value="90">不透明度90</option>
+				<option value="80">不透明度80</option>
+				<option value="70">不透明度70</option>
+				<option value="60">不透明度60</option>
+				<option value="50">不透明度50</option>
+				<option value="40">不透明度40</option>
+				<option value="30">不透明度30</option>
+				<option value="20">不透明度20</option>
+				<option value="10">不透明度10</option>
+				</select>
 				<select id="layer"><option value="1" selected>レイヤー上</option><option value="0">レイヤー下</option></select>
 		</div>
 		<BR CLEAR="all">
@@ -96,18 +116,18 @@
 <input type="button" value="イラストを投稿する" onclick="javascript:g_upload.upload('{{bbs_key}}','{{thread_key}}','{{reply}}');">
 		</div>
 
-	<!-- Canvas外でもイベントを取るためにサイズを256拡張する -->
+	<!-- Canvas外でもイベントを取るためにサイズを64拡張する -->
 	<div id="canvas_event" style="width:100%;height:10%;background-color:#eeeeee;">
-		<div id="canvas_div" style="position:relative;width:{{canvas_width|add:256}}px;height:{{canvas_height|add:256}}px; top: 0; left: 0;">
+		<div id="canvas_div" style="position:relative;width:{{canvas_width|add:64}}px;height:{{canvas_height|add:64}}px; top: 0; left: 0;">
 			<!--レイヤー1-->
-			<canvas id="canvas_fixed_0" width="{{canvas_width}}px" height="{{canvas_height}}px" style="position: absolute; top: 128; left: 128;background-color:#ffffff;z-index: 0;"></canvas>
-			<canvas id="canvas_local_0" width="{{canvas_width}}px" height="{{canvas_height}}px" style="position: absolute; top: 128; left: 128;z-index: 1;"></canvas>
-			<canvas id="canvas_drawing_0" width="{{canvas_width}}px" height="{{canvas_height}}px"  style="position: absolute; top: 128; left: 128;z-index: 2;"></canvas>
+			<canvas id="canvas_fixed_0" width="{{canvas_width}}px" height="{{canvas_height}}px" style="position: absolute; top: 32; left: 32;background-color:#ffffff;z-index: 0;display:none;"></canvas>
+			<canvas id="canvas_local_0" width="{{canvas_width}}px" height="{{canvas_height}}px" style="position: absolute; top: 32; left: 32;background-color:#ffffff;z-index: 1;"></canvas>
+			<canvas id="canvas_drawing_0" width="{{canvas_width}}px" height="{{canvas_height}}px"  style="position: absolute; top: 32; left: 32;z-index: 2;"></canvas>
 			
 			<!--レイヤー2-->
-			<canvas id="canvas_fixed_1" width="{{canvas_width}}px" height="{{canvas_height}}px" style="position: absolute; top: 128; left: 128;z-index: 3;"></canvas>
-			<canvas id="canvas_local_1" width="{{canvas_width}}px" height="{{canvas_height}}px" style="position: absolute; top: 128; left: 128;z-index: 4;"></canvas>
-			<canvas id="canvas_drawing_1" width="{{canvas_width}}px" height="{{canvas_height}}px"  style="position: absolute; top: 128; left: 128;z-index: 5;"></canvas>
+			<canvas id="canvas_fixed_1" width="{{canvas_width}}px" height="{{canvas_height}}px" style="position: absolute; top: 32; left: 32;z-index: 3;display:none;"></canvas>
+			<canvas id="canvas_local_1" width="{{canvas_width}}px" height="{{canvas_height}}px" style="position: absolute; top: 32; left: 32;z-index: 4;"></canvas>
+			<canvas id="canvas_drawing_1" width="{{canvas_width}}px" height="{{canvas_height}}px"  style="position: absolute; top: 32; left: 32;z-index: 5;"></canvas>
 		</div>
 	</div>
 </div>

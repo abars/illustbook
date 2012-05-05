@@ -20,6 +20,7 @@ var g_buffer=new Buffer();
 var g_draw_primitive=new DrawPrimitive();
 var g_user=new User();
 var g_layer=new Layer();
+var g_tool=new Tool();
 
 function ipad_init(){
 	ipad_get_instance();
@@ -35,6 +36,7 @@ function ipad_init(){
 	g_draw_primitive.init();
 	g_user.init();
 	g_layer.init();
+	g_tool.init();
 	
 	if(g_viewmode){
 		g_buffer._update_comment({"comment":"閲覧モードで起動しました。書き込みはできません。"});
@@ -71,7 +73,8 @@ function ipad_get_instance(){
 		can_drawing[layer] = document.getElementById("canvas_drawing_"+layer);
 	}
 	
-	g_draw_primitive.fill_white(can_fixed[0]);
+	//g_draw_primitive.fill_white(can_fixed[0]);
+	//g_draw_primitive.fill_white(can_local[0]);
 	
 	can_work = document.getElementById("canvas_work");
 	can_div = document.getElementById("canvas_div"); 
@@ -101,8 +104,11 @@ function ipad_event_init(){
 	can_event.addEventListener("touchend", ipad_on_mouse_up,false);
 	
 	can_div.addEventListener("gesturestart", function(e){ e.preventDefault();},false);
-
 	can_event.addEventListener("touchstart", function(e){ e.preventDefault();},false);
+
+	//横スクロール禁止
+	document.getElementById("toolmenu").addEventListener("touchmove", function(e){ e.preventDefault();},false);
+	document.getElementById("bottom_tool").addEventListener("touchmove", function(e){ e.preventDefault();},false);
 }
 
 function ipad_on_mouse_move(e){

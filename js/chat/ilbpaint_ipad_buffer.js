@@ -29,6 +29,10 @@ function Buffer(){
 		//ローカルモードの場合は直接バッファに描いて確定してしまう
 		if(!(g_chat.is_chat_mode())){
 			this.push_network_command(command);
+			for(var layer=0;layer<LAYER_N;layer++){
+				g_draw_primitive.clear(can_local[layer]);
+				can_local[layer].getContext("2d").drawImage(can_fixed[layer],0,0);
+			}
 			return;
 		}
 		
@@ -44,8 +48,14 @@ function Buffer(){
 	}
 	
 	this._update_local_image=function(){
+		if(g_draw_canvas.is_drawing()){
+			//線を書き終わったタイミングで自動的に更新が入る
+			//ここで更新してしまうと消しゴムが動作しない
+			return;
+		}
 		for(var layer=0;layer<LAYER_N;layer++){
 			g_draw_primitive.clear(can_local[layer]);
+			can_local[layer].getContext("2d").drawImage(can_fixed[layer],0,0);
 		}
 		this._command_exec(this._local_cmd_list,can_local,false);
 	}
@@ -87,6 +97,7 @@ function Buffer(){
 		this._network_cmd_list.push(command);
 		this._command_exec(this._network_cmd_list,can_fixed,true);
 		this._network_cmd_list=new Array();
+		this._update_local_image();
 	}
 
 //-------------------------------------------------
@@ -118,8 +129,15 @@ function Buffer(){
 				g_draw_canvas.draw_command_list(can_work,cmd_list[i]);
 				var alpha=cmd_object.alpha;
 				var layer=cmd_object.layer;
+				var color=cmd_object.color;
+				var tool=cmd_object.tool;
 				context[layer].globalAlpha=alpha
+				if(tool=="eraser"){
+					context[layer].globalCompositeOperation="destination-out";
+				}
 				context[layer].drawImage(can_work,0,0);
+				context[layer].globalCompositeOperation="source-over";
+				context[layer].globalAlpha=1.0;
 				break;
 			case CMD_HEART_BEAT:
 				g_user.get_heart_beat(cmd_object);

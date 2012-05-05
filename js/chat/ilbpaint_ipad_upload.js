@@ -118,7 +118,8 @@ function Upload(){
 			url_text="usr/"+this._bbs_key+"/"+this._thread_key+".html";
 		}
 		if(g_chat.is_chat_mode()){
-			window.open(url_text);
+			alert("投稿が完了しました。");
+			//window.open(url_text);
 		}else{
 			window.location.href=url_text;
 		}

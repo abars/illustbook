@@ -10,8 +10,6 @@ function Hand(){
 	this._before_x=0;
 	this._begore_y=0;
 
-	this._is_hand_mode=false;
-	
 	this._buttom_size;
 	this._left_size;
 	
@@ -47,7 +45,7 @@ function Hand(){
 		
 		this.resize(false);
 		
-		var margin=128;	//キャンバス外イベント確保用マージン
+		var margin=32;	//キャンバス外イベント確保用マージン
 		
 		var cwidth=document.getElementById("canvas_event").clientWidth-this._left_size;
 		var cheight=document.getElementById("canvas_event").clientHeight-this._buttom_size;
@@ -121,12 +119,7 @@ function Hand(){
 		this._zoom_core(1/1.2);
 	}
 	
-	this.hand_mode=function(){
-		this._is_hand_mode=!this._is_hand_mode;
-		g_tool_box.update();
-	}
-	
 	this.is_hand_mode=function(){
-		return this._is_hand_mode;
+		return g_tool.get_tool()=="hand";
 	}
 }

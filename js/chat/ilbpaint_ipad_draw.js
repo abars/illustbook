@@ -29,6 +29,7 @@ function DrawCanvas(){
 		var size=g_pen_size.get_size();
 		var alpha=g_alpha.get_alpha();
 		var layer=g_layer.get_layer_no();
+		var tool=g_tool.get_tool();
 		
 		var txt="[{";
 		txt+="'user_id':'"+g_chat.get_user_id()+"',"
@@ -38,7 +39,7 @@ function DrawCanvas(){
 		txt+="'size':'"+size+"',";
 		txt+="'alpha':'"+alpha+"',";
 		txt+="'layer':"+layer+",";
-		txt+="'tool':'pen',";
+		txt+="'tool':'"+tool+"',";
 
 		txt+="'point':[";
 		for(var i=0;i<this._x_array.length;i++){
@@ -82,6 +83,8 @@ function DrawCanvas(){
 //マウスイベント
 //-------------------------------------------------
 
+	this._target_can;
+
 	this.is_drawing=function(){
 		return this._draw_flag;
 	}
@@ -91,7 +94,14 @@ function DrawCanvas(){
 		
 		this._add_point(this._get_mx(x),this._get_my(y));
 		this._draw_flag=true;
-			
+		
+		if(g_tool.get_tool()=="eraser"){
+			this._target_can=can_local[g_layer.get_layer_no()]
+			this._target_can.getContext("2d").globalCompositeOperation="destination-out"
+		}else{
+			this._target_can=can_drawing[g_layer.get_layer_no()]
+		}
+		
 		can_drawing[g_layer.get_layer_no()].style.opacity=g_alpha.get_alpha();
 		
 		g_undo_redo.push();
@@ -102,7 +112,7 @@ function DrawCanvas(){
 			return;
 		}
 		this._add_point(this._get_mx(x),this._get_my(y));
-		if(this._draw_core(can_drawing[g_layer.get_layer_no()],this._x_array,this._y_array,this._pos,g_palette.get_color(),g_pen_size.get_size())){
+		if(this._draw_core(this._target_can,this._x_array,this._y_array,this._pos,g_palette.get_color(),g_pen_size.get_size())){
 			this._pos+=2;
 		}
 	}
@@ -112,10 +122,11 @@ function DrawCanvas(){
 			while(this._x_array.length<=2){
 				this._add_point(this._x_array[0],this._y_array[0]);
 			}
-			this._draw_core(can_drawing[g_layer.get_layer_no()],this._x_array,this._y_array,this._pos,g_palette.get_color(),g_pen_size.get_size());
+			this._draw_core(this._target_can,this._x_array,this._y_array,this._pos,g_palette.get_color(),g_pen_size.get_size());
 		}
 
 		g_draw_primitive.clear(can_drawing[g_layer.get_layer_no()]);
+		this._target_can.getContext("2d").globalCompositeOperation="source-over"
 
 		if(this._draw_flag){
 			this._draw_flag=false;

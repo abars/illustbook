@@ -103,6 +103,9 @@ function Palette(){
 	}
 	
 	this.get_color=function(){
+		if(g_tool.get_tool()=="eraser"){
+			return "#ffffff";
+		}
 		return this._color;
 	}
 }
@@ -128,8 +131,12 @@ function ToolBox(){
 		var margin=12;
 		txt+=this._add_button("g_undo_redo.undo","取り消し",s,margin);
 		txt+=this._add_button("g_undo_redo.redo","やり直し",s,0);
-		txt+=this._add_button("g_hand.hand_mode","ハンド",s,margin);
-		txt+=this._add_button("g_hand.zoom_in","ズーム<BR>+",s,0);
+
+		txt+=this._add_button("g_tool.set_pen","ペン",s,margin);
+		txt+=this._add_button("g_tool.set_eraser","消しゴム",s,0);
+		txt+=this._add_button("g_tool.set_hand","ハンド",s,0);
+
+		txt+=this._add_button("g_hand.zoom_in","ズーム<BR>+",s,margin);
 		txt+=this._add_button("g_hand.zoom_out","ズーム<BR>-",s,0);
 		if(!(g_chat.is_chat_mode())){
 			txt+=this._add_button("g_draw_canvas.clear","クリア",s,margin);
@@ -149,7 +156,9 @@ function ToolBox(){
 		if(!ipad_is_pc()){
 			document.getElementById("g_undo_redo.undo").addEventListener("touchstart", function(e){g_undo_redo.undo(true);},false);
 			document.getElementById("g_undo_redo.redo").addEventListener("touchstart", function(e){g_undo_redo.redo(true);},false);
-			document.getElementById("g_hand.hand_mode").addEventListener("touchstart", function(e){g_hand.hand_mode(true);},false);
+			document.getElementById("g_tool.set_pen").addEventListener("touchstart", function(e){g_tool/set_pen();},false);
+			document.getElementById("g_tool.set_eraser").addEventListener("touchstart", function(e){g_tool.set_eraser();},false);
+			document.getElementById("g_tool.set_hand").addEventListener("touchstart", function(e){g_tool.set_hand();},false);
 			document.getElementById("g_hand.zoom_out").addEventListener("touchstart", function(e){g_hand.zoom_out(true);},false);
 			document.getElementById("g_hand.zoom_in").addEventListener("touchstart", function(e){g_hand.zoom_in(true);},false);
 			if(!(g_chat.is_chat_mode())){
@@ -189,6 +198,46 @@ function PenSize(){
 
 	this.get_size=function (){
 		return this._size;
+	}
+}
+
+//-------------------------------------------------
+//ツール
+//-------------------------------------------------
+
+function Tool(){
+	this._tool;
+	
+	this.init=function(){
+		this._set_core("pen");
+	}
+	
+	this.set_hand=function(){
+		this._set_core("hand");
+	}
+	
+	this.set_pen=function(){
+		this._set_core("pen");
+	}
+	
+	this.set_eraser=function(){
+		this._set_core("eraser");
+	}
+	
+	this._set_core=function(tool){
+		var color="#c7e5f9";
+		document.getElementById("g_tool.set_pen").style["background-color"]=color;
+		document.getElementById("g_tool.set_eraser").style["background-color"]=color;
+		document.getElementById("g_tool.set_hand").style["background-color"]=color;
+
+		color="#a7c5d9"
+		document.getElementById("g_tool.set_"+tool).style["background-color"]=color;
+		
+		this._tool=tool;
+	}
+	
+	this.get_tool=function(){
+		return this._tool;
 	}
 }
 
