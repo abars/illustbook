@@ -52,6 +52,11 @@ class Chat(webapp.RequestHandler):
 
 		user_name=self.get_user_name(user)
 
+		canvas_size=self.request.get("canvas_size")
+		size=canvas_size.split("x")
+		canvas_width=int(size[0])
+		canvas_height=int(size[1])
+
 		room=ChatRoom()
 		room.name=self.request.get("name")
 		room.user_id=user.user_id()
@@ -61,6 +66,8 @@ class Chat(webapp.RequestHandler):
 		room.user_count=0
 		room.snap_range=0
 		room.create_date=datetime.datetime.now()
+		room.canvas_width=canvas_width
+		room.canvas_height=canvas_height
 		room.password=self.request.get("pass")
 		room.put()
 		self.redirect("./chat")
@@ -246,8 +253,6 @@ class Chat(webapp.RequestHandler):
 		bbs=None
 		bbs_key=""
 		thread_key=""
-		canvas_width=600
-		canvas_height=600
 		room_key=self.request.get("key")
 		ipad=CssDesign.is_tablet(self)
 		viewmode=self.request.get("viewmode")
@@ -265,6 +270,9 @@ class Chat(webapp.RequestHandler):
 		if(not user):
 			self.response.out.write(Alert.alert_msg("ルームへの参加にはログインが必要です。",self.request.host))
 			return
+
+		canvas_width=room.canvas_width
+		canvas_height=room.canvas_height
 
 		user_id=user.user_id()
 		user_name=self.get_user_name(user)

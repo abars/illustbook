@@ -96,24 +96,24 @@
 <input type="button" value="イラストを投稿する" onclick="javascript:g_upload.upload('{{bbs_key}}','{{thread_key}}','{{reply}}');">
 		</div>
 
+	<!-- Canvas外でもイベントを取るためにサイズを256拡張する -->
 	<div id="canvas_event" style="width:100%;height:10%;background-color:#eeeeee;">
-		<div id="canvas_div" style="position:relative;width:{{canvas_width}}px;height:{{canvas_height}}px; top: 0; left: 0;">
+		<div id="canvas_div" style="position:relative;width:{{canvas_width|add:256}}px;height:{{canvas_height|add:256}}px; top: 0; left: 0;">
 			<!--レイヤー1-->
-			<canvas id="canvas_fixed_0" width="{{canvas_width}}px" height="{{canvas_height}}px" style="position: absolute; top: 0; left: 0;background-color:#ffffff;z-index: 0;"></canvas>
-			<canvas id="canvas_local_0" width="{{canvas_width}}px" height="{{canvas_height}}px" style="position: absolute; top: 0; left: 0;z-index: 1;"></canvas>
-			<canvas id="canvas_drawing_0" width="{{canvas_width}}px" height="{{canvas_height}}px"  style="position: absolute; top: 0; left: 0;z-index: 2;"></canvas>
+			<canvas id="canvas_fixed_0" width="{{canvas_width}}px" height="{{canvas_height}}px" style="position: absolute; top: 128; left: 128;background-color:#ffffff;z-index: 0;"></canvas>
+			<canvas id="canvas_local_0" width="{{canvas_width}}px" height="{{canvas_height}}px" style="position: absolute; top: 128; left: 128;z-index: 1;"></canvas>
+			<canvas id="canvas_drawing_0" width="{{canvas_width}}px" height="{{canvas_height}}px"  style="position: absolute; top: 128; left: 128;z-index: 2;"></canvas>
 			
 			<!--レイヤー2-->
-			<canvas id="canvas_fixed_1" width="{{canvas_width}}px" height="{{canvas_height}}px" style="position: absolute; top: 0; left: 0;z-index: 3;"></canvas>
-			<canvas id="canvas_local_1" width="{{canvas_width}}px" height="{{canvas_height}}px" style="position: absolute; top: 0; left: 0;z-index: 4;"></canvas>
-			<canvas id="canvas_drawing_1" width="{{canvas_width}}px" height="{{canvas_height}}px"  style="position: absolute; top: 0; left: 0;z-index: 5;"></canvas>
-			
-			<!--ワーク-->
-			<canvas id="canvas_work" width="{{canvas_width}}px" height="{{canvas_height}}px"  style="position: absolute; top: 0; left: 0;z-index: 0; visibility:hidden;"></canvas>
+			<canvas id="canvas_fixed_1" width="{{canvas_width}}px" height="{{canvas_height}}px" style="position: absolute; top: 128; left: 128;z-index: 3;"></canvas>
+			<canvas id="canvas_local_1" width="{{canvas_width}}px" height="{{canvas_height}}px" style="position: absolute; top: 128; left: 128;z-index: 4;"></canvas>
+			<canvas id="canvas_drawing_1" width="{{canvas_width}}px" height="{{canvas_height}}px"  style="position: absolute; top: 128; left: 128;z-index: 5;"></canvas>
 		</div>
 	</div>
 </div>
 
+<!--ワーク-->
+<canvas id="canvas_work" width="{{canvas_width}}px" height="{{canvas_height}}px"  style="position: absolute; top: 0; left: 0;z-index: 0; visibility:hidden;"></canvas>
 <canvas id="canvas_rendering" width="{{canvas_width}}px" height="{{canvas_height}}px" style="background-color:#ff0000;z-index:100;position:absolute;top:0;left:60;display:none;"></canvas>
 <canvas id="canvas_thumbnail" width="100" height="100" style="background-color:#00ff00;z-index:110;position:absolute;top:0;left:60;display:none;"></canvas>
 

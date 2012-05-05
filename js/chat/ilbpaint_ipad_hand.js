@@ -47,11 +47,13 @@ function Hand(){
 		
 		this.resize(false);
 		
+		var margin=128;	//キャンバス外イベント確保用マージン
+		
 		var cwidth=document.getElementById("canvas_event").clientWidth-this._left_size;
 		var cheight=document.getElementById("canvas_event").clientHeight-this._buttom_size;
 	
-		this._hand_x=Math.floor(cwidth-can_drawing[0].width)/2+this._left_size;
-		this._hand_y=Math.floor(cheight-can_drawing[0].height)/2;
+		this._hand_x=Math.floor(cwidth-can_drawing[0].width)/2+this._left_size-margin;
+		this._hand_y=Math.floor(cheight-can_drawing[0].height)/2-margin;
 
 		can_div.style.left=""+this._hand_x+"px";
 		can_div.style.top=""+this._hand_y+"px";

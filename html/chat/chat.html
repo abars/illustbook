@@ -90,8 +90,13 @@
 <form action="./chat">
 <input type="hidden" name="mode" value="create">
 <TABLE>
-<TR><TD>ルームの名前（必須）</TD><TD><input type="text" name="name" style="width:200px"></TD></TR>
+<TR><TD>ルーム名（必須）</TD><TD><input type="text" name="name" style="width:200px"></TD></TR>
 <TR><TD>パスワード</TD><TD><input type="text" name="pass" style="width:200px"></TD></TR>
+<TR><TD>キャンバスサイズ</TD><TD><select name="canvas_size">
+<option value="600x600">600x600px</option>
+<option value="800x450">800x600px</option>
+<option value="1120x450">1200x600px</option>
+</select>
 </TABLE>
 <input type="submit" value="ルームを作成">
 </form>
