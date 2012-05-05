@@ -10,13 +10,17 @@
 	}
 </script>
 
+<div style="margin-left:4px;margin-right:4px;">
+
 <div style="float:left;margin-right:10px;">
 <img src="./static_files/chat/logo.png">
 </div>
 
 <div style="float:left;">
-<p>&nbsp</p>
-<p>&nbsp</p>
+{% if not is_iphone %}
+	<p>&nbsp</p>
+	<p>&nbsp</p>
+{% endif %}
 <p>&nbsp</p>
 <H1>イラブチャットの概要</H1>
 <p>イラブチャット（β）はPCとiPadで楽しめるお絵かきチャットです。</p>
@@ -34,12 +38,19 @@
 <p>チャットで使用する名前とサムネイルは<A HREF="./mypage" class="declink">マイページ</A>で設定することができます。</p>
 <p>ルームは最終更新から10分が経過すると自動的に削除されます。</p>
 <p>UNDO/REDOはサーバに送信されるまでの一定時間(3〜6秒)のみ可能です。</p>
+<p>レイヤーは2枚まで使用できます。筆圧は使用できません。</p>
 <p>バグ報告や要望は<A HREF="./support/" class="declink">サポート掲示板</A>までどうぞ。</p>
 <p>&nbsp</p>
 
 <div style="float:left;margin-right:16px;">
 
 <H1>稼働中のルーム</H1>
+
+{% if not user %}
+<p>参加と閲覧には<A HREF="{{redirect_url|login_url}}" class="declink">Googleアカウントでのログイン</A>が必要です。</H1>
+<p>&nbsp</p>
+{% endif %}
+
 {% if room_list %}
 	{% for room in room_list %}
 		<table>
@@ -67,12 +78,13 @@
 {% else %}
 	<p>稼働中のルームはありません。</p>
 {% endif %}
+	<p>&nbsp</p>
 </div>
 
 <div style="float:left;">
 <H1>ルームの作成</H1>
 {% if not user %}
-<p>ルームの作成と参加には<A HREF="{{redirect_url|login_url}}" class="declink">Googleアカウントでのログイン</A>が必要です。</H1>
+<p>ルームの作成には<A HREF="{{redirect_url|login_url}}" class="declink">Googleアカウントでのログイン</A>が必要です。</H1>
 <p>&nbsp</p>
 {% else %}
 <form action="./chat">
@@ -97,3 +109,4 @@
 <TR><TD>iPad</TD><TD>第２世代以降のiPad(第一世代だと速度が遅いです)</TD></TR>
 <TR><TD>Android</TD><TD>3.0ではまともに動きません、4.0は可能性があるかも？</TD></TR>
 </TABLE>
+</div>

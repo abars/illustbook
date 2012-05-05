@@ -22,7 +22,6 @@ var CMD_NOP=4;
 var g_chat_key=null;	//チャットモードの場合はROOMのKEYが入る
 var g_chat_user_id=null;	//ユーザのID
 var g_chat_user_name="名無しさん";	//ユーザの名前
-var g_initial_snapshot=true;	//最初のスナップショット読込
 var g_viewmode=false;			//見るだけのモードかどうか
 
 //チャットモードの場合は最初にinitが呼ばれる
@@ -44,7 +43,7 @@ function chat_init(key,user_id,user_name,server_time,viewmode){
 	user_set_time_delta(server_time);
 	
 	//デバッグ用
-	g_chat_user_name=g_chat_user_name;//+"_"+server_time
+	g_chat_user_name=g_chat_user_name;
 	g_chat_user_id=g_chat_user_id+"_"+server_time
 }
 
@@ -134,7 +133,15 @@ function Chat(){
 		this.snapshot_creating=false;
 		this.snapshot_data=null;
 		
-		setInterval(chat_worker,WORKER_INTERVAL);
+		//ローカルお絵かきモード
+		if(g_chat_key==null)
+			return;
+
+		//スナップショットを取得する
+		var url="chat?mode=snap_shot&key="+g_chat_key;
+		illustbook.request.get("./"+url,chat_get_snapshot_callback);
+		
+		//スナップショットの取得が完了したらワーカーのタイマー呼び出しを開始する
 	}
 	
 	//ワーカー
@@ -178,13 +185,6 @@ function Chat(){
 			if(this._geting_retry>=WATCH_DOG_COUNT){
 				this._get_failed();
 			}
-			return;
-		}
-		
-		//スナップショット取得
-		if(g_initial_snapshot){
-			var url="chat?mode=snap_shot&key="+g_chat_key;
-			illustbook.request.get("./"+url,chat_get_snapshot_callback);
 			return;
 		}
 		
@@ -372,15 +372,21 @@ function Chat(){
 		
 		var range=this._geted_count;
 
-		var image=can_fixed.toDataURL("image/png");
-		image = g_upload._header_split(image);
+		var image_array=new Array();
+		
+		for(var layer=0;layer<LAYER_N;layer++){
+			var image=can_fixed[layer].toDataURL("image/png");
+			image_array[layer] = g_upload._header_split(image);
+		}
 		
 		g_upload._create_thumbnail();
 		var thumbnail_can=document.getElementById("canvas_thumbnail");
 		var thumbnail = g_upload._header_split(thumbnail_can.toDataURL("image/jpeg",0.95));
 		
 		post_data=new Object();
-		post_data["snap_shot"]=image;
+		for(var layer=0;layer<LAYER_N;layer++){
+			post_data["snap_shot_"+layer]=image_array[layer];
+		}
 		post_data["snap_range"]=range;
 		post_data["thumbnail"]=thumbnail;
 		
@@ -419,19 +425,27 @@ function Chat(){
 		if(SNAPSHOT_ALERT){
 			g_buffer._update_comment({"comment":"スナップショットの読込に成功しました。"});
 		}
+		
+		//スナップショット取得成功
 		if(obj.snap_range){
 			this._geted_count=obj.snap_range;
 
-			var image=new Image();
-			image.src="data:image/png;base64,"+obj.snap_shot;
-			image.onload=function(){
-				g_draw_primitive.clear(can_fixed);
-				can_fixed.getContext("2d").drawImage(image,0,0);
-				g_initial_snapshot=false;
+			//スナップショットを反映
+			for(var layer=0;layer<LAYER_N;layer++){
+				var image=new Image();
+				image.src="data:image/png;base64,"+obj["snap_shot_"+layer];
+				image.onload=(function(layer){
+					g_draw_primitive.clear(can_fixed[layer]);
+					can_fixed[layer].getContext("2d").drawImage(image,0,0);
+				})(layer);
 			}
-		}else{
-			g_initial_snapshot=false;
 		}
+
+		//イニシャルロード
+		chat_worker();
+		
+		//2回目以降のGETリクエスト
+		setInterval(chat_worker,WORKER_INTERVAL);
 	}
 	
 	this.reset_snapshot=function(){

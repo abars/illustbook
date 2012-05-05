@@ -44,7 +44,9 @@ function Buffer(){
 	}
 	
 	this._update_local_image=function(){
-		g_draw_primitive.clear(can_local);
+		for(var layer=0;layer<LAYER_N;layer++){
+			g_draw_primitive.clear(can_local[layer]);
+		}
 		this._command_exec(this._local_cmd_list,can_local,false);
 	}
 	
@@ -98,7 +100,10 @@ function Buffer(){
 	}
 
 	this._command_exec=function(cmd_list,dest_canvas,comment_exec){
-		context=dest_canvas.getContext("2d");
+		var context=new Array();
+		for(var i=0;i<LAYER_N;i++){
+			context[i]=dest_canvas[i].getContext("2d");
+		}
 		for(var i=0;i<cmd_list.length;i++){
 			var cmd=cmd_list[i];
 			var cmd_object=eval(cmd)[0];
@@ -110,9 +115,11 @@ function Buffer(){
 				break;
 			case CMD_DRAW:
 				g_draw_primitive.clear(can_work);
-				alpha=g_draw_canvas.draw_command_list(can_work,cmd_list[i]);
-				context.globalAlpha=alpha
-				context.drawImage(can_work,0,0);
+				g_draw_canvas.draw_command_list(can_work,cmd_list[i]);
+				var alpha=cmd_object.alpha;
+				var layer=cmd_object.layer;
+				context[layer].globalAlpha=alpha
+				context[layer].drawImage(can_work,0,0);
 				break;
 			case CMD_HEART_BEAT:
 				g_user.get_heart_beat(cmd_object);
@@ -129,6 +136,9 @@ function Buffer(){
 	}
 	
 	this._update_comment=function(cmd_object){
+		if(!(g_chat.is_chat_mode())){
+			return;
+		}
 		document.getElementById("comment_list").value=cmd_object.comment+"\n"+document.getElementById("comment_list").value
 	}
 

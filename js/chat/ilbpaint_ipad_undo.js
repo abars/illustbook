@@ -3,12 +3,14 @@
 //copyright 2010-2012 ABARS all rights reserved.
 //-------------------------------------------------
 
+var UNDO_MAX=16;
+
 function UndoRedo(){
 	this._undo_array=new Array();
 	this._redo_array=new Array();
 	
-	this._get_now_image=function(){
-		var image_data = can_fixed.getContext("2d").getImageData(0,0,can_fixed.width, can_fixed.height);
+	this._get_now_image=function(layer){
+		var image_data = can_fixed[layer].getContext("2d").getImageData(0,0,can_fixed[layer].width, can_fixed[layer].height);
 		return image_data;
 	}
 
@@ -17,9 +19,13 @@ function UndoRedo(){
 			g_buffer.redo_clear();
 			return;
 		}
-		this._undo_array.push(this._get_now_image());
+		var layer=g_layer.get_layer_no();
+		var obj=new Object();
+		obj.layer=layer;
+		obj.image=this._get_now_image(layer);
+		this._undo_array.push(obj);
 		this._redo_array=new Array();
-		while(this._undo_array.length>=16){
+		while(this._undo_array.length>=UNDO_MAX){
 			this._undo_array.shift();
 		}
 	}
@@ -32,9 +38,16 @@ function UndoRedo(){
 		if(this._undo_array.length<=0){
 			return false;
 		}
-		this._redo_array.push(this._get_now_image());
-		var image_data=this._undo_array.pop();
-		can_fixed.getContext("2d").putImageData(image_data,0,0);
+		var obj=this._undo_array.pop();
+		var layer=obj.layer;
+
+		var redo_obj=new Object();
+		redo_obj.layer=layer;
+		redo_obj.image=this._get_now_image(layer);
+		
+		this._redo_array.push(redo_obj);
+
+		can_fixed[obj.layer].getContext("2d").putImageData(obj.image,0,0);
 		return false;
 	}
 	
@@ -46,9 +59,17 @@ function UndoRedo(){
 		if(this._redo_array.length<=0){
 			return false;
 		}
-		this._undo_array.push(this._get_now_image());
-		var image_data=this._redo_array.pop();
-		can_fixed.getContext("2d").putImageData(image_data,0,0);
+
+		var obj=this._redo_array.pop();
+		var layer=obj.layer;
+
+		var undo_obj=new Object();
+		undo_obj.layer=layer;
+		undo_obj.image=this._get_now_image(layer);
+
+		this._undo_array.push(undo_obj);
+		
+		can_fixed[obj.layer].getContext("2d").putImageData(obj.image,0,0);
 		return false;
 	}
 }

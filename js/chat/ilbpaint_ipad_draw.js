@@ -28,6 +28,7 @@ function DrawCanvas(){
 		var color=g_palette.get_color();
 		var size=g_pen_size.get_size();
 		var alpha=g_alpha.get_alpha();
+		var layer=g_layer.get_layer_no();
 		
 		var txt="[{";
 		txt+="'user_id':'"+g_chat.get_user_id()+"',"
@@ -36,6 +37,8 @@ function DrawCanvas(){
 		txt+="'color':'"+color+"',";
 		txt+="'size':'"+size+"',";
 		txt+="'alpha':'"+alpha+"',";
+		txt+="'layer':"+layer+",";
+		txt+="'tool':'pen',";
 
 		txt+="'point':[";
 		for(var i=0;i<this._x_array.length;i++){
@@ -51,12 +54,12 @@ function DrawCanvas(){
 	
 	//コマンドから描画
 	this.draw_command_list=function(canvas,cmd){
-		var obj=eval(cmd);
+		var obj=eval(cmd)[0];
 		
-		var color=obj[0]['color'];
-		var size=obj[0]['size'];
-		var alpha=obj[0]['alpha'];
-		var point=obj[0]['point'];
+		var color=obj['color'];
+		var size=obj['size'];
+		var alpha=obj['alpha'];
+		var point=obj['point'];
 
 		var len=point.length/2;
 		var x_array=new Array(len);
@@ -73,8 +76,6 @@ function DrawCanvas(){
 				pos+=2;
 			}
 		}
-		
-		return alpha
 	}
 
 //-------------------------------------------------
@@ -91,7 +92,7 @@ function DrawCanvas(){
 		this._add_point(this._get_mx(x),this._get_my(y));
 		this._draw_flag=true;
 			
-		can_drawing.style.opacity=g_alpha.get_alpha();
+		can_drawing[g_layer.get_layer_no()].style.opacity=g_alpha.get_alpha();
 		
 		g_undo_redo.push();
 	}
@@ -101,7 +102,7 @@ function DrawCanvas(){
 			return;
 		}
 		this._add_point(this._get_mx(x),this._get_my(y));
-		if(this._draw_core(can_drawing,this._x_array,this._y_array,this._pos,g_palette.get_color(),g_pen_size.get_size())){
+		if(this._draw_core(can_drawing[g_layer.get_layer_no()],this._x_array,this._y_array,this._pos,g_palette.get_color(),g_pen_size.get_size())){
 			this._pos+=2;
 		}
 	}
@@ -111,10 +112,10 @@ function DrawCanvas(){
 			while(this._x_array.length<=2){
 				this._add_point(this._x_array[0],this._y_array[0]);
 			}
-			this._draw_core(can_drawing,this._x_array,this._y_array,this._pos,g_palette.get_color(),g_pen_size.get_size());
+			this._draw_core(can_drawing[g_layer.get_layer_no()],this._x_array,this._y_array,this._pos,g_palette.get_color(),g_pen_size.get_size());
 		}
 
-		g_draw_primitive.clear(can_drawing);
+		g_draw_primitive.clear(can_drawing[g_layer.get_layer_no()]);
 
 		if(this._draw_flag){
 			this._draw_flag=false;
@@ -163,18 +164,20 @@ function DrawCanvas(){
 //-------------------------------------------------
 
 	this._get_mx=function(x){
-		var canvasRect = can_drawing.getBoundingClientRect();
+		var canvasRect = can_drawing[0].getBoundingClientRect();
 		return (x-canvasRect.left*g_hand.get_zoom())/g_hand.get_zoom();
 	}
 	
 	this._get_my=function(y){
-		var canvasRect = can_drawing.getBoundingClientRect();
+		var canvasRect = can_drawing[0].getBoundingClientRect();
 		return (y-canvasRect.top*g_hand.get_zoom())/g_hand.get_zoom();
 	}
 	
 	this.clear=function(){
 		g_undo_redo.push();
-		g_draw_primitive.clear(can_fixed);
+		for(var layer=0;layer<LAYER_N;layer++){
+			g_draw_primitive.clear(can_fixed[layer]);
+		}
 	}
 }
 

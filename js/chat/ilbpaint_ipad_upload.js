@@ -79,7 +79,9 @@ function Upload(){
 
 		var thumbnail_can=document.getElementById("canvas_thumbnail");
 		var thumbnail = this._header_split(thumbnail_can.toDataURL("image/jpeg",0.95));
-		var image = this._header_split(can_fixed.toDataURL("image/jpeg"));
+		
+		var image_can=document.getElementById("canvas_rendering");
+		var image = this._header_split(image_can.toDataURL("image/jpeg"));
 
 		this._append("thumbnail",thumbnail);
 		this._append("image",image);
@@ -122,7 +124,7 @@ function Upload(){
 		}
 	}
 
-	this._avg=function(src,fx,fy,mx,my,rgb){
+	this._avg=function(src,fx,fy,mx,my,rgb,image_can){
 		var ix=Math.floor(fx);
 		var iy=Math.floor(fy);
 		fx-=ix;
@@ -132,7 +134,7 @@ function Upload(){
 		var cnt=0;
 		for(var y=0;y<my;y++){
 			for(var x=0;x<mx;x++){
-				sum+=src.data[(iy+y)*can_fixed.width*4+(ix+x)*4+rgb];
+				sum+=src.data[(iy+y)*image_can.width*4+(ix+x)*4+rgb];
 				cnt++;
 			}
 		}
@@ -140,14 +142,27 @@ function Upload(){
 		return sum/cnt;
 	}
 	
+	this._rendering=function(){
+		var image_can=document.getElementById("canvas_rendering");
+		g_draw_primitive.fill_white(image_can);
+		var context=image_can.getContext("2d")
+		for(var layer=0;layer<LAYER_N;layer++){
+			context.drawImage(can_fixed[layer],0,0);
+			context.drawImage(can_local[layer],0,0);
+		}
+	}
+
 	//平均画素法で高品質のサムネイルを作成
 	this._create_thumbnail=function(){
 		var thumbnail_can=document.getElementById("canvas_thumbnail");
 		var image_data=thumbnail_can.getContext("2d").createImageData(thumbnail_can.width,thumbnail_can.height);
-		var src=can_fixed.getContext("2d").getImageData(0,0,can_fixed.width,can_fixed.height);
+		
+		this._rendering();
+		var image_can=document.getElementById("canvas_rendering");
+		var src=image_can.getContext("2d").getImageData(0,0,image_can.width,image_can.height);
 
-		var mx=can_fixed.width/thumbnail_can.width;
-		var my=can_fixed.height/thumbnail_can.height;
+		var mx=image_can.width/thumbnail_can.width;
+		var my=image_can.height/thumbnail_can.height;
 		
 		if(mx<my){
 			mx=my;
@@ -155,18 +170,19 @@ function Upload(){
 			my=mx;
 		}
 		
-		ox=Math.floor((100-can_fixed.width/mx)/2);
-		oy=Math.floor((100-can_fixed.height/my)/2)
+		ox=Math.floor((100-image_can.width/mx)/2);
+		oy=Math.floor((100-image_can.height/my)/2)
 		
-		for(var y=0;y<can_fixed.height/my;y++){
-			for(var x=0;x<can_fixed.width/mx;x++){
+		for(var y=0;y<image_can.height/my;y++){
+			for(var x=0;x<image_can.width/mx;x++){
 				var fx=x*mx;
 				var fy=y*my;
 				for(var rgb=0;rgb<4;rgb++){
-					image_data.data[(y+oy)*thumbnail_can.width*4+(x+ox)*4+rgb]=this._avg(src,fx,fy,mx,my,rgb);
+					image_data.data[(y+oy)*thumbnail_can.width*4+(x+ox)*4+rgb]=this._avg(src,fx,fy,mx,my,rgb,image_can);
 				}
 			}
 		}
+		
 		thumbnail_can.getContext("2d").putImageData(image_data,0,0);
 	}
 }

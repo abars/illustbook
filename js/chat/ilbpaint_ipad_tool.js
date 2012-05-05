@@ -129,14 +129,20 @@ function ToolBox(){
 		txt+=this._add_button("g_undo_redo.undo","取り消し",s,margin);
 		txt+=this._add_button("g_undo_redo.redo","やり直し",s,0);
 		txt+=this._add_button("g_hand.hand_mode","ハンド",s,margin);
-		txt+=this._add_button("g_hand.zoom_out","縮小",s,0);
-		txt+=this._add_button("g_hand.zoom_in","拡大",s,0);
+		txt+=this._add_button("g_hand.zoom_in","ズーム<BR>+",s,0);
+		txt+=this._add_button("g_hand.zoom_out","ズーム<BR>-",s,0);
 		if(!(g_chat.is_chat_mode())){
 			txt+=this._add_button("g_draw_canvas.clear","クリア",s,margin);
 		}
 		if(!(g_chat.is_view_mode())){
 			txt+=this._add_button("ipad_switch_upload_form","投稿",s,margin);
 		}
+		
+		//デバッグ
+		if(SNAPSHOT_ALERT){
+			txt+=this._add_button("g_chat.prepare_snapshot();g_chat.snapshot();","スナップ",s,margin);
+		}
+
 		document.getElementById("toolmenu").innerHTML=txt+"<br clear='both'>";
 
 		//遅延登録が必須

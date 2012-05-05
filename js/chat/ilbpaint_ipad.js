@@ -19,6 +19,7 @@ var g_chat=new Chat();
 var g_buffer=new Buffer();
 var g_draw_primitive=new DrawPrimitive();
 var g_user=new User();
+var g_layer=new Layer();
 
 function ipad_init(){
 	ipad_get_instance();
@@ -33,6 +34,7 @@ function ipad_init(){
 	g_buffer.init();
 	g_draw_primitive.init();
 	g_user.init();
+	g_layer.init();
 	
 	if(g_viewmode){
 		g_buffer._update_comment({"comment":"閲覧モードで起動しました。書き込みはできません。"});
@@ -47,9 +49,10 @@ function ipad_init(){
 //can_drawingに描画->コマンド取得->can_localに描画->ネットワーク送信
 //ネットワーク送信に成功->can_fixedに描画->can_localから削除
 
-var can_fixed;		//ネットワークで確定した画像が格納される
-var can_local;		//ローカルで確定した画像が格納される
-var can_drawing;	//描画中の画像が格納される
+var can_fixed=new Array();		//ネットワークで確定した画像が格納される
+var can_local=new Array();		//ローカルで確定した画像が格納される
+var can_drawing=new Array();	//描画中の画像が格納される
+
 var can_work;		//各種ワーク
 
 var can_div;
@@ -61,16 +64,18 @@ var g_color_width;
 var g_size_width;
 var g_window_height;
 
-function ipad_get_instance(){	
-	can_fixed = document.getElementById("canvas_fixed"); 
-	can_local = document.getElementById("canvas_local"); 
-	can_drawing = document.getElementById("canvas_drawing");
+function ipad_get_instance(){
+	for(var layer=0;layer<LAYER_N;layer++){
+		can_fixed[layer] = document.getElementById("canvas_fixed_"+layer); 
+		can_local[layer] = document.getElementById("canvas_local_"+layer); 
+		can_drawing[layer] = document.getElementById("canvas_drawing_"+layer);
+	}
+	
+	g_draw_primitive.fill_white(can_fixed[0]);
+	
 	can_work = document.getElementById("canvas_work");
-
 	can_div = document.getElementById("canvas_div"); 
 	
-	g_draw_primitive.fill_white(can_fixed);
-
 	g_button_width=48;//100;
 	g_button_height=48;//20;
 	

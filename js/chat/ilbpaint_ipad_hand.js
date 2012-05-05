@@ -50,8 +50,8 @@ function Hand(){
 		var cwidth=document.getElementById("canvas_event").clientWidth-this._left_size;
 		var cheight=document.getElementById("canvas_event").clientHeight-this._buttom_size;
 	
-		this._hand_x=Math.floor(cwidth-can_drawing.width)/2+this._left_size;
-		this._hand_y=Math.floor(cheight-can_drawing.height)/2;
+		this._hand_x=Math.floor(cwidth-can_drawing[0].width)/2+this._left_size;
+		this._hand_y=Math.floor(cheight-can_drawing[0].height)/2;
 
 		can_div.style.left=""+this._hand_x+"px";
 		can_div.style.top=""+this._hand_y+"px";
@@ -84,8 +84,8 @@ function Hand(){
 		if(this._before_x){
 			this._hand_x+=x-this._before_x;
 			this._hand_y+=y-this._before_y;
-			can_div.style.top=""+this._hand_y+"px";
-			can_div.style.left=""+this._hand_x+"px";
+			can_div.style.top=""+Math.floor(this._hand_y)+"px";
+			can_div.style.left=""+Math.floor(this._hand_x)+"px";
 		}
 		
 		this._before_x=x;
@@ -105,14 +105,14 @@ function Hand(){
 		this._hand_x-=(this._hand_x*new_zoom-this._hand_x*this._zoom)/new_zoom;
 		this._hand_y-=(this._hand_y*new_zoom-this._hand_y*this._zoom)/new_zoom;
 	
-		this._hand_x-=(can_fixed.width*new_zoom-can_fixed.width*this._zoom)/2/new_zoom;
-		this._hand_y-=(can_fixed.height*new_zoom-can_fixed.height*this._zoom)/2/new_zoom;
+		this._hand_x-=(can_fixed[0].width*new_zoom-can_fixed[0].width*this._zoom)/2/new_zoom;
+		this._hand_y-=(can_fixed[0].height*new_zoom-can_fixed[0].height*this._zoom)/2/new_zoom;
 		
-		can_div.style.left=""+this._hand_x+"px";
-		can_div.style.top=""+this._hand_y+"px";
+		can_div.style.left=""+Math.floor(this._hand_x)+"px";
+		can_div.style.top=""+Math.floor(this._hand_y)+"px";
 
 		this._zoom=new_zoom;
-		can_div.style.zoom=""+(this._zoom*100)+"%";
+		can_div.style.zoom=""+Math.floor(this._zoom*100)+"%";
 	}
 	
 	this.zoom_out=function(){

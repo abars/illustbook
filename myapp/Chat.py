@@ -109,17 +109,18 @@ class Chat(webapp.RequestHandler):
 	#スナップショットを作成
 	def post_snapshot(self):
 		key=self.request.get("key")
-		snap_shot=self.request.get("snap_shot")
+		snap_shot_0=self.request.get("snap_shot_0")
+		snap_shot_1=self.request.get("snap_shot_1")
 		thumbnail=self.request.get("thumbnail")
 		snap_range=int(self.request.get("snap_range"))
 		try:
-			db.run_in_transaction(Chat.post_snapshot_core,key,snap_shot,snap_range,thumbnail)
+			db.run_in_transaction(Chat.post_snapshot_core,key,snap_shot_0,snap_shot_1,snap_range,thumbnail)
 			ApiObject.write_json_core(self,{"status":"success"})
 		except:
 			ApiObject.write_json_core(self,{"status":"failed"})
 
 	@staticmethod
-	def post_snapshot_core(key,snap_shot,snap_range,thumbnail):
+	def post_snapshot_core(key,snap_shot_0,snap_shot_1,snap_range,thumbnail):
 		#スナップショットを格納
 		room=db.get(key)
 		
@@ -146,7 +147,8 @@ class Chat(webapp.RequestHandler):
 
 		#スナップショットを格納
 		room.snap_range=snap_range
-		room.snap_shot=snap_shot
+		room.snap_shot_0=snap_shot_0
+		room.snap_shot_1=snap_shot_1
 
 		room.put()
 	
@@ -165,7 +167,7 @@ class Chat(webapp.RequestHandler):
 	#スナップショットを取得する
 	def get_snap_shot(self):
 		room=db.get(self.request.get("key"))
-		ApiObject.write_json_core(self,{"status":"success","snap_shot":room.snap_shot,"snap_range":room.snap_range})
+		ApiObject.write_json_core(self,{"status":"success","snap_shot_0":room.snap_shot_0,"snap_shot_1":room.snap_shot_1,"snap_range":room.snap_range})
 	
 	#コマンドを取得する
 	def get_command(self):

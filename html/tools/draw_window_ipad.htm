@@ -25,6 +25,7 @@
 <script language="JavaScript" src="./js/chat/ilbpaint_ipad_tool.js"></script>
 <script language="JavaScript" src="./js/chat/ilbpaint_ipad_hand.js"></script>
 <script language="JavaScript" src="./js/chat/ilbpaint_ipad_user.js"></script>
+<script language="JavaScript" src="./js/chat/ilbpaint_ipad_layer.js"></script>
 <script language="JavaScript" src="./js/chat/ilbpaint_ipad.js"></script>
 
 <script language="JavaScript" src="./js/cookie.js"></script>
@@ -39,7 +40,8 @@
 	<div id="bottom_tool" style="position:absolute;bottom:0px;width:100%;padding-bottom:4px;z-index:10;background-color:#ffffff;">
 		<div id="pensize_form" style="float:left;padding-right:16px;">
 				太さ<input id="slider_size" type="range" min="1" max="100" value="4" onChange="g_pen_size.on_change();"/>　
-				透明度<input id="slider_alpha" type="range" min="1" max="100" value="100" onChange="g_alpha.on_change();"/>
+				透明度<input id="slider_alpha" type="range" min="1" max="100" value="100" onChange="g_alpha.on_change();"/>　
+				<select id="layer"><option value="1" selected>レイヤー上</option><option value="0">レイヤー下</option></select>
 		</div>
 		<BR CLEAR="all">
 		<div id="palette" style="margin-left:2px;margin-bottom:4px;" style="float:left;"></div>
@@ -96,15 +98,24 @@
 
 	<div id="canvas_event" style="width:100%;height:10%;background-color:#eeeeee;">
 		<div id="canvas_div" style="position:relative;width:{{canvas_width}}px;height:{{canvas_height}}px; top: 0; left: 0;">
-			<canvas id="canvas_fixed" width="{{canvas_width}}px" height="{{canvas_height}}px" style="position: absolute; top: 0; left: 0;background-color:#ffffff;z-index: 0;"></canvas>
-			<canvas id="canvas_local" width="{{canvas_width}}px" height="{{canvas_height}}px" style="position: absolute; top: 0; left: 0;z-index: 1;"></canvas>
-			<canvas id="canvas_drawing" width="{{canvas_width}}px" height="{{canvas_height}}px"  style="position: absolute; top: 0; left: 0;z-index: 2;"></canvas>
-			<canvas id="canvas_work" width="{{canvas_width}}px" height="{{canvas_height}}px"  style="position: absolute; top: 0; left: 0;z-index: 3; visibility:hidden;"></canvas>
+			<!--レイヤー1-->
+			<canvas id="canvas_fixed_0" width="{{canvas_width}}px" height="{{canvas_height}}px" style="position: absolute; top: 0; left: 0;background-color:#ffffff;z-index: 0;"></canvas>
+			<canvas id="canvas_local_0" width="{{canvas_width}}px" height="{{canvas_height}}px" style="position: absolute; top: 0; left: 0;z-index: 1;"></canvas>
+			<canvas id="canvas_drawing_0" width="{{canvas_width}}px" height="{{canvas_height}}px"  style="position: absolute; top: 0; left: 0;z-index: 2;"></canvas>
+			
+			<!--レイヤー2-->
+			<canvas id="canvas_fixed_1" width="{{canvas_width}}px" height="{{canvas_height}}px" style="position: absolute; top: 0; left: 0;z-index: 3;"></canvas>
+			<canvas id="canvas_local_1" width="{{canvas_width}}px" height="{{canvas_height}}px" style="position: absolute; top: 0; left: 0;z-index: 4;"></canvas>
+			<canvas id="canvas_drawing_1" width="{{canvas_width}}px" height="{{canvas_height}}px"  style="position: absolute; top: 0; left: 0;z-index: 5;"></canvas>
+			
+			<!--ワーク-->
+			<canvas id="canvas_work" width="{{canvas_width}}px" height="{{canvas_height}}px"  style="position: absolute; top: 0; left: 0;z-index: 0; visibility:hidden;"></canvas>
 		</div>
 	</div>
 </div>
 
-<canvas id="canvas_thumbnail" width="100" height="100" style="background-color:#ffffff;display:none;">
+<canvas id="canvas_rendering" width="{{canvas_width}}px" height="{{canvas_height}}px" style="background-color:#ff0000;z-index:100;position:absolute;top:0;left:60;display:none;"></canvas>
+<canvas id="canvas_thumbnail" width="100" height="100" style="background-color:#00ff00;z-index:110;position:absolute;top:0;left:60;display:none;"></canvas>
 
 </body>
 </html>
