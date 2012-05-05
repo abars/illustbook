@@ -94,8 +94,8 @@
 <input type="button" value="イラストを投稿する" onclick="javascript:g_upload.upload('{{bbs_key}}','{{thread_key}}','{{reply}}');">
 		</div>
 
-	<div id="canvas_event" style="width:100%;height:10%;background-color:#eeeeee">
-		<div id="canvas_div" style="position:absolute;width:{{canvas_width}}px;height:{{canvas_height}}px; top: 0; left: 0;">
+	<div id="canvas_event" style="width:100%;height:10%;background-color:#eeeeee;">
+		<div id="canvas_div" style="position:relative;width:{{canvas_width}}px;height:{{canvas_height}}px; top: 0; left: 0;">
 			<canvas id="canvas_fixed" width="{{canvas_width}}px" height="{{canvas_height}}px" style="position: absolute; top: 0; left: 0;background-color:#ffffff;z-index: 0;"></canvas>
 			<canvas id="canvas_local" width="{{canvas_width}}px" height="{{canvas_height}}px" style="position: absolute; top: 0; left: 0;z-index: 1;"></canvas>
 			<canvas id="canvas_drawing" width="{{canvas_width}}px" height="{{canvas_height}}px"  style="position: absolute; top: 0; left: 0;z-index: 2;"></canvas>

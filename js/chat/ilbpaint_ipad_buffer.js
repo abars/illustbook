@@ -5,17 +5,20 @@
 
 function Buffer(){
 	this._local_cmd_list;			//ローカルコマンド
+	this._local_time_list;			//ローカルコマンドの時間
 	this._network_cmd_list;	//ネットワークコマンド
-
+	
 	this._local_posted_cnt;		//ローカルコマンドの送信に成功した数
-
 	this._reload_need;				//リロードが必要かどうか
+	this._redo_buffer;				//REDOバッファ
 
 	this.init=function(){
 		this._local_cmd_list=new Array();
+		this._local_time_list=new Array();
 		this._network_cmd_list=new Array();
 		this._local_posted_cnt=0;
 		this._reload_need=false;
+		this._redo_buffer=new Array();
 	}
 
 //-------------------------------------------------
@@ -31,6 +34,8 @@ function Buffer(){
 		
 		//チャットモードの場合はローカルバッファに格納
 		this._local_cmd_list.push(command);
+		this._local_time_list.push(this.get_now_time());
+		
 		if(this._get_command_kind(command)==CMD_TEXT){
 			var cmd_object=eval(command)[0];
 			this._update_comment(cmd_object);	//今回のコメントを先行して反映してしまう
@@ -46,6 +51,10 @@ function Buffer(){
 	this.get_local_command=function(send_pos){
 		return this._local_cmd_list[send_pos-this._local_posted_cnt];
 	}
+
+	this.get_local_time=function(send_pos){
+		return this._local_time_list[send_pos-this._local_posted_cnt];
+	}
 	
 	this.get_local_command_len=function(){
 		return this._local_cmd_list.length+this._local_posted_cnt;
@@ -53,11 +62,12 @@ function Buffer(){
 	
 	this.pop_local_command=function(){
 		this._local_cmd_list.shift();
+		this._local_time_list.shift();
 		this._local_posted_cnt++;
 	}
 
 //-------------------------------------------------
-//
+//ネットワークコマンドが到着
 //-------------------------------------------------
 
 	this.push_network_command=function(command){
@@ -120,5 +130,37 @@ function Buffer(){
 	
 	this._update_comment=function(cmd_object){
 		document.getElementById("comment_list").value=cmd_object.comment+"\n"+document.getElementById("comment_list").value
+	}
+
+//-------------------------------------------------
+//UNDO
+//-------------------------------------------------
+
+	this.undo=function(){
+		var posted_count=g_chat.get_posted_count();
+		if(this._local_cmd_list.length+this._local_posted_cnt<=posted_count){
+			return;
+		}
+		var cmd=this._local_cmd_list[this._local_cmd_list.length-1]
+		this._redo_buffer.push(cmd);
+		this._local_cmd_list.splice(this._local_cmd_list.length-1,1)
+		this._local_time_list.splice(this._local_time_list.length-1,1)
+		this._update_local_image();
+	}
+
+	this.redo=function(){
+		if(this._redo_buffer.length<=0)
+			return;
+		var cmd=this._redo_buffer.shift();
+		this.push_command(cmd);
+	}
+	
+	this.redo_clear=function(){
+		this._redo_buffer=new Array();
+	}
+	
+	this.get_now_time=function(){
+		var date = new Date();
+		return date.getTime()
 	}
 };

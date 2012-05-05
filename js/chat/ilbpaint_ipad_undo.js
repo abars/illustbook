@@ -14,7 +14,8 @@ function UndoRedo(){
 
 	this.push=function(){
 		if(g_chat.is_chat_mode()){
-			return;	//チャットモードではUNDOできない
+			g_buffer.redo_clear();
+			return;
 		}
 		this._undo_array.push(this._get_now_image());
 		this._redo_array=new Array();
@@ -24,8 +25,13 @@ function UndoRedo(){
 	}
 
 	this.undo=function(is_touch){
-		if(this._undo_array.length<=0)
+		if(g_chat.is_chat_mode()){
+			g_buffer.undo();
 			return false;
+		}
+		if(this._undo_array.length<=0){
+			return false;
+		}
 		this._redo_array.push(this._get_now_image());
 		var image_data=this._undo_array.pop();
 		can_fixed.getContext("2d").putImageData(image_data,0,0);
@@ -33,8 +39,13 @@ function UndoRedo(){
 	}
 	
 	this.redo=function(is_touch){
-		if(this._redo_array.length<=0)
+		if(g_chat.is_chat_mode()){
+			g_buffer.redo();
 			return false;
+		}
+		if(this._redo_array.length<=0){
+			return false;
+		}
 		this._undo_array.push(this._get_now_image());
 		var image_data=this._redo_array.pop();
 		can_fixed.getContext("2d").putImageData(image_data,0,0);

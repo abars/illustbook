@@ -4,10 +4,11 @@
 //-------------------------------------------------
 
 var WATCH_DOG_COUNT=10;			//10回分の時間successが帰って来なかったらfailedと判断する
-var GET_COMMAND_LIMIT=100;		//コマンドを読み込んでくる単位
+var GET_COMMAND_LIMIT=250;		//コマンドを読み込んでくる単位
 var WORKER_INTERVAL=3000;			//3秒に一回通信
 var SNAPSHOT_PERCENT=75;			//使用率が上がった場合にスナップショットを取る
-var SNAPSHOT_ALERT=0;
+var WAIT_FOR_UNDO_MSEC=3000;	//UNDO用に3秒待機
+var SNAPSHOT_ALERT=0;					//スナップショットの状況を表示するかどうか
 
 var CMD_DRAW=0;
 var CMD_TEXT=1;
@@ -240,8 +241,15 @@ function Chat(){
 		
 		//送信するデータを準備
 		var cmd_list=new Array();
+		var now_time=g_buffer.get_now_time();
 		for(var i=0;i<len;i++){
 			var cmd=g_buffer.get_local_command(this._posted_count+i);
+			var time=g_buffer.get_local_time(this._posted_count+i);
+			if(now_time-time<=WAIT_FOR_UNDO_MSEC){
+				//UNDO用に一定時間送信を待つ
+				len=i;
+				break;
+			}
 			cmd_list.push(cmd);
 		}
 
@@ -278,6 +286,10 @@ function Chat(){
 	
 	this._send_failed=function(){
 		this._posting_count=0;
+	}
+	
+	this.get_posted_count=function(){
+		return this._posting_count+this._posted_count;
 	}
 
 //-------------------------------------------------

@@ -33,10 +33,11 @@
 <H1>利用ガイド</H1>
 <p>チャットで使用する名前とサムネイルは<A HREF="./mypage" class="declink">マイページ</A>で設定することができます。</p>
 <p>ルームは最終更新から10分が経過すると自動的に削除されます。</p>
+<p>UNDO/REDOはサーバに送信されるまでの一定時間(3〜6秒)のみ可能です。</p>
 <p>バグ報告や要望は<A HREF="./support/" class="declink">サポート掲示板</A>までどうぞ。</p>
 <p>&nbsp</p>
 
-<div style="float:left;">
+<div style="float:left;margin-right:16px;">
 
 <H1>稼働中のルーム</H1>
 {% if room_list %}
@@ -68,7 +69,7 @@
 {% endif %}
 </div>
 
-<div style="float:left;margin-left:16px;">
+<div style="float:left;">
 <H1>ルームの作成</H1>
 {% if not user %}
 <p>ルームの作成と参加には<A HREF="{{redirect_url|login_url}}" class="declink">Googleアカウントでのログイン</A>が必要です。</H1>

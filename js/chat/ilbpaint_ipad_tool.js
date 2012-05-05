@@ -126,10 +126,8 @@ function ToolBox(){
 		var txt="";
 		var s=g_button_width+20;
 		var margin=12;
-		if(!(g_chat.is_chat_mode())){
-			txt+=this._add_button("g_undo_redo.undo","取り消し",s,margin);
-			txt+=this._add_button("g_undo_redo.redo","やり直し",s,0);
-		}
+		txt+=this._add_button("g_undo_redo.undo","取り消し",s,margin);
+		txt+=this._add_button("g_undo_redo.redo","やり直し",s,0);
 		txt+=this._add_button("g_hand.hand_mode","ハンド",s,margin);
 		txt+=this._add_button("g_hand.zoom_out","縮小",s,0);
 		txt+=this._add_button("g_hand.zoom_in","拡大",s,0);
@@ -143,10 +141,8 @@ function ToolBox(){
 
 		//遅延登録が必須
 		if(!ipad_is_pc()){
-			if(!(g_chat.is_chat_mode())){
-				document.getElementById("g_undo_redo.undo").addEventListener("touchstart", function(e){g_undo_redo.undo(true);},false);
-				document.getElementById("g_undo_redo.redo").addEventListener("touchstart", function(e){g_undo_redo.redo(true);},false);
-			}
+			document.getElementById("g_undo_redo.undo").addEventListener("touchstart", function(e){g_undo_redo.undo(true);},false);
+			document.getElementById("g_undo_redo.redo").addEventListener("touchstart", function(e){g_undo_redo.redo(true);},false);
 			document.getElementById("g_hand.hand_mode").addEventListener("touchstart", function(e){g_hand.hand_mode(true);},false);
 			document.getElementById("g_hand.zoom_out").addEventListener("touchstart", function(e){g_hand.zoom_out(true);},false);
 			document.getElementById("g_hand.zoom_in").addEventListener("touchstart", function(e){g_hand.zoom_in(true);},false);
