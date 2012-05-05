@@ -121,9 +121,6 @@ function ipad_on_mouse_move(e){
 }
 
 function ipad_on_mouse_down(e){
-	if(g_chat.is_view_mode()){
-		return;
-	}
 	if(e.touches){
 		e.preventDefault();
 		if(e.touches.length>=2){
@@ -134,14 +131,18 @@ function ipad_on_mouse_down(e){
 			g_hand.on_mouse_down(e.touches[0].clientX,e.touches[0].clientY,0,0);
 			return;
 		}
-		g_draw_canvas.on_mouse_down(e.touches[0].clientX,e.touches[0].clientY);
+		if(!(g_chat.is_view_mode())){
+			g_draw_canvas.on_mouse_down(e.touches[0].clientX,e.touches[0].clientY);
+		}
 		return;
 	}
 	if(g_hand.is_hand_mode()){
 		g_hand.on_mouse_down(e.clientX,e.clientY,0,0);
 		return;
 	}
-	g_draw_canvas.on_mouse_down(e.clientX,e.clientY);
+	if(!(g_chat.is_view_mode())){
+		g_draw_canvas.on_mouse_down(e.clientX,e.clientY);
+	}
 }
 
 function ipad_on_mouse_up(e){

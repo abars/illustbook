@@ -44,7 +44,7 @@
 		<div id="palette" style="margin-left:2px;margin-bottom:4px;" style="float:left;"></div>
 		<BR CLEAR="all">
 		{% if chat %}
-		<div style="float:left;width:60%;margin-top:8px;">
+		<div style="float:left;width:60%;margin-top:8px;margin-left:2px;">
 			<textarea id="comment_list" style="width:100%;height:100px;" readonly="readonly"></textarea>
 		</div>
 		<div style="float:left;margin-left:8px;">
@@ -54,7 +54,9 @@
 			</div>
 		</div>
 		<BR clear="all">
-		<form action="javascript:return false;" onsubmit="javascript:g_chat.comment();return false;"><input id="comment" type="text" style="width:50%;"></input><input type="submit" value="発言"></input></form>
+		{% ifequal viewmode "false" %}
+			<form action="javascript:return false;" onsubmit="javascript:g_chat.comment();return false;" style="margin-left:2px;margin-bottom:2px;"><input id="comment" type="text" style="width:50%;"></input><input type="submit" value="発言"></input></form>
+		{% endifequal %}
 		{% else %}
 		<div style="width:100%;height:20px;">　</div>
 		{% endif %}
