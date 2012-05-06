@@ -26,6 +26,8 @@
 <script language="JavaScript" src="./js/ipad/ilbpaint_ipad_hand.js"></script>
 <script language="JavaScript" src="./js/ipad/ilbpaint_ipad_user.js"></script>
 <script language="JavaScript" src="./js/ipad/ilbpaint_ipad_layer.js"></script>
+<script language="JavaScript" src="./js/ipad/ilbpaint_ipad_spoit.js"></script>
+<script language="JavaScript" src="./js/ipad/ilbpaint_ipad_palette.js"></script>
 <script language="JavaScript" src="./js/ipad/ilbpaint_ipad_colorcircle.js"></script>
 <script language="JavaScript" src="./js/ipad/ilbpaint_ipad.js"></script>
 
@@ -38,10 +40,10 @@
 <div style="width:100%;height:100%;">
 	<div id="toolmenu" style="position:fixed;left:0px;top:0px;width:60px;height:100%;background-color:#ffffff;z-index:10;">
 	</div>
-	<div id="bottom_tool" style="position:fixed;left:60px;bottom:0px;width:100%;padding-bottom:4px;z-index:10;background-color:#ffffff;">
-		
+	
+	<div id="bottom_tool" style="position:fixed;left:60px;bottom:0px;width:100%;padding-bottom:0px;z-index:10;background-color:#ffffff;">
 		<div style="float:left">
-		<canvas id="color_circle" width="320px" height="40px""></canvas>
+		<canvas id="color_circle" width="380px" height="60px""></canvas>
 		</div>
 		<div id="palette" style="margin-left:2px;margin-top:2px;margin-bottom:4px;float:left;"></div>
 		<BR CLEAR="all">
@@ -60,7 +62,6 @@
 			<form action="javascript:return false;" onsubmit="javascript:g_chat.comment();return false;" style="margin-left:2px;margin-bottom:2px;"><input id="comment" type="text" style="width:50%;"></input><input type="submit" value="発言"></input></form>
 		{% endifequal %}
 		{% else %}
-		<div style="width:100%;height:20px;">　</div>
 		{% endif %}
 	</div>
 
