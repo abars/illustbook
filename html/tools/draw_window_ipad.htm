@@ -16,17 +16,18 @@
 {% endif %}
 
 <script language="JavaScript" src="./api_js"></script>
-<script language="JavaScript" src="./js/chat/ilbpaint_ipad_draw_primitive.js"></script>
-<script language="JavaScript" src="./js/chat/ilbpaint_ipad_draw.js"></script>
-<script language="JavaScript" src="./js/chat/ilbpaint_ipad_chat.js"></script>
-<script language="JavaScript" src="./js/chat/ilbpaint_ipad_buffer.js"></script>
-<script language="JavaScript" src="./js/chat/ilbpaint_ipad_undo.js"></script>
-<script language="JavaScript" src="./js/chat/ilbpaint_ipad_upload.js"></script>
-<script language="JavaScript" src="./js/chat/ilbpaint_ipad_tool.js"></script>
-<script language="JavaScript" src="./js/chat/ilbpaint_ipad_hand.js"></script>
-<script language="JavaScript" src="./js/chat/ilbpaint_ipad_user.js"></script>
-<script language="JavaScript" src="./js/chat/ilbpaint_ipad_layer.js"></script>
-<script language="JavaScript" src="./js/chat/ilbpaint_ipad.js"></script>
+<script language="JavaScript" src="./js/ipad/ilbpaint_ipad_draw_primitive.js"></script>
+<script language="JavaScript" src="./js/ipad/ilbpaint_ipad_draw.js"></script>
+<script language="JavaScript" src="./js/ipad/ilbpaint_ipad_chat.js"></script>
+<script language="JavaScript" src="./js/ipad/ilbpaint_ipad_buffer.js"></script>
+<script language="JavaScript" src="./js/ipad/ilbpaint_ipad_undo.js"></script>
+<script language="JavaScript" src="./js/ipad/ilbpaint_ipad_upload.js"></script>
+<script language="JavaScript" src="./js/ipad/ilbpaint_ipad_tool.js"></script>
+<script language="JavaScript" src="./js/ipad/ilbpaint_ipad_hand.js"></script>
+<script language="JavaScript" src="./js/ipad/ilbpaint_ipad_user.js"></script>
+<script language="JavaScript" src="./js/ipad/ilbpaint_ipad_layer.js"></script>
+<script language="JavaScript" src="./js/ipad/ilbpaint_ipad_colorcircle.js"></script>
+<script language="JavaScript" src="./js/ipad/ilbpaint_ipad.js"></script>
 
 <script language="JavaScript" src="./js/cookie.js"></script>
 
@@ -37,34 +38,12 @@
 <div style="width:100%;height:100%;">
 	<div id="toolmenu" style="position:fixed;left:0px;top:0px;width:60px;height:100%;background-color:#ffffff;z-index:10;">
 	</div>
-	<div id="bottom_tool" style="position:fixed;bottom:0px;width:100%;padding-bottom:4px;z-index:10;background-color:#ffffff;">
-		<div id="pensize_form" style="float:left;padding-right:16px;">
-				<select id="slider_size" onChange="g_pen_size.on_change();">
-				<option value="1">太さ1</option>
-				<option value="2" selected>太さ2</option>
-				<option value="4">太さ4</option>
-				<option value="8">太さ8</option>
-				<option value="16">太さ16</option>
-				<option value="32">太さ32</option>
-				<option value="64">太さ64</option>
-				<option value="128">太さ128</option>
-				</select>
-				<select id="slider_alpha" onChange="g_alpha.on_change();">
-				<option value="100" selected>不透明度100</option>
-				<option value="90">不透明度90</option>
-				<option value="80">不透明度80</option>
-				<option value="70">不透明度70</option>
-				<option value="60">不透明度60</option>
-				<option value="50">不透明度50</option>
-				<option value="40">不透明度40</option>
-				<option value="30">不透明度30</option>
-				<option value="20">不透明度20</option>
-				<option value="10">不透明度10</option>
-				</select>
-				<select id="layer"><option value="1" selected>レイヤー上</option><option value="0">レイヤー下</option></select>
+	<div id="bottom_tool" style="position:fixed;left:60px;bottom:0px;width:100%;padding-bottom:4px;z-index:10;background-color:#ffffff;">
+		
+		<div style="float:left">
+		<canvas id="color_circle" width="320px" height="40px""></canvas>
 		</div>
-		<BR CLEAR="all">
-		<div id="palette" style="margin-left:2px;margin-bottom:4px;" style="float:left;"></div>
+		<div id="palette" style="margin-left:2px;margin-top:2px;margin-bottom:4px;float:left;"></div>
 		<BR CLEAR="all">
 		{% if chat %}
 		<div style="float:left;width:60%;margin-top:8px;margin-left:2px;">
