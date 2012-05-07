@@ -6,7 +6,6 @@
 #copyright 2010-2012 ABARS all rights reserved.
 #---------------------------------------------------
 
-
 import cgi
 import os
 import sys
@@ -38,6 +37,7 @@ from myapp.MaintenanceCheck import MaintenanceCheck
 from myapp.ShowBbs import ShowBbs
 from myapp.CounterWorker import CounterWorker
 from myapp.ApiObject import ApiObject
+from myapp.ShowEntry import ShowEntry
 
 class ShowThread(webapp.RequestHandler):
 	def get(self,bbs_key,thread_key):
@@ -119,9 +119,6 @@ class ShowThread(webapp.RequestHandler):
 		page_url_base = MappingId.get_usr_url(host_url,bbs)+thread_key+'.html?page='
 		page_list=ShowThread.create_page_list(page,entry_num,col_num)
 		
-		#レスを取得
-		com_list=ShowThread.get_response(com_list_,thread)
-		
 		#コメントフォームを取得する
 		show_comment_form=1
 		if(bbs.comment_login_require and not(logined)):
@@ -130,13 +127,15 @@ class ShowThread(webapp.RequestHandler):
 		#掲示板のデザインを取得
 		design=CssDesign.get_design_object(self,bbs,host_url,1)
 		
+		#コメントのレンダリング
+		comment=ShowEntry.render_comment(self,host_url,bbs,thread,com_list_,edit_flag,bbs_key,logined)
+		
 		#描画
 		template_values = {
 			'host': host_url,
 			'usrhost': MappingId.get_usr_url(host_url,bbs),
 			'bbs': bbs,
 			'thread': thread,
-			'com_list':com_list,
 			'edit_flag':edit_flag,
 			'url': 'edit',
 			'url_linktext': 'edit blogs',
@@ -156,7 +155,8 @@ class ShowThread(webapp.RequestHandler):
 			'admin_user':admin_user,
 			'order':order,
 			'is_maintenance':is_maintenance,
-			'redirect_url': self.request.path
+			'redirect_url': self.request.path,
+			'comment':comment
 			}
 
 		path = os.path.join(os.path.dirname(__file__), "../html/"+design["base_name"])
@@ -200,20 +200,6 @@ class ShowThread(webapp.RequestHandler):
 			query.order('-date')
 		return query
 
-	@staticmethod
-	def get_response(com_list_,thread):
-		#コメントソート
-		if(thread.illust_mode):
-			com_list_.reverse()
-		
-		#レスを取得
-		com_list=[]
-		for com in com_list_:
-			res_list=[]
-			for res in com.res_list:
-				res_list.append(db.get(res))
-			com_list.append({'com':com, 'res_list':res_list})
-		return com_list
 
 
 

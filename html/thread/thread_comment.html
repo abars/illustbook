@@ -1,11 +1,8 @@
-<div class="entry">
-コメント一覧
-{% if com_list %}
-{%else%}
+{% if not com_list %}
 	<HR>コメントはまだありません。<BR>
 {%endif%}
 
-<TABLE BORDER=0 class="table_color">
+<TABLE BORDER=0 class="table_color" width=100%>
 {% for entry in com_list %}
 	{% if entry.com.del_flag %}
 <!-- 基本情報 -->
@@ -88,31 +85,3 @@
 {% endif %}
 {% endfor %}
 </TABLE>
-
-<div id="page-bottom">
-<select id="pageselect" onChange="select_change(this.value,'{{page_url_base}}',{{page}});">
-{% ifequal order "new" %}
-	<option value="new" selected="selected">新着順</option>
-{% else %}
-	<option value="new">新着順</option>
-{% endifequal %}
-{% ifequal order "update" %}
-	<option value="update" selected="selected">更新順</option>
-{% else %}
-	<option value="update">更新順</option>
-{% endifequal %}
-</select>
-	{%for p in page_list%}
-		{%ifequal p page%}
-			{% if template_path %}
-				<a href="{{page_url_base}}{{p}}&order={{order}}" style="background-color:#{{template_base_color}};">{{p}}</a>
-			{% else%}
-				<div class="page-current">{{p}}</div>
-			{% endif %}
-		{%else%}
-			<a href="{{page_url_base}}{{p}}&order={{order}}">{{p}}</a>
-		{%endifequal %}
-	{%endfor%}
-</div>　
-
-</div>

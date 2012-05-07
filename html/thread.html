@@ -54,7 +54,13 @@
 							
 				<!-- コメント一覧 -->
 				{% if not bbs.disable_comment %}
-					{% include "thread/thread_comment.html" %}
+					<div class="entry">
+					コメント一覧
+					{{comment}}
+					<!--{% include "thread/thread_comment.html" %}-->
+					{% include "./thread/thread_comment_order.html" %}
+					</div>
+			
 					{% include "thread/thread_comment_form.html" %}
 				{% endif %}
 

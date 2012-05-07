@@ -41,6 +41,7 @@ from myapp.Entry import Entry
 from myapp.CssDesign import CssDesign
 from myapp.ApiObject import ApiObject
 from myapp.CounterWorker import CounterWorker
+from myapp.ShowEntry import ShowEntry
 
 class ShowBbs(webapp.RequestHandler):
 	def get(self,bbs_key):
@@ -139,6 +140,10 @@ class ShowBbs(webapp.RequestHandler):
 
 		#スレッドを全て取得
 		all_threads_cached=ApiObject.get_cached_object_list(all_threads)
+		
+		#コメントを全て取得
+		if(bbs.enable_full_comment):
+			self.get_all_comment(all_threads_cached,host_url,bbs)
 
 		#レンダリング
 		template_values = {
@@ -182,6 +187,17 @@ class ShowBbs(webapp.RequestHandler):
 		
 		CounterWorker.update_counter(self,bbs,None,owner)
 
+	def get_all_comment(self,all_threads_cached,host_url,bbs):
+		edit_flag=False
+		bbs_key=bbs.key()
+		logined=False
+		
+		for thread in all_threads_cached:
+			entry_list=[]
+			for entry in thread.cached_entry_key:
+				entry_list.append(db.get(entry))
+				thread.cached_render_comment=ShowEntry.render_comment(self,host_url,bbs,thread,entry_list,edit_flag,bbs_key,logined)
+			
 	@staticmethod
 	def get_sidebar(bbs,category_list,side_comment):
 		sidebar_list=[]

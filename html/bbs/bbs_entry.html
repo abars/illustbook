@@ -67,36 +67,50 @@
 	{% include "bbs/bbs_thread_list.html" %}
 {% endif %}
 
-<!--コメント表示-->
+<!--記事-->
 {% if thread.illust_mode and bbs.enable_full_flat %}
+	<!--本文-->
 	<div class="entry-comment">
 	<p>{{thread.summary|safe}}</p>
 		{% if thread.postscript %}
 		　<p><a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{%endif%}.html' class="declink">続きを読む</a></p>
 		{% endif %}
 	</div>
+
+	{% if bbs.enable_full_comment %}
+		<!--コメント統合表示-->
+		<div class="entry-comment">
+			{{thread.cached_render_comment}}
+		</div>
+		<p>&nbsp</p>
+	{% endif %}
 	
-	<div class="entry-button">
-	{%if not bbs.disable_comment%}
-	<a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{%endif%}.html' class="declink">
-	{% if template_path %}
-		<img src="{{template_path}}images/btn_comment1.gif" alt="コメントを書く" width="116" height="20" />
-	{% else %}
-		コメントを書く
-	{% endif %}
-	</a>
-	{% if not template_path %}　{% endif %}
-	{% endif %}
-	{%if thread.comment_cnt %}
-	<a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{%endif%}.html' class="declink">
-	{% if template_path %}
-		<img src="{{template_path}}images/btn_comment2.gif" alt="コメントを読む" width="116" height="20" />
-	{% else %}
-		コメントを読む({{thread.comment_cnt}})
-	{% endif %}
-	</a>
-	{% endif %}
+		<!--コメントを書くボタン-->
+		<div class="entry-button">
+		{%if not bbs.disable_comment%}
+			<a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{%endif%}.html' class="declink">
+			{% if template_path %}
+				<img src="{{template_path}}images/btn_comment1.gif" alt="コメントを書く" width="116" height="20" />
+			{% else %}
+				コメントを書く
+			{% endif %}
+			</a>
+			{% if not template_path %}　{% endif %}
+		{% endif %}
+
+	{% if not bbs.enable_full_comment %}
+		<!--コメントを読むボタン-->
+		{%if thread.comment_cnt %}
+		<a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{%endif%}.html' class="declink">
+			{% if template_path %}
+				<img src="{{template_path}}images/btn_comment2.gif" alt="コメントを読む" width="116" height="20" />
+			{% else %}
+				コメントを読む({{thread.comment_cnt}})
+			{% endif %}
+		</a>
+		{% endif %}
+	{%endif%}
+
 	</div>
 {%endif%}
-
 </div>

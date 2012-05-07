@@ -32,6 +32,7 @@ from myapp.Bookmark import Bookmark
 from myapp.StackFeedData import StackFeedData
 from myapp.UTC import UTC
 from myapp.JST import JST
+from myapp.Entry import Entry
 
 class ApiObject(webapp.RequestHandler):
 
@@ -514,6 +515,7 @@ class ApiObject(webapp.RequestHandler):
 			bbs_key=MesThread.bbs_key.get_value_for_datastore(ds_obj)
 			if(bbs_key):
 				ds_obj.cached_bbs_key=str(bbs_key)
+			ds_obj.cached_entry_key=db.Query(Entry,keys_only=True).filter("thread_key =",ds_obj).filter("del_flag =",1).order("-create_date").fetch(limit=100)
 
 		if(type(ds_obj)==Bbs):
 			try:

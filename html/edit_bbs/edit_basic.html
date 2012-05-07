@@ -93,6 +93,15 @@
 				{% endifequal %}
 			</select></TD></TR>
 
+			<TR><TD>イラスト一覧にコメントを表示</TD><TD>
+			<select name="enable_full_comment">
+				{% ifequal bbs.enable_full_comment 1 %}
+						<option value="1" selected="selected">有効</option><option value="0">無効</option>
+				{% else%}
+						<option value="1">有効</option><option value="0" selected="selected">無効</option>
+				{% endifequal %}
+			</select></TD></TR>
+
 			<TR><TD>イラスト一覧に画像を表示</TD><TD>
 			<select name="disable_content_image">
 				{% if not bbs.disable_content_image %}

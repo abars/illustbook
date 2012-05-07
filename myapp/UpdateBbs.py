@@ -269,6 +269,7 @@ class UpdateBbs(webapp.RequestHandler):
 		bbs.disable_normal_reply=int(self.request.get("disable_normal_reply"))
 		bbs.enable_moper=int(self.request.get("enable_moper"))
 		bbs.enable_full_flat=int(self.request.get("enable_full_flat"))
+		bbs.enable_full_comment=int(self.request.get("enable_full_comment"))
 		bbs.disable_applause=int(self.request.get("disable_applause"))
 		bbs.disable_analyze=int(self.request.get("disable_analyze"))
 		#bbs.comment_login_require=int(self.request.get("comment_login_require"))

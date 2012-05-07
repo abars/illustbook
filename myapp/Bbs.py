@@ -57,7 +57,8 @@ class Bbs(db.Model):
 	disable_news = db.IntegerProperty()
 
 	enable_moper = db.IntegerProperty()
-	enable_full_flat =db.IntegerProperty()
+	enable_full_flat =db.IntegerProperty()				#一覧に本文
+	enable_full_comment=db.IntegerProperty()		#一覧にコメント
 	
 	enable_illust_reply = db.IntegerProperty()
 	enable_illust_reply_continue = db.IntegerProperty()
