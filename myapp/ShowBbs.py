@@ -191,12 +191,13 @@ class ShowBbs(webapp.RequestHandler):
 		edit_flag=False
 		bbs_key=bbs.key()
 		logined=False
+		show_comment_form=False
 		
 		for thread in all_threads_cached:
 			entry_list=[]
 			for entry in thread.cached_entry_key:
 				entry_list.append(db.get(entry))
-				thread.cached_render_comment=ShowEntry.render_comment(self,host_url,bbs,thread,entry_list,edit_flag,bbs_key,logined)
+				thread.cached_render_comment=ShowEntry.render_comment(self,host_url,bbs,thread,entry_list,edit_flag,bbs_key,logined,show_comment_form)
 			
 	@staticmethod
 	def get_sidebar(bbs,category_list,side_comment):

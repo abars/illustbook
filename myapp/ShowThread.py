@@ -119,16 +119,16 @@ class ShowThread(webapp.RequestHandler):
 		page_url_base = MappingId.get_usr_url(host_url,bbs)+thread_key+'.html?page='
 		page_list=ShowThread.create_page_list(page,entry_num,col_num)
 		
+		#掲示板のデザインを取得
+		design=CssDesign.get_design_object(self,bbs,host_url,1)
+
 		#コメントフォームを取得する
 		show_comment_form=1
 		if(bbs.comment_login_require and not(logined)):
 			show_comment_form=0
-
-		#掲示板のデザインを取得
-		design=CssDesign.get_design_object(self,bbs,host_url,1)
 		
 		#コメントのレンダリング
-		comment=ShowEntry.render_comment(self,host_url,bbs,thread,com_list_,edit_flag,bbs_key,logined)
+		comment=ShowEntry.render_comment(self,host_url,bbs,thread,com_list_,edit_flag,bbs_key,logined,show_comment_form)
 		
 		#描画
 		template_values = {
@@ -146,7 +146,6 @@ class ShowThread(webapp.RequestHandler):
 			'logined':logined,
 			'user':user,
 			'owner':owner,
-			'show_comment_form':show_comment_form,
 			'template_path':design["template_path"],
 			'css_name':design["css_name"],
 			'is_iphone':design["is_iphone"],
