@@ -76,15 +76,8 @@
 		　<p><a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{%endif%}.html' class="declink">続きを読む</a></p>
 		{% endif %}
 	</div>
-
-	{% if bbs.enable_full_comment %}
-		<!--コメント統合表示-->
-		<div class="entry-comment">
-			{{thread.cached_render_comment}}
-		</div>
-		<p>&nbsp</p>
-	{% endif %}
 	
+	{% if not bbs.enable_full_comment %}
 		<!--コメントを書くボタン-->
 		<div class="entry-button">
 		{%if not bbs.disable_comment%}
@@ -98,7 +91,6 @@
 			{% if not template_path %}　{% endif %}
 		{% endif %}
 
-	{% if not bbs.enable_full_comment %}
 		<!--コメントを読むボタン-->
 		{%if thread.comment_cnt %}
 		<a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{%endif%}.html' class="declink">
@@ -109,8 +101,29 @@
 			{% endif %}
 		</a>
 		{% endif %}
+		</div>
 	{%endif%}
-
-	</div>
 {%endif%}
+
+{% if bbs.enable_full_comment %}
+	<!--コメント統合表示-->
+	<p>&nbsp</p>
+	{% if not thread.cached_render_comment %}
+	{% else %}
+		{{thread.cached_render_comment}}
+	{% endif %}
+
+	<div id="comment_form_button_{{ thread.key }}">
+	<p>&nbsp</p>
+	<input type="button" value="コメントを書き込む" onmouseover="this.className='menubutton_active'" onmouseout="this.className='menubutton'" class="menubutton" onClick="show_comment_form('{{thread.key}}');">
+	</div>
+{% endif %}
+
 </div>
+
+{% if bbs.enable_full_comment %}
+	<!--コメント統合表示-->
+	<div id="comment_form_{{ thread.key }}" style="display:none;">
+	{% include "thread/thread_comment_form.html" %}
+	</div>
+{% endif %}

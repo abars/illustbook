@@ -155,7 +155,8 @@ class ShowThread(webapp.RequestHandler):
 			'order':order,
 			'is_maintenance':is_maintenance,
 			'redirect_url': self.request.path,
-			'comment':comment
+			'comment':comment,
+			'show_comment_form':show_comment_form
 			}
 
 		path = os.path.join(os.path.dirname(__file__), "../html/"+design["base_name"])

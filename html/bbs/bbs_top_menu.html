@@ -22,17 +22,17 @@
 			{% if can_create_new_image %}
 				{% if not bbs.disable_create_new_illust %}
 					{%if template_path %}
-						<A HREF="javascript:open_draw('','{{bbs.key}}','{{host}}');"><img src="{{template_path}}images/header_edit1.jpg" alt="イラストを描く" width="103" height="28"></A>
+						<A HREF="javascript:bbs_open_draw('','{{bbs.key}}','{{host}}');"><img src="{{template_path}}images/header_edit1.jpg" alt="イラストを描く" width="103" height="28"></A>
 					{% else %}
-						<input type="button" value="イラストを描く" onmouseover="this.className='menubutton_active'" onmouseout="this.className='menubutton'" class="menubutton" onclick="open_draw('','{{bbs.key}}','{{host}}');">
+						<input type="button" value="イラストを描く" onmouseover="this.className='menubutton_active'" onmouseout="this.className='menubutton'" class="menubutton" onclick="bbs_open_draw('','{{bbs.key}}','{{host}}');">
 					{% endif %}
 				{%endif%}
 		
 				{% if bbs.enable_moper %}
 					{%if template_path %}
-						<A HREF="javascript:open_moper('','{{bbs.key}}','{{host}}');"><img src="{{template_path}}images/header_edit2.jpg" alt="動画を描く" width="103" height="28"></A>
+						<A HREF="javascript:bbs_open_moper('','{{bbs.key}}','{{host}}');"><img src="{{template_path}}images/header_edit2.jpg" alt="動画を描く" width="103" height="28"></A>
 					{% else %}
-						<input type="button" value="動画を描く" onmouseover="this.className='menubutton_active'" onmouseout="this.className='menubutton'" class="menubutton" onclick="open_moper('','{{bbs.key}}','{{host}}');">
+						<input type="button" value="動画を描く" onmouseover="this.className='menubutton_active'" onmouseout="this.className='menubutton'" class="menubutton" onclick="bbs_open_moper('','{{bbs.key}}','{{host}}');">
 					{%endif%}
 				{%endif%}
 			{% else %}

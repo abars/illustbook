@@ -19,14 +19,15 @@
 <div style="float:left;">
 {% if not is_iphone %}
 	<p>&nbsp</p>
-	<p>&nbsp</p>
 {% endif %}
 <p>&nbsp</p>
-<H1>イラブチャットの概要</H1>
+<H1>イラブチャットとは</H1>
 <p>イラブチャット（β）はPCとiPadで楽しめるお絵かきチャットです。</p>
 <p>複数人同時にお絵かきとチャットを楽しむことができます。</p>
 <p>作成したイラストはイラストブックのお絵描き掲示板に投稿することができます。</p>
-<p>ご利用にはHTML5をサポートしたブラウザが必要です。IEには対応していません。</p>
+<p>ご利用にはHTML5をサポートしたブラウザが必要です。IEは9以降にのみ対応しています。</p>
+<a href="https://twitter.com/share" class="twitter-share-button" data-lang="ja" data-hashtags="ilbchat">ツイート</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 </div>
 
 <br clear="all">
@@ -36,9 +37,9 @@
 <p>&nbsp</p>
 <H1>利用ガイド</H1>
 <p>チャットで使用する名前とサムネイルは<A HREF="./mypage" class="declink">マイページ</A>で設定することができます。</p>
-<p>ルームは最終更新から10分が経過すると自動的に削除されます。</p>
-<p>UNDO/REDOはサーバに送信されるまでの一定時間(3〜6秒)のみ可能です。</p>
-<p>レイヤーは2枚まで使用できます。筆圧は使用できません。</p>
+<p>制限時間はありません。ルームは最終更新から10分が経過すると自動的に削除されます。</p>
+<p>UNDO/REDOはサーバに送信されるまでの一定時間(3から6秒)のみ可能です。</p>
+<p>レイヤーは2枚まで使用できます。筆圧は使用できません。ラグは多めです。</p>
 <p>バグ報告や要望は<A HREF="./support/" class="declink">サポート掲示板</A>までどうぞ。</p>
 <p>&nbsp</p>
 
@@ -55,8 +56,11 @@
 	{% for room in room_list %}
 		<table>
 		<tr><td>
-			<div style="background-color:#aaaaaa;padding:1px;">
+			<div style="background-color:#aaaaaa;padding:1px;margin-right:4px;">
+				{% if user %}
+		<A HREF="javascript:join_chat('{{room.key}}',false,{% if room.password %}true{%else%}false{%endif%});" class="declink">{% endif %}
 				<img src="./chat?mode=thumbnail&key={{room.key}}" WIDTH=60px HEIGHT=60px>
+				{% if user %}</A>{% endif %}
 			</div>
 		</td>
 		<td>
@@ -109,7 +113,7 @@
 <p>&nbsp</p>
 <H1>動作環境</H1>
 <TABLE BORDER=1>
-<TR><TD>PC</TD><TD>HTML5に対応したブラウザ(Chrome、Safari、FireFox)(IEは非対応)</TD></TR>
+<TR><TD>PC</TD><TD>HTML5に対応したブラウザ(Chrome、Safari、FireFox)(IEは9以降のみ対応)</TD></TR>
 <TR><TD>iPad</TD><TD>第２世代以降のiPad(第一世代だと速度が遅いです)</TD></TR>
 <TR><TD>Android</TD><TD>4.0(ICS)以降のChromeのみ対応(標準ブラウザでは動作しません)</TD></TR>
 </TABLE>

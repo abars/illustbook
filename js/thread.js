@@ -63,8 +63,13 @@
 		}
 		
 		function AddBookmark(host,thread_key){
-		if(confirm("このイラストをブックマークしますか？")){
-			window.location.href=host+'add_bookmark?mode=add&thread_key='+thread_key;
+			if(confirm("このイラストをブックマークしますか？")){
+				window.location.href=host+'add_bookmark?mode=add&thread_key='+thread_key;
+			}
 		}
-	}
+		
+		function show_comment_form(id){
+			document.getElementById('comment_form_'+id).style.display='block';
+			document.getElementById('comment_form_button_'+id).style.display='none';
+		}
 

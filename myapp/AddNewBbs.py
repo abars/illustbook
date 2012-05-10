@@ -132,6 +132,8 @@ class AddNewBbs(webapp.RequestHandler):
 		new_bbs.content_font_color="333333"
 		
 		new_bbs.content_width=800
+		
+		new_bbs.enable_full_comment=1
 
 		new_bbs.freearea=""
 		new_bbs.amazon=""

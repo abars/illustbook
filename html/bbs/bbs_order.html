@@ -1,5 +1,5 @@
 <!-- 表示順 -->
-	<select id="pageselect" onChange="select_change(this.value,'{{page_url_order_base}}');">
+	<select id="pageselect" onChange="bbs_select_change(this.value,'{{page_url_order_base}}');">
 		{% ifequal order "new" %}
 		<option value="new" selected="selected">新着順</option>
 		{% else %}
@@ -59,9 +59,9 @@
 				<input type="hidden" id="canvas_width" value="{%if bbs.default_canvas_width%}{{bbs.default_canvas_width}}{%else%}400{%endif%}" maxlength=3 size=3/>
 				<input type="hidden" id="canvas_height" value="{%if bbs.default_canvas_height%}{{bbs.default_canvas_height}}{%else%}400{%endif%}" maxlength=3 size=3/>
 				{% if template_path %}
-					<a href="#" onclick="open_draw('','{{bbs.key}}','{{host}}');">描く</A>
+					<a href="#" onclick="bbs_open_draw('','{{bbs.key}}','{{host}}');">描く</A>
 				{% else %}
-						<input type="button" value="描く" onmouseover="this.className='menubutton_active'" onmouseout="this.className='menubutton'" class="menubutton" onclick="open_draw('','{{bbs.key}}','{{host}}');" style="width:40px;" />
+						<input type="button" value="描く" onmouseover="this.className='menubutton_active'" onmouseout="this.className='menubutton'" class="menubutton" onclick="bbs_open_draw('','{{bbs.key}}','{{host}}');" style="width:40px;" />
 				{% endif %}
 			{% endif %}
 		{% endif %}

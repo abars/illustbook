@@ -67,7 +67,7 @@ class ShowEntry(webapp.RequestHandler):
 			'edit_flag':edit_flag,
 			'bbs_key': bbs_key,
 			'logined':logined,
-			'show_comment_form':show_comment_form,
+			'show_comment_form':show_comment_form
 			}
 
 		path = os.path.join(os.path.dirname(__file__), "../html/thread/thread_comment.html")

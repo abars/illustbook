@@ -141,9 +141,18 @@ class ShowBbs(webapp.RequestHandler):
 		#スレッドを全て取得
 		all_threads_cached=ApiObject.get_cached_object_list(all_threads)
 		
+		#コメントフォームを表示するか
+		show_comment_form=1
+		if(bbs.comment_login_require and not(logined)):
+			show_comment_form=0
+
+		#フルコメントデバッグ
+		if(self.request.get("full_comment")):
+			bbs.enable_full_comment=1
+
 		#コメントを全て取得
 		if(bbs.enable_full_comment):
-			self.get_all_comment(all_threads_cached,host_url,bbs)
+			self.get_all_comment(all_threads_cached,host_url,bbs,show_comment_form,logined)
 
 		#レンダリング
 		template_values = {
@@ -176,7 +185,8 @@ class ShowBbs(webapp.RequestHandler):
 			'sidebar_list': sidebar_list,
 			'is_maintenance': is_maintenance,
 			'css_key': css_key,
-			'redirect_url': self.request.path
+			'redirect_url': self.request.path,
+			'show_comment_form': show_comment_form
 		}
 
 		path = os.path.join(os.path.dirname(__file__), "../html/"+design["base_name"])
@@ -187,12 +197,10 @@ class ShowBbs(webapp.RequestHandler):
 		
 		CounterWorker.update_counter(self,bbs,None,owner)
 
-	def get_all_comment(self,all_threads_cached,host_url,bbs):
+	def get_all_comment(self,all_threads_cached,host_url,bbs,show_comment_form,logined):
 		edit_flag=False
 		bbs_key=bbs.key()
-		logined=False
-		show_comment_form=False
-		
+
 		for thread in all_threads_cached:
 			entry_list=[]
 			for entry in thread.cached_entry_key:

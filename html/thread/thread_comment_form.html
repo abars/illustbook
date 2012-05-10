@@ -9,7 +9,7 @@
 	{%if show_comment_form %}
 <div class="entry">
 		コメントを書き込む<HR>
-		<form action='http://localhost/' enctype="multipart/form-data" method="post" onSubmit="this.action='{{host}}add_entry?bbs_key={{ bbs_key }}&thread_key={{ thread.key }}';">
+		<form action='http://localhost/' enctype="multipart/form-data" method="post" onSubmit="this.action='{{host}}add_entry?bbs_key={{ bbs.key }}&thread_key={{ thread.key }}';">
 			<table class="table_color">
 			<tr><td>名前（必須）</td>
 			<td>
