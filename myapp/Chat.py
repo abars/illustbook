@@ -258,7 +258,12 @@ class Chat(webapp.RequestHandler):
 		bbs=None
 		bbs_key=""
 		thread_key=""
+
 		room_key=self.request.get("key")
+		if(not room_key):
+			self.response.out.write(Alert.alert_msg("ルームキーが必要です。",self.request.host))
+			return
+
 		ipad=CssDesign.is_tablet(self)
 		viewmode=self.request.get("viewmode")
 		password=self.request.get("pass")

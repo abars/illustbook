@@ -12,8 +12,10 @@
 $(function(){
 	$(window).hashchange(function(){
 		//ハッシュタグが変わった時に実行する処理
-		var list=location.hash.split("#")[1].split("_");
-		page_no[list[0]]=parseInt(list[1]);
+		if(location.hash){
+			var list=location.hash.split("#")[1].split("_");
+			page_no[list[0]]=parseInt(list[1]);
+		}
 	});
 	$(window).hashchange();//Windowロード時に実行
 });
