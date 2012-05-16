@@ -84,13 +84,10 @@ class CssDesign (webapp.RequestHandler):
 		if(p.search(agent)):
 			return 1
 
-		#p = re.compile("Android.*Mobile");
-		#if(p.search(agent)):
-		#	return 0
-
-		#p = re.compile("Android");
-		#if(p.search(agent)):
-		#	return 1
+		p_tablet = re.compile("Android")
+		p_mobile = re.compile("Android.*Mobile")
+		if(p_tablet.search(agent) and not p_mobile.search(agent)):
+			return 1
 
 		return 0
 	
