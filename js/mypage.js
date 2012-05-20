@@ -432,7 +432,7 @@ function update_thread_list(div_id,message){
 	for(var i=from;i<to;i++){
 		var thread=oj[i];
 		txt+="<div style='position:relative;float:left;width:100px;height:100px'><a href='javascript:go_thread(\""+thread.thread_url+"\",\""+div_id+"\");'>";
-		txt+="<img src='"+thread.thumbnail_url+"' width=100px height=100px style='display:none;' onload='$(this).fadeIn(250);'>";
+		txt+="<img src='"+thread.thumbnail_url+"' width=100px height=100px class='radius_image'>";// style='display:none;' onload='$(this).fadeIn(250);'>";
 		txt+="</a>";
 		if(mypage_is_edit["bookmark_thread"] && div_id=="bookmark_thread"){
 			txt+="<div style='position:absolute;left:0px;top:0px;'>";
