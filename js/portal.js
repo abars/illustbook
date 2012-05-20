@@ -9,12 +9,27 @@
 
 //get_ranking関数が呼ばれる前に呼ばれる
 
+var initial_load=true;
+
+function hashchange_core(id,page){
+	if(page_no[id]!=page){
+		page_no[id]=page;
+		if(!initial_load){
+			click_page_core(id,page);
+		}
+	}
+}
+
 $(function(){
 	$(window).hashchange(function(){
 		//ハッシュタグが変わった時に実行する処理
 		if(location.hash){
-			var list=location.hash.split("#")[1].split("_");
-			page_no[list[0]]=parseInt(list[1]);
+			var list=location.hash.split("#")[1].split("=");
+			hashchange_core(list[0],parseInt(list[1]));
+		}else{
+			click_page_core("news",1);
+			click_page_core("moper",1);
+			click_page_core("applause",1);
 		}
 	});
 	$(window).hashchange();//Windowロード時に実行
@@ -68,6 +83,8 @@ $(function(){
 			request_unit[id]=request_unit_list[i];
 			request(id);
 		}
+		
+		initial_load=false;
 	}
 
 //--------------------------------------------------------
@@ -128,15 +145,14 @@ $(function(){
 			thread_list[id].push(oj[i]);
 		}
 		
-		//Div更新
-		update(id);
-
 		//該当ページのデータが取得できるまでリトライする
 		if(is_require_next_thread(page_no[id],id)){
 			if(auto_retry<=16){
 				auto_retry++;
 				request(id);
 			}
+		}else{
+			update(id);
 		}
 	}
 
@@ -152,15 +168,26 @@ $(function(){
 		}
 	}
 	
-	function get_link(thread){
+	function go_thread(url,id){
+		//ブラウザバック用のURLを生成しておく
+		var return_url="#"+id+"="+page_no[id];
+		if(window.location.href!=return_url && page_no[id]!=1){
+			window.location.href=return_url;
+		}
+		
+		//飛ぶ
+		window.location.href=url;
+	}
+	
+	function get_link(thread,id){
 		var txt="";
 		if(!thread)
 			return txt;
-		txt+="<a href='"+thread.thread_url+"'>";
 		var size=60
 		if(is_iphone)
 			size=100
-		txt+="<img src='"+thread.thumbnail_url+"' BORDER=0 WIDTH="+size+"px HEIGHT="+size+"px></a>";
+		txt+="<a href='javascript:go_thread(\""+thread.thread_url+"\",\""+id+"\");'>";
+		txt+="<img src='"+thread.thumbnail_url+"' BORDER=0 WIDTH="+size+"px HEIGHT="+size+"px style='display:none;' onload='$(this).fadeIn(250)'></a>";
 		return txt;
 	}
 	
@@ -192,7 +219,7 @@ $(function(){
 			if(!thread)
 				continue;
 			txt+="<div class='clap-thum'>";
-			txt+=get_link(thread)+"<BR>";
+			txt+=get_link(thread,id)+"<BR>";
 			txt+=get_text(thread)+"<BR>";
 			txt+="</div>";
 		}
@@ -252,11 +279,11 @@ $(function(){
 		for(var i=0;i<page_unit[id];i++){
 			var thread=thread_list[id][i+page_unit[id]*(page_no[id]-1)];
 			if(is_iphone){
-				txt+=get_link(thread);
+				txt+=get_link(thread,id);
 				continue
 			}
 			txt+="<dt>";
-			txt+=get_link(thread);
+			txt+=get_link(thread,id);
 			txt+="</dt>";
 			txt+="<dd>";
 			txt+=get_text(thread);
@@ -286,6 +313,13 @@ $(function(){
 			page=1;
 		}
 		
+		//ページ遷移
+		click_page_core(id,page);
+	}
+	
+	function click_page_core(id,page){
+		page_no[id]=page;
+
 		//サーバから追加で読み込んでくる必要があるか？
 		var require_next_thread=is_require_next_thread(page,id);
 		if(require_next_thread){
@@ -293,17 +327,29 @@ $(function(){
 				return;
 			}
 		}
-		
-		//ページ遷移
-		page_no[id]=page;
-		window.location.href="#"+id+"_"+page;
-		update(id);
-		
-		//次のデータの要求を出しておく
+
+		//サーバに要求を出す
 		if(require_next_thread){
+			show_loading(id);
 			auto_retry=0;
 			request(id);
+		}else{
+			update(id);
 		}
+	}
+	
+	function show_loading(id){
+			var loading="<img src='static_files/loading.gif'>";
+			
+			if(id=="applause"){
+				if(page_vec[id]==1){
+					$("#clap-next").html(loading);
+				}else{
+					$("#clap-prev").html(loading);
+				}
+			}else{
+				$("#"+id+">.page").html(loading);
+			}
 	}
 	
 	function is_require_next_thread(page,id){
