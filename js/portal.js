@@ -190,7 +190,7 @@ $(function(){
 			txt+="<div style='width:"+size+"px;height:"+size+"px;float:left;'>";
 		}
 		txt+="<a href='javascript:go_thread(\""+thread.thread_url+"\",\""+id+"\");'>";
-		txt+="<img src='"+thread.thumbnail_url+"' BORDER=0 WIDTH="+size+"px HEIGHT="+size+"px class='radius_image' style='display:none;' onload='$(this).fadeIn(200)'>";
+		txt+="<img src='"+thread.thumbnail_url+"' BORDER=0 WIDTH="+size+"px HEIGHT="+size+"px class='radius_image' style='display:none;' onload='$(this).fadeIn(500)'>";
 		txt+="</a>";
 		if(id!="applause"){
 			txt+="</div>";

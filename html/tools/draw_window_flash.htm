@@ -32,7 +32,12 @@ object, embed {
 
 </style>
 
+{% if wacom2 %}
+<script language="JavaScript" src="./js/wacom_tablet_plugin_ver2.js"></script>
+{% else %}
 <script language="JavaScript" src="./js/wacom_tablet_plugin.js"></script>
+{% endif %}
+
 <script language="JavaScript" src="./js/cookie.js"></script>
 <script language="JavaScript" src="./js/upload_ilb.js"></script>
 <script language="JavaScript" src="./js/unloadlock.js"></script>

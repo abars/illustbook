@@ -86,7 +86,9 @@ var mypage_view_mode;
 var mypage_user_id;
 var mypage_feed_page;
 
-function mypage_init(tab,login,view_mode,edit_mode,feed_page,is_admin){ 
+var illust_limit=12;
+
+function mypage_init(tab,login,view_mode,edit_mode,feed_page,is_admin,is_iphone){ 
 	mypage_edit_mode=edit_mode;
 	mypage_view_mode=view_mode;
 	mypage_feed_page=feed_page;
@@ -102,6 +104,9 @@ function mypage_init(tab,login,view_mode,edit_mode,feed_page,is_admin){
 	if(is_admin){
 		mypage_is_edit["rental"]=1;
 	}
+	if(is_iphone){
+		illust_limit=9;
+	}
 
 	var user_id="";
 	if(view_mode){
@@ -116,7 +121,7 @@ function mypage_init(tab,login,view_mode,edit_mode,feed_page,is_admin){
 	mypage_user_id=user_id;
 	
 	var offset=0;
-	var limit=12;
+	var limit=illust_limit;
 	var feed_unit=12;
 
 	if(tab=="feed"){
@@ -432,7 +437,7 @@ function update_thread_list(div_id,message){
 	for(var i=from;i<to;i++){
 		var thread=oj[i];
 		txt+="<div style='position:relative;float:left;width:100px;height:100px'><a href='javascript:go_thread(\""+thread.thread_url+"\",\""+div_id+"\");'>";
-		txt+="<img src='"+thread.thumbnail_url+"' width=100px height=100px class='radius_image' style='display:none;' onload='$(this).fadeIn(200);'>";
+		txt+="<img src='"+thread.thumbnail_url+"' width=100px height=100px class='radius_image' style='display:none;' onload='$(this).fadeIn(500);'>";
 		txt+="</a>";
 		if(mypage_is_edit["bookmark_thread"] && div_id=="bookmark_thread"){
 			txt+="<div style='position:absolute;left:0px;top:0px;'>";
@@ -472,7 +477,7 @@ function page_change(next_page,div_id){
 function page_change_core(next_page,div_id){
 	mypage_page[div_id]=next_page;
 	
-	var limit=12;
+	var limit=illust_limit;
 	$("#"+div_id).append("<img src='static_files/loading.gif'>");
 	if(div_id=="submit_thread"){
 		illustbook.user.getThreadList(mypage_user_id,mypage_page[div_id]*limit,limit,illustbook.user.ORDER_NONE,get_user_thread_list_callback);

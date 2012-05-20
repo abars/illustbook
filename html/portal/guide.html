@@ -1,11 +1,39 @@
+<!--------------------------------------------------->
+
+<link rel="stylesheet" href="./js/jquery/pagination.css" />
+<script type="text/javascript" src="./js/jquery/jquery.pagination.js"></script>
+
+<script type="text/javascript">
+	function pageselectCallback(page_index, jq){
+		var new_content = jQuery('#hiddenresult div.result:eq('+page_index+')').clone();
+		$('#Searchresult').empty().append(new_content);
+
+$("html,body").animate({
+scrollTop: 0
+}, 100);
+
+		return false;
+	}
+	
+	function initPagination() {
+		var num_entries = jQuery('#hiddenresult div.result').length;
+		$("#Pagination").pagination(num_entries, { callback: pageselectCallback, items_per_page:1  });
+	}
+	
+	$(document).ready(function(){  initPagination(); }); 
+</script>
+
+<div id="hiddenresult" style="display:none;">
+
+<!--------------------------------------------------->
+<div class="result">
+
 <H1><p>1.イラストブックの特徴</p></H1>
 
-<p>
-イラストブックは無料で使える第二世代のお絵かき掲示板です。<BR>
+<p>イラストブックは無料で使える第二世代のお絵かき掲示板です。</p>
 <A HREF="./comic">
 <IMG SRC="./static_files/comic/banar.png">
 </A>
-</p>
 
 <p>&nbsp;</p>
 <p>
@@ -33,9 +61,15 @@
 掲示板のレンタルは<A HREF="./mypage" class="declink">マイページ</A>から、試し描きは<A HREF="./sample/" class="declink">サンプルお絵描き掲示板</A>から行えます。
 </p>
 
-<p>&nbsp;</p>
+</div>
+
+<!--------------------------------------------------->
+
+<div class="result">
 
 <H1><p>2.イラブペイントの使い方</p></H1>
+
+<H2><p>画面構成</p></H2><HR>
 
 <p>
 イラブペイントを開くと次のような画面になります。<BR>
@@ -150,30 +184,53 @@
 </TABLE>
 
 <p>&nbsp;</p>
-<h2><p>ウィンドウメニュー</p></h2><HR>
-<p>
-<IMG SRC="static_files/guide/guide_window_menu.png"><BR>
-パソコン上に編集中のデータを保存したり、保存したデータを読み込んだりすることができます。<BR>
-パソコン上の画像ファイル(.jpg/.png)を読み込んで続きから描くこともできます。<BR>
-jpgやpngの形式でパソコン上に保存することもできます。<BR>
-ilb形式で保存することで、レイヤー構造を保持したまま保存することもできます。<BR>
-設定では手ぶれ補正の有効化と、入抜きの自動追加を選択することができます。<BR>
-設定はローカルPCに保存されます。<BR>
-</p>
-
-<p>&nbsp;</p>
 <h2><p>ナビゲーション</p></h2><HR>
 <p>
 <IMG SRC="static_files/guide/guide_navigation.png"><BR>
 キャンバスの拡大や回転を制御したり、スクロールバーでキャンバスを移動したりすることができます。<BR></p>
 
 <p>&nbsp;</p>
-<h2><p>投稿ウィンドウ</p></h2><HR>
-<p><img src="static_files/guide/guide_comment.png"><BR>投稿ウィンドウでは、絵と一緒にコメントを投稿することができます。<BR>
-また、文字をドラッグで選択した後に色やサイズを選択すると、文字を装飾することができます。</p>
+<h2><p>オートセーブについて</p></h2><HR>
 
-<p>&nbsp;</p>
-<h2><p>キーボードショートカット</p></h2><HR>
+<p>何もクリックしない状態で2秒経つと自動的に現在の画像がローカルにセーブされます。
+セーブされた情報は、次回起動時に自動的にロードされます。
+キャンバスを初期化したい場合はCLEARボタンを使用して下さい。</p>
+
+</div>
+
+<!--------------------------------------------------->
+
+<div class="result">
+
+<H1><p>3.投稿ツールの使い方</p></H1>
+
+<H2><p>投稿ウィンドウを開く</p></H2><HR>
+
+<p>イラブペイントのウィンドウメニューから、投稿ボタンを押すと、投稿ウィンドウが開きます。</p>
+
+<IMG SRC="static_files/guide/guide_window_menu2.png">
+
+<p>&nbsp</p>
+<p>&nbsp</p>
+
+<H2><p>投稿ウィンドウでイラストにコメントを付ける</p></H2><HR>
+
+<p>投稿ウィンドウのフォームにイラストのコメントを入力します。<BR>文字をドラッグで選択した後に色やサイズを選択すると、文字を装飾することができます。</p>
+
+<img src="static_files/guide/guide_comment.png">
+
+<p>&nbsp</p>
+<H2><p>再編集する必要がある場合は保存する</p></H2><HR>
+
+<p>投稿するとレイヤーの情報が失われますので、再編集をする必要がある場合は、ファイルメニューからイラブ形式(.ilb)で保存して下さい。<BR>また、パソコン上の画像ファイル(.jpg/.png)を読み込んで続きから描くこともできます。</p>
+
+</div>
+
+<!--------------------------------------------------->
+
+<div class="result">
+
+<H1><p>4.キーボードショートカットを使う</p></H1>
 
 <p>キーボードを併用することで効率を上げることができます。　</p>
 
@@ -200,54 +257,40 @@ ilb形式で保存することで、レイヤー構造を保持したまま保�
 
 <p>(*)Internet Explorerのバージョンによっては動作しない場合があります。</p>
 
-<p>&nbsp;</p>
-<h2><p>オートセーブについて</p></h2><HR>
+</div>
 
-<p>何もクリックしない状態で2秒経つと自動的に現在の画像がローカルにセーブされます。
-セーブされた情報は、次回起動時に自動的にロードされます。
-キャンバスを初期化したい場合はCLEARボタンを使用して下さい。</p>
+<!--------------------------------------------------->
 
-<p>&nbsp;</p>
-<h2><p>筆圧を使用するには</p></h2><HR>
+<div class="result">
 
-<p>WACOMのタブレットを使用すると筆圧に応じて線の太さを自動的に変えたり、
-ペンをひっくり返すことで消しゴムモードにすることができます。
-プラグインはタブレットのドライバをインストールした際に自動的にインストールされますが、
-うまくインストールできていない場合は、<A HREF="http://www.wacom.com/productsupport/plugin.php" class="declink">WACOMのダウンロードサイトからプラグインをインストール</A>して下さい。<BR>
-</p>
-<BR>
-<p>
-以下は、エイバースでの動作確認情報です。☓は動作しない、○は動作する、です。
-</p>
+<h1><p>5.筆圧を使う</p></h1>
+
+<p>WacomTabletWebPluginに対応しているブラウザであれば、筆圧と消しゴムを使用することができます。<BR>
+筆圧が使えるブラウザは以下の通りです。</p>
 
 <TABLE BGCOLOR=#ffffff BORDER=1>
 <TR><TD>ブラウザ</TD><TD>WindowsXP</TD><TD>Windows7</TD><TD>MaxOSX</TD></TR>
-<TR BGCOLOR=#eeeeff><TD>IE7            </TD><TD>○</TD><TD>-</TD><TD>-</TD></TR>
-<TR BGCOLOR=#eeeeff><TD>IE8           </TD><TD>○</TD><TD>-</TD><TD>-</TD></TR>
+<TR BGCOLOR=#eeeeff><TD>IE7/8            </TD><TD>○</TD><TD>-</TD><TD>-</TD></TR>
 <TR><TD>IE9           </TD><TD>-</TD><TD>☓</TD><TD>-</TD></TR>
-<TR BGCOLOR=#eeeeff><TD>Firefox3.5</TD><TD>○</TD><TD>○</TD><TD></TD></TR>
+<TR BGCOLOR=#eeeeff><TD>Firefox3.5</TD><TD>○</TD><TD>○</TD><TD>-</TD></TR>
 <TR                             ><TD>Firefox3.6</TD><TD>☓</TD><TD>☓</TD><TD BGCOLOR=#eeeeff>○</TD></TR>
 <TR                             ><TD>Firefox4   </TD><TD>☓</TD><TD>☓</TD><TD>☓</TD></TR>
 <TR BGCOLOR=#eeeeff><TD>Safari5     </TD><TD>○</TD><TD>○</TD><TD>○</TD></TR>
 <TR                             ><TD>Chrome10</TD><TD>☓</TD><TD>☓</TD><TD>☓</TD></TR>
 </TABLE>
-<BR>
-<p>将来的には、Wacom様の対応によって、Chromeなどでも筆圧が動作するようになることが期待されています。</p>
 
-<p>&nbsp;</p>
-<h2><p>動作環境</p></h2><HR>
+<p>&nbsp</p>
 
-<TABLE BGCOLOR=#ffffff BORDER=1>
-<TR><TD>OS</TD><TD>Windows、Mac OSX</TD></TR>
-<TR><TD>ブラウザ</TD><TD>IE7、Safari3、Firefox3、Chrome4以降</TD></TR>
-<TR><TD>プラグイン</TD><TD>FLASH PLAYER10.1以降</TD></TR>
-<TR><TD></TD><TD>筆圧を使用する場合は<A HREF="http://www.wacomeng.com/web/release_notes.htm" class="declink">Wacom Tablet Plugin</A><BR></TD></TR>
-</TABLE>
+<p>筆圧を使用するために必要なプラグインはタブレットのドライバをインストールした際に自動的にインストールされます。<BR>
+うまくインストールできていない場合は、<A HREF="http://www.wacom.com/productsupport/plugin.php" class="declink" target="_BLANK">Wacomのサイト</A>からプラグインをインストールします。</p>
 
-<p>&nbsp;</p>
-<p>&nbsp;</p>
+</div>
 
-<H1><p>3.掲示板システムの使い方</p></H1>
+<!--------------------------------------------------->
+
+<div class="result">
+
+<H1><p>6.SNS機能を使う</p></H1>
 
 <h2><p>タグ</p></h2><HR>
 <p>
@@ -263,7 +306,7 @@ ilb形式で保存することで、レイヤー構造を保持したまま保�
 
 <p>&nbsp;</p>
 
-<h2><p>フィードについて</p></h2><HR>
+<h2><p>フィード</p></h2><HR>
 
 <p>マイページでは、ブックマークしている掲示板や、フォローしているユーザの更新情報を、タイムラインで見ることができます。フィードの配信ルールは次のようになっています。</p>
 
@@ -275,3 +318,17 @@ ilb形式で保存することで、レイヤー構造を保持したまま保�
 		<TR><TD>ユーザがイラストをブックマークした場合</TD><TD>イラストの投稿者にフィード<BR>ブックマークしたユーザをフォローしているユーザにフィード</TD></TR>
 		<TR><TD>ユーザをフォローした場合</TD><TD>フォローされたユーザにフィード<BR>フォローしたユーザをフォローしているユーザにフィード</TD></TR>
 </TABLE>
+
+	</div>
+</div>
+
+<!--------------------------------------------------->
+
+<div id="Searchresult">
+</div>
+
+<p>&nbsp</p>
+
+<div id="Pagination" class="pagination">
+</div>
+

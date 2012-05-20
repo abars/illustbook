@@ -100,7 +100,8 @@ class DrawWindow(webapp.RequestHandler):
 		'css_name':design["css_name"],
 		'is_iphone':design["is_iphone"],
 		'template_base_color':design["template_base_color"],
-		'is_flex46': self.request.get("is_flex46")
+		'is_flex46': self.request.get("is_flex46"),
+		'wacom2': self.request.get("wacom2"),
 		}
 		
 		if(ipad or iphone):
