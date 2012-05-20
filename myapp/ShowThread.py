@@ -128,7 +128,7 @@ class ShowThread(webapp.RequestHandler):
 			show_comment_form=0
 		
 		#コメントのレンダリング
-		comment=ShowEntry.render_comment(self,host_url,bbs,thread,com_list_,edit_flag,bbs_key,logined,show_comment_form)
+		comment=ShowEntry.render_comment(self,host_url,bbs,thread,com_list_,edit_flag,bbs_key,logined,show_comment_form,admin_user)
 		
 		#描画
 		template_values = {

@@ -38,9 +38,11 @@ class MesThread(db.Model):
 	#score=db.ReferenceProperty(RankingScore)
 	category = db.StringProperty()
 	postscript = db.TextProperty()
+
 	adult = db.IntegerProperty()
 	violate_terms = db.IntegerProperty()
 	violate_photo = db.IntegerProperty()
+
 	short = db.StringProperty()
 	is_png = db.IntegerProperty()
 	tag_list = db.StringListProperty()

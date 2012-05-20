@@ -152,7 +152,8 @@ class ShowBbs(webapp.RequestHandler):
 
 		#コメントを全て取得
 		if(bbs.enable_full_comment):
-			self.get_all_comment(all_threads_cached,host_url,bbs,show_comment_form,logined)
+			admin_user=OwnerCheck.is_admin(user)
+			self.get_all_comment(all_threads_cached,host_url,bbs,show_comment_form,logined,admin_user)
 
 		#レンダリング
 		template_values = {
@@ -197,7 +198,7 @@ class ShowBbs(webapp.RequestHandler):
 		
 		CounterWorker.update_counter(self,bbs,None,owner)
 
-	def get_all_comment(self,all_threads_cached,host_url,bbs,show_comment_form,logined):
+	def get_all_comment(self,all_threads_cached,host_url,bbs,show_comment_form,logined,is_admin):
 		edit_flag=False
 		bbs_key=bbs.key()
 
@@ -205,7 +206,7 @@ class ShowBbs(webapp.RequestHandler):
 			entry_list=[]
 			for entry in thread.cached_entry_key:
 				entry_list.append(db.get(entry))
-				thread.cached_render_comment=ShowEntry.render_comment(self,host_url,bbs,thread,entry_list,edit_flag,bbs_key,logined,show_comment_form)
+				thread.cached_render_comment=ShowEntry.render_comment(self,host_url,bbs,thread,entry_list,edit_flag,bbs_key,logined,show_comment_form,is_admin)
 			
 	@staticmethod
 	def get_sidebar(bbs,category_list,side_comment):

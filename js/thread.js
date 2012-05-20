@@ -8,8 +8,14 @@
 			window.location.href=''+url_base+page+"&order="+order;
 		}
 
-		function confirm_action(url) {
-			if (confirm("本当に削除しますか?")){
+		function confirm_action_comment(url) {
+			if (confirm("本当にコメントを削除しますか?")){
+				location.href = url; 
+			}
+		}
+
+		function confirm_action_term(url) {
+			if (confirm("本当に規約設定を変更しますか?")){
 				location.href = url; 
 			}
 		}

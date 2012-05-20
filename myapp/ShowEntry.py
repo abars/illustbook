@@ -54,7 +54,7 @@ class ShowEntry(webapp.RequestHandler):
 	
 	#コメントのレンダリング
 	@staticmethod
-	def render_comment(req,host_url,bbs,thread,com_list_,edit_flag,bbs_key,logined,show_comment_form):
+	def render_comment(req,host_url,bbs,thread,com_list_,edit_flag,bbs_key,logined,show_comment_form,is_admin):
 		#レスを取得
 		com_list=ShowEntry._get_response(com_list_,thread)
 		
@@ -67,7 +67,8 @@ class ShowEntry(webapp.RequestHandler):
 			'edit_flag':edit_flag,
 			'bbs_key': bbs_key,
 			'logined':logined,
-			'show_comment_form':show_comment_form
+			'show_comment_form':show_comment_form,
+			'is_admin':is_admin
 			}
 
 		path = os.path.join(os.path.dirname(__file__), "../html/thread/thread_comment.html")

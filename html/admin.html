@@ -70,7 +70,13 @@
 <H1>新着イラスト一覧</H1>
 <blockquote>
 {% for thread in threads %}
-<a href='{% if thread.bbs_key.short %}./{{thread.bbs_key.short}}/{%else%}./usr/{{thread.bbs_key.key}}/{%endif%}{{thread.key}}.html' class="imagelink"><IMG SRC="{{host}}thumbnail/{{thread.image_key.key}}.jpg" BORDER=0 ALT="{{thread.title}}"></A>
+<a href='{% if thread.bbs_key.short %}./{{thread.bbs_key.short}}/{%else%}./usr/{{thread.bbs_key.key}}/{%endif%}{{thread.key}}.html' class="imagelink">
+{% if thread.violate_terms %}
+非表示中
+{% else %}
+<IMG SRC="{{host}}thumbnail/{{thread.image_key.key}}.jpg" BORDER=0 ALT="{{thread.title}}">
+{% endif %}
+</A>
 {% endfor %}
 </blockquote>
 
@@ -93,7 +99,11 @@
 <H1>新着リプライ一覧</H1>
 <blockquote>
 {% for entry in entries %}
-{{entry|reply_with_except:host|safe}}
+	{% if entry.violate_terms %}
+	<A HREF="{{host}}{{entry.thread_key.bbs_key.short}}/{{entry.thread_key.key}}.html">非表示中</A>
+	{% else %}
+	{{entry|reply_with_except:host|safe}}
+	{% endif %}
 {% endfor %}
 </blockquote>
 <p>&nbsp</p>

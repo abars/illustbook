@@ -32,3 +32,4 @@ class Entry(db.Model):
 	last_update_editor = db.StringProperty()	#for response update to comment cache
 	user_id= db.StringProperty()						#Submitter
 	hidden_flag = db.IntegerProperty()	#HiddenComment
+	violate_terms = db.IntegerProperty()

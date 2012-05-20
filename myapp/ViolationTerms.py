@@ -34,29 +34,39 @@ class ViolationTerms(webapp.RequestHandler):
 				self.response.out.write(Alert.alert_msg("権限がありません。",self.request.host))
 				return
 
-		thread = db.get(self.request.get("thread_key"))
-		bbs = db.get(self.request.get("bbs_key"))
-		
-		if(self.request.get("mode")=="adult"):
-			if(thread.adult):
-				thread.adult=0
+		if(self.request.get("entry_key")):
+			#エントリー
+			entry=db.get(self.request.get("entry_key"))
+			if(entry.violate_terms):
+				entry.violate_terms=0
 			else:
-				thread.adult=1
+				entry.violate_terms=1
+			entry.put()
+		else:
+			#スレッド
+			thread = db.get(self.request.get("thread_key"))
+		
+			if(self.request.get("mode")=="adult"):
+				if(thread.adult):
+					thread.adult=0
+				else:
+					thread.adult=1
 
-		if(self.request.get("mode")=="terms"):
-			if(thread.violate_terms):
-				thread.violate_terms=0
-			else:
-				thread.violate_terms=1
+			if(self.request.get("mode")=="terms"):
+				if(thread.violate_terms):
+					thread.violate_terms=0
+				else:
+					thread.violate_terms=1
 		
-		if(self.request.get("mode")=="photo"):
-			if(thread.violate_photo):
-				thread.violate_photo=0
-			else:
-				thread.violate_photo=1
-		thread.put()
+			if(self.request.get("mode")=="photo"):
+				if(thread.violate_photo):
+					thread.violate_photo=0
+				else:
+					thread.violate_photo=1
+			thread.put()
 		
-		ApiFeed.invalidate_cache()
-		
+			ApiFeed.invalidate_cache()
+
+		bbs = db.get(self.request.get("bbs_key"))
 		self.redirect(str(MappingId.get_usr_url("./",bbs)+self.request.get("thread_key")+".html"))
 
