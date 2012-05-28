@@ -131,7 +131,7 @@ class Admin(webapp.RequestHandler):
 		try:
 			entry_query = Entry.all().order('-create_date')
 			entry_query.filter("illust_reply =",1)
-			entry=entry_query.fetch(limit=thread_page_unit)
+			entry=entry_query.fetch(limit=thread_page_unit,offset=(thread_page-1)*thread_page_unit)
 		except:
 			None
 		

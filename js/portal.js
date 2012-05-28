@@ -63,8 +63,8 @@ $(function(){
 		var request_unit_list=new Array(4*4,3*2,6*2);
 		
 		if(is_iphone){
-			page_unit_list=new Array(9,9,0)
-			request_unit_list=new Array(9*2,9*3,0)
+			page_unit_list=new Array(12,12,0)
+			request_unit_list=new Array(12*2,12*2,0)
 		}
 
 		for(var i=0;i<id_list.length;i++){
@@ -101,14 +101,14 @@ $(function(){
 		}
 		if(id=="moper") {
 			if(is_iphone){
-				order="bookmark";
+				order="hot";
 			}else{
 				order="moper";
 			}
 			callback=on_loaded_moper;
 		}
 		if(id=="applause") {
-			order="applause";
+			order="hot";//applause";
 			callback=on_loaded_applause;
 		}
 		illustbook.feed.getThreadList(null,offset[id],request_unit[id],order,callback);
@@ -186,11 +186,16 @@ $(function(){
 		var size=60
 		if(is_iphone)
 			size=100
-		if(id!="applause"){
-			txt+="<div style='width:"+size+"px;height:"+size+"px;float:left;'>";
+		if(is_iphone){
+				//size-=8;
+				txt+="<div style='width:"+size+"px;height:"+size+"px;float:left;margin:2px;box-shadow: 0 0 3px #cccccc;'>";
+		}else{
+			if(id!="applause"){
+				txt+="<div style='width:"+size+"px;height:"+size+"px;float:left;'>";
+			}
 		}
 		txt+="<a href='javascript:go_thread(\""+thread.thread_url+"\",\""+id+"\");'>";
-		txt+="<img src='"+thread.thumbnail_url+"' BORDER=0 WIDTH="+size+"px HEIGHT="+size+"px class='radius_image' style='display:none;' onload='$(this).fadeIn(500)'>";
+		txt+="<img src='"+thread.thumbnail_url+"' BORDER=0 WIDTH="+size+"px HEIGHT="+size+"px style='display:none;' onload='$(this).fadeIn(500)'>";
 		txt+="</a>";
 		if(id!="applause"){
 			txt+="</div>";
@@ -255,7 +260,7 @@ $(function(){
 		var txt="";
 		
 		if(is_iphone){
-			txt+="<p>&nbsp</p><p class='page' style='font-size:16px;'>";
+			txt+="<p class='page' style='font-size:16px;'>";
 		}else{
 			txt+="<p class='page'>";
 		}

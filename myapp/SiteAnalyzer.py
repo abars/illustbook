@@ -31,6 +31,8 @@ from myapp.Bbs import Bbs
 from myapp.MesThread import MesThread
 from myapp.Entry import Entry
 from myapp.Bookmark import Bookmark
+from myapp.Ranking import Ranking
+from myapp.BbsConst import BbsConst
 
 class SiteAnalyzer(webapp.RequestHandler):
 	@staticmethod
@@ -40,6 +42,10 @@ class SiteAnalyzer(webapp.RequestHandler):
 
 	def get(self):
 		SetUtf8.set()
+
+		#ランキング更新
+		rank=Ranking.get_or_insert(BbsConst.THREAD_RANKING_KEY_NAME)
+		rank.create_rank()
 
 		#キャッシュ取得
 		cache=SiteAnalyzer.get_cache();

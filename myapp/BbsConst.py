@@ -40,4 +40,6 @@ class BbsConst:
 	OBJECT_MAPPING_CACHE_TIME=60*60*24
 	OBJECT_CACHE_TIME=60*60*12
 	
+	#ranking
+	THREAD_RANKING_KEY_NAME="thread_ranking"
 

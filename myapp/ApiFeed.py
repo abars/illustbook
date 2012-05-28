@@ -11,6 +11,7 @@ import os
 import sys
 import re
 import datetime
+import logging
 
 from google.appengine.ext.webapp import template
 from google.appengine.api import users
@@ -34,6 +35,7 @@ from myapp.BbsConst import BbsConst
 from myapp.Bookmark import Bookmark
 from myapp.AddBookmark import AddBookmark
 from myapp.ApiObject import ApiObject
+from myapp.Ranking import Ranking
 
 class ApiFeed(webapp.RequestHandler):
 
@@ -48,6 +50,7 @@ class ApiFeed(webapp.RequestHandler):
 		memcache.delete(ApiFeed._get_cache_id("new",None,offset))
 		memcache.delete(ApiFeed._get_cache_id("applause",None,offset))
 		memcache.delete(ApiFeed._get_cache_id("moper",None,offset))
+		memcache.delete(ApiFeed._get_cache_id("hot",None,offset))
 		memcache.delete(ApiFeed._get_cache_id(None,None,offset))
 		return
 	
@@ -92,15 +95,8 @@ class ApiFeed(webapp.RequestHandler):
 			cache_enable=1
 		
 		data=memcache.get(cache_id)
-		if(data and cache_enable):
-			return data
-
-		query=ApiFeed._get_query(req.request.get("order"))
-
-		bbs_id=None
-		if(req.request.get("bbs_id")):
-			query.filter("bbs_key =",db.get(MappingId.mapping(req.request.get("bbs_id"))))
-			bbs_id=True
+		#if(data and cache_enable):
+		#	return data
 
 		limit=10
 		if(req.request.get("limit")):
@@ -108,8 +104,22 @@ class ApiFeed(webapp.RequestHandler):
 		if(limit>100):
 			limit=100
 		
-		thread_list=query.fetch(offset=offset,limit=limit)
+		#スレッド一覧取得
+		if(req.request.get("order")=="hot"):
+			rank=Ranking.get_or_insert(BbsConst.THREAD_RANKING_KEY_NAME)
+			thread_list=rank.get_rank(offset,limit)
+			bbs_id=None
+		else:
+			query=ApiFeed._get_query(req.request.get("order"))
+
+			bbs_id=None
+			if(req.request.get("bbs_id")):
+				query.filter("bbs_key =",db.get(MappingId.mapping(req.request.get("bbs_id"))))
+				bbs_id=True
+
+			thread_list=query.fetch(offset=offset,limit=limit)
 		
+		#リスト作成
 		dic=ApiObject.create_thread_object_list(req,thread_list,bbs_id)
 
 		if(cache_enable):

@@ -4,7 +4,7 @@
 			{% endif %}
 			
 			<center>
-			<div style="padding:10px;">
+			<div style="padding:4px;">
 			<img src="static_files/banar_180.png">
 			</div>
 			</center>
@@ -20,9 +20,42 @@
 				
 				<div class="clr"></div>
 
+	<script>
+		function display_tab(tab){
+			$(".one_tab").hide();
+			$("#"+tab).show();
+			$(".none").removeClass("none");
+			$("#"+tab+"_tab").addClass("none");
+		}
+	</script>
+
+		<p class="bar">イラストを探す</p>
+
+		<ul class="tab clear">
+		<li class="none" id="tab_hot_tab"><a href="#" class="green" onClick="return display_tab('tab_hot');">人気</a></li>
+		<li id="tab_new_tab"><a href="#" class="green" onClick="return display_tab('tab_new');">新着イラスト</a></li>
+		<li id="tab_tag_tab"><a href="#" class="green" onClick="return display_tab('tab_tag');">話題のタグ</a></li>
+		</ul>
+	
 			<p>&nbsp</p>
 
-			<p class="bar">早速使ってみる</p>
+		<div class="one_tab" id="tab_hot">
+			<div id="moper" style="padding:4px;"></div>
+		</div>
+
+		<div class="one_tab" id="tab_new" style="display:none;">
+			<div id="news" style="padding:4px;"></div>
+		</div>
+
+		<div class="one_tab" id="tab_tag" style="display:none;">
+			<div style="padding:4px;">
+			{% include "search/search_top_tag.html" %}
+			</div>
+		</div>
+			
+			<p>&nbsp</p>
+
+			<p class="bar">イラストを描く</p>
 
 				<div style="padding:4px;">
 					<p><a href="{{host}}sample/" class="declink">まずはお試し</a></p>
@@ -34,22 +67,6 @@
 				<div class="clr"></div>
 		</div>
 
-			<p>&nbsp</p>
-
-			<p class="bar">最近投稿されたイラスト</p>
-
-			<div id="news" style="padding:10px;"></div>				
-
-			<p class="bar">ブックマークの多いイラスト</p>
-
-			<div id="moper" style="padding:10px;"></div>				
-
-			<p class="bar">注目のタグ</p>
-
-			<div style="padding:4px;">
-			{% include "search/search_top_tag.html" %}
-			</div>
-			
 			<p>&nbsp</p>
 
 			<p class="bar">サイトマップ</p>

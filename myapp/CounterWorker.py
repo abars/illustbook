@@ -40,6 +40,7 @@ from myapp.Analyze import Analyze
 from myapp.Entry import Entry
 from myapp.CssDesign import CssDesign
 from myapp.ApiObject import ApiObject
+from myapp.Ranking import Ranking
 
 class CounterWorker(webapp.RequestHandler):
 	@staticmethod
@@ -97,6 +98,11 @@ class CounterWorker(webapp.RequestHandler):
 			return
 		if(not updated_counter):
 			return
+
+		#PVをカウント
+		if(thread):
+			rank=Ranking.get_or_insert(BbsConst.THREAD_RANKING_KEY_NAME)
+			rank.add_rank(thread)
 
 		#アクセス解析で表示する名前
 		analyze_name=bbs.bbs_name

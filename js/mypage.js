@@ -431,13 +431,13 @@ function go_thread(url,id){
 
 function update_thread_list(div_id,message){
 	var oj=thread_list[div_id];
-	var txt="";
+	var txt="<div style='max-width:624px;'>";
 	var from=0;
 	var to=oj.length;
 	for(var i=from;i<to;i++){
 		var thread=oj[i];
-		txt+="<div style='position:relative;float:left;width:100px;height:100px'><a href='javascript:go_thread(\""+thread.thread_url+"\",\""+div_id+"\");'>";
-		txt+="<img src='"+thread.thumbnail_url+"' width=100px height=100px class='radius_image' style='display:none;' onload='$(this).fadeIn(500);'>";
+		txt+="<div style='position:relative;float:left;width:100px;height:100px;margin:2px;box-shadow: 0 0 3px #cccccc;'><a href='javascript:go_thread(\""+thread.thread_url+"\",\""+div_id+"\");'>";
+		txt+="<img src='"+thread.thumbnail_url+"' width=100px height=100px style='display:none;' onload='$(this).fadeIn(500);'>";
 		txt+="</a>";
 		if(mypage_is_edit["bookmark_thread"] && div_id=="bookmark_thread"){
 			txt+="<div style='position:absolute;left:0px;top:0px;'>";
@@ -456,13 +456,15 @@ function update_thread_list(div_id,message){
 		if(oj.length==0){
 			txt+="<p>Fin.</p>"
 		}
-		txt+="<BR clear='all'>"
-		txt+="Page."+(page+1)+"　"
+		txt+="<BR clear='all'><div align='right'>"
 		if(page>0){
 			txt+=" <a href='javascript:page_change("+(page-1)+",\""+div_id+"\");'>戻る</a>　";
 		}
+		txt+="Page."+(page+1)+"　"
 		txt+=" <a href='javascript:page_change("+(page+1)+",\""+div_id+"\");'>次へ</a>";
+		txt+="</div>";
 	}
+	txt+="</div>"
 	document.getElementById(div_id).innerHTML=txt;
 }
 

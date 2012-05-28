@@ -12,7 +12,7 @@
 		{{entry.com|author_name_comment:host|safe}}
 		　投稿日：{% if entry.com.create_date %}{{entry.com.create_date|time_JST_format:bbs.date_format}}{%else%}{{entry.com.date|time_JST_format:bbs.date_format}}{%endif%}
 		
-		{%if edit_flag %}
+		{%if is_admin or edit_flag %}
 			<input type="button" value="削除" onmouseover="this.className='menubutton_active'" onmouseout="this.className='menubutton'" class="menubutton" onClick="confirm_action_comment('{{host}}del_ent?entry_key={{entry.com.key}}&bbs_key={{bbs_key}}&thread_key={{thread.key}}');">
 			{% if is_admin and entry.com.illust_reply %}
 				<input type="button" value="規約" onmouseover="this.className='menubutton_active'" onmouseout="this.className='menubutton'" class="menubutton" onClick="confirm_action_term('{{host}}violation?entry_key={{entry.com.key}}&bbs_key={{bbs_key}}&thread_key={{thread.key}}');">

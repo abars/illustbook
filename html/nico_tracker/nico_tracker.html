@@ -73,11 +73,16 @@
 ------------------------------------------------------------------>
 
 <div style="width:800px;margin-left:auto;margin-right:auto;">
-<H3><A HREF="http://{{host}}/nico_tracker" style="text-decoration:none;"><font color=#000000>ニコニコトラッカー</font></A></H3>
+
+{% if rec %}
+<a href="nico_tracker"><img src="static_files/nicotra/banar.jpg" style="width:100%"></a>
+{% else %}
+<a href="nico_tracker"><img src="static_files/nicotra/top.jpg" style="width:100%"></a>
+
 ニコニコトラッカーは、ニコニコ動画の再生数とコメント数を毎日自動的に記録して、再生数とコメント数の推移をグラフ化するクリエイター支援ツールです。現在{{rec_cnt}}件の動画をトラッキングしています。<BR>
 
 <BR>
-<div style="background-color:#8ec1da;width:790px;padding:5px;">
+<div style="background-color:#312bba;width:790px;padding:5px;color:#ffffff;">
 <form action="./nico_tracker">
 動画のURLを入力
 <input type="text" name="url" style="width:400px">
@@ -85,6 +90,8 @@
 </form>
 <div align="right"><small>Example：http://www.nicovideo.jp/watch/sm16685464</small></div>
 </div>
+
+{% endif %}
 
 {% if url and not rec %}
 	{% ifequal url "update_all" %}
@@ -139,7 +146,7 @@ new TWTR.Widget({
   height: 240,
   theme: {
     shell: {
-      background: '#8ec1da',
+      background: '#312bba',
       color: '#ffffff'
     },
     tweets: {
@@ -171,7 +178,7 @@ new TWTR.Widget({
 <BR>
 
 <CENTER>
-<TABLE style="width:80%;border-width:2px;border-style:groove;border-color:#8ec1da;">
+<TABLE style="width:80%;border-width:2px;border-style:groove;border-color:#ffffff;">
 <TR><TD>日付</TD><TD>再生数</TD><TD>コメント数</TD></TR>
 {{list_tbl|safe}}
 </TABLE>
@@ -233,6 +240,8 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 	<A HREF="./nico_tracker?url=http://www.nicovideo.jp/watch/{{one.id|safe}}">{{one.title|separate_nico}}</A>　{{one.play_cnt_now}}[play]<BR>
 {% endfor %}
 
+<BR>
+
 <H4>スポンサーリンク</H4>
 
 <CENTER>
@@ -257,7 +266,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 　
 </div>
 
-<div style="width:190px;float:left;background-color:#8ec1da;padding:5px;">
+<div style="width:190px;float:left;background-color:#312bba;padding:5px;color:#ffffff;">
 <A HREF="http://www.illustbook.net/"><IMG SRC="http://www.illustbook.net/static_files/banar_180.png"></A><BR>
 <A HREF="http://www.illustbook.net/moper/"><IMG SRC="http://www.illustbook.net/static_files/community/button_ilb3_on.jpg" width=180px height=180px></A>
 <BR>
@@ -277,7 +286,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 フッター
 ------------------------------------------------------------------>
 
-<div style="width:800px;margin-left:auto;margin-right:auto;" align="center">
+<div style="width:800px;margin-left:auto;margin-right:auto;font-size:90%;" align="center">
 	&copy 2011-2012 <A HREF="http://www.illustbook.net/"><FONT COLOR=#000000>イラストブック</FONT></A> all rights reserved.
 </div>
 
