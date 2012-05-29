@@ -33,6 +33,7 @@ from myapp.Entry import Entry
 from myapp.Bookmark import Bookmark
 from myapp.Ranking import Ranking
 from myapp.BbsConst import BbsConst
+from myapp.ApiFeed import ApiFeed
 
 class SiteAnalyzer(webapp.RequestHandler):
 	@staticmethod
@@ -46,6 +47,7 @@ class SiteAnalyzer(webapp.RequestHandler):
 		#ランキング更新
 		rank=Ranking.get_or_insert(BbsConst.THREAD_RANKING_KEY_NAME)
 		rank.create_rank()
+		ApiFeed.invalidate_cache();
 
 		#キャッシュ取得
 		cache=SiteAnalyzer.get_cache();

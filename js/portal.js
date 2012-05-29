@@ -282,6 +282,17 @@ $(function(){
 		
 		txt+="<a href='javascript:click_page(\""+id+"\","+(page_no[id]+1)+");'>次へ</a> ";
 		txt+="</p>";
+
+		if(is_iphone){
+			txt='<br clear="all"><div class="g-button-group" style="float:right;">';
+			if(page_no[id]==1){
+				txt+='<a href="#" class="g-button no-text disabled2"><i class="icon-chevron-left"></i></a>';
+			}else{
+				txt+='<a href="javascript:click_page(\''+id+'\','+(page_no[id]-1)+');" class="g-button no-text"><i class="icon-chevron-left"></i></a>';
+			}
+			txt+='<a href="javascript:click_page(\''+id+'\','+(page_no[id]+1)+');" class="g-button no-text"><i class="icon-chevron-right"></i></a>';
+			txt+='</div><br clear="all">';
+		}
 		
 		return txt;
 	}
@@ -363,7 +374,11 @@ $(function(){
 					$("#clap-prev").html(loading);
 				}
 			}else{
-				$("#"+id+">.page").html(loading);
+				if(is_iphone){
+					$("#"+id+">.g-button-group").html(loading);
+				}else{
+					$("#"+id+">.page").html(loading);
+				}
 			}
 	}
 	

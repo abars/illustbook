@@ -8,6 +8,8 @@
 
 from google.appengine.ext import db
 
+from myapp.BbsConst import BbsConst
+
 class Ranking(db.Model):
 	thread_list = db.ListProperty(db.Key)
 	ranking_list = db.ListProperty(db.Key)
@@ -19,7 +21,7 @@ class Ranking(db.Model):
 	def add_rank(self,thread):
 		if(not self.thread_list):
 			self.thread_list=[]
-		n=1000
+		n=2500
 		content_len=len(self.thread_list)
 		while(content_len>=n):
 			self.thread_list.pop(0)
@@ -28,16 +30,39 @@ class Ranking(db.Model):
 		self.put()
 	
 	def create_rank(self):
+		#ハッシュにthread_keyを入れていく
 		rank={}
 		for thread in self.thread_list:
 			if(rank.has_key(thread)):
 				rank[thread]=rank[thread]+1
 			else:
 				rank[thread]=1
-
+		
+		#スコア補正
+		for k,v in rank.items():
+			#存在しているものだけ
+			thread=None
+			try:
+				thread=db.get(k)
+			except:
+				thread=None
+			
+			#イラストモードだけ
+			if(not thread or thread.illust_mode!=BbsConst.ILLUSTMODE_ILLUST):
+				rank[k]=0
+				continue
+			
+			#拍手とブックマークスコアを加算
+			if(thread.applause):
+				rank[k]=rank[k]+thread.applause
+			if(thread.bookmark_count):
+				rank[k]=rank[k]+thread.bookmark_count
+		
+		#ランキング作成
 		self.ranking_list=[]
 		for k, v in sorted(rank.items(), key=lambda x:x[1], reverse=True):
-			self.ranking_list.append(k)
+			if(v>=1):
+				self.ranking_list.append(k)
 		
 		self.put()
 

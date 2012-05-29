@@ -26,6 +26,7 @@
 			$("#"+tab).show();
 			$(".none").removeClass("none");
 			$("#"+tab+"_tab").addClass("none");
+			return false;
 		}
 	</script>
 
@@ -37,8 +38,6 @@
 		<li id="tab_tag_tab"><a href="#" class="green" onClick="return display_tab('tab_tag');">話題のタグ</a></li>
 		</ul>
 	
-			<p>&nbsp</p>
-
 		<div class="one_tab" id="tab_hot">
 			<div id="moper" style="padding:4px;"></div>
 		</div>
@@ -48,6 +47,7 @@
 		</div>
 
 		<div class="one_tab" id="tab_tag" style="display:none;">
+			<p>&nbsp</p>
 			<div style="padding:4px;">
 			{% include "search/search_top_tag.html" %}
 			</div>
@@ -58,10 +58,10 @@
 			<p class="bar">イラストを描く</p>
 
 				<div style="padding:4px;">
-					<p><a href="{{host}}sample/" class="declink">まずはお試し</a></p>
+					<p><a href="{{host}}sample/" class="g-button green">まずはお試し</a></p>
 					<p>サンプルお絵描き掲示板で試し描きをすることができます。</p>
 					<p>&nbsp</p>
-					<p><a href="{{host}}mypage" class="declink">登録して使う</a></p>
+					<p><a href="{{host}}mypage" class="g-button green">登録して使う</a></p>
 					<p>掲示板のレンタルにはGoogleアカウントを使用します。現在、<strong>{{bbs_n}}人</strong>の方が、イラストブックに登録され、<strong>{{illust_n}}点</strong>の作品が公開されています。</p>
 				</div>
 				<div class="clr"></div>
