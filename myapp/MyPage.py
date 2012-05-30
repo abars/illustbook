@@ -194,6 +194,8 @@ class MyPage(webapp.RequestHandler):
 		tab=self.request.get("tab")
 		if(not tab):
 			tab="illust"
+			if(not view_mode and bookmark and bookmark.new_feed_count):
+				tab="feed"
 
 		#ページ
 		feed_page=1
