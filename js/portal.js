@@ -63,8 +63,8 @@ $(function(){
 		var request_unit_list=new Array(4*4,3*2,6*2);
 		
 		if(is_iphone){
-			page_unit_list=new Array(12,12,0)
-			request_unit_list=new Array(12*2,12*2,0)
+			page_unit_list=new Array(9,9,0)
+			request_unit_list=new Array(9*2,9*2,0)
 		}
 
 		for(var i=0;i<id_list.length;i++){
