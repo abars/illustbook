@@ -22,8 +22,8 @@
 		<div id="profile" style="float:left;margin:6px;"><img src="./show_icon?key={{bookmark.user_id}}" width=100 height=100 class="radius_image"></div>
 		<div style="float:left;font-size: 18px;padding-top:50px;">
 	{% else %}
-		<div id="profile" style="margin-left:10px;margin-right:10px;margin-top:2px;"><img src="./show_icon?key={{bookmark.user_id}}" width=160 height=160 class="radius_image"><BR></div>
-		<div style="font-size: 18px;width:100%;text-align:center;">
+		<div id="profile" style="margin-top:2px;margin-left:10px;margin-right:10px;"><img src="./show_icon?key={{bookmark.user_id}}" width=160 height=160 class="radius_image"><BR></div>
+		<div style="font-size: 24px;width:100%;text-align:center;">
 	{% endif %}
 	{% if bookmark.name%}
 	{{bookmark.name}}
@@ -32,6 +32,7 @@
 	{% endif%}
 	</div>
 	</a>
+
 	{% if is_iphone %}
 		<br clear="all">
 	{% endif %}
@@ -58,51 +59,80 @@
 	}
 </script>
 
-{% ifequal tab "profile" %}
-<div id="tab_profile">
-	<ul class="tab clear">
-	<li class="none"><a href="#" class="green" onClick="return display_tab('profile');">プロフィール</a></li>
-	<li><a href="#" class="green" onClick="return display_tab('feed');">タイムライン{% if not view_mode %}{{bookmark|new_feed_count}}{% endif %}</a></li>
-	<li><a href="#" class="green" onClick="return display_tab('bbs');">レンタル</a></li>
-	</ul>
-	<BR>
-
-	<p class="bar">投稿したイラスト</p>
+	<div style="float:left;padding-right:8px;">
+	{% if is_iphone %}
+	<div class="g-button-group toggle-buttons">
+		<a href="javascript:display_tab('illust');" class="g-button no-text {% ifequal tab "illust" %}checked{% endifequal %}">イラスト</a>
+		<a href="javascript:display_tab('profile');" class="g-button no-text {% ifequal tab "profile" %}checked{% endifequal %}">プロフ</a>
+		<a href="javascript:display_tab('feed');" class="g-button no-text {% ifequal tab "feed" %}checked{% endifequal %}">TL{% if bookmark.new_feed_count %}({{bookmark.new_feed_count}}){% endif %}</a>
+		<a href="javascript:display_tab('rental');" class="g-button no-text {% ifequal tab "rental" %}checked{% endifequal %}">レンタル</a>
+		</div>
+	{% else %}
+		<div class="g-button-group toggle-buttons">
+		<a href="javascript:display_tab('illust');" class="g-button {% ifequal tab "illust" %}checked{% endifequal %}">イラスト</a>
+		<a href="javascript:display_tab('profile');" class="g-button {% ifequal tab "profile" %}checked{% endifequal %}">プロフィール</a>
+		<a href="javascript:display_tab('feed');" class="g-button {% ifequal tab "feed" %}checked{% endifequal %}">タイムライン{% if bookmark.new_feed_count %}({{bookmark.new_feed_count}}){% endif %}</a>
+		<a href="javascript:display_tab('rental');" class="g-button {% ifequal tab "rental" %}checked{% endifequal %}">レンタル</a>
+		</div>
+	{% endif %}
+	</div>
 	
+	<div style="float:right;">
+		{% if edit_mode %}
+		<a href="./mypage?{% if tab %}tab={{tab}}&{% endif %}" class="g-button no-text checked">
+		{% else %}
+		<a href="./mypage?{% if tab %}tab={{tab}}&{% endif %}edit=1" class="g-button no-text">
+		{% endif %}
+		<i class="icon-edit"></i></a>
+	</div>
+	
+	<br clear="all">
+	<br clear="all">
+
+{% ifequal tab "illust" %}
+<div>
+	<div class="example">
+		<p><h2>投稿したイラスト</h2></p>
 		<TABLE width="100%"><TR><TD>
 		<div id="submit_thread">Loading</div>
 		</TD></TR></TABLE>
-
-	<p>&nbsp;</p>		
-
-	<p class="bar">ブックマークしているイラスト{% if not view_mode %}(<A HREF="./mypage?edit=2" class="declink">編集</A>){% endif %}</p>
+	</div>
+	
+	<div class="example">
+		<p><h2>ブックマークしているイラスト</h2></p>
 
 		<TABLE width="100%"><TR><TD>
 		<div id="bookmark_thread">Loading</div>
 		</TD></TR></TABLE>
-
-	<p>&nbsp;</p>
-	<p class="bar">ブックマークしているお絵かき掲示板{% if not view_mode %}(<A HREF="./mypage?edit=3" class="declink">編集</A>){% endif %}</p>
+	</div>
+</div>
+<div>
+	<div class="example">
+		<p><h2>ブックマークしている掲示板</h2></p>
 
 		<TABLE width="100%"><TR><TD>
 		<div id="bookmark_bbs">Loading</div>
 		</TD></TR></TABLE>
+	</div>
 
-	<p>&nbsp;</p>
-		
-			<p class="bar">レンタルしているお絵かき掲示板{% if not view_mode %}(<A HREF="./mypage?edit=5" class="declink">編集</A>){% endif %}</p>
+	<div class="example">
+		<p><h2>レンタルしている掲示板</h2></p>
 
 		<TABLE width="100%"><TR><TD>
 		<div id="rental">Loading</div>
 		</TD></TR></TABLE>
-		
-	<p>&nbsp;</p>
-		
-			<p class="bar">プロフィール{% if not view_mode %}(<A HREF="./mypage?edit=1" class="declink">編集</A>){% endif %}</p>
+	</div>
+</div>
+{% endifequal %}
+
+{% ifequal tab "profile" %}
+
+	<div class="example">
+		<p><h2>プロフィール</h2></p>
 	
 			<TABLE width="100%"><TR><TD>
-				{% ifequal edit_mode 1%}
-				<form action="./update_profile" enctype="multipart/form-data" method="post">
+				{% if edit_mode %}
+				<form action="./update_profile" enctype="multipart/form-data" method="post" name="profile_frm">
 				<input type="hidden" name="mode" value="profile">
 				
 				<TABLE>
@@ -134,7 +164,10 @@
 				{% endif %}
 				<BR>
 
-				<input type="submit" value="プロフィールを更新" onmouseover="this.className='pagebutton_active'" onmouseout="this.className='pagebutton'" class="pagebutton">
+				<div class="g-button-group">
+					<a href="javascript:document.profile_frm.submit();" class="g-button"><i class="icon-edit"></i>プロフィールを更新</a>
+				</div>
+
 				</form>
 				{% else %}
 					{% if not bookmark.name %}
@@ -159,26 +192,18 @@
 						{% if is_admin %}{% if bookmark.owner %}<TR><TD>アカウント(＊管理モード)</TD><TD>　</TD><TD>{{bookmark.owner.email}}</TD></TR>{% endif %}{% endif %}
 						</TABLE>
 					{% endif %}
-				{% endifequal %}
+				{% endif %}
 			</TD></TR></TABLE>
 </div>
 {% endifequal %}
 
 	<!--レンタル -->
-{% ifequal tab "bbs" %}
+{% ifequal tab "rental" %}
 <div id="tab_bbs">
-	<ul class="tab clear">
-	<li><a href="#" class="green" onClick="return display_tab('profile');">プロフィール</a></li>
-	<li><a href="#" class="green" onClick="return display_tab('feed');">タイムライン{% if not view_mode %}{{bookmark|new_feed_count}}{% endif %}</a></li>
-	<li class="none"><a href="#" class="green" onClick="return display_tab('bbs');">レンタル</a></li>
-	</ul>
-	<BR>
-	
-
-	<p class="bar">お絵かき掲示板の新規レンタル</p>
+	<div class="example">
 
 	{%if user and not view_mode%}
-			<form action="./add_bbs" enctype="multipart/form-data" method="post">
+			<form action="./add_bbs" enctype="multipart/form-data" method="post" name="rental_frm">
 			<input type="hidden" name="official" value="0">
 			<input type="hidden" name="redirect" value="./regist">
 			<TABLE width="100%">
@@ -194,7 +219,7 @@
 					<td>
 						希望するID(半角英数16文字以下)
 					</td>
-					<TD><input type="text" id="check_short" name="short" value="{% if bbs.short %}{{bbs.short}}{% endif %}" maxlength="16"><input type="button" value="IDを利用可能か確認" onmouseover="this.className='pagebutton_active'" onmouseout="this.className='pagebutton'" class="pagebutton" onclick="check_id('{{host}}');" style="font-size:85%">
+					<TD><input type="text" id="check_short" name="short" value="{% if bbs.short %}{{bbs.short}}{% endif %}" maxlength="16">
 					</TD>
 				</tr>	  
 				<tr>
@@ -211,7 +236,16 @@
 					<TD>
 					</TD>
 					<TD>
-						<input type="submit" value="お絵かき掲示板を新規レンタルする" onmouseover="this.className='pagebutton_active'" onmouseout="this.className='pagebutton'" class="pagebutton" style="font-size:85%">
+					<div style="float:left;padding-right:4px;">
+						<div class="g-button-group">
+			<a href="javascript:check_id('{{host}}');" class="g-button"><i class="icon-check"></i>IDを利用可能か確認</a>
+		</div>
+					</div>
+					<div style="float:left;">
+							<div class="g-button-group">
+			<a href="javascript:document.rental_frm.submit();" class="g-button"><i class="icon-plus"></i>レンタルを実行</a>
+		</div>
+		</div>
 					</TD>
 				</TR>
 			</TABLE>
@@ -220,19 +254,13 @@
 				<p>レンタルは自分のアカウントでのみ行うことができます。</p>
 			{%endif %}
 		</div>
+	</div>
 {% endifequal %}
 {% endif%}
 
 	<!--タイムライン -->
 {% ifequal tab "feed" %}
 <div id="tab_feed">
-	<ul class="tab clear">
-	<li><a href="#" class="green" onClick="return display_tab('profile');">プロフィール</a></li>
-	<li class="none"><a href="#" class="green" onClick="return display_tab('feed');">タイムライン{% if not view_mode %}{{bookmark|new_feed_count}}{% endif %}</a></li>
-	<li><a href="#" class="green" onClick="return display_tab('bbs');">レンタル</a></li>
-	</ul>
-	
-	<BR>
 	{% include "mypage/feed.html" %}
 </div>
 {% endifequal %}
@@ -250,17 +278,4 @@
 
 {% if not is_iphone %}
 <br clear="all">
-{% endif %}
-
-{% if user %}
-	<!--退会 -->
-	{% if not view_mode or is_admin%}
-		{% ifequal tab "profile" %}
-		<TABLE width="100%"><TR><TD>
-		<div align="right">
-			<A HREF="#" onClick="confirm_withdraw('mypage?withdraw=go&user_id={{bookmark.user_id}}');return false;" class="declink">イラストブックから退会する{% if is_admin %}（＊管理モード）{% endif %}</A>
-		</div>
-		</TD></TR></TABLE>
-		{% endifequal %}
-	{% endif %}
 {% endif %}

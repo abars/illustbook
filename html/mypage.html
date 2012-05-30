@@ -26,27 +26,20 @@
 	{% if not is_iphone %}
 		<p>&nbsp</p>
 	{% endif %}
-	<div id="contents">
-		{% if not user and not is_iphone and not view_mode%}
-		<h1><img src="static_files/general/images/entry/title_entry.gif" alt="登録して使う" width="880" height="40" /></h1>
-		{% endif %}
+	<div id="contents" style="background-color:#ffffff;padding:4px;">
 		{% if not is_iphone %}
 			{% include "portal_css/css_pc_2col.html" %}
 		{% endif %}
 		{% include "portal_css/css_tab.html" %}
 		{% include "mypage/mypage.html" %}
-		<div id="pan"> 
-			{% if not user %}
-			<p>&nbsp;</p>
-			<p>&nbsp;</p>
-			<p><a href="{{host}}">イラストブック ホーム</a> &gt; 登録して使う</p>
-			{% endif %}
-		</div>
 	</div>
+
 	<div id="footer">
+		{% if not is_iphone %}
 		<ul>
 			{% include "portal/footer_sitemap.html" %}
 		</ul>
+		{% endif %}
 		<p>{% include "portal/footer_link.html" %}</p>
 	</div>
 </div>

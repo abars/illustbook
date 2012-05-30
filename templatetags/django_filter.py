@@ -194,37 +194,32 @@ def div(value):
 #ブックマーク
 #-----------------------------------------------------------------
 
-def add_bookmark_thread(thread,host):
-	command="AddBookmark('"+host+"','"+str(thread.key())+"');return false;"
-	txt='<A HREF="#" onclick="javascript:'+command+'"'
-	txt+=' class="decnone">'
-	txt+='ブックマーク</A>'
-	if(thread.bookmark_count):
-		txt+='<A HREF="'+host+'show_bookmark?thread_key='+str(thread.key())
-		txt+='" class="decnone">('
-		txt+=str(thread.bookmark_count)
-		if(thread.bookmark_count==1):
-			txt+="user"
-		else:
-			txt+="users"
-		txt+=')</A>'
+def add_bookmark_core(command,search,count):
+	txt=""
+
+	if(count):
+		txt+='<a href="'+search
+		txt+='" class="g-button mini">'
+		txt+='<i class="icon-star"></i>'+str(count)
+		txt+='</a>'
+
+	txt+='<a href="javascript:'+command+'" class="g-button mini">'
+	txt+='<i class="icon-plus"></i>ブックマーク'
+	txt+='</a>'
+
 	return txt
 
+def add_bookmark_thread(thread,host):
+	command="AddBookmark('"+host+"','"+str(thread.key())+"')"
+	search=""+host+'show_bookmark?thread_key='+str(thread.key())
+	count=thread.bookmark_count
+	return add_bookmark_core(command,search,count)
+
 def add_bookmark_bbs(bbs,host):
-	txt='<A HREF="#" onclick="javascript:if(confirm(\'「'+bbs.bbs_name
-	txt+='」をブックマークしますか？\')){window.location.href=\''+host
-	txt+='add_bookmark?mode=add_bbs&bbs_key='+str(bbs.key())+'\'};return false;" class="decnone">'
-	txt+='ブックマーク</A>'
-	if(bbs.bookmark_count):
-		txt+='<A HREF="'+host+'show_bookmark?bbs_key='+str(bbs.key())
-		txt+='" class="decnone">('
-		txt+=str(bbs.bookmark_count)
-		if(bbs.bookmark_count==1):
-			txt+="user"
-		else:
-			txt+="users"
-		txt+=')</A>'
-	return txt
+	command="bbs_add_bookmark('"+bbs.bbs_name+"','"+str(bbs.key())+"','"+host+"')";
+	search=""+host+'show_bookmark?bbs_key='+str(bbs.key())
+	count=bbs.bookmark_count
+	return add_bookmark_core(command,search,count)
 
 #-----------------------------------------------------------------
 #アプリ表示

@@ -193,7 +193,7 @@ class MyPage(webapp.RequestHandler):
 		#タブ
 		tab=self.request.get("tab")
 		if(not tab):
-			tab="profile"
+			tab="illust"
 
 		#ページ
 		feed_page=1
@@ -208,6 +208,14 @@ class MyPage(webapp.RequestHandler):
 		#iPhoneモードかどうか
 		is_iphone=CssDesign.is_iphone(self)
 		
+		#フォロー中かどうか
+		following=False
+		if(view_mode):
+			if(user):
+				my_bookmark=ApiObject.get_bookmark_of_user_id(user.user_id())
+				if(bookmark.user_id in my_bookmark.user_list):
+					following=True
+			
 		#年齢
 		age=None
 		if(bookmark):
@@ -241,7 +249,9 @@ class MyPage(webapp.RequestHandler):
 			'feed_page_n': feed_page_n,
 			'login_flag': login_flag,
 			'is_admin': is_admin,
-			'redirect_url': self.request.path
+			'redirect_url': self.request.path,
+			'mypage': not view_mode,
+			'following': following
 		}
 		
 		path = os.path.join(os.path.dirname(__file__), '../html/mypage.html')

@@ -19,3 +19,9 @@ function bbs_select_change(order_value,url_base){
 	var order=order_value;
 	window.location.href=''+url_base+order;
 }
+
+function bbs_add_bookmark(bbs_name,bbs_key,host){
+	if(confirm('「'+bbs_name+'」をブックマークしますか？')){
+		window.location.href=host+"add_bookmark?mode=add_bbs&bbs_key="+bbs_key;
+	}
+}

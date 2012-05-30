@@ -87,18 +87,21 @@ var mypage_user_id;
 var mypage_feed_page;
 
 var illust_limit=12;
+var g_is_iphone=0;
 
 function mypage_init(tab,login,view_mode,edit_mode,feed_page,is_admin,is_iphone){ 
+	g_is_iphone=is_iphone;
+
 	mypage_edit_mode=edit_mode;
 	mypage_view_mode=view_mode;
 	mypage_feed_page=feed_page;
 	
-	switch(mypage_edit_mode){
-	case 6:mypage_is_edit["bookmark_app"]=1;break;
-	case 5:mypage_is_edit["rental"]=1;break;
-	case 4:mypage_is_edit["follow"]=1;break;
-	case 3:mypage_is_edit["bookmark_bbs"]=1;break;
-	case 2:mypage_is_edit["bookmark_thread"]=1;break;
+	if(mypage_edit_mode){
+		mypage_is_edit["bookmark_app"]=1;
+		mypage_is_edit["rental"]=1;
+		mypage_is_edit["follow"]=1;
+		mypage_is_edit["bookmark_bbs"]=1;
+		mypage_is_edit["bookmark_thread"]=1;
 	}
 	
 	if(is_admin){
@@ -133,10 +136,12 @@ function mypage_init(tab,login,view_mode,edit_mode,feed_page,is_admin,is_iphone)
 	if(offset_bookmark){offset_bookmark*=limit;}else{offset_bookmark=0;}
 	if(offset_submit){offset_submit*=limit;}else{offset_submit=0;}
 
-	if(tab=="profile"){
-		illustbook.user.getBbsList(user_id,0,limit,illustbook.user.ORDER_NONE,get_user_bbs_list_callback);
+	if(tab=="illust"){
 		illustbook.user.getThreadList(user_id,offset_submit,limit,illustbook.user.ORDER_NONE,get_user_thread_list_callback);
 		illustbook.bookmark.getThreadList(user_id,offset_bookmark,limit,illustbook.bookmark.ORDER_NONE,get_bookmark_thread_list_callback);
+	}
+	if(tab=="illust"){
+		illustbook.user.getBbsList(user_id,0,limit,illustbook.user.ORDER_NONE,get_user_bbs_list_callback);
 		illustbook.bookmark.getBbsList(user_id,0,limit,illustbook.bookmark.ORDER_NONE,get_bookmark_bbs_list_callback);
 	}
 	
@@ -302,7 +307,7 @@ function get_user(oj,id,initial_text){
 		txt+="</div>";
 	}
 	if(txt==""){
-		txt="<p>"+initial_text+"</p>";
+		txt=""+initial_text+"";
 	}
 	document.getElementById(id).innerHTML=txt;
 }
@@ -340,7 +345,7 @@ function get_app_list(oj,id,initial_text){
 		txt+="</div>";
 	}
 	if(txt==""){
-		txt="<p>"+initial_text+"</p>";
+		txt=""+initial_text+"";
 	}
 	document.getElementById(id).innerHTML=txt;
 }
@@ -380,7 +385,11 @@ function get_bbs_list(oj,id,initial_text){
 		txt+=""+bbs.title;
 		if(bbs.bookmark){
 			txt+="　";
-			txt+="<a href='show_bookmark?bbs_key="+bbs.key+"'>";
+			txt+="<a href='show_bookmark?bbs_key="+bbs.key+"' class='g-button no-text'>";
+			
+			txt+='<i class="icon-star"></i>'+bbs.bookmark+'</a>';
+		
+			/*
 			txt+="<small>";
 			txt+="("+bbs.bookmark;
 			if(bbs.bookmark==1){
@@ -390,6 +399,7 @@ function get_bbs_list(oj,id,initial_text){
 			}
 			txt+=")";
 			txt+="</small>";
+			*/
 			txt+="</a>";
 		}
 		txt+="</a>";
@@ -431,13 +441,17 @@ function go_thread(url,id){
 
 function update_thread_list(div_id,message){
 	var oj=thread_list[div_id];
-	var txt="<div style='max-width:624px;'>";
+	var txt="<div style='max-width:800px;'>";
 	var from=0;
 	var to=oj.length;
 	for(var i=from;i<to;i++){
 		var thread=oj[i];
-		txt+="<div style='position:relative;float:left;width:100px;height:100px;margin:2px;box-shadow: 0 0 3px #cccccc;'><a href='javascript:go_thread(\""+thread.thread_url+"\",\""+div_id+"\");'>";
-		txt+="<img src='"+thread.thumbnail_url+"' width=100px height=100px style='display:none;' onload='$(this).fadeIn(500);'>";
+		var size=100;
+		if(g_is_iphone){
+			size=95;
+		}
+		txt+="<div style='position:relative;float:left;width:"+size+"px;height:"+size+"px;margin:2px;box-shadow: 0 0 3px #cccccc;'><a href='javascript:go_thread(\""+thread.thread_url+"\",\""+div_id+"\");'>";
+		txt+="<img src='"+thread.thumbnail_url+"' width="+size+"px height="+size+"px style='display:none;' onload='$(this).fadeIn(500);'>";
 		txt+="</a>";
 		if(mypage_is_edit["bookmark_thread"] && div_id=="bookmark_thread"){
 			txt+="<div style='position:absolute;left:0px;top:0px;'>";
@@ -456,6 +470,17 @@ function update_thread_list(div_id,message){
 		if(oj.length==0){
 			txt+="<p>Fin.</p>"
 		}
+
+		txt+='<br clear="all"><div class="g-button-group" style="float:right;">';
+		if(page==0){
+			txt+='<a href="#" class="g-button no-text disabled2"><i class="icon-chevron-left"></i></a>';
+		}else{
+			txt+='<a href="javascript:page_change('+(page-1)+',\''+div_id+'\');" class="g-button no-text"><i class="icon-chevron-left"></i></a>';
+		}
+		txt+='<a href="javascript:page_change('+(page+1)+',\''+div_id+'\');" class="g-button no-text"><i class="icon-chevron-right"></i></a>';
+		txt+='</div><br clear="all">';
+
+		/*
 		txt+="<BR clear='all'><div align='right'>"
 		if(page>0){
 			txt+=" <a href='javascript:page_change("+(page-1)+",\""+div_id+"\");'>戻る</a>　";
@@ -463,6 +488,7 @@ function update_thread_list(div_id,message){
 		txt+="Page."+(page+1)+"　"
 		txt+=" <a href='javascript:page_change("+(page+1)+",\""+div_id+"\");'>次へ</a>";
 		txt+="</div>";
+		*/
 	}
 	txt+="</div>"
 	document.getElementById(div_id).innerHTML=txt;
@@ -490,15 +516,16 @@ function page_change_core(next_page,div_id){
 }
 
 function add_delete_button(url,rental_mode,prefix,title){
-	var txt="<input type='button' value='X' ";
-	txt+="onmouseover=\"this.className='pagebutton_active'\" onmouseout=\"this.className='pagebutton'\" ";
-	txt+="class=\"pagebutton\" style=\"font-size:85%\" onclick=\"";
+	var script="";
 	if(rental_mode){
-		txt+="confirm_action_bbs('./del_bbs?bbs_key="+url+"','"+title+"');";
+		script+="confirm_action_bbs('./del_bbs?bbs_key="+url+"','"+title+"');";
 	}else{
-		txt+="if(confirm('"+prefix+"から「"+title+"」を削除してもいいですか？')){";
-		txt+="window.location.href='./add_bookmark?mode="+url+"'}";
+		script+="if(confirm('"+prefix+"から「"+title+"」を削除してもいいですか？')){";
+		script+="window.location.href='./add_bookmark?mode="+url+"'}";
 	}
-	txt+="\">";
+
+	var txt="";
+	txt+='<a href="javascript:'+script+';" class="g-button no-text"><i class="icon-remove"></i></a>';
+	
 	return txt;
 }

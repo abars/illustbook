@@ -1,45 +1,66 @@
+
+	<p>&nbsp;</p>
+
+	<div class="g-button-group">
+		{% if not view_mode %}
+			<a href="mypage" class="g-button">マイアカウント</a>
+		{% else %}
+		{% if following %}
+			<a href="add_bookmark?mode=add_user&user_key={{bookmark.user_id}}" class="g-button">フォロー中</a>
+		{% else %}
+			<a href="add_bookmark?mode=add_user&user_key={{bookmark.user_id}}" class="g-button"><i class="icon-plus"></i>フォロー</a>
+		{% endif %}
+		{% endif %}
+  <a class="g-button dropdown-toggle" data-toggle="dropdown" href="#">
+    その他 <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu">
+      <li><a href="./mypage?user_id={{bookmark.user_id}}"">リンク用のURLを開く</a></li>
+  {% if user %}
+      <li><a href="./mypage?tab=profile&edit=1">フォロワーの管理</a></li>
+	<!--退会 -->
+	{% if not view_mode or is_admin%}
+			<li><a href="javascript:confirm_withdraw('mypage?withdraw=go&user_id={{bookmark.user_id}}')">退会する{% if is_admin %}（＊管理モード）{% endif %}
+</a></li>
+	{% endif %}
+{% endif %}
+  </ul>
+</div>
 	<p>&nbsp;</p>		
 
-	<p class="bar">フォローしている{% if not view_mode %}(<A HREF="./mypage?edit=4" class="declink">編集</A>){% endif %}</p>
+{% if is_iphone %}
+<div class="example">
+{% endif %}
+
+	<p>フォローしている</p>
 
 		<TABLE width="100%"><TR><TD>
 		<div id="follow">Loading</div>
 		</TD></TR></TABLE>
 
 	<p>&nbsp;</p>
-	<p class="bar">フォローされている</p>
+	<p>フォローされている</p>
 
 		<TABLE width="100%"><TR><TD>
 		<div id="follower">Loading</div>
 		</TABLE>
 
-
-
 	<p>&nbsp;</p>
 
-	<p class="bar">アプリ{% if not view_mode %}(<A HREF="./mypage?edit=6" class="declink">編集</A>){% endif %}</p>
+	<p>アプリ</p>
 
 		<TABLE width="100%"><TR><TD>
 		<div id="bookmark_app">Loading</div>
 		</TD></TR></TABLE>
 
+{% if is_iphone %}
+</div>
+{% endif %}
+
+<!--
 	<p>&nbsp;</p>
-	<p class="bar">イラブ速報</p>
+	<p>イラブ速報</p>
 
 	<a href="./chat"><img src="./static_files/chat/mypage.png"></a>
-
-	<p>&nbsp;</p>
-	<p class="bar">メニュー</p>
-	<TABLE width="100%">
-	<TR><TD>
-	{% if view_mode %}
-		{% if bookmark.name %}
-			<p><A HREF="add_bookmark?mode=add_user&user_key={{bookmark.user_id}}" class="declink">{{bookmark.name}}をフォロー</A></p>
-		{% endif %}
-		<p><A HREF="./mypage" class="declink">マイページ</A></p>
-	{% else %}
-		<p><A HREF="./mypage?user_id={{bookmark.user_id}}" class="declink">リンク用URL</A></p>
-	{% endif %}
-	</TD></TR>
-	</TABLE>
+-->
 

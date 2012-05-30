@@ -1,21 +1,22 @@
-<div class="left_box">
 
 {% if not thread_list %}
 	{% if not moper_list %}
 		{% if not text_list %}
-	<p class="bar">タグ「{{tag}}」を含むイラスト</p>
+	<div class="example">
+	<p><h2>タグ「{{tag}}」を含むイラスト</h2></p>
 	<TABLE width="100%">
 	<TR><TD>
 			<p>イラストは見つかりませんでした。</p>
 	</TD></TR>
 	</TABLE>
-	<p>&nbsp</p>
+	</div>
 		{% endif %}
 	{% endif %}
 {% endif %}
 
 {% if thread_list %}
-	<p class="bar">タグ「{{tag}}」を含むイラスト</p>
+	<div class="example">
+	<p><h2>タグ「{{tag}}」を含むイラスト</h2></p>
 	<TABLE width="100%">
 	<TR><TD>
 	{% for thread in thread_list %}
@@ -25,11 +26,12 @@
 	{% endfor %}
 	</TD></TR>
 	</TABLE>
-	<p>&nbsp</p>
+	</div>
 {% endif %}
 
 {% if moper_list %}
-	<p class="bar">タグ「{{tag}}」を含む動画</p>
+	<div class="example">
+	<p><h2>タグ「{{tag}}」を含む動画</h2></p>
 	<TABLE width="100%">
 	<TR><TD>
 	{% for thread in moper_list %}
@@ -37,11 +39,12 @@
 	{% endfor %}
 	</TD></TR>
 	</TABLE>
-	<p>&nbsp</p>
+	</div>
 {% endif %}
 
 {% if text_list %}
-	<p class="bar">タグ「{{tag}}」を含むスレッド</p>
+	<div class="example">
+	<p><h2>タグ「{{tag}}」を含むスレッド</h2></p>
 	<TABLE width="100%">
 	<TR><TD>
 	{% for thread in text_list %}
@@ -49,13 +52,12 @@
 	{% endfor %}
 	</TD></TR>
 	</TABLE>
-	<p>&nbsp</p>
+	</div>
 {% endif %}
 
-</div>
+<div class="example">
 
-<div class="right_box">
-<p class="bar">タグ検索</p>
+<p><h2>タグ検索</h2></p>
 
 	<TABLE width="100%">
 	<TR><TD>
@@ -66,15 +68,11 @@
 	</form>
 	</TD></TR>
 	</TABLE>
+</div>
 
-<p>&nbsp</p>
+<div class="example">
 
-	<p class="bar">スポンサーリンク</p>
-	{% include "adsense/adsense_square.html" %}
-
-	<p>&nbsp</p>
-
-<p class="bar">注目のタグ</p>
+<p><h2>注目のタグ</h2></p>
 	<TABLE width="100%">
 	<TR><TD>
 <p>
@@ -84,7 +82,7 @@
 </p>
 	</TD></TR>
 	</TABLE>
-
 </div>
+
 
 <br clear="all">

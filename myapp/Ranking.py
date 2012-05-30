@@ -6,6 +6,9 @@
 #copyright 2010-2012 ABARS all rights reserved.
 #---------------------------------------------------
 
+import datetime;
+import time;
+
 from google.appengine.ext import db
 
 from myapp.BbsConst import BbsConst
@@ -28,7 +31,10 @@ class Ranking(db.Model):
 			content_len=content_len-1
 		self.thread_list.append(thread.key())
 		self.put()
-	
+
+	def get_sec(self,now):
+		return int(time.mktime(now.timetuple()))
+
 	def create_rank(self):
 		#ハッシュにthread_keyを入れていく
 		rank={}
@@ -52,11 +58,15 @@ class Ranking(db.Model):
 				rank[k]=0
 				continue
 			
+			#経過日数
+			day_left=(self.get_sec(datetime.datetime.now())-self.get_sec(thread.create_date))/60/60/24
+			day_left=day_left/7+1	#1週間で1/2
+			
 			#拍手とブックマークスコアを加算
 			if(thread.applause):
-				rank[k]=rank[k]+thread.applause
+				rank[k]=rank[k]+thread.applause/day_left
 			if(thread.bookmark_count):
-				rank[k]=rank[k]+thread.bookmark_count
+				rank[k]=rank[k]+thread.bookmark_count/day_left
 		
 		#ランキング作成
 		self.ranking_list=[]

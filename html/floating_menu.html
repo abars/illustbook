@@ -2,13 +2,13 @@
 #floating_menu{
 border-bottom: 1px solid #ccc;
 padding: 1px 0;
-padding-left:4px;
-min-height:21px;
+padding-left:2px;
+min-height:28px;
 text-align: left;
 background-color:#ffffff;
 color: #333;
 font-family: "ＭＳ Ｐゴシック", "Arial", "Osaka", "ヒラギノ角ゴPro W3";
-font-size: 10px;
+font-size: 12px;
 }
 
 #floating_menu a{
@@ -17,45 +17,48 @@ color: #333;
 </style>
 
 <div id="floating_menu">
-{% if is_iphone and bbs %}
-{% else %}
-<div style="float:left;">
-<a href="{{host}}"><img src="{{host}}static_files/icon/icon20.gif"></a>
-</div>
-<div style="float:left;padding-left:2px;padding-top:3px;padding-right:8px;font-weight:600;">
-<a href="{{host}}">イラストブック</a>
-</div>
-{% endif %}
-{% if user %}
-<div style="float:left;width:20px;height:20px;">
-	<a href="{{host}}mypage"><img src="{{host}}show_icon?key={{user.user_id}}" width=20px height=20px></a>
-</div>
-{% endif %}
-<div style="float:left;margin-left:8px;padding-top:3px;">
-{% if user %}
-<a href="{{host}}mypage">マイページ</a><a href="{{host}}mypage?tab=feed">{{user|new_feed_count}}</a>｜
-{% if not edit_thread %}
-	{% if thread %}
-		{% if thread.user_id %}
-			<a href="{{host}}mypage?user_id={{thread.user_id}}">投稿者</a>｜
+
+	{% if user %}
+	<div style="float:left;padding-left:2px;padding-top:2px;padding-right:2px;font-weight:600;">
+		<a href="{{host}}mypage"><img src="{{host}}show_icon?key={{user.user_id}}" width=24px height=24px></a><a href="{{host}}mypage?tab=feed">{{user|new_feed_count}}</a>
+	</div>
+	{% endif %}
+	
+	<div style="float:left;padding-left:2px;padding-top:3px;padding-right:2px;font-weight:600;">
+	<div class="g-button-group">
+		{% if mypage %}
+			<a href="{{host}}" class="g-button mini" style="margin:0px;"><i class="icon-home"></i>トップ</a>
+		{% else %}
+			<a href="{{host}}mypage" class="g-button mini {% if bbs and is_iphone %}no-text{% endif %}" style="margin:0px;"><i class="icon-home"></i>{% if bbs and is_iphone %}{%else%}マイページ{% endif %}</a>
 		{% endif %}
-		{{thread|add_bookmark_thread:host|safe}}｜
-	{% else %}
-		{% if bbs %}
-			<a href="{{host}}mypage?user_id={{bbs.user_id}}">オーナー</a>｜
-			{{bbs|add_bookmark_bbs:host|safe}}｜
+		
+	{% if user %}
+		{% if not edit_thread %}
+			{% if thread %}
+				{% if thread.user_id %}
+					<a href="{{host}}mypage?user_id={{thread.user_id}}" class="g-button mini"><i class="icon-user"></i>ドロワー</a>
+				{% endif %}
+				{{thread|add_bookmark_thread:host|safe}}
+			{% else %}
+				{% if bbs %}
+					<a href="{{host}}mypage?user_id={{bbs.user_id}}" class="g-button mini"><i class="icon-user"></i>オーナー</a>
+					{{bbs|add_bookmark_bbs:host|safe}}
+				{% endif %}
+			{% endif %}
 		{% endif %}
 	{% endif %}
-{% endif %}
-<a href="{{redirect_url|logout_url}}">ログアウト</a>
-{% else %}
-<a href="{{redirect_url|login_url}}">ログイン</a>
-{% endif %}
-</div>
-{% if not is_iphone %}
-<div style="float:right;padding-top:3px;color:#000000;padding-right:4px;">
-<a href="{{host}}guide">ヘルプ</a>
-</div>
-{% endif %}
+	</div>
+	</div>
+
+	<div style="float:right;padding-left:2px;padding-top:3px;padding-right:2px;font-weight:600;">
+		{% if user %}
+			{% if not is_iphone or mypage %}
+				<a href="{{redirect_url|logout_url}}" class="g-button mini"><i class="icon-off"></i>ログアウト</a>
+			{% endif %}
+		{% else %}
+			<a href="{{redirect_url|login_url}}" class="g-button mini"><i class="icon-off"></i>ログイン</a>
+		{% endif %}
+	</div>
+	
 <br clear="all">
 </div>

@@ -1,23 +1,18 @@
 <script src="api_js"></script>
 <script src="js/bookmark.js"></script>
 
-<div class="left_box">
-	<p class="bar">「
+	<div class="example">
+	<p><h2>「
 	{% if search_thread %}{{search_thread.title}}{% endif%}
 	{% if search_bbs %}{{search_bbs.bbs_name}}{% endif %}
 	{% if search_app %}{{search_app.app_name}}{%endif %}
-」をブックマークしているユーザ</p>
+」をブックマークしているユーザ</h2></p>
 
 	<TABLE width="100%">
 	<TR><TD>
 		<div id="user_list"></div>
 	</TD></TR>
 	</TABLE>
-</div>
-
-<div class="right_box">
-	<p class="bar">スポンサーリンク</p>
-	{% include "adsense/adsense_square.html" %}
-</div>
+	</div>
 
 <br clear="all">
