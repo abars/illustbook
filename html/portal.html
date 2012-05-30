@@ -158,9 +158,13 @@
 		{% endif %}
 	</div>
 	<div id="footer">
+		{% if not is_iphone %}
 		<ul>
 			{% include "portal/footer_sitemap.html" %}
 		</ul>
+		{% else %}
+			<br clear="all">
+		{% endif %}
 		<p>{% include "portal/footer_link.html" %}</p>
 	</div>
 </div>
