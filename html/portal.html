@@ -88,9 +88,9 @@
 
 		{% ifequal mode "bookmark" %}
 			{% if not is_iphone %}
-				{% include "portal_css/css_pc_2col.html" %}
+				{% include "portal_css/option_2col.html" %}
 			{% endif %}
-			{% include "portal_css/css_tab.html" %}
+			{% include "portal_css/option_tab.html" %}
 			{% if tag %}
 				{% include "search/search_tag.html" %}
 			{% else %}
@@ -100,7 +100,7 @@
 
 		{% ifequal mode "link" %}
 			{% if is_iphone %}
-				{% include "portal_css/css_tab.html" %}
+				{% include "portal_css/option_tab.html" %}
 				<p class="bar">リンク</p>
 			{% else %}
 				<h1><img src="static_files/general/images/top/title_link.gif" alt="リンク" width="880" height="40" /></h1>
@@ -120,7 +120,7 @@
 
 		{% ifequal mode "terms" %}
 			{% if is_iphone %}
-				{% include "portal_css/css_tab.html" %}
+				{% include "portal_css/option_tab.html" %}
 				<p class="bar">ご利用規約</p>
 			{% else %}
 				<h1><img src="static_files/general/images/top/title_guide.gif" alt="ご利用規約" width="880" height="40" /></h1>

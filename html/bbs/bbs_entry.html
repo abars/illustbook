@@ -9,11 +9,11 @@
 
 		<!-- 拍手 -->
 		{% if not bbs.disable_applause %}
-			<div class="clap">
+			<div class="clap" align="right">
 			{% if template_path%}
 				<A HREF="{{host}}applause?bbs_key={{bbs.key}}&thread_key={{thread.key}}&mode=bbs&order={{order}}&page={{page}}" rel="nofollow"><img src="{{template_path}}images/i_crap.gif" alt="拍手" width="53" height="20"/></A>{%if thread.applause %}{{thread.applause}}{%else%}0{%endif%}
 			{% else %}
-				<input type="button" value="拍手" onmouseover="this.className='menubutton_active'" onmouseout="this.className='menubutton'" class="menubutton" onClick="location.href='{{host}}applause?bbs_key={{bbs.key}}&thread_key={{thread.key}}&mode=bbs&order={{order}}&page={{page}}'">{%if thread.applause %}{{thread.applause}}{%else%}0{%endif%}
+				<input type="button" value="拍手{%if thread.applause %}{{thread.applause}}{%else%}0{%endif%}"  class="g-button" onClick="location.href='{{host}}applause?bbs_key={{bbs.key}}&thread_key={{thread.key}}&mode=bbs&order={{order}}&page={{page}}'">
 			{% endif %}
 			</div>
 		{% endif %}
@@ -73,7 +73,7 @@
 	<div class="entry-comment">
 	<p>{{thread.summary|safe}}</p>
 		{% if thread.postscript %}
-		　<p><a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{%endif%}.html' class="declink">続きを読む</a></p>
+		　<p><a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{%endif%}.html'  class="g-button">続きを読む</a></p>
 		{% endif %}
 	</div>
 	
@@ -81,10 +81,12 @@
 		<!--コメントを書くボタン-->
 		<div class="entry-button">
 		{%if not bbs.disable_comment%}
-			<a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{%endif%}.html' class="declink">
+			<a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{%endif%}.html' 
 			{% if template_path %}
+				class="declink">
 				<img src="{{template_path}}images/btn_comment1.gif" alt="コメントを書く" width="116" height="20" />
 			{% else %}
+				class="g-button">
 				コメントを書く
 			{% endif %}
 			</a>
@@ -93,10 +95,12 @@
 
 		<!--コメントを読むボタン-->
 		{%if thread.comment_cnt %}
-		<a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{%endif%}.html' class="declink">
+		<a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{%endif%}.html' 
 			{% if template_path %}
+				class="declink">
 				<img src="{{template_path}}images/btn_comment2.gif" alt="コメントを読む" width="116" height="20" />
 			{% else %}
+				class="g-button">
 				コメントを読む({{thread.comment_cnt}})
 			{% endif %}
 		</a>
@@ -115,7 +119,8 @@
 
 	<div id="comment_form_button_{{ thread.key }}">
 	<p>&nbsp</p>
-	<input type="button" value="コメントを書き込む" onmouseover="this.className='menubutton_active'" onmouseout="this.className='menubutton'" class="menubutton" onClick="show_comment_form('{{thread.key}}');">
+	<!-- <input type="button" value="コメントを書き込む" onmouseover="this.className='menubutton_active'" onmouseout="this.className='menubutton'" class="menubutton" onClick="show_comment_form('{{thread.key}}');"> -->
+	<a href="javascript:show_comment_form('{{thread.key}}');" class="g-button"><i class="icon-pencil"></i>コメントを書き込む</a>
 	</div>
 {% endif %}
 

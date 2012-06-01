@@ -2,32 +2,35 @@
 	<HR>コメントはまだありません。<BR>
 {%endif%}
 
-<TABLE BORDER=0 class="table_color" width=100% style="word-break:break-all;">
+<div width=100% style="word-break:break-all;">
 {% for entry in com_list %}
 	{% if entry.com.del_flag %}
 <!-- 基本情報 -->
-		<TR><TD colspan=1 width=100%><hr></TD></TR>
-		<TR><TD>
+		<hr>
+		<div class="actions g-button-container">
 		投稿者：
 		{{entry.com|author_name_comment:host|safe}}
 		　投稿日：{% if entry.com.create_date %}{{entry.com.create_date|time_JST_format:bbs.date_format}}{%else%}{{entry.com.date|time_JST_format:bbs.date_format}}{%endif%}
 		
+		<div class="g-button-group" style="float:right;">
 		{%if is_admin or edit_flag %}
-			<input type="button" value="削除" onmouseover="this.className='menubutton_active'" onmouseout="this.className='menubutton'" class="menubutton" onClick="confirm_action_comment('{{host}}del_ent?entry_key={{entry.com.key}}&bbs_key={{bbs_key}}&thread_key={{thread.key}}');">
+			<input type="button" value="削除"  class="g-button" onClick="confirm_action_comment('{{host}}del_ent?entry_key={{entry.com.key}}&bbs_key={{bbs_key}}&thread_key={{thread.key}}');">
 			{% if is_admin and entry.com.illust_reply %}
-				<input type="button" value="規約" onmouseover="this.className='menubutton_active'" onmouseout="this.className='menubutton'" class="menubutton" onClick="confirm_action_term('{{host}}violation?entry_key={{entry.com.key}}&bbs_key={{bbs_key}}&thread_key={{thread.key}}');">
+				<input type="button" value="規約"  class="g-button" onClick="confirm_action_term('{{host}}violation?entry_key={{entry.com.key}}&bbs_key={{bbs_key}}&thread_key={{thread.key}}');">
 			{% endif %}
 			{% if bbs.comment_hidden_button %}
-				<input type="button" value="{% if entry.com.hidden_flag %}表示{%else%}非表示{% endif %}" onmouseover="this.className='menubutton_active'" onmouseout="this.className='menubutton'" class="menubutton" onClick="window.location.href='{{host}}vis_ent?entry_key={{entry.com.key}}&bbs_key={{bbs_key}}&thread_key={{thread.key}}';">
+				<input type="button" value="{% if entry.com.hidden_flag %}表示{%else%}非表示{% endif %}"  class="g-button" onClick="window.location.href='{{host}}vis_ent?entry_key={{entry.com.key}}&bbs_key={{bbs_key}}&thread_key={{thread.key}}';">
 			{% endif %}
 		{%endif%}
 
 		{%ifequal bbs.disable_normal_reply 1 %}
 		{%else%}
 			{%if show_comment_form %}
-				<input type="button" value="返信" onmouseover="this.className='menubutton_active'" onmouseout="this.className='menubutton'" class="menubutton" onClick="show('{{ entry.com.key }}');">
+				<input type="button" value="返信" class="g-button" onClick="show('{{ entry.com.key }}');">
 			{% endif %}
 		{%endifequal%}
+		</div>
+		</div>
 
 <br>
 <!-- 絵で返信 -->
@@ -51,20 +54,22 @@
 {% if not entry.com.hidden_flag %}
 {% for res in entry.res_list %}
 <div style="margin:16px 2px 16px 40px;">
-<TABLE BORDER=0 class="table_color" width=100%>
-<TR><TD width=100%><hr></TD></TR>
-</TABLE>
+<HR>
+<div class="actions g-button-container">
 	投稿者：
 	{{res|author_name_comment:host|safe}}
 	　投稿日：{{res.date|time_JST_format:bbs.date_format}}
+<div class="g-button-group" style="float:right;">
 {%if edit_flag %}
-<input type="button" value="削除" onmouseover="this.className='menubutton_active'" onmouseout="this.className='menubutton'" class="menubutton" onClick="confirm_action_comment('{{host}}del_res?entry_key={{entry.com.key}}&res_key={{res.key}}');">
+<input type="button" value="削除"  class="g-button" onClick="confirm_action_comment('{{host}}del_res?entry_key={{entry.com.key}}&res_key={{res.key}}');">
 {% endif %}
 {% if forloop.last %}
 {%if show_comment_form %}
-<input type="button" value="返信" onmouseover="this.className='menubutton_active'" onmouseout="this.className='menubutton'" class="menubutton" onClick="show('{{ entry.com.key }}');">
+<input type="button" value="返信"  class="g-button" onClick="show('{{ entry.com.key }}');">
 {%endif%}
 {% endif %}
+</div>
+</div>
 <BR>{{res.content|safe}}<BR><BR>
 </div>
 {% endfor %}
@@ -85,11 +90,10 @@
 </tr>
 <tr><td>コメント（必須）</td>
 <td><textarea name="comment" rows="10" cols="40" style="width:100%;"></textarea></td></tr>
-<tr><td></td><td><input type="submit" value="コメントを投稿する" onmouseover="this.className='menubutton_active'" onmouseout="this.className='menubutton'" class="menubutton"></td></tr>
+<tr><td></td><td><input type="submit" value="コメントを投稿する"  class="g-button"></td></tr>
 </table>
 </form>
 </div>
-</TD></TR>
 {% endif %}
 {% endfor %}
-</TABLE>
+</div>

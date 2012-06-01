@@ -31,6 +31,7 @@
 {%endif%}
 {{thread|author_name_thread:host|safe}}
 　
+{% if is_iphone %}<BR>{% endif %}
 
 {% if thread.create_date %}
 	{%if template_path %}
@@ -53,7 +54,7 @@
 {% if thread.cached_image_key %}
 {% if not template_path %}
 {% if not bbs.disable_applause %}
-<input type="button" value="拍手" onmouseover="this.className='menubutton_active'" onmouseout="this.className='menubutton'" class="menubutton" onClick="location.href='{{host}}applause?bbs_key={{bbs_key}}&thread_key={{thread.key}}&mode=thread'">{%if thread.applause %}{{thread.applause}}{%else%}0{%endif%}
+<input type="button" value="拍手{%if thread.applause %}{{thread.applause}}{%else%}0{%endif%}"  class="g-button" onClick="location.href='{{host}}applause?bbs_key={{bbs_key}}&thread_key={{thread.key}}&mode=thread'">
 {% endif %}
 {% endif %}
 {% endif %}
@@ -66,4 +67,8 @@
 {% endif%}
 </div>
 
+		{% if thread.cached_image_key %}
+			{%if bbs.disable_draw_time %}{%else%}{%if thread.draw_time %}（描画時間{{thread.draw_time|div}}分）{% endif %}{%endif%}
+		{%endif%}
+		
 </div>

@@ -15,20 +15,21 @@
 </script>
 
 			<!-- CSS設定 -->
-			<div class="entry" id="css_editor">
-				<p>&nbsp</p>
-				<H1><p>CSSデザインの一覧</p></H1>
+				<p>デザインテンプレートでCSSデザインを選択した場合の設定です</p>
 				{% if my_app_list %}
-				<TABLE width=100%>
+				<TABLE width=100% class="g-table">
 					{% for app2 in my_app_list %}
-					<TR><TD><p><a href="app?mode=play&app_key={{app2.key}}">
-					{{app2.app_name}}</a></p></TD><TD><p>デザインID：{{app2.app_id}}
+					<TR><TH><p>{{app2.app_name}}</p></TH><TD><p>デザインID：{{app2.app_id}}
 					</p></TD>
 					<TD>
-					<input type="button" onclick="script:window.location.href='dev?page=edit&app_key={{app2.key}}&bbs_key={{bbs.key}}'" value="デザインを編集">
-					<input type="button" onclick="setCss('{{app2.app_id}}');" value="デザインを使用">
-					<input type="button" onclick="script:window.location.href='dev?page=info&app_key={{app2.key}}&bbs_key={{bbs.key}}'" value="編集と公開">
-					<input type="button" onclick="script:confirm_delete('dev?page=delete&app_key={{app2.key}}&redirect=edit_bbs?bbs_key={{bbs.key}}');" value="削除"></TD>
+					<div class="g-button-group">
+					<a href="app?mode=play&app_key={{app2.key}}" target="_BLANK" class="g-button">プレビュー</a>
+					<a class="g-button" href="javascript:setCss('{{app2.app_id}}');">デザインを使用</a>
+					<a class="g-button" href="dev?page=edit&app_key={{app2.key}}&bbs_key={{bbs.key}}" target="_BLANK">デザインを編集</a>
+					<a class="g-button" href="dev?page=info&app_key={{app2.key}}&bbs_key={{bbs.key}}" target="_BLANK">設定</a>
+					<a class="g-button" href="javascript:confirm_delete('dev?page=delete&app_key={{app2.key}}&redirect=edit_bbs?bbs_key={{bbs.key}}');">削除</a>
+					</div>
+					</TD>
 					</TR>
 					{% endfor %}
 				</TABLE>
@@ -36,21 +37,18 @@
 					<p>CSSデザインはまだありません。</p>
 				{% endif %}
 				<p>&nbsp</p>
-				<p>CSSデザインは、<a href="./app" TARGET="_BLANK" class="declink">イラストブックマーケット</A>からも入手することができます。</p>
-				<p>作成したデザインは、一般に公開することも、自分だけで使用することもできます。</p>
-				<p>&nbsp</p>
-				<p>&nbsp</p>
-				<H1><p>CSSデザインの新規作成</p></H1>
 				<form action="dev" method="POST">
 				<input name="mode" type="hidden" value="2">
 				<input type="hidden" name="page" value="submit">
 				<input type="hidden" name="redirect" value="edit_bbs?bbs_key={{bbs.key}}">
-				<TABLE>
-				<TR><TD>CSSデザインの名称</TD><TD><input name="app_name" style="width:200px;"></TD>
-				<TR><TD>CSSデザインID(半角英数)</TD><TD><input name="app_id" style="width:200px;"></TD>
-				<TD><input type="submit" value="新規作成"></TD></TR></TABLE>
+				<TABLE class="g-table">
+				<TR><TH>CSSデザインの名称</TH><TD><input name="app_name" style="width:200px;"></TD><TD></TD></TR>
+				<TR><TH>CSSデザインID(半角英数)</TH><TD><input name="app_id" style="width:200px;"></TD>
+				<TD><input type="submit" value="CSSデザインの新規作成" class="g-button"></TD></TR></TABLE>
 				</form>
 				
-				</div>
 				<p>&nbsp</p>
-			</div>
+
+				<p>CSSデザインは、<a href="./app" TARGET="_BLANK" class="declink">イラストブックマーケット</A>からも入手することができます。</p>
+				<p>作成したデザインは、一般に公開することも、自分だけで使用することもできます。</p>
+				<p>&nbsp</p>

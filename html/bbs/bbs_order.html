@@ -1,54 +1,30 @@
 <!-- 表示順 -->
-	<select id="pageselect" onChange="bbs_select_change(this.value,'{{page_url_order_base}}');">
-		{% ifequal order "new" %}
-		<option value="new" selected="selected">新着順</option>
-		{% else %}
-		<option value="new">新着順</option>
-		{% endifequal %}
-		{% ifequal order "update" %}
-		<option value="update" selected="selected">更新順</option>
-		{% else %}
-		<option value="update">更新順</option>
-		{% endifequal %}
-		{% ifequal order "comment" %}
-		<option value="comment" selected="selected">コメント数</option>
-		{% else %}
-		<option value="comment">コメント数</option>
-		{% endifequal %}
-{% ifequal bbs.bbs_mode 3 %}
-{% else %}
-		{% ifequal order "applause" %}
-		<option value="applause" selected="selected">拍手順</option>
-		{% else %}
-		<option value="applause">拍手順</option>
-		{% endifequal %}
-		{% ifequal order "thumbnail" %}
-		<option value="thumbnail" selected="selected">サムネイル</option>
-		{% else %}
-		<option value="thumbnail">サムネイル</option>
-		{% endifequal %}
-{% endifequal %}
-{% if bbs.show_only_movie %}
-		{% ifequal order "illust" %}
-		<option value="illust" selected="selected">ラスターを表示</option>
-		{% else %}
-		<option value="illust">ラスターを表示</option>
-		{% endifequal %}
-{% endif %}
-	</select>
+<div class="actions g-button-container">
 
-<!-- ページ番号 -->
-		{%for p in page_list%}
-			{%ifequal p page%}
-				{% if template_path %}
-					<a href="{{page_url_base}}{{p}}" style="background-color:#{{template_base_color}};">{{p}}</a>
-				{% else %}
-					<div class="page-current">{{p}}</div>
-				{% endif %}
-			{%else%}
-				<a href="{{page_url_base}}{{p}}">{{p}}</a>
-			{%endifequal %}
-		{%endfor%}
+	<div class="g-button-group">
+	<a class="g-button mini dropdown-toggle" data-toggle="dropdown" href="#" style="color:#333">
+		{% ifequal order "new" %}新着順{% endifequal %}
+		{% ifequal order "update" %}更新順{% endifequal %}
+		{% ifequal order "comment" %}コメント数{% endifequal %}
+		{% ifequal order "applause" %}拍手順{% endifequal %}
+		{% ifequal order "thumbnail" %}サムネイル{% endifequal %}
+		{% ifequal order "illust" %}ラスター{% endifequal %}
+		<span class="caret"></span>
+	</a>
+	<ul class="dropdown-menu">
+		<li><a href="javascript:bbs_select_change('new','{{page_url_order_base}}');" style="border-bottom: 0px;color:#333;">新着順</a></li>
+		<li><a href="javascript:bbs_select_change('update','{{page_url_order_base}}');" style="border-bottom: 0px;color:#333">更新順</a></li>
+		<li><a href="javascript:bbs_select_change('comment','{{page_url_order_base}}');" style="border-bottom: 0px;color:#333">コメント数</a></li>
+	{% ifequal bbs.bbs_mode 3 %}
+	{% else %}
+		<li><a href="javascript:bbs_select_change('applause','{{page_url_order_base}}');" style="border-bottom: 0px;color:#333">拍手順</a></li>
+		<li><a href="javascript:bbs_select_change('thumbnail','{{page_url_order_base}}');" style="border-bottom: 0px;color:#333">サムネイル</a></li>
+		{% if bbs.show_only_movie %}
+			<li><a href="javascript:bbs_select_change('illust','{{page_url_order_base}}');" style="border-bottom: 0px;color:#333">ラスターを表示</a></li>
+		{% endif %}
+	{% endifequal %}
+	</ul>
+	</div>
 
 <!-- モバイルの新規イラスト -->
 {% if is_iphone %}
@@ -58,12 +34,28 @@
 			{% if not bbs.disable_create_new_illust %}
 				<input type="hidden" id="canvas_width" value="{%if bbs.default_canvas_width%}{{bbs.default_canvas_width}}{%else%}400{%endif%}" maxlength=3 size=3/>
 				<input type="hidden" id="canvas_height" value="{%if bbs.default_canvas_height%}{{bbs.default_canvas_height}}{%else%}400{%endif%}" maxlength=3 size=3/>
-				{% if template_path %}
-					<a href="#" onclick="bbs_open_draw('','{{bbs.key}}','{{host}}');">描く</A>
-				{% else %}
-						<input type="button" value="描く" onmouseover="this.className='menubutton_active'" onmouseout="this.className='menubutton'" class="menubutton" onclick="bbs_open_draw('','{{bbs.key}}','{{host}}');" style="width:40px;" />
-				{% endif %}
+				<a class="g-button no-text" href="javascript:bbs_open_draw('','{{bbs.key}}','{{host}}');" style="color:#333;" />イラストを描く</a>
 			{% endif %}
 		{% endif %}
 	{% endifequal %}
+	<BR><BR>
 {% endif %}
+
+<!-- ページ番号 -->
+	<div class="g-button-group">
+		{% ifequal page 1 %}
+			<a href="#" class="g-button no-text mini disabled2"><i class="icon-chevron-left"></i></a>
+		{% else %}
+			<a href="{{page_url_base}}{{page|add:"-1"}}" class="g-button no-text mini"><i class="icon-chevron-left"></i></a>
+		{% endifequal %}
+		{%for p in page_list%}
+			{%ifequal p page%}
+					<div class="g-button checked no-text mini" style="color:#333">{{p}}</div>
+			{%else%}
+				<a href="{{page_url_base}}{{p}}" class="g-button no-text mini" style="color:#333">{{p}}</a>
+			{%endifequal %}
+		{%endfor%}
+		<a href="{{page_url_base}}{{page|add:"1"}}" class="g-button no-text mini"><i class="icon-chevron-right"></i></a>
+	</div>
+
+</div>

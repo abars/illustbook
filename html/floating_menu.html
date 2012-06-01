@@ -26,7 +26,7 @@ color: #333;
 	
 	<div style="float:left;padding-left:2px;padding-top:3px;padding-right:2px;font-weight:600;">
 	<div class="g-button-group">
-		{% if top_page or bbs or thread%}
+		{% if top_page or bbs or thread or view_mode %}
 			<a href="{{host}}mypage" class="g-button mini {% if bbs and is_iphone %}no-text{% endif %}" style="margin:0px;"><i class="icon-home"></i>{% if bbs and is_iphone %}{%else%}マイページ{% endif %}{{user|new_feed_count}}</a>
 		{% else %}
 			<a href="{{host}}" class="g-button mini" style="margin:0px;"><i class="icon-home"></i>トップ</a>

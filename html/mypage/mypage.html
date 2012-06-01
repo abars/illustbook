@@ -84,7 +84,7 @@
 		{% else %}
 		<a href="./mypage?{% if tab %}tab={{tab}}&{% endif %}edit=1" class="g-button no-text">
 		{% endif %}
-		<i class="icon-edit"></i></a>
+		<i class="icon-edit"></i>{% if not is_iphone %}編集{% endif %}</a>
 	</div>
 	{% endif %}
 	

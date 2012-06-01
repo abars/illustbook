@@ -2,17 +2,7 @@
 <html>
 
 <head>
-{% if template_path%}
-	<link rel="stylesheet" type="text/css" media="screen,print" href="{{css_name}}" />
-	<link rel="stylesheet" type="text/css" media="screen,print" href="{{host}}template/common/style_common2.css" />
-{% else %}
-	{% if css_key %}
-		<link rel="stylesheet" type="text/css" href="{{host}}css/{{css_key}}.key" media="screen,print" />
-	{% else %}
-		<link rel="stylesheet" type="text/css" href="{{host}}css/{{bbs.key}}.css" media="screen,print" />
-	{% endif %}
-{% endif %}
-
+{% include "./bbs_thread/css.html" %}
 	<title>スレッドの編集</title>
 	<script language="JavaScript" src="./js/rediter.js"></script>
 	<script><!--

@@ -8,7 +8,6 @@
 {%if not bbs.disable_normal_reply %}
 	{%if show_comment_form %}
 <div class="entry">
-		コメントを書き込む<HR>
 		<form action='http://localhost/' enctype="multipart/form-data" method="post" onSubmit="this.action='{{host}}add_entry?bbs_key={{ bbs.key }}&thread_key={{ thread.key }}';">
 			<table class="table_color">
 			<tr><td>名前（必須）</td>
@@ -32,7 +31,7 @@
 				<textarea name="comment" rows="10" cols="60" style="width:100%;"></textarea>
 			</td></tr>
 			<tr><td></td><td>
-			<input type="submit" value="コメントを書き込む" onmouseover="this.className='menubutton_active'" onmouseout="this.className='menubutton'" class="menubutton">
+			<input type="submit" value="コメントを書き込む" class="g-button">
 			</td></tr>
 		</table>
 	</form>
@@ -43,17 +42,16 @@
 {%if show_comment_form %}
 	{%if bbs.enable_illust_reply or bbs.enable_illust_reply_continue %}
 		<div class="entry">
-		絵でコメントを書き込む<HR>
 	{%endif%}
 	
 	{%ifequal bbs.enable_illust_reply 1 %}
 		キャンバスサイズ<input type="text" id="canvas_width" value="{{bbs.illust_reply_width}}" maxlength=3 size=3/>x<input type="text" id="canvas_height" value="{{bbs.illust_reply_height}}" maxlength=3 size=3/>px　
-		<input type="button" value="絵でコメント" onmouseover="this.className='menubutton_active'" onmouseout="this.className='menubutton'" class="menubutton" onClick="open_draw('',1,'{{host}}','{{thread.key}}','{{bbs.key}}',{{thread.illust_mode}});">
+		<input type="button" value="絵でコメント" class="g-button" onClick="open_draw('',1,'{{host}}','{{thread.key}}','{{bbs.key}}',{{thread.illust_mode}});">
 	{% endifequal %}
 	
 	{%ifequal thread.illust_mode 1 %}
 		{%ifequal bbs.enable_illust_reply_continue 1 %}
-			<input type="button" value="絵で続きからコメント" onmouseover="this.className='menubutton_active'" onmouseout="this.className='menubutton'" class="menubutton" onClick="open_draw('{{thread.image}}',1,'{{host}}','{{thread.key}}','{{bbs.key}}',{{thread.illust_mode}});">
+			<input type="button" value="絵で続きからコメント"  class="g-button" onClick="open_draw('{{thread.image}}',1,'{{host}}','{{thread.key}}','{{bbs.key}}',{{thread.illust_mode}});">
 		{% endifequal %}
 	{%endifequal %}
 

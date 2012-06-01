@@ -2,13 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
 <head>
 {% include "./bbs_thread/meta.html" %}
-<title>{{ bbs.bbs_name }}：{{ thread.title }}</title>
-{% if template_path %}
-	<link rel="stylesheet" type="text/css" media="screen,print" href="{{css_name}}" />
-	<link rel="stylesheet" type="text/css" media="screen,print" href="{{host}}template/common/style_common2.css" />
-{% else %}
-	<link rel="stylesheet" type="text/css" href="{{host}}css/{{bbs.key}}.css{% if is_iphone %}?is_iphone=1{% endif %}" media="screen,print" />
-{% endif %}
+{% include "./bbs_thread/css.html" %}
 </head>
 
 <body>
@@ -55,7 +49,7 @@
 				<!-- コメント一覧 -->
 				{% if not bbs.disable_comment %}
 					<div class="entry">
-					コメント一覧
+					コメント
 					{{comment}}
 					{% include "./thread/thread_comment_order.html" %}
 					</div>

@@ -1,11 +1,10 @@
 <div id="contents-header">
 	<div id="contents-header-edit">
-		{% if template_path %}<p>{%endif%}
-		<a href='{{usrhost}}' class="decnone">{{bbs.bbs_name}}へ戻る</a>　
-		{% if thread.cached_image_key %}
-			{%if bbs.disable_draw_time %}{%else%}{%if thread.draw_time %}描画時間{{thread.draw_time|div}}分{% endif %}{%endif%}
-		{%endif%}
-		{% if template_path %}</p>{%endif%}
+		{% if template_path %}
+			<p><a href='{{usrhost}}'>{{bbs.bbs_name}}へ戻る</a></p>
+		{% else %}
+			<a href='{{usrhost}}' class="g-button"><i class="icon-chevron-left"></i>{{bbs.bbs_name}}へ戻る</a>
+		{% endif %}
 	</div>
 	<div id="contents-header-edit" style="float:right;" align="right">
 		{%if not bbs.tweet_disable %}

@@ -102,13 +102,14 @@ function rediter_create_fontsize(id){
 
 function rediter_create_button(id,enable_tag_edit){
 	var button=document.getElementById(id+"_button");
-	var text="";
-	text+='<button onClick="rediter_bold(\''+id+'\');">強調</button>';
-    text+='<button onClick="rediter_link(\''+id+'\');">リンク</button>';
-	text+='<button onClick="rediter_remove_format(\''+id+'\');">クリア</button>';
+	var text="<div class='g-button-group'>";
+	text+='<button class="g-button" onClick="rediter_bold(\''+id+'\');">強調</button>';
+    text+='<button class="g-button" onClick="rediter_link(\''+id+'\');">リンク</button>';
+	text+='<button class="g-button" onClick="rediter_remove_format(\''+id+'\');">クリア</button>';
 	if(enable_tag_edit){
-		text+='<button onClick="rediter_switch_edit_mode(\''+id+'\');">タグ編集</button>';
+		text+='<button class="g-button" onClick="rediter_switch_edit_mode(\''+id+'\');">タグ編集</button>';
 	}
+	text+="</div>";
 	button.innerHTML=text;
 }
 

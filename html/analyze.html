@@ -2,7 +2,11 @@
 <html>
 <head>
 	<title>イラストブック　-　{{page_name}}のアクセス解析</title>
-	<link rel="stylesheet" type="text/css" media="screen,print" href="{{host}}static_files/general/css/common.css" />
+{% if is_iphone %}
+	{% include "portal_css/css_iphone.html" %}
+{% else %}
+	{% include "portal_css/css_pc.html" %}
+{% endif %}
 </head>
 
 <body onload="update('{{analyze_data|safe}}');">
@@ -34,12 +38,13 @@
 </div>
 
 {% if bbs %}
-<div class="entry"><br />
-<p><A HREF="./usr/{{bbs.key}}/" class="declink">{{page_name}}へ戻る</A>
+<div class="entry">
+<div class="g-button-group">
+<A HREF="./usr/{{bbs.key}}/" class="g-button">{{page_name}}へ戻る</A>
 {% if user %}
-　<A HREF="./analyze?bbs_key={{bbs.key}}&mode=delete" class="declink">解析結果の初期化</A>
+　<A HREF="./analyze?bbs_key={{bbs.key}}&mode=delete" class="g-button">解析結果の初期化</A>
 {% endif %}
-</p>
+</div>
 </div>
 {% endif %}
 

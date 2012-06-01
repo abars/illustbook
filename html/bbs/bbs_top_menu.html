@@ -11,11 +11,12 @@
 			<input type="text" name="text" id="canvas_height" value="{%if bbs.default_canvas_height%}{{bbs.default_canvas_height}}{%else%}400{%endif%}"/>
 			<img src="{{template_path}}images/header_px.gif" alt="px" width="17" height="17" />
 		{% else%}
-			キャンバスサイズ<input type="text" id="canvas_width" value="{%if bbs.default_canvas_width%}{{bbs.default_canvas_width}}{%else%}400{%endif%}" maxlength=3 size=3/>x<input type="text" id="canvas_height" value="{%if bbs.default_canvas_height%}{{bbs.default_canvas_height}}{%else%}400{%endif%}" maxlength=3 size=3/>px
+			<div class="g-button">キャンバスサイズ　<input type="text" id="canvas_width" value="{%if bbs.default_canvas_width%}{{bbs.default_canvas_width}}{%else%}400{%endif%}" maxlength=3 size=3/><i class="icon-remove"></i><input type="text" id="canvas_height" value="{%if bbs.default_canvas_height%}{{bbs.default_canvas_height}}{%else%}400{%endif%}" maxlength=3 size=3/>px</div>
 		{% endif%}
 		</div>
 	{% endif%}
 
+	<div class="g-button-group">
 	<div id="contents-header-edit">
 		{% ifequal bbs.bbs_mode 3 %}
 		{% else %}
@@ -24,7 +25,7 @@
 					{%if template_path %}
 						<A HREF="javascript:bbs_open_draw('','{{bbs.key}}','{{host}}');"><img src="{{template_path}}images/header_edit1.jpg" alt="イラストを描く" width="103" height="28"></A>
 					{% else %}
-						<input type="button" value="イラストを描く" onmouseover="this.className='menubutton_active'" onmouseout="this.className='menubutton'" class="menubutton" onclick="bbs_open_draw('','{{bbs.key}}','{{host}}');">
+						<input type="button" value="イラストを描く"  class="g-button" onclick="bbs_open_draw('','{{bbs.key}}','{{host}}');">
 					{% endif %}
 				{%endif%}
 		
@@ -32,7 +33,7 @@
 					{%if template_path %}
 						<A HREF="javascript:bbs_open_moper('','{{bbs.key}}','{{host}}');"><img src="{{template_path}}images/header_edit2.jpg" alt="動画を描く" width="103" height="28"></A>
 					{% else %}
-						<input type="button" value="動画を描く" onmouseover="this.className='menubutton_active'" onmouseout="this.className='menubutton'" class="menubutton" onclick="bbs_open_moper('','{{bbs.key}}','{{host}}');">
+						<input type="button" value="動画を描く"  class="g-button" onclick="bbs_open_moper('','{{bbs.key}}','{{host}}');">
 					{%endif%}
 				{%endif%}
 			{% else %}
@@ -46,10 +47,12 @@
 			{%if template_path %}
 					<A HREF="{{host}}edit_bbs?bbs_key={{bbs.key}}"><img src="{{template_path}}images/header_edit3.jpg" alt="デザインの編集" width="103" height="28"></A>
 			{% else %}
-				<input type="button" value="デザインの編集" onmouseover="this.className='menubutton_active'" onmouseout="this.className='menubutton'" class="menubutton" onclick="window.location.href='{{host}}edit_bbs?bbs_key={{bbs.key}}'">
+				<input type="button" value="デザインの編集"  class="g-button" onclick="window.location.href='{{host}}edit_bbs?bbs_key={{bbs.key}}'">
 			{%endif%}
 		{% endif %}
 	</div>
+	</div>
+
 	{% if bbs.bbs_mode and can_create_new_image %}
 	{%else%}
 		<div style="width:340px;float:left">　</div>
@@ -63,24 +66,26 @@
 			</div>
 		{% endif %}
 	{% endif %}
-	
+
+<!--
 	{% if not is_iphone %}
 	<div id="contents-header-login">
 	{% if owner or logined %}
 		{%if template_path %}
 			<a href="{{redirect_url|logout_url}}"><img src="{{template_path}}images/header_logout.jpg" alt="ログアウト" width="87" height="28" /></a>
 		{% else%}
-			<input type="button" value="ログアウト" onmouseover="this.className='menubutton_active'" onmouseout="this.className='menubutton'" class="menubutton" onclick="window.location.href='{{redirect_url|logout_url}}'">
+			<input type="button" value="ログアウト"  class="g-button" onclick="window.location.href='{{redirect_url|logout_url}}'">
 		{% endif %}
 	{% else %}
 		{%if template_path %}
 			<a href="{{redirect_url|login_url}}"><img src="{{template_path}}images/header_login.jpg" alt="ログイン" width="87" height="28" /></a>
 		{% else%}
-			<input type="button" value="ログイン" onmouseover="this.className='menubutton_active'" onmouseout="this.className='menubutton'" class="menubutton" onclick="window.location.href='{{redirect_url|login_url}}'">
+			<input type="button" value="ログイン"  class="g-button" onclick="window.location.href='{{redirect_url|login_url}}'">
 		{%endif%}
 	{% endif %}
 	</div>
 	{% endif %}
+-->
 	<div class="clr"></div>
 </div>
 

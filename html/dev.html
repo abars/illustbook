@@ -14,7 +14,11 @@
 <meta http-equiv="Content-Style-Type" content="text/css" />
 <meta name="Copyright" content="Copyright: ABARS" />
 
-<link rel="stylesheet" type="text/css" media="screen,print" href="static_files/general/css/common.css?version=111119" />
+{% if is_iphone %}
+	{% include "portal_css/css_iphone.html" %}
+{% else %}
+	{% include "portal_css/css_pc.html" %}
+{% endif %}
 
 <!-- SyntaxHighlighter start -->
 <link href='js/sh/shCore.css' rel='stylesheet' type='text/css'/> 

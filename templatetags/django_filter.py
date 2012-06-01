@@ -278,7 +278,7 @@ def author_name_core(user_id,homepage_addr,author,host):
 		txt+=host
 		txt+='mypage?user_id='
 		txt+=user_id
-		txt+='" class="declink">'
+		txt+='" class="g-button mini">'
 		txt+=author
 		txt+='</A>'
 		return txt
@@ -286,7 +286,7 @@ def author_name_core(user_id,homepage_addr,author,host):
 		txt+='<A HREF="'
 		txt+=''+homepage_addr
 		txt+='"'
-		txt+=' class="declink">'
+		txt+=' class="g-button mini">'
 		txt+=author
 		txt+="</A>"
 		return txt
