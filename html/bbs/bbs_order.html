@@ -2,7 +2,7 @@
 <div class="actions g-button-container">
 
 	<div class="g-button-group">
-	<a class="g-button mini dropdown-toggle" data-toggle="dropdown" href="#" style="color:#333">
+	<a class="g-button mini dropdown-toggle" data-toggle="dropdown" href="#" style="color:#444">
 		{% ifequal order "new" %}新着順{% endifequal %}
 		{% ifequal order "update" %}更新順{% endifequal %}
 		{% ifequal order "comment" %}コメント数{% endifequal %}
@@ -12,15 +12,15 @@
 		<span class="caret"></span>
 	</a>
 	<ul class="dropdown-menu">
-		<li><a href="javascript:bbs_select_change('new','{{page_url_order_base}}');" style="border-bottom: 0px;color:#333;">新着順</a></li>
-		<li><a href="javascript:bbs_select_change('update','{{page_url_order_base}}');" style="border-bottom: 0px;color:#333">更新順</a></li>
-		<li><a href="javascript:bbs_select_change('comment','{{page_url_order_base}}');" style="border-bottom: 0px;color:#333">コメント数</a></li>
+		<li><a href="javascript:bbs_select_change('new','{{page_url_order_base}}');" style="border-bottom: 0px;color:#444;">新着順</a></li>
+		<li><a href="javascript:bbs_select_change('update','{{page_url_order_base}}');" style="border-bottom: 0px;color:#444">更新順</a></li>
+		<li><a href="javascript:bbs_select_change('comment','{{page_url_order_base}}');" style="border-bottom: 0px;color:#444">コメント数</a></li>
 	{% ifequal bbs.bbs_mode 3 %}
 	{% else %}
-		<li><a href="javascript:bbs_select_change('applause','{{page_url_order_base}}');" style="border-bottom: 0px;color:#333">拍手順</a></li>
-		<li><a href="javascript:bbs_select_change('thumbnail','{{page_url_order_base}}');" style="border-bottom: 0px;color:#333">サムネイル</a></li>
+		<li><a href="javascript:bbs_select_change('applause','{{page_url_order_base}}');" style="border-bottom: 0px;color:#444">拍手順</a></li>
+		<li><a href="javascript:bbs_select_change('thumbnail','{{page_url_order_base}}');" style="border-bottom: 0px;color:#444">サムネイル</a></li>
 		{% if bbs.show_only_movie %}
-			<li><a href="javascript:bbs_select_change('illust','{{page_url_order_base}}');" style="border-bottom: 0px;color:#333">ラスターを表示</a></li>
+			<li><a href="javascript:bbs_select_change('illust','{{page_url_order_base}}');" style="border-bottom: 0px;color:#444">ラスターを表示</a></li>
 		{% endif %}
 	{% endifequal %}
 	</ul>
@@ -34,7 +34,7 @@
 			{% if not bbs.disable_create_new_illust %}
 				<input type="hidden" id="canvas_width" value="{%if bbs.default_canvas_width%}{{bbs.default_canvas_width}}{%else%}400{%endif%}" maxlength=3 size=3/>
 				<input type="hidden" id="canvas_height" value="{%if bbs.default_canvas_height%}{{bbs.default_canvas_height}}{%else%}400{%endif%}" maxlength=3 size=3/>
-				<a class="g-button no-text" href="javascript:bbs_open_draw('','{{bbs.key}}','{{host}}');" style="color:#333;" />イラストを描く</a>
+				<a class="g-button no-text" href="javascript:bbs_open_draw('','{{bbs.key}}','{{host}}');" style="color:#444;" />イラストを描く</a>
 			{% endif %}
 		{% endif %}
 	{% endifequal %}
@@ -50,9 +50,9 @@
 		{% endifequal %}
 		{%for p in page_list%}
 			{%ifequal p page%}
-					<div class="g-button checked no-text mini" style="color:#333">{{p}}</div>
+					<div class="g-button checked no-text mini" style="color:#444">{{p}}</div>
 			{%else%}
-				<a href="{{page_url_base}}{{p}}" class="g-button no-text mini" style="color:#333">{{p}}</a>
+				<a href="{{page_url_base}}{{p}}" class="g-button no-text mini" style="color:#444">{{p}}</a>
 			{%endifequal %}
 		{%endfor%}
 		<a href="{{page_url_base}}{{page|add:"1"}}" class="g-button no-text mini"><i class="icon-chevron-right"></i></a>

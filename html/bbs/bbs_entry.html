@@ -73,7 +73,7 @@
 	<div class="entry-comment">
 	<p>{{thread.summary|safe}}</p>
 		{% if thread.postscript %}
-		　<p><a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{%endif%}.html'  class="g-button">続きを読む</a></p>
+		　<p><a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{%endif%}.html'  class="g-button" style="color:#444;">続きを読む</a></p>
 		{% endif %}
 	</div>
 	
@@ -86,7 +86,7 @@
 				class="declink">
 				<img src="{{template_path}}images/btn_comment1.gif" alt="コメントを書く" width="116" height="20" />
 			{% else %}
-				class="g-button">
+				class="g-button" style="color:#444;">
 				コメントを書く
 			{% endif %}
 			</a>
@@ -100,7 +100,7 @@
 				class="declink">
 				<img src="{{template_path}}images/btn_comment2.gif" alt="コメントを読む" width="116" height="20" />
 			{% else %}
-				class="g-button">
+				class="g-button" style="color:#444;">
 				コメントを読む({{thread.comment_cnt}})
 			{% endif %}
 		</a>
@@ -120,7 +120,7 @@
 	<div id="comment_form_button_{{ thread.key }}">
 	<p>&nbsp</p>
 	<!-- <input type="button" value="コメントを書き込む" onmouseover="this.className='menubutton_active'" onmouseout="this.className='menubutton'" class="menubutton" onClick="show_comment_form('{{thread.key}}');"> -->
-	<a href="javascript:show_comment_form('{{thread.key}}');" class="g-button"><i class="icon-pencil"></i>コメントを書き込む</a>
+	<a href="javascript:show_comment_form('{{thread.key}}');" class="g-button" style="color:#444;"><i class="icon-pencil"></i>コメントを書き込む</a>
 	</div>
 {% endif %}
 
