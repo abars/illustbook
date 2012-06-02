@@ -28,10 +28,9 @@ class Ranking(db.Model):
 	def reset(self):
 		self.thread_list=[]
 	
-	def _add_rank_core(self,key,key_list):
+	def _add_rank_core(self,key,key_list,n):
 		if(not key):
 			return
-		n=2500
 		content_len=len(key_list)
 		while(content_len>=n):
 			key_list.pop(0)
@@ -41,9 +40,9 @@ class Ranking(db.Model):
 	def add_rank(self,thread):
 		if(not self.thread_list):
 			self.thread_list=[]
-		self._add_rank_core(thread.key(),self.thread_list)
-		self._add_rank_core(thread.bbs_key.user_id,self.owner_list)
-		self._add_rank_core(thread.user_id,self.user_list)
+		self._add_rank_core(thread.key(),self.thread_list,BbsConst.THREAD_RANKING_RECENT)
+		self._add_rank_core(thread.bbs_key.user_id,self.owner_list,BbsConst.USER_RANKING_RECENT)
+		self._add_rank_core(thread.user_id,self.user_list,BbsConst.USER_RANKING_RECENT)
 		self.put()
 
 	def get_sec(self,now):
@@ -51,44 +50,25 @@ class Ranking(db.Model):
 
 	def create_rank(self):
 		self.create_thread_rank()
-		self.create_user_rank()
+		self.create_user_rank(self.user_list,self.user_ranking_list)
+		self.create_user_rank(self.owner_list,self.owner_ranking_list)
 		self.put()
 	
-	def create_user_rank(self):
+	def create_user_rank(self,user_list,ranking_list):
 		rank_user={}
-		rank_owner={}
 		
-		for user_id in self.user_list:
+		for user_id in user_list:
 			if(user_id):
 				if(rank_user.has_key(user_id)):
 					rank_user[user_id]=rank_user[user_id]+1
 				else:
 					rank_user[user_id]=1
 
-		for user_id in self.owner_list:
-			if(user_id):
-				if(rank_owner.has_key(user_id)):
-					rank_owner[user_id]=rank_owner[user_id]+1
-				else:
-					rank_owner[user_id]=1
-		
-		cnt=0
-		self.owner_ranking_list=[]
-		for k, v in sorted(rank_owner.items(), key=lambda x:x[1], reverse=True):
-			if(v>=1):
-				self.owner_ranking_list.append(k)
-				cnt=cnt+1
-				if(cnt>=BbsConst.THREAD_RANKING_MAX):
-					break
-
-		cnt=0
-		self.user_ranking_list=[]
+		ranking_list=[]
 		for k, v in sorted(rank_user.items(), key=lambda x:x[1], reverse=True):
-			if(v>=1):
-				self.user_ranking_list.append(k)
-				cnt=cnt+1
-				if(cnt>=BbsConst.THREAD_RANKING_MAX):
-					break
+			ranking_list.append(k)
+			if(len(ranking_list)>=BbsConst.USER_RANKING_MAX):
+				break
 	
 	def create_thread_rank(self):
 		#ハッシュにthread_keyを入れていく
@@ -99,9 +79,17 @@ class Ranking(db.Model):
 			else:
 				rank[thread]=1
 		
-		#スコア補正
-		for k,v in rank.items():
-			#存在しているものだけ
+		#1次ランキングを作成
+		first_ranking_list=[]
+		for k, v in sorted(rank.items(), key=lambda x:x[1], reverse=True):
+			if(v>=1):
+				first_ranking_list.append(k)
+				if(len(first_ranking_list)>=BbsConst.THREAD_RANKING_MAX*2):
+					break
+		
+		#1次ランキングに出現したもののスコア補正（全てでthreadの実体を取得すると重いので）
+		for k in first_ranking_list:
+			#スレッドの実体を取得
 			thread=ApiObject.get_cached_object(k)
 			
 			#イラストモードだけ
@@ -120,14 +108,11 @@ class Ranking(db.Model):
 				rank[k]=rank[k]+thread.bookmark_count/day_left
 		
 		#ランキング作成
-		cnt=0
 		self.ranking_list=[]
 		for k, v in sorted(rank.items(), key=lambda x:x[1], reverse=True):
-			if(v>=1):
-				self.ranking_list.append(k)
-				cnt=cnt+1
-				if(cnt>=BbsConst.THREAD_RANKING_MAX):
-					break
+			self.ranking_list.append(k)
+			if(len(self.ranking_list)>=BbsConst.THREAD_RANKING_MAX):
+				break
 		
 	def get_rank(self,offset,limit):
 		if(not self.ranking_list):
