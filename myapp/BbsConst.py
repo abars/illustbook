@@ -42,4 +42,5 @@ class BbsConst:
 	
 	#ranking
 	THREAD_RANKING_KEY_NAME="thread_ranking"
+	THREAD_RANKING_MAX=100
 

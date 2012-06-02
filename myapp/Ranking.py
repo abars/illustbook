@@ -12,6 +12,7 @@ import time;
 from google.appengine.ext import db
 
 from myapp.BbsConst import BbsConst
+from myapp.ApiObject import ApiObject
 
 class Ranking(db.Model):
 	thread_list = db.ListProperty(db.Key)
@@ -47,17 +48,8 @@ class Ranking(db.Model):
 		rank_owner={}
 		
 		for thread_key in self.thread_list:
-			thread=None
-			try:
-				thread=db.get(thread_key)
-			except:
-				thread=None
-			
-			bbs=None
-			try:
-				bbs=thread.bbs_key
-			except:
-				bbs=None
+			thread=ApiObject.get_cached_object(thread_key)
+			bbs=ApiObject.get_cached_object(thread.cached_bbs_key)
 			
 			if(not thread):
 				continue
@@ -76,15 +68,23 @@ class Ranking(db.Model):
 				else:
 					rank_owner[bbs.user_id]=1
 		
+		cnt=0
 		self.owner_ranking_list=[]
 		for k, v in sorted(rank_owner.items(), key=lambda x:x[1], reverse=True):
 			if(v>=1):
 				self.owner_ranking_list.append(k)
+				cnt=cnt+1
+				if(cnt>=BbsConst.THREAD_RANKING_MAX):
+					break
 
+		cnt=0
 		self.user_ranking_list=[]
 		for k, v in sorted(rank_user.items(), key=lambda x:x[1], reverse=True):
 			if(v>=1):
 				self.user_ranking_list.append(k)
+				cnt=cnt+1
+				if(cnt>=BbsConst.THREAD_RANKING_MAX):
+					break
 	
 	def create_thread_rank(self):
 		#ハッシュにthread_keyを入れていく
@@ -98,11 +98,7 @@ class Ranking(db.Model):
 		#スコア補正
 		for k,v in rank.items():
 			#存在しているものだけ
-			thread=None
-			try:
-				thread=db.get(k)
-			except:
-				thread=None
+			thread=ApiObject.get_cached_object(k)
 			
 			#イラストモードだけ
 			if(not thread or thread.illust_mode!=BbsConst.ILLUSTMODE_ILLUST):
@@ -120,10 +116,14 @@ class Ranking(db.Model):
 				rank[k]=rank[k]+thread.bookmark_count/day_left
 		
 		#ランキング作成
+		cnt=0
 		self.ranking_list=[]
 		for k, v in sorted(rank.items(), key=lambda x:x[1], reverse=True):
 			if(v>=1):
 				self.ranking_list.append(k)
+				cnt=cnt+1
+				if(cnt>=BbsConst.THREAD_RANKING_MAX):
+					break
 		
 	def get_rank(self,offset,limit):
 		if(not self.ranking_list):

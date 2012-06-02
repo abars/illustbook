@@ -106,7 +106,9 @@ class ApiFeed(webapp.RequestHandler):
 		
 		#スレッド一覧取得
 		if(req.request.get("order")=="hot"):
-			rank=Ranking.get_or_insert(BbsConst.THREAD_RANKING_KEY_NAME)
+			rank=Ranking.get_by_key_name(BbsConst.THREAD_RANKING_KEY_NAME)
+			if(rank==None):
+				rank=Ranking.get_or_insert(BbsConst.THREAD_RANKING_KEY_NAME)
 			thread_list=rank.get_rank(offset,limit)
 			bbs_id=None
 		else:
