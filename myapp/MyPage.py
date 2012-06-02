@@ -77,6 +77,7 @@ from myapp.Alert import Alert
 from myapp.StackFeedData import StackFeedData
 from myapp.ApiObject import ApiObject
 from myapp.OwnerCheck import OwnerCheck
+from myapp.Ranking import Ranking
 
 class MyPage(webapp.RequestHandler):
 	@staticmethod
@@ -234,6 +235,15 @@ class MyPage(webapp.RequestHandler):
 		if(feed_page==feed_page_n):
 			feed_next_page=""
 		
+		#ランキング
+		user_rank=0
+		owner_rank=0
+		if(tab=="profile"):
+			if(bookmark):
+				rank=Ranking.get_or_insert(BbsConst.THREAD_RANKING_KEY_NAME)
+				user_rank=rank.get_user_rank(bookmark.user_id)
+				owner_rank=rank.get_owner_rank(bookmark.user_id)
+		
 		template_values = {
 			'host': host,
 			'user':user,
@@ -253,7 +263,9 @@ class MyPage(webapp.RequestHandler):
 			'is_admin': is_admin,
 			'redirect_url': self.request.path,
 			'mypage': not view_mode,
-			'following': following
+			'following': following,
+			'user_rank': user_rank,
+			'owner_rank': owner_rank
 		}
 		
 		path = os.path.join(os.path.dirname(__file__), '../html/mypage.html')

@@ -15,6 +15,7 @@
 {% ifequal mode "profile" %}会社概要{% endifequal %}
 {% ifequal mode "link" %}リンク{% endifequal %}
 {% ifequal mode "chat" %}お絵かきチャット{% endifequal %}
+{% ifequal mode "ranking" %}ランキング{% endifequal %}
 {% ifequal mode "bookmark" %}
 	{% if tag %}
 	タグ「{{tag}}」を含むイラスト
@@ -98,6 +99,11 @@
 			{% endif %}
 		{% endifequal %}
 
+		{% ifequal mode "ranking" %}
+			{% include "portal_css/option_tab.html" %}
+			{% include "ranking/ranking.html" %}
+		{% endifequal %}
+		
 		{% ifequal mode "link" %}
 			{% if is_iphone %}
 				{% include "portal_css/option_tab.html" %}

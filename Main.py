@@ -99,6 +99,7 @@ from myapp.CounterWorker import CounterWorker
 from myapp.ShowIcon import ShowIcon
 from myapp.CheckId import CheckId
 from myapp.Chat import Chat
+from myapp.Ranking import Ranking
 
 #-----------------------------------------------------------------
 #ポータル
@@ -174,6 +175,32 @@ class Portal(webapp.RequestHandler):
 		path = os.path.join(os.path.dirname(__file__), 'html/portal.html')
 		req.response.out.write(template.render(path, template_values))
 
+class RankingPortal(webapp.RequestHandler):
+	def get(self):
+		is_iphone=CssDesign.is_iphone(self)
+		
+		rank=Ranking.get_or_insert(BbsConst.THREAD_RANKING_KEY_NAME)
+		if(self.request.get("mode")=="owner"):
+			ranking_list=rank.owner_ranking_list
+			ranking_name="オーナーランキング"
+		else:
+			ranking_list=rank.user_ranking_list
+			ranking_name="ユーザーランキング"
+		template_values = {
+			'host': "./",
+			'is_iphone': is_iphone,
+			'user': users.get_current_user(),
+			'redirect_url': self.request.path,
+			'mode': "ranking",
+			'header_enable': False,
+			'ranking_list': ranking_list,
+			'ranking_name': ranking_name
+			
+		}
+
+		path = os.path.join(os.path.dirname(__file__), 'html/portal.html')
+		self.response.out.write(template.render(path, template_values))
+	
 class Questionnaire(webapp.RequestHandler):
 	def get(self):
 		Portal.get(self,"questionnaire",True)
@@ -437,7 +464,8 @@ application = webapp.WSGIApplication(
 	('/dev',DevPortal),
 	('/stack_feed_worker',StackFeed),
 	('/counter_worker',CounterWorker),
-	('/feed_tweet',StackFeedTweet)
+	('/feed_tweet',StackFeedTweet),
+	('/ranking',RankingPortal)
 	],debug=False)
 
 if __name__ == "__main__":

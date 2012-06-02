@@ -16,6 +16,8 @@ from myapp.BbsConst import BbsConst
 class Ranking(db.Model):
 	thread_list = db.ListProperty(db.Key)
 	ranking_list = db.ListProperty(db.Key)
+	owner_ranking_list = db.StringListProperty()
+	user_ranking_list = db.StringListProperty()
 	date = db.DateTimeProperty(auto_now=True)
 	
 	def reset(self):
@@ -36,6 +38,55 @@ class Ranking(db.Model):
 		return int(time.mktime(now.timetuple()))
 
 	def create_rank(self):
+		self.create_thread_rank()
+		self.create_user_rank()
+		self.put()
+	
+	def create_user_rank(self):
+		rank_user={}
+		rank_owner={}
+		
+		for thread_key in self.thread_list:
+			thread=None
+			try:
+				thread=db.get(thread_key)
+			except:
+				thread=None
+			
+			bbs=None
+			try:
+				bbs=thread.bbs_key
+			except:
+				bbs=None
+			
+			if(not thread):
+				continue
+			if(not bbs):
+				continue
+			
+			if(thread.user_id):
+				if(rank_user.has_key(thread.user_id)):
+					rank_user[thread.user_id]=rank_user[thread.user_id]+1
+				else:
+					rank_user[thread.user_id]=1
+			
+			if(bbs.user_id):
+				if(rank_owner.has_key(bbs.user_id)):
+					rank_owner[bbs.user_id]=rank_owner[bbs.user_id]+1
+				else:
+					rank_owner[bbs.user_id]=1
+		
+		self.owner_ranking_list=[]
+		for k, v in sorted(rank_owner.items(), key=lambda x:x[1], reverse=True):
+			if(v>=1):
+				self.owner_ranking_list.append(k)
+
+		self.user_ranking_list=[]
+		for k, v in sorted(rank_user.items(), key=lambda x:x[1], reverse=True):
+			if(v>=1):
+				self.user_ranking_list.append(k)
+	
+	def create_thread_rank(self):
 		#ハッシュにthread_keyを入れていく
 		rank={}
 		for thread in self.thread_list:
@@ -74,9 +125,22 @@ class Ranking(db.Model):
 			if(v>=1):
 				self.ranking_list.append(k)
 		
-		self.put()
-
 	def get_rank(self,offset,limit):
 		if(not self.ranking_list):
 			return []
 		return self.ranking_list[offset:offset+limit]
+	
+	def get_rank_core(self,user_id,list):
+		cnt=1
+		for i in list:
+			if(i==user_id):
+				return cnt
+			cnt=cnt+1
+		return 0
+	
+	def get_user_rank(self,user_id):
+		return self.get_rank_core(user_id,self.user_ranking_list)
+
+	def get_owner_rank(self,user_id):
+		return self.get_rank_core(user_id,self.owner_ranking_list)
+		
