@@ -16,23 +16,34 @@ from myapp.ApiObject import ApiObject
 
 class Ranking(db.Model):
 	thread_list = db.ListProperty(db.Key)
+	user_list = db.StringListProperty()
+	owner_list = db.StringListProperty()
+	
 	ranking_list = db.ListProperty(db.Key)
 	owner_ranking_list = db.StringListProperty()
 	user_ranking_list = db.StringListProperty()
+
 	date = db.DateTimeProperty(auto_now=True)
 	
 	def reset(self):
 		self.thread_list=[]
 	
+	def _add_rank_core(self,key,key_list):
+		if(not key):
+			return
+		n=2500
+		content_len=len(key_list)
+		while(content_len>=n):
+			key_list.pop(0)
+			content_len=content_len-1
+		key_list.append(key)
+	
 	def add_rank(self,thread):
 		if(not self.thread_list):
 			self.thread_list=[]
-		n=2500
-		content_len=len(self.thread_list)
-		while(content_len>=n):
-			self.thread_list.pop(0)
-			content_len=content_len-1
-		self.thread_list.append(thread.key())
+		self._add_rank_core(thread.key(),self.thread_list)
+		self._add_rank_core(thread.bbs_key.user_id,self.owner_list)
+		self._add_rank_core(thread.user_id,self.user_list)
 		self.put()
 
 	def get_sec(self,now):
@@ -47,26 +58,19 @@ class Ranking(db.Model):
 		rank_user={}
 		rank_owner={}
 		
-		for thread_key in self.thread_list:
-			thread=ApiObject.get_cached_object(thread_key)
-			bbs=ApiObject.get_cached_object(thread.cached_bbs_key)
-			
-			if(not thread):
-				continue
-			if(not bbs):
-				continue
-			
-			if(thread.user_id):
-				if(rank_user.has_key(thread.user_id)):
-					rank_user[thread.user_id]=rank_user[thread.user_id]+1
+		for user_id in self.user_list:
+			if(user_id):
+				if(rank_user.has_key(user_id)):
+					rank_user[user_id]=rank_user[user_id]+1
 				else:
-					rank_user[thread.user_id]=1
-			
-			if(bbs.user_id):
-				if(rank_owner.has_key(bbs.user_id)):
-					rank_owner[bbs.user_id]=rank_owner[bbs.user_id]+1
+					rank_user[user_id]=1
+
+		for user_id in self.owner_list:
+			if(user_id):
+				if(rank_owner.has_key(user_id)):
+					rank_owner[user_id]=rank_owner[user_id]+1
 				else:
-					rank_owner[bbs.user_id]=1
+					rank_owner[user_id]=1
 		
 		cnt=0
 		self.owner_ranking_list=[]
