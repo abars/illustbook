@@ -31,9 +31,9 @@
 {%endif%}
 {{thread|author_name_thread:host|safe}}
 　
-{% if is_iphone %}<BR>{% endif %}
 
 {% if thread.create_date %}
+	{% if is_iphone %}<BR>{% endif %}
 	{%if template_path %}
 		<img src="{{template_path}}images/i_day.gif" alt="投稿日" width="64" height="20" />
 	{% else %}
@@ -43,6 +43,7 @@
 {% endif %}
 
 {% if thread.category %}
+	{% if is_iphone %}<BR>{% endif %}
 	{%if template_path %}
 		<img src="{{template_path}}images/i_category.gif" alt="カテゴリ" width="64" height="20" />
 	{% else %}

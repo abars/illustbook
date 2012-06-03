@@ -179,8 +179,7 @@
 						<TR><TD WIDTH=100px>ユーザ名</TD><TD>　</TD><TD>
 						{{bookmark.name}}
 						<div class="g-button-group">
-							<a href="ranking?mode=user" class="g-button">ユーザランク {% if user_rank %}{{user_rank}}{% else %}-{% endif %}</a>
-							<a href="ranking?mode=owner" class="g-button">オーナーランク{% if owner_rank %}{{owner_rank}}{% else %}-{% endif %}</a>
+							<a href="ranking?mode=user" class="g-button">ランキング {% if user_rank %}{{user_rank}}位{% else %}-{% endif %}</a>
 						</div>
 						</TD></TR>
 						{% if bookmark.sex %}<TR><TD>性別</TD><TD>　</TD><TD>

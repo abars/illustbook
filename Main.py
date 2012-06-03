@@ -185,7 +185,7 @@ class RankingPortal(webapp.RequestHandler):
 			ranking_name="オーナーランキング"
 		else:
 			ranking_list=rank.user_ranking_list
-			ranking_name="ユーザーランキング"
+			ranking_name="人気のユーザ"
 		template_values = {
 			'host': "./",
 			'is_iphone': is_iphone,

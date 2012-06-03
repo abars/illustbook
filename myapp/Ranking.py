@@ -38,23 +38,22 @@ class Ranking(db.Model):
 		key_list.append(key)
 	
 	def add_rank(self,thread):
-		if(not self.thread_list):
-			self.thread_list=[]
-		self._add_rank_core(thread.key(),self.thread_list,BbsConst.THREAD_RANKING_RECENT)
-		self._add_rank_core(thread.bbs_key.user_id,self.owner_list,BbsConst.USER_RANKING_RECENT)
-		self._add_rank_core(thread.user_id,self.user_list,BbsConst.USER_RANKING_RECENT)
-		self.put()
+		if(thread.illust_mode==BbsConst.ILLUSTMODE_ILLUST):
+			self._add_rank_core(thread.key(),self.thread_list,BbsConst.THREAD_RANKING_RECENT)
+			self._add_rank_core(thread.bbs_key.user_id,self.owner_list,BbsConst.USER_RANKING_RECENT)
+			self._add_rank_core(thread.user_id,self.user_list,BbsConst.USER_RANKING_RECENT)
+			self.put()
 
 	def get_sec(self,now):
 		return int(time.mktime(now.timetuple()))
 
 	def create_rank(self):
 		self.create_thread_rank()
-		self.create_user_rank(self.user_list,self.user_ranking_list)
-		self.create_user_rank(self.owner_list,self.owner_ranking_list)
+		self.user_ranking_list=self.create_user_rank(self.user_list)
+		self.owner_ranking_list=self.create_user_rank(self.owner_list)
 		self.put()
 	
-	def create_user_rank(self,user_list,ranking_list):
+	def create_user_rank(self,user_list):
 		rank_user={}
 		
 		for user_id in user_list:
@@ -69,6 +68,8 @@ class Ranking(db.Model):
 			ranking_list.append(k)
 			if(len(ranking_list)>=BbsConst.USER_RANKING_MAX):
 				break
+
+		return ranking_list
 	
 	def create_thread_rank(self):
 		#ハッシュにthread_keyを入れていく

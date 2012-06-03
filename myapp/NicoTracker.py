@@ -229,6 +229,9 @@ class NicoTracker(webapp.RequestHandler):
 		rec_cnt=query.count()
 		rec_list=query.order("-play_cnt_now").fetch(limit=10)
 		
+		query=NicoTrackerBookmark.all()
+		book_cnt=query.count()
+		
 		bookmark_list=[]
 		if(bookmark):
 			for i in range(0,len(bookmark.bookmark_id_list)):
@@ -254,6 +257,7 @@ class NicoTracker(webapp.RequestHandler):
 				bookmark_list.append(del_button+"<A HREF='nico_tracker?url="+url_base+bookmark.bookmark_id_list[i]+"'>"+title+"</A>　"+str(playcnt)+"[play]　");
 		
 		is_anim_icon=self.request.get("is_anim_icon")
+		bbs_n=memcache.get("top_bbs_n")
 
 		host_url =self.request.host
 		template_values = {
@@ -268,7 +272,9 @@ class NicoTracker(webapp.RequestHandler):
 			'user': user,
 			'bookmark_list': bookmark_list,
 			'url_log': url_log,
-			'is_anim_icon': is_anim_icon
+			'is_anim_icon': is_anim_icon,
+			'bbs_n': bbs_n,
+			'book_cnt': book_cnt
 			}
 		
 		path = os.path.join(os.path.dirname(__file__), '../html/nico_tracker/nico_tracker.html')
