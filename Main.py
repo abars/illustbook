@@ -272,7 +272,8 @@ class DelEn(webapp.RequestHandler):
 	def get(self):
 		bbs = db.get(self.request.get("bbs_key"))
 		user = users.get_current_user()
-		if(OwnerCheck.check(bbs,user)):
+		if(OwnerCheck.check(bbs,user) and not OwnerCheck.is_admin(user)):
+			self.response.out.write(Alert.alert_msg("削除する権限がありません。",self.request.host))
 			return
 		entry = db.get(self.request.get("entry_key"))
 		entry.del_flag = 0

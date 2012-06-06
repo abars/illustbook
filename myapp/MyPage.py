@@ -216,8 +216,9 @@ class MyPage(webapp.RequestHandler):
 		if(view_mode):
 			if(user):
 				my_bookmark=ApiObject.get_bookmark_of_user_id(user.user_id())
-				if(bookmark.user_id in my_bookmark.user_list):
-					following=True
+				if(my_bookmark):
+					if(bookmark.user_id in my_bookmark.user_list):
+						following=True
 			
 		#年齢
 		age=None
