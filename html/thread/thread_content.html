@@ -70,6 +70,9 @@
 
 		{% if thread.cached_image_key %}
 			{%if bbs.disable_draw_time %}{%else%}{%if thread.draw_time %}（描画時間{{thread.draw_time|div}}分）{% endif %}{%endif%}
+			{%if thread.is_ipad %}
+			（iPadから投稿）
+			{% endif %}
 		{%endif%}
 		
 </div>

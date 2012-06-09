@@ -48,6 +48,7 @@ class MesThread(db.Model):
 	tag_list = db.StringListProperty()
 	bookmark_count = db.IntegerProperty()
 	user_id = db.StringProperty()	#Submitter
+	is_ipad = db.IntegerProperty()
 
 	cached_image_key = db.StringProperty() #For object cache
 	cached_bbs_key = db.StringProperty() #For object cache

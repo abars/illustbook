@@ -153,6 +153,7 @@ class AddNewThread(webapp.RequestHandler):
 			if(self.request.get("base64") and self.request.get("base64")=="1"):
 				timage.image=db.Blob(base64.b64decode(self.request.get("image")))
 				timage.thumbnail=db.Blob(base64.b64decode(self.request.get("thumbnail")))
+				new_thread.is_ipad=1
 			else:
 				timage.image=db.Blob(self.request.get("image"))
 				timage.thumbnail=db.Blob(self.request.get("thumbnail"))
