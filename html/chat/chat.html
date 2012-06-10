@@ -26,6 +26,7 @@
 <p>複数人同時にお絵かきとチャットを楽しむことができます。</p>
 <p>作成したイラストはイラストブックのお絵描き掲示板に投稿することができます。</p>
 <p>ご利用にはHTML5をサポートしたブラウザが必要です。IEは9以降にのみ対応しています。</p>
+<a href="chat?mode=tool&key=always&viewmode=false&pass=false" class="g-button green">まずはお試し</a>
 <a href="https://twitter.com/share" class="twitter-share-button" data-lang="ja" data-hashtags="ilbchat">ツイート</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 </div>
@@ -34,16 +35,7 @@
 <br clear="all">
 <img src="./static_files/chat/ipad.png"><img src="./static_files/chat/bbs.png">
 
-<p>&nbsp</p>
-<H1>利用ガイド</H1>
-<p>チャットで使用する名前とサムネイルは<A HREF="./mypage" class="declink">マイページ</A>で設定することができます。</p>
-<p>制限時間はありません。ルームは最終更新から10分が経過すると自動的に削除されます。</p>
-<p>UNDO/REDOはサーバに送信されるまでの一定時間(3から6秒)のみ可能です。</p>
-<p>レイヤーは2枚まで使用できます。筆圧は使用できません。ラグは多めです。</p>
-<p>バグ報告や要望は<A HREF="./support/" class="declink">サポート掲示板</A>までどうぞ。</p>
-<p>&nbsp</p>
-
-<div style="float:left;margin-right:16px;">
+<div>
 
 <H1>稼働中のルーム</H1>
 
@@ -59,23 +51,31 @@
 			<div style="background-color:#aaaaaa;padding:1px;margin-right:4px;">
 				{% if user %}
 		<A HREF="javascript:join_chat('{{room.key}}',false,{% if room.password %}true{%else%}false{%endif%});" class="declink">{% endif %}
-				<img src="./chat?mode=thumbnail&key={{room.key}}" WIDTH=60px HEIGHT=60px>
+				<img src="./chat?mode=thumbnail&key={{room.key}}" WIDTH=100px HEIGHT=100px>
 				{% if user %}</A>{% endif %}
 			</div>
 		</td>
 		<td>
-		ルーム名：{{room.name}}　作成者：<A HREF="./mypage?user_id={{room.user_id}}" class="declink">{{room.user_name}}</A><BR>
-		参加人数：{{room.user_count}}人　最終更新から：{{room.from_last_update}}分　作成から：{{room.from_created}}分<BR>
+		<BR>
+		ルーム名：{{room.name}}{% if room.is_always %}(常時稼動ルーム){% endif %}　{% if is_iphone %}<BR>{% endif %}
+		作成者：<A HREF="./mypage?user_id={{room.user_id}}" class="g-button">{{room.user_name}}</A><BR>
+		最終更新から：{{room.from_last_update}}分　{% if is_iphone %}<BR>{% endif %}作成から：{{room.from_created}}分　{% if is_iphone %}<BR>{% endif %}
 		{% if room.password %}
-			パスワードが必要{% if user %}{% ifequal user.user_id room.user_id %}（{{room.password}}）{% endifequal %}{% endif %}<BR>
+			パスワードが必要{% if user %}{% ifequal user.user_id room.user_id %}（{{room.password}}）{% endifequal %}{% endif %}　
 		{% else %}
 			誰でも参加可能<BR>
 		{% endif %}
 		{% if user %}
-		<A HREF="javascript:join_chat('{{room.key}}',false,{% if room.password %}true{%else%}false{%endif%});" class="declink">チャットに参加</A>　
-		<A HREF="javascript:join_chat('{{room.key}}',true,{% if room.password %}true{%else%}false{%endif%});" class="declink">チャットを閲覧</A>　
+		<BR>
+		<div class="actions g-button-container">
+		<div class="g-button-group">
+		<A HREF="javascript:join_chat('{{room.key}}',false,{% if room.password %}true{%else%}false{%endif%});" class="g-button green">{% if not is_iphone %}ルームに{% endif %}参加（{{room.user_count}}人）</A>
+		<A HREF="javascript:join_chat('{{room.key}}',true,{% if room.password %}true{%else%}false{%endif%});" class="g-button green">{% if not is_iphone %}ルームを{% endif %}閲覧</A>
 		{% endif %}
-		{% if user %}{% ifequal user.user_id room.user_id %}<A HREF="./chat?mode=delete&key={{room.key}}" class="declink">削除</A>{% endifequal %}{% endif %}
+		</div>
+		{% if is_iphone %}<BR>{% endif %}
+		{% if user %}{% ifequal user.user_id room.user_id %}<A HREF="./chat?mode=delete&key={{room.key}}" class="g-button green">{% if not is_iphone %}ルームを{% endif %}削除</A>{% endifequal %}{% endif %}
+		</div>
 		</td></tr>
 		</table>
 	{% endfor %}
@@ -85,32 +85,37 @@
 	<p>&nbsp</p>
 </div>
 
-<div style="float:left;">
+<div>
 <H1>ルームの作成</H1>
 {% if not user %}
-<p>ルームの作成には<A HREF="{{redirect_url|login_url}}" class="declink">Googleアカウントでのログイン</A>が必要です。</H1>
-<p>&nbsp</p>
+<p>ルームの作成には<A HREF="{{redirect_url|login_url}}" class="declink">Googleアカウントでのログイン</A>が必要です。</p>
 {% else %}
 <form action="./chat">
 <input type="hidden" name="mode" value="create">
-<TABLE>
-<TR><TD>ルーム名（必須）</TD><TD><input type="text" name="name" style="width:200px"></TD></TR>
-<TR><TD>パスワード</TD><TD><input type="text" name="pass" style="width:200px"></TD></TR>
-<TR><TD>キャンバスサイズ</TD><TD><select name="canvas_size">
+<TABLE class="g-table">
+<TR><TH>ルーム名（必須）</TH><TD><input type="text" name="name" style="width:200px"></TD></TR>
+<TR><TH>パスワード</TH><TD><input type="text" name="pass" style="width:200px">　パスワードを設定しない場合は誰でも参加可能</TD></TR>
+<TR><TH>キャンバスサイズ</TH><TD><select name="canvas_size">
 <option value="600x600">600x600px</option>
 <option value="800x600">800x600px</option>
 </select>
 </TABLE>
-<input type="submit" value="ルームを作成">
+<BR>
+<input type="submit" value="ルームを作成" class="g-button green">
 </form>
-<p>&nbsp</p>
-<p>パスワードを設定しない場合は誰でも参加可能になります。</p>
 {% endif %}
 </div>
 
-<br clear="all">
-
 <p>&nbsp</p>
+<p>&nbsp</p>
+<H1>利用ガイド</H1>
+<p>チャットで使用する名前とサムネイルは<A HREF="./mypage" class="declink">マイページ</A>で設定することができます。</p>
+<p>制限時間はありません。ルームは最終更新から10分が経過すると自動的に削除されます。</p>
+<p>UNDO/REDOはサーバに送信されるまでの一定時間(3から6秒)のみ可能です。</p>
+<p>レイヤーは2枚まで使用できます。筆圧は使用できません。ラグは多めです。</p>
+<p>バグ報告や要望は<A HREF="./support/" class="declink">サポート掲示板</A>までどうぞ。</p>
+<p>&nbsp</p>
+
 <H1>動作環境</H1>
 <TABLE BORDER=1>
 <TR><TD>PC</TD><TD>HTML5に対応したブラウザ(Chrome、Safari、FireFox)(IEは9以降のみ対応)</TD></TR>

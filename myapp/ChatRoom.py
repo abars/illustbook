@@ -31,5 +31,6 @@ class ChatRoom(db.Model):
 	snap_range=db.IntegerProperty()
 	canvas_width=db.IntegerProperty()
 	canvas_height=db.IntegerProperty()
+	is_always=db.IntegerProperty()
 	create_date = 	db.DateTimeProperty(auto_now=False)
 	date = db.DateTimeProperty(auto_now=True)

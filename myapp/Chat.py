@@ -69,6 +69,12 @@ class Chat(webapp.RequestHandler):
 		room.canvas_width=canvas_width
 		room.canvas_height=canvas_height
 		room.password=self.request.get("pass")
+		room.is_always=0
+		
+		if(room.password=="always"):
+			room.is_always=1
+			room.password=""
+		
 		room.put()
 		self.redirect("./chat")
 	
@@ -219,7 +225,7 @@ class Chat(webapp.RequestHandler):
 		for room in room_list:
 			room.from_last_update=(Chat.get_sec(datetime.datetime.now())-Chat.get_sec(room.date))/60
 			room.from_created=(Chat.get_sec(datetime.datetime.now())-Chat.get_sec(room.create_date))/60
-			if(room.from_last_update>=10):
+			if(room.from_last_update>=10 and (not room.is_always)):
 				room.delete()
 			else:
 				if(room.from_last_update>=1 and room.user_count>=1):
@@ -259,7 +265,13 @@ class Chat(webapp.RequestHandler):
 		bbs_key=""
 		thread_key=""
 
-		room_key=self.request.get("key")
+		if(self.request.get("key")=="always"):
+			try:
+				room_key=ChatRoom.all().filter("is_always =",1).fetch(1)[0].key()
+			except:
+				room_key=None
+		else:
+			room_key=self.request.get("key")
 		if(not room_key):
 			self.response.out.write(Alert.alert_msg("ルームキーが必要です。",self.request.host))
 			return
@@ -267,8 +279,11 @@ class Chat(webapp.RequestHandler):
 		ipad=CssDesign.is_tablet(self)
 		viewmode=self.request.get("viewmode")
 		password=self.request.get("pass")
-		
-		room=db.get(room_key)
+
+		try:
+			room=db.get(room_key)
+		except:
+			room=None
 		if(not room):
 			self.response.out.write(Alert.alert_msg("ルームが見つかりません。",self.request.host))
 			return
