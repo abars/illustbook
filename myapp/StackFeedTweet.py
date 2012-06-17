@@ -66,6 +66,20 @@ class StackFeedTweet(webapp.RequestHandler):
 		bookmark.stack_feed_list.remove(db.Key(self.request.get("key")))
 		bookmark.put()
 		return True
+	
+	def retweet(self,user):
+		data=db.get(self.request.get("key"))
+		#comment=self.request.get("comment")
+		
+		#自分にフィード
+		StackFeed._append_one(data,user.user_id())
+		if(data.to_user_id):
+			StackFeed._append_one(data,data.to_user_id)
+		
+		#フォロワーにフィード
+		StackFeed.feed_new_message(user,data)
+
+		return True
 
 	def add_new_message(self,user):
 		#メッセージ作成
@@ -117,11 +131,17 @@ class StackFeedTweet(webapp.RequestHandler):
 
 	def get(self):
 		user = users.get_current_user()
+		if(not user):
+			self.response.out.write(Alert.alert_msg("ログインが必要です。",self.request.host));
+			return
 		if(self.request.get("mode")=="del_tweet"):
 			if(self.del_message(user)):
 				self.redirect_main()
 		if(self.request.get("mode")=="del_feed"):
 			if(self.del_feed(user)):
+				self.redirect_main()
+		if(self.request.get("mode")=="retweet"):
+			if(self.retweet(user)):
 				self.redirect_main()
 		
 	def post(self):

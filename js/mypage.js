@@ -214,9 +214,12 @@ function feed_parse(feed){
 	
 	//メッセージ
 	txt+="<p>"
+	if(feed.message!=""){
+		txt+=""+feed.message+"<BR>";
+	}
 	switch(feed.mode){
 	case "message":
-		txt+=feed.message;
+		//txt+=feed.message;
 		break;
 	case "bbs_new_illust":
 		if(feed.thread.thumbnail_url==""){
@@ -229,9 +232,6 @@ function feed_parse(feed){
 		txt+='<a href="'+feed.follow_user.profile_url+'">'+feed.follow_user.name+'をフォローしました。</a>'
 		break;
 	case "new_bookmark_thread":
-		if(feed.message!=""){
-			txt+=""+feed.message+"<BR>";
-		}
 		txt+='<a href="'+feed.thread.thread_url+'">'+feed.thread.title+'をブックマークしました。</a>'
 		break;
 	case "new_comment_thread":
@@ -264,10 +264,12 @@ function feed_parse(feed){
 	txt+=feed.create_date+"<BR>"
 	if(!mypage_view_mode){
 		if(feed.mode=="message" && feed.from_user.user_id==mypage_user_id){
-			txt+='<a href="#" onclick="if(confirm(\'ツイートを取り消してもよろしいですか？\')){window.location.href=\'feed_tweet?mode=del_tweet&key='+feed.key+'&feed_page='+mypage_feed_page+'\';}return false;">ツイートを取り消す</a><BR>'
+			txt+='<a href="#" onclick="if(confirm(\'ツイートを取り消してもよろしいですか？\')){window.location.href=\'feed_tweet?mode=del_tweet&key='+feed.key+'&feed_page='+mypage_feed_page+'\';}return false;" class="g-button mini">ツイートを取り消す</a><BR>'
 		}else{
-			txt+='<a href="#" onclick="if(confirm(\'フィードを消去してもよろしいですか？\')){window.location.href=\'feed_tweet?mode=del_feed&key='+feed.key+'&feed_page='+mypage_feed_page+'\';}return false;">フィードを消去</a><BR>'
+			txt+='<a href="#" onclick="if(confirm(\'フィードを消去してもよろしいですか？\')){window.location.href=\'feed_tweet?mode=del_feed&key='+feed.key+'&feed_page='+mypage_feed_page+'\';}return false;" class="g-button mini">フィードを消去</a><BR>'
 		}
+	}else{
+			txt+='<a href="#" onclick="feed_retweet(\''+feed.key+'\',\''+mypage_feed_page+'\');return false;" class="g-button mini">リツイート</a><BR>'
 	}
 	txt+="</div>"
 	txt+="</div>"
@@ -275,6 +277,14 @@ function feed_parse(feed){
 	txt+="<HR>"
 
 	return txt;
+}
+
+function feed_retweet(feed_key,feed_page){
+	var comment=confirm("リツイートしますか？");
+	if(!comment){
+		return;
+	}
+	window.location.href='feed_tweet?mode=retweet&key='+feed_key;
 }
 
 //--------------------------------------------------------
