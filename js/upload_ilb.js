@@ -16,12 +16,18 @@
 		ret.delete_key=document.getElementById("delete_key").value;
 		ret.no_illust=document.getElementById("no_illust").checked;
 
-        var link_to_profile=document.getElementById("link_to_profile");
-        if(link_to_profile && link_to_profile.checked){
-            ret.link_to_profile="on";
-        }else{
-            ret.link_to_profile=false;
-        }
+		var link_to_profile=document.getElementById("link_to_profile");
+		if(link_to_profile && link_to_profile.checked){
+			ret.link_to_profile="on";
+		}else{
+			ret.link_to_profile=false;
+		}
+		
+		var resize_width=document.getElementById("resize_width");
+		if(resize_width && resize_width.checked){
+			flex_object=GetFlexObject();
+			flex_object.SetResizeWidth(700);
+		}
 		
 		var expires = "Thu, 1-Jan-2030 00:00:00 GMT";
 		document.cookie="name="+escape(ret.name)+"; expires="+expires;

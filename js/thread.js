@@ -69,9 +69,11 @@
 		}
 		
 		function AddBookmark(host,thread_key){
-			if(confirm("このイラストをブックマークしますか？")){
-				window.location.href=host+'add_bookmark?mode=add&thread_key='+thread_key;
+			var comment=prompt("このイラストをブックマークしますか？以下のフォームからブックマークにコメントを付加することもできます。");
+			if(comment==null){
+				return;
 			}
+			window.location.href=host+'add_bookmark?mode=add&thread_key='+thread_key+'&comment='+comment;
 		}
 		
 		function show_comment_form(id){

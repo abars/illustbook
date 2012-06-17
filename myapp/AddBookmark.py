@@ -13,6 +13,7 @@ import re
 import datetime
 import random
 import logging
+import pickle
 
 from google.appengine.ext.webapp import template
 from google.appengine.api import users
@@ -45,6 +46,18 @@ class AddBookmark(webapp.RequestHandler):
 		if(type(thread)==AppCode):
 			return Bookmark.all().filter("app_key_list =",add_thread_key).count()
 		return 0
+
+	@staticmethod
+	def add_comment(thread,user_id,comment):
+		if(not comment):
+			comment=""
+		if(thread.bookmark_comment):
+			dict=pickle.loads(thread.bookmark_comment)
+		else:
+			dict={}
+		dict[user_id]=comment
+		thread.bookmark_comment=db.Blob(pickle.dumps(dict))
+		thread.put()
 
 	@staticmethod
 	def add_one(thread_key_list,add_thread_key,thread):
@@ -151,9 +164,14 @@ class AddBookmark(webapp.RequestHandler):
 		if(self.request.get("app_key")):
 			add_app_key=db.Key(self.request.get("app_key"))
 
+		comment=None
+		if(self.request.get("comment")):
+			comment=self.request.get("comment")
+
 		if(mode=="add"):
 			if(AddBookmark.add_one(bookmark.thread_key_list,add_thread_key,thread)):
-				StackFeed.feed_new_bookmark_thread(user,thread)
+				StackFeed.feed_new_bookmark_thread(user,thread,comment)
+			AddBookmark.add_comment(thread,user.user_id(),comment)
 		if(mode=="add_bbs"):
 			if(AddBookmark.add_one(bookmark.bbs_key_list,add_bbs_key,bbs)):
 				StackFeed.feed_new_bookmark_bbs(user,bbs)

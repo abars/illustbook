@@ -229,6 +229,9 @@ function feed_parse(feed){
 		txt+='<a href="'+feed.follow_user.profile_url+'">'+feed.follow_user.name+'をフォローしました。</a>'
 		break;
 	case "new_bookmark_thread":
+		if(feed.message!=""){
+			txt+=""+feed.message+"<BR>";
+		}
 		txt+='<a href="'+feed.thread.thread_url+'">'+feed.thread.title+'をブックマークしました。</a>'
 		break;
 	case "new_comment_thread":

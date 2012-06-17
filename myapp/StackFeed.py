@@ -89,7 +89,7 @@ class StackFeed(webapp.RequestHandler):
 		return data
 		
 	@staticmethod
-	def _create_new_bookmark_thread(user_id,thread):
+	def _create_new_bookmark_thread(user_id,thread,comment):
 		data=StackFeedData()
 		data.feed_mode="new_bookmark_thread"
 
@@ -100,6 +100,8 @@ class StackFeed(webapp.RequestHandler):
 		data.bbs_key=thread.bbs_key
 		data.thread_key=thread
 		data.message=""
+		if(comment):
+			data.message=comment
 		data.create_date=datetime.datetime.today()
 		data.put()
 		return data
@@ -178,9 +180,11 @@ class StackFeed(webapp.RequestHandler):
 		taskqueue.add(url="/stack_feed_worker",params={"mode":"new_bookmark_bbs","user_id":user_id,"bbs":str(bbs.key())},queue_name="feed")
 
 	@staticmethod
-	def feed_new_bookmark_thread(user,thread):
+	def feed_new_bookmark_thread(user,thread,comment):
 		user_id=user.user_id()
-		taskqueue.add(url="/stack_feed_worker",params={"mode":"new_bookmark_thread","user_id":user_id,"thread":str(thread.key())},queue_name="feed")
+		if(not comment):
+			comment=""
+		taskqueue.add(url="/stack_feed_worker",params={"mode":"new_bookmark_thread","user_id":user_id,"thread":str(thread.key()),"comment":comment},queue_name="feed")
 
 	@staticmethod
 	def feed_new_comment_thread(user,thread):
@@ -266,7 +270,7 @@ class StackFeed(webapp.RequestHandler):
 		StackFeed._feed_to_follower(data,user_id)
 
 	@staticmethod
-	def _feed_new_bookmark_thread_core(user_id,thread):
+	def _feed_new_bookmark_thread_core(user_id,thread,comment):
 		#イラストがブックマークされた場合、
 		#イラストのオーナーと、
 		#ブックマークしたユーザをフォローしているユーザにフィード
@@ -276,7 +280,7 @@ class StackFeed(webapp.RequestHandler):
 
 		thread_owner_user_id=thread.user_id
 
-		data=StackFeed._create_new_bookmark_thread(user_id,thread)
+		data=StackFeed._create_new_bookmark_thread(user_id,thread,comment)
 		StackFeed._append_one(data,thread_owner_user_id)
 
 		StackFeed._feed_to_follower(data,user_id)
@@ -340,7 +344,8 @@ class StackFeed(webapp.RequestHandler):
 			StackFeed._feed_new_bookmark_bbs_core(user_id,bbs)
 		if(mode=="new_bookmark_thread"):
 			thread=db.get(self.request.get("thread"))
-			StackFeed._feed_new_bookmark_thread_core(user_id,thread)
+			comment=self.request.get("comment")
+			StackFeed._feed_new_bookmark_thread_core(user_id,thread,comment)
 		if(mode=="new_comment_thread"):
 			thread=db.get(self.request.get("thread"))
 			StackFeed._feed_new_comment_thread_and_entry_core(user_id,thread,None)

@@ -53,6 +53,8 @@ class MesThread(db.Model):
 	cached_image_key = db.StringProperty() #For object cache
 	cached_bbs_key = db.StringProperty() #For object cache
 	cached_entry_key = db.ListProperty(db.Key) #For object cache
+	
+	bookmark_comment = db.BlobProperty()
 
 	sand = db.StringProperty()
 	

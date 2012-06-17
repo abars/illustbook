@@ -24,6 +24,9 @@
 			txt+="<A HREF='mypage?user_id="+user.user_id+"'>";
 			txt+="<IMG SRC='"+user.icon_url+"' WIDTH=50px HEIGHT=50px class='radius_image'>";
 			txt+="</A>";
+			if(user.comment){
+				txt+=""+user.comment+"　";
+			}
 			txt+="</div>";
 		}
 		if(oj.length==0){

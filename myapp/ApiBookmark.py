@@ -11,6 +11,7 @@ import os
 import sys
 import re
 import datetime
+import pickle
 
 from google.appengine.ext.webapp import template
 from google.appengine.api import users
@@ -90,10 +91,24 @@ class ApiBookmark(webapp.RequestHandler):
 	def bookmark_get_thread_user_list(req):
 		thread_key=req.request.get("thread_key")
 		bookmark_list=Bookmark.all().filter("thread_key_list =",db.Key(thread_key)).fetch(limit=100)
+		
+		#comment
+		comment={}
+		thread=ApiObject.get_cached_object(db.Key(thread_key))
+		if(thread.bookmark_comment):
+			comment=pickle.loads(thread.bookmark_comment)
+
+		#user list
 		dic=[]
 		for bookmark in bookmark_list:
 			one_dic=ApiObject.create_user_object(req,bookmark)
+			user_id=None
+			if(one_dic.has_key("user_id")):
+				user_id=one_dic["user_id"]
+			if(user_id and comment.has_key(user_id)):
+				one_dic["comment"]=comment[user_id]
 			dic.append(one_dic)
+
 		return dic
 
 	@staticmethod
