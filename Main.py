@@ -152,7 +152,8 @@ class MainPage(webapp.RequestHandler):
 			'is_iphone': is_iphone,
 			'user': user,
 			'redirect_url': self.request.path,
-			'top_page': True
+			'top_page': True,
+			'mode': "index"
 		}
 
 		path = os.path.join(os.path.dirname(__file__), 'html/index.html')
