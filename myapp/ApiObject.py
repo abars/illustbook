@@ -497,6 +497,16 @@ class ApiObject(webapp.RequestHandler):
 		if(ret):
 			return ret
 		return ApiObject.get_datastore_object(thread)
+
+	@staticmethod
+	def _get_cached_entry_key(ds_obj):
+		query=db.Query(Entry,keys_only=True).filter("thread_key =",ds_obj).filter("del_flag =",1)
+		if(ds_obj.bbs_key.default_comment_order==1):
+			query.order("-create_date")
+		else:
+			query.order("-date")
+		entry_list=query.fetch(limit=100)
+		return entry_list
 	
 	@staticmethod
 	def get_datastore_object(ds_obj):
@@ -515,7 +525,7 @@ class ApiObject(webapp.RequestHandler):
 			bbs_key=MesThread.bbs_key.get_value_for_datastore(ds_obj)
 			if(bbs_key):
 				ds_obj.cached_bbs_key=str(bbs_key)
-			ds_obj.cached_entry_key=db.Query(Entry,keys_only=True).filter("thread_key =",ds_obj).filter("del_flag =",1).order("-create_date").fetch(limit=100)
+			ds_obj.cached_entry_key=ApiObject._get_cached_entry_key(ds_obj)
 
 		if(type(ds_obj)==Bbs):
 			try:
