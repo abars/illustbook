@@ -38,6 +38,6 @@ class AppImage (webapp.RequestHandler):
 		blob=app.image_blob_list[index_no];
 		content_type=app.image_type_list[index_no];
 		
-		self.response.headers['Content-Type']=content_type
+		self.response.headers['Content-Type']=str(content_type)
 		self.response.out.write(blob)
 		
