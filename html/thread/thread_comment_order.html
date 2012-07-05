@@ -1,0 +1,40 @@
+
+<div><!-- id="page-bottom">-->
+
+<div class="actions g-button-container">
+<!-- 表示順 -->
+	<div class="g-button-group">
+		<a class="g-button mini dropdown-toggle" data-toggle="dropdown" href="#" style="color:#444">
+			{% ifequal order "new" %}新着順{% endifequal %}
+			{% ifequal order "update" %}更新順{% endifequal %}
+			<span class="caret"></span>
+		</a>
+		<ul class="dropdown-menu">
+			<li><a href="javascript:select_change('new','{{page_url_base}}',{{page}});" style="border-bottom: 0px;color:#444;">新着順</a></li>
+			<li><a href="javascript:select_change('update','{{page_url_base}}',{{page}});" style="border-bottom: 0px;color:#444">更新順</a></li>
+		</ul>
+	</div>
+
+<!-- ページ番号 -->
+	<div class="g-button-group">
+		{% ifequal page 1 %}
+			<a href="#" class="g-button no-text mini disabled2"><i class="icon-chevron-left"></i></a>
+		{% else %}
+			<a href="{{page_url_base}}{{page|add:"-1"}}&order={{order}}" class="g-button no-text mini"><i class="icon-chevron-left"></i></a>
+		{% endifequal %}
+
+		{%for p in page_list%}
+			{%ifequal p page%}
+				<div class="g-button checked no-text mini" style="color:#444">{{p}}</div>
+			{%else%}
+				<a href="{{page_url_base}}{{p}}&order={{order}}" class="g-button no-text mini" style="color:#444">{{p}}</a>
+			{%endifequal %}
+		{%endfor%}
+
+		<a href="{{page_url_base}}{{page|add:"1"}}&order={{order}}" class="g-button no-text mini"><i class="icon-chevron-right"></i></a>
+	</div>
+
+</div>
+
+
+</div>　
