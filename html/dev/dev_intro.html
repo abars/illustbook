@@ -1,0 +1,116 @@
+<H1><p>イラストブックプラットフォームの概要</p></H1>
+
+<H2><p>はじめに</p></H2>
+<HR>
+
+<p>イラストブックプラットフォームでは、アプリ、プラグイン、デザインの3種類のコンテンツを開発して公開することができます。これらのコンテンツによって、例えば、バーチャルグラフとイラストを使用したゲームアプリ、外部BLOGに埋め込める新着投稿プラグイン、CSSによるお絵描き掲示板のデザイン変更などを実現できます。</p>
+
+<p>&nbsp</p>
+
+<p>アプリおよびプラグインはJavaScriptで開発します。アプリおよびプラグインは、イラストブックから提供されるdivに対して、イラストブックから提供されるJavaScriptライブラリを使用して書き込みを行うことで動作します。開発は全てブラウザ上で行うこともできますし、ローカル環境で開発することもできます。イラストブックからは、WEBアクセスや画像描画などのAPIが提供されます。</p>
+
+<p>&nbsp</p>
+
+<p>デザインは掲示板のCSSを編集することで作成します。CSSの編集とプレビューは、ブラウザ上のエディタで行うことができます。</p>
+
+<p>&nbsp</p>
+
+<p>イラストブックプラットフォームのブロック図を次に示します。クリエイタは描いたイラストをイラストブックのお絵描き掲示板に投稿します。一般ユーザは、そのイラストをブックマークしたり、ユーザ間のバーチャルグラフを構成します。デベロッパは、これらの情報を元に、アプリ、CSSデザイン、プラグインを作成し、イラストブックマーケットに公開します。クリエイタは公開されたプラグインを自分のホームページで利用したり、CSSデザインを自分のお絵描き掲示板に設定したりすることができます。また、一般ユーザは、公開されたアプリで楽しむことができます。</p>
+
+<p>&nbsp</p>
+
+<img src="./static_files/app/api_guide_platform.png?version=111119">
+
+<p>&nbsp</p>
+<p>&nbsp</p>
+
+<H2><p>コンテンツの種類</p></H2>
+<HR>
+
+<H3><p>>アプリ</p></H3>
+
+<p>ユーザはイラストブックマーケットからアプリをクリックすることで、アプリ実行画面へ移動し、アプリを実行します。最も簡単なアプリのコードを次に示します。このコードでは、新しくMyAppクラスを作り、それをイラストブックアプリに登録しています。イラストブックアプリに登録するとMyAppのinit関数が呼ばれ、init関数の中でcanvasをnewすることで描画領域を確保し、同時にコールバック関数を定義しています。以降は、自動的にloop関数が呼ばれるので、この中にアプリコードを記述します。イラストブックアプリプラットフォームに公開されたプログラムのソースコードは、アプリメニューから自由に見ることができますので、APIの使用例の参考にして下さい。</p>
+<p>&nbsp</p>
+
+<pre class="brush: jscript;">{{sample_code|safe}}</pre>
+
+<p>&nbsp</p>
+
+<p>ローカル環境で開発する場合は、次のようなHTMLで動作を確認した後、JavaScriptコード部分のみをイラストブックに登録します。</p>
+
+<pre class="brush: xhtml;">
+&lt;html&gt;
+&lt;head&gt;
+<!-- IE用のFlashCanvas読込(本番環境では自動的に読込) -->
+<!--[if lt IE 9]>
+&lt;script type="text/javascript" src="http://www.illustbook.net/js/flashcanvas.js"&gt;&lt;/script&gt;
+<![endif]-->
+<!-- API読込(本番環境では自動的に読込) -->
+&lt;script src="http://www.illustbook.net/api_js"&gt;&lt;/script&gt;
+<!-- 自分のアプリ読込(アプリ登録時はこの内容のみ登録) -->
+&lt;script src="./my_app.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+<!-- 描画先DIV定義(本番環境では自動的に読込) -->
+&lt;div id="illustbook_app"&gt;&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<p>&nbsp</p>
+
+<H3><p>>プラグイン</p></H3>
+
+<p>プラグインは外部BLOGなどにタグを貼り付けることで動作します。次のコードでは、bbs_idで与えられる掲示板の新着イラストを表示します。ユーザはイラストブックマーケットからプラグインをクリックすることで、外部BLOGに貼り付けるためのタグを取得します。プラグインは、タグの貼り付けられたサイトのiframe内で動作します。プラグインには、デフォルト引数を与えることができます。ユーザはURLのデフォルト引数を書き換えることで、自分に最適なプラグインにカスタマイズします。</p>
+
+<pre class="brush: jscript;">{{sample_code_plugin|safe}}</pre>
+
+<p>&nbsp</p>
+
+<H3><p>>デザイン</p></H3>
+
+<p>デザインは掲示板のCSSです。コードエディタでCSSを記述します。CSSデザインにはIDが割り当てられ、ユーザは自分の掲示板のデザインの設定から、CSSデザインのIDを入力することで、デザインを適用します。掲示板のCSSは一般に公開してもよいですし、自分だけで使用してもかまいません。編集できるCSSの要素は<a href="http://localhost:8084/dev?page=css" class="declink">CSSリファレンス</a>に記載されています。デザインを新規作成すると、次のコードが自動的に生成され、これを書き換えることでデザインを構成していきます。</p>
+
+<p>&nbsp</p>
+
+<pre class="brush: css;">{{sample_code_css|safe}}</pre>
+
+<p>&nbsp</p>
+<p>&nbsp</p>
+
+<H2><p>公開されるAPI</p></H2>
+<HR>
+
+<p>アプリやプラグインから、イラストブックのバーチャルグラフやイラストを利用するには、JavaScript APIとJSON APIを使用します。APIの関係図を次に示します。JavaScript APIはJSON APIをラップしているため、基本的にはJavaScript APIだけでイラストブックにアクセスすることができます。JSON APIは、外部サーバやネイティブアプリなど、JavaScriptが使用できない環境で利用します。ただし、JavaScript APIを用いた場合でも、コールバックに通知されるオブジェクトは、JSON APIと同じ、JSON形式になりますので、JSON APIの概要を理解しておく必要があります。</p>
+
+<img src="./static_files/app/api_guide_api.png">
+
+<p>&nbsp</p>
+<p>&nbsp</p>
+
+<H2><p>コードエディタ</p></H2>
+<HR>
+
+<p>ブラウザ上で開発する場合は、ACEによるコードエディタが使用可能です。コードエディタでは、JavaScriptとCSSのシンタックスハイライト、Lintチェック、コードとデザインの保存、実行、プレビューが行えます</p>
+<img src="static_files/app/code_editer.png?version=111119">
+
+<p>&nbsp</p>
+<p>&nbsp</p>
+
+<H2><p>ライセンスとプライバシーポリシー</p></H2>
+<hr>
+
+<p>投稿されたコンテンツの権利は投稿者に帰属しています。コンテンツは、いつでも公開したり、公開を停止したりすることができます。ただし、投稿したコンテンツのコードは誰でも見れる形で公開されることにご注意下さい。</p>
+
+<p>&nbsp</p>
+
+<p>投稿されたイラストの権利は投稿者に帰属しています。イラストのアプリでの使用許可は、掲示板単位で管理者が設定することができます。アプリで使用できない設定になっている場合は、サムネイルは取得できますが、イラスト本体は取得できません。</p>
+
+<p>&nbsp</p>
+
+<p>http://www.illustbook.net/api_jsのJavaScriptコードはMITライセンスで提供させて頂いています。イラストブック外でもご自由にご利用や改変や再配布が可能です。</p>
+
+<p>&nbsp</p>
+
+<p>IE用の描画APIには<A HREF="http://flashcanvas.net/" class="declink">FlashCanvasPro</A>の<A HREF="http://flashcanvas.net/purchase" class="declink">CommercialLicense</A>を、コードエディタには<A HREF="http://ace.ajax.org/" class="declink">ACE</A>、リントチェックには<A HREF="http://www.jshint.com/" class="declink">JSHint</A>、コードの埋め込みには<A HREF="http://code.google.com/p/syntaxhighlighter/" class="declink">SyntaxHighlighter</A>を使用させて頂いています。</p>
+

@@ -1,0 +1,616 @@
+<!------------------------------------------------------>
+
+<H1><p>JavaScript API</p></H1>
+
+<H2><p>概要</p></H2>
+<HR>
+
+<p>JavaScript APIには、JSON APIをラップしたAPIの他、アプリケーションを管理したり、描画やタッチイベントを管理するAPIが含まれます。JavaScript APIを使用するにはHTMLからhttp://www.illustbook.net/api_jsを読み込みます。</p>
+
+<p>&nbsp</p>
+
+<pre class="brush: jscript;">
+<script src="http://www.illustbook.net/api_js"></script>
+</pre>
+
+<p>&nbsp</p>
+
+<p>以降、illustbook.クラス名.メソッド名、としてJavaScriptのAPIを呼び出すことができます。</p>
+
+<p>&nbsp</p>
+
+<!------------------------------------------------------>
+
+<p>&nbsp</p>
+
+<H2><p>クラス一覧</p></H2>
+<HR>
+
+<p>JavaScript APIには次のクラスがあります。</p>
+
+<TABLE BORDER=1 WIDTH=100%>
+<TR><TD>クラス</TD><TD>役割</TD></TR>
+<TR><TD><a href="#app_class">app</a></TD><TD>イラストブックにアプリ＆プラグインを登録する</TD></TR>
+<TR><TD><a href="#canvas_class">canvas</a></TD><TD>描画を行う</TD></TR>
+<TR><TD><a href="#user_class">user</a></TD><TD>ユーザ情報を取得する</TD></TR>
+<TR><TD><a href="#feed_class">feed</a></TD><TD>フィード情報を取得する</TD></TR>
+<TR><TD><a href="#bookmark_class">bookmark</a></TD><TD>ブックマーク情報を取得する</TD></TR>
+<TR><TD><a href="#perpetuation_class">perpetuation</a></TD><TD>データを保存する</TD></TR>
+<TR><TD><a href="#requets_class">request</a></TD><TD>JSON APIにアクセスする</TD></TR>
+<TR><TD><a href="#utility_class">utility</a></TD><TD>各種のユーティリティ関数</TD></TR>
+</TABLE>
+
+<p>&nbsp</p>
+
+<!------------------------------------------------------>
+
+<p>&nbsp</p>
+
+<a name="app_class"><H2><p>appクラス</p></H2></a>
+<HR>
+
+<p>appクラスは最も基本的なクラスです。アプリ＆プラグインは、必ずillustbook.app.regist関数を使用してイラストブックに登録する必要があります。また、ゲームを作成する場合は、illustbook.app.addLoopCallbackを使用してゲームループを登録する必要があります。</p>
+
+<p>&nbsp</p>
+<pre class="brush: jscript;">
+function MyApp(){
+}
+
+MyApp.prototype.init()=function{
+	illustbook.app.addLoopCallback(this,1000/15)
+}
+
+MyApp.prototype.loop=function(){
+}
+
+illustbook.app.regist(new MyApp())
+</pre>
+
+<p>&nbsp</p>
+
+<TABLE BORDER=1 WIDTH=100%>
+	<TR>
+		<TD>メソッド</TD>
+		<TD>概要</TD>
+		<TD>引数</TD>
+		<TD>返値</TD>
+		<TD>解説</TD>
+	</TR>
+
+	<TR>
+		<TD>regist</TD>
+		<TD>アプリ＆プラグインを登録する</TD>
+		<TD>アプリ＆プラグインクラス</TD>
+		<TD>なし</TD>
+		<TD>イラストブックにアプリ＆プラグインを登録します。<BR>登録直後に登録したクラスのinit関数が呼ばれます。</TD>
+	</TR>
+
+	<TR>
+		<TD>addLoopCallback</TD>
+		<TD>メインループを登録する</TD>
+		<TD>アプリ＆プラグインクラス、ループを呼び出すミリ秒間隔</TD>
+		<TD>なし</TD>
+		<TD>設定した間隔でアプリ＆プラグインクラスのloop関数が呼ばれます。</TD>
+	</TR>
+
+	<TR>
+		<TD>getAppKey</TD>
+		<TD>アプリケーションのキーを取得する</TD>
+		<TD>なし</TD>
+		<TD>String</TD>
+		<TD>PerpetuationAPIで使用するアプリケーションのキーを取得します</TD>
+	</TR>
+
+	<TR>
+		<TD>getDiv</TD>
+		<TD>アプリケーションの描画先のDIVを取得する</TD>
+		<TD>アプリ＆プラグインクラス</TD>
+		<TD>div element</TD>
+		<TD>アプリケーションの描画先のDIVを取得して.innnerHTMLなどでアクセスすることができるようにします</TD>
+	</TR>
+
+</TABLE>
+
+<p>&nbsp</p>
+
+<!------------------------------------------------------>
+
+<p>&nbsp</p>
+
+<a name="canvas_class"><H2><p>canvasクラス</p></H2></a>
+<HR>
+
+<p>canvasクラスでは、HTML5のCanvasオブジェクトを使用した描画を行うことができます。canvasクラスを仕様するには、アプリのinit関数でnew illustbook.canvas()を呼び出してインスタンスを作成した後、loop関数で描画を行います。描画は、drawBegin()関数で開始し、drawEnd()関数で終了します。</p>
+
+<p>&nbsp</p>
+<pre class="brush: jscript;">
+function MyApp(){
+	this._canvas;
+}
+
+MyApp.prototype.init()=function{
+	this._canvas=new illustbook.canvas(this,480,480);
+	illustbook.app.addLoopCallback(this)
+}
+
+MyApp.prototype.loop=function(){
+	this._canvas.drawBegin();
+	this._canvas.drawText("Hello world",0,0,12,0x000000);
+	this._canvas.drawEnd();
+}
+
+illustbook.app.regist(new MyApp())
+</pre>
+<p>&nbsp</p>
+<p>また、loadImage関数で画像を読み込み、drawImage関数で描画することができます。</p>
+
+<pre class="brush: jscript;">
+MyApp.prototype.init()=function{
+	this._canvas=new illustbook.canvas(this,480,480);
+	this._image=this._canvas.loadImage("test.jpg")
+	illustbook.app.addLoopCallback(this,1000/15)
+}
+
+MyApp.prototype.loop=function(){
+	this._canvas.drawBegin();
+	this._canvas.drawImage(this._image,0,0);
+	this._canvas.drawEnd();
+}
+</pre>
+
+<p>&nbsp</p>
+
+<p>init関数でaddTouchCallbackを呼ぶことで、マウスイベントのコールバックを登録することができます。</p>
+
+<pre class="brush: jscript;">
+MyApp.prototype.init()=function{
+	this._canvas=new illustbook.canvas(this,480,480);
+	this._canvas.addTouchCallback(this)
+	illustbook.app.addLoopCallback(this,1000/15)
+}
+
+MyApp.prototype.onTouchStart=function(x,y){
+	alert(""+x+"/"+y);
+}
+
+MyApp.prototype.onTouchMove=function(x,y){
+}
+
+MyApp.prototype.onTouchEnd=function(x,y){
+}
+</pre>
+
+<p>&nbsp</p>
+
+<TABLE BORDER=1 WIDTH=100%>
+	<TR>
+		<TD>メソッド</TD>
+		<TD>概要</TD>
+		<TD>引数</TD>
+		<TD>返値</TD>
+		<TD>解説</TD>
+	</TR>
+
+	<TR>
+		<TD>new illustbook.canvas</TD>
+		<TD>描画領域の作成</TD>
+		<TD>アプリ＆プラグインクラス,横幅,高さ</TD>
+		<TD>作成したcanvasクラス</TD>
+		<TD>描画領域を作成します。横幅と高さは480を推奨します。（スマートフォン対応）</TD>
+	</TR>
+
+	<TR>
+		<TD>addTouchCallback</TD>
+		<TD>タッチイベントの登録</TD>
+		<TD>アプリ＆プラグインクラス</TD>
+		<TD>なし</TD>
+		<TD>アプリ＆プラグインクラスのonTouchStart/onTouchMove/onTouchEndが呼ばれるようになります。</TD>
+	</TR>
+
+	<TR>
+		<TD>drawBegin</TD>
+		<TD>描画開始</TD>
+		<TD>なし</TD>
+		<TD>なし</TD>
+		<TD>フレームの描画を開始します。</TD>
+	</TR>
+
+	<TR>
+		<TD>drawEnd</TD>
+		<TD>描画終了</TD>
+		<TD>なし</TD>
+		<TD>なし</TD>
+		<TD>フレームの描画を終了します。</TD>
+	</TR>
+
+	<TR>
+		<TD>fillRect</TD>
+		<TD>矩形描画</TD>
+		<TD>x,y,width,height,color</TD>
+		<TD>なし</TD>
+		<TD>(x,y)から(width,height)のサイズの矩形を色colorで描画します。色は0xffffffのようにカラーコードで指定します。</TD>
+	</TR>
+
+
+	<TR>
+		<TD>loadImage</TD>
+		<TD>画像読込</TD>
+		<TD>url</TD>
+		<TD>Imageオブジェクト</TD>
+		<TD>なし</TD>
+	</TR>
+
+	<TR>
+		<TD>drawImage</TD>
+		<TD>画像描画</TD>
+		<TD>Imageオブジェクト,x,y</TD>
+		<TD>なし</TD>
+		<TD></TD>
+	</TR>
+
+	<TR>
+		<TD>drawImageRect</TD>
+		<TD>区間画像描画</TD>
+		<TD>Imageオブジェクト,sx,sy,sw,sh,dx,dy,dw,dh</TD>
+		<TD>なし</TD>
+		<TD>(sx,sy)から(sw,sh)の矩形を(dx,dy)に(dw,dh)のサイズで描画します。</TD>
+	</TR>
+
+	<TR>
+		<TD>drawText</TD>
+		<TD>文字列描画</TD>
+		<TD>text,x,y,font_size,color</TD>
+		<TD>なし</TD>
+		<TD></TD>
+	</TR>
+	
+
+</TABLE>
+
+<p>&nbsp</p>
+
+<!------------------------------------------------------>
+
+<p>&nbsp</p>
+
+<a name="user_class"><H2><p>userクラス</p></H2></a>
+<HR>
+
+<p>userクラスでは、レンタルしている掲示板やフォロワーなど、ユーザに関連した情報を取得します。また、ログインしていたり、アプリを所有していたりするユーザのIDを取得することができます。</p>
+<p>&nbsp</p>
+
+<p>次の例では、offset番目からlimit個のデータを取得して、結果をcallback関数に通知しています。callback関数に通知されるデータについては、JSON APIを参照して下さい。</p>
+<p>&nbsp</p>
+
+<pre class="brush: jscript;">
+	var offset=0;
+	var limit=100;
+
+	illustbook.user.getFollow(user_id,0,limit,illustbook.user.ORDER_NONE,callback);
+	illustbook.user.getFollower(user_id,0,limit,illustbook.user.ORDER_NONE,callback);
+	illustbook.user.getBbsList(user_id,0,limit,illustbook.user.ORDER_NONE,callback);
+	illustbook.user.getThreadList(user_id,0,limit,illustbook.user.ORDER_NONE,callback);
+	illustbook.user.getTimeline(user_id,0,limit,illustbook.user.ORDER_NONE,callback);
+
+	function callback(oj){
+		alert(oj.status);
+	}
+</pre>
+
+<p>&nbsp</p>
+
+<TABLE BORDER=1 WIDTH=100%>
+	<TR>
+		<TD>メソッド</TD>
+		<TD>概要</TD>
+		<TD>引数</TD>
+		<TD>返値</TD>
+		<TD>解説</TD>
+	</TR>
+
+	<TR>
+		<TD>getCurrentUser</TD>
+		<TD>ログインしているユーザを取得</TD>
+		<TD>なし</TD>
+		<TD>ユーザID(String)</TD>
+		<TD></TD>
+	</TR>
+
+	<TR>
+		<TD>getOwner</TD>
+		<TD>アプリを所有しているユーザを取得</TD>
+		<TD>なし</TD>
+		<TD>ユーザID(String)</TD>
+		<TD>他人の掲示板を見ている場合は掲示板の所有者が返ります。</TD>
+	</TR>
+
+	<TR>
+		<TD>getBbsList</TD>
+		<TD>レンタルしている掲示板の一覧を取得</TD>
+		<TD>user_id,offset,limit,order,callback</TD>
+		<TD>Bbsオブジェクトのリスト</TD>
+		<TD></TD>
+	</TR>
+
+	<TR>
+		<TD>getThreadList</TD>
+		<TD>投稿したイラストの一覧を取得</TD>
+		<TD>user_id,offset,limit,order,callback</TD>
+		<TD>Threadオブジェクトのリスト</TD>
+		<TD></TD>
+	</TR>
+
+	<TR>
+		<TD>getFollow</TD>
+		<TD>フォローしているユーザを取得</TD>
+		<TD>user_id,offset,limit,order,callback</TD>
+		<TD>Userオブジェクトのリスト</TD>
+		<TD></TD>
+	</TR>
+
+	<TR>
+		<TD>getFollower</TD>
+		<TD>フォローされているユーザを取得</TD>
+		<TD>user_id,offset,limit,order,callback</TD>
+		<TD>Userオブジェクトのリスト</TD>
+		<TD></TD>
+	</TR>
+
+	<TR>
+		<TD>getTimeline</TD>
+		<TD>ユーザのフィードの一覧を取得</TD>
+		<TD>user_id,offset,limit,order,callback</TD>
+		<TD>Feedオブジェクトのリスト</TD>
+		<TD></TD>
+	</TR>
+</TABLE>
+
+<p>&nbsp</p>
+
+<!------------------------------------------------------>
+
+<p>&nbsp</p>
+
+<a name="feed_class"><H2><p>feedクラス</p></H2></a>
+<HR>
+
+<p>feedクラスでは、イラストブックの最新情報を取得することができます。現在は、掲示板に投稿されたイラストの一覧のみ取得が可能です。</p>
+<p>&nbsp</p>
+<p>次の例では、掲示板(sample)に最近投稿されたイラストの一覧を、offset番目からlimit個、取得しています。bbs_idにnullを設定すると、全ての掲示板から取得します。callback関数に通知されるデータについては、JSON APIを参照して下さい。</p>
+<p>&nbsp</p>
+
+<pre class="brush: jscript;">
+	var bbs_id="sample";
+	var offset=0;
+	var limit=9;
+	var order="new";
+
+	illustbook.feed.getThreadList(bbs_id,offset,limit,order,callback);
+	
+	function callback(oj){
+		alert(oj.status);
+	}
+</pre>
+
+<p>&nbsp</p>
+
+<TABLE BORDER=1 WIDTH=100%>
+	<TR>
+		<TD>メソッド</TD>
+		<TD>概要</TD>
+		<TD>引数</TD>
+		<TD>返値</TD>
+		<TD>解説</TD>
+	</TR>
+
+	<TR>
+		<TD>getThreadList</TD>
+		<TD>掲示板のスレッドの一覧を取得</TD>
+		<TD>bbs_id,offset,limit,order,callback</TD>
+		<TD>Threadオブジェクトのリスト</TD>
+		<TD>orderにはORDER_NEW/ORDER_MOPER/ORDER_APPLAUSEを指定します。bbs_idを省略した場合は全ての掲示板から取得します。</TD>
+	</TR>
+</TABLE>
+
+<p>&nbsp</p>
+
+<!------------------------------------------------------>
+
+<p>&nbsp</p>
+
+<a name="bookmark_class"><H2><p>bookmarkクラス</p></H2></a>
+<HR>
+
+<p>bookmarkクラスでは、ユーザIDをキーに、ブックマークしているスレッドや掲示板の情報を取得することができます。</p>
+<p>&nbsp</p>
+<p>次の例では、ユーザ(user_id)のブックマークしているスレッドと掲示板の一覧を、offset番目からlimit個、取得しています。callback関数に通知されるデータについては、JSON APIを参照して下さい。</p>
+<p>&nbsp</p>
+
+<pre class="brush: jscript;">
+	var offset=0;
+	var limit=10;
+
+	illustbook.bookmark.getThreadList(user_id,offset,limit,illustbook.bookmark.ORDER_NONE,callback);
+	illustbook.bookmark.getBbsList(user_id,offset,limit,illustbook.bookmark.ORDER_NONE,callback);
+
+	function callback(oj){
+		alert(oj.status);
+	}
+</pre>
+
+<p>&nbsp</p>
+
+<TABLE BORDER=1 WIDTH=100%>
+	<TR>
+		<TD>メソッド</TD>
+		<TD>概要</TD>
+		<TD>引数</TD>
+		<TD>返値</TD>
+		<TD>解説</TD>
+	</TR>
+
+	<TR>
+		<TD>getThreadList</TD>
+		<TD>ブックマークしているスレッドの一覧を取得</TD>
+		<TD>user_id,offset,limit,order,callback</TD>
+		<TD>Threadオブジェクトのリスト</TD>
+		<TD>あるユーザのブックマークしているスレッドの一覧を取得します。orderにはORDER_NONEを指定します。</TD>
+	</TR>
+
+	<TR>
+		<TD>getBbsList</TD>
+		<TD>ブックマークしている掲示板の一覧を取得</TD>
+		<TD>user_id,offset,limit,order,callback</TD>
+		<TD>Bbsオブジェクトのリスト</TD>
+		<TD>あるユーザのブックマークしている掲示板の一覧を取得します。orderにはORDER_NONEを指定します。</TD>
+	</TR>
+
+	<TR>
+		<TD>getAppList</TD>
+		<TD>ブックマークしているアプリの一覧を取得</TD>
+		<TD>user_id,offset,limit,order,callback</TD>
+		<TD>Appオブジェクトのリスト</TD>
+		<TD>あるユーザのブックマークしているアプリの一覧を取得します。orderにはORDER_NONEを指定します。</TD>
+	</TR>
+</TABLE>
+
+<p>&nbsp</p>
+
+<!------------------------------------------------------>
+
+<p>&nbsp</p>
+
+<a name="perpetuation_class"><H2><p>perpetuationクラス</p></H2></a>
+<HR>
+
+<p>perpetuationクラスでは、イラストブックのKeyValueStoreにデータを保存することができます。データは整数値と文字列のペアで保存します。また、data_keyをアプリ設定に登録することで、自動的にランキングを作成することができます。ランキングは整数値でソートされ、文字列を表示します。</p>
+<p>&nbsp</p>
+<p>次の例では、data_keyに対応するハイスコアの取得と、ハイスコア(highscore_int/highscore_text)の保存を行なっています。callback関数に通知されるデータについては、JSON APIを参照して下さい。</p>
+<p>&nbsp</p>
+
+<pre class="brush: jscript;">
+	var data_key="highscore";
+	var highscore_int=0;
+	var highscore_text="SCORE0";
+
+	illustbook.perpetuation.getData(data_key,get_data_callback);
+	illustbook.perpetuation.putData(data_key,highscore_int,highscore_text,put_data_callback);
+
+	function get_data_callback(oj){
+		alert(oj.status);
+	}
+
+	function put_data_callback(oj){
+		alert(oj.status);
+	}
+</pre>
+
+<p>&nbsp</p>
+
+<TABLE BORDER=1 WIDTH=100%>
+	<TR>
+		<TD>メソッド</TD>
+		<TD>概要</TD>
+		<TD>引数</TD>
+		<TD>返値</TD>
+		<TD>解説</TD>
+	</TR>
+
+	<TR>
+		<TD>getData</TD>
+		<TD>データを取得</TD>
+		<TD>data_key,callback</TD>
+		<TD>PerpetuationDataオブジェクト</TD>
+		<TD>現在プレイしているユーザのdata_keyに対応するデータを取得します。</TD>
+	</TR>
+
+	<TR>
+		<TD>putData</TD>
+		<TD>ブックマークしている掲示板の一覧を取得</TD>
+		<TD>data_key,int_data,text_data,callback</TD>
+		<TD>成功通知オブジェクト</TD>
+		<TD>現在プレイしているユーザのdata_keyにデータを保存します。</TD>
+	</TR>
+</TABLE>
+
+<p>&nbsp</p>
+
+<!------------------------------------------------------>
+
+<p>&nbsp</p>
+
+<a name="request_class"><H2><p>requestクラス</p></H2></a>
+<HR>
+
+<p>requestクラスでは、基本的なget/postメソッド、およびJSONPアクセスメソッドを提供します。</p>
+<p>&nbsp</p>
+
+<TABLE BORDER=1 WIDTH=100%>
+	<TR>
+		<TD>メソッド</TD>
+		<TD>概要</TD>
+		<TD>引数</TD>
+		<TD>返値</TD>
+		<TD>解説</TD>
+	</TR>
+
+	<TR>
+		<TD>get</TD>
+		<TD>GETリクエストの発行</TD>
+		<TD>url,callback</TD>
+		<TD>JSONをパースした結果のオブジェクト</TD>
+		<TD>同じドメインの場合は通常のgetで、それ以外の場合はJSONPで結果を取得します。返値は共通です。非同期で処理されます。</TD>
+	</TR>
+
+	<TR>
+		<TD>post</TD>
+		<TD>POSTリクエストの発行</TD>
+		<TD>url,obj,callback</TD>
+		<TD>String</TD>
+		<TD>objは送信データハッシュでマルチパートデータで送信されます。同期で処理されます。</TD>
+	</TR>
+
+	<TR>
+		<TD>post_async</TD>
+		<TD>POSTリクエストの発行</TD>
+		<TD>url,obj,callback</TD>
+		<TD>String</TD>
+		<TD>objは送信データハッシュでマルチパートデータで送信されます。非同期で処理されます。</TD>
+	</TR>
+</TABLE>
+
+<p>&nbsp</p>
+
+<!------------------------------------------------------>
+
+<p>&nbsp</p>
+
+<a name="utility_class"><H2><p>utilityクラス</p></H2></a>
+<HR>
+
+<p>utilityクラスでは、引数の取得など、ちょっと便利に使える関数を提供します。</p>
+
+<p>&nbsp</p>
+
+<TABLE BORDER=1 WIDTH=100%>
+	<TR>
+		<TD>メソッド</TD>
+		<TD>概要</TD>
+		<TD>引数</TD>
+		<TD>返値</TD>
+		<TD>解説</TD>
+	</TR>
+
+	<TR>
+		<TD>getUrlArg</TD>
+		<TD>URLの引数を取得</TD>
+		<TD>なし</TD>
+		<TD>オブジェクト</TD>
+		<TD>引数のハッシュが返ります。arg[key]でアクセス可能です。</TD>
+	</TR>
+</TABLE>
+
+<p>&nbsp</p>
+
+
+<!------------------------------------------------------>

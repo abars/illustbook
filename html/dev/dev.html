@@ -1,0 +1,142 @@
+<!------------------------------------------------------------------------------->
+
+<div style="width:570px;float:left;padding-right:20px;">
+<H1><p>デベロッパーポータル(β)</p></H1>
+
+<p>
+イラストブックプラットフォームでは、イラストブックのバーチャルグラフとイラストを使用したアプリやプラグイン、およびイラストブックの掲示板のCSSデザインを作成して、イラストブックマーケットに公開することができます。例えば次のようなものを開発することができます。</p>
+
+<p>&nbsp</p>
+
+<ul>
+	<li>・イラストブックに投稿したイラストのスライドショーアプリ</li>
+	<li>・イラストブックのバーチャルグラフとイラストを使用したゲーム</li>
+	<li>・イラストブックをブラウズするネイティブアプリ</li>
+	<li>・イラストブックの掲示板の新着イラストを表示するプラグイン</li>
+	<li>・イラストブックの掲示板のCSSデザイン</li>
+</ul>
+
+<p>&nbsp</p>
+
+<p>アプリ＆プラグインは、divを直接書き換える方法と、提供される描画APIを使用する方法の２つで開発することができます。描画APIは、HTML5に対応したブラウザとiPhone/iPad/AndroidではHTML5 Canvasを、IE7およびIE8ではFlashCanvasを自動的に選択して使用します。</p>
+
+<p>&nbsp</p>
+
+<p>開発は全てブラウザ上だけで行うことができます。ブラウザ上ではリッチエディタ(ACE)とLintチェック(JSHint)がご利用頂けます。</p>
+
+</div>
+
+<div style="width:300px;float:left;">
+	<img src="static_files/app/app_p2.jpg">
+</div>
+
+<br clear="all">
+
+<!------------------------------------------------------------------------------->
+
+
+<p>&nbsp</p>
+
+<H2><p>デベロッパーガイド</p></H2>
+<HR>
+
+<p>&nbsp</p>
+
+<p><a href="dev?page=intro" class="declink">イラストブックプラットフォームの概要</a></p>
+<p><a href="dev?page=json" class="declink">JSON APIリファレンス</a></p>
+<p><a href="dev?page=js" class="declink">JavaScript APIリファレンス</a></p>
+<p><a href="dev?page=css" class="declink">CSSリファレンス</a></p>
+<p><a href="support/" class="declink">サポートフォーラム</a></p>
+
+<!------------------------------------------------------------------------------->
+
+<script>
+	function confirm_delete(url){
+		if(confirm("アプリを削除してもよろしいですか？")){
+			if(confirm("削除操作は取り消せません。本当によろしいですか？")){
+				window.location.href=url;
+			}
+		}
+	}
+</script>
+
+{% if logined %}
+
+<p>&nbsp</p>
+<p>&nbsp</p>
+
+<H2><p>開発中のコンテンツ一覧</p></H2>
+<HR>
+
+<TABLE>
+{% if my_app_list %}
+	{% for app2 in my_app_list %}
+		<TR>
+			<TD><p><a href="app?mode=play&app_key={{app2.key}}">
+			{{app2.app_name}}
+			{% ifequal app2.mode 0 %}（アプリ）{% endifequal %}
+			{% ifequal app2.mode 1 %}（プラグイン）{% endifequal %}
+			{% ifequal app2.mode 2 %}（デザイン）{% endifequal %}
+			</a></p></TD>
+			<TD><input type="button" onclick="script:window.location.href='dev?page=edit&app_key={{app2.key}}'" value="コードを編集"></TD>
+			<TD><input type="button" onclick="script:window.location.href='dev?page=info&app_key={{app2.key}}'" value="情報を編集"></TD>
+			<TD><input type="button" onclick="script:confirm_delete('dev?page=delete&app_key={{app2.key}}');" value="削除"></TD>
+		</TR>
+	{% endfor %}
+{% else %}
+	<TR><TD><p><small>開発しているコンテンツはまだありません。</small></p></TD></TR>
+{% endif %}
+</TABLE>
+
+<p>&nbsp</p>
+<p>&nbsp</p>
+
+<H2><p>新規コンテンツの作成</p></H2>
+<HR>
+
+<form action="dev" method="POST">
+
+<p>コンテンツの名称とID、種別を入力して新規作成ボタンを押して下さい。作成しても公開設定するまで一般には公開されず、いつでも削除できますので、お気軽にお試し下さい。新規アプリの作成後、”コードを編集”をクリックすると、ブラウザで動作するリッチエディタが開きます。</p>
+
+<TABLE>
+<TR><TD>コンテンツ名称</TD><TD><input name="app_name" style="width:200px;"></TD>
+<TR><TD>コンテンツID(半角英数)</TD><TD><input name="app_id" style="width:200px;"></TD>
+<TR><TD>コンテンツ種別</TD><TD><select name="mode"><option value="0">アプリ</option selected><option value="1">プラグイン</option><option value="2">CSSデザイン</option></select></TD></TR>
+<TD>
+<input type="hidden" name="page" value="submit">
+<input type="submit" value="新規作成">
+</TD>
+</TR>
+</TABLE>
+
+</form>
+
+<div align="right">
+<p>
+<A HREF="app" class="declink">イラストブックマーケット</A>　
+<A HREF="{{url_log}}" class="declink">ログアウト</A>
+</p>
+</div>
+
+{% else %}
+
+<p>&nbsp</p>
+<p>&nbsp</p>
+
+<H2><p>ログイン</p></H2>
+<hr>
+
+<p>アプリを開発して登録するにはログインする必要があります。<A HREF="{{url_log}}" class="declink">ログインするにはこちらをクリック</A>して下さい。</p>
+{% endif %}
+
+<!------------------------------------------------------------------------------->
+
+<p>&nbsp</p>
+<p>&nbsp</p>
+
+<H2><p>ご利用規約</p></H2>
+<hr>
+
+<p>APIのご利用は、負荷や内容に応じて予告なく停止させて頂くことがございます。ただし、できるだけオープンに、柔軟に対応していきたいと考えていますので、お気軽にお問い合わせ下さい。</p>
+
+

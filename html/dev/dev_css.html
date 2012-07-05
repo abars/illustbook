@@ -1,0 +1,156 @@
+<!------------------------------------------------------>
+
+<H1><p>CSSリファレンス</p></H1>
+
+<H2><p>概要</p></H2>
+<HR>
+
+<p>このページでは、お絵描き掲示板のCSSをカスタマイズするための基本情報を提供します。CSSでは、一度しか出現しない要素にはID(#)、複数出現する要素にはCLASS(.)を割り当てています。</p>
+
+<p>&nbsp</p>
+<p>&nbsp</p>
+
+<!------------------------------------------------------>
+
+<H2><p>お絵かき掲示板のCSS構成</p></H2>
+<HR>
+<p>お絵描き掲示板は、次のようなCSS構成になっています。</p>
+
+<p>&nbsp</p>
+
+<style>
+	.css_sample{
+		margin:4px;
+		padding:4px;
+	}
+</style>
+
+<div style="background-color:#ffaaaa;" class="css_sample">
+	<p>#container</p>
+	<div style="background-color:#aaffaa;" class="css_sample">
+		<p>#header　お絵描き掲示板のタイトル、ロゴイラストを表示</p>
+	</div>
+
+	<div style="background-color:#aaffaa;" class="css_sample">
+		<p>#contents-header　イラストの新規作成やログインに使用するボタンを表示</p>
+	</div>
+	
+	<div style="background-color:#aaffaa;" class="css_sample">
+		<p>#contents</p>
+		
+		<div style="background-color:#aaaaff;width:75%;float:left;" class="css_sample">
+			<p>#main_2col/#main_1col　2col表示の場合はmain_2col、1col表示の場合はmain_1colが選択される</p>
+		
+			<div style="background-color:#aaffff;" class="css_sample">
+				<p>#entry-head</p>
+				<div style="background-color:#ffffff;" class="css_sample">
+					<p>#page-head　ページの一覧を表示</p>
+				</div>
+				<div style="background-color:#ffffff;" class="css_sample">
+					<p>#rss　RSSへのリンクを表示</p>
+				</div>
+			</div>
+	
+			<div style="background-color:#aaffff;" class="css_sample">
+				<p>.entry　イラストを1枚表示</p>
+			</div>
+
+			<div style="background-color:#aaffff;" class="css_sample">
+				<p>.entry　イラストを1枚表示</p>
+			</div>
+
+			<div style="background-color:#aaffff;" class="css_sample">
+				<p>#entry-bottom</p>
+				<div style="background-color:#ffffff;" class="css_sample">
+					<p>#page-bottom　ページの一覧を表示</p>
+				</div>
+			</div>
+		</div>
+
+		<div style="background-color:#aaaaff;width:20%;float:left;" class="css_sample">
+			<p>#side　サイドバーを表示</p>
+			<p>以下、各項目のタイトル文字にはh4が指定されます</p>
+
+				<div style="background-color:#ffffff;" class="css_sample">
+					<p>#free　フリーエリア</p>
+				</div>
+
+				<div style="background-color:#ffffff;" class="css_sample">
+					<p>#category　カテゴリ一覧</p>
+				</div>
+
+				<div style="background-color:#ffffff;" class="css_sample">
+					<p>#affiliate　アフィリエイト</p>
+				</div>
+
+				<div style="background-color:#ffffff;" class="css_sample">
+					<p>#comment　コメント</p>
+				</div>
+
+				<div style="background-color:#ffffff;" class="css_sample">
+					<p>#counter　カウンター</p>
+				</div>
+
+				<div style="background-color:#ffffff;" class="css_sample">
+					<p>#menu　掲示板メニュー</p>
+				</div>
+
+				<div style="background-color:#ffffff;" class="css_sample">
+					<p>#twitter</p>
+				</div>
+		</div>
+		<br clear="all">
+
+	</div>
+
+	<div style="background-color:#aaffaa;" class="css_sample">
+		<p>#contents-footer　コピーライトを表示</p>
+	</div>
+</div>
+
+<!------------------------------------------------------>
+
+<p>&nbsp</p>
+<p>&nbsp</p>
+
+<H2><p>イラストのCSS構成</p></H2>
+<HR>
+<p>お絵描き掲示板内の各イラストは、次のようなCSS構成になっています。</p>
+
+<p>&nbsp</p>
+
+<div style="background-color:#ffaaaa;" class="css_sample">
+	<p>.entry</p>
+	<div style="background-color:#aaffaa;" class="css_sample">
+		<p>.entry-title</p>
+		<div style="background-color:#ffffff;width:400px;float:left;" class="css_sample">
+			<p>h3　イラストタイトル</p>
+		</div>
+		<div style="background-color:#ffffff;float:right;width:100px;" class="css_sample">
+			<p>.clap　拍手</p>
+		</div>
+		<br clear="all">
+	</div>
+
+	<div style="background-color:#aaffaa;height:200px;" class="css_sample">
+		<p>.entry-illust　イラスト</p>
+	</div>
+
+	<div style="background-color:#aaffaa;" class="css_sample">
+		<p>.entry-name　イラストの基本情報</p>
+	</div>
+
+	<div style="background-color:#aaffaa;" class="css_sample">
+		<p>.entry-comment　イラストのコメント</p>
+	</div>
+
+	<div style="background-color:#aaffaa;" class="css_sample">
+		<p>.entry-bottom　コメントを書く、コメントを読む</p>
+	</div>
+</div>
+
+<!------------------------------------------------------>
+
+<p>&nbsp</p>
+
+<!------------------------------------------------------>

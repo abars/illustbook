@@ -1,0 +1,270 @@
+<!------------------------------------------------------>
+<!-- コードエディタ                                                                    -->
+<!------------------------------------------------------>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>コードエディタ - イラストブック</title>
+<meta name="Copyright" content="Copyright: ABARS" />
+<style type="text/css" media="screen">
+body {
+	overflow: hidden;
+}
+
+#editor { 
+	margin: 0;
+	position: absolute;
+	top: 40px;
+	bottom: 0px;
+	left: 0;
+	right: 0;
+	width:80%;
+}
+
+#edit_tool {
+	position: absolute;
+	top:0px;
+	width:100%;
+	height:40px;
+	margin-top:10px;
+}
+
+#run_tool {
+	position: absolute;
+	top:0px;
+	width:100%;
+	height:40px;
+	margin-top:10px;
+	display:none;
+}
+
+#status {
+	position: absolute;
+	width:20%;
+	bottom:0px;
+	right:0px;
+	height:100%;
+	top:40px;
+	background-color:#e8e8e8;
+	z-index: 50;
+	display: block;
+	font-size: 80%;
+}
+
+#run_window {
+	position:absolute;
+	width:100%;
+	height:100%;
+	background-color:#ffffff;
+	display:none;
+	top:40px;
+	left:0px;
+	z-index: 2000;
+}
+
+</style>
+</head>
+<body>
+
+<!------------------------------------------------------>
+<!-- エディタ                                                                              -->
+<!------------------------------------------------------>
+
+{% ifequal app.mode 2 %}
+	<pre id="editor">{{css_code|safe}}</pre>
+{% else %}
+	<pre id="editor">{{app_code|safe}}</pre>
+{% endifequal %}
+
+<script src="js/ace/ace.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/ace/theme-textmate.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/ace/mode-javascript.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/ace/mode-css.js" type="text/javascript" charset="utf-8"></script>
+<script>
+	var editor;
+	window.onload = function() {
+	editor = ace.edit("editor");
+	editor.setTheme("ace/theme/textmate");
+	{% ifequal app.mode 2 %}
+		var CssMode = require("ace/mode/css").Mode;
+		editor.getSession().setMode(new CssMode());
+	{% else %}
+		var JavaScriptMode = require("ace/mode/javascript").Mode;
+		editor.getSession().setMode(new JavaScriptMode());
+	{% endifequal %}
+};
+</script>
+
+<!------------------------------------------------------>
+<!-- Lint Check                                                                            ->
+<!------------------------------------------------------>
+
+<script src="js/jshint/jshint.js"></script>
+
+<script><!--
+	function lint_check(code_text){
+		var options={};
+		var result=JSHINT(code_text,options);
+		var ret="";
+		if(!result){
+			for(var no=0;no<JSHINT.errors.length;no++){
+				var er=JSHINT.errors[no];
+				if(er){
+					ret+="line"+er.line+" ";
+					ret+=""+er.reason+"<BR>";
+				}
+			}
+		}else{
+			ret+="エラーは見つかりませんでした。";
+		}
+		document.getElementById("status").innerHTML=ret;
+		if(ret=="success"){
+			return true;
+		}
+		return false;
+	}
+--></script>
+
+<!------------------------------------------------------>
+<!-- アプリ実行領域                                                                    -->
+<!------------------------------------------------------>
+
+<script src="api_js"></script>
+
+<script><!--
+	var return_to_app=false;
+	
+	function save(code,mode){
+		return_to_app=mode;
+		var obj=new Object();
+		obj.code=code;
+		obj.page="update"
+		obj.app_key="{{app.key}}"
+		var url="dev"
+		write_status("保存しています。");
+		illustbook.request.post(url,obj,save_callback);
+	}
+	
+	var MODE_EDIT=0;
+	var MODE_RUN=1;
+	var MODE_INFO=2;
+	
+	function tool_mode(mode){
+		document.getElementById("edit_tool").style.display="none";
+		document.getElementById("run_tool").style.display="none";
+		switch(mode){
+		case MODE_EDIT:
+			document.getElementById("edit_tool").style.display="block";
+			break;
+		case MODE_RUN:
+			document.getElementById("run_tool").style.display="block";
+			break;
+		}
+	}
+	
+	function show_run_window(){
+		document.getElementById("run_window").style.display="block";
+		tool_mode(MODE_RUN);
+	}
+	
+	function close_run_window(){
+		document.getElementById("run_window").style.display="none";
+		tool_mode(MODE_EDIT);
+		write_status("実行を終了しました。");
+	}
+	
+	function write_status(text){
+		document.getElementById("status").innerHTML=text;
+	}
+	
+	function save_callback(oj){
+		var text="";
+		if(oj.status=="success"){
+			text="保存に成功しました。";
+		}else{
+			text=oj.message;
+		}
+		write_status(text);
+		if(oj.status=="success"){
+			if(return_to_app){
+				//window.location.href="dev";
+			}else{
+				exec_run();
+			}
+		}
+	}
+	
+	function exec_run(){
+		show_run_window(true);
+		url="app?mode=run&app_key={{app.key}}&{{app.plugin_args|safe}}";
+		{% ifequal app.mode 2%}
+			{% if bbs_key %}
+				url="./{{bbs_key}}/?css_key={{app.key}}";
+			{% else %}
+				url="./sample/?css_key={{app.key}}";
+			{% endif %}
+		{% endifequal %}
+		document.getElementById("run_window").src=url;
+	}
+--></script>
+
+<iframe id="run_window" src=""></iframe>
+
+<!------------------------------------------------------>
+<!-- 保存せずに移動しようとしたらダイアログを出す                      -->
+<!------------------------------------------------------>
+
+<script>
+
+window.onbeforeunload = function (evt) { 
+	var message = '編集を破棄して、このページから移動します。よろしいですか？';
+	if (typeof evt == 'undefined') {//IE 
+		evt = window.event; 
+	}
+	if (evt) { 
+		evt.returnValue = message; 
+	}
+	return message; 
+}
+
+</script>
+
+<!------------------------------------------------------>
+<!-- ツールメニュー                                                                    -->
+<!------------------------------------------------------>
+
+<div id="edit_tool">
+	<div style="float:left;">
+	<input type="button" value="保存" onclick="javascript:save(editor.getSession().getValue(),true);">
+	<input type="button" value="保存して実行" onclick="script:save(editor.getSession().getValue(),false);">
+	{% ifequal app.mode 2 %}
+	{% else %}
+		<input type="button" value="lintチェック" onclick="script:lint_check(editor.getSession().getValue());">
+	{% endifequal %}
+	{% if bbs_key %}
+	<input type="button" value="CSSリファレンス" onclick="javascript:window.open('dev?page=css',null);">
+	<input type="button" value="掲示板の編集へ戻る" onclick="javascript:window.location.href='edit_bbs?bbs_key={{bbs_key}}';">
+	{% else %}
+	<input type="button" value="デベロッパーガイド" onclick="javascript:window.open('dev',null);">
+	<input type="button" value="デベロッパーポータルへ戻る" onclick="javascript:window.location.href='dev';">
+	{% endif %}
+	</div>
+	<BR CLEAR="all">
+</div>
+
+<div id="run_tool">
+	<div style="float:left;">
+	<input type="button" value="実行を終了する" onclick="close_run_window();">
+	<input type="button" value="再実行" onclick="exec_run();">
+	</div>
+	<BR CLEAR="all">
+</div>
+
+<div id="status"></div>
+
+
+</body>
+</html>

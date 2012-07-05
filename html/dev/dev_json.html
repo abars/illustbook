@@ -1,0 +1,473 @@
+<!------------------------------------------------------>
+
+<H1><p>JSON API</p></H1>
+
+<H2><p>概要</p></H2>
+<HR>
+
+<p>
+JSON APIへは、http://www.illustbook.net/api_クラス名?method=関数名&引数、でアクセスします。返り値はJSONオブジェクトです。外部サーバからアクセスする場合は、通常のgetメソッドで問題ありませんが、ローカルのJavaScriptからアクセスされる場合、クロスドメイン制約を回避する必要があります。そこで、APIアクセスの引数の最後に、callback=関数名、を追加することでJSONPでアクセスすることができます。</p>
+
+<p>&nbsp</p>
+
+<p>イラストブックのJavaScript APIでは、ネットワークアクセスAPIが提供されており、同じドメインの場合は通常のget、それ以外の場合はJSONPを自動的に選択して、JSON APIにアクセスしています。JavaScript APIを使用してJSON APIにアクセスする例を、次に示します。</p>
+
+<pre class="brush: jscript;">
+function test_jsonp(){
+	user_id=illustbook.user.getCurrentUser()
+	var api_url="http://www.illustbook.net/api_user"
+	illustbook.request.get(api_url+"?method=getProfile&user_id="+user_id,test_callback)
+}
+	
+function test_callback(oj){
+	alert(oj.response.name);
+}
+</pre>
+
+<p>&nbsp</p>
+
+<p>この例ではapi_userにアクセスしていますが、get関数が自動的に、http://www.illustbook.net/api_user?method=getProfile&user_id=xxx&callback=my_callback、という形式に変換してscriptタグを動的に生成して、処理結果をmy_callbackに通知します。</p>
+
+<p>&nbsp</p>
+
+<p>コールバックには次のプロパティを持つオブジェクトが通知されます。通知されるオブジェクトは、JavaScript APIとJSON APIで共通です。</p>
+
+<TABLE BORDER=1 WIDTH=100%>
+<TR><TD>プロパティ</TD><TD>返値</TD><TD>返値の詳細</TD></TR>
+<TR><TD>status</TD><TD>APIアクセス結果が返ります</TD><TD>"success"：APIアクセスに成功した<BR>"overcapacity"：帯域制限された<BR>"nodata"：保存されているデータが存在しない<BR>"failed"：APIアクセスに失敗した</TD></TR>
+<TR><TD>message</TD><TD>statusが"success"以外の場合に、エラーの詳細が返ります</TD><TD>UTF8の日本語文字列、statusが"success"の場合は空文字列</TD></TR>
+<TR><TD>response</TD><TD>APIアクセスの処理結果</TD><TD>APIに応じたオブジェクトもしくはオブジェクトのリスト</TD></TR>
+</TABLE>
+
+<p>&nbsp</p>
+
+<!------------------------------------------------------>
+
+<p>&nbsp</p>
+<p>&nbsp</p>
+
+<H2><p>クラスとオブジェクト一覧</p></H2>
+<HR>
+
+<H3><p>>クラス一覧</p></H3>
+
+<TABLE BORDER=1 WIDTH=100%>
+<TR><TD>クラス</TD><TD>役割</TD></TR>
+<TR><TD><a href="#feed_class">feed</a></TD><TD>フィードを取得</TD></TR>
+<TR><TD><a href="#user_class">user</a></TD><TD>ユーザ情報を取得</TD></TR>
+<TR><TD><a href="#bookmark_class">bookmark</a></TD><TD>ブックマーク情報を取得</TD></TR>
+<TR><TD><a href="#perpetuation_class">perpetuation</a></TD><TD>データを保存</TD></TR>
+</TABLE>
+
+<p>&nbsp</p>
+<p>&nbsp</p>
+
+<H3><p>>オブジェクト一覧</p></H3>
+
+<TABLE BORDER=1 WIDTH=100%>
+<TR><TD>オブジェクト</TD><TD>役割</TD></TR>
+<TR><TD><a href="#thread_object">thread</a></TD><TD>イラスト情報</TD></TR>
+<TR><TD><a href="#bbs_object">bbs</a></TD><TD>掲示板情報</TD></TR>
+<TR><TD><a href="#app_object">app</a></TD><TD>アプリ情報</TD></TR>
+<TR><TD><a href="#feed_object">feed</a></TD><TD>フィード情報</TD></TR>
+<TR><TD><a href="#user_object">user</a></TD><TD>ユーザ情報</TD></TR>
+<TR><TD><a href="#perpetuation_data_object">perpetuaion_data</a></TD><TD>保存した情報</TD></TR>
+</TABLE>
+
+<!------------------------------------------------------>
+
+<p>&nbsp</p>
+<p>&nbsp</p>
+
+<a name="feed_class"><H2><p>feedクラス</p></H2></a>
+<HR>
+
+<p>feedクラスではイラストブックの最新情報を取得することができます。次の例では、最近追加されたイラストのタイトルを表示します。</p>
+
+<pre class="brush: jscript;">
+function test_feed(){
+	user_id=illustbook.user.getCurrentUser()
+	var api_url="http://www.illustbook.net/api_feed"
+	var args="offset=0&limit=1&order=new"
+	illustbook.request.get(api_url+"?method=getThreadList&"+args,feed_callback)
+}
+	
+function feed_callback(oj){
+	var thread_list=oj.response;
+	alert(thread_list[0].title);
+}
+</pre>
+
+<p>&nbsp</p>
+
+<TABLE BORDER=1 WIDTH=100%>
+
+<TR><TD>メソッド</TD><TD>概要</TD><TD>引数</TD><TD>返値</TD></TR>
+
+<TR><TD>getThreadList</TD>
+<TD>スレッドリストの取得</TD>
+<TD>
+bbs_id：掲示板のID　省略時は全ての掲示板<BR>
+offset：開始オフセット<BR>
+limit：取得する数(最大100)<BR>
+order：並び順(new/applause/bookmark/moper)<BR>
+</TD>
+<TD>
+threadオブジェクトのリスト<BR>
+<BR>
+非公開ユーザの情報は返らないため返り値はlimitより少ない場合があります。<BR>
+offsetは非公開ユーザを含めて指定します。<BR>
+データはキャッシュされます。<BR>
+</TD></TR>
+
+</TABLE>
+
+<!------------------------------------------------------>
+
+<p>&nbsp</p>
+<p>&nbsp</p>
+
+<a name="user_class"><H2><p>userクラス</p></H2></a>
+<HR>
+
+<p>userクラスではイラストブックのユーザ情報を取得することができます。</p>
+
+<TABLE BORDER=1 WIDTH=100%>
+
+<TR><TD>メソッド</TD><TD>概要</TD><TD>引数</TD><TD>返値</TD></TR>
+
+<TR>
+	<TD>getUser</TD>
+	<TD>ユーザの基本情報を取得</TD>
+	<TD>user_id:ユーザID</TD>
+	<TD>userオブジェクト</TD>
+</TR>
+
+<TR>
+	<TD>getFollow</TD>
+	<TD>フォローしているユーザを取得</TD>
+	<TD>user_id:ユーザID</TD>
+	<TD>userオブジェクトのリスト<BR>キャッシュされます
+	</TD>
+</TR>
+
+<TR>
+	<TD>getFollower</TD>
+	<TD>フォローされているユーザを取得</TD>
+	<TD>user_id:ユーザID</TD>
+	<TD>userオブジェクトのリスト<BR>キャッシュされます
+	</TD>
+</TR>
+
+<TR>
+	<TD>getProfile</TD>
+	<TD>ユーザのプロフィールを取得</TD>
+	<TD>user_id:ユーザID</TD>
+	<TD>オブジェクト<BR><BR>
+	profile:プロフィール<BR>
+	</TD>
+</TR>
+
+<TR>
+	<TD>getBbsList</TD>
+	<TD>ユーザのレンタルしている掲示板のリストを取得</TD>
+	<TD>user_id:ユーザID</TD>
+	<TD>bbsオブジェクトのリスト
+	</TD>
+</TR>
+
+<TR>
+	<TD>getThreadList</TD>
+	<TD>ユーザの投稿したイラストのリストを取得</TD>
+	<TD>user_id:ユーザID</TD>
+	<TD>threadオブジェクトのリスト
+	</TD>
+</TR>
+
+<TR>
+	<TD>getTimeline</TD>
+	<TD>タイムラインの取得</TD>
+	<TD>
+	user_id：ユーザID<BR>
+	offset：開始オフセット<BR>
+	limit：取得する数(最大100)<BR>
+	order：並び順(new)<BR>
+	</TD>
+	<TD>
+	feedオブジェクトのリスト<BR>
+	<BR>
+	削除されたフィードの情報は返らないため返り値はlimitより少ない場合があります。<BR>
+	</TD>
+</TR>
+
+</TABLE>
+
+<!------------------------------------------------------>
+
+<p>&nbsp</p>
+<p>&nbsp</p>
+
+<a name="bookmark_class"><H2><p>bookmarkクラス</p></H2></a>
+<HR>
+
+<p>bookmarkクラスでは、ユーザをキーとしてブックマークしているイラストを取得したり、イラストをキーにしてブックマークしているユーザを取得するこができます。</p>
+
+<TABLE BORDER=1 WIDTH=100%>
+
+<TR><TD>メソッド</TD><TD>概要</TD><TD>引数</TD><TD>返値</TD></TR>
+
+<TR>
+	<TD>getThreadList</TD>
+	<TD>ブックマークしているイラストを取得</TD>
+	<TD>user_id:ユーザID</TD>
+	<TD>threadオブジェクトのリスト</TD>
+</TR>
+
+<TR>
+	<TD>getBbsList</TD>
+	<TD>ブックマークしている掲示板を取得</TD>
+	<TD>user_id:ユーザID</TD>
+	<TD>bbsオブジェクトのリスト</TD>
+</TR>
+
+<TR>
+	<TD>getThreadUserList</TD>
+	<TD>イラストをブックマークしているユーザのリストを取得</TD>
+	<TD>thread_key:スレッドのキー</TD>
+	<TD>userオブジェクトのリスト</TD>
+</TR>
+
+<TR>
+	<TD>getBbsUserList</TD>
+	<TD>掲示板をブックマークしているユーザのリストを取得</TD>
+	<TD>bbs_key:掲示板のkey</TD>
+	<TD>userオブジェクトのリスト</TD>
+</TR>
+
+<TR>
+	<TD>getAppUserList</TD>
+	<TD>アプリをブックマークしているユーザのリストを取得</TD>
+	<TD>app_key:アプリのkey</TD>
+	<TD>userオブジェクトのリスト</TD>
+</TR>
+
+</TABLE>
+
+
+<!------------------------------------------------------>
+
+<p>&nbsp</p>
+<p>&nbsp</p>
+
+<a name="perpetuation_class"><H2><p>perpetuationクラス</p></H2></a>
+<HR>
+
+<p>perpetuationクラスでは、イラストブックにデータを保存したり、イラストブックからデータを読み込んだりすることができます。保存形式はキーバリューストアとなり、実データの文字列と一緒に、データのソートのための数値を格納することができます。保存時にはユーザアカウントとアプリIDを認証するため、他のユーザのデータや、他のアプリのデータを書き換えることはできません。また、ローカル環境からは動作しません。</p>
+
+<p>次の例では、"test_data"という名前でデータの保存を行なっています。</p>
+
+<pre class="brush: jscript;">
+function test_put_data(){
+    var data_obj=[];
+    data_obj.int_data=10;
+    data_obj.text_data="test";
+
+    app_key=illustbook.app.getAppKey();
+    user_id=illustbook.user.getCurrentUser();
+    data_key="test_data";
+    args="app_key="+app_key+"&user_id="+user_id+"&data_key="+data_key;
+    illustbook.request.post("api_perpetuation?method=putData&"+args,data_obj,put_data_callback);
+};
+
+function put_data_callback(oj){
+    alert("put:"+oj.status);
+}
+</pre>
+
+<p>次の例では、"test_data"という名前からデータの読込を行なっています。</p>
+
+<pre class="brush: jscript;">
+function test_get_data(){
+    app_key=illustbook.app.getAppKey();
+    user_id=illustbook.user.getCurrentUser();
+    data_key="test_data";
+    args="app_key="+app_key+"&user_id="+user_id+"&data_key="+data_key;
+    illustbook.request.get("api_perpetuation?method=getData&"+args,get_data_callback);
+}
+
+function get_data_callback(oj){
+    alert("get:"+oj.status+" int_data:"+oj.response.int_data+" text_data:"+oj.response.text_data);
+}
+</pre>
+
+<p>また、アプリケーションの設定においてランキングに使用するdata_keyを指定することで、自動的にアプリにユーザランキングを追加することができます。ランキングはint_dataでソートされ、text_dataが画面に表示されます。</p>
+
+<TABLE BORDER=1 WIDTH=100%>
+
+<TR><TD>メソッド</TD><TD>概要</TD><TD>引数</TD><TD>返値</TD><TD>解説</TD></TR>
+
+	<TR>
+		<TD>putData</TD>
+		<TD>データの保存</TD>
+		<TD>app_key,data_key,user_id,text_data,int_data</TD>
+		<TD>なし</TD>
+		<TD>data_keyをキーとしてtext_dataおよびint_dataを保存します。POSTメソッドでデータを送信する必要があります。JSON APIには対応していません。ログイン中かつプレイしているアプリでない場合はエラーが返ります。保存に成功したかどうかはコールバックのstatusを確認します。</TD>
+	</TR>
+
+	<TR>
+		<TD>getData</TD>
+		<TD>データの読込</TD>
+		<TD>app_key,data_key,user_id</TD>
+		<TD>perpetuation_dataオブジェクト</TD>
+		<TD>data_keyをキーとしてtext_dataおよびint_dataを読み込みます。保存しているデータが存在しない場合はstatusにnodataが返ります。</TD>
+	</TR>
+
+	<TR>
+		<TD>getRanking</TD>
+		<TD>ランキングの取得</TD>
+		<TD>app_key,data_key,order</TD>
+		<TD>userオブジェクトのリスト+text_data+int_data</TD>
+		<TD>data_keyをキーとしてランキングを読み込みます。orderにはdescending(降順)もしくはascending(昇順)を指定します。</TD>
+	</TR>
+
+</TABLE>
+
+<!------------------------------------------------------>
+
+<p>&nbsp</p>
+<p>&nbsp</p>
+
+<a name="thread_object"><H2><p>threadオブジェクト</p></H2></a>
+<HR>
+
+<p>threadオブジェクトにはイラストの情報が入ります。イラストからブックマークを検索する場合はthreadオブジェクトのkeyプロパティを使用します。</p>
+
+<TABLE BORDER=1 WIDTH=100%>
+<TR><TD>プロパティ</TD><TD>詳細</TD></TR>
+<TR><TD>title</TD><TD>タイトル</TD></TR>
+<TR><TD>author</TD><TD>投稿者</TD></TR>
+<TR><TD>thumbnail_url</TD><TD>サムネイル画像へのURL</TD></TR>
+<TR><TD>image_url</TD><TD>イラスト画像へのURL、アプリでの使用が禁止されている場合は空文字列が返ります</TD></TR>
+<TR><TD>thread_url</TD><TD>スレッドへのURL</TD></TR>
+<TR><TD>create_date</TD><TD>作成日時</TD></TR>
+<TR><TD>applause</TD><TD>拍手の数</TD></TR>
+<TR><TD>bookmark</TD><TD>ブックマークの数</TD></TR>
+<TR><TD>key</TD><TD>オブジェクトへのキー</TD></TR>
+</TABLE>
+
+<!------------------------------------------------------>
+
+<p>&nbsp</p>
+<p>&nbsp</p>
+
+<a name="bbs_object"><H2><p>bbsオブジェクト</p></H2></a>
+<HR>
+
+<p>bbsオブジェクトには掲示板の情報が入ります。</p>
+
+<TABLE BORDER=1 WIDTH=100%>
+<TR><TD>プロパティ</TD><TD>詳細</TD></TR>
+<TR><TD>title</TD><TD>タイトル</TD></TR>
+<TR><TD>bbs_url</TD><TD>BBSへのURL</TD></TR>
+<TR><TD>thumbnail_url</TD><TD>サムネイル画像へのURL</TD></TR>
+<TR><TD>bookmark</TD><TD>ブックマークの数</TD></TR>
+<TR><TD>key</TD><TD>オブジェクトへのキー</TD></TR>
+</TABLE>
+
+<!------------------------------------------------------>
+
+<p>&nbsp</p>
+<p>&nbsp</p>
+
+<a name="app_object"><H2><p>appオブジェクト</p></H2></a>
+<HR>
+
+<p>appオブジェクトにはアプリの情報が入ります。</p>
+
+<TABLE BORDER=1 WIDTH=100%>
+<TR><TD>プロパティ</TD><TD>詳細</TD></TR>
+<TR><TD>app_id</TD><TD>アプリID</TD></TR>
+<TR><TD>name</TD><TD>アプリの名前</TD></TR>
+<TR><TD>app_url</TD><TD>アプリへのアドレス</TD></TR>
+<TR><TD>icon_url</TD><TD>アイコンへのURL</TD></TR>
+<TR><TD>key</TD><TD>オブジェクトへのキー</TD></TR>
+</TABLE>
+
+<p>&nbsp</p>
+
+<!------------------------------------------------------>
+
+<p>&nbsp</p>
+<p>&nbsp</p>
+
+<a name="feed_object"><H2><p>feedオブジェクト</p></H2></a>
+<HR>
+
+<p>feedオブジェクトにはフィードの情報が入ります。</p>
+
+<TABLE BORDER=1 WIDTH=100%>
+<TR><TD>プロパティ</TD><TD>詳細</TD></TR>
+<TR><TD>mode</TD><TD>フィードの内容に応じて次の値が入ります。<BR>bbs_new_illust：新規イラストの投稿<BR>new_bookmark_thread：イラストのブックマーク<BR>new_follow：ユーザをフォロー<BR>new_comment_thread：イラストへのコメント<BR>new_bookmark_bbs：掲示板のブックマーク<BR>message：ツイート<BR></TD></TR>
+<TR><TD>from_user</TD><TD>フィード発信者のuserオブジェクト</TD></TR>
+<TR><TD>to_user</TD><TD>フィード受信者のuserオブジェクト</TD></TR>
+<TR><TD>follow_user</TD><TD>フォローしたユーザのuserオブジェクト</TD></TR>
+<TR><TD>bbs</TD><TD>投稿先のbbsオブジェクト</TD></TR>
+<TR><TD>thread</TD><TD>投稿したイラストのthreadオブジェクト<BR><BR>通常、threadオブジェクトには必ずイラストを含みますが、feedオブジェクトの場合のみ、イラストを含まないthread（文字だけの投稿など）が返る場合があります。その場合、thread.image_urlとthread.thumbnail_urlが空文字列になります。</TD></TR>
+<TR><TD>message</TD><TD>コメント</TD></TR>
+<TR><TD>create_date</TD><TD>作成日時</TD></TR>
+<TR><TD>key</TD><TD>フィードオブジェクトへのキー</TD></TR>
+</TABLE>
+
+<p>&nbsp</p>
+
+<!------------------------------------------------------>
+
+<p>&nbsp</p>
+<p>&nbsp</p>
+
+<a name="user_object"><H2><p>userオブジェクト</p></H2></a>
+<HR>
+
+<p>userオブジェクトにはユーザの情報が入ります。メールアドレスは取得できません。</p>
+
+<TABLE BORDER=1 WIDTH=100%>
+<TR><TD>プロパティ</TD><TD>詳細</TD></TR>
+<TR><TD>user_id</TD><TD>ユーザID</TD></TR>
+<TR><TD>name</TD><TD>名前</TD></TR>
+<TR><TD>homepage</TD><TD>ホームページへのアドレス</TD></TR>
+<TR><TD>icon_url</TD><TD>アイコンへのURL</TD></TR>
+<TR><TD>profile_url</TD><TD>プロフィールへのURL</TD></TR>
+</TABLE>
+
+<p>&nbsp</p>
+
+<!------------------------------------------------------>
+
+<p>&nbsp</p>
+<p>&nbsp</p>
+
+<a name="perpetuation_data_object"><H2><p>perpetuation_dataオブジェクト</p></H2></a>
+<HR>
+
+<p>perpetuation_dataオブジェクトにはperpetuaion apiで保存したデータが返ります。</p>
+
+<TABLE BORDER=1 WIDTH=100%>
+<TR><TD>プロパティ</TD><TD>詳細</TD></TR>
+<TR><TD>user_id</TD><TD>ユーザID</TD></TR>
+<TR><TD>data_id</TD><TD>データID</TD></TR>
+<TR><TD>text_data</TD><TD>テキストデータ</TD></TR>
+<TR><TD>int_data</TD><TD>整数データ</TD></TR>
+</TABLE>
+
+<p>&nbsp</p>
+
+<!------------------------------------------------------>
+<p>&nbsp</p>
+<p>&nbsp</p>
+
+<a name="user_object"><H2><p>APIのアクセス制限</p></H2></a>
+<HR>
+
+<p>JSON APIは同一IPから3秒間に10回までアクセスすることができます。それを超えた場合は自動的にovercapacityエラーが返ります。アクセス制限はサーバの負荷に応じて今後変更される可能性があります。</p>
+
+<p>&nbsp</p>
