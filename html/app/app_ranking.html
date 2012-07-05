@@ -1,0 +1,31 @@
+<p class="bar">ランキング</p>
+	
+	{% if app.ranking_key %}
+	<script>
+		illustbook.request.get("api_perpetuation?method=getRanking&app_key={{app.key}}&data_key={{app.ranking_key}}&order={% if app.ranking_order %}ascending{%else%}descending{%endif%}",app_ranking_callback);
+		
+		function app_ranking_callback(oj){
+			var text="";
+			if(oj.status=="success"){
+				if(oj.response.length==0){
+					text="<p>スコアを登録しているユーザはいません。</p>";
+				}
+				for(var i=0;i<oj.response.length;i++){
+					var one=oj.response[i];
+					text+=""+(i+1)+"位　"+one.text_data
+					text+="<a href='"+one.profile_url+"'>";
+					text+="<img src='"+one.icon_url+"' width=20px height=20px>";
+					text+=""+one.name+"";
+					text+="</a>";
+					text+="<BR>";
+				}
+			}else{
+				text="<p>ランキングデータの取得に失敗("+oj.message+")</p>"
+			}
+			document.getElementById("ranking_data").innerHTML=text;
+		}
+	</script>
+	<div id="ranking_data"></div>
+	{% else %}
+	<p>このアプリにはランキングは提供されていません。</p>
+	{% endif %}

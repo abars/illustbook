@@ -1,0 +1,12 @@
+<p class="bar">コンテンツ情報</p>
+<div style="width:100%;">
+	<TABLE width="100%">
+	<TR><TD width=100px><p>
+{% ifequal app.mode 0 %}アプリ名{% endifequal %}
+{% ifequal app.mode 1 %}プラグイン名{% endifequal %}
+{% ifequal app.mode 2 %}デザイン名{% endifequal %}
+</p></TD><TD><p>{{app.app_name}}</p></TD></TR>
+	<TR><TD><p>開発者</p></TD><TD><p><a href="mypage?user_id={{app.user_id}}">{{app.author}}</a></p></TD></TR>
+	<TR><TD><p>概要</p></TD><TD><p>{{app.app_guide}}</p></TD></TR>
+	</TABLE>
+</div>

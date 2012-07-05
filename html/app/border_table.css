@@ -1,0 +1,85 @@
+<!-- 2段組スタイルシート -->
+
+<style>
+	.border_table{
+		border-style:solid;
+		border-color:#dfeec3;
+		border-width:2px;
+	}
+
+	.radius_image{
+		border-radius: 4px;
+		-moz-border-radius: 4px;
+		-webkit-border-radius: 4px;
+	}
+
+	.bar{
+		background:#DFEEC3;
+		width:98%;
+		font-size: 14px;
+		padding:4px;
+		margin-bottom: 4px;
+	}
+	
+	#container p{
+		padding-bottom: 4px;
+	}
+	
+	{% if not is_iphone %}
+	.left_box{
+		width:660px;
+		float:left;
+	}
+	
+	.right_box{
+		width:220px;
+		float:left;
+		padding-left:10px;
+	}
+	
+	.app_list_info{
+		width:570px;
+		float:left;
+		padding-right:20px;
+	}
+	
+	.app_list_news{
+		width:300px;
+		float:left;
+	}
+	
+	{% endif %}
+	
+	{% if is_iphone %}
+	#container{
+		{% if is_portal %}
+		width: 320px;
+		{% else %}
+		width: 480px;
+		{% endif %}
+	}
+	
+	#contents{
+		padding-left: 0px;
+		padding-right: 0px;
+	}
+	
+	#footer{
+		padding: 0px;
+		text-align: center;
+	}
+	
+	.left_box{
+		padding-top:8px;
+	}
+
+	.right_box{
+	}
+	
+	.app_text{
+		padding:4px;
+	}
+
+	{% endif %}
+</style>
+

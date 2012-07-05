@@ -1,0 +1,10 @@
+{% ifequal app.mode 2 %}
+<pre class="brush: css">{{app_code|safe}}</pre>
+{% else %}
+<pre class="brush: js">{{app_code|safe}}</pre>
+{% endifequal %}
+
+<p>&nbsp</p>
+
+{% include "app_info.html" %}
+<p>&nbsp</p>

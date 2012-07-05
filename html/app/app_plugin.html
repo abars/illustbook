@@ -1,0 +1,19 @@
+{% include "app_info.html" %}
+<p>&nbsp</p>
+
+<p class="bar">使用方法</p>
+
+<div class="app_text">
+		<p>このコンテンツはプラグインです。</p>
+		<p>次のコードを自分のホームページや掲示板のHTMLに埋め込むことでご利用頂けます。</p>
+		<p>また、URLに含まれる引数を変更することで、プラグインの設定を変更することができます。</p>
+		<p>設定値の詳細はアプリ概要を参照して下さい。</p>
+<textarea style="width:80%;" rows=10>{{plugin_code|safe}}</textarea>
+		<p>&nbsp</p>
+		<p class="bar">プラグインの実行例</p>
+		{{plugin_code|safe}}
+</div>
+
+<br clear="all">
+
+<p>&nbsp</p>
