@@ -12,7 +12,7 @@
 			<table class="table_color">
 			<tr><td>名前（必須）</td>
 			<td>
-				<input type="text" name="author" maxlength="50">
+				<input type="text" name="author" maxlength="50" value="{{user_name}}">
 				{% if logined %}
 					<input name="link_to_profile" type="checkbox" checked>プロフィールにリンク
 				{% else %}

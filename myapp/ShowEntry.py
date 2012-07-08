@@ -52,9 +52,20 @@ class ShowEntry(webapp.RequestHandler):
 			com_list.append({'com':com, 'res_list':res_list})
 		return com_list
 	
+	#ユーザ名を取得
+	@staticmethod
+	def get_user_name(user):
+		if(not user):
+			return ""
+		user_id=user.user_id()
+		bookmark=ApiObject.get_bookmark_of_user_id_for_write(user_id)
+		if(not bookmark):
+			return ""
+		return bookmark.name
+
 	#コメントのレンダリング
 	@staticmethod
-	def render_comment(req,host_url,bbs,thread,com_list_,edit_flag,bbs_key,logined,show_comment_form,is_admin):
+	def render_comment(req,host_url,bbs,thread,com_list_,edit_flag,bbs_key,logined,show_comment_form,is_admin,user_name):
 		#レスを取得
 		com_list=ShowEntry._get_response(com_list_,thread)
 		
@@ -68,7 +79,8 @@ class ShowEntry(webapp.RequestHandler):
 			'bbs_key': bbs_key,
 			'logined':logined,
 			'show_comment_form':show_comment_form,
-			'is_admin':is_admin
+			'is_admin':is_admin,
+			'user_name': user_name
 			}
 
 		path = os.path.join(os.path.dirname(__file__), "../html/thread/thread_comment.html")

@@ -127,8 +127,11 @@ class ShowThread(webapp.RequestHandler):
 		if(bbs.comment_login_require and not(logined)):
 			show_comment_form=0
 		
+		#名前取得
+		user_name=ShowEntry.get_user_name(user)
+		
 		#コメントのレンダリング
-		comment=ShowEntry.render_comment(self,host_url,bbs,thread,com_list_,edit_flag,bbs_key,logined,show_comment_form,admin_user)
+		comment=ShowEntry.render_comment(self,host_url,bbs,thread,com_list_,edit_flag,bbs_key,logined,show_comment_form,admin_user,user_name)
 		
 		#描画
 		template_values = {
@@ -156,7 +159,8 @@ class ShowThread(webapp.RequestHandler):
 			'is_maintenance':is_maintenance,
 			'redirect_url': self.request.path,
 			'comment':comment,
-			'show_comment_form':show_comment_form
+			'show_comment_form':show_comment_form,
+			'user_name':user_name
 			}
 
 		path = os.path.join(os.path.dirname(__file__), "../html/"+design["base_name"])
