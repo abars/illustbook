@@ -500,6 +500,8 @@ class ApiObject(webapp.RequestHandler):
 
 	@staticmethod
 	def _get_cached_entry_key(ds_obj):
+		if(not ds_obj.comment_cnt):
+			return []	#コメント数が0の場合は高速化のためQueryを走らせない
 		query=db.Query(Entry,keys_only=True).filter("thread_key =",ds_obj).filter("del_flag =",1)
 		if(ds_obj.bbs_key.default_comment_order==1):
 			query.order("-create_date")
