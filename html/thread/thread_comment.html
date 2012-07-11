@@ -1,7 +1,4 @@
-{% if not com_list %}
-	<HR>コメントはまだありません。<BR>
-{%endif%}
-
+{% if com_list %}
 <div width=100% style="word-break:break-all;">
 {% for entry in com_list %}
 	{% if entry.com.del_flag %}
@@ -97,3 +94,4 @@
 {% endif %}
 {% endfor %}
 </div>
+{% endif %}

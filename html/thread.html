@@ -50,7 +50,11 @@
 				{% if not bbs.disable_comment %}
 					<div class="entry">
 					コメント
-					{{comment}}
+					{% if not comment %}
+						<HR>コメントはまだありません。<BR>
+					{% else %}
+						{{comment}}
+					{% endif %}
 					<p>&nbsp</p>
 					{% include "./thread/thread_comment_order.html" %}
 					</div>
