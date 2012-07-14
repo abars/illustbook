@@ -385,6 +385,11 @@ class RedirectBbs(webapp.RequestHandler):
 		url=MappingId.get_usr_url(host_url,bbs)
 		self.redirect(str(url))
 
+class DropBox(webapp.RequestHandler):
+	def get(self):
+		url="https://www.dropbox.com/referrals/NTE2NDM3NTAzOQ?src=referrals_twitter6"
+		self.redirect(str(url))
+		
 application = webapp.WSGIApplication(
 	[('/', MainPage),
 	(r'/usr/(.*)/(.*)\.html',ShowThread),
@@ -467,7 +472,8 @@ application = webapp.WSGIApplication(
 	('/stack_feed_worker',StackFeed),
 	('/counter_worker',CounterWorker),
 	('/feed_tweet',StackFeedTweet),
-	('/ranking',RankingPortal)
+	('/ranking',RankingPortal),
+	('/dropbox',DropBox),
 	],debug=False)
 
 if __name__ == "__main__":
