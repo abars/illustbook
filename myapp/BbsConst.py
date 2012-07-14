@@ -39,6 +39,7 @@ class BbsConst:
 	#memcacheの残存時間
 	OBJECT_MAPPING_CACHE_TIME=60*60*24
 	OBJECT_CACHE_TIME=60*60*12
+	TOPPAGE_FEED_CACHE_TIME=60*60*1
 	
 	#ranking
 	THREAD_RANKING_KEY_NAME="thread_ranking"

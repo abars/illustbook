@@ -40,6 +40,7 @@ from myapp.UTC import UTC
 from myapp.JST import JST
 from myapp.StackFeed import StackFeed
 from myapp.SyncPut import SyncPut
+from myapp.ApiFeed import ApiFeed
 
 class AddNewThread(webapp.RequestHandler):
 	def post(self):
@@ -186,6 +187,9 @@ class AddNewThread(webapp.RequestHandler):
 			user=None
 		url=self.get_thread_url(bbs,new_thread)
 		StackFeed.feed_new_thread(user,bbs,new_thread)
+		
+		#news
+		ApiFeed.invalidate_cache()
 	
 	def get_thread_url(self,bbs,new_thread):
 		#thread info

@@ -34,6 +34,7 @@ from myapp.OwnerCheck import OwnerCheck
 from myapp.MappingId import MappingId
 from myapp.RecentCommentCache import RecentCommentCache
 from myapp.AppPortal import AppPortal
+from myapp.ApiFeed import ApiFeed
 
 class UpdateBbs(webapp.RequestHandler):
 	def post(self):
@@ -307,12 +308,15 @@ class UpdateBbs(webapp.RequestHandler):
 		bbs.put()
 		
 		RecentCommentCache.invalidate(bbs);
+
+		#feed update
+		ApiFeed.invalidate_cache()
 		
 		if(bbs.move_account):
 			self.redirect(str('./move_account?bbs_key='+self.request.get("bbs_key")))
 		else:
 			self.redirect(str('./bbs_index?bbs_key='+self.request.get("bbs_key")))
-
+		
 	@staticmethod
 	def set_css(main,css,bbs):
 		if(css):

@@ -46,21 +46,23 @@ class ApiFeed(webapp.RequestHandler):
 	@staticmethod
 	def invalidate_cache():
 		offset=0
-		memcache.delete(ApiFeed._get_cache_id("bookmark",None,offset))
-		memcache.delete(ApiFeed._get_cache_id("new",None,offset))
-		memcache.delete(ApiFeed._get_cache_id("applause",None,offset))
-		memcache.delete(ApiFeed._get_cache_id("moper",None,offset))
-		memcache.delete(ApiFeed._get_cache_id("hot",None,offset))
-		memcache.delete(ApiFeed._get_cache_id(None,None,offset))
+		#memcache.delete(ApiFeed._get_cache_id("bookmark",None,offset,0))
+		memcache.delete(ApiFeed._get_cache_id("new",None,offset,16))	#pc
+		memcache.delete(ApiFeed._get_cache_id("new",None,offset,18))	#iphone
+		#memcache.delete(ApiFeed._get_cache_id("applause",None,offset,0))
+		memcache.delete(ApiFeed._get_cache_id("moper",None,offset,6))	#pc
+		memcache.delete(ApiFeed._get_cache_id("hot",None,offset,12))	#pc
+		memcache.delete(ApiFeed._get_cache_id("hot",None,offset,18))	#iphone
+		#memcache.delete(ApiFeed._get_cache_id(None,None,offset))
 		return
 	
 	@staticmethod
-	def _get_cache_id(order,bbs_id,offset):
+	def _get_cache_id(order,bbs_id,offset,limit):
 		if(not order):
 			order="none"
 		if(not bbs_id):
 			bbs_id="none"
-		return BbsConst.OBJECT_CACHE_HEADER+"_"+order+"_"+bbs_id+"_"+str(offset)
+		return BbsConst.OBJECT_CACHE_HEADER+"_"+order+"_"+bbs_id+"_"+str(offset)+"_"+str(limit)
 	
 	@staticmethod
 	def _get_query(order):
@@ -88,21 +90,22 @@ class ApiFeed(webapp.RequestHandler):
 		if(req.request.get("offset")):
 			offset=int(req.request.get("offset"))
 
-		cache_id=ApiFeed._get_cache_id(req.request.get("order"),req.request.get("bbs_id"),offset)
-
-		cache_enable=0
-		if(offset==0):
-			cache_enable=1
-		
-		data=memcache.get(cache_id)
-		#if(data and cache_enable):
-		#	return data
-
 		limit=10
 		if(req.request.get("limit")):
 			limit=int(req.request.get("limit"))
 		if(limit>100):
 			limit=100
+
+		#キャッシュが有効かどうか
+		cache_enable=0
+		if(offset==0):
+			cache_enable=1
+		
+		#キャッシュ取得
+		cache_id=ApiFeed._get_cache_id(req.request.get("order"),req.request.get("bbs_id"),offset,limit)
+		data=memcache.get(cache_id)
+		if(data and cache_enable):
+			return data
 		
 		#スレッド一覧取得
 		if(req.request.get("order")=="hot"):
@@ -124,8 +127,9 @@ class ApiFeed(webapp.RequestHandler):
 		#リスト作成
 		dic=ApiObject.create_thread_object_list(req,thread_list,bbs_id)
 
+		#キャッシュに乗せる
 		if(cache_enable):
-			memcache.set(cache_id,dic,60*10)
+			memcache.set(cache_id,dic,BbsConst.TOPPAGE_FEED_CACHE_TIME)
 		
 		return dic
 
