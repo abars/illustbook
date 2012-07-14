@@ -474,6 +474,7 @@ application = webapp.WSGIApplication(
 	('/feed_tweet',StackFeedTweet),
 	('/ranking',RankingPortal),
 	('/dropbox',DropBox),
+	('/dropbox_blog',DropBox),
 	],debug=False)
 
 if __name__ == "__main__":
