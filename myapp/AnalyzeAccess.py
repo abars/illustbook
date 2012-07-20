@@ -56,13 +56,18 @@ class AnalyzeAccess(webapp.RequestHandler):
 		analyze=re.sub("\"","\\\"",analyze)
 		analyze=re.sub("\'","\\\'",analyze)
 		
+		show_analyze=False
+		if(user or bbs.short=="sample"):
+			show_analyze=True
+		
 		host_url ="./"
 		template_values = {
 			'host': host_url,
 			'bbs': bbs,
 			'page_name': page_name,
 			'analyze_data':analyze,
-			'user': user
+			'user': user,
+			'show_analyze': show_analyze
 			}
 		path = os.path.join(os.path.dirname(__file__), '../html/analyze.html')
 		self.response.out.write(template.render(path, template_values))
