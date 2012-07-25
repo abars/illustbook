@@ -12,6 +12,7 @@ from myapp.MesThread import MesThread
 from myapp.Bbs import Bbs
 from myapp.MappingId import MappingId
 from myapp.Alert import Alert
+from myapp.CssDesign import CssDesign
 
 class MoperPlayer(webapp.RequestHandler):
 	def get(self):
@@ -41,6 +42,11 @@ class MoperPlayer(webapp.RequestHandler):
 			width=self.request.get("width")
 		if(self.request.get("height")):
 			height=self.request.get("height")
+		
+		if(CssDesign.is_iphone(self)==1):
+			if(width>=300):
+				height=300*height/width
+				width=300
 		
 		template_values = {
 		'host': host_url,
