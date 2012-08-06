@@ -190,7 +190,8 @@ class ShowBbs(webapp.RequestHandler):
 			'css_key': css_key,
 			'redirect_url': self.request.path,
 			'show_comment_form': show_comment_form,
-			'user_name': user_name
+			'user_name': user_name,
+			'is_admin': OwnerCheck.is_admin(user)
 		}
 
 		path = os.path.join(os.path.dirname(__file__), "../html/"+design["base_name"])

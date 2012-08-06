@@ -107,6 +107,8 @@
 	</div>
 	<!-- フッタ -->
 	{% include 'footer.html' %}
+	<!-- 管理モード -->
+	{% if is_admin %}管理人ID：{{bbs.user_id}}　管理人メール：{{bbs.owner.email}}{% endif %}
 </div>
 
 <script language="javascript" src="{{host}}js/bbs.js" type="text/javascript"></script>
