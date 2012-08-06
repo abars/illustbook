@@ -46,8 +46,8 @@
 			var width=400;
 			var height=400;
 			if(reply_mode){
-				width=document.getElementById("canvas_width").value;
-				height=document.getElementById("canvas_height").value;
+				width=document.getElementById("canvas_width_"+thread_key).value;
+				height=document.getElementById("canvas_height_"+thread_key).value;
 			}
 			if(illust_mode==2 && !reply_mode){
 				window.location.href=''+host+'draw_moper?thread_key='+thread_key+'&bbs_key='+bbs_key+'&canvas_url='+url;

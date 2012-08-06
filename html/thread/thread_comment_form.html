@@ -46,7 +46,7 @@
 	
 	{%ifequal bbs.enable_illust_reply 1 %}
 		<div class="g-button">
-		<input type="text" id="canvas_width" value="{{bbs.illust_reply_width}}" maxlength=3 size=3/><i class="icon-remove"></i><input type="text" id="canvas_height" value="{{bbs.illust_reply_height}}" maxlength=3 size=3/>px
+		<input type="text" id="canvas_width_{{thread.key}}" value="{{bbs.illust_reply_width}}" maxlength=3 size=3/><i class="icon-remove"></i><input type="text" id="canvas_height_{{thread.key}}" value="{{bbs.illust_reply_height}}" maxlength=3 size=3/>px
 		</div>
 		<input type="button" value="絵でコメント" class="g-button" onClick="open_draw('',1,'{{host}}','{{thread.key}}','{{bbs.key}}',{{thread.illust_mode}});">
 	{% endifequal %}
