@@ -46,6 +46,7 @@ class UpdateProfile(webapp.RequestHandler):
 		birthday_year = self.request.get("birthday_year")
 		birthday_month = self.request.get("birthday_month")
 		birthday_day = self.request.get("birthday_day")
+		disable_rankwatch =int(self.request.get("disable_rankwatch"))
 
 		if(name==""):
 			self.response.out.write(Alert.alert_msg("名前がありません。",self.request.host));
@@ -82,6 +83,7 @@ class UpdateProfile(webapp.RequestHandler):
 		bookmark.twitter_id=twitter
 		bookmark.homepage=homepage
 		bookmark.owner=user
+		bookmark.disable_rankwatch=disable_rankwatch
 		
 		bookmark.sex=int(self.request.get("sex"))
 

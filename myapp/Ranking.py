@@ -65,6 +65,9 @@ class Ranking(db.Model):
 
 		ranking_list=[]
 		for k, v in sorted(rank_user.items(), key=lambda x:x[1], reverse=True):
+			bookmark=ApiObject.get_bookmark_of_user_id(k)
+			if(bookmark and bookmark.disable_rankwatch):
+				continue
 			ranking_list.append(k)
 			if(len(ranking_list)>=BbsConst.USER_RANKING_MAX):
 				break

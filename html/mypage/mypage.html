@@ -155,6 +155,13 @@
 				<input name="birthday_day" type="text" value="{% if bookmark.birthday_day %}{{bookmark.birthday_day}}{% endif %}" style="width:40px;">日<BR>
 				何も書かなければ非公開になります
 				</TD></TR>
+				<TR><TD>ユーザランキング</TD><TD>　</TD><TD>
+				<select name="disable_rankwatch" id="disable_rankwatch">
+					<option value="0" {% if not bookmark.disable_rankwatch %} selected="selected" {% endif %}>参加する</option>
+					<option value="1" {% if bookmark.disable_rankwatch %} selected="selected" {% endif%}>参加しない</option>
+				</select><BR>
+				ランキング設定は次回のランキング更新から反映されます
+				</TD></TR>
 				<TR><TD>コメント</TD><TD>　</TD><TD><textarea name="profile" rows="8" cols="40" style="width:90%;">{% if edit_profile %}{{edit_profile}}{% endif %}</textarea></TD></TR>
 				<TR><TD>ホームページ</TD><TD>　</TD><TD><input name="homepage" type="text" value="{% if bookmark.homepage %}{{bookmark.homepage}}{% endif %}" style="width:90%;"></TD></TR>
 				<TR><TD>メール</TD><TD>　</TD><TD><input name="mail" type="text" value="{% if bookmark.mail %}{{bookmark.mail}}{% endif %}" style="width:90%;"></TD></TR>
@@ -178,9 +185,11 @@
 						<TABLE>
 						<TR><TD WIDTH=100px>ユーザ名</TD><TD>　</TD><TD>
 						{{bookmark.name}}
-						<div class="g-button-group">
-							<a href="ranking?mode=user" class="g-button">ランキング {% if user_rank %}{{user_rank}}位{% else %}-{% endif %}</a>
-						</div>
+						{%if not bookmark.disable_rankwatch %}
+							<div class="g-button-group">
+								<a href="ranking?mode=user" class="g-button">ランキング {% if user_rank %}{{user_rank}}位{% else %}-{% endif %}</a>
+							</div>
+						{%endif%}
 						</TD></TR>
 						{% if bookmark.sex %}<TR><TD>性別</TD><TD>　</TD><TD>
 							{% ifequal bookmark.sex 1 %}

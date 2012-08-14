@@ -37,6 +37,7 @@ class Bookmark(db.Model):
 	birthday_month=db.IntegerProperty()
 	birthday_day=db.IntegerProperty()
 	new_feed_count=db.IntegerProperty()
+	disable_rankwatch=db.IntegerProperty()
 	sand = db.StringProperty()
 	date = db.DateTimeProperty(auto_now=True)
 

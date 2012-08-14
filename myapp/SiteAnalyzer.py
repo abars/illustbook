@@ -54,6 +54,8 @@ class SiteAnalyzer(webapp.RequestHandler):
 
 		#1日単位で習得
 		force=False
+		if(self.request.get("force")):
+			force=True
 		if(cache.date and len(cache.day_list)>=1 and not force):
 			day1_str=NicoTracker.get_day_string(cache.date)
 			day2_str=NicoTracker.get_day_string(datetime.datetime.today())
