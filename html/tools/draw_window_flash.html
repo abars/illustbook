@@ -29,12 +29,22 @@ object, embed {
 <script language="JavaScript" src="./js/wacom_tablet_plugin.js"></script>
 {% endif %}
 
+<script language="JavaScript" src="./js/swfobject.js"></script>
 <script language="JavaScript" src="./js/cookie.js"></script>
 <script language="JavaScript" src="./js/upload_ilb.js"></script>
 <script language="JavaScript" src="./js/unloadlock.js"></script>
 <script language="JavaScript" src="./js/rediter.js"></script>
 <script><!--
 	function init(){
+		//Flashのバージョンチェック
+		var playerVersion = swfobject.getFlashPlayerVersion();
+		if(playerVersion.major<=11 && playerVersion.minor<2){
+			var message="イラブペイントのご利用にはFlashPlayer11.2以降が必要です。ダウンロードページを開きますか？尚、現在インストールされているバージョンは"+playerVersion.major + "." + playerVersion.minor + "." + playerVersion.release+"です。";
+			if(confirm(message)){
+				window.open("http://get.adobe.com/jp/flashplayer/",null);
+			}
+		}
+		
 		//リッチエディタを準備
 		rediter_init('rediter','{{summary|safe}}','10pt',false);
 		if(document.getElementById("title")){
