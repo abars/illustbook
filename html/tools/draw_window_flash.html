@@ -37,6 +37,7 @@ object, embed {
 <script><!--
 	function init(){
 		//Flashのバージョンチェック
+		/*
 		var playerVersion = swfobject.getFlashPlayerVersion();
 		if(playerVersion.major<=11 && playerVersion.minor<2){
 			var message="イラブペイントのご利用にはFlashPlayer11.2以降が必要です。ダウンロードページを開きますか？尚、現在インストールされているバージョンは"+playerVersion.major + "." + playerVersion.minor + "." + playerVersion.release+"です。";
@@ -44,6 +45,7 @@ object, embed {
 				window.open("http://get.adobe.com/jp/flashplayer/",null);
 			}
 		}
+		*/
 		
 		//リッチエディタを準備
 		rediter_init('rediter','{{summary|safe}}','10pt',false);
@@ -98,6 +100,40 @@ object, embed {
 
 <body bgcolor=#ffffff onload="init();">
 
+<div id="fromJavaScript">
+<script type="text/javascript">
+	var playerVersion = swfobject.getFlashPlayerVersion();
+	var flashvars={
+		"celsys":"{{celsys}}",
+		"draw_time":"{{draw_time}}",
+		"local_mode":"0",
+		"width":"{{canvas_width}}",
+		"height":"{{canvas_height}}",
+		"bbs_key":"{{bbs_key}}",
+		"thread_key":"{{thread_key}}",
+		"canvas_url":"{{canvas_url}}",
+		"host":"{{host}}",
+		"reply":"{{reply}}",
+		{% if bbs.tool_bg_color %}
+		"bg_color":"{{bbs.tool_bg_color}}",
+		{%endif%}
+		"delete_when_upload_success":"{{bbs.delete_when_upload_success}}"
+	};
+	var params={
+	"allowScriptAccess":"always",
+	"quality":"high",
+	"allowFullScreen":"true",
+	"wmode":"direct"
+	};
+	if(playerVersion.major<=11 && playerVersion.minor<2){
+		swfobject.embedSWF("flash/IllustBook41.swf","fromJavaScript","100%","100%","10.0.0",null,flashvars,params);
+	}else{
+		swfobject.embedSWF("flash/IllustBook.swf","fromJavaScript","100%","100%","11.2.0",null,flashvars,params);
+	}
+</script>
+</div>
+
+<!--
 <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=10,0,0,0" id="fromJavaScript" width=100% height=100%>
 <param name="allowScriptAccess" value="always" />
 <param name="movie" value="flash/IllustBook{% if is_flex46 %}46{% endif %}.swf" />
@@ -107,6 +143,7 @@ object, embed {
 <param name="FlashVars" value="celsys={{celsys}}&draw_time={{draw_time}}&local_mode=0&width={{canvas_width}}&height={{canvas_height}}&bbs_key={{bbs_key}}&thread_key={{thread_key}}&canvas_url={{canvas_url}}&host={{host}}&reply={{reply}}{% if bbs.tool_bg_color %}&bg_color={{bbs.tool_bg_color}}{%endif%}&delete_when_upload_success={{bbs.delete_when_upload_success}}" />
 <embed src="flash/IllustBook{% if is_flex46 %}46{% endif %}.swf" allowFullScreen="true"  FlashVars="celsys={{celsys}}&draw_time={{draw_time}}&local_mode=0&width={{canvas_width}}&height={{canvas_height}}&bbs_key={{bbs_key}}&thread_key={{thread_key}}&canvas_url={{canvas_url}}&host={{host}}&reply={{reply}}{% if bbs.tool_bg_color %}&bg_color={{bbs.tool_bg_color}}{%endif%}&delete_when_upload_success={{bbs.delete_when_upload_success}}" quality="high" width=100% height=100% bgcolor="#ffffff" name="fromJavaScript" allowScriptAccess="always" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" wmode="direct" />
 </object>
+-->
 
 <div id="loading_window" style="position:absolute;left:8px;top:8px;z-index:-1;">
 	<p>イラブペイントを読込中</p>
