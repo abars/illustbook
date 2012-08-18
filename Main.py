@@ -100,6 +100,7 @@ from myapp.ShowIcon import ShowIcon
 from myapp.CheckId import CheckId
 from myapp.Chat import Chat
 from myapp.Ranking import Ranking
+from myapp.ApiPacked import ApiPacked
 
 #-----------------------------------------------------------------
 #ポータル
@@ -475,6 +476,7 @@ application = webapp.WSGIApplication(
 	('/api_bookmark',ApiBookmark),
 	('/api_perpetuation',ApiPerpetuation),
 	('/api_js',ApiJs),
+	('/api_packed',ApiPacked),
 	('/dev',DevPortal),
 	('/stack_feed_worker',StackFeed),
 	('/counter_worker',CounterWorker),

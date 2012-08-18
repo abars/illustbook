@@ -138,11 +138,14 @@ class ApiUser(webapp.RequestHandler):
 #-------------------------------------------------------------------
 
 	def get(self):
-		#日本語対応
 		SetUtf8.set()
 		if(ApiObject.check_api_capacity(self)):
 			return
-		
+		dic=ApiUser.get_core(self)
+		ApiObject.write_json_core(self,dic)
+	
+	@staticmethod
+	def get_core(self):
 		#パラメータ取得
 		method=""
 		if(self.request.get("method")):
@@ -171,4 +174,4 @@ class ApiUser(webapp.RequestHandler):
 		if(method=="getTimeline"):
 			dic=ApiUser.user_get_timeline(self,user_id)
 			
-		ApiObject.write_json(self,dic)
+		return ApiObject.add_json_success_header(dic)

@@ -58,6 +58,9 @@ illustbook_request.prototype._is_same_domain=function(url){
 	if(location.host.match(/www\.illustbook\.net/)){
 		return true;
 	}
+	if(location.host.match(/localhost:8084/)){
+		return true;
+	}
 	if(url.match(/^\.\//)){
 		return true;
 	}
@@ -120,10 +123,42 @@ illustbook_request.prototype._getObject=function(api_class,api_method,bbs_id,use
 	if(user_id){
 		api_args+="&user_id="+user_id;
 	}
-	illustbook.request.get("{{host}}"+api_class+"?method="+api_method+"&"+api_args,callback);
+	if(illustbook_request.prototype._is_packed_request){
+		illustbook_request.prototype._request_args+="class="+api_class+"&method="+api_method+"&"+api_args+":";
+		illustbook_request.prototype._request_callback.push(callback);
+	}else{
+		var url=api_class+"?method="+api_method+"&"+api_args;
+		illustbook.request.get("{{host}}"+url,callback);
+	}
 }
 
+//------------------------------------------------
+//packed request api
+//------------------------------------------------
 
+illustbook_request.prototype._is_packed_request=false;
+
+//beginPackedRequest〜endPackedRequestの区間に呼ばれたAPIを、1度のHTTPリクエストで実行します。
+//非公開APIです。
+
+illustbook_request.prototype.beginPackedRequest=function(){
+	illustbook_request.prototype._is_packed_request=true;
+	illustbook_request.prototype._request_args="";
+	illustbook_request.prototype._request_callback=new Array();
+}
+
+illustbook_request.prototype.endPackedRequest=function(){
+	illustbook_request.prototype._is_packed_request=false;
+	var url="{{host}}api_packed?"+illustbook_request.prototype._request_args;
+	illustbook.request.get(url,illustbook_request.prototype.callbackPackedRequest);
+}
+
+illustbook_request.prototype.callbackPackedRequest=function(oj){
+	for(var i=0;i<illustbook_request.prototype._request_callback.length;i++){
+		var callback=illustbook_request.prototype._request_callback[i];
+		callback(oj["request"+i]);
+	}
+}
 
 //------------------------------------------------
 //user api

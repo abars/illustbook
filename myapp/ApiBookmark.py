@@ -130,7 +130,11 @@ class ApiBookmark(webapp.RequestHandler):
 		SetUtf8.set()
 		if(ApiObject.check_api_capacity(self)):
 			return
-		
+		dic=ApiBookmark.get_core(self)
+		ApiObject.write_json_core(self,dic)
+
+	@staticmethod
+	def get_core(self):
 		#パラメータ取得
 		method=""
 		if(self.request.get("method")):
@@ -159,7 +163,7 @@ class ApiBookmark(webapp.RequestHandler):
 		
 		if(dic==None):
 			dic={"status":"failed","message":"ブックマークの取得に失敗しました。"}
-			ApiObject.write_json_core(self,dic)
-			return dic
-
-		ApiObject.write_json(self,dic)
+		else:
+			dic=ApiObject.add_json_success_header(dic)
+		
+		return dic

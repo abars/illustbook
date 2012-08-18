@@ -548,9 +548,13 @@ class ApiObject(webapp.RequestHandler):
 
 	@staticmethod
 	def write_json(req,dic):
-		dic={"response":dic,"status":"success","message":""}
+		dic=ApiObject.add_json_success_header(dic)
 		ApiObject.write_json_core(req,dic)
 	
+	@staticmethod
+	def add_json_success_header(dic):
+		return {"response":dic,"status":"success","message":""}
+		
 	@staticmethod
 	def write_json_core(req,dic):
 		#JSONPかどうか

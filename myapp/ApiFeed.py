@@ -138,11 +138,14 @@ class ApiFeed(webapp.RequestHandler):
 #-------------------------------------------------------------------
 
 	def get(self):
-		#日本語対応
 		SetUtf8.set()
 		if(ApiObject.check_api_capacity(self)):
 			return
-		
+		dic=ApiFeed.get_core(self)
+		ApiObject.write_json_core(self,dic)
+
+	@staticmethod
+	def get_core(self):
 		#パラメータ取得
 		method=""
 		if(self.request.get("method")):
@@ -159,6 +162,7 @@ class ApiFeed(webapp.RequestHandler):
 		if(method=="getThreadList"):
 			dic=ApiFeed.feed_get_thread_list(self)
 
-		ApiObject.write_json(self,dic)
+		dic=ApiObject.add_json_success_header(dic)
+		return dic
 		
 
