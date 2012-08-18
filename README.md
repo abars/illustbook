@@ -5,7 +5,7 @@
 -------
 
 GoogleAppEngineで動く掲示板システムです。
-MITライセンスです。
+公開しているソースコードはMITライセンスです。
 実際に
 http://www.illustbook.net/
 で運用しています。
