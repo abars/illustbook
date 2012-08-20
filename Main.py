@@ -346,6 +346,9 @@ class DelThread(webapp.RequestHandler):
 				return
 
 		thread.delete()
+		
+		bbs.cached_thumbnail_key=None
+		bbs.put()
 
 		url=MappingId.get_usr_url("./",bbs)
 		self.redirect(str(url))

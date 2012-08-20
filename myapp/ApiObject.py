@@ -530,14 +530,18 @@ class ApiObject(webapp.RequestHandler):
 			ds_obj.cached_entry_key=ApiObject._get_cached_entry_key(ds_obj)
 
 		if(type(ds_obj)==Bbs):
-			try:
-				recent_thread=MesThread.all().filter("bbs_key =",ds_obj).order("-create_date").fetch(limit=1)
-				if(recent_thread):
-					image=recent_thread[0].image_key;
-					if(image):
-						ds_obj.cached_thumbnail_key=str(image.key());
-			except:
-				ds_obj.cached_thumbnail_key=""
+			#現在はスレッド追加時にcached_thumbnail_keyを上書きしている
+			#将来的にDSの以降などでkeyが変わる場合は以下のifをTrueにしてキャッシュを全更新すること
+			if not ds_obj.cached_thumbnail_key:
+				try:
+					recent_thread=MesThread.all().filter("bbs_key =",ds_obj).order("-create_date").fetch(limit=1)
+					if(recent_thread):
+						image=recent_thread[0].image_key;
+						if(image):
+							ds_obj.cached_thumbnail_key=str(image.key());
+							ds_obj.put()
+				except:
+					ds_obj.cached_thumbnail_key=""
 
 		memcache.set(BbsConst.OBJECT_CACHE_HEADER+str(ds_obj.key()),ds_obj,BbsConst.OBJECT_CACHE_TIME)
 		return ds_obj

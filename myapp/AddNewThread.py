@@ -174,6 +174,10 @@ class AddNewThread(webapp.RequestHandler):
 		
 		#put
 		SyncPut.put_sync(new_thread)
+		
+		#サムネイル更新
+		bbs.cached_thumbnail_key=str(timage.key())
+		bbs.put()
 	
 		#ステータスを出力
 		if(self.request.get('mode')=="illust" or self.request.get('mode')=="illust_all"):
