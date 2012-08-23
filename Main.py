@@ -284,6 +284,8 @@ class DelEn(webapp.RequestHandler):
 		thread = db.get(self.request.get("thread_key"))
 		thread.comment_cnt=thread.comment_cnt-1
 		#thread.thread_entry_list.append(entry.key())
+		thread.cached_entry_key=[]
+		thread.cached_entry_key_enable=None
 		thread.put()
 
 		url=MappingThreadId.get_thread_url("./",bbs,thread)

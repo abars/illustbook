@@ -131,7 +131,7 @@ class AddEntry(webapp.RequestHandler):
 		#保存
 		entry.put()
 		thread = db.get(self.request.get("thread_key"))
-		thread.put()
+		#thread.put()
 
 		if(self.request.get('image')):
 			self.response.headers ['Content-type'] = "text/html;charset=utf-8"  
@@ -142,6 +142,8 @@ class AddEntry(webapp.RequestHandler):
 
 		thread.comment_cnt = thread.comment_cnt+1
 		thread.date=datetime.datetime.today()
+		thread.cached_entry_key=[]
+		thread.cached_entry_key_enable=None
 		thread.put()
 
 		if(bbs.comment_n) :

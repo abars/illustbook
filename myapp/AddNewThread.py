@@ -147,6 +147,7 @@ class AddNewThread(webapp.RequestHandler):
 				new_thread.user_id=user.user_id()	#必ずプロフィールにマップ
 
 		#一括投稿モード（新エディタ）
+		timage=None
 		if(self.request.get('mode')=="illust_all" and new_thread.illust_mode!=BbsConst.ILLUSTMODE_TEXT):
 			timage=ThreadImage()
 			timage.bbs_key=db.get(self.request.get("bbs_key"))
@@ -176,8 +177,9 @@ class AddNewThread(webapp.RequestHandler):
 		SyncPut.put_sync(new_thread)
 		
 		#サムネイル更新
-		bbs.cached_thumbnail_key=str(timage.key())
-		bbs.put()
+		if(timage):
+			bbs.cached_thumbnail_key=str(timage.key())
+			bbs.put()
 	
 		#ステータスを出力
 		if(self.request.get('mode')=="illust" or self.request.get('mode')=="illust_all"):

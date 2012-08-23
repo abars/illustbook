@@ -527,7 +527,13 @@ class ApiObject(webapp.RequestHandler):
 			bbs_key=MesThread.bbs_key.get_value_for_datastore(ds_obj)
 			if(bbs_key):
 				ds_obj.cached_bbs_key=str(bbs_key)
-			ds_obj.cached_entry_key=ApiObject._get_cached_entry_key(ds_obj)
+			
+			#コメント一覧を取得
+			#コメント更新時にはcached_entry_key=Noneで代入される
+			if not ds_obj.cached_entry_key_enable:
+				ds_obj.cached_entry_key=ApiObject._get_cached_entry_key(ds_obj)
+				ds_obj.cached_entry_key_enable=True
+				ds_obj.put()
 
 		if(type(ds_obj)==Bbs):
 			#現在はスレッド追加時にcached_thumbnail_keyを上書きしている
