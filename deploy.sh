@@ -1,2 +1,2 @@
-appcfg update .
-appcfg backends . update
+appcfg.py update .
+appcfg.py backends . update
