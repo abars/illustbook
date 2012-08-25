@@ -55,4 +55,5 @@ class BbsConst:
 	#画像キャッシュ
 	IMAGE_CACHE_KEY="image_cache_key_"
 	IMAGE_CACHE_DATE="image_cache_date_"
+	IMAGE_CACHE_KEY_AND_DATE="image_cache_key_date_"
 
