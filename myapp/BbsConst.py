@@ -40,6 +40,7 @@ class BbsConst:
 	OBJECT_MAPPING_CACHE_TIME=60*60*24
 	OBJECT_CACHE_TIME=60*60*12
 	TOPPAGE_FEED_CACHE_TIME=60*60*1
+	IMAGE_CACHE_TIME=60*60*3
 	
 	#ranking
 	THREAD_RANKING_KEY_NAME="thread_ranking"
@@ -50,4 +51,8 @@ class BbsConst:
 	
 	#ページリストの表示数
 	PAGE_LIST_COUNT=6
+	
+	#画像キャッシュ
+	IMAGE_CACHE_KEY="image_cache_key_"
+	IMAGE_CACHE_DATE="image_cache_date_"
 

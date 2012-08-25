@@ -22,6 +22,7 @@ from google.appengine.api import memcache
 
 from myapp.Entry import Entry
 from myapp.Bookmark import Bookmark
+from myapp.BbsConst import BbsConst
 
 HTTP_DATE_FMT = "%a, %d %b %Y %H:%M:%S GMT"
 
@@ -85,8 +86,13 @@ class ImageFile (webapp.RequestHandler):
 
 		#とりあえずmemcacheからヒット判定に必要な要素を取得
 		content=None
-		content_key=memcache.get("image_cache_key_"+path)
-		content_date=memcache.get("image_cache_date_"+path)
+		
+		#content_key=memcache.get("image_cache_key_"+path)
+		#content_date=memcache.get("image_cache_date_"+path)
+		
+		content_list=memcache.get_multi({BbsConst.IMAGE_CACHE_KEY+path,BbsConst.IMAGE_CACHE_DATE+path})
+		content_key=content_list[BbsConst.IMAGE_CACHE_KEY+path];
+		content_date=content_list[BbsConst.IMAGE_CACHE_DATE+path];
 
 		#memcacheに無ければ新たに取ってくる
 		if(content_key is None or content_date is None):
@@ -100,8 +106,11 @@ class ImageFile (webapp.RequestHandler):
 				return
 			content_key=str(content.key())
 			content_date=content.date
-			memcache.set("image_cache_key_"+path,content_key,60*60*3)
-			memcache.set("image_cache_date_"+path,content_date,60*60*3)
+			
+			#memcache.set("image_cache_key_"+path,content_key,60*60*3)
+			#memcache.set("image_cache_date_"+path,content_date,60*60*3)
+			
+			memcache.set_multi({BbsConst.IMAGE_CACHE_KEY+path:content_key,BbsConst.IMAGE_CACHE_DATE+path:content_date},BbsConst.IMAGE_CACHE_TIME)
 
 		#サーブするかを決定する
 		serve=ImageFile.is_serve(p_self,content_key,content_date,tag)
