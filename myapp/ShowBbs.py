@@ -83,13 +83,14 @@ class ShowBbs(webapp.RequestHandler):
 		col_num=ShowBbs.get_col_num(bbs,order)
 
 		#スレッド数とスレッドを取得
-		threads_num = thread_query.count()
+		count_limit=(BbsConst.PAGE_LIST_COUNT+page)*col_num	#ページ番号生成用にしか使わないのでページ番号のMaxがわかれば良い
+		threads_num = thread_query.count(limit=count_limit)
 		all_threads = thread_query.fetch(limit=col_num, offset=(page-1)*col_num)
 		
 		#返信イラストを取得
 		all_entries = None
 		if(order=="thumbnail"):
-			all_entries=ShowBbs.get_illust_reply(bbs,page,col_num,threads_num)
+			all_entries=ShowBbs.get_illust_reply(bbs,page,col_num)
 			if(threads_num<all_entries["count"]):
 				threads_num=all_entries["count"]
 			all_entries=all_entries["entry"]
@@ -306,7 +307,7 @@ class ShowBbs(webapp.RequestHandler):
 		return col_num
 	
 	@staticmethod
-	def get_illust_reply(bbs,page,col_num,threads_num):
+	def get_illust_reply(bbs,page,col_num):
 		all_entries = None
 		entries_num = 0
 		try:

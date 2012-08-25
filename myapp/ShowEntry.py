@@ -58,7 +58,7 @@ class ShowEntry(webapp.RequestHandler):
 		if(not user):
 			return ""
 		user_id=user.user_id()
-		bookmark=ApiObject.get_bookmark_of_user_id_for_write(user_id)
+		bookmark=ApiObject.get_bookmark_of_user_id(user_id)
 		if(not bookmark):
 			return ""
 		return bookmark.name

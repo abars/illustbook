@@ -6,13 +6,15 @@
 #copyright 2010-2012 ABARS all rights reserved.
 #---------------------------------------------------
 
+from myapp.BbsConst import BbsConst
+
 class PageGenerate:
 	@staticmethod
 	def generate_page(page,threads_num,col_num):
 		if(threads_num==0):
 			threads_num=1
-		page_n=6
-		page_start = page-page_n/2
+		page_n=BbsConst.PAGE_LIST_COUNT
+		page_start = page-page_n/2+1
 		if(page_start <= 0):
 			page_start = 1
 		page_end=page_start+(page_n-1)
