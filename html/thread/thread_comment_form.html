@@ -1,6 +1,6 @@
 {%if bbs.comment_rule_enable %}
 	<div class="entry">
-	コメントルール<HR>
+	コメントルール<hr/>
 	{{bbs.comment_rule|safe}}
 	</div>
 {% endif %}
@@ -8,13 +8,13 @@
 {%if not bbs.disable_normal_reply %}
 	{%if show_comment_form %}
 <div class="entry">
-		<form action='http://localhost/' enctype="multipart/form-data" method="post" onSubmit="this.action='{{host}}add_entry?bbs_key={{ bbs.key }}&thread_key={{ thread.key }}';">
+		<form action='http://localhost/' enctype="multipart/form-data" method="post" onsubmit="this.action='{{host}}add_entry?bbs_key={{ bbs.key }}&thread_key={{ thread.key }}';">
 			<table class="table_color">
 			<tr><td>名前（必須）</td>
 			<td>
-				<input type="text" name="author" maxlength="50" value="{{user_name}}">
+				<input type="text" name="author" maxlength="50" value="{{user_name}}"/>
 				{% if logined %}
-					<input name="link_to_profile" type="checkbox" checked>プロフィールにリンク
+					<input name="link_to_profile" type="checkbox" checked/>プロフィールにリンク
 				{% else %}
 					プロフィールにリンクするにはログインして下さい
 				{% endif %}
@@ -23,7 +23,7 @@
 			{% else %}
 			<tr><td>ホームページアドレス</td>
 			<td>
-				<input type="text" name="homepage_addr" maxlength="50" value="http://">
+				<input type="text" name="homepage_addr" maxlength="50" value="http://"/>
 			</td></tr>
 			{% endif %}
 			<tr><td>コメント（必須）</td>
@@ -31,7 +31,7 @@
 				<textarea name="comment" rows="10" cols="60" style="width:100%;"></textarea>
 			</td></tr>
 			<tr><td></td><td>
-			<input type="submit" value="コメントを書き込む" class="g-button">
+			<input type="submit" value="コメントを書き込む" class="g-button"/>
 			</td></tr>
 		</table>
 	</form>
@@ -46,14 +46,14 @@
 	
 	{%ifequal bbs.enable_illust_reply 1 %}
 		<div class="g-button">
-		<input type="text" id="canvas_width_{{thread.key}}" value="{{bbs.illust_reply_width}}" maxlength=3 size=3/><i class="icon-remove"></i><input type="text" id="canvas_height_{{thread.key}}" value="{{bbs.illust_reply_height}}" maxlength="3" size="3"/>px
+		<input type="text" id="canvas_width_{{thread.key}}" value="{{bbs.illust_reply_width}}" maxlength="3" size="3"/><i class="icon-remove"></i><input type="text" id="canvas_height_{{thread.key}}" value="{{bbs.illust_reply_height}}" maxlength="3" size="3"/>px
 		</div>
-		<input type="button" value="絵でコメント" class="g-button" onClick="open_draw('',1,'{{host}}','{{thread.key}}','{{bbs.key}}',{{thread.illust_mode}});">
+		<input type="button" value="絵でコメント" class="g-button" onclick="open_draw('',1,'{{host}}','{{thread.key}}','{{bbs.key}}',{{thread.illust_mode}});"/>
 	{% endifequal %}
 	
 	{%ifequal thread.illust_mode 1 %}
 		{%ifequal bbs.enable_illust_reply_continue 1 %}
-			<input type="button" value="絵で続きからコメント"  class="g-button" onClick="open_draw('{{thread.image}}',1,'{{host}}','{{thread.key}}','{{bbs.key}}',{{thread.illust_mode}});">
+			<input type="button" value="絵で続きからコメント"  class="g-button" onclick="open_draw('{{thread.image}}',1,'{{host}}','{{thread.key}}','{{bbs.key}}',{{thread.illust_mode}});"/>
 		{% endifequal %}
 	{%endifequal %}
 
@@ -65,7 +65,7 @@
 {%if bbs.comment_login_require %}
 	{% if not logined %}
 		<div class="entry">
-		ログインしてコメントを書き込む<HR>
+		ログインしてコメントを書き込む<hr/>
 		この掲示板では、コメントを書き込む際にログインが必要です。<br/><br/>
 		</div>
 	{% endif %}

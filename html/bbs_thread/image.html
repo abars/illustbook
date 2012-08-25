@@ -1,6 +1,6 @@
 {% if thread.adult or thread.violate_terms %}
-	[大変申し訳ありませんが、ご利用規約の制約からイラストが非表示になっています]<BR>
-	[ご利用規約は <a href="http://www.illustbook.net/terms">http://www.illustbook.net/terms</a> からご確認頂けます]<BR>
+	[大変申し訳ありませんが、ご利用規約の制約からイラストが非表示になっています]<br/>
+	[ご利用規約は <a href="http://www.illustbook.net/terms">http://www.illustbook.net/terms</a> からご確認頂けます]<br/>
 {% else %}
-	<IMG SRC="{{host}}img/{{thread.cached_image_key}}{% if thread.is_png %}.png{%else%}.jpg{%endif%}" BORDER=0 ALT="{{thread.title}}" {% if is_iphone%} style="max-width:100%;"{%endif%}>
+	<img src="{{host}}img/{{thread.cached_image_key}}{% if thread.is_png %}.png{%else%}.jpg{%endif%}" border="0" alt="{{thread.title}}" {% if is_iphone%} style="max-width:100%;"{%endif%}/>
 {% endif %}

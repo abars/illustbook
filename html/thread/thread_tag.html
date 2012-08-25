@@ -1,16 +1,16 @@
 {% if not bbs.disable_tag %}
 <div class="entry">
-	タグ<HR>
+	タグ<hr/>
 	<div class="actions g-button-container">
 		<div class="g-button-group">
 		{% for tag in thread.tag_list %}
-			<A HREF="{{host}}search_tag?tag={{tag|iriencode}}" class="g-button" style="color:#444;">{{tag}}</A>　
+			<a href="{{host}}search_tag?tag={{tag|iriencode}}" class="g-button" style="color:#444;">{{tag}}</a>　
 		{% endfor %}
 		</div>
 	
 		<div class="g-button-group">
 			<div class="g-button">
-				<input type="text" id="tag" maxlength="10">
+				<input type="text" id="tag" maxlength="10"/>
 			</div>
 			<a href="javascript:AddTag('{{host}}','{{ bbs_key }}','{{ thread.key}}');" class="g-button" style="color:#444;"><i class="icon-tag"></i>タグ追加</a>
 			<a href="javascript:DelTag('{{host}}','{{ bbs_key }}','{{ thread.key}}');" class="g-button" style="color:#444;"><i class="icon-remove"></i>タグ削除</a>

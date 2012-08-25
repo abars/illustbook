@@ -19,10 +19,10 @@
 {% if user or view_mode%}
 	<a href="{{host}}mypage{% if view_mode %}?user_id={{bookmark.user_id}}{% endif %}">
 	{% if is_iphone %}
-		<div id="profile" style="float:left;margin:6px;"><img src="./show_icon?key={{bookmark.user_id}}" width=100 height=100 class="radius_image"></div>
+		<div id="profile" style="float:left;margin:6px;"><img src="./show_icon?key={{bookmark.user_id}}" width="100" height="100" class="radius_image"/></div>
 		<div style="float:left;font-size: 18px;padding-top:50px;">
 	{% else %}
-		<div id="profile" style="margin-top:2px;margin-left:10px;margin-right:10px;"><img src="./show_icon?key={{bookmark.user_id}}" width=160 height=160 class="radius_image"><BR></div>
+		<div id="profile" style="margin-top:2px;margin-left:10px;margin-right:10px;"><img src="./show_icon?key={{bookmark.user_id}}" width="160" height="160" class="radius_image"/><br/></div>
 		<div style="font-size: 24px;width:100%;text-align:center;">
 	{% endif %}
 	{% if bookmark.name%}
@@ -95,34 +95,34 @@
 <div>
 	<div class="example">
 		<p><h2>投稿したイラスト</h2></p>
-		<TABLE width="100%"><TR><TD>
+		<table width="100%"><tr><td>
 		<div id="submit_thread">Loading</div>
-		</TD></TR></TABLE>
+		</td></tr></table>
 	</div>
 	
 	<div class="example">
 		<p><h2>ブックマークしているイラスト</h2></p>
 
-		<TABLE width="100%"><TR><TD>
+		<table width="100%"><tr><td>
 		<div id="bookmark_thread">Loading</div>
-		</TD></TR></TABLE>
+		</td></tr></table>
 	</div>
 </div>
 <div>
 	<div class="example">
 		<p><h2>ブックマークしている掲示板</h2></p>
 
-		<TABLE width="100%"><TR><TD>
+		<table width="100%"><tr><td>
 		<div id="bookmark_bbs">Loading</div>
-		</TD></TR></TABLE>
+		</td></tr></table>
 	</div>
 
 	<div class="example">
 		<p><h2>レンタルしている掲示板</h2></p>
 
-		<TABLE width="100%"><TR><TD>
+		<table width="100%"><tr><td>
 		<div id="rental">Loading</div>
-		</TD></TR></TABLE>
+		</td></tr></table>
 	</div>
 </div>
 {% endifequal %}
@@ -132,46 +132,46 @@
 	<div class="example">
 		<p><h2>プロフィール</h2></p>
 	
-			<TABLE width="100%"><TR><TD>
+			<table width="100%"><tr><td>
 				{% if edit_mode %}
 				<form action="./update_profile" enctype="multipart/form-data" method="post" name="profile_frm">
 				<input type="hidden" name="mode" value="profile">
 				
-				<TABLE>
-				<TR><TD>ユーザ名（必須）</TD><TD>　</TD><TD><input name="name" type="text" value="{{bookmark.name}}" style="width:90%;"></TD></TR>
-				<TR><TD>性別</TD><TD>　</TD><TD>
+				<table>
+				<tr><td>ユーザ名（必須）</td><td>　</td><td><input name="name" type="text" value="{{bookmark.name}}" style="width:90%;"></td></tr>
+				<tr><td>性別</td><td>　</td><td>
 				<select name="sex" id="sex">
 					<option value="0" {% ifequal bookmark.sex 0 %} selected="selected" {% endifequal%}>非公開</option>
 					<option value="1" {% ifequal bookmark.sex 1 %} selected="selected" {% endifequal%}>男</option>
 					<option value="2" {% ifequal bookmark.sex 2 %} selected="selected" {% endifequal%}>女</option>
 				</select>
-				</TD></TR>
-				<TR><TD>生まれた年(西暦)</TD><TD>　</TD><TD>
-				<input name="birthday_year" type="text" value="{% if bookmark.birthday_year %}{{bookmark.birthday_year}}{% endif %}" style="width:80px;">年<BR>
+				</td></tr>
+				<tr><td>生まれた年(西暦)</td><td>　</td><td>
+				<input name="birthday_year" type="text" value="{% if bookmark.birthday_year %}{{bookmark.birthday_year}}{% endif %}" style="width:80px;">年<br/>
 				何も書かなければ非公開になります
-				</TD></TR>
-				<TR><TD>誕生日（半角）</TD><TD>　</TD><TD>
+				</td></tr>
+				<tr><td>誕生日（半角）</td><td>　</td><td>
 				<input name="birthday_month" type="text" value="{% if bookmark.birthday_month %}{{bookmark.birthday_month}}{%endif%}" style="width:40px;">月
-				<input name="birthday_day" type="text" value="{% if bookmark.birthday_day %}{{bookmark.birthday_day}}{% endif %}" style="width:40px;">日<BR>
+				<input name="birthday_day" type="text" value="{% if bookmark.birthday_day %}{{bookmark.birthday_day}}{% endif %}" style="width:40px;">日<br/>
 				何も書かなければ非公開になります
-				</TD></TR>
-				<TR><TD>ユーザランキング</TD><TD>　</TD><TD>
+				</td></tr>
+				<tr><td>ユーザランキング</td><td>　</td><td>
 				<select name="disable_rankwatch" id="disable_rankwatch">
 					<option value="0" {% if not bookmark.disable_rankwatch %} selected="selected" {% endif %}>参加する</option>
 					<option value="1" {% if bookmark.disable_rankwatch %} selected="selected" {% endif%}>参加しない</option>
-				</select><BR>
+				</select><br/>
 				ランキング設定は次回のランキング更新から反映されます
-				</TD></TR>
-				<TR><TD>コメント</TD><TD>　</TD><TD><textarea name="profile" rows="8" cols="40" style="width:90%;">{% if edit_profile %}{{edit_profile}}{% endif %}</textarea></TD></TR>
-				<TR><TD>ホームページ</TD><TD>　</TD><TD><input name="homepage" type="text" value="{% if bookmark.homepage %}{{bookmark.homepage}}{% endif %}" style="width:90%;"></TD></TR>
-				<TR><TD>メール</TD><TD>　</TD><TD><input name="mail" type="text" value="{% if bookmark.mail %}{{bookmark.mail}}{% endif %}" style="width:90%;"></TD></TR>
-				<TR><TD>TwitterID</TD><TD>　</TD><TD><input name="twitter" type="text" value="{% if bookmark.twitter_id %}{{bookmark.twitter_id}}{% endif %}" style="width:90%;"></TD></TR>
-				<TR><TD>アイコン</TD><TD>　</TD><TD>{% if not is_iphone %}<input type="file" name="icon">{% endif %}</TD></TR>
-				</TABLE>
+				</td></tr>
+				<tr><td>コメント</td><td>　</td><td><textarea name="profile" rows="8" cols="40" style="width:90%;">{% if edit_profile %}{{edit_profile}}{% endif %}</textarea></td></tr>
+				<tr><td>ホームページ</td><td>　</td><td><input name="homepage" type="text" value="{% if bookmark.homepage %}{{bookmark.homepage}}{% endif %}" style="width:90%;"></td></tr>
+				<tr><td>メール</td><td>　</td><td><input name="mail" type="text" value="{% if bookmark.mail %}{{bookmark.mail}}{% endif %}" style="width:90%;"></td></tr>
+				<tr><td>TwitterID</td><td>　</td><td><input name="twitter" type="text" value="{% if bookmark.twitter_id %}{{bookmark.twitter_id}}{% endif %}" style="width:90%;"></td></tr>
+				<tr><td>アイコン</td><td>　</td><td>{% if not is_iphone %}<input type="file" name="icon">{% endif %}</td></tr>
+				</table>
 				{% if is_iphone %}
 				<input type="file" name="icon">
 				{% endif %}
-				<BR>
+				<br/>
 
 				<div class="g-button-group">
 					<a href="javascript:document.profile_frm.submit();" class="g-button"><i class="icon-edit"></i>プロフィールを更新</a>
@@ -180,36 +180,36 @@
 				</form>
 				{% else %}
 					{% if not bookmark.name %}
-						<p>ユーザのプロフィールは設定されていません。</p><BR>
+						<p>ユーザのプロフィールは設定されていません。</p><br/>
 					{% else %}
-						<TABLE>
-						<TR><TD WIDTH=100px>ユーザ名</TD><TD>　</TD><TD>
+						<table>
+						<tr><TD WIDTH=100px>ユーザ名</td><td>　</td><td>
 						{{bookmark.name}}
 						{%if not bookmark.disable_rankwatch %}
 							<div class="g-button-group">
 								<a href="ranking?mode=user" class="g-button">ランキング {% if user_rank %}{{user_rank}}位{% else %}-{% endif %}</a>
 							</div>
 						{%endif%}
-						</TD></TR>
-						{% if bookmark.sex %}<TR><TD>性別</TD><TD>　</TD><TD>
+						</td></tr>
+						{% if bookmark.sex %}<tr><td>性別</td><td>　</td><td>
 							{% ifequal bookmark.sex 1 %}
 								男
 							{%else%}
 								女
 							{%endifequal%}
-						</TD></TR>
+						</td></tr>
 						{% endif %}
-						{% if age %}<TR><TD>年齢</TD><TD>　</TD><TD>{{age}}才</TD></TR>{%endif%}
-						{% if bookmark.birthday_month %}<TR><TD>誕生日</TD><TD>　</TD><TD>{{bookmark.birthday_month}}月{{bookmark.birthday_day}}日</TD></TR>{%endif %}
-						<TR><TD>コメント</TD><TD>　</TD><TD>{{bookmark.profile|safe}}</TD></TR>
-						{% if bookmark.homepage %}<TR><TD>ホームページ</TD><TD>　</TD><TD><A HREF="{{bookmark.homepage}}" class="declink"><div class="linebreak">{{bookmark.homepage}}</div></A></TD></TR>{% endif %}
-						{% if bookmark.mail %}<TR><TD>メール</TD><TD>　</TD><TD><A HREF="mailto:{{bookmark.mail}}" class="declink"><div class="linebreak">{{bookmark.mail|safe}}</div></A></TD></TR>{% endif %}
-						{% if bookmark.twitter_id %}<TR><TD>Twitter</TD><TD>　</TD><TD>{% if bookmark.twitter_id %}<A HREF="https://twitter.com/#!/{{bookmark.twitter_id}}" class="declink"><div class="linebreak">{{bookmark.twitter_id}}</div></A>{% endif %}</TD></TR>{% endif %}
-						{% if is_admin %}{% if bookmark.owner %}<TR><TD>アカウント(＊管理モード)</TD><TD>　</TD><TD>{{bookmark.owner.email}}</TD></TR>{% endif %}{% endif %}
-						</TABLE>
+						{% if age %}<tr><td>年齢</td><td>　</td><td>{{age}}才</td></tr>{%endif%}
+						{% if bookmark.birthday_month %}<tr><td>誕生日</td><td>　</td><td>{{bookmark.birthday_month}}月{{bookmark.birthday_day}}日</td></tr>{%endif %}
+						<tr><td>コメント</td><td>　</td><td>{{bookmark.profile|safe}}</td></tr>
+						{% if bookmark.homepage %}<tr><td>ホームページ</td><td>　</td><td><a href="{{bookmark.homepage}}" class="declink"><div class="linebreak">{{bookmark.homepage}}</div></a></td></tr>{% endif %}
+						{% if bookmark.mail %}<tr><td>メール</td><td>　</td><td><a href="mailto:{{bookmark.mail}}" class="declink"><div class="linebreak">{{bookmark.mail|safe}}</div></a></td></tr>{% endif %}
+						{% if bookmark.twitter_id %}<tr><td>Twitter</td><td>　</td><td>{% if bookmark.twitter_id %}<a href="https://twitter.com/#!/{{bookmark.twitter_id}}" class="declink"><div class="linebreak">{{bookmark.twitter_id}}</div></a>{% endif %}</td></tr>{% endif %}
+						{% if is_admin %}{% if bookmark.owner %}<tr><td>アカウント(＊管理モード)</td><td>　</td><td>{{bookmark.owner.email}}</td></tr>{% endif %}{% endif %}
+						</table>
 					{% endif %}
 				{% endif %}
-			</TD></TR></TABLE>
+			</td></tr></table>
 	</div>
 {% endifequal %}
 
@@ -222,21 +222,21 @@
 			<form action="./add_bbs" enctype="multipart/form-data" method="post" name="rental_frm">
 			<input type="hidden" name="official" value="0">
 			<input type="hidden" name="redirect" value="./regist">
-			<TABLE width="100%">
-				<TR>
-					<TD>タイトル（必須）<br></TD>
-					<TD><input type="text" name="bbs_title" size="38" style="width:90%;"><br></TD>
+			<table width="100%">
+				<tr>
+					<td>タイトル（必須）<br/></td>
+					<td><input type="text" name="bbs_title" size="38" style="width:90%;"><br/></td>
 				</tr>
 				<tr>
 					<td>概要（必須）</td>
-					<TD><textarea name="bbs_summary" rows="3" cols="40" style="width:90%;"></textarea></TD>
+					<td><textarea name="bbs_summary" rows="3" cols="40" style="width:90%;"></textarea></td>
 				</tr>
 				<tr>
 					<td>
 						希望するID(半角英数16文字以下)
 					</td>
-					<TD><input type="text" id="check_short" name="short" value="{% if bbs.short %}{{bbs.short}}{% endif %}" maxlength="16">
-					</TD>
+					<td><input type="text" id="check_short" name="short" value="{% if bbs.short %}{{bbs.short}}{% endif %}" maxlength="16">
+					</td>
 				</tr>	  
 				<tr>
 					<td>モード</td>
@@ -249,9 +249,9 @@
 					</td>
 				</tr>
 				<tr>
-					<TD>
-					</TD>
-					<TD>
+					<td>
+					</td>
+					<td>
 					<div style="float:left;padding-right:4px;">
 						<div class="g-button-group">
 			<a href="javascript:check_id('{{host}}');" class="g-button"><i class="icon-check"></i>IDを利用可能か確認</a>
@@ -262,9 +262,9 @@
 			<a href="javascript:document.rental_frm.submit();" class="g-button"><i class="icon-plus"></i>レンタルを実行</a>
 		</div>
 		</div>
-					</TD>
-				</TR>
-			</TABLE>
+					</td>
+				</tr>
+			</table>
 			</form>
 			{%else%}
 				<p>レンタルは自分のアカウントでのみ行うことができます。</p>
