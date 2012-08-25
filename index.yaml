@@ -75,30 +75,6 @@ indexes:
 
 - kind: Bbs
   properties:
-  - name: disable_news=
-  - name: applause_n
-    direction: desc
-
-- kind: Bbs
-  properties:
-  - name: disable_news=
-  - name: comment_n
-    direction: desc
-
-- kind: Bbs
-  properties:
-  - name: disable_news=
-  - name: date
-    direction: desc
-
-- kind: Bbs
-  properties:
-  - name: disable_news=
-  - name: illust_n
-    direction: desc
-
-- kind: Bbs
-  properties:
   - name: official
   - name: date
     direction: desc
@@ -191,18 +167,6 @@ indexes:
 - kind: Entry
   properties:
   - name: thread_key
-  - name: date
-    direction: desc
-
-- kind: Entry
-  properties:
-  - name: thread_key.bbs_key
-  - name: date
-    direction: desc
-
-- kind: Favorite
-  properties:
-  - name: owner
   - name: date
     direction: desc
 
@@ -279,27 +243,6 @@ indexes:
 
 - kind: MesThread
   properties:
-  - name: bbs_key
-  - name: tmp_com_num
-    direction: desc
-
-- kind: MesThread
-  properties:
-  - name: del_flag
-  - name: illust_mode
-  - name: user_id
-  - name: create_date
-    direction: desc
-
-- kind: MesThread
-  properties:
-  - name: del_flag
-  - name: tag_list
-  - name: create_date
-    direction: desc
-
-- kind: MesThread
-  properties:
   - name: illust_mode
   - name: applause
     direction: desc
@@ -365,12 +308,6 @@ indexes:
   properties:
   - name: illust_mode
   - name: user_id
-  - name: create_date
-    direction: desc
-
-- kind: MesThread
-  properties:
-  - name: illust_reply
   - name: create_date
     direction: desc
 
