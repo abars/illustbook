@@ -11,6 +11,7 @@ import os
 import sys
 import re
 import datetime
+import json
 
 from google.appengine.api import users
 from google.appengine.ext import webapp
@@ -20,7 +21,7 @@ from google.appengine.api import images
 from google.appengine.api import memcache
 from google.appengine.api.users import User
 
-from django.utils import simplejson
+#from django.utils import simplejson
 
 from myapp.SetUtf8 import SetUtf8
 from myapp.Alert import Alert
@@ -573,12 +574,13 @@ class ApiObject(webapp.RequestHandler):
 			callback_func=req.request.get("callback")
 		
 		#JSON作成
-		json = simplejson.dumps(dic, ensure_ascii=False)
+		#json_code = simplejson.dumps(dic, ensure_ascii=False)
+		json_code = json.dumps(dic)
 		req.response.content_type = 'application/json'
 		
 		#JSONP作成
 		if(callback_func):
-			json=""+callback_func+"("+json+")"
+			json_code=""+callback_func+"("+json_code+")"
 		
 		#返却
-		req.response.out.write(json)
+		req.response.out.write(json_code)
