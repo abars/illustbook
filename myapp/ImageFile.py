@@ -93,7 +93,7 @@ class ImageFile (webapp.RequestHandler):
 		content_info=memcache.get(BbsConst.IMAGE_CACHE_KEY_AND_DATE+path)
 		content_key=None
 		content_date=None
-		if(content_list):
+		if(content_info):
 			content_key=content_info["key"];
 			content_date=content_info["date"];
 
