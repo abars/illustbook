@@ -75,19 +75,6 @@ indexes:
 
 - kind: Bbs
   properties:
-  - name: official
-  - name: date
-    direction: desc
-
-- kind: Bbs
-  properties:
-  - name: official
-  - name: owner
-  - name: date
-    direction: desc
-
-- kind: Bbs
-  properties:
   - name: owner
   - name: date
     direction: desc

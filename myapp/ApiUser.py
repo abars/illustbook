@@ -111,11 +111,17 @@ class ApiUser(webapp.RequestHandler):
 
 		offset=0
 		if(req.request.get("offset")):
-			offset=int(req.request.get("offset"))
+			try:
+				offset=int(req.request.get("offset"))
+			except:
+				offset=0
 		
 		limit=10
 		if(req.request.get("limit")):
-			limit=int(req.request.get("limit"))
+			try:
+				limit=int(req.request.get("limit"))
+			except:
+				limit=10
 
 		thread_key_list=[]
 		thread_list=query.fetch(limit=limit,offset=offset)
