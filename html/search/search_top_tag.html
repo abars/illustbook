@@ -1,5 +1,5 @@
 <p>
-<font color="#258FB8" size=3>{% if not is_iphone %}注目のタグ：{% endif %}</font>
+<font color="#258FB8" size="3">{% if not is_iphone %}注目のタグ：{% endif %}</font>
 {% for tag2 in tag_list %}
 	{% if is_iphone %}
 		{% if forloop.counter <= 10 %}

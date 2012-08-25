@@ -67,16 +67,16 @@ class SearchTag(webapp.RequestHandler):
 				cnt=cnt+1
 				continue
 			
-			one_tag='<A HREF="./search_tag?tag='
+			one_tag='<a href="./search_tag?tag='
 			one_tag+=urllib.quote_plus(tag2.encode('utf8'))
 			one_tag+='" class="decnone">'
 			
 			size=int(score)
 			size=round(math.log(size+1,2)+1)
 			
-			one_tag+='<font color="#258FB8" SIZE='+str(size)+'>'
+			one_tag+='<font color="#258FB8" size="'+str(size)+'">'
 			one_tag+=tag2+"("+str(score)+")"
-			one_tag+='</font></A>'
+			one_tag+='</font></a>'
 			
 			tag_list.append(one_tag)
 			cnt=cnt+1
