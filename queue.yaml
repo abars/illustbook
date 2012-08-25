@@ -2,4 +2,5 @@ queue:
 - name: feed
   rate: 1/s
 - name: counter
+  target: backend1
   rate: 1/s
