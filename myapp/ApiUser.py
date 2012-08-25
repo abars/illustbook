@@ -55,9 +55,13 @@ class ApiUser(webapp.RequestHandler):
 		bookmark=ApiObject.get_bookmark_of_user_id(user_id)
 		if(not bookmark):
 			return []
+		
+		bookmark_list=ApiObject.get_bookmark_list(bookmark.user_list)
+		
 		dic=[]
 		for one_user in bookmark.user_list:
-			bookmark=ApiObject.get_bookmark_of_user_id(one_user)
+			bookmark=bookmark_list[one_user]
+			#bookmark=ApiObject.get_bookmark_of_user_id(one_user)
 			if(bookmark):
 				one_dic=ApiObject.create_user_object(req,bookmark)
 				dic.append(one_dic)
