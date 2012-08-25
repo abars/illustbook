@@ -1,26 +1,8 @@
-<style>
-#floating_menu{
-border-bottom: 1px solid #ccc;
-padding: 1px 0;
-padding-left:2px;
-min-height:28px;
-text-align: left;
-background-color:#ffffff;
-color: #444;
-font-family: "ＭＳ Ｐゴシック", "Arial", "Osaka", "ヒラギノ角ゴPro W3";
-font-size: 12px;
-}
-
-#floating_menu a{
-color: #444;
-}
-</style>
-
 <div id="floating_menu">
 
 	{% if user %}
 	<div style="float:left;padding-left:2px;padding-top:2px;padding-right:2px;font-weight:600;">
-		<a href="{{host}}mypage"><img src="{{host}}show_icon?key={{user.user_id}}" width=24px height=24px></a>
+		<a href="{{host}}mypage"><img src="{{host}}show_icon?key={{user.user_id}}" width="24px" height="24px" alt="icon"/></a>
 	</div>
 	{% endif %}
 	
@@ -60,5 +42,5 @@ color: #444;
 		{% endif %}
 	</div>
 	
-<br clear="all">
+<br clear="all"/>
 </div>

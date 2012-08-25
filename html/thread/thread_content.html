@@ -3,10 +3,10 @@
 	<div class="entry-title">
 		<h3>{{ thread.title|escape }}</h3>
 		{% if not bbs.disable_applause %}
-			<div class="clap"><A HREF="{{host}}applause?bbs_key={{bbs_key}}&thread_key={{thread.key}}&mode=thread" rel="nofollow"><img src="{{template_path}}images/i_crap.gif" alt="拍手" width="53" height="20"></A>{%if thread.applause %}{{thread.applause}}{%else%}0{%endif%}</div>
+			<div class="clap"><a href="{{host}}applause?bbs_key={{bbs_key}}&thread_key={{thread.key}}&mode=thread" rel="nofollow"><img src="{{template_path}}images/i_crap.gif" alt="拍手" width="53" height="20"></a>{%if thread.applause %}{{thread.applause}}{%else%}0{%endif%}</div>
 		{% endif %}
 		<div class="clr"></div>
-	</div><BR>
+	</div><br/>
 	{% else%}
 	{{thread.title}}
 	<HR>
@@ -15,11 +15,11 @@
 
 {% if thread.cached_image_key %}
 	{% ifequal thread.illust_mode 2 %}
-		<script type="text/javascript" src="{{host}}moper_player?bbs_key={{bbs_key}}&thread_key={{thread.key}}{% if is_iphone %}&is_iphone=1{% endif %}"></script><BR>
+		<script type="text/javascript" src="{{host}}moper_player?bbs_key={{bbs_key}}&thread_key={{thread.key}}{% if is_iphone %}&is_iphone=1{% endif %}"></script><br/>
 	{%else%}
 			{% include "bbs_thread/image.html" %}
-			<BR>
-			{% if template_path %}<BR>{%endif%}
+			<br/>
+			{% if template_path %}<br/>{%endif%}
 	{% endifequal %}
 {% endif %}
 
@@ -33,7 +33,7 @@
 　
 
 {% if thread.create_date %}
-	{% if is_iphone %}<BR>{% endif %}
+	{% if is_iphone %}<br/>{% endif %}
 	{%if template_path %}
 		<img src="{{template_path}}images/i_day.gif" alt="投稿日" width="64" height="20" />
 	{% else %}
@@ -43,13 +43,13 @@
 {% endif %}
 
 {% if thread.category %}
-	{% if is_iphone %}<BR>{% endif %}
+	{% if is_iphone %}<br/>{% endif %}
 	{%if template_path %}
 		<img src="{{template_path}}images/i_category.gif" alt="カテゴリ" width="64" height="20" />
 	{% else %}
 		カテゴリ：
 	{% endif%}
-	<A HREF="{{usrhost}}?category={{thread.category|iriencode}}" class="decnone">{{thread.category}}</A>　
+	<a href="{{usrhost}}?category={{thread.category|iriencode}}" class="decnone">{{thread.category}}</a>　
 {%endif%}
 
 {% if thread.cached_image_key %}
@@ -64,7 +64,7 @@
 <div class="entry-comment">
 {{thread.summary|safe}}
 {%if thread.postscript %}
-<BR>{{thread.postscript|safe}}
+<br/>{{thread.postscript|safe}}
 {% endif%}
 </div>
 

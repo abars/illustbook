@@ -1,13 +1,13 @@
 <!--掲示板のタイトル-->
 
 {% if template_path %}
-	<h1><A HREF="{{page_url}}">{{bbs.bbs_name}}</A></h1>
+	<h1><a href="{{page_url}}">{{bbs.bbs_name}}</a></h1>
 	<h2>{{bbs.summary|safe}}</h2>
 {% else %}
 		{% if bbs.bottom_image %}
-			<A HREF="{{page_url}}" class="decnone_top_logo"><IMG SRC="{{bbs.bottom_image}}"></A>
+			<a href="{{page_url}}" class="decnone_top_logo"><img src="{{bbs.bottom_image}}"/></a>
 		{% else %}
-			<H3><A HREF="{{page_url}}" class="decnone">{{bbs.bbs_name}}</A></H3>
-			{% if bbs.summary %}{{bbs.summary|safe}}<BR>{% endif %}
+			<h3><a href="{{page_url}}" class="decnone">{{bbs.bbs_name}}</a></h3>
+			{% if bbs.summary %}{{bbs.summary|safe}}<br/>{% endif %}
 		{% endif %}
 {% endif %}

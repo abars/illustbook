@@ -33,10 +33,10 @@
 <!-- 絵で返信 -->
 {% if entry.com.illust_reply %}
 	{% if entry.com.violate_terms %}
-		[大変申し訳ありませんが、ご利用規約の制約からイラストが非表示になっています]<BR>
-		[ご利用規約は <a href="http://www.illustbook.net/terms">http://www.illustbook.net/terms</a> からご確認頂けます]<BR><BR>
+		[大変申し訳ありませんが、ご利用規約の制約からイラストが非表示になっています]<br/>
+		[ご利用規約は <a href="http://www.illustbook.net/terms">http://www.illustbook.net/terms</a> からご確認頂けます]<br/><br/>
 	{% else %}
-		<IMG SRC="{{host}}img/{{entry.com.illust_reply_image_key.key}}.jpg" BORDER=0 {% if is_iphone %} style="max-width:100%;"{%endif%}><BR>
+		<img src="{{host}}img/{{entry.com.illust_reply_image_key.key}}.jpg" BORDER=0 {% if is_iphone %} style="max-width:100%;"{%endif%}/><br/>
 	{% endif %}
 {% endif %}
 
@@ -67,13 +67,13 @@
 {% endif %}
 </div>
 </div>
-<BR>{{res.content|safe}}<BR><BR>
+<br/>{{res.content|safe}}<br/><br/>
 </div>
 {% endfor %}
 {% endif %}
 
 <div id="layer_{{ entry.com.key }}" style="display: none;position:relative;" class="close">
-<BR>
+<br/>
 <form action='http://localhost/' enctype="multipart/form-data" method="post" onSubmit="this.action='{{host}}add_res?entry_key={{ entry.com.key }}';">
 <table class="table_color">
 <tr><td>名前（必須）</td>

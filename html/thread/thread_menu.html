@@ -2,35 +2,35 @@
 <div class="g-button-group toggle-buttons">
 	
 {% if owner %}
-<A class="g-button" HREF="#" onclick='location.href="{{host}}edit_thread?bbs_key={{bbs.key}}&thread_key={{thread.key}}"' style="color:#333;">スレッドを編集</A>　
-<A class="g-button" HREF="#" onclick='confirm_action_thread("{{thread.key}}", "{{bbs.key}}", "{{host}}")'  style="color:#333;">スレッドを削除</A>　
+<a class="g-button" href="#" onclick='location.href="{{host}}edit_thread?bbs_key={{bbs.key}}&thread_key={{thread.key}}"' style="color:#333;">スレッドを編集</a>　
+<a class="g-button" href="#" onclick='confirm_action_thread("{{thread.key}}", "{{bbs.key}}", "{{host}}")'  style="color:#333;">スレッドを削除</a>　
 {% else %}
 	{% if thread.delete_key %}
-	<A class="g-button" HREF="#" onclick='prompt_action_thread("{{thread.key}}", "{{bbs.key}}", "{{host}}")'  style="color:#333;">削除キーでスレッドを削除</A>　
+	<a class="g-button" href="#" onclick='prompt_action_thread("{{thread.key}}", "{{bbs.key}}", "{{host}}")'  style="color:#333;">削除キーでスレッドを削除</a>　
 	{% endif %}
 {% endif %}
 
 {% if thread.cached_image_key %}
 	{% ifequal thread.illust_mode 2 %}
-	<A class="g-button" HREF="{{host}}embedded?thread_key={{thread.key}}"  style="color:#333;">埋込タグ</A>　
+	<a class="g-button" href="{{host}}embedded?thread_key={{thread.key}}"  style="color:#333;">埋込タグ</a>　
 	{% endifequal %}
 	{% if bbs.enable_continue_draw %}
 		{% ifequal bbs.bbs_mode 1 %}
-		<A class="g-button" HREF="#"  onclick="open_draw('{{thread.cached_image_key}}',0,'{{host}}','{{thread.key}}','{{bbs.key}}',{{thread.illust_mode}})"  style="color:#333;">続きから描く</A>　
+		<a class="g-button" href="#"  onclick="open_draw('{{thread.cached_image_key}}',0,'{{host}}','{{thread.key}}','{{bbs.key}}',{{thread.illust_mode}})"  style="color:#333;">続きから描く</a>　
 		{% endifequal %}
 		
 		{% ifequal bbs.bbs_mode 2 %}
 			{% if owner %}
-				<A class="g-button" HREF="#" onclick="open_draw('{{thread.cached_image_key}}',0,'{{host}}','{{thread.key}}','{{bbs.key}}',{{thread.illust_mode}})"  style="color:#333;">続きから描く</A>　
+				<a class="g-button" href="#" onclick="open_draw('{{thread.cached_image_key}}',0,'{{host}}','{{thread.key}}','{{bbs.key}}',{{thread.illust_mode}})"  style="color:#333;">続きから描く</a>　
 			{% endif %}
 		{% endifequal %}
 	{% endif %}
 {% endif %}
 
 {% if admin_user %}
-	<A class="g-button" HREF="{{host}}violation?bbs_key={{bbs.key}}&thread_key={{thread.key}}&mode=adult"  style="color:#333;">アダルト</A>　
-	<A class="g-button" HREF="{{host}}violation?bbs_key={{bbs.key}}&thread_key={{thread.key}}&mode=terms"  style="color:#333;">規約</A>　
-	<A class="g-button" HREF="{{host}}violation?bbs_key={{bbs.key}}&thread_key={{thread.key}}&mode=photo"  style="color:#333;">非表示{% if thread.violate_photo %}(ON){% endif %}</A>　
+	<a class="g-button" href="{{host}}violation?bbs_key={{bbs.key}}&thread_key={{thread.key}}&mode=adult"  style="color:#333;">アダルト</a>　
+	<a class="g-button" href="{{host}}violation?bbs_key={{bbs.key}}&thread_key={{thread.key}}&mode=terms"  style="color:#333;">規約</a>　
+	<a class="g-button" href="{{host}}violation?bbs_key={{bbs.key}}&thread_key={{thread.key}}&mode=photo"  style="color:#333;">非表示{% if thread.violate_photo %}(ON){% endif %}</a>　
 {% endif %}
 
 </div>

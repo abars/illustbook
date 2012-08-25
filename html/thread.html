@@ -4,6 +4,7 @@
 <title>{{thread.title}} - {{bbs.bbs_name}}</title>
 {% include "./bbs_thread/meta.html" %}
 {% include "./bbs_thread/css.html" %}
+{% include "floating_menu_css.html" %}
 </head>
 
 <body>
@@ -17,7 +18,7 @@
 		<!-- ヘッダ -->
 		{% if template_path %}
 			<div id="header">
-				<h1><A HREF="{{usrhost}}">{{bbs.bbs_name}}</A></h1>
+				<h1><a href="{{usrhost}}">{{bbs.bbs_name}}</a></h1>
 			</div>
 		{% endif %}
 		

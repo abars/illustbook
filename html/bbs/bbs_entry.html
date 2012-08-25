@@ -5,13 +5,13 @@
 	<!--イラスト掲示板-->
 	<div class="entry-title">
 		<!-- タイトル -->
-		<h3><A href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{%endif%}.html'>{{ thread.title|escape }}</A></h3>
+		<h3><a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{%endif%}.html'>{{ thread.title|escape }}</a></h3>
 
 		<!-- 拍手 -->
 		{% if not bbs.disable_applause %}
 			<div class="clap" align="right">
 			{% if template_path%}
-				<A HREF="{{host}}applause?bbs_key={{bbs.key}}&thread_key={{thread.key}}&mode=bbs&order={{order}}&page={{page}}" rel="nofollow"><img src="{{template_path}}images/i_crap.gif" alt="拍手" width="53" height="20"/></A>{%if thread.applause %}{{thread.applause}}{%else%}0{%endif%}
+				<a href="{{host}}applause?bbs_key={{bbs.key}}&thread_key={{thread.key}}&mode=bbs&order={{order}}&page={{page}}" rel="nofollow"><img src="{{template_path}}images/i_crap.gif" alt="拍手" width="53" height="20"/></a>{%if thread.applause %}{{thread.applause}}{%else%}0{%endif%}
 			{% else %}
 				<input type="button" value="拍手{%if thread.applause %}{{thread.applause}}{%else%}0{%endif%}"  class="g-button" onClick="location.href='{{host}}applause?bbs_key={{bbs.key}}&thread_key={{thread.key}}&mode=bbs&order={{order}}&page={{page}}'">
 			{% endif %}
@@ -52,7 +52,7 @@
 		{% else %}
 			コメント数：
 		{% endif %}
-		<a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{%endif%}.html'>{{thread.comment_cnt}}</A>
+		<a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{%endif%}.html'>{{thread.comment_cnt}}</a>
 		{% endif %}
 		{%if is_iphone%} <BR>{%else%}&nbsp;&nbsp;{%endif%}
 		{% if template_path %}
