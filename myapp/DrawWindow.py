@@ -60,10 +60,7 @@ class DrawWindow(webapp.RequestHandler):
 			author=ReeditEscape.escape(thread.author)
 			title=ReeditEscape.escape(thread.title)
 
-		category_list=None
-		if(bbs.category_list):
-			if(bbs.category_list!=""):
-				category_list=bbs.category_list.split(",")
+		category_list=bbs.get_category_list()
 
 		user = users.get_current_user()
 		logined=0
@@ -102,6 +99,7 @@ class DrawWindow(webapp.RequestHandler):
 		'template_base_color':design["template_base_color"],
 		'version': self.request.get("version"),
 		'wacom2': self.request.get("wacom2"),
+		'selecting_category': None
 		}
 		
 		if(ipad or iphone):

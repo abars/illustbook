@@ -118,12 +118,13 @@ class AddNewThread(webapp.RequestHandler):
 		new_thread.homepage_addr=homepage_addr
 		new_thread.author=self.request.get('author')
 		if(self.request.get("draw_time")):
-			new_thread.draw_time=int(self.request.get("draw_time")	)			
+			new_thread.draw_time=int(self.request.get("draw_time"))
 		if(self.request.get("delete_key")):
 			new_thread.delete_key=self.request.get("delete_key")
 
 		if(self.request.get("category")):
 			new_thread.category=self.request.get("category")
+			bbs.add_new_category(new_thread.category)
 		
 		if(self.request.get("is_png")):
 			new_thread.is_png=1
@@ -198,9 +199,7 @@ class AddNewThread(webapp.RequestHandler):
 		ApiFeed.invalidate_cache()
 	
 	def get_thread_url(self,bbs,new_thread):
-		#thread info
 		url="http://"+self.request.host+"/"
-		#www.illustbook.net/";
 		if(bbs.short):
 			url=url+bbs.short+"/";
 		else:

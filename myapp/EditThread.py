@@ -43,6 +43,8 @@ class EditThread(webapp.RequestHandler):
 		
 		host_url="./"
 		design=CssDesign.get_design_object(self,bbs,host_url,1)
+
+		category_list=bbs.get_category_list()
 		
 		template_values = {
 			'host': './',
@@ -56,7 +58,9 @@ class EditThread(webapp.RequestHandler):
 			'template_base_color':design["template_base_color"],
 			'user': user,
 			'redirect_url': self.request.path,
-			'edit_thread': True
+			'edit_thread': True,
+			'category_list': category_list,
+			'selecting_category': thread.category
 		}
 
 		path = os.path.join(os.path.dirname(__file__), '../html/edit_thread.html')

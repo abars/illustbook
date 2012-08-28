@@ -14,9 +14,16 @@
 		function submit_info(){
 			document.getElementById("thread_summary").value=rediter_get_text("rediter_summary");
 			document.getElementById("thread_postscript").value=rediter_get_text("rediter_postscript");
+			var category=document.getElementById("category").value;
+			if(category=="add"){
+				category=document.getElementById("category_new").value;
+			}
+			document.getElementById("thread_category").value=category;
 			document.getElementById("submit_form").submit();
 		}
 	--></script>
+
+	{% include "floating_menu_css.html" %}
 </head>
 	
 <body onload="init();">
@@ -46,11 +53,14 @@
 		<TABLE>
 		<TR><TD>タイトル</TD><TD><input type="text" name="thread_title" value="{{thread.title}}" size=60></TD></TR>
 		<TR><TD>投稿者名</TD><TD><input type="text" name="thread_author" value="{{thread.author}}"><input type="checkbox" name="link_profile" value="link_profile" {% if thread.user_id %}checked{% endif %}>プロフィールにリンク</TD></TR>
-		<TR><TD>カテゴリ</TD><TD><input type="text" name="category" value="{% if thread.category %}{{thread.category}}{% endif %}"></TD></TR>
+		<TR><TD>カテゴリ</TD><TD>
+		{% include "category_list.html" %}
+		</TD></TR>
 		<TR><TD>コメント数</TD><TD><input type="text" name="comment_cnt" value="{{thread.comment_cnt}}"></TD></TR>
 		</TABLE>
 		<textarea id="thread_summary" name="thread_summary" cols=60 rows=16 style="display:none;"></textarea>
 		<textarea id="thread_postscript" name="thread_postscript" cols=60 rows=16 style="display:none;"></textarea>
+		<input id="thread_category" name="thread_category" style="display:none;"/>
 		</form>
 		<BR>
 

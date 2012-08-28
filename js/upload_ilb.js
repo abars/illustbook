@@ -13,6 +13,9 @@
 		else
 			ret.title="　";
 		ret.category=document.getElementById("category").value
+		if(ret.category=="add"){
+			ret.category=document.getElementById("category_new").value
+		}
 		ret.delete_key=document.getElementById("delete_key").value;
 		ret.no_illust=document.getElementById("no_illust").checked;
 

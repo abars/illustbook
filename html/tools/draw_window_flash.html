@@ -126,18 +126,6 @@ object, embed {
 <div id="fromJavaScript">
 </div>
 
-<!--
-<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=10,0,0,0" id="fromJavaScript" width=100% height=100%>
-<param name="allowScriptAccess" value="always" />
-<param name="movie" value="flash/IllustBook{% if is_flex46 %}46{% endif %}.swf" />
-<param name="quality" value="high" />
-<param name="allowFullScreen" value="true" />
-<param  name="wmode"  value="direct" />
-<param name="FlashVars" value="celsys={{celsys}}&draw_time={{draw_time}}&local_mode=0&width={{canvas_width}}&height={{canvas_height}}&bbs_key={{bbs_key}}&thread_key={{thread_key}}&canvas_url={{canvas_url}}&host={{host}}&reply={{reply}}{% if bbs.tool_bg_color %}&bg_color={{bbs.tool_bg_color}}{%endif%}&delete_when_upload_success={{bbs.delete_when_upload_success}}" />
-<embed src="flash/IllustBook{% if is_flex46 %}46{% endif %}.swf" allowFullScreen="true"  FlashVars="celsys={{celsys}}&draw_time={{draw_time}}&local_mode=0&width={{canvas_width}}&height={{canvas_height}}&bbs_key={{bbs_key}}&thread_key={{thread_key}}&canvas_url={{canvas_url}}&host={{host}}&reply={{reply}}{% if bbs.tool_bg_color %}&bg_color={{bbs.tool_bg_color}}{%endif%}&delete_when_upload_success={{bbs.delete_when_upload_success}}" quality="high" width=100% height=100% bgcolor="#ffffff" name="fromJavaScript" allowScriptAccess="always" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" wmode="direct" />
-</object>
--->
-
 <div id="loading_window" style="position:absolute;left:8px;top:8px;z-index:-1;">
 	<p>イラブペイントを読込中</p>
 </div>
@@ -165,15 +153,13 @@ object, embed {
 					<table class="table_color" style="width:100%;">
 					{% ifequal reply "1" %}
 					{% else %}
-					<tr><td>タイトル</td><td><input id="title" style="width:100%;"></td></tr>
+					<tr><td>タイトル</td><td><input id="title" style="width:100%;"/></td></tr>
 					{% endifequal %}
-					<tr><td>投稿者名（必須）</td><td><input id="name" style="width:100%;"></td></tr>
-					<tr><td>ホームページアドレス</td><td><input id="homepage_addr" value="http://" style="width:100%;"></td></tr>
-					<tr><td>削除キー</td><td><input id="delete_key" style="width:100%;"></td></tr>
+					<tr><td>投稿者名（必須）</td><td><input id="name" style="width:100%;"/></td></tr>
+					<tr><td>ホームページアドレス</td><td><input id="homepage_addr" value="http://" style="width:100%;"/></td></tr>
+					<tr><td>削除キー</td><td><input id="delete_key" style="width:100%;"/></td></tr>
 					<tr><td>カテゴリ</td><td>
-					<select id="category" style="margin-bottom:0px;">
-					<option value="" selected="selected">設定しない</option>{% for category in category_list %}{% ifequal category "" %}{% else %}<option value="{{category}}">{{category}}</option>{% endifequal %}{% endfor %}
-					</select>
+					{% include "category_list.html" %}
 					</td></tr>
 					<tr><td>オプション</td><td>
 						<div id="thread_option" style="float:left;">

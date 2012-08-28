@@ -1,0 +1,14 @@
+<div style="float:left">
+	<select id="category" style="margin-bottom:0px;" onchange="if(this.value=='add'){next_state='block';}else{next_state='none';}document.getElementById('category_new_div').style.display=next_state;">
+	<option value="" {% if not selecting_category %}selected="selected"{% endif %}>設定しない</option>
+	{% for category in category_list %}
+		{% ifequal category "" %}{% else %}
+			<option value="{{category}}" {% ifequal selecting_category category %}selected="selected"{% endifequal %}>{{category}}</option>
+		{% endifequal %}{% endfor %}
+	<option value="add" onselcted="">カテゴリの追加</option>
+	</select>
+</div>
+<div style="float:left;display:none;" id="category_new_div">
+	　追加するカテゴリ名<input id="category_new"/>
+</div>
+<br clear="all"/>

@@ -51,8 +51,9 @@ class UpdateThread(webapp.RequestHandler):
 		
 		thread.author=self.request.get('thread_author')
 		
-		category = self.request.get("category")
+		category = self.request.get("thread_category")
 		thread.category=category
+		bbs.add_new_category(category)
 
 		summary = self.request.get('thread_summary')
 		summary = compiled_line.sub(r'', summary)
