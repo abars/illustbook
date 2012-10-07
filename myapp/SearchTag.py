@@ -72,6 +72,8 @@ class SearchTag(webapp.RequestHandler):
 			one_tag+='" class="decnone">'
 			
 			size=int(score)
+			if(size>16):
+				size=16
 			size=round(math.log(size+1,2)+1)
 			
 			one_tag+='<font color="#258FB8" size="'+str(size)+'">'
