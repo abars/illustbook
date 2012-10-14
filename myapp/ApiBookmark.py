@@ -11,6 +11,7 @@ import os
 import sys
 import re
 import datetime
+import logging
 import pickle
 
 from google.appengine.ext.webapp import template
@@ -43,15 +44,46 @@ class ApiBookmark(webapp.RequestHandler):
 #-------------------------------------------------------------------
 
 	@staticmethod
+	def add_removed_thread_to_dic(req,dic,thread_key_list):
+		if len(dic)==len(thread_key_list):
+			return
+		
+		#削除されたスレッドも一覧に表示する
+		appear={}
+		for thread in dic:
+			appear[thread["key"]]=True
+			#logging.error('key:'+thread["key"])
+		for key in thread_key_list:
+			key=str(key)
+			if key not in appear:
+				#logging.error('not key:'+key)
+				removed_url="http://"+req.request.host+"/static_files/removed.png";
+				removed_thread={
+					"title":"removed",
+					"author":"removed",
+					"thumbnail_url":removed_url,
+					"image_url":removed_url,
+					"create_date":"removed",
+					"thread_url":"removed",
+					"applause":0,
+					"bookmark":0,
+					"key":str(key),
+					"disable_news":0}
+				dic.append(removed_thread)
+
+	@staticmethod
 	def bookmark_get_thread_list(req,user_id):
 		bookmark=ApiObject.get_bookmark_of_user_id(user_id)
 		if(bookmark==None):
 			return []
+
 		thread_key_list=bookmark.thread_key_list
-		
 		thread_key_list=ApiObject.offset_and_limit(req,thread_key_list)
 
-		return ApiObject.create_thread_object_list(req,thread_key_list,"bookmark")
+		dic=ApiObject.create_thread_object_list(req,thread_key_list,"bookmark")
+		ApiBookmark.add_removed_thread_to_dic(req,dic,thread_key_list)
+
+		return dic
 
 	@staticmethod
 	def bookmark_get_bbs_list(req,user_id):

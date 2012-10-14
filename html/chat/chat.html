@@ -51,7 +51,11 @@
 			<div style="background-color:#aaaaaa;padding:1px;margin-right:4px;">
 				{% if user %}
 		<A HREF="javascript:join_chat('{{room.key}}',false,{% if room.password %}true{%else%}false{%endif%});" class="declink">{% endif %}
-				<img src="./chat?mode=thumbnail&key={{room.key}}" WIDTH=100px HEIGHT=100px>
+				{% if room.password %}
+					<div style="width:100px;height:100px;background-color:#ffffff;color:#333333;">password lock</div>
+				{% else %}
+					<img src="./chat?mode=thumbnail&key={{room.key}}" WIDTH=100px HEIGHT=100px>
+				{% endif %}
 				{% if user %}</A>{% endif %}
 			</div>
 		</td>
