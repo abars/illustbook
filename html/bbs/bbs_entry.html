@@ -70,7 +70,7 @@
 <!--記事-->
 {% if thread.illust_mode and bbs.enable_full_flat %}
 	<!--本文-->
-	<div class="entry-comment">
+	<div class="entry-comment" style="word-break:break-all;">
 	<p>{{thread.summary|safe}}</p>
 		{% if thread.postscript %}
 		　<p><a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{%endif%}.html'  class="g-button" style="color:#444;">続きを読む</a></p>

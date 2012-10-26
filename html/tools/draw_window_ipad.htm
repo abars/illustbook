@@ -22,6 +22,7 @@
 <script language="JavaScript" src="./js/ipad/ilbpaint_ipad_buffer.js"></script>
 <script language="JavaScript" src="./js/ipad/ilbpaint_ipad_undo.js"></script>
 <script language="JavaScript" src="./js/ipad/ilbpaint_ipad_upload.js"></script>
+<script language="JavaScript" src="./js/ipad/ilbpaint_ipad_import.js"></script>
 <script language="JavaScript" src="./js/ipad/ilbpaint_ipad_tool.js"></script>
 <script language="JavaScript" src="./js/ipad/ilbpaint_ipad_hand.js"></script>
 <script language="JavaScript" src="./js/ipad/ilbpaint_ipad_user.js"></script>
@@ -29,6 +30,7 @@
 <script language="JavaScript" src="./js/ipad/ilbpaint_ipad_spoit.js"></script>
 <script language="JavaScript" src="./js/ipad/ilbpaint_ipad_palette.js"></script>
 <script language="JavaScript" src="./js/ipad/ilbpaint_ipad_colorcircle.js"></script>
+<script language="JavaScript" src="./js/ipad/ilbpaint_ipad_bottom_tool.js"></script>
 <script language="JavaScript" src="./js/ipad/ilbpaint_ipad.js"></script>
 
 <script language="JavaScript" src="./js/cookie.js"></script>
@@ -38,13 +40,12 @@
 <body bgcolor="{% if chat %}#eeeeee{% else %}#ffffff{% endif %}" onload="loadCookie();{% if chat %}chat_init('{{chat}}','{{user_id}}','{{user_name}}',{{server_time}},{{viewmode}});{% else %}chat_init('local','','',0);{% endif %}ipad_init();" style="overflow:hidden;margin:0px;padding:0px;-webkit-user-select: none;" onselectstart="return false;">
 
 <div style="width:100%;height:100%;">
-	<div id="toolmenu" style="position:fixed;left:0px;top:0px;width:60px;height:100%;z-index:10;">
+	<div id="toolmenu" style="position:fixed;left:0px;top:0px;width:60px;height:100%;z-index:10;background-color:#ffffff;">
 	</div>
 	
-	<div id="bottom_tool" style="position:fixed;left:60px;bottom:0px;width:100%;padding-bottom:0px;z-index:10;background-color:#ffffff;">
+	<div id="bottom_tool" style="position:fixed;left:0px;bottom:0px;width:100%;padding-bottom:0px;z-index:10;background-color:#ffffff;">
 		<div id="edit_tool">
-			<div style="float:left;"><canvas id="color_circle" width="420px" height="80px""></canvas></div>
-			<div id="palette" style="float:left;max-width:420px;margin-top:2px;margin-bottom:4px;"></div>
+			<div style="float:left;"><canvas id="pen_tools" width="480px" height="60px""></canvas></div>
 			<BR clear="all">
 		</div>
 		{% if chat %}
@@ -69,6 +70,13 @@
 		{% endif %}
 	</div>
 
+	<div id="palette_tool" style="display:none;z-index:10;position:fixed;left:60px;background-color:#ffffff;">
+			<div style="float:left;">
+			<canvas id="color_circle" width="200px" height="200px"></canvas>
+			</div>
+			<div id="palette" style="float:left;max-width:220px;margin-top:4px;margin-bottom:4px;"></div>
+	</div>
+	
 		<div id="upload_form" style="position:fixed;padding-bottom:10px;display:none;left:60px;z-index:10;background-color:#ffffff;">
 			<table width=90%>
 				<tr><td>タイトル</td><td><input id="title""></td></tr>
@@ -89,6 +97,9 @@
 					投稿先が見つかりません。マイページから掲示板を作成して下さい。
 					{% endif %}
 				</td></tr>
+				{% endif %}
+				{% if not chat %}
+				<tr><td>画像を読込</td><td><input type="file" id="import" onchange="ipad_import();"/></td></tr>
 				{% endif %}
 			</table>
 			<BR>コメント<BR><textarea id="comment" rows=6 style="width:90%;"></textarea><BR>
