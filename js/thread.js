@@ -3,6 +3,8 @@
 //copyright 2010-2012 ABARS all rights reserved.
 //--------------------------------------------------------
 
+var isFlashInstalled=function(){if(navigator.plugins["Shockwave Flash"]){return true;}try{new ActiveXObject("ShockwaveFlash.ShockwaveFlash");return true;}catch(a){return false;}}();
+
 		function select_change(order_value,url_base,page){
 			var order=order_value;
 			window.location.href=''+url_base+page+"&order="+order;
@@ -49,10 +51,14 @@
 				width=document.getElementById("canvas_width_"+thread_key).value;
 				height=document.getElementById("canvas_height_"+thread_key).value;
 			}
+			var is_ipad="";
+			if(!isFlashInstalled){
+				is_ipad="ipad=1&";
+			}
 			if(illust_mode==2 && !reply_mode){
 				window.location.href=''+host+'draw_moper?thread_key='+thread_key+'&bbs_key='+bbs_key+'&canvas_url='+url;
 			}else{
-				window.location.href=''+host+'draw?thread_key='+thread_key+'&bbs_key='+bbs_key+'&canvas_width='+width+"&canvas_height="+height+"&canvas_url="+url+"&reply="+reply_mode;
+				window.location.href=''+host+'draw?'+is_ipad+'thread_key='+thread_key+'&bbs_key='+bbs_key+'&canvas_width='+width+"&canvas_height="+height+"&canvas_url="+url+"&reply="+reply_mode;
 			}
 		}
 		

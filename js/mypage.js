@@ -136,7 +136,7 @@ function mypage_init(tab,login,view_mode,edit_mode,feed_page,is_admin,is_iphone)
 	if(offset_bookmark){offset_bookmark*=limit;}else{offset_bookmark=0;}
 	if(offset_submit){offset_submit*=limit;}else{offset_submit=0;}
 
-	illustbook.request.beginPackedRequest();
+	//illustbook.request.beginPackedRequest();
 
 	if(tab=="illust"){
 		illustbook.user.getThreadList(user_id,offset_submit,limit,illustbook.user.ORDER_NONE,get_user_thread_list_callback);
@@ -151,7 +151,7 @@ function mypage_init(tab,login,view_mode,edit_mode,feed_page,is_admin,is_iphone)
 	illustbook.user.getFollow(user_id,0,limit,illustbook.user.ORDER_NONE,get_follow_callback);
 	illustbook.user.getFollower(user_id,0,limit,illustbook.user.ORDER_NONE,get_follower_callback);
 
-	illustbook.request.endPackedRequest();
+	//illustbook.request.endPackedRequest();
 	
 	initial_load=false;
 }

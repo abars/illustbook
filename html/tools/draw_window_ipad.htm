@@ -35,9 +35,17 @@
 
 <script language="JavaScript" src="./js/cookie.js"></script>
 
+<style>
+	.layer_button{
+		border:solid 1px #5f5fef;
+		margin:6px;
+		padding:2px;
+	}
+</style>
+
 </head>
 
-<body bgcolor="{% if chat %}#eeeeee{% else %}#ffffff{% endif %}" onload="loadCookie();{% if chat %}chat_init('{{chat}}','{{user_id}}','{{user_name}}',{{server_time}},{{viewmode}});{% else %}chat_init('local','','',0);{% endif %}ipad_init();" style="overflow:hidden;margin:0px;padding:0px;-webkit-user-select: none;" onselectstart="return false;">
+<body style="color:#2f2fbf" bgcolor="{% if chat %}#eeeeee{% else %}#ffffff{% endif %}" onload="loadCookie();{% if chat %}chat_init('{{chat}}','{{user_id}}','{{user_name}}',{{server_time}},{{viewmode}});{% else %}chat_init('local','','',0);{% endif %}ipad_init({{canvas_width}},{{canvas_height}},'{{canvas_url}}');" style="overflow:hidden;margin:0px;padding:0px;-webkit-user-select: none;" onselectstart="return false;">
 
 <div style="width:100%;height:100%;">
 	<div id="toolmenu" style="position:fixed;left:0px;top:0px;width:60px;height:100%;z-index:10;background-color:#ffffff;">
@@ -70,11 +78,32 @@
 		{% endif %}
 	</div>
 
-	<div id="palette_tool" style="display:none;z-index:10;position:fixed;left:60px;background-color:#ffffff;">
-			<div style="float:left;">
-			<canvas id="color_circle" width="200px" height="200px"></canvas>
+	<div id="palette_tool" style="display:none;z-index:10;position:fixed;left:60px;margin:2px;background-color:#ffffff;border-radius:4px;">
+			<div id="palette_tool_color" style="display:none;">
+				<div style="float:left;"><canvas id="color_circle" width="200px" height="200px"></canvas></div>
+				<div id="palette" style="float:left;max-width:210px;margin-top:4px;margin-bottom:4px;"></div>
 			</div>
-			<div id="palette" style="float:left;max-width:220px;margin-top:4px;margin-bottom:4px;"></div>
+			<div id="palette_tool_layer" style="display:none;width:420px;height:100px;">
+				<div id="palette_tool_layer_list" style="float:left;">
+				</div>
+				<div style="float:left;">
+					{% if chat %}
+					{% else %}
+					<div class="layer_button" onmousedown="g_layer.add_layer();" ontouchstart="g_layer.add_layer();">
+					レイヤーの追加
+					</div>
+					<div class="layer_button" onmousedown="g_layer.clear_layer();" ontouchstart="g_layer.clear_layer();">
+					レイヤーのクリア
+					</div>
+					<div class="layer_button" onmousedown="g_layer.up_layer();" ontouchstart="g_layer.up_layer();">
+					一つ上に移動
+					</div>
+					<div class="layer_button" onmousedown="g_layer.down_layer();" ontouchstart="g_layer.down_layer();">
+					一つ下に移動
+					</div>
+					{% endif %}
+				</div>
+			</div>
 	</div>
 	
 		<div id="upload_form" style="position:fixed;padding-bottom:10px;display:none;left:60px;z-index:10;background-color:#ffffff;">
@@ -109,15 +138,7 @@
 	<!-- Canvas外でもイベントを取るためにサイズを64拡張する -->
 	<div id="canvas_event" style="width:100%;height:10%;background-color:#eeeeee;">
 		<div id="canvas_div" style="position:relative;width:{{canvas_width|add:64}}px;height:{{canvas_height|add:64}}px; top: 0; left: 0;">
-			<!--レイヤー1-->
-			<canvas id="canvas_fixed_0" width="{{canvas_width}}px" height="{{canvas_height}}px" style="position: absolute; top: 32; left: 32;background-color:#ffffff;z-index: 0;display:none;"></canvas>
-			<canvas id="canvas_local_0" width="{{canvas_width}}px" height="{{canvas_height}}px" style="position: absolute; top: 32; left: 32;background-color:#ffffff;z-index: 1;"></canvas>
-			<canvas id="canvas_drawing_0" width="{{canvas_width}}px" height="{{canvas_height}}px"  style="position: absolute; top: 32; left: 32;z-index: 2;"></canvas>
-			
-			<!--レイヤー2-->
-			<canvas id="canvas_fixed_1" width="{{canvas_width}}px" height="{{canvas_height}}px" style="position: absolute; top: 32; left: 32;z-index: 3;display:none;"></canvas>
-			<canvas id="canvas_local_1" width="{{canvas_width}}px" height="{{canvas_height}}px" style="position: absolute; top: 32; left: 32;z-index: 4;"></canvas>
-			<canvas id="canvas_drawing_1" width="{{canvas_width}}px" height="{{canvas_height}}px"  style="position: absolute; top: 32; left: 32;z-index: 5;"></canvas>
+			<canvas id="canvas_background" width="{{canvas_width}}px" height="{{canvas_height}}px" style="position: absolute; top: 32; left: 32;background-color:#ffffff;z-index: 0;"></canvas>
 		</div>
 	</div>
 </div>

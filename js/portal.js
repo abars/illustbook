@@ -67,7 +67,7 @@ $(function(){
 			request_unit_list=new Array(9*2,9*2,0)
 		}
 
-		illustbook.request.beginPackedRequest();
+		//illustbook.request.beginPackedRequest();
 
 		for(var i=0;i<id_list.length;i++){
 			if(page_unit_list[i]==0)
@@ -86,7 +86,7 @@ $(function(){
 			request(id);
 		}
 		
-		illustbook.request.endPackedRequest();
+		//illustbook.request.endPackedRequest();
 		
 		initial_load=false;
 	}
