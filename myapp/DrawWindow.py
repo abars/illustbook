@@ -36,8 +36,9 @@ class DrawWindow(webapp.RequestHandler):
 		
 		ipad=CssDesign.is_tablet(self)
 		iphone=CssDesign.is_iphone(self)
-		if(self.request.get("ipad") and self.request.get("ipad")=="1"):
-			ipad=1
+		if(not ipad and not iphone):
+			if(self.request.get("ipad") and self.request.get("ipad")=="1"):
+				ipad=1
 		
 		thread_key=self.request.get("thread_key")
 		draw_time=0
