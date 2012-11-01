@@ -5,6 +5,12 @@
 	</div>
 {% endif %}
 
+{% if thread.prohibit_comment %}
+	<div class="entry">
+	現在、このイラストへのコメントは禁止されています。詳細は運営までお問い合わせ下さい。
+	</div>
+{% endif %}
+
 {%if not bbs.disable_normal_reply %}
 	{%if show_comment_form %}
 <div class="entry">

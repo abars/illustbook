@@ -73,6 +73,11 @@ class AddEntry(webapp.RequestHandler):
 			self.redirect(str(url))
 			return
 		
+		#コメント禁止
+		if(db.get(thread).prohibit_comment):
+			self.response.out.write(Alert.alert_msg("このイラストへのコメントは禁止されています。",self.request.host));
+			return
+		
 		#書き込み権限確認
 		user = users.get_current_user()
 

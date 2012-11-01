@@ -30,6 +30,7 @@
 {% if admin_user %}
 	<a class="g-button" href="{{host}}violation?bbs_key={{bbs.key}}&thread_key={{thread.key}}&mode=adult"  style="color:#333;">アダルト</a>　
 	<a class="g-button" href="{{host}}violation?bbs_key={{bbs.key}}&thread_key={{thread.key}}&mode=terms"  style="color:#333;">規約</a>　
+	<a class="g-button" href="{{host}}violation?bbs_key={{bbs.key}}&thread_key={{thread.key}}&mode=comment"  style="color:#333;">コメント禁止</a>　
 	<a class="g-button" href="{{host}}violation?bbs_key={{bbs.key}}&thread_key={{thread.key}}&mode=photo"  style="color:#333;">非表示{% if thread.violate_photo %}(ON){% endif %}</a>　
 {% endif %}
 

@@ -42,6 +42,7 @@ class MesThread(db.Model):
 	adult = db.IntegerProperty()
 	violate_terms = db.IntegerProperty()
 	violate_photo = db.IntegerProperty()
+	prohibit_comment = db.IntegerProperty()
 
 	short = db.StringProperty()
 	is_png = db.IntegerProperty()

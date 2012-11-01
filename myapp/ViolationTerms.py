@@ -63,6 +63,13 @@ class ViolationTerms(webapp.RequestHandler):
 					thread.violate_photo=0
 				else:
 					thread.violate_photo=1
+			
+			if(self.request.get("mode")=="comment"):
+				if(thread.prohibit_comment):
+					thread.prohibit_comment=0
+				else:
+					thread.prohibit_comment=1
+
 			thread.put()
 		
 			ApiFeed.invalidate_cache()
