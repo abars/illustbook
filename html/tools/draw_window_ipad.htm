@@ -15,6 +15,8 @@
 <title>{{bbs.bbs_name}}へのイラストの新規投稿</title>
 {% endif %}
 
+<link rel="stylesheet" type="text/css" media="screen,print" href="{{host}}static_files/google_buttons/css/google-buttons.css?version=120531" />
+
 <script language="JavaScript" src="./api_js"></script>
 <script language="JavaScript" src="./js/ipad/ilbpaint_ipad_const.js"></script>
 <script language="JavaScript" src="./js/ipad/ilbpaint_ipad_rendering.js"></script>
@@ -46,15 +48,11 @@
 	}
 	
 	#toolmenu{
-		position:fixed;
-		left:0px;
-		top:0px;
 		z-index:99;
 		background-color:#F4F7FC;
 		border-radius:4px;
 		margin:2px;
-		padding-top:4px;
-		padding-bottom:2px;
+		padding-bottom:4px;
 		padding-left:1px;
 		padding-right:1px;
 	}
@@ -84,13 +82,25 @@
 		position:fixed;
 		padding-bottom:10px;
 		display:none;
-		left:60px;
+		right:0px;
+		bottom:0px;
+		width:471px;
 		z-index:99;
 		background-color:#F4F7FC;
 		border-radius:4px;
 		margin:2px;
+		margin-bottom:4px;
 		padding:4px;
 	}
+	
+	.tool_button{
+		border-radius:4px;
+		margin:2px;
+		text-align:center;
+		border:solid 2px #5f5fef;
+		background-color:#ffffff;
+	}
+	
 </style>
 
 </head>
@@ -98,10 +108,9 @@
 <body style="color:#2f2fbf;background-color:#d8d8d8;margin:0px;" onload="loadCookie();{% if chat %}chat_init('{{chat}}','{{user_id}}','{{user_name}}',{{server_time}},{{viewmode}});{% else %}chat_init('local','','',0);{% endif %}ipad_init({{canvas_width}},{{canvas_height}},'{{canvas_url}}');" style="overflow:hidden;margin:0px;padding:0px;-webkit-user-select: none;" onselectstart="return false;">
 
 <div style="width:100%;height:100%;">
-	<div id="toolmenu">
-	</div>
-	
 	<div id="bottom_tool">
+		<div id="toolmenu">
+		</div>
 		<div id="edit_tool">
 			<div style="float:left;"><canvas id="pen_tools" width="480px" height="60px""></canvas></div>
 			<BR clear="all">
@@ -181,8 +190,8 @@
 				<tr><td>画像を読込</td><td><input type="file" id="import" onchange="ipad_import();"/></td></tr>
 				{% endif %}
 			</table>
-			<BR>コメント<BR><textarea id="comment" rows=6 style="width:90%;"></textarea><BR>
-<input type="button" value="{% if chat %}スナップショットを投稿する{% else %}イラストを投稿する{% endif %}" onclick="javascript:g_upload.upload('{{bbs_key}}','{{thread_key}}','{{reply}}');">
+			<BR>コメント<BR><textarea id="comment" rows=6 style="width:90%;"></textarea><BR><BR>
+<input class="g-button blue" type="button" value="{% if chat %}スナップショットを投稿する{% else %}イラストを投稿する{% endif %}" onclick="javascript:g_upload.upload('{{bbs_key}}','{{thread_key}}','{{reply}}');">
 		</div>
 
 	<!-- Canvas外でもイベントを取るためにサイズを64拡張する -->
