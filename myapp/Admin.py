@@ -112,68 +112,61 @@ class Admin(webapp.RequestHandler):
 			thread_page = int(self.request.get("page"))
 		thread_page_list=PageGenerate.generate_page(thread_page,cnt,thread_page_unit)
 
-		thread_query.filter("illust_mode =",1)
-		thread=thread_query.fetch(limit=thread_page_unit,offset=(thread_page-1)*thread_page_unit)
+		comment_page=1
+		only_comment=0
+		if self.request.get("comment_page"):
+			comment_page = int(self.request.get("comment_page"))
+			only_comment=1
+
+		if(not only_comment):
+			thread_query.filter("illust_mode =",1)
+			thread=thread_query.fetch(limit=thread_page_unit,offset=(thread_page-1)*thread_page_unit)
 		
-		new_moper_query=MesThread.all().order("-create_date")
-		new_moper_query.filter("illust_mode =",2)
-		new_moper=new_moper_query.fetch(limit=12)
+			new_moper_query=MesThread.all().order("-create_date")
+			new_moper_query.filter("illust_mode =",2)
+			new_moper=new_moper_query.fetch(limit=12)
+
+			entry=None
+			try:
+				entry_query = Entry.all().order('-create_date')
+				entry_query.filter("illust_reply =",1)
+				entry=entry_query.fetch(limit=thread_page_unit,offset=(thread_page-1)*thread_page_unit)
+			except:
+				None
+		else:
+			thread=None
+			new_moper=None
+			entry=None
 
 		comment=None
 		try:
+			comment_unit=7
 			comment_query = Entry.all().order('-create_date')
 			comment_query.filter("del_flag =", 1)
-			comment=comment_query.fetch(limit=5)
+			comment=comment_query.fetch(limit=comment_unit,offset=comment_unit*(comment_page-1))
 		except:
 			None
 
-		entry=None
-		try:
-			entry_query = Entry.all().order('-create_date')
-			entry_query.filter("illust_reply =",1)
-			entry=entry_query.fetch(limit=thread_page_unit,offset=(thread_page-1)*thread_page_unit)
-		except:
-			None
-		
-#		new_bbs=None
-#		try:
-#			new_bbs_query = Bbs.all().order("-create_date")
-#			new_bbs=new_bbs_query.fetch(limit=40)
-#		except:
-#			None
+		if(not only_comment):
+			new_bbs_count=SiteAnalyzer.create_graph(self,0);
+			new_illust_count=SiteAnalyzer.create_graph(self,1);
+			new_entry_count=SiteAnalyzer.create_graph(self,2);
+			new_user_count=SiteAnalyzer.create_graph(self,3);
 
-#		update_bbs=None	#投稿されたコメント
-#		try:
-#			update_bbs_query = Entry.all().order('-create_date')
-#			update_bbs=update_bbs_query.fetch(limit=100)
-#		except:
-#			None
-
-#		new_illust=None
-#		try:
-#			new_illust_query = MesThread.all().order("-create_date")
-#			new_illust=new_illust_query.fetch(limit=200)
-#		except:
-#			None
-
-#		new_bbs_count=self.count_bbs(new_bbs,0)
-#		update_bbs_count=self.count_bbs(update_bbs,1)
-#		new_illust_count=self.count_bbs(new_illust,2)
+			today_start = datetime.datetime.today()
+			week_start = today_start - datetime.timedelta(days=7)
+			month1_start = today_start - datetime.timedelta(days=31)
 		
-		new_bbs_count=SiteAnalyzer.create_graph(self,0);
-		new_illust_count=SiteAnalyzer.create_graph(self,1);
-		new_entry_count=SiteAnalyzer.create_graph(self,2);
-		new_user_count=SiteAnalyzer.create_graph(self,3);
-
-		today_start = datetime.datetime.today()
-		week_start = today_start - datetime.timedelta(days=7)
-		month1_start = today_start - datetime.timedelta(days=31)
-		#month6_start = today_start - datetime.timedelta(days=31*6)
-		
-		weekly=Bbs.all().filter("date >=",week_start).count(limit=10000)
-		monthly=Bbs.all().filter("date >=",month1_start).count(limit=10000)
-		#monthly6=Bbs.all().filter("date >=",month6_start).count(limit=10000)
-		
+			weekly=Bbs.all().filter("date >=",week_start).count(limit=10000)
+			monthly=Bbs.all().filter("date >=",month1_start).count(limit=10000)
+		else:
+			new_bbs_count=0
+			new_illust_count=0
+			new_entry_count=0
+			new_user_count=0
+			weekly=0
+			monthly=0
+			
 		host_url ="./"
 		template_values = {
 			'host': host_url,
@@ -195,7 +188,8 @@ class Admin(webapp.RequestHandler):
 			'page':thread_page,
 			'weekly':weekly,
 			'monthly':monthly,
-			#'monthly6':monthly6,
+			'comment_page':comment_page,
+			'only_comment': only_comment
 			}
 		path = os.path.join(os.path.dirname(__file__), '../html/admin.html')
 		render=template.render(path, template_values)

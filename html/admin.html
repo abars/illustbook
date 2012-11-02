@@ -54,7 +54,7 @@
 <p>&nbsp</p>
 </div>
 
-{% if is_admin %}
+{% if is_admin and not only_comment%}
 <div class="entry">
 <H1>アクティブ率</H1>
 <p>週間アクティブユーザ：{{weekly}}</p>
@@ -64,7 +64,7 @@
 </div>
 {% endif %}
 
-{% if is_high_admin %}
+{% if is_high_admin and not only_comment%}
 
 <div class="entry">
 <H1>新着イラスト一覧</H1>
@@ -111,7 +111,7 @@
 
 {% endif %}
 
-{% if is_admin %}
+{% if is_admin and not only_comment%}
 
 <div class="entry">
 <H1>新着モッパー一覧</H1>
@@ -143,6 +143,7 @@
 </p>
 <HR>
 {% endfor%}
+<p><A HREF="./admin?comment_page={{comment_page|add:-1}}">前のページ　ページ{{comment_page}}　<A HREF="./admin?comment_page={{comment_page|add:1}}">次のページ</A>
 <p>&nbsp</p>
 </div>
 

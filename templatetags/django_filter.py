@@ -106,7 +106,7 @@ def admin_comment_with_except(entry):
 		ret="<a href='./usr/"
 		ret+=str(entry.bbs_key.key())+"/"
 		ret+=str(entry.thread_key.key())
-		ret+=".html'>"
+		ret+=".html' target='_BLANK'>"
 		ret+=entry.content
 		ret+="</a>"
 	except:
