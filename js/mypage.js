@@ -377,6 +377,8 @@ function get_bbs_list(oj,id,initial_text){
 	for(var i=0;i<oj.length;i++){
 		var bbs=oj[i];
 		
+		txt+="<div style='width:280px;float:left;'>";
+		
 		//サムネイルと削除ボタン
 		txt+="<div style='position:relative;float:left;width:60px;height:52px;padding-top:2px;'>"
 		if(bbs.thumbnail_url){
@@ -397,31 +399,22 @@ function get_bbs_list(oj,id,initial_text){
 		txt+="</div>";
 		
 		//基本情報
-		txt+="<div style='float:left;padding-top:18px;'>";
+		txt+="<div style='float:left;padding-top:18px;width:200px;'>";
 		txt+="<p><a href='"+bbs.bbs_url+"'>";
 		txt+=""+bbs.title;
 		if(bbs.bookmark){
 			txt+="　";
 			txt+="<a href='show_bookmark?bbs_key="+bbs.key+"' class='g-button no-text'>";
-			
 			txt+='<i class="icon-star"></i>'+bbs.bookmark+'</a>';
-		
-			/*
-			txt+="<small>";
-			txt+="("+bbs.bookmark;
-			if(bbs.bookmark==1){
-				txt+="user";
-			}else{
-				txt+="users";
-			}
-			txt+=")";
-			txt+="</small>";
-			*/
 			txt+="</a>";
 		}
 		txt+="</a>";
 		txt+="</p>";
-		txt+="</div><br clear='all'>";
+		txt+="</div>";
+		txt+="</div>";
+		if(i%2==1){
+			txt+="<br clear='all'>";
+		}
 	}
 	if(txt==""){
 		txt="<p>"+initial_text+"</p>";
