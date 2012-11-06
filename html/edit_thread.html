@@ -52,7 +52,7 @@
 		<form id="submit_form" action="./update_thread?bbs_key={{bbs.key}}&thread_key={{thread.key}}" enctype="multipart/form-data" method="post">
 		<TABLE>
 		<TR><TD>タイトル</TD><TD><input type="text" name="thread_title" value="{{thread.title}}" size=60></TD></TR>
-		<TR><TD>投稿者名</TD><TD><input type="text" name="thread_author" value="{{thread.author}}"><input type="checkbox" name="link_profile" value="link_profile" {% if thread.user_id %}checked{% endif %}>プロフィールにリンク</TD></TR>
+		<TR><TD>投稿者名</TD><TD><input type="text" name="thread_author" value="{{thread.author}}"><input type="checkbox" name="link_profile" value="link_profile" {% if thread.user_id %}checked{% endif %}>マイページにリンク</TD></TR>
 		<TR><TD>カテゴリ</TD><TD>
 		{% include "category_list.html" %}
 		</TD></TR>
