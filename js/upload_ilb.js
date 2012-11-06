@@ -57,3 +57,12 @@
 		flex_object=GetFlexObject();
 		flex_object.SetToAlphaPngMode(document.getElementById("alpha_png_mode").checked);
 	}
+	
+	function SetToOnlyTextMode(){
+		var display="none";
+		if(document.getElementById("no_illust").checked){
+			display="block";
+		}
+		document.getElementById("no_illust_alert").style.display=display;
+	}
+	

@@ -163,19 +163,23 @@ object, embed {
 					</td></tr>
 					<tr><td>オプション</td><td>
 						<div id="thread_option" style="float:left;">
-							<input type="checkbox" id="no_illust">文字だけで投稿する　
-							<input type="checkbox" id="alpha_png_mode" onClick="SetToAlphaPngMode();">アルファ付きPNGで投稿する　
-							<input type="checkbox" id="resize_width" checked>700pxを超える場合はリサイズ　
+							<input type="checkbox" id="no_illust" onClick="SetToOnlyTextMode();">文字だけで投稿　
+							<input type="checkbox" id="alpha_png_mode" onClick="SetToAlphaPngMode();">透過PNGで投稿　
+							<input type="checkbox" id="resize_width" checked>700px以上の画像を縮小　
 						</div>
 						<div>
 						{% if logined %}
-							<input  type="checkbox" id="link_to_profile"checked>プロフィールにリンク
+							<input  type="checkbox" id="link_to_profile"checked>マイページにリンク
 						{% else %}
 							プロフィールにリンクするにはログインして下さい
 						{% endif %}
 						</div>
 					</td></tr>
 					</table>
+					
+					<div id="no_illust_alert" style="display:none;background-color:#ffcccc;">
+						文字だけで投稿をした場合は描画したイラストは投稿されませんのでご注意下さい。
+					</div>
 
 					<p>&nbsp</p>
 					<p>&nbsp</p>
