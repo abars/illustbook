@@ -192,10 +192,11 @@ class AddBookmark(webapp.RequestHandler):
 
 		#フォロー先のユーザのフォロワーを更新するようにリクエスト
 		if(mode=="add_user" or mode=="del_user"):
-			target_user=ApiObject.get_bookmark_of_user_id(add_user_key)
-			if(target_user):
-				target_user.follower_list_enable=0
-				target_user.put()
+			ApiObject.invalidate_follower_list(add_user_key)
+		#	target_user=ApiObject.get_bookmark_of_user_id(add_user_key)
+		#	if(target_user):
+		#		target_user.follower_list_enable=0
+		#		target_user.put()
 
 		bookmark.put()
 		

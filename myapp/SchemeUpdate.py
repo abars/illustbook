@@ -162,25 +162,30 @@ class SchemeUpdate(webapp.RequestHandler):
 				
 				update_require=0
 
-				if(not bookmark.thread_key_list and bookmark.thread_list):
-					bookmark.thread_key_list=[]
-					for thread in bookmark.thread_list:
-						bookmark.thread_key_list.append(db.Key(thread))
-					update_require=1
+				#if(not bookmark.thread_key_list and bookmark.thread_list):
+				#	bookmark.thread_key_list=[]
+				#	for thread in bookmark.thread_list:
+				#		bookmark.thread_key_list.append(db.Key(thread))
+				#	update_require=1
 
-				if(not bookmark.bbs_key_list and bookmark.bbs_list):
-					bookmark.bbs_key_list=[]
-					for bbs in bookmark.bbs_list:
-						bookmark.bbs_key_list.append(db.Key(bbs))
+				#if(not bookmark.bbs_key_list and bookmark.bbs_list):
+				#	bookmark.bbs_key_list=[]
+				#	for bbs in bookmark.bbs_list:
+				#		bookmark.bbs_key_list.append(db.Key(bbs))
+				#	update_require=1
+				
+				if(bookmark.follower_list_enable==None or bookmark.follower_list==None):
+					bookmark.follower_list=[]
+					bookmark.follower_list_enable=0
 					update_require=1
 				
 				if(update_require):
 					bookmark.put()
 					update_cnt=update_cnt+1
-					if(update_cnt>=500):
+					if(update_cnt>=100):
 						break
 			offset=offset+1000
-			if(update_cnt>=500):
+			if(update_cnt>=100):
 				break
 		
 		main.response.out.write("total"+str(total_cnt)+" update"+str(update_cnt))

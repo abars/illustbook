@@ -24,8 +24,8 @@ class Bookmark(db.Model):
 	bbs_key_list = db.ListProperty(db.Key)
 	app_key_list = db.ListProperty(db.Key)
 	user_list = db.StringListProperty()	#follow
-	follower_list = db.StringListProperty() #follower(auto make in ApiUser.user_get_follower)
-	follower_list_enable = db.IntegerProperty()	#1:enable 0:disable
+	#follower_list = db.StringListProperty() #follower(auto make in ApiUser.user_get_follower)
+	#follower_list_enable = db.IntegerProperty()	#1:enable 0:disable
 	name = db.StringProperty()
 	profile = db.TextProperty()
 	icon = db.BlobProperty()
