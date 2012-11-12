@@ -84,14 +84,7 @@ class ApiUser(webapp.RequestHandler):
 		if(not bookmark):
 			return []
 		if(not bookmark.follower_list_enable):
-			query=Bookmark.all().filter("user_list =",user_id)
-			follower=query.fetch(limit=1000)
-			follower_string=[]
-			for one_user in follower:
-				follower_string.append(one_user.user_id)
-			bookmark.follower_list=follower_string
-			bookmark.follower_list_enable=1
-			bookmark.put()
+			return []
 		return ApiUser.user_list_to_user_object_list(req,bookmark.follower_list,fast)
 		
 		#毎回計算する場合はこちら

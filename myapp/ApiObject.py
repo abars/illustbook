@@ -97,6 +97,17 @@ class ApiObject(webapp.RequestHandler):
 		
 		#サムネイル作成
 		ApiObject.create_user_thumbnail(target_bookmark)
+		
+		#フォロワー更新
+		if(target_bookmark and not target_bookmark.follower_list_enable):
+			query=Bookmark.all().filter("user_list =",user_id)
+			follower=query.fetch(limit=1000)
+			follower_string=[]
+			for one_user in follower:
+				follower_string.append(one_user.user_id)
+			target_bookmark.follower_list=follower_string
+			target_bookmark.follower_list_enable=1
+			target_bookmark.put()
 
 		#memcachedに格納
 		memcache.set(BbsConst.OBJECT_CACHE_HEADER+BbsConst.OBJECT_BOOKMARK_CACHE_HEADER+user_id,target_bookmark,60*60*12)
