@@ -189,7 +189,7 @@ $(function(){
 			return txt;
 		var size=60
 		if(is_iphone)
-			size=100
+			size=94//100
 		if(is_iphone){
 				//size-=8;
 				txt+="<div style='width:"+size+"px;height:"+size+"px;float:left;margin:2px;box-shadow: 0 0 3px #cccccc;'>";

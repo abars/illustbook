@@ -193,7 +193,7 @@ class ApiObject(webapp.RequestHandler):
 			cnt=cnt+1
 			one_dic=ApiObject._create_thread_object_core(req,thread,bbs,True)	#文字だけのスレッドは含まない
 			if(not bbs_id):
-				if(one_dic["disable_news"]):
+				if(one_dic and one_dic["disable_news"]):
 					continue
 			if(one_dic):
 				dic.append(one_dic)
@@ -216,7 +216,7 @@ class ApiObject(webapp.RequestHandler):
 	
 	@staticmethod
 	def _create_thread_object_core(req,thread,bbs,only_image_thread):
-		if(not thread):
+		if(not thread or not bbs):
 			return None
 		if(not thread.cached_image_key and only_image_thread):
 			return None
