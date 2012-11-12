@@ -148,8 +148,8 @@ function mypage_init(tab,login,view_mode,edit_mode,feed_page,is_admin,is_iphone)
 	}
 	
 	illustbook.bookmark.getAppList(user_id,0,limit,illustbook.bookmark.ORDER_NONE,get_bookmark_app_list_callback);
-	illustbook.user.getFollow(user_id,0,limit,illustbook.user.ORDER_NONE,get_follow_callback);
-	illustbook.user.getFollower(user_id,0,limit,illustbook.user.ORDER_NONE,get_follower_callback);
+	illustbook.user.getFollowFast(user_id,0,limit,illustbook.user.ORDER_NONE,get_follow_callback);
+	illustbook.user.getFollowerFast(user_id,0,limit,illustbook.user.ORDER_NONE,get_follower_callback);
 
 	//illustbook.request.endPackedRequest();
 	

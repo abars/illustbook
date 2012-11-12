@@ -197,6 +197,14 @@ illustbook_user.prototype.getFollower=function(user_id,offset,limit,order,callba
 	illustbook.request._getObject("api_user","getFollower",null,user_id,offset,limit,order,callback);
 }
 
+illustbook_user.prototype.getFollowFast=function(user_id,offset,limit,order,callback){
+	illustbook.request._getObject("api_user","getFollowFast",null,user_id,offset,limit,order,callback);
+}
+
+illustbook_user.prototype.getFollowerFast=function(user_id,offset,limit,order,callback){
+	illustbook.request._getObject("api_user","getFollowerFast",null,user_id,offset,limit,order,callback);
+}
+
 //------------------------------------------------
 //utility api
 //------------------------------------------------

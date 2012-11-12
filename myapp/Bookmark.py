@@ -44,6 +44,8 @@ class Bookmark(db.Model):
 	date = db.DateTimeProperty(auto_now=True)
 
 	def put(self,**kwargs):
+		if(not self.follower_list):
+			self.follower_list=[]
 		super(Bookmark, self).put(**kwargs)
 		if(self.key()):
 			memcache.delete(BbsConst.OBJECT_CACHE_HEADER+BbsConst.OBJECT_BOOKMARK_CACHE_HEADER+self.user_id)

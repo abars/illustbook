@@ -51,14 +51,23 @@ class ApiUser(webapp.RequestHandler):
 		return one_dic
 	
 	@staticmethod
-	def user_get_follow(req,user_id):
+	def user_get_follow(req,user_id,fast):
 		bookmark=ApiObject.get_bookmark_of_user_id(user_id)
 		if(not bookmark):
 			return []
-		return ApiUser.user_list_to_user_object_list(req,bookmark.user_list)
+		return ApiUser.user_list_to_user_object_list(req,bookmark.user_list,fast)
 	
 	@staticmethod
-	def user_list_to_user_object_list(req,user_list):
+	def user_list_to_user_object_list(req,user_list,fast):
+		#ユーザIDだけの高速版
+		if(fast):
+			dic=[]
+			for one_user in user_list:
+				one_dic=ApiObject.create_user_object_fast(req,one_user)
+				dic.append(one_dic)
+			return dic
+		
+		#名前などを含んだ低速版
 		bookmark_list=ApiObject.get_bookmark_list(user_list)
 		dic=[]
 		for one_user in user_list:
@@ -69,7 +78,7 @@ class ApiUser(webapp.RequestHandler):
 		return dic
 	
 	@staticmethod
-	def user_get_follower(req,user_id):
+	def user_get_follower(req,user_id,fast):
 		#フォロワー情報が更新された場合のみ再計算する
 		bookmark=ApiObject.get_bookmark_of_user_id(user_id)
 		if(not bookmark):
@@ -83,7 +92,7 @@ class ApiUser(webapp.RequestHandler):
 			bookmark.follower_list=follower_string
 			bookmark.follower_list_enable=1
 			bookmark.put()
-		return ApiUser.user_list_to_user_object_list(req,bookmark.follower_list)
+		return ApiUser.user_list_to_user_object_list(req,bookmark.follower_list,fast)
 		
 		#毎回計算する場合はこちら
 		#follower=None
@@ -190,10 +199,10 @@ class ApiUser(webapp.RequestHandler):
 			dic=ApiUser.user_get_user(self,user_id)
 		if(method=="getProfile"):
 			dic=ApiUser.user_get_profile(self,user_id)
-		if(method=="getFollow"):
-			dic=ApiUser.user_get_follow(self,user_id)
-		if(method=="getFollower"):
-			dic=ApiUser.user_get_follower(self,user_id)
+		if(method=="getFollow" or method=="getFollowFast"):
+			dic=ApiUser.user_get_follow(self,user_id,method=="getFollowFast")
+		if(method=="getFollower" or method=="getFollowerFast"):
+			dic=ApiUser.user_get_follower(self,user_id,method=="getFollowerFast")
 		if(method=="getBbsList"):
 			dic=ApiUser.user_get_bbs_list(self,user_id)
 		if(method=="getThreadList"):

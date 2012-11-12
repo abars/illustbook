@@ -51,6 +51,13 @@ class ApiObject(webapp.RequestHandler):
 #-------------------------------------------------------------------
 
 	@staticmethod
+	def create_user_object_fast(req,user_id):
+		icon_url="http://"+req.request.host+"/show_icon?key="+user_id
+		profile_url="http://"+req.request.host+"/mypage?user_id="+user_id
+		one_dic={"user_id":user_id,"name":"unknown","homepage":"unknown","icon_url":icon_url,"profile_url":profile_url}
+		return one_dic
+
+	@staticmethod
 	def create_user_object(req,one):
 		icon_url="http://"+req.request.host+"/show_icon?key="+one.user_id
 		profile_url="http://"+req.request.host+"/mypage?user_id="+one.user_id
