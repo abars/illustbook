@@ -125,7 +125,7 @@ function mypage_init(tab,login,view_mode,edit_mode,feed_page,is_admin,is_iphone)
 	
 	var offset=0;
 	var limit=illust_limit;
-	var feed_unit=12;
+	var feed_unit=8;
 
 	if(tab=="feed"){
 		illustbook.user.getTimeline(user_id,(feed_page-1)*feed_unit,feed_unit,illustbook.user.ORDER_NONE,get_timeline_callback);
