@@ -55,13 +55,14 @@ class ApiUser(webapp.RequestHandler):
 		bookmark=ApiObject.get_bookmark_of_user_id(user_id)
 		if(not bookmark):
 			return []
-		
-		bookmark_list=ApiObject.get_bookmark_list(bookmark.user_list)
-		
+		return ApiUser.user_list_to_user_object_list(req,bookmark.user_list)
+	
+	@staticmethod
+	def user_list_to_user_object_list(req,user_list):
+		bookmark_list=ApiObject.get_bookmark_list(user_list)
 		dic=[]
-		for one_user in bookmark.user_list:
+		for one_user in user_list:
 			bookmark=bookmark_list[one_user]
-			#bookmark=ApiObject.get_bookmark_of_user_id(one_user)
 			if(bookmark):
 				one_dic=ApiObject.create_user_object(req,bookmark)
 				dic.append(one_dic)
@@ -69,17 +70,33 @@ class ApiUser(webapp.RequestHandler):
 	
 	@staticmethod
 	def user_get_follower(req,user_id):
-		follower=None
-		try:
+		#フォロワー情報が更新された場合のみ再計算する
+		bookmark=ApiObject.get_bookmark_of_user_id(user_id)
+		if(not bookmark):
+			return []
+		if(not bookmark.follower_list_enable):
 			query=Bookmark.all().filter("user_list =",user_id)
 			follower=query.fetch(limit=1000)
-		except:
-			return []
-		dic=[]
-		for bookmark in follower:
-			one_dic=ApiObject.create_user_object(req,bookmark)
-			dic.append(one_dic)
-		return dic
+			follower_string=[]
+			for one_user in follower:
+				follower_string.append(one_user.user_id)
+			bookmark.follower_list=follower_string
+			bookmark.follower_list_enable=1
+			bookmark.put()
+		return ApiUser.user_list_to_user_object_list(req,bookmark.follower_list)
+		
+		#毎回計算する場合はこちら
+		#follower=None
+		#try:
+		#	query=Bookmark.all().filter("user_list =",user_id)
+		#	follower=query.fetch(limit=1000)
+		#except:
+		#	return []
+		#dic=[]
+		#for bookmark in follower:
+		#	one_dic=ApiObject.create_user_object(req,bookmark)
+		#	dic.append(one_dic)
+		#return dic
 	
 	@staticmethod
 	def user_get_user(req,user_id):

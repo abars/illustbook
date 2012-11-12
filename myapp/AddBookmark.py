@@ -190,6 +190,13 @@ class AddBookmark(webapp.RequestHandler):
 		if(mode=="del_user"):
 			bookmark.user_list.remove(add_user_key)
 
+		#フォロー先のユーザのフォロワーを更新するようにリクエスト
+		if(mode=="add_user" or mode=="del_user"):
+			target_user=ApiObject.get_bookmark_of_user_id(add_user_key)
+			if(target_user):
+				target_user.follower_list_enable=0
+				target_user.put()
+
 		bookmark.put()
 		
 		self.redirect(str("./mypage"))
