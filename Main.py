@@ -121,14 +121,13 @@ class MainPage(webapp.RequestHandler):
 			is_maintenance=1
 		
 		#BBS COUNT
-		bbs_n=memcache.get("top_bbs_n")
-		illust_n=memcache.get("top_illust_n")
-		if(bbs_n is None or illust_n is None):
+		cache=memcache.get("top_bbs_and_illust_n")
+		if(not cache):
 			cache=SiteAnalyzer.get_cache()
-			bbs_n=cache.bbs_n
-			illust_n=cache.illust_n
-			memcache.set("top_bbs_n",bbs_n,60*60*12)
-			memcache.set("top_illust_n",illust_n,60*60*12)
+			cache={"bbs_n":cache.bbs_n,"illust_n":cache.illust_n}
+			memcache.set("top_bbs_and_illust_n",cache,60*60*12)
+		bbs_n=cache["bbs_n"]
+		illust_n=cache["illust_n"]
 		
 		#最近のタグ
 		tag_list=SearchTag.get_recent_tag()
@@ -280,10 +279,9 @@ class DelEn(webapp.RequestHandler):
 		entry = db.get(self.request.get("entry_key"))
 		entry.del_flag = 0
 		entry.put()
-		#thread_key
+
 		thread = db.get(self.request.get("thread_key"))
 		thread.comment_cnt=thread.comment_cnt-1
-		#thread.thread_entry_list.append(entry.key())
 		thread.cached_entry_key=[]
 		thread.cached_entry_key_enable=None
 		thread.put()
