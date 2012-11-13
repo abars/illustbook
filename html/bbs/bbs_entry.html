@@ -72,10 +72,11 @@
 	<!--本文-->
 	<div class="entry-comment" style="word-break:break-all;">
 	<p>{{thread.summary|safe}}</p>
-		{% if thread.postscript %}
-		　<p><a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{%endif%}.html'  class="g-button" style="color:#444;">続きを読む</a></p>
-		{% endif %}
+	{% if thread.postscript %}
+	　<p><a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{%endif%}.html'  class="g-button" style="color:#444;">続きを読む</a></p>
+	{% endif %}
 	</div>
+	{% include "thread/thread_drawtime.html" %}
 	
 	{% if not bbs.enable_full_comment %}
 		<!--コメントを書くボタン-->
@@ -114,7 +115,9 @@
 	<p>&nbsp</p>
 	{% if not thread.cached_render_comment %}
 	{% else %}
-		{{thread.cached_render_comment}}
+		<div style="margin-left:10%;">
+			{{thread.cached_render_comment}}
+		</div>
 	{% endif %}
 
 	<div id="comment_form_button_{{ thread.key }}">

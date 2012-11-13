@@ -1,17 +1,20 @@
 {% if regist_finish %}
-	<p class="bar">新規登録完了</p>
-	<p>お絵かき掲示板の登録が完了しました。このページの”レンタルしているお絵かき掲示板”からアクセスして下さい。</p>
-	<p>&nbsp</p>
+	<div class="example">
+		<p><h2>新規登録完了</h2></p>
+		<p>お絵かき掲示板の登録が完了しました。このページの”レンタルしている掲示板”からアクセスして下さい。</p>
+	</div>
 {% endif %}
 
 <!-- メイン領域 -->
 
 {% if not user %}
 	{% if not view_mode %}
-		<p>&nbsp;</p>		
+	<div class="example">
+		<p><h2>マイページへのログイン</h2></p>
 		<p>お絵かき掲示板のレンタルを行うにはGoogleアカウントでログインする必要があります。</p>
 		<p><a href='{{redirect_url|login_url}}' class="declink">Googleアカウントをお持ちの方はこちらからログインして下さい。</a></p>
 		<p><a href="https://www.google.com/accounts/NewAccount?hl=ja" class="declink" target="_BLANK">Googleアカウントをお持ちでない方はこちらから新規登録して下さい。</a></p>
+	</div>
 	{% endif %}
 {% endif %}
 
