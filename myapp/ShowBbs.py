@@ -121,6 +121,7 @@ class ShowBbs(webapp.RequestHandler):
 		
 		#サイドバーコメントを取得
 		side_comment=RecentCommentCache.get_entry(bbs)
+		side_thread=RecentCommentCache.get_thread(bbs)
 		
 		#カテゴリ一覧を取得
 		category_list=None
@@ -133,7 +134,7 @@ class ShowBbs(webapp.RequestHandler):
 		design=CssDesign.get_design_object(self,bbs,host_url,0)
 
 		#サイドバー一覧を作成
-		sidebar_list=ShowBbs.get_sidebar(bbs,category_list,side_comment)
+		sidebar_list=ShowBbs.get_sidebar(bbs,category_list,side_comment,side_thread)
 
 		#新規スレッドを作成できるか
 		can_create_thread=ShowBbs.get_can_create_thread(bbs,user,logined)
@@ -175,6 +176,7 @@ class ShowBbs(webapp.RequestHandler):
 			'user':user,
 			'owner': owner,
 			'side_comment':side_comment,
+			'side_thread':side_thread,
 			'logined':logined,
 			'can_create_thread':can_create_thread,
 			'category_list':category_list,
@@ -214,7 +216,7 @@ class ShowBbs(webapp.RequestHandler):
 			thread.cached_render_comment=ShowEntry.render_comment(self,host_url,bbs,thread,entry_list,edit_flag,bbs_key,logined,show_comment_form,is_admin,user_name)
 			
 	@staticmethod
-	def get_sidebar(bbs,category_list,side_comment):
+	def get_sidebar(bbs,category_list,side_comment,side_thread):
 		sidebar_list=[]
 		if(bbs.freearea):
 			sidebar_list.append("free")
@@ -222,6 +224,8 @@ class ShowBbs(webapp.RequestHandler):
 			sidebar_list.append("category")
 		if(bbs.amazon):
 			sidebar_list.append("affiliate")
+		if(side_thread):
+			sidebar_list.append("thread")
 		if(side_comment):
 			sidebar_list.append("comment")
 		if(not bbs.disable_counter):

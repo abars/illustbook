@@ -7,7 +7,7 @@
 	{% ifequal forloop.counter 1 %}
 		<div id="free">
 	{% else %}
-		<div id="{{one}}">
+		<div id="{% ifequal one 'thread' %}comment{%else%}{{one}}{% endifequal %}">
 	{% endifequal %}
 
 	{%ifequal one "free" %}
@@ -39,6 +39,13 @@
 		{%if bbs.amazon_title %}{{bbs.amazon_title}}{%else%}管理人のオススメ{%endif%}
 		</h4>
 		<p>{{bbs.amazon|safe}}</p>
+	{%endifequal%}
+
+	{%ifequal one "thread" %}
+		<h4>
+		新着イラスト
+		</h4>
+		<p>{% include 'bbs/bbs_recent_thread.html' %}</p>
 	{%endifequal%}
 
 	{%ifequal one "comment" %}

@@ -186,6 +186,11 @@ class UpdateBbs(webapp.RequestHandler):
 			bbs.recent_comment_n=8
 
 		try:
+			bbs.recent_thread_n=int(self.request.get('recent_thread_n'))
+		except:
+			bbs.recent_thread_n=8
+
+		try:
 			bbs.font_size=int(self.request.get('font_size'))
 		except:
 			bbs.font_size=0

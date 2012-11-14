@@ -60,7 +60,16 @@
 		{% else %}
 			投稿日：
 		{% endif %}
-		 {{thread.create_date|time_JST_format:bbs.date_format}}</p>
+		 {{thread.create_date|time_JST_format:bbs.date_format}}
+		{% if thread.category %}
+			{%if template_path %}
+				<img src="{{template_path}}images/i_category.gif" alt="カテゴリ" width="64" height="20" />
+			{% else %}
+				カテゴリ：
+			{% endif%}
+				<a href="{{usrhost}}?category={{thread.category|iriencode}}" class="g-button mini">{{thread.category}}</a>
+		{%endif%}
+		</p>
 	</div>
 {% else%}
 	<!--スレッド式掲示板-->
@@ -76,7 +85,7 @@
 	　<p><a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{%endif%}.html'  class="g-button" style="color:#444;">続きを読む</a></p>
 	{% endif %}
 	</div>
-	{% include "thread/thread_drawtime.html" %}
+	<!-- {% include "thread/thread_drawtime.html" %} -->
 	
 	{% if not bbs.enable_full_comment %}
 		<!--コメントを書くボタン-->

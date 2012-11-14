@@ -103,7 +103,8 @@ class Bbs(db.Model):
 	design_template_no=db.IntegerProperty()
 	
 	disable_content_image=db.IntegerProperty()
-	recent_comment_n=db.IntegerProperty()
+	recent_comment_n=db.IntegerProperty()	#サイドバーのコメント数
+	recent_thread_n=db.IntegerProperty()	#サイドバーのスレッド数
 	font_size=db.IntegerProperty()
 	tool_bg_color=db.StringProperty()
 	
