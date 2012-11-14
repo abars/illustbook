@@ -50,7 +50,7 @@
 							
 				<!-- コメント一覧 -->
 				{% if not bbs.disable_comment %}
-					<div class="entry">
+				<div class="entry">
 					コメント
 					{% if not comment %}
 						<hr/>コメントはまだありません。<br/>
@@ -59,7 +59,6 @@
 					{% endif %}
 					<p>&nbsp</p>
 					{% include "./thread/thread_comment_order.html" %}
-					</div>
 					
 					<!-- コメント投稿フォーム -->
 					{% if show_comment_form %}
@@ -70,7 +69,7 @@
 					<div id="comment_form_{{ thread.key }}" style="display:none;">
 						{% include "thread/thread_comment_form.html" %}
 					</div>
-					<p>&nbsp</p>
+				</div>
 				{% endif %}
 
 				<!-- スレッドメニュー -->
