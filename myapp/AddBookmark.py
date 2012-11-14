@@ -35,6 +35,7 @@ from myapp.Bookmark import Bookmark
 from myapp.StackFeed import StackFeed
 from myapp.ApiObject import ApiObject
 from myapp.Ranking import Ranking
+from myapp.BbsConst import BbsConst
 
 class AddBookmark(webapp.RequestHandler):
 	@staticmethod
