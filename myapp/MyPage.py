@@ -108,7 +108,7 @@ class MyPage(webapp.RequestHandler):
 			bookmark.delete()
 			self.response.out.write(Alert.alert_msg("退会が完了しました。",self.request.host));
 		else:
-			self.response.out.write(Alert.alert_msg("退会する前にレンタルしている掲示板を削除する必要があります。残り："+str(your_bbs_count),self.request.host))
+			self.response.out.write(Alert.alert_msg("退会する前にレンタルしている掲示板を削除する必要があります。<BR>掲示板の削除はマイページのイラストタブで編集を押すことで行うことができます。<BR>残りの掲示板数："+str(your_bbs_count),self.request.host))
 			return True
 
 		return True

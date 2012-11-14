@@ -29,8 +29,17 @@
 {%else%}
 	投稿者：
 {%endif%}
-{{thread|author_name_thread:host|safe}}
-　
+{{thread|author_name_thread:host|safe}}　
+
+{% if thread.category %}
+	{% if is_iphone %}<br/>{% endif %}
+	{%if template_path %}
+		<img src="{{template_path}}images/i_category.gif" alt="カテゴリ" width="64" height="20" />
+	{% else %}
+		カテゴリ：
+	{% endif%}
+	<a href="{{usrhost}}?category={{thread.category|iriencode}}" class="g-button mini" style="margin-left:1px;">{{thread.category}}</a>　
+{%endif%}
 
 {% if thread.create_date %}
 	{% if is_iphone %}<br/>{% endif %}
@@ -41,16 +50,6 @@
 	{% endif%}
 	{{thread.create_date|time_JST_format:bbs.date_format}}　
 {% endif %}
-
-{% if thread.category %}
-	{% if is_iphone %}<br/>{% endif %}
-	{%if template_path %}
-		<img src="{{template_path}}images/i_category.gif" alt="カテゴリ" width="64" height="20" />
-	{% else %}
-		カテゴリ：
-	{% endif%}
-	<a href="{{usrhost}}?category={{thread.category|iriencode}}" class="g-button mini">{{thread.category}}</a>　
-{%endif%}
 
 {% if thread.cached_image_key %}
 {% if not template_path %}

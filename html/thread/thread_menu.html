@@ -2,8 +2,8 @@
 <div class="g-button-group toggle-buttons">
 	
 {% if owner %}
-<a class="g-button" href="#" onclick='location.href="{{host}}edit_thread?bbs_key={{bbs.key}}&thread_key={{thread.key}}"' style="color:#333;">編集</a>
-<a class="g-button" href="#" onclick='confirm_action_thread("{{thread.key}}", "{{bbs.key}}", "{{host}}")'  style="color:#333;">削除</a>
+<a class="g-button" href="#" onclick='location.href="{{host}}edit_thread?bbs_key={{bbs.key}}&thread_key={{thread.key}}"' style="color:#333;">投稿の編集</a>
+<a class="g-button" href="#" onclick='confirm_action_thread("{{thread.key}}", "{{bbs.key}}", "{{host}}")'  style="color:#333;">投稿の削除</a>
 {% else %}
 	{% if thread.delete_key %}
 	<a class="g-button" href="#" onclick='prompt_action_thread("{{thread.key}}", "{{bbs.key}}", "{{host}}")'  style="color:#333;">削除キーで削除</a>
