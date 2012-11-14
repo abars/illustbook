@@ -80,7 +80,8 @@ class ShowEntry(webapp.RequestHandler):
 			'logined':logined,
 			'show_comment_form':show_comment_form,
 			'is_admin':is_admin,
-			'user_name': user_name
+			'user_name': user_name,
+			'redirect_url': req.request.path
 			}
 
 		path = os.path.join(os.path.dirname(__file__), "../html/thread/thread_comment.html")

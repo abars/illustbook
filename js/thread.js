@@ -87,3 +87,7 @@ var isFlashInstalled=function(){if(navigator.plugins["Shockwave Flash"]){return 
 			document.getElementById('comment_form_button_'+id).style.display='none';
 		}
 
+		function show_tag_form(id){
+			document.getElementById('tag_form_'+id).style.display='block';
+			document.getElementById('tag_form_button_'+id).style.display='none';
+		}

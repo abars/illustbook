@@ -34,6 +34,7 @@ from myapp.RecentTag import RecentTag
 from myapp.Bookmark import Bookmark
 from myapp.StackFeed import StackFeed
 from myapp.ApiObject import ApiObject
+from myapp.Ranking import Ranking
 
 class AddBookmark(webapp.RequestHandler):
 	@staticmethod
@@ -171,6 +172,7 @@ class AddBookmark(webapp.RequestHandler):
 		if(mode=="add"):
 			if(AddBookmark.add_one(bookmark.thread_key_list,add_thread_key,thread)):
 				StackFeed.feed_new_bookmark_thread(user,thread,comment)
+				Ranking.add_rank_global(thread,BbsConst.SCORE_BOOKMARK)
 			AddBookmark.add_comment(thread,user.user_id(),comment)
 		if(mode=="add_bbs"):
 			if(AddBookmark.add_one(bookmark.bbs_key_list,add_bbs_key,bbs)):

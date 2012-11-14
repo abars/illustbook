@@ -87,7 +87,10 @@
 </tr>
 <tr><td>コメント（必須）</td>
 <td><textarea name="comment" rows="10" cols="40" style="width:100%;"></textarea></td></tr>
-<tr><td></td><td><input type="submit" value="コメントを投稿する"  class="g-button"/></td></tr>
+<tr><td></td><td>
+	<input type="hidden" name="redirect_url" value="{{redirect_url}}"/>
+	<input type="submit" value="コメントを投稿する"  class="g-button"/>
+</td></tr>
 </table>
 </form>
 </div>

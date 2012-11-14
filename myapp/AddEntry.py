@@ -36,6 +36,7 @@ from myapp.RecentCommentCache import RecentCommentCache
 from myapp.MappingId import MappingId
 from myapp.MappingThreadId import MappingThreadId
 from myapp.StackFeed import StackFeed
+from myapp.Ranking import Ranking
 
 class AddEntry(webapp.RequestHandler):
 	def post(self):
@@ -143,6 +144,8 @@ class AddEntry(webapp.RequestHandler):
 			self.response.out.write("success")			
 		else:
 			url=MappingThreadId.get_thread_url("./",bbs,thread)
+			if(self.request.get("redirect_url")):
+				url=self.request.get("redirect_url")
 			self.redirect(str(url))
 
 		thread.comment_cnt = thread.comment_cnt+1
@@ -162,6 +165,9 @@ class AddEntry(webapp.RequestHandler):
 		#二重投稿ブロック
 		memcache.set("add_entry_double_block",self.request.get("comment"),30)
 		
+		#ランキング
+		Ranking.add_rank_global(thread,BbsConst.SCORE_ENTRY)
+
 		#フィード
 		if(not link_to_profile):
 			user=None

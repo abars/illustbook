@@ -60,12 +60,23 @@
 					<p>&nbsp</p>
 					{% include "./thread/thread_comment_order.html" %}
 					</div>
-			
-					{% include "thread/thread_comment_form.html" %}
+					
+					<!-- コメント投稿フォーム -->
+					<div id="comment_form_button_{{ thread.key }}">
+					<a href="javascript:show_comment_form('{{thread.key}}');" class="g-button" style="color:#444;"><i class="icon-pencil"></i>コメントを書き込む</a>
+					</div>
+					<div id="comment_form_{{ thread.key }}" style="display:none;">
+						{% include "thread/thread_comment_form.html" %}
+					</div>
+					<p>&nbsp</p>
 				{% endif %}
 
 				<!-- スレッドメニュー -->
+				<div class="entry">
+				イラストの管理
+				<HR>
 				{% include "thread/thread_menu.html" %}
+				</div>
 			</div>
 
 			<div class="clr"></div>

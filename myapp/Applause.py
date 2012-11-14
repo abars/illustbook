@@ -34,6 +34,7 @@ from myapp.OwnerCheck import OwnerCheck
 from myapp.RecentCommentCache import RecentCommentCache
 from myapp.MappingId import MappingId
 from myapp.Alert import Alert
+from myapp.Ranking import Ranking
 
 class Applause(webapp.RequestHandler):
 	def get(self):
@@ -59,11 +60,15 @@ class Applause(webapp.RequestHandler):
 			thread.applause_ip=self.request.remote_addr
 			thread.applause_date=datetime.datetime.today()
 			thread.put()
+
 			if(bbs.applause_n) :
 				bbs.applause_n=bbs.applause_n+1
 			else:
 				bbs.applause_n=1
 			bbs.put()
+
+			Ranking.add_rank_global(thread,BbsConst.SCORE_APPLAUSE)
+
 		if(self.request.get("mode")=="bbs"):
 			order = self.request.get("order")
 			page = self.request.get("page")

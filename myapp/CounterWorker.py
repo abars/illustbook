@@ -101,10 +101,7 @@ class CounterWorker(webapp.RequestHandler):
 
 		#PVをカウント
 		if(thread):
-			rank=Ranking.get_by_key_name(BbsConst.THREAD_RANKING_KEY_NAME)
-			if(rank==None):
-				rank=Ranking.get_or_insert(BbsConst.THREAD_RANKING_KEY_NAME)
-			rank.add_rank(thread)
+			Ranking.add_rank_global(thread,BbsConst.SCORE_PV)
 
 		#アクセス解析で表示する名前
 		analyze_name=bbs.bbs_name

@@ -57,4 +57,11 @@ class BbsConst:
 	IMAGE_CACHE_KEY="image_cache_key_"
 	IMAGE_CACHE_DATE="image_cache_date_"
 	IMAGE_CACHE_KEY_AND_DATE="image_cache_key_date_"
+	
+	#スコア
+	SCORE_PV=1
+	SCORE_APPLAUSE=4
+	SCORE_ENTRY=2
+	SCORE_RES=2
+	SCORE_BOOKMARK=8
 

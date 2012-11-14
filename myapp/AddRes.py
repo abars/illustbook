@@ -36,6 +36,7 @@ from myapp.MappingId import MappingId
 from myapp.MappingThreadId import MappingThreadId
 from myapp.SpamCheck import SpamCheck
 from myapp.StackFeed import StackFeed
+from myapp.Ranking import Ranking
 
 class AddRes(webapp.RequestHandler):
 	def post(self):
@@ -107,6 +108,8 @@ class AddRes(webapp.RequestHandler):
 		entry.put()
 		
 		url=MappingThreadId.get_thread_url("./",bbs_key,thread_key)
+		if(self.request.get("redirect_url")):
+			url=self.request.get("redirect_url")
 		self.redirect(str(url))
 		
 		thread = thread_key
@@ -124,6 +127,9 @@ class AddRes(webapp.RequestHandler):
 
 		#二重投稿ブロック
 		memcache.set("add_res_double_block",self.request.get("comment"),30)
+
+		#ランキング
+		Ranking.add_rank_global(thread,BbsConst.SCORE_RES)
 
 		#フィード
 		if(not link_to_profile):

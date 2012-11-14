@@ -37,11 +37,19 @@ class Ranking(db.Model):
 			content_len=content_len-1
 		key_list.append(key)
 	
-	def add_rank(self,thread):
+	@staticmethod
+	def add_rank_global(thread,score):
+		rank=Ranking.get_by_key_name(BbsConst.THREAD_RANKING_KEY_NAME)
+		if(rank==None):
+			rank=Ranking.get_or_insert(BbsConst.THREAD_RANKING_KEY_NAME)
+		rank.add_rank(thread,score)
+	
+	def add_rank(self,thread,score):
 		if(thread.illust_mode==BbsConst.ILLUSTMODE_ILLUST):
-			self._add_rank_core(thread.key(),self.thread_list,BbsConst.THREAD_RANKING_RECENT)
-			self._add_rank_core(thread.bbs_key.user_id,self.owner_list,BbsConst.USER_RANKING_RECENT)
-			self._add_rank_core(thread.user_id,self.user_list,BbsConst.USER_RANKING_RECENT)
+			for cnt in range(score):
+				self._add_rank_core(thread.key(),self.thread_list,BbsConst.THREAD_RANKING_RECENT)
+				self._add_rank_core(thread.bbs_key.user_id,self.owner_list,BbsConst.USER_RANKING_RECENT)
+				self._add_rank_core(thread.user_id,self.user_list,BbsConst.USER_RANKING_RECENT)
 			self.put()
 
 	def get_sec(self,now):
@@ -106,10 +114,10 @@ class Ranking(db.Model):
 			day_left=day_left/7+1	#1週間で1/2
 			
 			#拍手とブックマークスコアを加算
-			if(thread.applause):
-				rank[k]=rank[k]+thread.applause/day_left
-			if(thread.bookmark_count):
-				rank[k]=rank[k]+thread.bookmark_count/day_left
+			#if(thread.applause):
+			#	rank[k]=rank[k]+thread.applause/day_left	#1拍手=8PVの価値
+			#if(thread.bookmark_count):
+			#	rank[k]=rank[k]+thread.bookmark_count/day_left	#1ブックマーク=16PVの価値
 		
 		#ランキング作成
 		self.ranking_list=[]
