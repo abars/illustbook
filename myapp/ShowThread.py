@@ -79,11 +79,6 @@ class ShowThread(webapp.RequestHandler):
 			self.response.out.write(Alert.alert_msg_notfound(self.request.host))
 			return
 
-		#コメントはログインを必須にしない
-		if(bbs.comment_login_require) :
-			bbs.comment_login_require=0
-			bbs.put()
-		
 		#コメント数を更新
 		if(bbs.page_comment_n):
 			col_num=bbs.page_comment_n
@@ -124,7 +119,7 @@ class ShowThread(webapp.RequestHandler):
 
 		#コメントフォームを取得する
 		show_comment_form=1
-		if(bbs.comment_login_require and not(logined)):
+		if(bbs.comment_login_require and not(owner)):
 			show_comment_form=0
 		
 		#名前取得

@@ -144,7 +144,7 @@ class ShowBbs(webapp.RequestHandler):
 		
 		#コメントフォームを表示するか
 		show_comment_form=1
-		if(bbs.comment_login_require and not(logined)):
+		if(bbs.comment_login_require and not(owner)):
 			show_comment_form=0
 
 		#フルコメントデバッグ

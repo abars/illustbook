@@ -140,6 +140,21 @@
 	<div id="res" class="tabin"> 
 			<TABLE BORDER=0 class="g-table">
 
+			<TR><TH>コメント表示</TH><TD>
+			<select name="disable_comment">
+				<option value="1" {% ifequal bbs.disable_comment 1 %}selected="selected"{% endifequal %}>表示しない</option>
+				<option value="0" {% if not bbs.disable_comment %}selected="selected"{% endif %}>表示する</option>
+			</select></TD></TR>
+
+			<TR><TH>コメント権限</TH><TD>
+			<select name="comment_login_require">
+				{% ifequal bbs.comment_login_require 1 %}
+					<option value="0">誰でもコメント可能</option><option value="1" selected="selected">管理人のみコメント可能</option>
+				{% else%}
+					<option value="0" selected="selected">誰でもコメント可能</option><option value="1">管理人のみコメント可能</option>
+				{% endifequal %}
+			</select></TD></TR>
+
 			<TR><TH>表示コメント数(デフォルト10、最大50)</TH><TD><input type="text" name="page_comment_n" maxlength="2" value="{{bbs.page_comment_n}}" size=48></TD></TR>		
 
 			<TR><TH>デフォルト表示順（初期設定は更新順）</TH><TD>
@@ -173,17 +188,6 @@
 			</select>
 			</TD></TR>
 
-			<!--
-			<TR><TH>コメントする場合にログインを必須にする</TH><TD>
-			<select name="comment_login_require">
-				{% ifequal bbs.comment_login_require 1 %}
-						<option value="0">誰でもコメント可能</option><option value="1" selected="selected">ログイン必須</option>
-				{% else%}
-						<option value="0" selected="selected">誰でもコメント可能</option><option value="1">ログイン必須</option>
-				{% endifequal %}
-			</select></TD></TR>
-			-->
-			
 			<TR><TH>新規スレッドの作成（スレッド式掲示板の場合）</TH><TD>
 			<select name="disable_create_new_thread">	
 			{%ifequal bbs.disable_create_new_thread 1 %}
@@ -214,15 +218,6 @@
 			</select></TD></TR>
 
 			<TR><TH>コメントルール</TH><TD><textarea name="comment_rule"	rows="4" cols="40" style="width:100%;">{{bbs.comment_rule}}</textarea></TD></TR>
-
-			<TR><TH>コメントフォーム</TH><TD>
-			<select name="disable_comment">
-				{% ifequal bbs.disable_comment 1 %}
-						<option value="1" selected="selected">表示しない</option><option value="0">表示する</option>
-				{% else%}
-						<option value="1">表示しない</option><option value="0" selected="selected">表示する</option>
-				{% endifequal %}
-			</select></TD></TR>
 
 			<TR><TH>文字でコメント</TH><TD>
 			<select name="disable_normal_reply">

@@ -273,7 +273,7 @@ class UpdateBbs(webapp.RequestHandler):
 		bbs.enable_full_comment=int(self.request.get("enable_full_comment"))
 		bbs.disable_applause=int(self.request.get("disable_applause"))
 		bbs.disable_analyze=int(self.request.get("disable_analyze"))
-		#bbs.comment_login_require=int(self.request.get("comment_login_require"))
+		bbs.comment_login_require=int(self.request.get("comment_login_require"))
 		bbs.disable_create_new_thread=int(self.request.get("disable_create_new_thread"))
 		bbs.disable_create_new_illust=int(self.request.get("disable_create_new_illust"))
 		bbs.dont_count_owner=int(self.request.get("dont_count_owner"))
