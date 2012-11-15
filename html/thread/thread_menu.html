@@ -39,6 +39,8 @@
 			<li><a href="{{host}}violation?bbs_key={{bbs.key}}&thread_key={{thread.key}}&mode=terms">規約</a></li>
 			<li><a href="{{host}}violation?bbs_key={{bbs.key}}&thread_key={{thread.key}}&mode=comment">コメント禁止</a></li>
 			<li><a href="{{host}}violation?bbs_key={{bbs.key}}&thread_key={{thread.key}}&mode=photo">非表示{% if thread.violate_photo %}(適用中){% endif %}</a></li>
+			<li><a href="#">{{bbs.owner.email}}</a></li>
+			<li><a href="#">{{bbs.user_id}}</a></li>
 		</ul>
 	</div>
 {% endif %}

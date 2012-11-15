@@ -26,9 +26,9 @@
 		<A HREF="{{page_url_category_base}}" class="decnone">全て</A><BR>
 		{% endif%}
 		{% for category in category_list %}
-			{% ifequal category "" %}
+			{% ifequal category.category "" %}
 			{% else %}
-			<A HREF="{{page_url_category_base}}{{category|iriencode}}" class="decnone">{{category}}</A><BR>
+			<A HREF="{{page_url_category_base}}{{category.category|iriencode}}" class="decnone">{{category.category}}({{category.count}})</A><BR>
 			{% endifequal %}
 		{% endfor %}
 		</p>

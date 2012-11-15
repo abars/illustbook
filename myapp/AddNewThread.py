@@ -41,6 +41,7 @@ from myapp.JST import JST
 from myapp.StackFeed import StackFeed
 from myapp.SyncPut import SyncPut
 from myapp.ApiFeed import ApiFeed
+from myapp.CategoryList import CategoryList
 
 class AddNewThread(webapp.RequestHandler):
 	def post(self):
@@ -124,7 +125,7 @@ class AddNewThread(webapp.RequestHandler):
 
 		if(self.request.get("category")):
 			new_thread.category=self.request.get("category")
-			bbs.add_new_category(new_thread.category)
+			CategoryList.add_new_category(bbs,new_thread.category)
 		
 		if(self.request.get("is_png")):
 			new_thread.is_png=1

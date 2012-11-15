@@ -33,6 +33,7 @@ from myapp.Alert import Alert
 from myapp.OwnerCheck import OwnerCheck
 from myapp.MappingId import MappingId
 from myapp.MappingThreadId import MappingThreadId
+from myapp.CategoryList import CategoryList
 
 class UpdateThread(webapp.RequestHandler):
 	def post(self):
@@ -53,7 +54,7 @@ class UpdateThread(webapp.RequestHandler):
 		
 		category = self.request.get("thread_category")
 		thread.category=category
-		bbs.add_new_category(category)
+		CategoryList.add_new_category(bbs,category)
 
 		summary = self.request.get('thread_summary')
 		summary = compiled_line.sub(r'', summary)

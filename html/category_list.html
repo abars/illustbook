@@ -2,8 +2,8 @@
 	<select id="category" style="margin-bottom:0px;" onchange="if(this.value=='add'){next_state='block';}else{next_state='none';}document.getElementById('category_new_div').style.display=next_state;">
 	<option value="" {% if not selecting_category %}selected="selected"{% endif %}>設定しない</option>
 	{% for category in category_list %}
-		{% ifequal category "" %}{% else %}
-			<option value="{{category}}" {% ifequal selecting_category category %}selected="selected"{% endifequal %}>{{category}}</option>
+		{% ifequal category.category "" %}{% else %}
+			<option value="{{category.category}}" {% ifequal selecting_category category.category %}selected="selected"{% endifequal %}>{{category.category}}</option>
 		{% endifequal %}{% endfor %}
 	<option value="add" onselcted="">カテゴリの追加</option>
 	</select>

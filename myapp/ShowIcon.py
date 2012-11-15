@@ -18,8 +18,11 @@ class ShowIcon (webapp.RequestHandler):
 		if(bookmark==None):
 			self.redirect(str("/static_files/empty_user.png"));
 			return
-		if bookmark.icon:
-			ImageFile.serve_icon(self,bookmark,user_id)
+		if(bookmark.user_icon):
+			ImageFile.serve_icon(self,bookmark.user_icon,user_id)
 		else:
+			#if bookmark.icon:
+			#	ImageFile.serve_icon(self,bookmark,user_id)
+			#else:
 			self.redirect(str("/static_files/empty_user.png"));
 			

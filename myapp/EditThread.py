@@ -23,6 +23,7 @@ from myapp.OwnerCheck import OwnerCheck
 from myapp.Alert import Alert
 from myapp.CssDesign import CssDesign
 from myapp.ReeditEscape import ReeditEscape
+from myapp.CategoryList import CategoryList
 
 class EditThread(webapp.RequestHandler):
 	def get(self):
@@ -44,7 +45,7 @@ class EditThread(webapp.RequestHandler):
 		host_url="./"
 		design=CssDesign.get_design_object(self,bbs,host_url,1)
 
-		category_list=bbs.get_category_list()
+		category_list=CategoryList.get_category_list(bbs)
 		
 		template_values = {
 			'host': './',

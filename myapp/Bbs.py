@@ -128,16 +128,16 @@ class Bbs(db.Model):
 		if(self.key()):
 			memcache.delete(BbsConst.OBJECT_CACHE_HEADER+str(self.key()))
 	
-	def get_category_list(self):
-		category_list=[]
-		if(self.category_list and self.category_list!=""):
-			category_list=self.category_list.split(",")
-		else:
-			self.category_list=""
-		return category_list
+	#def get_category_list(self):
+	#	category_list=[]
+	#	if(self.category_list and self.category_list!=""):
+	#		category_list=self.category_list.split(",")
+	#	else:
+	#		self.category_list=""
+	#	return category_list
 
-	def add_new_category(self,category):
-		category_list=self.get_category_list()
-		if not (category in category_list):
-			self.category_list=self.category_list+","+category
-			self.put()
+	#def add_new_category(self,category):
+	#	category_list=self.get_category_list()
+	#	if not (category in category_list):
+	#		self.category_list=self.category_list+","+category
+	#		self.put()

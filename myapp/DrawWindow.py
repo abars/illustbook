@@ -19,6 +19,7 @@ from myapp.MappingId import MappingId
 from myapp.Alert import Alert
 from myapp.ReeditEscape import ReeditEscape
 from myapp.CssDesign import CssDesign
+from myapp.CategoryList import CategoryList
 
 class DrawWindow(webapp.RequestHandler):
 	def get(self):
@@ -61,7 +62,7 @@ class DrawWindow(webapp.RequestHandler):
 			author=ReeditEscape.escape(thread.author)
 			title=ReeditEscape.escape(thread.title)
 
-		category_list=bbs.get_category_list()
+		category_list=CategoryList.get_category_list(bbs)
 
 		user = users.get_current_user()
 		logined=0

@@ -42,6 +42,7 @@ from myapp.CssDesign import CssDesign
 from myapp.ApiObject import ApiObject
 from myapp.CounterWorker import CounterWorker
 from myapp.ShowEntry import ShowEntry
+from myapp.CategoryList import CategoryList
 
 class ShowBbs(webapp.RequestHandler):
 	def get(self,bbs_key):
@@ -127,7 +128,7 @@ class ShowBbs(webapp.RequestHandler):
 		category_list=None
 		if(bbs.category_list):
 			if(bbs.category_list!=""):
-				category_list=bbs.category_list.split(",")
+				category_list=CategoryList.get_category_list(bbs) #bbs.category_list.split(",")
 
 		#ページデザインを取得
 		css_key=self.request.get("css_key")

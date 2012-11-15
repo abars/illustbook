@@ -2,7 +2,7 @@
 #!/usr/bin/env python
 
 #---------------------------------------------------
-#ブックマーク情報、だったのがマイページのユーザ情報管理構造体に進化
+#ユーザ情報管理構造体
 #copyright 2010-2012 ABARS all rights reserved.
 #---------------------------------------------------
 
@@ -12,6 +12,7 @@ from google.appengine.api import memcache
 
 from myapp.StackFeedData import StackFeedData
 from myapp.BbsConst import BbsConst
+from myapp.UserIcon import UserIcon
 
 class Bookmark(db.Model):
 	owner = db.UserProperty()	#deleted
@@ -28,9 +29,15 @@ class Bookmark(db.Model):
 	#follower_list_enable = db.IntegerProperty()	#1:enable 0:disable
 	name = db.StringProperty()
 	profile = db.TextProperty()
+	
+	#アイコン登録直後はここに値が入る
 	icon = db.BlobProperty()
 	icon_content_type = db.StringProperty()
 	thumbnail_created = db.IntegerProperty()
+	
+	#最初のデータストアの読込と同時にアイコンはこちらに移動する
+	user_icon = db.ReferenceProperty(UserIcon)
+	
 	mail = db.StringProperty()
 	homepage = db.StringProperty()
 	twitter_id = db.StringProperty()

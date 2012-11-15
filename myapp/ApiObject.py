@@ -21,8 +21,6 @@ from google.appengine.api import images
 from google.appengine.api import memcache
 from google.appengine.api.users import User
 
-#from django.utils import simplejson
-
 from myapp.SetUtf8 import SetUtf8
 from myapp.Alert import Alert
 from myapp.MesThread import MesThread
@@ -34,6 +32,7 @@ from myapp.StackFeedData import StackFeedData
 from myapp.UTC import UTC
 from myapp.JST import JST
 from myapp.Entry import Entry
+from myapp.UserIcon import UserIcon
 
 class ApiObject(webapp.RequestHandler):
 
@@ -124,7 +123,7 @@ class ApiObject(webapp.RequestHandler):
 	#sudo easy_install pilでインストール
 	@staticmethod
 	def create_user_thumbnail(bookmark):
-		#bookmark.thumbnail_created=0
+		#サムネイル作成
 		if(bookmark and bookmark.icon and (not bookmark.thumbnail_created)):
 			img = images.Image(bookmark.icon)
 			img.resize(width=180, height=180)
@@ -136,6 +135,21 @@ class ApiObject(webapp.RequestHandler):
 				bookmark.put()
 			except:
 				img=None
+		
+		#BookmarkクラスからUserIconクラスに画像を移動
+		if(bookmark and bookmark.icon and (not bookmark.user_icon)):
+			user_icon=UserIcon()
+			user_icon.icon=bookmark.icon
+			user_icon.icon_content_type=bookmark.icon_content_type
+			user_icon.user_id=bookmark.user_id
+			user_icon.put()
+			bookmark.user_icon=user_icon
+			bookmark.put()
+		
+		#Bookmarkクラスのアイコンを削除
+		#if(bookmark and bookmark.icon and bookmark.user_icon):
+		#	bookmark.icon=None
+		#	bookmark.put()
 
 	@staticmethod
 	def get_bookmark_of_user_id_for_write(user_id):
@@ -274,6 +288,9 @@ class ApiObject(webapp.RequestHandler):
 
 	@staticmethod
 	def create_bbs_object(req,bbs):
+		if(not bbs):
+			return {}
+	
 		bookmark_cnt=0
 		if(bbs.bookmark_count):
 			bookmark_cnt=bbs.bookmark_count
