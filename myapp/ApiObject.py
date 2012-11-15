@@ -98,7 +98,10 @@ class ApiObject(webapp.RequestHandler):
 		ApiObject.create_user_thumbnail(target_bookmark)
 		
 		#memcachedに格納
-		memcache.set(BbsConst.OBJECT_CACHE_HEADER+BbsConst.OBJECT_BOOKMARK_CACHE_HEADER+user_id,target_bookmark,BbsConst.OBJECT_CACHE_TIME)
+		try:
+			memcache.set(BbsConst.OBJECT_CACHE_HEADER+BbsConst.OBJECT_BOOKMARK_CACHE_HEADER+user_id,target_bookmark,BbsConst.OBJECT_CACHE_TIME)
+		except:
+			mee=None
 		return target_bookmark
 	
 	@staticmethod

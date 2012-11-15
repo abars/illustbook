@@ -122,6 +122,9 @@ class UpdateProfile(webapp.RequestHandler):
 			bookmark.icon=db.Blob(self.request.get("icon"))
 			img = self.request.body_file.vars['icon']
 			bookmark.icon_content_type=img.headers['content-type']
+			if(bookmark.user_icon):
+				bookmark.user_icon.delete()
+				bookmark.user_icon=None
 			ApiObject.create_user_thumbnail(bookmark)
 		
 		#bookmark.put()
