@@ -43,7 +43,7 @@
 
 	{%ifequal one "thread" %}
 		<h4>
-		新着イラスト
+		新着{% ifequal bbs.bbs_mode 3 %}スレッド{%else%}イラスト{%endifequal%}
 		</h4>
 		<p>{% include 'bbs/bbs_recent_thread.html' %}</p>
 	{%endifequal%}

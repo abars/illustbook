@@ -147,9 +147,9 @@ class ApiObject(webapp.RequestHandler):
 			bookmark.put()
 		
 		#Bookmarkクラスのアイコンを削除
-		#if(bookmark and bookmark.icon and bookmark.user_icon):
-		#	bookmark.icon=None
-		#	bookmark.put()
+		if(bookmark and bookmark.icon and bookmark.user_icon):
+			bookmark.icon=None
+			bookmark.put()
 
 	@staticmethod
 	def get_bookmark_of_user_id_for_write(user_id):
