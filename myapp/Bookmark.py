@@ -2,7 +2,7 @@
 #!/usr/bin/env python
 
 #---------------------------------------------------
-#ƒ†[ƒUî•ñŠÇ—\‘¢‘Ì
+#ãƒ¦ãƒ¼ã‚¶æƒ…å ±ç®¡ç†æ§‹é€ ä½“
 #copyright 2010-2012 ABARS all rights reserved.
 #---------------------------------------------------
 
@@ -30,12 +30,12 @@ class Bookmark(db.Model):
 	name = db.StringProperty()
 	profile = db.TextProperty()
 	
-	#ƒAƒCƒRƒ““o˜^’¼Œã‚Í‚±‚±‚É’l‚ª“ü‚é
+	#ã‚¢ã‚¤ã‚³ãƒ³ç™»éŒ²ç›´å¾Œã¯ã“ã“ã«å€¤ãŒå…¥ã‚‹
 	icon = db.BlobProperty()
 	icon_content_type = db.StringProperty()
 	thumbnail_created = db.IntegerProperty()
 	
-	#Å‰‚Ìƒf[ƒ^ƒXƒgƒA‚Ì“Ç‚Æ“¯‚ÉƒAƒCƒRƒ“‚Í‚±‚¿‚ç‚ÉˆÚ“®‚·‚é
+	#æœ€åˆã®ãƒ‡ãƒ¼ã‚¿ã‚¹ãƒˆã‚¢ã®èª­è¾¼ã¨åŒæ™‚ã«ã‚¢ã‚¤ã‚³ãƒ³ã¯ã“ã¡ã‚‰ã«ç§»å‹•ã™ã‚‹
 	user_icon = db.ReferenceProperty(UserIcon)
 	
 	mail = db.StringProperty()

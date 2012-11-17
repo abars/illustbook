@@ -154,6 +154,8 @@ class StackFeed(webapp.RequestHandler):
 				return
 			
 			bookmark.stack_feed_list.insert(0,data.key())
+			bookmark.stack_feed_list=bookmark.stack_feed_list[:256]
+
 			if(bookmark.user_id!=data.from_user_id):
 				if(not bookmark.new_feed_count):
 					bookmark.new_feed_count=1
