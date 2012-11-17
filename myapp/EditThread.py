@@ -28,11 +28,17 @@ from myapp.CategoryList import CategoryList
 class EditThread(webapp.RequestHandler):
 	def get(self):
 		bbs=db.get(self.request.get("bbs_key"));
+		thread = db.get(self.request.get("thread_key"))
 		user = users.get_current_user()
-		if(OwnerCheck.check(bbs,user)):
+		
+		bbs_owner=not OwnerCheck.check(bbs,user)
+		thread_owner=False
+		if(user and user.user_id()==thread.user_id):
+			thread_owner=True
+		
+		if(not bbs_owner and not thread_owner):
 			self.response.out.write(Alert.alert_msg("編集する権限がありません。",self.request.host))
 			return
-		thread = db.get(self.request.get("thread_key"))
 		
 		summary=thread.summary
 		postscript=""

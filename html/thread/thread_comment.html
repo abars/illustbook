@@ -11,12 +11,20 @@
 		
 		<div class="g-button-group" style="float:right;">
 		{%if is_admin or edit_flag %}
+			<!-- 管理者削除 -->
 			<input type="button" value="削除"  class="g-button" onclick="confirm_action_comment('{{host}}del_ent?entry_key={{entry.com.key}}&bbs_key={{bbs_key}}&thread_key={{thread.key}}');"/>
 			{% if is_admin and entry.com.illust_reply %}
 				<input type="button" value="規約"  class="g-button" onclick="confirm_action_term('{{host}}violation?entry_key={{entry.com.key}}&bbs_key={{bbs_key}}&thread_key={{thread.key}}');"/>
 			{% endif %}
 			{% if bbs.comment_hidden_button %}
 				<input type="button" value="{% if entry.com.hidden_flag %}表示{%else%}非表示{% endif %}"  class="g-button" onclick="window.location.href='{{host}}vis_ent?entry_key={{entry.com.key}}&bbs_key={{bbs_key}}&thread_key={{thread.key}}';"/>
+			{% endif %}
+		{%else%}
+			<!-- 自分の投稿したコメントの削除 -->
+			{% if user %}
+				{% ifequal user.user_id entry.com.user_id %}
+					<input type="button" value="削除"  class="g-button" onclick="confirm_action_comment('{{host}}del_ent?entry_key={{entry.com.key}}&bbs_key={{bbs_key}}&thread_key={{thread.key}}');"/>
+				{% endifequal %}
 			{% endif %}
 		{%endif%}
 
@@ -50,25 +58,29 @@
 <!-- レス -->
 {% if not entry.com.hidden_flag %}
 {% for res in entry.res_list %}
-<div style="margin:16px 2px 16px 40px;">
-<HR>
-<div class="actions g-button-container">
-	投稿者：
-	{{res|author_name_comment:host|safe}}
-	　投稿日：{{res.date|time_JST_format:bbs.date_format}}
-<div class="g-button-group" style="float:right;">
-{%if edit_flag %}
-<input type="button" value="削除"  class="g-button" onclick="confirm_action_comment('{{host}}del_res?entry_key={{entry.com.key}}&res_key={{res.key}}');">
-{% endif %}
-{% if forloop.last %}
-{%if show_comment_form %}
-<input type="button" value="返信"  class="g-button" onclick="show('{{ entry.com.key }}');">
-{%endif%}
-{% endif %}
-</div>
-</div>
-<br/>{{res.content|safe}}<br/><br/>
-</div>
+	<div style="margin:16px 2px 16px 40px;">
+		<HR>
+		<div class="actions g-button-container">
+		投稿者：{{res|author_name_comment:host|safe}}　投稿日：{{res.date|time_JST_format:bbs.date_format}}
+			<div class="g-button-group" style="float:right;">
+			{%if edit_flag %}
+				<input type="button" value="削除"  class="g-button" onclick="confirm_action_comment('{{host}}del_res?entry_key={{entry.com.key}}&res_key={{res.key}}');">
+			{% else %}
+				{% if user %}
+					{% ifequal user.user_id res.user_id %}
+						<input type="button" value="削除"  class="g-button" onclick="confirm_action_comment('{{host}}del_res?entry_key={{entry.com.key}}&res_key={{res.key}}');">
+					{% endifequal %}
+				{% endif %}
+			{% endif %}
+			{% if forloop.last %}
+				{%if show_comment_form %}
+					<input type="button" value="返信"  class="g-button" onclick="show('{{ entry.com.key }}');">
+				{%endif%}
+			{% endif %}
+			</div>
+		</div>
+	<br/>{{res.content|safe}}<br/><br/>
+	</div>
 {% endfor %}
 {% endif %}
 

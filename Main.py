@@ -273,10 +273,17 @@ class DelEn(webapp.RequestHandler):
 	def get(self):
 		bbs = db.get(self.request.get("bbs_key"))
 		user = users.get_current_user()
-		if(OwnerCheck.check(bbs,user) and not OwnerCheck.is_admin(user)):
+		entry = db.get(self.request.get("entry_key"))
+
+		entry_owner=False
+		if(user and user.user_id()==entry.user_id):
+			entry_owner=True
+		
+		bbs_owner=not OwnerCheck.check(bbs,user)
+
+		if(not bbs_owner and not OwnerCheck.is_admin(user) and not entry_owner):
 			self.response.out.write(Alert.alert_msg("削除する権限がありません。",self.request.host))
 			return
-		entry = db.get(self.request.get("entry_key"))
 		entry.del_flag = 0
 		entry.put()
 
@@ -300,7 +307,13 @@ class DelRes(webapp.RequestHandler):
 		bbs_key=thread_key.bbs_key
 
 		user = users.get_current_user()
-		if(OwnerCheck.check(bbs_key,user)):
+		bbs_owner =not OwnerCheck.check(bbs_key,user)
+		res_owner=False
+		if(user and user.user_id()==res.user_id):
+			res_owner=True
+		
+		if(not bbs_owner and not res_owner):
+			self.response.out.write(Alert.alert_msg("削除する権限がありません。",self.request.host))
 			return
 
 		res.delete()
@@ -338,11 +351,18 @@ class DelThread(webapp.RequestHandler):
 					del_ok=1
 				else:
 					self.response.out.write(Alert.alert_msg("削除キーが一致しません。",self.request.host))
-					return;					
+					return;
 		
 		user = users.get_current_user()
+
+		bbs_owner = not OwnerCheck.check(bbs,user)
+		thread_owner=False
+		if(user and user.user_id()==thread.user_id):
+			thread_owner=True
+		
 		if(del_ok==0):
-			if(OwnerCheck.check(bbs,user)):
+			if(not bbs_owner and not thread_owner):
+				self.response.out.write(Alert.alert_msg("削除権限がありません。",self.request.host))
 				return
 
 		thread.delete()

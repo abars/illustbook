@@ -65,7 +65,7 @@ class ShowEntry(webapp.RequestHandler):
 
 	#コメントのレンダリング
 	@staticmethod
-	def render_comment(req,host_url,bbs,thread,com_list_,edit_flag,bbs_key,logined,show_comment_form,is_admin,user_name):
+	def render_comment(req,host_url,bbs,thread,com_list_,edit_flag,bbs_key,logined,show_comment_form,is_admin,user_name,user):
 		#レスを取得
 		com_list=ShowEntry._get_response(com_list_,thread)
 		
@@ -81,6 +81,7 @@ class ShowEntry(webapp.RequestHandler):
 			'show_comment_form':show_comment_form,
 			'is_admin':is_admin,
 			'user_name': user_name,
+			'user': user,
 			'redirect_url': req.request.path
 			}
 

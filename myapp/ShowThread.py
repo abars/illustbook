@@ -125,8 +125,13 @@ class ShowThread(webapp.RequestHandler):
 		#名前取得
 		user_name=ShowEntry.get_user_name(user)
 		
+		#自分のイラストか
+		my_illust=False
+		if(user and thread.user_id==user.user_id()):
+			my_illust=True
+		
 		#コメントのレンダリング
-		comment=ShowEntry.render_comment(self,host_url,bbs,thread,com_list_,edit_flag,bbs_key,logined,show_comment_form,admin_user,user_name)
+		comment=ShowEntry.render_comment(self,host_url,bbs,thread,com_list_,edit_flag,bbs_key,logined,show_comment_form,admin_user,user_name,user)
 		
 		#描画
 		template_values = {
@@ -144,6 +149,7 @@ class ShowThread(webapp.RequestHandler):
 			'logined':logined,
 			'user':user,
 			'owner':owner,
+			'my_illust':my_illust,
 			'template_path':design["template_path"],
 			'css_name':design["css_name"],
 			'is_iphone':design["is_iphone"],
