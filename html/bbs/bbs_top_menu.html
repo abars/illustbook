@@ -43,7 +43,7 @@
 			{% endif %}
 		{% endifequal %}
 
-		{% if owner %}
+		{% if owner or is_admin %}
 			{%if template_path %}
 					<A HREF="{{host}}edit_bbs?bbs_key={{bbs.key}}"><img src="{{template_path}}images/header_edit3.jpg" alt="デザインの編集" width="103" height="28"></A>
 			{% else %}
@@ -67,25 +67,6 @@
 		{% endif %}
 	{% endif %}
 
-<!--
-	{% if not is_iphone %}
-	<div id="contents-header-login">
-	{% if owner or logined %}
-		{%if template_path %}
-			<a href="{{redirect_url|logout_url}}"><img src="{{template_path}}images/header_logout.jpg" alt="ログアウト" width="87" height="28" /></a>
-		{% else%}
-			<input type="button" value="ログアウト"  class="g-button" onclick="window.location.href='{{redirect_url|logout_url}}'">
-		{% endif %}
-	{% else %}
-		{%if template_path %}
-			<a href="{{redirect_url|login_url}}"><img src="{{template_path}}images/header_login.jpg" alt="ログイン" width="87" height="28" /></a>
-		{% else%}
-			<input type="button" value="ログイン"  class="g-button" onclick="window.location.href='{{redirect_url|login_url}}'">
-		{%endif%}
-	{% endif %}
-	</div>
-	{% endif %}
--->
 	<div class="clr"></div>
 </div>
 

@@ -48,7 +48,8 @@ class UpdateBbs(webapp.RequestHandler):
 			return
 		bbs=db.get(bbs_key);
 		user = users.get_current_user()
-		if(OwnerCheck.check(bbs,user)):
+		if(OwnerCheck.check(bbs,user) and not OwnerCheck.is_admin(user)):
+			self.response.out.write(Alert.alert_msg("デザインの編集を行う権限がありません。",self.request.host))
 			return
 		summary = self.request.get('bbs_summary')
 		bg_color=self.request.get('bg_color')
