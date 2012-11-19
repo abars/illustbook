@@ -10,6 +10,7 @@ from google.appengine.ext import webapp
 
 from myapp.ApiObject import ApiObject
 from myapp.ImageFile import ImageFile
+from myapp.Bookmark import Bookmark
 
 class ShowIcon (webapp.RequestHandler):
 	def get(self):
