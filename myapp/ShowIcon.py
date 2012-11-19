@@ -14,15 +14,19 @@ from myapp.ImageFile import ImageFile
 class ShowIcon (webapp.RequestHandler):
 	def get(self):
 		user_id=self.request.get("key")
+
 		bookmark=ApiObject.get_bookmark_of_user_id(user_id)
 		if(bookmark==None):
 			self.redirect(str("/static_files/empty_user.png"));
 			return
-		if(bookmark.user_icon):
+		
+		try:
+			key=Bookmark.user_icon.get_value_for_datastore(bookmark)
+			user_icon=ApiObject.get_cached_object(key)
+		except:
+			user_icon=None
+		
+		if(user_icon):
 			ImageFile.serve_icon(self,bookmark.user_icon,user_id)
 		else:
-			#if bookmark.icon:
-			#	ImageFile.serve_icon(self,bookmark,user_id)
-			#else:
 			self.redirect(str("/static_files/empty_user.png"));
-			

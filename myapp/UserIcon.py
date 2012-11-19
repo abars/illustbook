@@ -17,3 +17,5 @@ class UserIcon(db.Model):
 	icon = db.BlobProperty()
 	icon_content_type = db.StringProperty()
 	date = db.DateTimeProperty(auto_now=True)
+	
+	#アイコン変更時はdeleteしてputするのでmemcached.deleteは不要

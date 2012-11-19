@@ -37,6 +37,7 @@ from myapp.BbsConst import BbsConst
 from myapp.MappingThreadId import MappingThreadId
 from myapp.MesThread import MesThread
 from myapp.RecentTag import RecentTag
+from myapp.ApiObject import ApiObject
 
 class SearchTag(webapp.RequestHandler):
 	@staticmethod
@@ -87,6 +88,12 @@ class SearchTag(webapp.RequestHandler):
 		
 		return tag_list
 
+	def get_thread(self,query,tag,thread_num,page):
+		query.filter('tag_list =', tag)
+		thread_key_list = query.fetch(limit=thread_num, offset=(page-1)*thread_num)
+		thread_list = ApiObject.get_cached_object_list(thread_key_list)
+		return thread_list
+
 	def get(self):
 		tag=self.request.get("tag")
 		
@@ -95,26 +102,25 @@ class SearchTag(webapp.RequestHandler):
 		page=1
 		thread_num=100
 
-		query = MesThread.all()
-		query.filter('tag_list =', tag)
+		#タグに対応するクエリを作成
+		query = db.Query(MesThread,keys_only=True)
 		query.filter('illust_mode =', BbsConst.ILLUSTMODE_ILLUST)
 		query.order('-applause')
-		thread_list = query.fetch(limit=thread_num, offset=(page-1)*thread_num)
+		thread_list = self.get_thread(query,tag,thread_num,page)
 
-		query = MesThread.all()
-		query.filter('tag_list =', tag)
+		query = db.Query(MesThread,keys_only=True)
 		query.filter('illust_mode =', BbsConst.ILLUSTMODE_MOPER)
 		query.order('-applause')
-		moper_list = query.fetch(limit=thread_num, offset=(page-1)*thread_num)
-
-		query = MesThread.all()
-		query.filter('tag_list =', tag)
+		moper_list = self.get_thread(query,tag,thread_num,page)
+		
+		query = db.Query(MesThread,keys_only=True)
 		query.filter('illust_mode =', BbsConst.ILLUSTMODE_NONE)
 		query.order('-date')
-		text_list = query.fetch(limit=thread_num, offset=(page-1)*thread_num)
+		text_list = self.get_thread(query,tag,thread_num,page)
 		
 		host_url="./";
 
+		#最近のタグ
 		recent_tag=RecentTag.get_or_insert("recent_tag")
 		
 		#タグに対応するスレッドの数を更新
