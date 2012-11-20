@@ -85,7 +85,8 @@ class CounterWorker(webapp.RequestHandler):
 	@staticmethod
 	def update_counter_core(bbs,bbs_key,thread,dont_count,referer,url,remote_addr):
 		#カウンター取得
-		counter=bbs.counter
+		counter_key=Bbs.counter.get_value_for_datastore(bbs)
+		counter=ApiObject.get_cached_object(counter_key)
 		
 		#カウンタを更新
 		updated_counter=counter.update_counter(remote_addr,dont_count)
