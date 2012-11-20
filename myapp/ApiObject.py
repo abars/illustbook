@@ -127,7 +127,13 @@ class ApiObject(webapp.RequestHandler):
 	@staticmethod
 	def create_user_thumbnail(bookmark):
 		#UserIconクラスに退避していた画像をBookmarkクラスに復元
-		if(bookmark and bookmark.user_icon):
+		user_icon_exist=False
+		try:
+			if(bookmark and bookmark.user_icon):
+				user_icon_exist=True
+		except:
+			user_icon_exist=False
+		if(user_icon_exist):
 			if(not bookmark.icon):
 				bookmark.icon=bookmark.user_icon.icon
 				bookmark.put()
@@ -148,16 +154,16 @@ class ApiObject(webapp.RequestHandler):
 				img=None
 		
 		#50pxサムネイル作成
-		#if(bookmark and bookmark.icon and (not bookmark.icon_mini)):
-		#	img = images.Image(bookmark.icon)
-		#	img.resize(width=50, height=50)
-		#	img.im_feeling_lucky()
-		#		try:
-		#		bookmark.icon_mini=img.execute_transforms(output_encoding=images.PNG)
-		#		bookmark.icon_mini_content_type = 'image/png'
-		#		bookmark.put()
-		#	except:
-		#		img=None
+		if(bookmark and bookmark.icon and (not bookmark.icon_mini)):
+			img = images.Image(bookmark.icon)
+			img.resize(width=50, height=50)
+			img.im_feeling_lucky()
+			try:
+				bookmark.icon_mini=img.execute_transforms(output_encoding=images.PNG)
+				bookmark.icon_mini_content_type = 'image/png'
+				bookmark.put()
+			except:
+				img=None
 		
 		#BookmarkからUserIconに退避させていたが速度が出ないのでBookmarkに統合した
 		#if(bookmark and bookmark.icon and (not bookmark.user_icon)):

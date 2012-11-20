@@ -199,7 +199,7 @@ function feed_parse(feed){
 	//アイコン
 	txt+='<div style="float:left;width:58px;padding-right:6px;text-align:center;margin:auto;">'
 	if(feed.from_user){
-		txt+='<a href="'+feed.from_user.profile_url+'"><img src="'+feed.from_user.icon_url+'" width=50px height=50px class="radius_image"></a>';
+		txt+='<a href="'+feed.from_user.profile_url+'"><img src="'+feed.from_user.icon_url+'&size=mini" width=50px height=50px class="radius_image"></a>';
 	}else{
 		txt+='<img src="static_files/empty_user.png" width=50px height=50px class="radius_image">'
 	}
@@ -259,7 +259,7 @@ function feed_parse(feed){
 		}
 		break;
 	case "new_follow":
-		txt+='<a href="'+feed.follow_user.profile_url+'"><img src="'+feed.follow_user.icon_url+'" width=50px height=50px class="radius_image"></a>'
+		txt+='<a href="'+feed.follow_user.profile_url+'"><img src="'+feed.follow_user.icon_url+'&size=mini" width=50px height=50px class="radius_image"></a>'
 		break;
 	case "new_bookmark_thread":
 		txt+='<a href="'+feed.thread.thread_url+'"><img src="'+feed.thread.thumbnail_url+'" width=100px height=100px></a>'
@@ -318,7 +318,7 @@ function get_user(oj,id,initial_text){
 		var user=oj[i];
 		txt+="<div style='position:relative;float:left;'>";
 		txt+="<a href='"+user.profile_url+"'>";
-		txt+="<img src='"+user.icon_url+"' width=50px height=50px class='radius_image'>";
+		txt+="<img src='"+user.icon_url+"&size=mini' width=50px height=50px class='radius_image'>";
 		txt+="</a>";
 		if(id=="follow" && mypage_is_edit[id]){
 			txt+="<div style='position:absolute;top:0px;left:0px;'>";
