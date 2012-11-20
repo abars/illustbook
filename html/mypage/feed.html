@@ -2,13 +2,13 @@
 
 <div class="example">
 	<div style="padding-left:4px;padding-right:8px;">
-	<div id="feed"><p>Loading</p><p>&nbsp</p></div>
+	<div id="feed"></div>
 	</div>
 
 	<!-- ページ -->
 	<div class="g-button-group">
-		<a href="{{feed_previous_page}}" class="g-button no-text {% ifequal feed_page 1 %}disabled2{% endifequal %}"><i class="icon-chevron-left"></i></a>
-		<a href="{{feed_next_page}}" class="g-button no-text"><i class="icon-chevron-right"></i></a>
+		<a id="feed_previous_page" href="javascript:go_feed_previous_page();" class="g-button no-text"><i class="icon-chevron-left"></i></a>
+		<a id="feed_next_page" href="javascript:go_feed_next_page();" class="g-button no-text"><i class="icon-chevron-right"></i></a>
 	</div>
 </div>
 

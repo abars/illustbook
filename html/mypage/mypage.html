@@ -49,33 +49,26 @@
 
 <div class="left_box">
 
+<!--タブ-->
 {% if user or view_mode%}
-
-<script>
-	function display_tab(id){
-		{% if view_mode %}
-			window.location.href="{{host}}mypage?user_id={{bookmark.user_id}}&tab="+id;
-		{% else %}
-			window.location.href="{{host}}mypage?tab="+id;
-		{% endif %}
-		return false;
-	}
-</script>
-
 	<div style="float:left;padding-right:8px;">
 	{% if is_iphone %}
 	<div class="g-button-group toggle-buttons">
-		<a href="javascript:display_tab('illust');" class="g-button no-text {% ifequal tab "illust" %}checked{% endifequal %}">イラスト</a>
-		<a href="javascript:display_tab('profile');" class="g-button no-text {% ifequal tab "profile" %}checked{% endifequal %}">プロフ</a>
-		<a href="javascript:display_tab('feed');" class="g-button no-text {% ifequal tab "feed" %}checked{% endifequal %}">TL{% if bookmark.new_feed_count %}({{bookmark.new_feed_count}}){% endif %}</a>
-		<a href="javascript:display_tab('rental');" class="g-button no-text {% ifequal tab "rental" %}checked{% endifequal %}">レンタル</a>
+		<a id="illust_tab" href="javascript:display_tab('illust');" class="g-button no-text {% ifequal tab "illust" %}checked{% endifequal %}">イラスト</a>
+		<a id="profile_tab" href="javascript:display_tab('profile');" class="g-button no-text {% ifequal tab "profile" %}checked{% endifequal %}">プロフ</a>
+		<a id="feed_tab" href="javascript:display_tab('feed');" class="g-button no-text {% ifequal tab "feed" %}checked{% endifequal %}">TL{% if bookmark.new_feed_count %}({{bookmark.new_feed_count}}){% endif %}</a>
+		{% if not view_mode %}
+			<a id="rental_tab" href="javascript:display_tab('rental');" class="g-button no-text {% ifequal tab "rental" %}checked{% endifequal %}">レンタル</a>
+		{% endif %}
 		</div>
 	{% else %}
 		<div class="g-button-group toggle-buttons">
-		<a href="javascript:display_tab('illust');" class="g-button {% ifequal tab "illust" %}checked{% endifequal %}">イラスト</a>
-		<a href="javascript:display_tab('profile');" class="g-button {% ifequal tab "profile" %}checked{% endifequal %}">プロフィール</a>
-		<a href="javascript:display_tab('feed');" class="g-button {% ifequal tab "feed" %}checked{% endifequal %}">タイムライン{% if bookmark.new_feed_count %}({{bookmark.new_feed_count}}){% endif %}</a>
-		<a href="javascript:display_tab('rental');" class="g-button {% ifequal tab "rental" %}checked{% endifequal %}">レンタル</a>
+		<a id="illust_tab" href="javascript:display_tab('illust');" class="g-button {% ifequal tab "illust" %}checked{% endifequal %}">イラスト</a>
+		<a id="profile_tab" href="javascript:display_tab('profile');" class="g-button {% ifequal tab "profile" %}checked{% endifequal %}">プロフィール</a>
+		<a id="feed_tab" href="javascript:display_tab('feed');" class="g-button {% ifequal tab "feed" %}checked{% endifequal %}">タイムライン{% if bookmark.new_feed_count %}({{bookmark.new_feed_count}}){% endif %}</a>
+		{% if not view_mode %}
+			<a id="rental_tab" href="javascript:display_tab('rental');" class="g-button {% ifequal tab "rental" %}checked{% endifequal %}">レンタル</a>
+		{% endif %}
 		</div>
 	{% endif %}
 	</div>
@@ -83,18 +76,19 @@
 	{% if not view_mode %}
 	<div style="float:right;">
 		{% if edit_mode %}
-		<a href="./mypage?{% if tab %}tab={{tab}}&{% endif %}" class="g-button no-text checked">
+		<a href="javascript:go_edit_mode(1);" class="g-button no-text checked">
 		{% else %}
-		<a href="./mypage?{% if tab %}tab={{tab}}&{% endif %}edit=1" class="g-button no-text">
+		<a href="javascript:go_edit_mode(0);" class="g-button no-text">
 		{% endif %}
-		<i class="icon-edit"></i>{% if not is_iphone %}編集{% endif %}</a>
+		<i class="icon-edit"></i>{% if not is_iphone %}{% if edit_mode %}完了{%else%}編集{%endif%}{% endif %}</a>
 	</div>
-	{% endif %}
+{% endif %}
 	
-	<br clear="all">
-	<br clear="all">
+<br clear="all">
+<br clear="all">
 
-{% ifequal tab "illust" %}
+<!--イラスト-->
+<div class="one_tab" id="one_tab_illust" style="display:none;">
 <div>
 	<div class="example">
 		<p><h2>投稿したイラスト</h2></p>
@@ -128,10 +122,9 @@
 		</td></tr></table>
 	</div>
 </div>
-{% endifequal %}
+</div>
 
-{% ifequal tab "profile" %}
-
+<div class="one_tab" id="one_tab_profile" style="display:none;">
 	<div class="example">
 		<p><h2>プロフィール</h2></p>
 	
@@ -214,10 +207,16 @@
 				{% endif %}
 			</td></tr></table>
 	</div>
-{% endifequal %}
 
-	<!--レンタル -->
-{% ifequal tab "rental" %}
+	{% if is_iphone %}
+		{% if user %}
+			{% include "mypage/follower.html" %}
+		{% endif %}
+	{% endif %}
+</div>
+
+<!--レンタル -->
+<div class="one_tab" id="one_tab_rental" style="display:none;">
 <div id="tab_bbs">
 	<div class="example">
 
@@ -274,24 +273,15 @@
 			{%endif %}
 		</div>
 	</div>
-{% endifequal %}
+</div>
 {% endif%}
 
-	<!--タイムライン -->
-{% ifequal tab "feed" %}
+<!--タイムライン -->
+<div class="one_tab" id="one_tab_feed" style="display:none;">
 <div id="tab_feed">
 	{% include "mypage/feed.html" %}
 </div>
-{% endifequal %}
-
-	<!--フォロワー -->
-	{% if is_iphone %}
-		{% if user %}
-			{% ifequal tab "profile" %}
-				{% include "mypage/follower.html" %}
-			{% endifequal %}
-		{% endif %}
-	{% endif %}
+</div>
 
 </div>
 

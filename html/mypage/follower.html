@@ -54,7 +54,11 @@
 </div>
 {% endif %}
 
-	<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+{% if is_iphone %}
+<div class="example">
+{% endif %}
 	<p>イラブチャット</p>
 
 	<a href="./chat"><img src="./static_files/chat/mypage.png"></a><br/><br/>
@@ -62,8 +66,15 @@
 	<a href="chat" class="g-button">ルーム作成</a>
 	<a href="chat?mode=tool&key=always&viewmode=false&pass=false" class="g-button">お試し</a>
 	</div>
+{% if is_iphone %}
+</div>
+{% endif %}
 
-	<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+{% if is_iphone %}
+<div class="example">
+{% endif %}
 	<p>広告</p>
 	<p>&nbsp;</p>
 	<a href="dropbox"><img src="./static_files/dropbox.png" width=160px></a><br/><br/>
@@ -71,3 +82,6 @@
 	<div class="g-button-group">
 	<a href="dropbox" class="g-button">ドロップボックスに登録</a>
 	</div>
+{% if is_iphone %}
+</div>
+{% endif %}

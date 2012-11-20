@@ -11,6 +11,7 @@
 
 var mypage_page=new Object();
 var initial_load=true;
+var initial_tab=null;
 
 function hashchange_core(id,page){
 	if(mypage_page[id]!=page){
@@ -27,6 +28,15 @@ $(function(){
 		if(location.hash){
 			var list=location.hash.split("#")[1].split("=");
 			hashchange_core(list[0],parseInt(list[1])-1);
+			if(list[0]=="submit_thread" || list[0]=="bookmark_thread"){
+				initial_tab="illust";
+			}
+			if(list[0]=="feed"){
+				initial_tab="feed";
+			}
+			if(list[0]=="bbs"){
+				initial_tab="illust";
+			}
 		}else{
 			hashchange_core("submit_thread",0);
 			hashchange_core("bookmark_thread",0);
@@ -43,14 +53,6 @@ function check_id(host){
 	var id=document.getElementById("check_short").value;
 	window.open(""+host+"check_id?id="+id);
 }
-
-/*
-function confirm_action(url) {
-	if (confirm("本当に削除してもよろしいですか?")){
-		location.href = url; 
-	}	 
-}	 
-*/
 
 function confirm_action_bbs(url,title) {
 	if (confirm("お絵かき掲示板「"+title+"」を削除してもよろしいですか?")){
@@ -85,13 +87,20 @@ var mypage_is_edit=new Object();
 var mypage_view_mode;
 var mypage_user_id;
 var mypage_feed_page;
+var mypage_initialized=new Object();
+var mypage_now_tab;
 
 var illust_limit=12;
 var g_is_iphone=0;
 
 function mypage_init(tab,login,view_mode,edit_mode,feed_page,is_admin,is_iphone){ 
-	g_is_iphone=is_iphone;
+	//ハッシュ値から計算したタブ
+	if(initial_tab){
+		tab=initial_tab;
+	}
 
+	//ステートを保持
+	g_is_iphone=is_iphone;
 	mypage_edit_mode=edit_mode;
 	mypage_view_mode=view_mode;
 	mypage_feed_page=feed_page;
@@ -121,32 +130,24 @@ function mypage_init(tab,login,view_mode,edit_mode,feed_page,is_admin,is_iphone)
 			return;
 		}
 	}
-	mypage_user_id=user_id;
 	
-	var offset=0;
-	var limit=illust_limit;
-	var feed_unit=8;
-
-	if(tab=="feed"){
-		illustbook.user.getTimeline(user_id,(feed_page-1)*feed_unit,feed_unit,illustbook.user.ORDER_NONE,get_timeline_callback);
-	}
-
-	var offset_bookmark=mypage_page["bookmark_thread"]
-	var offset_submit=mypage_page["submit_thread"]
-	if(offset_bookmark){offset_bookmark*=limit;}else{offset_bookmark=0;}
-	if(offset_submit){offset_submit*=limit;}else{offset_submit=0;}
+	mypage_user_id=user_id;
 
 	//illustbook.request.beginPackedRequest();
-
-	if(tab=="illust"){
-		illustbook.user.getThreadList(user_id,offset_submit,limit,illustbook.user.ORDER_NONE,get_user_thread_list_callback);
-		illustbook.bookmark.getThreadList(user_id,offset_bookmark,limit,illustbook.bookmark.ORDER_NONE,get_bookmark_thread_list_callback);
-	}
-	if(tab=="illust"){
-		illustbook.user.getBbsList(user_id,0,limit,illustbook.user.ORDER_NONE,get_user_bbs_list_callback);
-		illustbook.bookmark.getBbsList(user_id,0,limit,illustbook.bookmark.ORDER_NONE,get_bookmark_bbs_list_callback);
-	}
+	//illustbook.request.endPackedRequest();
 	
+	initial_load=false;
+
+	if(!is_iphone){
+		user_initialize();
+	}
+
+	display_tab(tab);
+}
+
+function user_initialize(){
+	var limit=illust_limit;
+	var user_id=mypage_user_id;
 	illustbook.bookmark.getAppList(user_id,0,limit,illustbook.bookmark.ORDER_NONE,get_bookmark_app_list_callback);
 	if(mypage_edit_mode){
 		illustbook.user.getFollow(user_id,0,limit,illustbook.user.ORDER_NONE,get_follow_callback);
@@ -155,9 +156,90 @@ function mypage_init(tab,login,view_mode,edit_mode,feed_page,is_admin,is_iphone)
 		illustbook.user.getFollowFast(user_id,0,limit,illustbook.user.ORDER_NONE,get_follow_callback);
 		illustbook.user.getFollowerFast(user_id,0,limit,illustbook.user.ORDER_NONE,get_follower_callback);
 	}
-	//illustbook.request.endPackedRequest();
+}
+
+function feed_initialize(){
+	document.getElementById("feed").innerHTML="<p>Loading</p><p>&nbsp</p>"
+
+	var feed_unit=8;
+	illustbook.user.getTimeline(mypage_user_id,(mypage_feed_page-1)*feed_unit,feed_unit,illustbook.user.ORDER_NONE,get_timeline_callback);
 	
-	initial_load=false;
+	if(mypage_feed_page==1){
+		$("#feed_previous_page").addClass("disabled2");
+	}else{
+		$("#feed_previous_page").removeClass("disabled2");
+	}
+}
+
+function illust_initialize(){
+	var offset=0;
+	var limit=illust_limit;
+
+	var offset_bookmark=mypage_page["bookmark_thread"]
+	var offset_submit=mypage_page["submit_thread"]
+	if(offset_bookmark){offset_bookmark*=limit;}else{offset_bookmark=0;}
+	if(offset_submit){offset_submit*=limit;}else{offset_submit=0;}
+
+	illustbook.user.getThreadList(mypage_user_id,offset_submit,limit,illustbook.user.ORDER_NONE,get_user_thread_list_callback);
+	illustbook.bookmark.getThreadList(mypage_user_id,offset_bookmark,limit,illustbook.bookmark.ORDER_NONE,get_bookmark_thread_list_callback);
+	illustbook.user.getBbsList(mypage_user_id,0,limit,illustbook.user.ORDER_NONE,get_user_bbs_list_callback);
+	illustbook.bookmark.getBbsList(mypage_user_id,0,limit,illustbook.bookmark.ORDER_NONE,get_bookmark_bbs_list_callback);
+}
+
+function go_edit_mode(edit_mode){
+	var edit_sufix="&edit=1"
+	if(edit_mode){
+		edit_sufix=""
+	}
+	window.location.href="./mypage?tab="+mypage_now_tab+edit_sufix;
+}
+
+function go_feed_next_page(){
+	mypage_feed_page++;
+	feed_initialize();
+	scroll_to_top();
+}
+
+function go_feed_previous_page(){
+	if(mypage_feed_page<=1){
+		return;
+	}
+	mypage_feed_page--;
+	feed_initialize();
+	scroll_to_top();
+}
+
+function scroll_to_top(){
+	$('html, body').animate({scrollTop:0},'fast');
+}
+
+function display_tab(id){
+	mypage_now_tab=id;
+
+	$(".one_tab").hide();
+	$("#one_tab_"+id).show();
+		
+	$(".g-button").removeClass("checked");
+	$("#"+id+"_tab").addClass("checked");
+
+	if(!mypage_initialized[id]){
+		if(id=="illust"){
+			illust_initialize();
+		}
+		if(id=="profile"){
+			if(g_is_iphone){
+				user_initialize();
+			}
+		}
+		if(id=="feed"){
+			feed_initialize();
+		}
+		mypage_initialized[id]=true;
+	}
+
+	scroll_to_top();
+
+	//return false;
 }
 
 //--------------------------------------------------------
@@ -199,7 +281,7 @@ function feed_parse(feed){
 	//アイコン
 	txt+='<div style="float:left;width:58px;padding-right:6px;text-align:center;margin:auto;">'
 	if(feed.from_user){
-		txt+='<a href="'+feed.from_user.profile_url+'"><img src="'+feed.from_user.icon_url+'&size=mini" width=50px height=50px class="radius_image"></a>';
+		txt+='<a href="javascript:go_feed(\''+feed.from_user.profile_url+'\')"><img src="'+feed.from_user.icon_url+'&size=mini" width=50px height=50px class="radius_image"></a>';
 	}else{
 		txt+='<img src="static_files/empty_user.png" width=50px height=50px class="radius_image">'
 	}
@@ -211,12 +293,12 @@ function feed_parse(feed){
 	//ユーザ名
 	txt+="<p><b>"
 	if(feed.from_user){
-		txt+='<a href="'+feed.from_user.profile_url+'">'+feed.from_user.name+'</a>'
+		txt+='<a href="javascript:go_feed(\''+feed.from_user.profile_url+'\')">'+feed.from_user.name+'</a>'
 	}else{
 		txt+='匿名ユーザ'
 	}
 	if(feed.to_user){
-		txt+='　->　<a href="'+feed.to_user.profile_url+'">'+feed.to_user.name+'</A>'
+		txt+='　->　<a href="javascript:go_feed(\''+feed.to_user.profile_url+'\')">'+feed.to_user.name+'</A>'
 	}
 	txt+="</b></p>"
 	
@@ -231,22 +313,22 @@ function feed_parse(feed){
 		break;
 	case "bbs_new_illust":
 		if(feed.thread.thumbnail_url==""){
-			txt+='<a href="'+feed.thread.thread_url+'">'+feed.bbs.title+'に記事を投稿しました。</a>'
+			txt+='<a href="javascript:go_feed(\''+feed.thread.thread_url+'\')">'+feed.bbs.title+'に記事を投稿しました。</a>'
 		}else{
-			txt+='<a href="'+feed.thread.thread_url+'">'+feed.bbs.title+'にイラストを投稿しました。</a>'
+			txt+='<a href="javascript:go_feed(\''+feed.thread.thread_url+'\')">'+feed.bbs.title+'にイラストを投稿しました。</a>'
 		}
 		break;
 	case "new_follow":
-		txt+='<a href="'+feed.follow_user.profile_url+'">'+feed.follow_user.name+'をフォローしました。</a>'
+		txt+='<a href="javascript:go_feed(\''+feed.follow_user.profile_url+'\')">'+feed.follow_user.name+'をフォローしました。</a>'
 		break;
 	case "new_bookmark_thread":
-		txt+='<a href="'+feed.thread.thread_url+'">'+feed.thread.title+'をブックマークしました。</a>'
+		txt+='<a href="javascript:go_feed(\''+feed.thread.thread_url+'\')">'+feed.thread.title+'をブックマークしました。</a>'
 		break;
 	case "new_comment_thread":
-		txt+='<a href="'+feed.thread.thread_url+'">'+feed.thread.title+'にコメントしました。</a>'
+		txt+='<a href="javascript:go_feed(\''+feed.thread.thread_url+'\')">'+feed.thread.title+'にコメントしました。</a>'
 		break;
 	case "new_bookmark_bbs":
-		txt+='<a href="'+feed.bbs.bbs_url+'">'+feed.bbs.title+'をブックマークしました。</a>'
+		txt+='<a href="javascript:go_feed(\''+feed.bbs.bbs_url+'\')">'+feed.bbs.title+'をブックマークしました。</a>'
 		break;
 	}
 	txt+="</p>"
@@ -255,14 +337,14 @@ function feed_parse(feed){
 	switch(feed.mode){
 	case "bbs_new_illust":
 		if(feed.thread.thumbnail_url){
-			txt+='<a href="'+feed.thread.thread_url+'"><img src="'+feed.thread.thumbnail_url+'" width=100px height=100px></a>'
+			txt+='<a href="javascript:go_feed(\''+feed.thread.thread_url+'\')"><img src="'+feed.thread.thumbnail_url+'" width=100px height=100px></a>'
 		}
 		break;
 	case "new_follow":
-		txt+='<a href="'+feed.follow_user.profile_url+'"><img src="'+feed.follow_user.icon_url+'&size=mini" width=50px height=50px class="radius_image"></a>'
+		txt+='<a href="javascript:go_feed(\''+feed.follow_user.profile_url+'\')"><img src="'+feed.follow_user.icon_url+'&size=mini" width=50px height=50px class="radius_image"></a>'
 		break;
 	case "new_bookmark_thread":
-		txt+='<a href="'+feed.thread.thread_url+'"><img src="'+feed.thread.thumbnail_url+'" width=100px height=100px></a>'
+		txt+='<a href="javascript:go_feed(\''+feed.thread.thread_url+')"><img src="'+feed.thread.thumbnail_url+'" width=100px height=100px></a>'
 		break;
 	}
 	txt+="</div>"
@@ -293,6 +375,14 @@ function feed_retweet(feed_key,feed_page){
 		return;
 	}
 	window.location.href='feed_tweet?mode=retweet&key='+feed_key;
+}
+
+function go_feed(url){
+	var return_url="#feed="+mypage_feed_page;
+	if(window.location.href!=return_url){//} && mypage_feed_page!=1){
+		window.location.href=return_url;
+	}
+	window.location.href=url;
 }
 
 //--------------------------------------------------------
@@ -386,7 +476,7 @@ function get_bbs_list(oj,id,initial_text){
 		//サムネイルと削除ボタン
 		txt+="<div style='position:relative;float:left;width:60px;height:52px;padding-top:2px;'>"
 		if(bbs.thumbnail_url){
-			txt+="<a href='"+bbs.bbs_url+"'>";
+			txt+="<a href='javascript:go_bbs(\""+bbs.bbs_url+"\")'>";
 			txt+="<img src='"+bbs.thumbnail_url+"' width=50px height=50px class='radius_image'>";
 			txt+="</a>";
 		}
@@ -404,7 +494,7 @@ function get_bbs_list(oj,id,initial_text){
 		
 		//基本情報
 		txt+="<div style='float:left;padding-top:18px;width:200px;'>";
-		txt+="<p><a href='"+bbs.bbs_url+"'>";
+		txt+="<p><a href='javascript:go_bbs(\""+bbs.bbs_url+"\")'>";
 		txt+=""+bbs.title;
 		if(bbs.bookmark){
 			txt+="　";
@@ -446,8 +536,20 @@ function get_thread_list(oj,div_id,message){
 }
 
 function go_thread(url,id){
-	var return_url="#"+id+"="+(mypage_page[id]+1);
-	if(window.location.href!=return_url && mypage_page[id]!=0){
+	var page_no=1;
+	if(mypage_page[id]){
+		page_no=mypage_page[id]+1;
+	}
+	var return_url="#"+id+"="+page_no;
+	if(window.location.href!=return_url){//} && mypage_page[id]!=0){
+		window.location.href=return_url;
+	}
+	window.location.href=url;
+}
+
+function go_bbs(url){
+	var return_url="#bbs=1";
+	if(window.location.href!=return_url){
 		window.location.href=return_url;
 	}
 	window.location.href=url;
@@ -493,16 +595,6 @@ function update_thread_list(div_id,message){
 		}
 		txt+='<a href="javascript:page_change('+(page+1)+',\''+div_id+'\');" class="g-button no-text"><i class="icon-chevron-right"></i></a>';
 		txt+='</div><br clear="all">';
-
-		/*
-		txt+="<BR clear='all'><div align='right'>"
-		if(page>0){
-			txt+=" <a href='javascript:page_change("+(page-1)+",\""+div_id+"\");'>戻る</a>　";
-		}
-		txt+="Page."+(page+1)+"　"
-		txt+=" <a href='javascript:page_change("+(page+1)+",\""+div_id+"\");'>次へ</a>";
-		txt+="</div>";
-		*/
 	}
 	txt+="</div>"
 	document.getElementById(div_id).innerHTML=txt;
