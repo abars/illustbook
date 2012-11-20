@@ -14,23 +14,24 @@ from myapp.Analyze import Analyze
 from myapp.Counter import Counter
 from myapp.BbsConst import BbsConst
 from myapp.AppCode import AppCode
+from myapp.CachedDbModel import CachedDbModel
 
-class ChatRoom(db.Model):
-	name = db.StringProperty()
-	password = db.StringProperty()
+class ChatRoom(CachedDbModel):
+	name = db.StringProperty(indexed=False)
+	password = db.StringProperty(indexed=False)
 	user_id = db.StringProperty()	#Owner
 	user_name = db.StringProperty()
 	user_count = db.IntegerProperty()
-	command_list = db.TextProperty()
-	command_cnt = db.IntegerProperty()
+	command_list = db.TextProperty(indexed=False)
+	command_cnt = db.IntegerProperty(indexed=False)
 	from_last_update = db.IntegerProperty()
 	from_created = db.IntegerProperty()
-	thumbnail=db.BlobProperty()
-	snap_shot_0=db.TextProperty()
-	snap_shot_1=db.TextProperty()
-	snap_range=db.IntegerProperty()
-	canvas_width=db.IntegerProperty()
-	canvas_height=db.IntegerProperty()
-	is_always=db.IntegerProperty()
-	create_date = 	db.DateTimeProperty(auto_now=False)
+	thumbnail=db.BlobProperty(indexed=False)
+	snap_shot_0=db.TextProperty(indexed=False)
+	snap_shot_1=db.TextProperty(indexed=False)
+	snap_range=db.IntegerProperty(indexed=False)
+	canvas_width=db.IntegerProperty(indexed=False)
+	canvas_height=db.IntegerProperty(indexed=False)
+	is_always=db.IntegerProperty(indexed=False)
+	create_date = db.DateTimeProperty(auto_now=False)
 	date = db.DateTimeProperty(auto_now=True)

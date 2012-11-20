@@ -179,7 +179,7 @@ class Chat(webapp.RequestHandler):
 	
 	#スナップショットを取得する
 	def get_snap_shot(self):
-		room=db.get(self.request.get("key"))
+		room=ApiObject.get_cached_object(str(self.request.get("key")))
 
 		if(room==None):
 			ApiObject.write_json_core(self,{"status":"failed"})
@@ -189,7 +189,7 @@ class Chat(webapp.RequestHandler):
 	
 	#コマンドを取得する
 	def get_command(self):
-		room=db.get(self.request.get("key"))
+		room=ApiObject.get_cached_object(str(self.request.get("key")))
 		
 		if(room==None):
 			ApiObject.write_json_core(self,{"status":"not_found"})
@@ -251,7 +251,7 @@ class Chat(webapp.RequestHandler):
 	
 	#サムネイル取得
 	def thumbnail(self):
-		room=db.get(self.request.get("key"))
+		room=ApiObject.get_cached_object(str(self.request.get("key")))
 		if(not room) or (not room.thumbnail):
 			self.redirect("./static_files/empty_user.png")
 			return

@@ -10,10 +10,10 @@ from google.appengine.ext import db
 
 class Analyze(db.Model):
 	bbs_key =db.ReferenceProperty()
-	ip = db.StringProperty()
-	adr = db.StringListProperty()
-	content = db.StringListProperty()
-	date = db.DateTimeProperty(auto_now=True)
+	ip = db.StringProperty(indexed=False)
+	adr = db.StringListProperty(indexed=False)
+	content = db.StringListProperty(indexed=False)
+	date = db.DateTimeProperty(auto_now=True,indexed=False)
 	
 	def init_analyze(self,key):
 		self.ip="0"
@@ -49,8 +49,9 @@ class Analyze(db.Model):
 				content_len=content_len-1
 			self.content.append(content_name+"@"+url)
 		
+		#書き込み
 		try:
-			self.put()#db.put_async(self)
+			self.put()
 		except:
 			a=None
 	

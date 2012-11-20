@@ -2,7 +2,7 @@
 #!/usr/bin/env python
 
 #---------------------------------------------------
-#ユーザのアイコン制御
+#putとdeleteのフック
 #copyright 2010-2012 ABARS all rights reserved.
 #---------------------------------------------------
 
@@ -11,10 +11,13 @@ from google.appengine.api import users
 from google.appengine.api import memcache
 
 from myapp.BbsConst import BbsConst
-from myapp.CachedDbModel import CachedDbModel
 
-class UserIcon(CachedDbModel):
-	user_id = db.StringProperty()
-	icon = db.BlobProperty()
-	icon_content_type = db.StringProperty()
-	date = db.DateTimeProperty(auto_now=True)
+class CachedDbModel(db.Model):
+	def put(self):
+		db.Model.put(self)
+		if(self.key()):
+			memcache.delete(BbsConst.OBJECT_CACHE_HEADER+str(self.key()))
+
+	def delete(self):
+		memcache.delete(BbsConst.OBJECT_CACHE_HEADER+str(self.key()))
+		db.Model.delete(self)

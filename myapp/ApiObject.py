@@ -530,17 +530,17 @@ class ApiObject(webapp.RequestHandler):
 		return all_threads_cached
 
 	@staticmethod
-	def get_cached_object(thread):
-		if(not thread):
+	def get_cached_object(ds_obj):
+		if(not ds_obj):
 			return None
-		if(type(thread)==db.Key or type(thread)==str):
-			thread_key=str(thread)
+		if(type(ds_obj)==db.Key or type(ds_obj)==str):
+			ds_obj_key=str(ds_obj)
 		else:
-			thread_key=str(thread.key())
-		ret=memcache.get(BbsConst.OBJECT_CACHE_HEADER+thread_key)
+			ds_obj_key=str(ds_obj.key())
+		ret=memcache.get(BbsConst.OBJECT_CACHE_HEADER+ds_obj_key)
 		if(ret):
 			return ret
-		return ApiObject.get_datastore_object(thread)
+		return ApiObject.get_datastore_object(ds_obj)
 
 	@staticmethod
 	def _get_cached_entry_key(ds_obj):

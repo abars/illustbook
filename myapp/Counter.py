@@ -12,14 +12,18 @@ from google.appengine.api import users
 import datetime
 
 class Counter(db.Model):
-	total_cnt=db.IntegerProperty()
-	today_cnt=db.IntegerProperty()
-	yesterday_cnt=db.IntegerProperty()
-	yesterday_yesterday_cnt=db.IntegerProperty()
-	today_date=db.IntegerProperty()
-	start_date = db.DateTimeProperty(auto_now_add=True)
-	update_date = db.DateProperty(auto_now=True)
-	ip = db.StringProperty()
+	#カウンター
+	total_cnt=db.IntegerProperty(indexed=False)
+	today_cnt=db.IntegerProperty(indexed=False)
+	yesterday_cnt=db.IntegerProperty(indexed=False)
+	yesterday_yesterday_cnt=db.IntegerProperty(indexed=False)
+	
+	#カウンター更新判定用
+	today_date=db.IntegerProperty(indexed=False)
+	ip = db.StringProperty(indexed=False)
+	
+	#最後に更新された日
+	update_date = db.DateProperty(auto_now=True,indexed=False)
 	
 	def init_cnt(self) :
 		self.total_cnt = 0
@@ -49,9 +53,4 @@ class Counter(db.Model):
 		if(updated):
 			self.put()
 		return updated
-
-
-
-
-
 

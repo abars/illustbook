@@ -15,18 +15,14 @@ from myapp.BbsConst import BbsConst
 from myapp.UserIcon import UserIcon
 
 class Bookmark(db.Model):
-	owner = db.UserProperty()	#deleted
+	owner = db.UserProperty()
 	user_id = db.StringProperty()
 	feed_list = db.StringListProperty()
 	stack_feed_list = db.ListProperty(db.Key)
-	thread_list = db.StringListProperty()	#deleted
-	bbs_list = db.StringListProperty()	#deleted
 	thread_key_list = db.ListProperty(db.Key)
 	bbs_key_list = db.ListProperty(db.Key)
 	app_key_list = db.ListProperty(db.Key)
-	user_list = db.StringListProperty()	#follow
-	#follower_list = db.StringListProperty() #follower(auto make in ApiUser.user_get_follower)
-	#follower_list_enable = db.IntegerProperty()	#1:enable 0:disable
+	user_list = db.StringListProperty()	#follow user list
 	name = db.StringProperty()
 	profile = db.TextProperty()
 	
@@ -37,7 +33,12 @@ class Bookmark(db.Model):
 	
 	#最初のデータストアの読込と同時にアイコンはこちらに移動する
 	user_icon = db.ReferenceProperty(UserIcon)
+
+	#削除予定
+	thread_list = db.StringListProperty()	#deleted
+	bbs_list = db.StringListProperty()	#deleted
 	
+	#プロフィール情報
 	mail = db.StringProperty()
 	homepage = db.StringProperty()
 	twitter_id = db.StringProperty()
@@ -47,9 +48,11 @@ class Bookmark(db.Model):
 	birthday_day=db.IntegerProperty()
 	new_feed_count=db.IntegerProperty()
 	disable_rankwatch=db.IntegerProperty()
+
 	sand = db.StringProperty()
 	date = db.DateTimeProperty(auto_now=True)
 
+	#ユーザIDベースでキャッシュする
 	def put(self,**kwargs):
 		super(Bookmark, self).put(**kwargs)
 		if(self.key()):
