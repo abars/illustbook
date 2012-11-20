@@ -138,11 +138,11 @@ function mypage_init(tab,login,view_mode,edit_mode,feed_page,is_admin,is_iphone)
 	
 	initial_load=false;
 
+	display_tab(tab);
+
 	if(!is_iphone){
 		user_initialize();
 	}
-
-	display_tab(tab);
 }
 
 function user_initialize(){

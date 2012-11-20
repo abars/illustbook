@@ -273,9 +273,14 @@ class ApiObject(webapp.RequestHandler):
 		if(bbs.short and bbs.short=="mopersample" and thread.illust_mode!=BbsConst.ILLUSTMODE_MOPER):
 			disable_news=1;
 
+		if(req):
+			url_header="http://"+req.request.host
+		else:
+			url_header="."
+
 		thumbnail_url=""
 		if(thread.cached_image_key):
-			thumbnail_url="http://"+req.request.host+"/thumbnail/"+str(thread.cached_image_key)
+			thumbnail_url=url_header+"/thumbnail/"+str(thread.cached_image_key)
 			if(thread.illust_mode==BbsConst.ILLUSTMODE_MOPER):
 				thumbnail_url+=".gif"
 			else:
@@ -284,7 +289,7 @@ class ApiObject(webapp.RequestHandler):
 			thumbnail_url=""
 		create_date=ApiObject.get_date_str(thread.create_date)
 
-		thread_url="http://"+req.request.host+"/"
+		thread_url=url_header+"/"
 		if(bbs.short):
 			thread_url+=bbs.short+"/"
 		else:
@@ -296,7 +301,7 @@ class ApiObject(webapp.RequestHandler):
 
 		image_url=""
 		if(thread.cached_image_key):
-			image_url="http://"+req.request.host+"/img/"+str(thread.cached_image_key)+".jpg"
+			image_url=url_header+"/img/"+str(thread.cached_image_key)+".jpg"
 		if(bbs.dont_permit_app or bbs.del_flag):	#アプリでの画像データの参照を禁止
 			image_url=""
 

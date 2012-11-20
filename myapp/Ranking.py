@@ -8,11 +8,13 @@
 
 import datetime;
 import time;
+import json;
 
 from google.appengine.ext import db
 
 from myapp.BbsConst import BbsConst
 from myapp.ApiObject import ApiObject
+from myapp.MesThread import MesThread
 
 class Ranking(db.Model):
 	thread_list = db.ListProperty(db.Key)
@@ -72,11 +74,32 @@ class Ranking(db.Model):
 					rank_user[user_id]=1
 
 		ranking_list=[]
+		no=1
 		for k, v in sorted(rank_user.items(), key=lambda x:x[1], reverse=True):
 			bookmark=ApiObject.get_bookmark_of_user_id(k)
 			if(bookmark and bookmark.disable_rankwatch):
 				continue
-			ranking_list.append(k)
+			name=bookmark.name
+			profile=bookmark.profile
+			
+			query=db.Query(MesThread)
+			query=query.filter("illust_mode IN",[BbsConst.ILLUSTMODE_ILLUST,BbsConst.ILLUSTMODE_MOPER])
+			query=query.filter("user_id =",user_id).order("-create_date")
+			try:
+				thread_list=query.fetch(offset=0,limit=1)
+				thread=ApiObject.create_thread_object(None,thread_list[0])
+				thumbnail_url=thread["thumbnail_url"]
+			except:
+				thumbnail_url=""
+
+			dic={"no":no,"user_id":k,"name":name,"thumbnail_url":thumbnail_url}
+			no=no+1
+
+			try:
+				ranking_list.append(json.dumps(dic))
+			except:
+				ranking_list.append("overflow")
+
 			if(len(ranking_list)>=BbsConst.USER_RANKING_MAX):
 				break
 
