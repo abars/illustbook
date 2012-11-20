@@ -13,8 +13,9 @@ from google.appengine.api import memcache
 from myapp.Bbs import Bbs
 from myapp.ThreadImage import ThreadImage
 from myapp.BbsConst import BbsConst
+from myapp.CachedDbModel import CachedDbModel
 
-class MesThread(db.Model):
+class MesThread(CachedDbModel):
 	bbs_key = db.ReferenceProperty(Bbs)
 	title = db.TextProperty()
 	summary = db.TextProperty()
@@ -59,13 +60,3 @@ class MesThread(db.Model):
 	bookmark_comment = db.BlobProperty()
 
 	sand = db.StringProperty()
-	
-	def put(self,**kwargs):
-		super(MesThread, self).put(**kwargs)
-		if(self.key()):
-			memcache.delete(BbsConst.OBJECT_CACHE_HEADER+str(self.key()))
-
-	def delete(self,**kwargs):
-		memcache.delete(BbsConst.OBJECT_CACHE_HEADER+str(self.key()))
-		super(MesThread, self).delete(**kwargs)
-

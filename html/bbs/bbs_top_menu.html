@@ -44,11 +44,13 @@
 		{% endifequal %}
 
 		{% if owner or is_admin %}
-			{%if template_path %}
+			{%if can_create_new_image %}
+				{%if template_path %}
 					<A HREF="{{host}}edit_bbs?bbs_key={{bbs.key}}"><img src="{{template_path}}images/header_edit3.jpg" alt="デザインの編集" width="103" height="28"></A>
-			{% else %}
-				<input type="button" value="デザインの編集"  class="g-button" onclick="window.location.href='{{host}}edit_bbs?bbs_key={{bbs.key}}'">
-			{%endif%}
+				{% else %}
+					<input type="button" value="デザインの編集"  class="g-button" onclick="window.location.href='{{host}}edit_bbs?bbs_key={{bbs.key}}'">
+				{%endif%}
+			{% endif %}
 		{% endif %}
 	</div>
 	</div>

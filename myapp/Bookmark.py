@@ -27,11 +27,13 @@ class Bookmark(db.Model):
 	profile = db.TextProperty()
 	
 	#アイコン登録直後はここに値が入る
-	icon = db.BlobProperty()
+	icon = db.BlobProperty()	#180px
 	icon_content_type = db.StringProperty()
+	icon_mini = db.BlobProperty()	#50px
+	icon_mini_content_type = db.StringProperty()
 	thumbnail_created = db.IntegerProperty()
 	
-	#最初のデータストアの読込と同時にアイコンはこちらに移動する
+	#互換性用
 	user_icon = db.ReferenceProperty(UserIcon)
 
 	#削除予定

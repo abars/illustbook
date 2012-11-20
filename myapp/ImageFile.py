@@ -62,7 +62,7 @@ class ImageFile (webapp.RequestHandler):
 		
 	#アイコンを供給
 	@staticmethod
-	def serve_icon(p_self,bookmark,user_id):
+	def serve_icon(p_self,bookmark,user_id,size):
 		path=user_id
 
 		content=bookmark
@@ -71,8 +71,13 @@ class ImageFile (webapp.RequestHandler):
 			content_date=bookmark.date
 		else:
 			content_date=datetime.datetime(2010,4,11)
-		content_blob=bookmark.icon
-		content_header=str(bookmark.icon_content_type)
+		
+		if(size=="mini"):
+			content_blob=bookmark.icon_mini
+			content_header=str(bookmark.icon_mini_content_type)
+		else:
+			content_blob=bookmark.icon
+			content_header=str(bookmark.icon_content_type)
 
 		tag="icon"
 
@@ -86,9 +91,6 @@ class ImageFile (webapp.RequestHandler):
 
 		#とりあえずmemcacheからヒット判定に必要な要素を取得
 		content=None
-		
-		#content_key=memcache.get(BbsConst.IMAGE_CACHE_KEY+path)
-		#content_date=memcache.get(BbsConst.IMAGE_CACHE_DATE+path)
 		
 		content_info=memcache.get(BbsConst.IMAGE_CACHE_KEY_AND_DATE+path)
 		content_key=None
@@ -109,9 +111,6 @@ class ImageFile (webapp.RequestHandler):
 				return
 			content_key=str(content.key())
 			content_date=content.date
-			
-			#memcache.set(BbsConst.IMAGE_CACHE_KEY+path,content_key,BbsConst.IMAGE_CACHE_TIME)
-			#memcache.set(BbsConst.IMAGE_CACHE_DATE+path,content_date,BbsConst.IMAGE_CACHE_TIME)
 			
 			memcache.set(BbsConst.IMAGE_CACHE_KEY_AND_DATE+path,{"key":content_key,"date":content_date},BbsConst.IMAGE_CACHE_TIME)
 

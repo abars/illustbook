@@ -14,8 +14,9 @@ from myapp.Analyze import Analyze
 from myapp.Counter import Counter
 from myapp.BbsConst import BbsConst
 from myapp.AppCode import AppCode
+from myapp.CachedDbModel import CachedDbModel
 
-class Bbs(db.Model):
+class Bbs(CachedDbModel):
 	bbs_name = db.StringProperty()
 	summary = db.TextProperty()
 	owner = db.UserProperty()	#deleted
@@ -122,8 +123,3 @@ class Bbs(db.Model):
 
 	create_date = 	db.DateTimeProperty(auto_now=False)
 	date = db.DateTimeProperty(auto_now=True)
-
-	def put(self,**kwargs):
-		super(Bbs, self).put(**kwargs)
-		if(self.key()):
-			memcache.delete(BbsConst.OBJECT_CACHE_HEADER+str(self.key()))

@@ -121,12 +121,20 @@ class ApiObject(webapp.RequestHandler):
 		memcache.delete(BbsConst.OBJECT_CACHE_HEADER+BbsConst.OBJECT_FOLLOWER_HEADER+user_id)
 	
 	#サムネイルを作成
-	#pilが必要
-	#sudo port install jpeg
-	#sudo easy_install pilでインストール
+	#  pilが必要
+	#  sudo port install jpeg
+	#  sudo easy_install pilでインストール
 	@staticmethod
 	def create_user_thumbnail(bookmark):
-		#サムネイル作成
+		#UserIconクラスに退避していた画像をBookmarkクラスに復元
+		if(bookmark and bookmark.user_icon):
+			if(not bookmark.icon):
+				bookmark.icon=bookmark.user_icon.icon
+				bookmark.put()
+			bookmark.user_icon.delete()
+			bookmark.user_icon=None
+		
+		#180pxサムネイル作成
 		if(bookmark and bookmark.icon and (not bookmark.thumbnail_created)):
 			img = images.Image(bookmark.icon)
 			img.resize(width=180, height=180)
@@ -139,20 +147,32 @@ class ApiObject(webapp.RequestHandler):
 			except:
 				img=None
 		
-		#BookmarkクラスからUserIconクラスに画像を移動
-		if(bookmark and bookmark.icon and (not bookmark.user_icon)):
-			user_icon=UserIcon()
-			user_icon.icon=bookmark.icon
-			user_icon.icon_content_type=bookmark.icon_content_type
-			user_icon.user_id=bookmark.user_id
-			user_icon.put()
-			bookmark.user_icon=user_icon
-			bookmark.put()
+		#50pxサムネイル作成
+		#if(bookmark and bookmark.icon and (not bookmark.icon_mini)):
+		#	img = images.Image(bookmark.icon)
+		#	img.resize(width=50, height=50)
+		#	img.im_feeling_lucky()
+		#		try:
+		#		bookmark.icon_mini=img.execute_transforms(output_encoding=images.PNG)
+		#		bookmark.icon_mini_content_type = 'image/png'
+		#		bookmark.put()
+		#	except:
+		#		img=None
+		
+		#BookmarkからUserIconに退避させていたが速度が出ないのでBookmarkに統合した
+		#if(bookmark and bookmark.icon and (not bookmark.user_icon)):
+		#	user_icon=UserIcon()
+		#	user_icon.icon=bookmark.icon
+		#	user_icon.icon_content_type=bookmark.icon_content_type
+		#	user_icon.user_id=bookmark.user_id
+		#	user_icon.put()
+		#	bookmark.user_icon=user_icon
+		#	bookmark.put()
 		
 		#Bookmarkクラスのアイコンを削除
-		if(bookmark and bookmark.icon and bookmark.user_icon):
-			bookmark.icon=None
-			bookmark.put()
+		#if(bookmark and bookmark.icon and bookmark.user_icon):
+		#	bookmark.icon=None
+		#	bookmark.put()
 
 	@staticmethod
 	def get_bookmark_of_user_id_for_write(user_id):
