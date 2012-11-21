@@ -475,40 +475,45 @@ function get_bbs_list(oj,id,initial_text){
 	for(var i=0;i<oj.length;i++){
 		var bbs=oj[i];
 		
-		txt+="<div style='width:280px;float:left;'>";
+		txt+="<div style='width:310px;float:left;'>";
 		
 		//サムネイルと削除ボタン
 		txt+="<div style='position:relative;float:left;width:60px;height:52px;padding-top:2px;'>"
-		if(bbs.thumbnail_url){
-			txt+="<a href='javascript:go_bbs(\""+bbs.bbs_url+"\")'>";
-			txt+="<img src='"+bbs.thumbnail_url+"' width=50px height=50px class='radius_image'>";
-			txt+="</a>";
-		}
-		if(id=="bookmark_bbs" && mypage_is_edit[id]){
-			txt+="<div style='position:absolute;left:0px;top:0px;'>";
-			txt+=add_delete_button("del_bbs&bbs_key="+bbs.key,0,"ブックマーク",bbs.title);
-			txt+="</div>";
-		}
-		if(id=="rental" && mypage_is_edit[id]){
-			txt+="<div style='position:absolute;left:0px;top:0px;'>";
-			txt+=add_delete_button(bbs.key,1,"",bbs.title);
-			txt+="</div>";
-		}
+			if(bbs.thumbnail_url){
+				txt+="<a href='javascript:go_bbs(\""+bbs.bbs_url+"\")'>";
+				txt+="<img src='"+bbs.thumbnail_url+"' width=50px height=50px class='radius_image'>";
+				txt+="</a>";
+			}
+			if(id=="bookmark_bbs" && mypage_is_edit[id]){
+				txt+="<div style='position:absolute;left:0px;top:0px;'>";
+				txt+=add_delete_button("del_bbs&bbs_key="+bbs.key,0,"ブックマーク",bbs.title);
+				txt+="</div>";
+			}
+			if(id=="rental" && mypage_is_edit[id]){
+				txt+="<div style='position:absolute;left:0px;top:0px;'>";
+				txt+=add_delete_button(bbs.key,1,"",bbs.title);
+				txt+="</div>";
+			}
 		txt+="</div>";
 		
 		//基本情報
-		txt+="<div style='float:left;padding-top:18px;width:200px;'>";
-		txt+="<p><a href='javascript:go_bbs(\""+bbs.bbs_url+"\")'>";
-		txt+=""+bbs.title;
-		if(bbs.bookmark){
-			txt+="　";
-			txt+="<a href='show_bookmark?bbs_key="+bbs.key+"' class='g-button no-text'>";
-			txt+='<i class="icon-star"></i>'+bbs.bookmark+'</a>';
-			txt+="</a>";
-		}
-		txt+="</a>";
-		txt+="</p>";
+		txt+="<div style='float:left;padding-top:18px;width:240px;'>";
+			txt+="<div style='float:left;width:170px;margin-right:10px;''><p><a href='javascript:go_bbs(\""+bbs.bbs_url+"\")'>";
+			txt+=""+bbs.title;
+			txt+="</a></p></div>";
+			txt+="<div style='float:left;'>"
+		
+			if(bbs.bookmark){
+				txt+="<a href='show_bookmark?bbs_key="+bbs.key+"' class='g-button no-text'>";
+				txt+='<i class="icon-star"></i>';
+				txt+=bbs.bookmark;
+				txt+="</a>";
+			}else{
+				//txt+="-";
+			}
+			txt+="</div>"
 		txt+="</div>";
+
 		txt+="</div>";
 		if(i%2==1){
 			txt+="<br clear='all'>";
