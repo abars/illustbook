@@ -239,11 +239,11 @@ class MyPage(webapp.RequestHandler):
 		#ランキング
 		user_rank=0
 		owner_rank=0
-		if(tab=="profile"):
-			if(bookmark):
-				rank=Ranking.get_or_insert(BbsConst.THREAD_RANKING_KEY_NAME)
-				user_rank=rank.get_user_rank(bookmark.user_id)
-				owner_rank=rank.get_owner_rank(bookmark.user_id)
+		#if(tab=="profile"):
+		if(bookmark):
+			rank=Ranking.get_or_insert(BbsConst.THREAD_RANKING_KEY_NAME)
+			user_rank=rank.get_user_rank(bookmark.user_id)
+			owner_rank=rank.get_owner_rank(bookmark.user_id)
 		
 		template_values = {
 			'host': host,

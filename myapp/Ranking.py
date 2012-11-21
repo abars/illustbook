@@ -22,8 +22,12 @@ class Ranking(db.Model):
 	owner_list = db.StringListProperty()
 	
 	ranking_list = db.ListProperty(db.Key)
+
 	owner_ranking_list = db.StringListProperty()
+	owner_id_ranking_list = db.StringListProperty()
+
 	user_ranking_list = db.StringListProperty()
+	user_id_ranking_list = db.StringListProperty()
 
 	date = db.DateTimeProperty(auto_now=True)
 	
@@ -59,8 +63,15 @@ class Ranking(db.Model):
 
 	def create_rank(self):
 		self.create_thread_rank()
-		self.user_ranking_list=self.create_user_rank(self.user_list)
-		self.owner_ranking_list=self.create_user_rank(self.owner_list)
+		
+		rank=self.create_user_rank(self.user_list)
+		self.user_ranking_list=rank["user"]
+		self.user_id_ranking_list=rank["user_id"]
+		
+		rank=self.create_user_rank(self.owner_list)
+		self.owner_ranking_list=rank["user"]
+		self.owner_id_ranking_list=rank["user_id"]
+
 		self.put()
 	
 	def create_user_rank(self,user_list):
@@ -74,6 +85,8 @@ class Ranking(db.Model):
 					rank_user[user_id]=1
 
 		ranking_list=[]
+		user_id_list=[]
+
 		no=1
 		for k, v in sorted(rank_user.items(), key=lambda x:x[1], reverse=True):
 			bookmark=ApiObject.get_bookmark_of_user_id(k)
@@ -104,10 +117,12 @@ class Ranking(db.Model):
 			except:
 				ranking_list.append("overflow")
 
+			user_id_list.append(k)
+
 			if(len(ranking_list)>=BbsConst.USER_RANKING_MAX):
 				break
 
-		return ranking_list
+		return {"user":ranking_list,"user_id":user_id_list}
 	
 	def create_thread_rank(self):
 		#ハッシュにthread_keyを入れていく
@@ -139,12 +154,6 @@ class Ranking(db.Model):
 			#経過日数
 			day_left=(self.get_sec(datetime.datetime.now())-self.get_sec(thread.create_date))/60/60/24
 			day_left=day_left/7+1	#1週間で1/2
-			
-			#拍手とブックマークスコアを加算
-			#if(thread.applause):
-			#	rank[k]=rank[k]+thread.applause/day_left	#1拍手=8PVの価値
-			#if(thread.bookmark_count):
-			#	rank[k]=rank[k]+thread.bookmark_count/day_left	#1ブックマーク=16PVの価値
 		
 		#ランキング作成
 		self.ranking_list=[]
@@ -159,16 +168,14 @@ class Ranking(db.Model):
 		return self.ranking_list[offset:offset+limit]
 	
 	def get_rank_core(self,user_id,list):
-		cnt=1
-		for i in list:
-			if(i==user_id):
-				return cnt
-			cnt=cnt+1
-		return 0
+		try:
+			return list.index(user_id)+1
+		except:
+			return 0
 	
 	def get_user_rank(self,user_id):
-		return self.get_rank_core(user_id,self.user_ranking_list)
+		return self.get_rank_core(user_id,self.user_id_ranking_list)
 
 	def get_owner_rank(self,user_id):
-		return self.get_rank_core(user_id,self.owner_ranking_list)
+		return self.get_rank_core(user_id,self.owner_id_ranking_list)
 		
