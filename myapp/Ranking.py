@@ -77,6 +77,8 @@ class Ranking(db.Model):
 		no=1
 		for k, v in sorted(rank_user.items(), key=lambda x:x[1], reverse=True):
 			bookmark=ApiObject.get_bookmark_of_user_id(k)
+			if(not bookmark):
+				continue
 			if(bookmark and bookmark.disable_rankwatch):
 				continue
 			name=bookmark.name
@@ -84,7 +86,7 @@ class Ranking(db.Model):
 			
 			query=db.Query(MesThread)
 			query=query.filter("illust_mode IN",[BbsConst.ILLUSTMODE_ILLUST,BbsConst.ILLUSTMODE_MOPER])
-			query=query.filter("user_id =",user_id).order("-create_date")
+			query=query.filter("user_id =",k).order("-create_date")
 			try:
 				thread_list=query.fetch(offset=0,limit=1)
 				thread=ApiObject.create_thread_object(None,thread_list[0])

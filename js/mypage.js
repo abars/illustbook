@@ -237,7 +237,7 @@ function display_tab(id){
 		mypage_initialized[id]=true;
 	}
 
-	scroll_to_top();
+	//scroll_to_top();
 
 	//return false;
 }

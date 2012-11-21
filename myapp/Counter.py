@@ -10,9 +10,8 @@ from google.appengine.ext import db
 from google.appengine.api import users
 
 import datetime
-from myapp.CachedDbModel import CachedDbModel
 
-class Counter(CachedDbModel):
+class Counter(db.Model):
 	#カウンター
 	total_cnt=db.IntegerProperty(indexed=False)
 	today_cnt=db.IntegerProperty(indexed=False)
