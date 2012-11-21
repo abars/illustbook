@@ -89,10 +89,12 @@ class Ranking(db.Model):
 				thread_list=query.fetch(offset=0,limit=1)
 				thread=ApiObject.create_thread_object(None,thread_list[0])
 				thumbnail_url=thread["thumbnail_url"]
+				thread_url=thread["thread_url"]
 			except:
 				thumbnail_url=""
+				thread_url=""
 
-			dic={"no":no,"user_id":k,"name":name,"thumbnail_url":thumbnail_url}
+			dic={"no":no,"user_id":k,"name":name,"thumbnail_url":thumbnail_url,"thread_url":thread_url}
 			no=no+1
 
 			try:

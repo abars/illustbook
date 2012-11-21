@@ -179,14 +179,21 @@ class Portal(webapp.RequestHandler):
 class RankingPortal(webapp.RequestHandler):
 	def get(self):
 		is_iphone=CssDesign.is_iphone(self)
+
+		page=1
+		page_unit=20
+		if(self.request.get("page")):
+			page=int(self.request.get("page"))
 		
 		rank=Ranking.get_or_insert(BbsConst.THREAD_RANKING_KEY_NAME)
-		if(self.request.get("mode")=="owner"):
-			ranking_list=rank.owner_ranking_list
+		ranking_mode=self.request.get("mode")
+		if(ranking_mode=="owner"):
+			ranking_list=rank.owner_ranking_list[(page-1)*page_unit:page*page_unit]
 			ranking_name="オーナーランキング"
 		else:
-			ranking_list=rank.user_ranking_list
+			ranking_list=rank.user_ranking_list[(page-1)*page_unit:page*page_unit]
 			ranking_name="人気のユーザ"
+
 		template_values = {
 			'host': "./",
 			'is_iphone': is_iphone,
@@ -195,8 +202,9 @@ class RankingPortal(webapp.RequestHandler):
 			'mode': "ranking",
 			'header_enable': False,
 			'ranking_list': ranking_list,
-			'ranking_name': ranking_name
-			
+			'ranking_name': ranking_name,
+			'ranking_mode': ranking_mode,
+			'page': page
 		}
 
 		path = os.path.join(os.path.dirname(__file__), 'html/portal.html')
