@@ -35,6 +35,7 @@ from myapp.RecentCommentCache import RecentCommentCache
 from myapp.MappingId import MappingId
 from myapp.Alert import Alert
 from myapp.Ranking import Ranking
+from myapp.StackFeed import StackFeed
 
 class Applause(webapp.RequestHandler):
 	def get(self):
@@ -67,6 +68,8 @@ class Applause(webapp.RequestHandler):
 				bbs.applause_n=1
 			bbs.put()
 
+			user = users.get_current_user()
+			StackFeed.feed_new_applause_thread(user,thread)
 			Ranking.add_rank_global(thread,BbsConst.SCORE_APPLAUSE)
 
 		if(self.request.get("mode")=="bbs"):

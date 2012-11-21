@@ -330,6 +330,9 @@ function feed_parse(feed){
 	case "new_bookmark_bbs":
 		txt+='<a href="javascript:go_feed(\''+feed.bbs.bbs_url+'\')">'+feed.bbs.title+'をブックマークしました。</a>'
 		break;
+	case "new_applause_thread":
+		txt+='<a href="javascript:go_feed(\''+feed.thread.thread_url+'\')">'+feed.thread.title+'に拍手しました。</a>'
+		break;
 	}
 	txt+="</p>"
 
@@ -343,8 +346,9 @@ function feed_parse(feed){
 	case "new_follow":
 		txt+='<a href="javascript:go_feed(\''+feed.follow_user.profile_url+'\')"><img src="'+feed.follow_user.icon_url+'&size=mini" width=50px height=50px class="radius_image"></a>'
 		break;
+	case "new_applause_thread":
 	case "new_bookmark_thread":
-		txt+='<a href="javascript:go_feed(\''+feed.thread.thread_url+')"><img src="'+feed.thread.thumbnail_url+'" width=100px height=100px></a>'
+		txt+='<a href="javascript:go_feed(\''+feed.thread.thread_url+'\')"><img src="'+feed.thread.thumbnail_url+'" width=100px height=100px></a>'
 		break;
 	}
 	txt+="</div>"

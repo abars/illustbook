@@ -107,6 +107,22 @@ class StackFeed(webapp.RequestHandler):
 		return data
 
 	@staticmethod
+	def _create_new_applause_thread(user_id,thread):
+		data=StackFeedData()
+		data.feed_mode="new_applause_thread"
+
+		data.from_user_id=user_id
+		data.to_user_id=None
+
+		data.user_key=None
+		data.bbs_key=thread.bbs_key
+		data.thread_key=thread
+		data.message=""
+		data.create_date=datetime.datetime.today()
+		data.put()
+		return data
+
+	@staticmethod
 	def _create_new_comment_thread(user_id,thread):
 		data=StackFeedData()
 		data.feed_mode="new_comment_thread"
@@ -194,6 +210,13 @@ class StackFeed(webapp.RequestHandler):
 		if(user):
 			user_id=user.user_id()
 		taskqueue.add(url="/stack_feed_worker",params={"mode":"new_comment_thread","user_id":user_id,"thread":str(thread.key())},queue_name="feed")
+
+	@staticmethod
+	def feed_new_applause_thread(user,thread):
+		user_id=""
+		if(user):
+			user_id=user.user_id()
+		taskqueue.add(url="/stack_feed_worker",params={"mode":"new_applause_thread","user_id":user_id,"thread":str(thread.key())},queue_name="feed")
 	
 	@staticmethod
 	def feed_new_response_entry(user,thread,entry):
@@ -288,6 +311,22 @@ class StackFeed(webapp.RequestHandler):
 		StackFeed._feed_to_follower(data,user_id)
 
 	@staticmethod
+	def _feed_new_applause_thread_core(user_id,thread):
+		#イラストに拍手された場合、
+		#イラストのオーナーと、
+		#拍手したユーザをフォローしているユーザにフィード
+		
+		if(not thread):
+			return
+
+		thread_owner_user_id=thread.user_id
+
+		data=StackFeed._create_new_applause_thread(user_id,thread)
+		StackFeed._append_one(data,thread_owner_user_id)
+
+		StackFeed._feed_to_follower(data,user_id)
+
+	@staticmethod
 	def _feed_new_comment_thread_and_entry_core(user_id,thread,entry):
 		#コメントが投稿された場合、
 		#イラストのオーナーと、
@@ -351,6 +390,9 @@ class StackFeed(webapp.RequestHandler):
 		if(mode=="new_comment_thread"):
 			thread=db.get(self.request.get("thread"))
 			StackFeed._feed_new_comment_thread_and_entry_core(user_id,thread,None)
+		if(mode=="new_applause_thread"):
+			thread=db.get(self.request.get("thread"))
+			StackFeed._feed_new_applause_thread_core(user_id,thread)
 		if(mode=="new_response_entry"):
 			thread=db.get(self.request.get("thread"))
 			entry=db.get(self.request.get("entry"))
