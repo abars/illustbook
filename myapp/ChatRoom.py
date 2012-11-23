@@ -33,6 +33,6 @@ class ChatRoom(db.Model):
 	canvas_height=db.IntegerProperty(indexed=False)
 	channel_client_list=db.StringListProperty()
 	channel_client_list_for_reconnect=db.StringListProperty()
-	is_always=db.IntegerProperty(indexed=False)
+	is_always=db.IntegerProperty()	#for always room search
 	create_date = db.DateTimeProperty(auto_now=False)
 	date = db.DateTimeProperty(auto_now=True)
