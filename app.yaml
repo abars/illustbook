@@ -12,6 +12,9 @@ libraries:
 builtins:
 - appstats: on
 
+inbound_services:
+- channel_presence
+
 handlers:
 - url: /image
   static_dir: image

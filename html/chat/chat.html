@@ -74,7 +74,7 @@
 		<div class="actions g-button-container">
 		<div class="g-button-group">
 		<A HREF="javascript:join_chat('{{room.key}}',false,{% if room.password %}true{%else%}false{%endif%});" class="g-button green">{% if not is_iphone %}ルームに{% endif %}参加（{{room.user_count}}人）</A>
-		<A HREF="javascript:join_chat('{{room.key}}',true,{% if room.password %}true{%else%}false{%endif%});" class="g-button green">{% if not is_iphone %}ルームを{% endif %}閲覧</A>
+		<!--<A HREF="javascript:join_chat('{{room.key}}',true,{% if room.password %}true{%else%}false{%endif%});" class="g-button green">{% if not is_iphone %}ルームを{% endif %}閲覧</A>-->
 		{% endif %}
 		</div>
 		{% if is_iphone %}<BR>{% endif %}
@@ -108,6 +108,7 @@
 <input type="submit" value="ルームを作成" class="g-button green">
 </form>
 {% endif %}
+{% if is_admin %}<BR><p>管理者向け補足：パスワードにalwaysと入れると常時稼動ルームになります</p>{% endif %}
 </div>
 
 <p>&nbsp</p>
@@ -115,8 +116,8 @@
 <H1>利用ガイド</H1>
 <p>チャットで使用する名前とサムネイルは<A HREF="./mypage" class="declink">マイページ</A>で設定することができます。</p>
 <p>制限時間はありません。ルームは最終更新から10分が経過すると自動的に削除されます。</p>
-<p>UNDO/REDOはサーバに送信されるまでの一定時間(3から6秒)のみ可能です。</p>
-<p>レイヤーは2枚まで使用できます。筆圧は使用できません。ラグは多めです。</p>
+<p>UNDO/REDOはサーバに送信されるまでの一定時間のみ可能です。</p>
+<p>レイヤーは2枚まで使用できます。筆圧は使用できません。</p>
 <p>バグ報告や要望は<A HREF="./support/" class="declink">サポート掲示板</A>までどうぞ。</p>
 <p>&nbsp</p>
 
@@ -126,4 +127,6 @@
 <TR><TD>iPad</TD><TD>第２世代以降のiPad(第一世代だと速度が遅いです)</TD></TR>
 <TR><TD>Android</TD><TD>4.0(ICS)以降のChromeのみ対応(標準ブラウザでは動作しません)</TD></TR>
 </TABLE>
+<p>&nbsp</p>
+<p>クライアントとの非同期通信にはGoogle AppEngine ChannelAPIを使用しています。</p>
 </div>

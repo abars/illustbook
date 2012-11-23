@@ -2,7 +2,7 @@
 #!/usr/bin/env python
 
 #---------------------------------------------------
-#HRD‚Å®‡«‚ğæ‚é‚½‚ß‚ÉputŒãAƒCƒ“ƒfƒbƒNƒX‚ªXV‚³‚ê‚é‚Ü‚Å‘Ò‹@‚·‚é
+#HRDã§æ•´åˆæ€§ã‚’å–ã‚‹ãŸã‚ã«putå¾Œã€ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãŒæ›´æ–°ã•ã‚Œã‚‹ã¾ã§å¾…æ©Ÿã™ã‚‹
 #copyright 2010-2012 ABARS all rights reserved.
 #---------------------------------------------------
 
@@ -15,26 +15,26 @@ import time
 class SyncPut():
 	@staticmethod
 	def put_sync(obj):
-		#‚Ù‚Úƒ†ƒj[ƒN‚Èsand‚ğì¬
+		#ã»ã¼ãƒ¦ãƒ‹ãƒ¼ã‚¯ãªsandã‚’ä½œæˆ
 		rand=random.randint(0, (1<<30))
 		sand=""+str(type(obj))+"_"+str(time.time())+"_"+str(rand)
 		
-		#put‚·‚é
-		obj.sand=sand	#Model‚Ésand=db.StringProperty()‚ğ’Ç‰Á‚·‚é‚±‚Æ
+		#putã™ã‚‹
+		obj.sand=sand	#Modelã«sand=db.StringProperty()ã‚’è¿½åŠ ã™ã‚‹ã“ã¨
 		obj.put()
 	
-		#ƒCƒ“ƒfƒbƒNƒX‚É”½‰f‚³‚ê‚é‚Ü‚Å‘Ò‹@
+		#ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã«åæ˜ ã•ã‚Œã‚‹ã¾ã§å¾…æ©Ÿ
 		try_count=1
 		for i in range(10):
-			#obj‚ÌƒIƒuƒWƒFƒNƒg‘S‘Ì‚©‚çsand‚ğ‚ÂƒIƒuƒWƒFƒNƒg‚Ì”‚ğæ“¾
+			#objã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆå…¨ä½“ã‹ã‚‰sandã‚’æŒã¤ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®æ•°ã‚’å–å¾—
 			cnt=obj.all().filter("sand =",sand).count()
 			if(cnt>=1):
 				break
 			
-			#‚Ü‚¾”½‰f‚³‚ê‚Ä‚¢‚È‚©‚Á‚½‚Ì‚Å‘Ò‹@
+			#ã¾ã åæ˜ ã•ã‚Œã¦ã„ãªã‹ã£ãŸã®ã§å¾…æ©Ÿ
 			time.sleep(1)
 			try_count=try_count+1
 
-		#s‰ñ”‚ğƒƒMƒ“ƒO
+		#è©¦è¡Œå›æ•°ã‚’ãƒ­ã‚®ãƒ³ã‚°
 		if(try_count>=3):
 			logging.error("put_sync_retry:"+str(try_count))

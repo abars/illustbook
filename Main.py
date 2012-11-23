@@ -99,6 +99,8 @@ from myapp.CounterWorker import CounterWorker
 from myapp.ShowIcon import ShowIcon
 from myapp.CheckId import CheckId
 from myapp.Chat import Chat
+from myapp.ChatConnected import ChatConnected
+from myapp.ChatDisconnected import ChatDisconnected
 from myapp.Ranking import Ranking
 from myapp.ApiPacked import ApiPacked
 
@@ -431,6 +433,8 @@ class DropBox(webapp.RequestHandler):
 		
 application = webapp.WSGIApplication(
 	[('/', MainPage),
+	('/_ah/channel/connected/',ChatConnected),
+	('/_ah/channel/disconnected/',ChatDisconnected),
 	(r'/usr/(.*)/(.*)\.html',ShowThread),
 	(r'/usr/(.*)/',ShowBbs),
 	(r'/usr/(.*)/index.xml',RssFeed),

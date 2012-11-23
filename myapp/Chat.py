@@ -16,6 +16,7 @@ import random
 import logging
 import base64
 
+from google.appengine.api import channel
 from google.appengine.ext.webapp import template
 from google.appengine.api import users
 from google.appengine.ext import webapp
@@ -31,8 +32,13 @@ from myapp.CssDesign import CssDesign
 from myapp.ChatRoom import ChatRoom
 from myapp.ApiObject import ApiObject
 from myapp.Bbs import Bbs
+from myapp.OwnerCheck import OwnerCheck
 
 class Chat(webapp.RequestHandler):
+	#エラー定数
+	ERROR_DISCONNECT=-2
+	ERROR_NO_ROOM=-1
+
 	#ユーザ名を取得する
 	def get_user_name(self,user):
 		bookmark=ApiObject.get_bookmark_of_user_id(user.user_id())
@@ -98,6 +104,7 @@ class Chat(webapp.RequestHandler):
 		key=self.request.get("key")
 		cmd_count=int(self.request.get("command_count"))
 		user_count=int(self.request.get("user_count"))
+		client_id=self.request.get("client_id")
 		
 		cmd_list=""
 		for i in range(0,cmd_count):
@@ -114,8 +121,14 @@ class Chat(webapp.RequestHandler):
 			return
 
 		try:
-			size=db.run_in_transaction(Chat.post_command_core,key,cmd_list,cmd_count,user_count)	#排他制御を行う
-			ApiObject.write_json_core(self,{"status":"success","size":size})
+			size=db.run_in_transaction(Chat.post_command_core,key,cmd_list,cmd_count,user_count,client_id)	#排他制御を行う
+			if(size==Chat.ERROR_NO_ROOM):
+				ApiObject.write_json_core(self,{"status":"not_found"})
+			else:
+				if(size==Chat.ERROR_DISCONNECT):
+					ApiObject.write_json_core(self,{"status":"disconnect"})
+				else:
+					ApiObject.write_json_core(self,{"status":"success","size":size})
 		except:
 			ApiObject.write_json_core(self,{"status":"failed"})
 	
@@ -166,20 +179,30 @@ class Chat(webapp.RequestHandler):
 		room.put()
 	
 	@staticmethod
-	def post_command_core(key,cmd,cmd_count,user_count):
+	def post_command_core(key,cmd,cmd_count,user_count,client_id):
 		room=db.get(key)
-		room.user_count=user_count
+		if(room==None):
+			return Chat.ERROR_NO_ROOM
+		if(not(client_id in room.channel_client_list)):
+			return Chat.ERROR_DISCONNECT
+
+		if(user_count!=-1):
+			room.user_count=user_count
 		if(room.command_list==""):
 			room.command_list=cmd
 		else:
 			room.command_list=room.command_list+" , "+cmd
 		room.command_cnt=room.command_cnt+cmd_count
 		room.put()
+
+		for client in room.channel_client_list:
+			channel.send_message( client , "update" )
+
 		return sys.getsizeof(room.command_list)+sys.getsizeof(room)
-	
+
 	#スナップショットを取得する
 	def get_snap_shot(self):
-		room=ApiObject.get_cached_object(str(self.request.get("key")))
+		room=db.get(str(self.request.get("key")))
 
 		if(room==None):
 			ApiObject.write_json_core(self,{"status":"failed"})
@@ -187,12 +210,36 @@ class Chat(webapp.RequestHandler):
 			
 		ApiObject.write_json_core(self,{"status":"success","snap_shot_0":room.snap_shot_0,"snap_shot_1":room.snap_shot_1,"snap_range":room.snap_range})
 	
+	#ユーザリストを取得する
+	def get_user_list(self):
+		room=db.get(str(self.request.get("key")))
+
+		if(room==None):
+			ApiObject.write_json_core(self,{"status":"failed"})
+			return
+
+		dic={}
+		for client in room.channel_client_list:
+			user_id=client.split("_")[0]
+			name="unknown"
+			bookmark=ApiObject.get_bookmark_of_user_id(user_id)
+			if(bookmark):
+				name=bookmark.name
+			dic[client]=name
+		
+		ApiObject.write_json_core(self,{"status":"success","user_list":dic});
+
 	#コマンドを取得する
 	def get_command(self):
-		room=ApiObject.get_cached_object(str(self.request.get("key")))
+		room=db.get(str(self.request.get("key")))
 		
 		if(room==None):
 			ApiObject.write_json_core(self,{"status":"not_found"})
+			return
+
+		client_id=self.request.get("client_id")
+		if(not(client_id in room.channel_client_list)):
+			ApiObject.write_json_core(self,{"status":"disconnect"})
 			return
 
 		offset=int(self.request.get("offset"))
@@ -232,6 +279,10 @@ class Chat(webapp.RequestHandler):
 					room.user_count=0
 				show_room.append(room)
 		
+		is_admin=False
+		if(OwnerCheck.is_admin(user)):
+			is_admin=True
+
 		template_values = {
 			'host': "./",
 			'is_iphone': is_iphone,
@@ -239,7 +290,8 @@ class Chat(webapp.RequestHandler):
 			'redirect_url': self.request.path,
 			'mode': "chat",
 			'header_enable': False,
-			'room_list': show_room
+			'room_list': show_room,
+			'is_admin':is_admin
 		}
 		path = os.path.join(os.path.dirname(__file__), '../html/portal.html')
 		self.response.out.write(template.render(path, template_values))
@@ -251,7 +303,7 @@ class Chat(webapp.RequestHandler):
 	
 	#サムネイル取得
 	def thumbnail(self):
-		room=ApiObject.get_cached_object(str(self.request.get("key")))
+		room=db.get(str(self.request.get("key")))
 		if(not room) or (not room.thumbnail):
 			self.redirect("./static_files/empty_user.png")
 			return
@@ -259,6 +311,46 @@ class Chat(webapp.RequestHandler):
 		self.response.out.write(room.thumbnail)
 		return
 	
+	@staticmethod
+	def add_user(room_key,client_id):
+		db.run_in_transaction(Chat.add_user_core,room_key,client_id)
+		room=db.get(room_key)
+		Chat.user_update_notify(room)
+
+	@staticmethod
+	def add_user_core(room_key,client_id):
+		room=db.get(room_key)
+		if(not room.channel_client_list):
+			room.channel_client_list=[]
+		if(not room.channel_client_list_for_reconnect):
+			room.channel_client_list_for_reconnect=[]
+		room.channel_client_list.append(client_id)
+		room.channel_client_list_for_reconnect.append(client_id)
+		room.put()
+
+	@staticmethod
+	def remove_user(room_key,client_id):
+		db.run_in_transaction(Chat.remove_user_core,room_key,client_id)
+		room=db.get(room_key)
+		Chat.user_update_notify(room)
+
+	@staticmethod
+	def remove_user_core(room_key,client_id):
+		room=db.get(room_key)
+		room.channel_client_list.remove(client_id)
+		server_time=Chat.get_sec(datetime.datetime.now())
+		for one_user in room.channel_client_list:
+			past=server_time-int(one_user.split("_")[1])
+			if(past>=60*60*2):
+				room.channel_client_list.remove(one_user)
+				logging.info("### timeout user "+str(past)+"[sec]")
+		room.put()
+
+	@staticmethod
+	def user_update_notify(room):
+		for client in room.channel_client_list:
+			channel.send_message( client , "update_user" )
+
 	#チャットツール
 	def tool(self,user):
 		bbs=None
@@ -305,6 +397,12 @@ class Chat(webapp.RequestHandler):
 		
 		bbs_list=Bbs.all().filter("user_id =",user.user_id()).filter("del_flag =",0).fetch(limit=10)
 
+		client_id=str(user.user_id()) + "_"+ str(server_time)
+		token = channel.create_channel(client_id)
+
+		#排他制御が必要
+		Chat.add_user(room_key,client_id)
+
 		template_values = {
 		'host': "./",
 		'bbs': bbs,
@@ -326,7 +424,9 @@ class Chat(webapp.RequestHandler):
 		'bbs_list':bbs_list,
 		'logined':True,
 		'viewmode':viewmode,
-		'room_name':room.name
+		'room_name':room.name,
+		'token':token,
+		'client_id':client_id
 		}
 		
 		path = os.path.join(os.path.dirname(__file__), '../html/tools/draw_window_ipad.htm')
@@ -367,6 +467,9 @@ class Chat(webapp.RequestHandler):
 			return
 		if(mode=="snap_shot"):
 			self.get_snap_shot()
+			return
+		if(mode=="user_list"):
+			self.get_user_list()
 			return
 		
 		#ポータル

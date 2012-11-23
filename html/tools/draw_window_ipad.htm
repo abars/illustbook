@@ -78,7 +78,7 @@
 		margin-bottom:4px;
 	}
 	
-	#upload_form{
+	.upload_form{
 		position:fixed;
 		padding-bottom:10px;
 		display:none;
@@ -103,23 +103,27 @@
 	
 </style>
 
+{% if chat %}
+<script src="/_ah/channel/jsapi"></script>
+{% endif %}
 </head>
 
-<body style="color:#2f2fbf;background-color:#d8d8d8;margin:0px;" onload="loadCookie();{% if chat %}chat_init('{{chat}}','{{user_id}}','{{user_name}}',{{server_time}},{{viewmode}});{% else %}chat_init('local','','',0);{% endif %}ipad_init({{canvas_width}},{{canvas_height}},'{{canvas_url}}');" style="overflow:hidden;margin:0px;padding:0px;-webkit-user-select: none;" onselectstart="return false;">
+<body style="color:#2f2fbf;background-color:#d8d8d8;margin:0px;" onload="loadCookie();{% if chat %}chat_init('{{chat}}','{{user_id}}','{{user_name}}',{{server_time}},{{viewmode}},'{{token}}','{{client_id}}');{% else %}chat_init('local','','',0);{% endif %}ipad_init({{canvas_width}},{{canvas_height}},'{{canvas_url}}');" style="overflow:hidden;margin:0px;padding:0px;-webkit-user-select: none;" onselectstart="return false;">
 
 <div style="width:100%;height:100%;">
 	<div id="bottom_tool">
 		<div id="toolmenu">
 		</div>
+		<BR clear="all">
 		<div id="edit_tool">
 			<div style="float:left;"><canvas id="pen_tools" width="480px" height="60px""></canvas></div>
 			<BR clear="all">
 		</div>
 		{% if chat %}
-		<div style="float:left;width:60%;margin-top:8px;margin-left:2px;">
+		<div style="float:left;width:70%;margin-top:8px;margin-left:2px;">
 			<textarea id="comment_list" style="width:100%;height:100px;" readonly="readonly"></textarea>
 		</div>
-		<div style="float:left;margin-left:8px;margin-top:8px;">
+		<div style="float:left;margin-left:8px;margin-top:8px;width:25%;">
 			<div id="user_list">
 			</div>
 			<div id="status">
@@ -164,8 +168,18 @@
 				</div>
 			</div>
 	</div>
+
+		<div id="uploading" class="upload_form">
+			アップロード中です。しばらくお待ち下さい。
+			<input class="g-button blue" type="button" value="キャンセル" onclick="javascript:g_upload.upload_cansel();">
+		</div>
+
+		<div id="upload_finish" class="upload_form">
+			アップロードが完了しました。
+			<input class="g-button blue" type="button" value="完了" onclick="javascript:g_upload.upload_cansel();">
+		</div>
 	
-		<div id="upload_form">
+		<div id="upload_form" class="upload_form">
 			<table>
 				<tr><td>タイトル</td><td><input id="title""></td></tr>
 				<tr><td>投稿者名（必須）</td><td><input id="name"></td></tr>
