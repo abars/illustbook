@@ -320,12 +320,17 @@ class Chat(webapp.RequestHandler):
 	@staticmethod
 	def add_user_core(room_key,client_id):
 		room=db.get(room_key)
+
+		#ユーザの追加
 		if(not room.channel_client_list):
-			room.channel_client_list=[]
+			room.channel_client_list=[]	#ログイン中
 		if(not room.channel_client_list_for_reconnect):
-			room.channel_client_list_for_reconnect=[]
+			room.channel_client_list_for_reconnect=[]	#再接続
 		room.channel_client_list.append(client_id)
 		room.channel_client_list_for_reconnect.append(client_id)
+
+		#ユーザ数を変更
+		room.user_count=len(room.channel_client_list)
 		room.put()
 
 	@staticmethod
@@ -337,13 +342,21 @@ class Chat(webapp.RequestHandler):
 	@staticmethod
 	def remove_user_core(room_key,client_id):
 		room=db.get(room_key)
+
+		#対象者を削除
 		room.channel_client_list.remove(client_id)
+
+		#2時間経過したユーザも削除（トークンの有効期限が2時間なので）
 		server_time=Chat.get_sec(datetime.datetime.now())
 		for one_user in room.channel_client_list:
 			past=server_time-int(one_user.split("_")[1])
 			if(past>=60*60*2):
 				room.channel_client_list.remove(one_user)
 				logging.info("### timeout user "+str(past)+"[sec]")
+
+		#ユーザ数を変更
+		room.user_count=len(room.channel_client_list)
+
 		room.put()
 
 	@staticmethod
