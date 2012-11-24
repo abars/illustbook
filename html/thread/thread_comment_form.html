@@ -1,19 +1,31 @@
 {%if bbs.comment_rule_enable %}
-	<div class="entry">
+	<p>&nbsp</p>
 	コメントルール<hr/>
 	{{bbs.comment_rule|safe}}
-	</div>
 {% endif %}
 
 {% if thread.prohibit_comment %}
-	<div class="entry">
 	現在、このイラストへのコメントは禁止されています。詳細は運営までお問い合わせ下さい。
-	</div>
 {% endif %}
 
-{%if not bbs.disable_normal_reply %}
-	{%if show_comment_form %}
-<div class="entry">
+{%if show_comment_form %}
+	<p>&nbsp</p>
+	<div class="g-button-group toggle-buttons">
+	{%if not bbs.disable_normal_reply %}
+		<a href="javascript:display_comment_tab('text','{{thread.key}}');" class="g-button no-text comment_tab_{{thread.key}} comment_tab_{{thread.key}}_text"><i class="icon-pencil"></i>コメントを書く</a>
+	{%endif%}
+	{%if bbs.enable_illust_reply %}
+		<a href="javascript:display_comment_tab('illust','{{thread.key}}');" class="g-button no-text comment_tab_{{thread.key}} comment_tab_{{thread.key}}_illust">絵でコメント</a>
+	{%endif%}
+	{%if bbs.enable_illust_reply_continue %}
+		<a href="javascript:display_comment_tab('continue','{{thread.key}}');" class="g-button no-text comment_tab_{{thread.key}} comment_tab_{{thread.key}}_continue">続きから絵でコメント</a>
+	{%endif%}
+	</div>
+	<br>
+{% endif %}
+
+{%if show_comment_form %}
+	<div class="comment_tab_{{thread.key}}_body comment_tab_{{thread.key}}_body_text" style="display:none;">
 		<form action='http://localhost/' enctype="multipart/form-data" method="post" onsubmit="this.action='{{host}}add_entry?bbs_key={{ bbs.key }}&thread_key={{ thread.key }}';">
 			<table class="table_color">
 			<tr><td>名前（必須）</td>
@@ -41,30 +53,19 @@
 			<input type="submit" value="コメントを書き込む" class="g-button"/>
 			</td></tr>
 		</table>
-	</form>
-</div>
-	{%endif%}
-{%endif%}
+		</form>
+	</div>
 
-{%if show_comment_form %}
-	{%if bbs.enable_illust_reply or bbs.enable_illust_reply_continue %}
-		<div class="entry">
-	{%endif%}
-	
-	{%ifequal bbs.enable_illust_reply 1 %}
-		<div class="g-button">
-		<input type="text" id="canvas_width_{{thread.key}}" value="{{bbs.illust_reply_width}}" maxlength="3" size="3"/><i class="icon-remove"></i><input type="text" id="canvas_height_{{thread.key}}" value="{{bbs.illust_reply_height}}" maxlength="3" size="3"/>px
-		</div>
-		<input type="button" value="絵でコメント" class="g-button" onclick="open_draw('',1,'{{host}}','{{thread.key}}','{{bbs.key}}',{{thread.illust_mode}});"/>
-	{% endifequal %}
-	
-	{%ifequal thread.illust_mode 1 %}
-		{%ifequal bbs.enable_illust_reply_continue 1 %}
-			<input type="button" value="絵で続きからコメント"  class="g-button" onclick="open_draw('{{thread.image}}',1,'{{host}}','{{thread.key}}','{{bbs.key}}',{{thread.illust_mode}});"/>
-		{% endifequal %}
-	{%endifequal %}
+	<div class="comment_tab_{{thread.key}}_body comment_tab_{{thread.key}}_body_illust" style="display:none;">
+		イラストの横幅　<input type="text" id="canvas_width_{{thread.key}}" value="{{bbs.illust_reply_width}}" maxlength="3" size="3"/>px
+		<BR>
 
-	{%if bbs.enable_illust_reply or bbs.enable_illust_reply_continue %}
-		</div>
-	{%endif%}
+		イラストの高さ　<input type="text" id="canvas_height_{{thread.key}}" value="{{bbs.illust_reply_height}}" maxlength="3" size="3"/>px
+		<BR>
+		<input type="button" value="イラブペイントを開く" class="g-button" onclick="open_draw('',1,'{{host}}','{{thread.key}}','{{bbs.key}}',{{thread.illust_mode}});"/>
+	</div>
+
+	<div class="comment_tab_{{thread.key}}_body comment_tab_{{thread.key}}_body_continue" style="display:none;">
+		<input type="button" value="イラブペイントを開く"  class="g-button" onclick="open_draw('{{thread.image_key.key}}',1,'{{host}}','{{thread.key}}','{{bbs.key}}',{{thread.illust_mode}});"/>
+	</div>
 {% endif %}

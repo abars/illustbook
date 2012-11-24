@@ -127,6 +127,7 @@
 {%endif%}
 
 {% if bbs.enable_full_comment %}
+{% ifnotequal bbs.bbs_mode 3 %}
 	<!--コメント統合表示-->
 	<p>&nbsp</p>
 	{% if not thread.cached_render_comment %}
@@ -136,19 +137,13 @@
 		</div>
 	{% endif %}
 
-	{% if show_comment_form %}
-	<div id="comment_form_button_{{ thread.key }}">
-	<p>&nbsp</p>
-	<a href="javascript:show_comment_form('{{thread.key}}');" class="g-button" style="color:#444;"><i class="icon-pencil"></i>コメントを書き込む</a>
-	</div>
-	{% endif %}
+	<!--コメントを書き込む-->
+	{% include "thread/thread_comment_form.html" %}
+{% endifnotequal %}
 {% endif %}
 
 </div>
 
 {% if bbs.enable_full_comment %}
 	<!--コメント統合表示-->
-	<div id="comment_form_{{ thread.key }}" style="display:none;">
-	{% include "thread/thread_comment_form.html" %}
-	</div>
 {% endif %}

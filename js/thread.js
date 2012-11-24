@@ -91,3 +91,11 @@ var isFlashInstalled=function(){if(navigator.plugins["Shockwave Flash"]){return 
 			document.getElementById('tag_form_'+id).style.display='block';
 			document.getElementById('tag_form_button_'+id).style.display='none';
 		}
+
+		function display_comment_tab(type,thread_key){
+			$(".comment_tab_"+thread_key).removeClass("checked");
+			$(".comment_tab_"+thread_key+"_"+type).addClass("checked");
+
+			$(".comment_tab_"+thread_key+"_body").hide();
+			$(".comment_tab_"+thread_key+"_body_"+type).show();
+		}

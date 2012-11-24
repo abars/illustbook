@@ -17,13 +17,13 @@
 	{% if can_create_thread %}
 		<form action='http://localhost/' enctype="multipart/form-data" method="post" onSubmit="this.action='{{host}}add_thread?bbs_key={{bbs.key}}';">
 		<input type="hidden" name="illust_mode" value="0">
-		<table class="table_color" class="table_color"><tr><td>タイトル（必須）</td>
+		<table class="table_color"><tr><td>タイトル（必須）</td>
 		<td><textarea name="thread_title" rows="1" cols="40" style="width:90%;"></textarea></td></tr>
 		<tr><td>作成者（必須）</td><td><input name="author" maxlength="40"></td></tr>
 		<tr><td>ホームページアドレス</td><td><input name="homepage_addr" maxlength="40" value="http://"></td></tr>
 		<tr><td>スレッド概要</td><td><textarea name="comment" rows="4" cols="40" style="width:90%;"></textarea></td></tr>
 		<tr><td></td><td>
-		<input type="submit" value="スレッドを作成する" onmouseover="this.className='pagebutton_active'" onmouseout="this.className='pagebutton'" class="pagebutton">
+		<input type="submit" value="スレッドを作成する" class="g-button">
 		</td></tr></table></form>
 	{% endif %}
 </div>

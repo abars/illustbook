@@ -160,6 +160,11 @@ class ShowBbs(webapp.RequestHandler):
 			user_name=ShowEntry.get_user_name(user)
 			self.get_all_comment(all_threads_cached,host_url,bbs,show_comment_form,logined,admin_user,user_name,user)
 
+		#デザインの編集ができるか
+		can_edit_design=False
+		if(owner or (is_admin and bbs_mode==BbsConst.BBS_MODE_EVERYONE)):
+			can_edit_design=True
+
 		#レンダリング
 		template_values = {
 			'host': host_url,
@@ -195,7 +200,8 @@ class ShowBbs(webapp.RequestHandler):
 			'redirect_url': self.request.path,
 			'show_comment_form': show_comment_form,
 			'user_name': user_name,
-			'is_admin': OwnerCheck.is_admin(user)
+			'is_admin': OwnerCheck.is_admin(user),
+			'can_edit_design': can_edit_design
 		}
 
 		path = os.path.join(os.path.dirname(__file__), "../html/"+design["base_name"])

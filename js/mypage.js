@@ -348,7 +348,9 @@ function feed_parse(feed){
 		break;
 	case "new_applause_thread":
 	case "new_bookmark_thread":
-		txt+='<a href="javascript:go_feed(\''+feed.thread.thread_url+'\')"><img src="'+feed.thread.thumbnail_url+'" width=100px height=100px></a>'
+		if(feed.thread.thumbnail_url){
+			txt+='<a href="javascript:go_feed(\''+feed.thread.thread_url+'\')"><img src="'+feed.thread.thumbnail_url+'" width=100px height=100px></a>'
+		}
 		break;
 	}
 	txt+="</div>"
