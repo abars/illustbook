@@ -162,7 +162,8 @@ class ShowBbs(webapp.RequestHandler):
 
 		#デザインの編集ができるか
 		can_edit_design=False
-		if(owner or (is_admin and bbs_mode==BbsConst.BBS_MODE_EVERYONE)):
+		is_admin=OwnerCheck.is_admin(user)
+		if(owner or (is_admin and bbs.bbs_mode==BbsConst.BBS_MODE_EVERYONE)):
 			can_edit_design=True
 
 		#レンダリング
@@ -200,7 +201,7 @@ class ShowBbs(webapp.RequestHandler):
 			'redirect_url': self.request.path,
 			'show_comment_form': show_comment_form,
 			'user_name': user_name,
-			'is_admin': OwnerCheck.is_admin(user),
+			'is_admin': is_admin,
 			'can_edit_design': can_edit_design
 		}
 
