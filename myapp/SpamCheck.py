@@ -32,7 +32,7 @@ class SpamCheck(webapp.RequestHandler):
 				is_admin=1
 		
 		if(not is_admin):
-			self.response.out.write(Alert.alert_msg("管理者権限が必要です。",self.request.host));
+			Alert.alert_msg_with_write(self,"管理者権限が必要です。");
 			return
 		
 		message=""
@@ -68,7 +68,7 @@ class SpamCheck(webapp.RequestHandler):
 		form="code:"+checkcode+"<BR>"+message+"<BR>"
 		form+="<form method='GET' action='spam_check'>thread_key:<input type='text' name='code' size=40><input type='submit' value='UPDATE'></form>";
 		
-		self.response.out.write(Alert.alert_msg("<H2>SPAM CHECKER</H2><H3>CHECK CODE</H3>"+form+"<H3>SPAM LIST</H3>"+ret+"<BR><BR><A HREF='./spam_delete'>DELETE ALL</A>",self.request.host))		
+		Alert.alert_msg_with_write(self,"<H2>SPAM CHECKER</H2><H3>CHECK CODE</H3>"+form+"<H3>SPAM LIST</H3>"+ret+"<BR><BR><A HREF='./spam_delete'>DELETE ALL</A>")		
 
 	@staticmethod
 	def check_with_thread(entry,checkcode):

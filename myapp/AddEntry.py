@@ -47,7 +47,7 @@ class AddEntry(webapp.RequestHandler):
 			if(self.request.get('image')):
 				entry.content = ""
 			else:
-				self.response.out.write(Alert.alert_msg("コメントを入力して下さい。",self.request.host));
+				Alert.alert_msg_with_write(self,"コメントを入力して下さい。");
 				return
 
 		if(self.request.get('mail_addr')):
@@ -62,7 +62,7 @@ class AddEntry(webapp.RequestHandler):
 
 		checkcode=SpamCheck.get_check_code()
 		if(SpamCheck.check(entry.content,checkcode)):			
-			self.response.out.write(Alert.alert_msg(BbsConst.SPAM_CHECKED,self.request.host));
+			Alert.alert_msg_with_write(self,BbsConst.SPAM_CHECKED);
 			return
 
 		thread=db.Key(self.request.get("thread_key"))
@@ -76,7 +76,7 @@ class AddEntry(webapp.RequestHandler):
 		
 		#コメント禁止
 		if(db.get(thread).prohibit_comment):
-			self.response.out.write(Alert.alert_msg("このイラストへのコメントは禁止されています。",self.request.host));
+			Alert.alert_msg_with_write(self,"このイラストへのコメントは禁止されています。");
 			return
 		
 		#書き込み権限確認
@@ -84,7 +84,7 @@ class AddEntry(webapp.RequestHandler):
 
 		if(bbs.comment_login_require):
 			if(not(user)):
-				self.response.out.write(Alert.alert_msg("この掲示板ではコメントする際にログインが必須です。",self.request.host));
+				Alert.alert_msg_with_write(self,"この掲示板ではコメントする際にログインが必須です。");
 				return
 		
 		if(self.request.get('image')):
@@ -118,7 +118,7 @@ class AddEntry(webapp.RequestHandler):
 			entry.editor = cgi.escape(self.request.get('author'))
 		else:
 			entry.editor = "no_name"
-			self.response.out.write(Alert.alert_msg("名前を入力して下さい。",self.request.host));
+			Alert.alert_msg_with_write(self,"名前を入力して下さい。");
 			return
 			
 		entry.thread_key = thread

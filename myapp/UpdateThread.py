@@ -47,7 +47,7 @@ class UpdateThread(webapp.RequestHandler):
 			thread_owner=True
 		
 		if(not bbs_owner and not thread_owner):
-			self.response.out.write(Alert.alert_msg("スレッドを更新する権限がありません。",self.request.host));
+			Alert.alert_msg_with_write(self,"スレッドを更新する権限がありません。");
 			return
 
 		title = self.request.get('thread_title')
@@ -83,7 +83,7 @@ class UpdateThread(webapp.RequestHandler):
 		try:
 			thread.comment_cnt = int(self.request.get('comment_cnt'))
 		except:
-			self.response.out.write(Alert.alert_msg("コメント数は数値である必要があります。",self.request.host));
+			Alert.alert_msg_with_write(self,"コメント数は数値である必要があります。");
 			return
 
 		thread.put()

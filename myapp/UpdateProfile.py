@@ -49,21 +49,21 @@ class UpdateProfile(webapp.RequestHandler):
 		disable_rankwatch =int(self.request.get("disable_rankwatch"))
 
 		if(name==""):
-			self.response.out.write(Alert.alert_msg("名前がありません。",self.request.host));
+			Alert.alert_msg_with_write(self,"名前がありません。");
 			return
 
 		if(profile==""):
-			self.response.out.write(Alert.alert_msg("プロフィールがありません。",self.request.host));
+			Alert.alert_msg_with_write(self,"プロフィールがありません。");
 			return
 
 		user = users.get_current_user()
 		if(not(user)):
-			self.response.out.write(Alert.alert_msg("ログインが必要です。",self.request.host));
+			Alert.alert_msg_with_write(self,"ログインが必要です。");
 			return
 		
 		bookmark=ApiObject.get_bookmark_of_user_id_for_write(user.user_id())
 		if(bookmark==None):
-			self.response.out.write(Alert.alert_msg("プロフィールの取得に失敗しました。",self.request.host));
+			Alert.alert_msg_with_write(self,"プロフィールの取得に失敗しました。");
 			return
 		
 		profile = cgi.escape(profile)
@@ -91,7 +91,7 @@ class UpdateProfile(webapp.RequestHandler):
 			try:
 				birthday_year=int(birthday_year)
 			except:
-				self.response.out.write(Alert.alert_msg("生まれた年は半角数字である必要があります。",self.request.host));
+				Alert.alert_msg_with_write(self,"生まれた年は半角数字である必要があります。");
 				return
 		else:
 			birthday_year=0
@@ -100,7 +100,7 @@ class UpdateProfile(webapp.RequestHandler):
 			try:
 				birthday_month=int(birthday_month)
 			except:
-				self.response.out.write(Alert.alert_msg("生まれた月は半角数字である必要があります。",self.request.host));
+				Alert.alert_msg_with_write(self,"生まれた月は半角数字である必要があります。");
 				return
 		else:
 			birthday_month=0
@@ -109,7 +109,7 @@ class UpdateProfile(webapp.RequestHandler):
 			try:
 				birthday_day=int(birthday_day)
 			except:
-				self.response.out.write(Alert.alert_msg("生まれた日は半角数字である必要があります。",self.request.host));
+				Alert.alert_msg_with_write(self,"生まれた日は半角数字である必要があります。");
 				return
 		else:
 			birthday_day=0

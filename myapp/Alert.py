@@ -14,16 +14,29 @@ from google.appengine.ext import webapp
 from google.appengine.api import memcache
 
 from myapp.MappingId import MappingId
+from myapp.CssDesign import CssDesign
 
 webapp.template.register_template_library('templatetags.django_filter')
 
 class Alert(webapp.RequestHandler):
 	@staticmethod
 	def alert_msg(msg,host):
+		is_iphone=0
+		return Alert.alert_msg_core(msg,host,is_iphone)
+
+	@staticmethod
+	def alert_msg_with_write(req,msg):
+		is_iphone=CssDesign.is_iphone(req)
+		host=req.request.host
+		req.response.out.write(Alert.alert_msg_core(msg,host,is_iphone))
+
+	@staticmethod
+	def alert_msg_core(msg,host,is_iphone):
 		host_url="http://"+MappingId.mapping_host(host)+"/";
 		template_values = {
 		'host': host_url,
-		'alert_msg': msg
+		'alert_msg': msg,
+		'is_iphone': is_iphone
 		}
 		path = os.path.join(os.path.dirname(__file__), '../html/alert.html')
 		return template.render(path, template_values)

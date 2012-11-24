@@ -32,7 +32,7 @@ class DrawWindow(webapp.RequestHandler):
 		except:
 			bbs=None
 		if(bbs==None):
-			self.response.out.write(Alert.alert_msg("イラストの投稿画面のURLが変更されています。掲示板からイラストを描くボタンをクリックして下さい。",self.request.host))
+			Alert.alert_msg_with_write(self,"イラストの投稿画面のURLが変更されています。掲示板からイラストを描くボタンをクリックして下さい。")
 			return
 		
 		ipad=CssDesign.is_tablet(self)

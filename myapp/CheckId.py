@@ -20,9 +20,9 @@ class CheckId(webapp.RequestHandler):
 		SetUtf8.set()
 		short=self.request.get('id')
 		if(MappingId.key_format_check(short)):
-			self.response.out.write(Alert.alert_msg("IDは半角英数である必要があります。",self.request.host))
+			Alert.alert_msg_with_write(self,"IDは半角英数である必要があります。")
 			return
 		if(MappingId.check_capability(short,"")==0):
-			self.response.out.write(Alert.alert_msg("ID:"+short+"は既に登録されていて利用できません。",self.request.host))
+			Alert.alert_msg_with_write(self,"ID:"+short+"は既に登録されていて利用できません。")
 			return
-		self.response.out.write(Alert.alert_msg("ID:"+short+"は利用可能です。",self.request.host))
+		Alert.alert_msg_with_write(self,"ID:"+short+"は利用可能です。")

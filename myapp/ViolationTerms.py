@@ -31,7 +31,7 @@ class ViolationTerms(webapp.RequestHandler):
 		user = users.get_current_user()
 		if(user):
 			if(not OwnerCheck.is_admin(user)):
-				self.response.out.write(Alert.alert_msg("権限がありません。",self.request.host))
+				Alert.alert_msg_with_write(self,"権限がありません。")
 				return
 
 		if(self.request.get("entry_key")):

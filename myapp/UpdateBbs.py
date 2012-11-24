@@ -41,15 +41,15 @@ class UpdateBbs(webapp.RequestHandler):
 		bbs_key=self.request.get("bbs_key")
 		short=self.request.get('short')
 		if(MappingId.key_format_check(short)):
-			self.response.out.write(Alert.alert_msg("IDは半角英数である必要があります。",self.request.host))
+			Alert.alert_msg_with_write(self,"IDは半角英数である必要があります。")
 			return
 		if(MappingId.check_capability(short,bbs_key)==0):
-			self.response.out.write(Alert.alert_msg("ID:"+short+"は既に登録されています。",self.request.host))
+			Alert.alert_msg_with_write(self,"ID:"+short+"は既に登録されています。")
 			return
 		bbs=db.get(bbs_key);
 		user = users.get_current_user()
 		if(OwnerCheck.check(bbs,user) and not OwnerCheck.is_admin(user)):
-			self.response.out.write(Alert.alert_msg("デザインの編集を行う権限がありません。",self.request.host))
+			Alert.alert_msg_with_write(self,"デザインの編集を行う権限がありません。")
 			return
 		summary = self.request.get('bbs_summary')
 		bg_color=self.request.get('bg_color')

@@ -24,7 +24,7 @@ class EditBbs(webapp.RequestHandler):
 		try:
 			bbs = db.get(self.request.get("bbs_key"))
 		except:
-			self.response.out.write(Alert.alert_msg("掲示板の編集画面のURLが変更されています。掲示板からログインし、デザインの編集ボタンをクリックして下さい。",self.request.host))
+			Alert.alert_msg_with_write(self,"掲示板の編集画面のURLが変更されています。掲示板からログインし、デザインの編集ボタンをクリックして下さい。")
 			return
 
 		user = users.get_current_user()
@@ -32,7 +32,7 @@ class EditBbs(webapp.RequestHandler):
 		if(user and OwnerCheck.is_admin(user)):
 			is_admin=1
 		if(bbs.short!="sample" and OwnerCheck.check(bbs,user) and not is_admin):
-			self.response.out.write(Alert.alert_msg("デザインの編集の権限がありません。",self.request.host))
+			Alert.alert_msg_with_write(self,"デザインの編集の権限がありません。")
 			return
 
 		error_str=""

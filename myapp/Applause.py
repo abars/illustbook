@@ -47,7 +47,7 @@ class Applause(webapp.RequestHandler):
 			bbs=None
 		
 		if(thread==None or bbs==None):
-			self.response.out.write(Alert.alert_msg("拍手対象のスレッドが見つかりません。",self.request.host));
+			Alert.alert_msg_with_write(self,"拍手対象のスレッドが見つかりません。");
 			return
 		
 		if(self.request.remote_addr!=thread.applause_ip and self.request.remote_addr!=thread.applause_ip2 and self.request.remote_addr!=thread.applause_ip3 and self.request.remote_addr!=thread.applause_ip4):

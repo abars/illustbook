@@ -61,7 +61,7 @@ class ShowBbs(webapp.RequestHandler):
 
 		#掲示板削除チェック
 		if(bbs.del_flag) :
-			self.response.out.write(Alert.alert_msg("この掲示板は削除されました。",self.request.host))
+			Alert.alert_msg_with_write(self,"この掲示板は削除されました。")
 			return
 
 		#ページ取得

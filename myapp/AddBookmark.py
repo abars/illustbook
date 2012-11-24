@@ -117,30 +117,30 @@ class AddBookmark(webapp.RequestHandler):
 		#スレッド取得
 		thread = AddBookmark.get_one_db(self.request.get("thread_key"))
 		if(not thread and mode=="add"):	#削除はスレッドが見つからなくてもできるようにする
-			self.response.out.write(Alert.alert_msg("スレッドが見つかりません。",self.request.host));
+			Alert.alert_msg_with_write(self,"スレッドが見つかりません。");
 			return
 		
 		#BBS取得
 		bbs=AddBookmark.get_one_db(self.request.get("bbs_key"))
 		if(not bbs and mode=="add_bbs"):
-			self.response.out.write(Alert.alert_msg("掲示板が見つかりません。",self.request.host));
+			Alert.alert_msg_with_write(self,"掲示板が見つかりません。");
 			return
 		
 		#アプリ取得
 		app=AddBookmark.get_one_db(self.request.get("app_key"))
 		if(not app and mode=="add_app"):
-			self.response.out.write(Alert.alert_msg("アプリが見つかりません。",self.request.host));
+			Alert.alert_msg_with_write(self,"アプリが見つかりません。");
 			return
 		
 		#ログイン要求
 		user = users.get_current_user()
 		if(not(user)):
-			self.response.out.write(Alert.alert_msg("ブックマークをする場合はログインが必須です。",self.request.host));
+			Alert.alert_msg_with_write(self,"ブックマークをする場合はログインが必須です。");
 			return
 		
 		bookmark=ApiObject.get_bookmark_of_user_id_for_write(user.user_id())
 		if(bookmark==None):
-			self.response.out.write(Alert.alert_msg("ブックマークの取得に失敗しました。",self.request.host));
+			Alert.alert_msg_with_write(self,"ブックマークの取得に失敗しました。");
 			return
 		
 		#ユーザ

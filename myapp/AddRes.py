@@ -46,7 +46,7 @@ class AddRes(webapp.RequestHandler):
 		except:
 			entry=None
 		if(not entry):
-			self.response.out.write(Alert.alert_msg("エントリーが見つかりません。",self.request.host));
+			Alert.alert_msg_with_write(self,"エントリーが見つかりません。");
 			return
 
 		thread_key=entry.thread_key
@@ -56,14 +56,14 @@ class AddRes(webapp.RequestHandler):
 		user = users.get_current_user()
 		if(bbs_key.comment_login_require):
 			if(not(user)):
-				self.response.out.write(Alert.alert_msg("この掲示板ではコメントする際にログインが必須です。",self.request.host));
+				Alert.alert_msg_with_write(self,"この掲示板ではコメントする際にログインが必須です。");
 				return
 
 		response = Response()
 		if(self.request.get('comment')):
 			response.content = cgi.escape(self.request.get('comment'))
 		else:
-			self.response.out.write(Alert.alert_msg("コメントを入力して下さい。",self.request.host));
+			Alert.alert_msg_with_write(self,"コメントを入力して下さい。");
 			return
 
 		#二重投稿ブロック
@@ -74,7 +74,7 @@ class AddRes(webapp.RequestHandler):
 
 		checkcode=SpamCheck.get_check_code()
 		if(SpamCheck.check(response.content,checkcode)):			
-			self.response.out.write(Alert.alert_msg(BbsConst.SPAM_CHECKED,self.request.host));
+			Alert.alert_msg_with_write(self,BbsConst.SPAM_CHECKED);
 			return
 		
 		compiled_line = re.compile("\r\n|\r|\n")
@@ -87,11 +87,11 @@ class AddRes(webapp.RequestHandler):
 			try:
 				response.editor = cgi.escape(self.request.get('author'))
 			except:
-				self.response.out.write(Alert.alert_msg("名前に改行は使用できません。",self.request.host));
+				Alert.alert_msg_with_write(self,"名前に改行は使用できません。");
 				return
 		else:
 			response.editor = "no_name"
-			self.response.out.write(Alert.alert_msg("名前を入力して下さい。",self.request.host));
+			Alert.alert_msg_with_write(self,"名前を入力して下さい。");
 			return
 
 		#プロフィールにリンクするか

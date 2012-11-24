@@ -50,10 +50,10 @@ class Chat(webapp.RequestHandler):
 	#ルームを作成する
 	def create_room(self,user):
 		if(self.request.get("name")==""):
-			self.response.out.write(Alert.alert_msg("ルーム名は必須です。",self.request.host))
+			Alert.alert_msg_with_write(self,"ルーム名は必須です。")
 			return
 		if(not user):
-			self.response.out.write(Alert.alert_msg("ルームの作成にはログインが必要です。",self.request.host))
+			Alert.alert_msg_with_write(self,"ルームの作成にはログインが必要です。")
 			return
 
 		user_name=self.get_user_name(user)
@@ -91,10 +91,10 @@ class Chat(webapp.RequestHandler):
 		except:
 			room=None
 		if(not room):
-			self.response.out.write(Alert.alert_msg("ルームが見つかりません。",self.request.host))
+			Alert.alert_msg_with_write(self,"ルームが見つかりません。")
 			return
 		if(not user or room.user_id!=user.user_id()):
-			self.response.out.write(Alert.alert_msg("終了する権限がありません。",self.request.host))
+			Alert.alert_msg_with_write(self,"終了する権限がありません。")
 			return
 		room.delete()
 		self.redirect("./chat")
@@ -378,7 +378,7 @@ class Chat(webapp.RequestHandler):
 		else:
 			room_key=self.request.get("key")
 		if(not room_key):
-			self.response.out.write(Alert.alert_msg("ルームキーが必要です。",self.request.host))
+			Alert.alert_msg_with_write(self,"ルームキーが必要です。")
 			return
 
 		ipad=CssDesign.is_tablet(self)
@@ -389,16 +389,24 @@ class Chat(webapp.RequestHandler):
 			room=db.get(room_key)
 		except:
 			room=None
+
+		alert_footer="<BR><A HREF='./chat'><IMG SRC='./static_files/chat/logo.png'/></A>"
+
+		login_message=""
+		if(not user):
+			login_url=users.create_login_url(self.request.url)
+			login_message="<BR><A HREF='"+login_url+"' class='g-button'>Googleアカウントでログイン</A><BR>"
+
 		if(not room):
-			self.response.out.write(Alert.alert_msg("ルームが見つかりません。",self.request.host))
+			Alert.alert_msg_with_write(self,"このチャットルームは終了されています。"+alert_footer)
 			return
 		
 		if(room.password and room.password!=password):
-			self.response.out.write(Alert.alert_msg("ルームのパスワードが一致しません。",self.request.host))
+			Alert.alert_msg_with_write(self,"チャットルームのパスワードが一致しません。"+alert_footer)
 			return
 		
 		if(not user):
-			self.response.out.write(Alert.alert_msg("ルームへの参加にはログインが必要です。",self.request.host))
+			Alert.alert_msg_with_write(self,"チャットルームへの参加にはログインが必要です。<BR>"+login_message+alert_footer)
 			return
 
 		canvas_width=room.canvas_width

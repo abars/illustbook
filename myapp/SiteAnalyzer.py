@@ -60,7 +60,7 @@ class SiteAnalyzer(webapp.RequestHandler):
 			day1_str=NicoTracker.get_day_string(cache.date)
 			day2_str=NicoTracker.get_day_string(datetime.datetime.today())
 			if(day1_str==day2_str):
-				self.response.out.write(Alert.alert_msg("まだ1日が経過していません。",self.request.host))
+				Alert.alert_msg_with_write(self,"まだ1日が経過していません。")
 				return
 		
 		#コメント数と再生数を取得
@@ -83,7 +83,7 @@ class SiteAnalyzer(webapp.RequestHandler):
 
 		cache.put()
 
-		self.response.out.write(Alert.alert_msg("ランキングを更新しました。",self.request.host))
+		Alert.alert_msg_with_write(self,"ランキングを更新しました。")
 	
 	@staticmethod
 	def create_graph(self,no):

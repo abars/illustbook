@@ -52,7 +52,7 @@ class ShowThread(webapp.RequestHandler):
 
 		#BBSが削除されていた場合
 		if(bbs.del_flag) :
-			self.response.out.write(Alert.alert_msg("このBBSは削除されました。",self.request.host))
+			Alert.alert_msg_with_write(self,"このBBSは削除されました。")
 			return
 		
 		#ページ番号を取得

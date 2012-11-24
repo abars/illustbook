@@ -37,7 +37,7 @@ class EditThread(webapp.RequestHandler):
 			thread_owner=True
 		
 		if(not bbs_owner and not thread_owner):
-			self.response.out.write(Alert.alert_msg("編集する権限がありません。",self.request.host))
+			Alert.alert_msg_with_write(self,"編集する権限がありません。")
 			return
 		
 		summary=thread.summary

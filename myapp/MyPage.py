@@ -91,24 +91,24 @@ class MyPage(webapp.RequestHandler):
 	def withdraw(self,bookmark,your_bbs_count):
 		user_id=self.request.get("user_id")
 		if(not user_id):
-			self.response.out.write(Alert.alert_msg("ユーザIDが必要です。",self.request.host))
+			Alert.alert_msg_with_write(self,"ユーザIDが必要です。")
 			return True
 
 		user=users.get_current_user()
 		bookmark=ApiObject.get_bookmark_of_user_id_for_write(user_id)	#キャッシュから取得するのを防止
 		if(not bookmark):
-			self.response.out.write(Alert.alert_msg("ユーザが見つかりません。",self.request.host))
+			Alert.alert_msg_with_write(self,"ユーザが見つかりません。")
 			return True
 
 		if(OwnerCheck.check_bookmark(bookmark,user)):
-			self.response.out.write(Alert.alert_msg("退会する権限がありません。",self.request.host))
+			Alert.alert_msg_with_write(self,"退会する権限がありません。")
 			return True
 
 		if(your_bbs_count==0):
 			bookmark.delete()
-			self.response.out.write(Alert.alert_msg("退会が完了しました。",self.request.host));
+			Alert.alert_msg_with_write(self,"退会が完了しました。");
 		else:
-			self.response.out.write(Alert.alert_msg("退会する前にレンタルしている掲示板を削除する必要があります。<BR>掲示板の削除はマイページのイラストタブで編集を押すことで行うことができます。<BR>残りの掲示板数："+str(your_bbs_count),self.request.host))
+			Alert.alert_msg_with_write(self,"退会する前にレンタルしている掲示板を削除する必要があります。<BR>掲示板の削除はマイページのイラストタブで編集を押すことで行うことができます。<BR>残りの掲示板数："+str(your_bbs_count))
 			return True
 
 		return True
@@ -125,7 +125,7 @@ class MyPage(webapp.RequestHandler):
 		if(self.request.get("user_id")):
 			target_bookmark=ApiObject.get_bookmark_of_user_id(self.request.get("user_id"))
 			if(target_bookmark==None):
-				self.response.out.write(Alert.alert_msg("ユーザが見つかりません。",self.request.host))
+				Alert.alert_msg_with_write(self,"ユーザが見つかりません。")
 				return
 			view_mode=str(target_bookmark.key());
 		
@@ -185,7 +185,7 @@ class MyPage(webapp.RequestHandler):
 		#退会
 		if(self.request.get("withdraw") and self.request.get("withdraw")=="go"):
 			if(not bookmark):
-				self.response.out.write(Alert.alert_msg("ユーザ情報は未登録です。",self.request.host));
+				Alert.alert_msg_with_write(self,"ユーザ情報は未登録です。");
 				return
 			your_bbs_count=Bbs.all().filter("del_flag =",0).filter("user_id =",bookmark.user_id).count()
 			if(self.withdraw(bookmark,your_bbs_count)):
