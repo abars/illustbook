@@ -362,12 +362,12 @@
 				{% endifequal %}
 			</select></TD></TR>
 			
-			<TR><TH>アクセス解析表示</TH><TD>
+			<TR><TH>アクセス解析を使用するか</TH><TD>
 			<select name="disable_analyze">
 				{% ifequal bbs.disable_analyze 1 %}
-						<option value="1" selected="selected">無効</option><option value="0">有効</option>
+						<option value="1" selected="selected">使用しない</option><option value="0">使用する</option>
 				{% else%}
-						<option value="1">無効</option><option value="0" selected="selected">有効</option>
+						<option value="1">使用しない</option><option value="0" selected="selected">使用する</option>
 				{% endifequal %}
 			</select></TD></TR>
 	 </TABLE>

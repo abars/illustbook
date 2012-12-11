@@ -68,7 +68,7 @@
 	{%endifequal%}
 	
 	{%ifequal one "menu" %}
-		{% if bbs.my_homepage or not bbs.disable_analyze%}
+		{% if not bbs.disable_analyze and owner or bbs.my_homepage%}
 		<h4>
 		メニュー
 		</h4>
@@ -76,7 +76,7 @@
 		{% if bbs.my_homepage %}
 			<A HREF="{{bbs.my_homepage}}" class="decnone">ホームページ</A><BR>
 		{% endif %}
-		{% if not bbs.disable_analyze %}
+		{% if not bbs.disable_analyze and owner %}
 			<A HREF="{{host}}analyze?bbs_key={{bbs.key}}" class="decnone">アクセス解析</A><BR>
 		{% endif %}
 		</p>
