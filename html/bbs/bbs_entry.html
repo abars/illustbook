@@ -129,9 +129,9 @@
 {% if bbs.enable_full_comment %}
 {% ifnotequal bbs.bbs_mode 3 %}
 	<!--コメント統合表示-->
-	<p>&nbsp</p>
 	{% if not thread.cached_render_comment %}
 	{% else %}
+		<p>&nbsp</p>
 		<div style="margin-left:10%;">
 			{{thread.cached_render_comment}}
 		</div>
