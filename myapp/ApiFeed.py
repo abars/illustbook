@@ -119,7 +119,10 @@ class ApiFeed(webapp.RequestHandler):
 
 			bbs_id=None
 			if(req.request.get("bbs_id")):
-				query.filter("bbs_key =",db.get(MappingId.mapping(req.request.get("bbs_id"))))
+				bbs_key=MappingId.mapping(req.request.get("bbs_id"))
+				if(bbs_key==""):
+					return None #bbs not found
+				query.filter("bbs_key =",db.get(bbs_key))
 				bbs_id=True
 
 			thread_list=query.fetch(offset=offset,limit=limit)
@@ -161,6 +164,8 @@ class ApiFeed(webapp.RequestHandler):
 		#フィードクラス
 		if(method=="getThreadList"):
 			dic=ApiFeed.feed_get_thread_list(self)
+			if(dic==None):
+				return {"status":"failed","message":"bbs not found"}
 
 		dic=ApiObject.add_json_success_header(dic)
 		return dic

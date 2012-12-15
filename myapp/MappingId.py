@@ -2,7 +2,7 @@
 #!/usr/bin/env python
 
 #---------------------------------------------------
-#http://www.illustbook.net/[ID]/‚Ì[ID]‚©‚çkey‚Éƒ}ƒbƒv‚·‚é
+#http://www.illustbook.net/[ID]/ã®[ID]ã‹ã‚‰keyã«ãƒãƒƒãƒ—ã™ã‚‹
 #copyright 2010-2012 ABARS all rights reserved.
 #---------------------------------------------------
 
@@ -69,16 +69,16 @@ class MappingId():
 	
 	@staticmethod
 	def mapping(bbs_key):
-		#’¼’l
+		#ç›´å€¤
 		if(len(bbs_key)>16):
 			return bbs_key
 
-		#ƒLƒƒƒbƒVƒ…ƒqƒbƒg”»’è
+		#ã‚­ãƒ£ãƒƒã‚·ãƒ¥ãƒ’ãƒƒãƒˆåˆ¤å®š
 		data=memcache.get(BbsConst.OBJECT_BBS_ID_MAPPING_HEADER+bbs_key)
 		if data is not None:
 			return data
 
-		#BBS‚ÌID‚É‘Î‰‚·‚éBBS‚ğæ“¾
+		#BBSã®IDã«å¯¾å¿œã™ã‚‹BBSã‚’å–å¾—
 		query=Bbs.all()
 		query.filter("short =",bbs_key)
 		try:
@@ -86,7 +86,7 @@ class MappingId():
 		except:
 			return ""
 		
-		#ƒL[‚ğ•Ô‚·
+		#ã‚­ãƒ¼ã‚’è¿”ã™
 		memcache.set(BbsConst.OBJECT_BBS_ID_MAPPING_HEADER+bbs_key,data,BbsConst.OBJECT_MAPPING_CACHE_TIME)
 		return data
 		
