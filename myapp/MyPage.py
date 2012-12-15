@@ -88,6 +88,12 @@ class MyPage(webapp.RequestHandler):
 			age -= 1
 		return age
 
+	def delete_user_thread(self,user_id):
+		query=MesThread.all().filter("user_id =",user_id)
+		thread_list=query.fetch(limit=1000)
+		for thread in thread_list:
+			thread.delete()
+
 	def withdraw(self,bookmark,your_bbs_count):
 		user_id=self.request.get("user_id")
 		if(not user_id):
@@ -105,6 +111,7 @@ class MyPage(webapp.RequestHandler):
 			return True
 
 		if(your_bbs_count==0):
+			#delete_user_thread(user.user_id())	#他人の掲示板に描いたイラストは慎重に削除する必要がある気がする
 			bookmark.delete()
 			Alert.alert_msg_with_write(self,"退会が完了しました。");
 		else:

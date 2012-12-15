@@ -265,7 +265,7 @@ class ApiObject(webapp.RequestHandler):
 			return None
 
 		disable_news=0
-		if(bbs.disable_news or bbs.del_flag ):
+		if(bbs.disable_news or bbs.del_flag):
 			disable_news=1
 		if(thread.adult or thread.violate_terms or thread.violate_photo):
 			disable_news=1
