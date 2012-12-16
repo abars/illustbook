@@ -19,6 +19,7 @@ from myapp.Bbs import Bbs
 from myapp.MappingId import MappingId
 from myapp.SetUtf8 import SetUtf8
 from myapp.Alert import Alert
+from myapp.Counter import Counter
 
 class AnalyzeAccess(webapp.RequestHandler):
 	def get(self):
@@ -47,8 +48,7 @@ class AnalyzeAccess(webapp.RequestHandler):
 					if(user):
 						bbs.analyze.reset()
 						bbs.analyze.put()
-						bbs.counter.reset_ip()
-						bbs.counter.put()
+						Counter.reset_ip(bbs)
 
 			analyze=bbs.analyze.get_referer()
 			page_name=bbs.bbs_name;

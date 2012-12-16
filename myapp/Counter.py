@@ -8,6 +8,9 @@
 
 from google.appengine.ext import db
 from google.appengine.api import users
+from google.appengine.api import memcache
+
+from myapp.BbsConst import BbsConst
 
 import datetime
 
@@ -20,7 +23,7 @@ class Counter(db.Model):
 	
 	#カウンター更新判定用
 	today_date=db.IntegerProperty(indexed=False)
-	ip = db.StringProperty(indexed=False)
+	#ip = db.StringProperty(indexed=False)
 	
 	#最後に更新された日
 	update_date = db.DateProperty(auto_now=True,indexed=False)
@@ -31,17 +34,28 @@ class Counter(db.Model):
 		self.yesterday_cnt = 0
 		self.yesterday_yesterday_cnt = 0
 	
-	def reset_ip(self):
-		self.ip=""
+	@staticmethod
+	def is_same_ip(remote_addr,bbs):
+		cache_id=BbsConst.OBJECT_COUNTER_IP_HEADER+str(bbs.key())
+		before_ip=memcache.get(cache_id)
+		if(before_ip==remote_addr):
+			return True
+		memcache.set(cache_id,remote_addr,BbsConst.COUNTER_IP_CACHE_TIME)
+		return False
+
+	@staticmethod
+	def reset_ip(bbs):
+		cache_id=BbsConst.OBJECT_COUNTER_IP_HEADER+str(bbs.key())
+		memcache.delete(cache_id)
 		
-	def update_counter(self,remote_addr,dont_count):
-		updated=False
-		if(remote_addr and self.ip!=str(remote_addr)):
-			self.ip=str(remote_addr)
-			if(not dont_count):
-				self.total_cnt=self.total_cnt+1
-				self.today_cnt=self.today_cnt+1
-			updated=True
+	def update_counter(self,remote_addr,dont_count_owner):
+		#カウンターを更新
+		if(not dont_count_owner):
+			self.total_cnt=self.total_cnt+1
+			self.today_cnt=self.today_cnt+1
+			self.put()
+		
+		#1日を超えていた場合
 		now = datetime.datetime.today()+datetime.timedelta(hours=9)
 		now_date=now.day+now.month*12+now.year*365
 		if(now_date!=self.today_date):
@@ -49,8 +63,5 @@ class Counter(db.Model):
 			self.yesterday_cnt=self.today_cnt-1
 			self.today_cnt=1
 			self.today_date=now_date
-			updated=True
-		if(updated):
 			self.put()
-		return updated
 

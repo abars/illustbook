@@ -45,15 +45,26 @@ from myapp.Ranking import Ranking
 class CounterWorker(webapp.RequestHandler):
 	@staticmethod
 	def update_counter(req,bbs,thread,owner):
+		#同じIPからのアクセスは弾く
+		remote_addr=req.request.remote_addr
+		if(Counter.is_same_ip(remote_addr,bbs)):
+			return
+
+		#オーナーをカウントしないモードの判定
 		dont_count=0
 		if(bbs.dont_count_owner and owner):
 			dont_count=1
+
+		#リファラを取得
 		url=req.request.url
 		referer=Analyze.get_request_referer(req.request)
-		remote_addr=req.request.remote_addr
+
+		#スレッドのKeyを取得
 		thread_key=""
 		if(thread):
 			thread_key=str(thread.key())
+
+		#カウンターを進める
 		taskqueue.add(url="/counter_worker",params={"bbs":str(bbs.key()),"thread":thread_key,"dont_count":str(dont_count),"referer":referer,"url":url,"remote_addr":remote_addr},queue_name="counter")
 	
 	def post(self):
@@ -70,7 +81,7 @@ class CounterWorker(webapp.RequestHandler):
 		thread=None
 		if(thread_key):
 			thread=ApiObject.get_cached_object(str(thread_key))
-		
+
 		#カウントしないモードかどうか
 		dont_count=int(self.request.get("dont_count"))
 
@@ -79,27 +90,15 @@ class CounterWorker(webapp.RequestHandler):
 		url=self.request.get("url")
 		remote_addr=self.request.get("remote_addr")
 
-		#カウンタ更新
-		CounterWorker.update_counter_core(bbs,bbs_key,thread,dont_count,referer,url,remote_addr)
-	
-	@staticmethod
-	def update_counter_core(bbs,bbs_key,thread,dont_count,referer,url,remote_addr):
-		#カウンター取得
-		counter=bbs.counter
-		
 		#カウンタを更新
-		updated_counter=counter.update_counter(remote_addr,dont_count)
+		counter=bbs.counter
+		counter.update_counter(remote_addr,dont_count)
 
-		#デバッグ情報
-		#logging.warning("ref:"+referer+" adr:"+remote_addr+" dontcount:"+str(dont_count)+" updated:"+str(updated_counter))
-		
-		#IPが同じだったら終了
+		#オーナーをカウントしないモードでオーナーだった場合は終了
 		if(dont_count):
 			return
-		if(not updated_counter):
-			return
 
-		#PVをカウント
+		#ランキング用のPVをカウント
 		if(thread):
 			Ranking.add_rank_global(thread,BbsConst.SCORE_PV)
 
