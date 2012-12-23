@@ -18,6 +18,7 @@ from myapp.Bbs import Bbs
 from myapp.OwnerCheck import OwnerCheck
 from myapp.BbsConst import BbsConst
 from myapp.AppCode import AppCode
+from myapp.CssDesign import CssDesign
 
 class EditBbs(webapp.RequestHandler):
 	def get(self):
@@ -51,6 +52,7 @@ class EditBbs(webapp.RequestHandler):
 			'error_str': error_str,
 			'is_css_enable': is_css_enable,
 			'is_admin': is_admin,
+			'is_iphone': CssDesign.is_iphone(self),
 			'my_app_list': my_app_list,
 			'user': user,
 			'redirect_url': self.request.path

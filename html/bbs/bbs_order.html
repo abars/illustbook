@@ -34,10 +34,13 @@
 			{% if not bbs.disable_create_new_illust %}
 				<input type="hidden" id="canvas_width" value="{%if bbs.default_canvas_width%}{{bbs.default_canvas_width}}{%else%}400{%endif%}" maxlength=3 size=3/>
 				<input type="hidden" id="canvas_height" value="{%if bbs.default_canvas_height%}{{bbs.default_canvas_height}}{%else%}400{%endif%}" maxlength=3 size=3/>
-				<a class="g-button no-text" href="javascript:bbs_open_draw('','{{bbs.key}}','{{host}}');" style="color:#444;" />イラストを描く</a>
+				<a class="g-button no-text" href="javascript:bbs_open_draw('','{{bbs.key}}','{{host}}');" style="color:#444;">イラストを描く</a>
 			{% endif %}
 		{% endif %}
 	{% endifequal %}
+	{% if owner %}
+		<a class="g-button no-text" href="{{host}}edit_bbs?bbs_key={{bbs.key}}">デザインの編集</a>
+	{% endif %}
 	<BR><BR>
 {% endif %}
 

@@ -16,30 +16,30 @@
 
 <div id="basic" class="tabin">			
 			<TABLE BORDER=0 class="g-table">
-			<TR><TH>掲示板のタイトル</TH><TD><input type="text" name="title" value="{{bbs.bbs_name}}" size="40"></TD></TR>
-			<TR><TH>掲示板の概要</TH><TD><textarea name="bbs_summary"	rows="8" cols="40" style="width:100%;">{{bbs.summary}}</textarea></TD></TR>
+			<TR><TH>掲示板のタイトル</TH><TD><input type="text" name="title" value="{{bbs.bbs_name}}" style="width:100%;"></TD></TR>
+			<TR><TH>掲示板の概要</TH><TD><textarea name="bbs_summary"	rows="8" style="width:100%;">{{bbs.summary}}</textarea></TD></TR>
 			<TR><TH>掲示板のモード</TH><TD>
 			<select name="mode">
 				{% ifequal bbs.bbs_mode 1 %}
-						<option value="1" selected="selected">お絵描き掲示板モード（誰でも投稿可能）</option>
+						<option value="1" selected="selected">お絵描き掲示板（誰でも投稿可能）</option>
 				{% else%}
-						<option value="1">お絵描き掲示板モード（誰でも投稿可能）</option>
+						<option value="1">お絵描き掲示板（誰でも投稿可能）</option>
 				{% endifequal %}
 				
 				{% ifequal bbs.bbs_mode 2 %}
-						<option value="2" selected="selected">お絵かきブログモード（管理人だけ投稿可能）</option>
+						<option value="2" selected="selected">お絵かきブログ（管理人だけ投稿可能）</option>
 				{% else%}
-						<option value="2">お絵かきブログモード（管理人だけ投稿可能）</option>
+						<option value="2">お絵かきブログ（管理人だけ投稿可能）</option>
 				{% endifequal %}
 				
 				{% ifequal bbs.bbs_mode 3 %}
-						<option value="3" selected="selected">スレッド式掲示板モード（イラストなし）</option>
+						<option value="3" selected="selected">スレッド式掲示板（イラストなし）</option>
 				{% else%}
-						<option value="3">スレッド式掲示板モード（イラストなし）</option>
+						<option value="3">スレッド式掲示板（イラストなし）</option>
 				{% endifequal %}
 			</select></TD></TR>
 
-			<TR><TH>戻り先ホームページアドレス</TH><TD><input type="text" name="my_homepage" value="{{bbs.my_homepage}}" size=48></TD></TR>			
+			<TR><TH>戻り先ホームページアドレス</TH><TD><input type="text" name="my_homepage" value="{{bbs.my_homepage}}" style="width:100%"></TD></TR>			
 
 			<TR><TH>イラストをポータルの新着とランキングに表示</TH><TD>
 			<select name="disable_news">
@@ -81,7 +81,7 @@
 	<div id="content" class="tabin">			
 			<TABLE BORDER=0 class="g-table">
 
-			<TR><TH>表示イラスト数(デフォルト5、最大10)</TH><TD><input type="text" name="page_illust_n" maxlength="2" value="{{bbs.page_illust_n}}" size=48></TD></TR>			
+			<TR><TH>表示イラスト数(デフォルト5、最大10)</TH><TD><input type="text" name="page_illust_n" maxlength="2" value="{{bbs.page_illust_n}}"></TD></TR>			
 
 			<TR><TH>デフォルト表示順（初期設定は新着順）</TH><TD>
 			<select name="order">	
@@ -155,7 +155,7 @@
 				{% endifequal %}
 			</select></TD></TR>
 
-			<TR><TH>表示コメント数(デフォルト10、最大50)</TH><TD><input type="text" name="page_comment_n" maxlength="2" value="{{bbs.page_comment_n}}" size=48></TD></TR>		
+			<TR><TH>表示コメント数(デフォルト10、最大50)</TH><TD><input type="text" name="page_comment_n" maxlength="2" value="{{bbs.page_comment_n}}"></TD></TR>		
 
 			<TR><TH>デフォルト表示順（初期設定は更新順）</TH><TD>
 			<select name="comment_order">	
