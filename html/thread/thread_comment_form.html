@@ -54,14 +54,10 @@
 	</div>
 
 	<div class="comment_tab_{{thread.key}}_body comment_tab_{{thread.key}}_body_illust" style="display:none;">
-		イラストの横幅　<input type="text" id="canvas_width_{{thread.key}}" value="{{bbs.illust_reply_width}}" maxlength="3" size="3"/>px
-		<BR>
-
-		イラストの高さ　<input type="text" id="canvas_height_{{thread.key}}" value="{{bbs.illust_reply_height}}" maxlength="3" size="3"/>px
-		<BR>
-
+		<p>イラストの横幅　<input type="text" id="canvas_width_{{thread.key}}" value="{{bbs.illust_reply_width}}" maxlength="3" size="3"/>px</p>
+		<p>イラストの高さ　<input type="text" id="canvas_height_{{thread.key}}" value="{{bbs.illust_reply_height}}" maxlength="3" size="3"/>px</p>
 		{%if bbs.enable_illust_reply_continue %}
-		絵で続きからコメント <input type="checkbox" id="continue_reply_{{thread.key}}"/><BR>
+		<p>絵で続きからコメント <input type="checkbox" id="continue_reply_{{thread.key}}"/></p>
 		{% endif %}
 
 		<input type="button" value="イラブペイントを開く" class="g-button" onclick="open_draw('{{thread.image_key.key}}',1,'{{host}}','{{thread.key}}','{{bbs.key}}',{{thread.illust_mode}});"/>

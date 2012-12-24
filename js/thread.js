@@ -100,6 +100,12 @@ var isFlashInstalled=function(){if(navigator.plugins["Shockwave Flash"]){return 
 		}
 
 		function display_comment_tab(type,thread_key){
+			if($(".comment_tab_"+thread_key+"_"+type).hasClass("checked")){
+				$(".comment_tab_"+thread_key).removeClass("checked");
+				$(".comment_tab_"+thread_key+"_body").hide();
+				return;
+			}
+
 			$(".comment_tab_"+thread_key).removeClass("checked");
 			$(".comment_tab_"+thread_key+"_"+type).addClass("checked");
 

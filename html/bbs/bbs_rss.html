@@ -1,19 +1,17 @@
 {% if template_path %}
-					<table><tr><td width="46px">
-					<A HREF="{{usrhost}}index.xml" class="decnone"><img src="{{template_path}}images/i_rss.jpg" alt="RSS" width="44" height="20" /></A>
-					</td><td>
-					{%if not bbs.tweet_disable %}
-						{% include "bbs_thread/tweet.html" %}
-					{%endif%}
-					</td>
-					</tr></table>
+	<table><tr><td width="46px">
+	<A HREF="{{usrhost}}index.xml" class="decnone"><img src="{{template_path}}images/i_rss.jpg" alt="RSS" width="44" height="20" /></A>
+	</td><td>
+	{%if not bbs.tweet_disable %}
+		{% include "bbs_thread/tweet.html" %}
+	{%endif%}
+	</td></tr></table>
 {% else %}
-					<table><tr><td width="14px">
-					<A HREF="{{usrhost}}index.xml" class="decnone"><img src="{{host}}static_files/rss.png"></A>
-					</td><td>
-					{%if not bbs.tweet_disable %}
-					　{% include "bbs_thread/tweet.html" %}
-					{%endif%}
-					</td>
-					</tr></table>
+	<table><tr><td width="14px">
+	<A HREF="{{usrhost}}index.xml" class="decnone"><img src="{{host}}static_files/rss.png"></A>
+	</td><td>
+	{%if not bbs.tweet_disable %}
+		{% include "bbs_thread/tweet.html" %}
+	{%endif%}
+	</td></tr></table>
 {% endif %}
