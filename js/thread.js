@@ -55,6 +55,13 @@ var isFlashInstalled=function(){if(navigator.plugins["Shockwave Flash"]){return 
 			if(!isFlashInstalled){
 				is_ipad="ipad=1&";
 			}
+			if(!document.getElementById("continue_reply_"+thread_key)){
+				url="";
+			}else{
+				if(!document.getElementById("continue_reply_"+thread_key).checked){
+					url="";
+				}
+			}
 			if(illust_mode==2 && !reply_mode){
 				window.location.href=''+host+'draw_moper?thread_key='+thread_key+'&bbs_key='+bbs_key+'&canvas_url='+url;
 			}else{

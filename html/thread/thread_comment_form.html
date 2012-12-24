@@ -15,10 +15,7 @@
 		<a href="javascript:display_comment_tab('text','{{thread.key}}');" class="g-button no-text comment_tab_{{thread.key}} comment_tab_{{thread.key}}_text"><i class="icon-pencil"></i>コメントを書く</a>
 	{%endif%}
 	{%if bbs.enable_illust_reply %}
-		<a href="javascript:display_comment_tab('illust','{{thread.key}}');" class="g-button no-text comment_tab_{{thread.key}} comment_tab_{{thread.key}}_illust">絵でコメント</a>
-	{%endif%}
-	{%if bbs.enable_illust_reply_continue %}
-		<a href="javascript:display_comment_tab('continue','{{thread.key}}');" class="g-button no-text comment_tab_{{thread.key}} comment_tab_{{thread.key}}_continue">続きから絵でコメント</a>
+		<a href="javascript:display_comment_tab('illust','{{thread.key}}');" class="g-button no-text comment_tab_{{thread.key}} comment_tab_{{thread.key}}_illust"><i class="icon-picture"></i>絵でコメントを描く</a>
 	{%endif%}
 	</div>
 	<br>
@@ -62,10 +59,11 @@
 
 		イラストの高さ　<input type="text" id="canvas_height_{{thread.key}}" value="{{bbs.illust_reply_height}}" maxlength="3" size="3"/>px
 		<BR>
-		<input type="button" value="イラブペイントを開く" class="g-button" onclick="open_draw('',1,'{{host}}','{{thread.key}}','{{bbs.key}}',{{thread.illust_mode}});"/>
-	</div>
 
-	<div class="comment_tab_{{thread.key}}_body comment_tab_{{thread.key}}_body_continue" style="display:none;">
-		<input type="button" value="イラブペイントを開く"  class="g-button" onclick="open_draw('{{thread.image_key.key}}',1,'{{host}}','{{thread.key}}','{{bbs.key}}',{{thread.illust_mode}});"/>
+		{%if bbs.enable_illust_reply_continue %}
+		絵で続きからコメント <input type="checkbox" id="continue_reply_{{thread.key}}"/><BR>
+		{% endif %}
+
+		<input type="button" value="イラブペイントを開く" class="g-button" onclick="open_draw('{{thread.image_key.key}}',1,'{{host}}','{{thread.key}}','{{bbs.key}}',{{thread.illust_mode}});"/>
 	</div>
 {% endif %}

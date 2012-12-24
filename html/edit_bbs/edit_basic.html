@@ -16,8 +16,8 @@
 
 <div id="basic" class="tabin">			
 			<TABLE BORDER=0 class="g-table">
-			<TR><TH>掲示板のタイトル</TH><TD><input type="text" name="title" value="{{bbs.bbs_name}}" style="width:100%;"></TD></TR>
-			<TR><TH>掲示板の概要</TH><TD><textarea name="bbs_summary"	rows="8" style="width:100%;">{{bbs.summary}}</textarea></TD></TR>
+			<TR><TH>掲示板のタイトル</TH><TD><input type="text" name="title" value="{{bbs.bbs_name}}" style="width:95%;"></TD></TR>
+			<TR><TH>掲示板の概要</TH><TD><textarea name="bbs_summary"	rows="8" style="width:95%;">{{bbs.summary}}</textarea></TD></TR>
 			<TR><TH>掲示板のモード</TH><TD>
 			<select name="mode">
 				{% ifequal bbs.bbs_mode 1 %}
@@ -39,7 +39,7 @@
 				{% endifequal %}
 			</select></TD></TR>
 
-			<TR><TH>戻り先ホームページアドレス</TH><TD><input type="text" name="my_homepage" value="{{bbs.my_homepage}}" style="width:100%"></TD></TR>			
+			<TR><TH>戻り先ホームページアドレス</TH><TD><input type="text" name="my_homepage" value="{{bbs.my_homepage}}" style="width:95%"></TD></TR>			
 
 			<TR><TH>イラストをポータルの新着とランキングに表示</TH><TD>
 			<select name="disable_news">
@@ -217,7 +217,7 @@
 				{% endifequal %}
 			</select></TD></TR>
 
-			<TR><TH>コメントルール</TH><TD><textarea name="comment_rule"	rows="4" cols="40" style="width:100%;">{{bbs.comment_rule}}</textarea></TD></TR>
+			<TR><TH>コメントルール</TH><TD><textarea name="comment_rule"	rows="4" cols="40" style="width:95%;">{{bbs.comment_rule}}</textarea></TD></TR>
 
 			<TR><TH>文字でコメント</TH><TD>
 			<select name="disable_normal_reply">
@@ -228,6 +228,24 @@
 				{% endifequal %}
 			</select></TD></TR>
 
+			<TR><TH>絵でコメント</TH><TD>
+			<select name="enable_illust_reply">
+				{% ifequal bbs.enable_illust_reply 1 %}
+						<option value="1" selected="selected">有効</option><option value="0">無効</option>
+				{% else%}
+						<option value="1">有効</option><option value="0" selected="selected">無効</option>
+				{% endifequal %}
+			</select></TD></TR>
+
+			<TR><TH>絵で続きからコメント</TH><TD>
+			<select name="enable_illust_reply_continue">
+				{% ifequal bbs.enable_illust_reply_continue 1 %}
+						<option value="1" selected="selected">有効</option><option value="0">無効</option>
+				{% else%}
+						<option value="1">有効</option><option value="0" selected="selected">無効</option>
+				{% endifequal %}
+			</select></TD></TR>
+			
 			<TR><TH>コメント非表示ボタン</TH><TD>
 			<select name="comment_hidden_button">
 				{% ifequal bbs.comment_hidden_button 1 %}
@@ -283,24 +301,6 @@
 				{% endifequal %}
 			</select></TD></TR>
 
-			<TR><TH>絵でコメント</TH><TD>
-			<select name="enable_illust_reply">
-				{% ifequal bbs.enable_illust_reply 1 %}
-						<option value="1" selected="selected">有効</option><option value="0">無効</option>
-				{% else%}
-						<option value="1">有効</option><option value="0" selected="selected">無効</option>
-				{% endifequal %}
-			</select></TD></TR>
-
-			<TR><TH>絵で続きからコメント</TH><TD>
-			<select name="enable_illust_reply_continue">
-				{% ifequal bbs.enable_illust_reply_continue 1 %}
-						<option value="1" selected="selected">有効</option><option value="0">無効</option>
-				{% else%}
-						<option value="1">有効</option><option value="0" selected="selected">無効</option>
-				{% endifequal %}
-			</select></TD></TR>
-			
 			<TR><TH>絵で返信する場合のキャンバス幅（デフォルト400)</TH><TD><input type="text" name="illust_reply_width" value="{{bbs.illust_reply_width}}" maxlength="4"></TD></TR>
 			<TR><TH>絵で返信する場合のキャンバス高さ（デフォルト200)</TH><TD><input type="text" name="illust_reply_height" value="{{bbs.illust_reply_height}}" maxlength="4"></TD></TR>
 
@@ -328,10 +328,10 @@
 			</select></TD></TR>
 
 			<TR><TH>サイドバーフリーエリアタイトル</TH><TD><input type="text" name="freearea_title" value="{{bbs.freearea_title}}"></TD></TR>
-			<TR><TH>サイドバーフリーエリア</TH><TD><textarea name="freearea"	rows="4" cols="40" style="width:100%;">{{bbs.freearea}}</textarea></TD></TR>
+			<TR><TH>サイドバーフリーエリア</TH><TD><textarea name="freearea"	rows="4" cols="40" style="width:95%;">{{bbs.freearea}}</textarea></TD></TR>
 
 			<TR><TH>アフィリエイトタイトル</TH><TD><input type="text" name="amazon_title" value="{{bbs.amazon_title}}"></TD></TR>
-			<TR><TH>アフィリエイトタグ</TH><TD><textarea name="amazon"	rows="4" cols="40" style="width:100%;">{{bbs.amazon}}</textarea></TD></TR>
+			<TR><TH>アフィリエイトタグ</TH><TD><textarea name="amazon"	rows="4" cols="40" style="width:95%;">{{bbs.amazon}}</textarea></TD></TR>
 
 			<TR><TH>新着イラストの表示数（デフォルト8、-1で非表示)</TH>
 			<TD><input type="text" name="recent_thread_n" value="{{bbs.recent_thread_n}}" maxlength="4"></TD></TR>

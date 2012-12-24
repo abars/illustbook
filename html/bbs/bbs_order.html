@@ -28,6 +28,7 @@
 
 <!-- モバイルの新規イラスト -->
 {% if is_iphone %}
+	<div class="g-button-group">
 	{% ifequal bbs.bbs_mode 3 %}
 	{% else %}
 		{% if can_create_new_image %}
@@ -41,6 +42,7 @@
 	{% if owner %}
 		<a class="g-button no-text" href="{{host}}edit_bbs?bbs_key={{bbs.key}}">デザインの編集</a>
 	{% endif %}
+	</div>
 	<BR><BR>
 {% endif %}
 
