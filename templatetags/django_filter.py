@@ -19,6 +19,7 @@ from myapp.UTC import UTC
 from myapp.JST import JST
 from myapp.Bookmark import Bookmark
 from myapp.ApiObject import ApiObject
+from myapp.BbsConst import BbsConst
 
 #-----------------------------------------------------------------
 # 時間取得
@@ -298,6 +299,13 @@ def new_feed_count(obj):
 	return "("+str(bookmark.new_feed_count)+")"
 
 #-----------------------------------------------------------------
+#スパムフィルタ
+#-----------------------------------------------------------------
+
+def set_seed(no):
+	return BbsConst.SUBMIT_SEED
+
+#-----------------------------------------------------------------
 #フィルタ登録
 #-----------------------------------------------------------------
 
@@ -323,3 +331,4 @@ register.filter(separate_nico)
 register.filter(login_url)
 register.filter(logout_url)
 register.filter(new_feed_count)
+register.filter(set_seed)

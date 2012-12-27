@@ -50,6 +50,11 @@ class AddEntry(webapp.RequestHandler):
 				Alert.alert_msg_with_write(self,"コメントを入力して下さい。");
 				return
 
+		if(not self.request.get('image')):
+			if(self.request.get("seed")!=BbsConst.SUBMIT_SEED):
+				Alert.alert_msg_with_write(self,"シードが一致しません。");
+				return
+
 		if(self.request.get('mail_addr')):
 			entry.mail=self.request.get('mail_addr')
 		else:

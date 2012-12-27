@@ -86,7 +86,7 @@
 
 <div id="layer_{{ entry.com.key }}" style="display: none;position:relative;" class="close">
 <br/>
-<form action='http://localhost/' enctype="multipart/form-data" method="post" onsubmit="this.action='{{host}}add_res?entry_key={{ entry.com.key }}';">
+<form action='http://localhost/' enctype="multipart/form-data" method="post" onsubmit="this.action='{{host}}add_res?entry_key={{ entry.com.key }}&seed={{0|set_seed}}';">
 <table class="table_color">
 <tr><td>名前（必須）</td>
 <td><input type="text" name="author" maxlength="50" value="{{user_name}}"/>

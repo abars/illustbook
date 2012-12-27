@@ -52,6 +52,11 @@ class AddRes(webapp.RequestHandler):
 		thread_key=entry.thread_key
 		bbs_key=thread_key.bbs_key
 
+		#スパムチェック
+		if(self.request.get("seed")!=BbsConst.SUBMIT_SEED):
+			Alert.alert_msg_with_write(self,"シードが一致しません。");
+			return
+
 		#書き込み権限チェック
 		user = users.get_current_user()
 		if(bbs_key.comment_login_require):

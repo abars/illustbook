@@ -70,3 +70,6 @@ class BbsConst:
 	SCORE_RES=1
 	SCORE_BOOKMARK=8
 
+	#スパムチェック用のシード
+	SUBMIT_SEED="1212"
+
