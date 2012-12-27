@@ -85,7 +85,10 @@ class ShowBbs(webapp.RequestHandler):
 
 		#スレッド数とスレッドを取得
 		count_limit=(BbsConst.PAGE_LIST_COUNT+page)*col_num	#ページ番号生成用にしか使わないのでページ番号のMaxがわかれば良い
-		threads_num = thread_query.count(limit=count_limit)
+		if(category==""):
+			threads_num = bbs.cached_threads_num
+		else:
+			threads_num = thread_query.count(limit=count_limit)
 		all_threads = thread_query.fetch(limit=col_num, offset=(page-1)*col_num)
 		
 		#返信イラストを取得

@@ -182,6 +182,9 @@ class AddNewThread(webapp.RequestHandler):
 		if(timage):
 			bbs.cached_thumbnail_key=str(timage.key())
 			bbs.put()
+
+		#新着イラストのキャッシュ無効化
+		RecentCommentCache.invalidate(bbs)
 	
 		#ステータスを出力
 		if(self.request.get('mode')=="illust" or self.request.get('mode')=="illust_all"):

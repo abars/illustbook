@@ -58,7 +58,7 @@ class Bbs(CachedDbModel):
 	disable_news = db.IntegerProperty()
 
 	enable_moper = db.IntegerProperty()
-	enable_full_flat =db.IntegerProperty()				#一覧に本文
+	enable_full_flat =db.IntegerProperty()			#一覧に本文
 	enable_full_comment=db.IntegerProperty()		#一覧にコメント
 	
 	enable_illust_reply = db.IntegerProperty()
@@ -109,17 +109,18 @@ class Bbs(CachedDbModel):
 	font_size=db.IntegerProperty()
 	tool_bg_color=db.StringProperty()
 	
-	dont_count_owner=db.IntegerProperty()							#オーナーのアクセスをカウントするか
-	disable_tag=db.IntegerProperty()										#タグフォームを非表示にするか
-	date_format = db.IntegerProperty()									#日付の表記 0:年月日時秒 1:年月日
-	show_only_movie = db.IntegerProperty()							#イラスト一覧に動画のみ表示
-	bookmark_count = db.IntegerProperty()							#ブックマーク数
-	dont_permit_app = db.IntegerProperty()							#イラストのアプリでの使用禁止
-	css = db.ReferenceProperty(AppCode)								#CSSデザイン
-	delete_when_upload_success=db.IntegerProperty()			#アップロードに成功した場合にデータを削除するか
+	dont_count_owner=db.IntegerProperty()						#オーナーのアクセスをカウントするか
+	disable_tag=db.IntegerProperty()							#タグフォームを非表示にするか
+	date_format = db.IntegerProperty()							#日付の表記 0:年月日時秒 1:年月日
+	show_only_movie = db.IntegerProperty()						#イラスト一覧に動画のみ表示
+	bookmark_count = db.IntegerProperty()						#ブックマーク数
+	dont_permit_app = db.IntegerProperty()						#イラストのアプリでの使用禁止
+	css = db.ReferenceProperty(AppCode)							#CSSデザイン
+	delete_when_upload_success=db.IntegerProperty()				#アップロードに成功した場合にデータを削除するか
 	comment_hidden_button = db.IntegerProperty()				#コメント非表示ボタンを表示するか
 	
 	cached_thumbnail_key = db.StringProperty()					#サムネイルへのKey
+	cached_threads_num = db.IntegerProperty()					#スレッド数
 
 	create_date = 	db.DateTimeProperty(auto_now=False)
 	date = db.DateTimeProperty(auto_now=True)

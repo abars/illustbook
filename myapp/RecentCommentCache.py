@@ -28,8 +28,8 @@ class RecentCommentCache():
 			return None
 
 		data = memcache.get(key)
-		#if data:
-		#	return data
+		if data:
+			return data
 
 		thread_query = MesThread.all().order("-date");
 		thread_query.filter('bbs_key =', bbs)
@@ -61,8 +61,8 @@ class RecentCommentCache():
 			return None
 
 		data = memcache.get(key)
-		#if data:
-		#	return data
+		if data:
+			return data
 		
 		entry_query = Entry.all().order("-date");
 		entry_query.filter("del_flag =",1)

@@ -55,11 +55,13 @@ var isFlashInstalled=function(){if(navigator.plugins["Shockwave Flash"]){return 
 			if(!isFlashInstalled){
 				is_ipad="ipad=1&";
 			}
-			if(!document.getElementById("continue_reply_"+thread_key)){
-				url="";
-			}else{
-				if(!document.getElementById("continue_reply_"+thread_key).checked){
+			if(reply_mode){
+				if(!document.getElementById("continue_reply_"+thread_key)){
 					url="";
+				}else{
+					if(!document.getElementById("continue_reply_"+thread_key).checked){
+						url="";
+					}
 				}
 			}
 			if(illust_mode==2 && !reply_mode){
