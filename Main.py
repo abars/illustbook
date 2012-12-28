@@ -311,7 +311,11 @@ class DelEn(webapp.RequestHandler):
 class DelRes(webapp.RequestHandler):
 	def get(self):
 		entry = db.get(self.request.get("entry_key"))
-		res= db.get(self.request.get("res_key"))
+		
+		if(self.request.get("res_key")=="all"):
+			res=None
+		else:
+			res= db.get(self.request.get("res_key"))
 
 		thread_key=entry.thread_key
 		bbs_key=thread_key.bbs_key
@@ -319,16 +323,21 @@ class DelRes(webapp.RequestHandler):
 		user = users.get_current_user()
 		bbs_owner =not OwnerCheck.check(bbs_key,user)
 		res_owner=False
-		if(user and user.user_id()==res.user_id):
+		if(user and res and user.user_id()==res.user_id):
 			res_owner=True
 		
-		if(not bbs_owner and not res_owner):
+		if(not bbs_owner and not OwnerCheck.is_admin(user) and not res_owner):
 			self.response.out.write(Alert.alert_msg("削除する権限がありません。",self.request.host))
 			return
 
-		res.delete()
-		idx = entry.res_list.index(db.Key(self.request.get("res_key")))
-		entry.res_list.pop(idx)
+		if(not res):
+			for res in entry.res_list:
+				db.get(res).delete()
+			entry.res_list=[]
+		else:
+			res.delete()
+			idx = entry.res_list.index(db.Key(self.request.get("res_key")))
+			entry.res_list.pop(idx)
 		entry.put()
 
 		url=MappingThreadId.get_thread_url("./",bbs_key,thread_key)
