@@ -156,6 +156,10 @@ class ShowBbs(webapp.RequestHandler):
 		if(self.request.get("full_comment")):
 			bbs.enable_full_comment=1
 
+		#フルフラット表示をデフォルト化
+		bbs.enable_full_flat=1
+		bbs.enable_full_comment=1
+
 		#コメントを全て取得
 		user_name=""
 		if(bbs.enable_full_comment):

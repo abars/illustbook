@@ -128,6 +128,7 @@
 
 {% if bbs.enable_full_comment %}
 {% ifnotequal bbs.bbs_mode 3 %}
+{% if not bbs.disable_comment %}
 	<!--コメント統合表示-->
 	{% if not thread.cached_render_comment %}
 	{% else %}
@@ -139,6 +140,7 @@
 
 	<!--コメントを書き込む-->
 	{% include "thread/thread_comment_form.html" %}
+{% endif %}
 {% endifnotequal %}
 {% endif %}
 
