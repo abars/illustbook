@@ -1,0 +1,27 @@
+	<div class="example">
+			<p>この掲示板のURLは</p>
+			{% if bbs.short %}
+			<blockquote>
+			<A HREF="{{host}}{{bbs.short}}/" TARGET=_BLANK><p>http://www.illustbook.net/{{bbs.short}}/</p></A>
+			</blockquote>
+			<p>です。下記にIDを入力して、保存ボタンを押すことでURLを変更可能です。</p>
+			{% else %}
+			 <blockquote>
+			<A HREF="{{host}}usr/{{bbs.key}}/" TARGET=_BLANK><p>http://www.illustbook.net/usr/{{bbs.key}}/</p></A>
+			 </blockquote>
+			<p>です。この形式のURLは内部の仕様変更によって変化してしまう可能性があります。下記にIDを入力することでURLを固定化することを推奨させて頂いています。</p>
+			 {% endif %}
+			<BR><BR>
+			
+			<TABLE BORDER=0 class="g-table">
+			<TR><TH>ID(16文字以下)</TH><TD><input type="text" id="check_short" name="short" value="{% if bbs.short %}{{bbs.short}}{% endif %}" maxlength="16"></TD>
+			<TD><input type="button" value="IDを利用可能か確認" class="g-button" onclick="check_id();" style="font-size:85%"></TD></TR>
+			</TABLE>
+			
+			<BR><BR>
+			<p>管理人を変更する場合は、次のフォームに変更先のアカウントのメールアドレスを入力して保存ボタンを押して下さい。</p>
+			<TABLE BORDER=0 class="g-table">
+			<TR><TH>Gmailメールアドレス</TD><TD><input type="text" name="move_account" value="{% if bbs.move_account %}{{bbs.move_account}}{% endif %}" maxlength="32"></TD>
+			</TABLE>
+	</div>
+

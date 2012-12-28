@@ -1,30 +1,43 @@
-<p>デザインテンプレートでフォームデザインを選択した場合の設定です</p>
+<p>基本設定のデザインテンプレートでフォームデザインを選択した場合のデザインを設定します。</p>
 
-<div class="g-button-group toggle-buttons">
-<a href="javascript:click_design_tab('design');" id="tab_design">全体</a>
-<a href="javascript:click_design_tab('aff');" id="tab_aff">記事</a>
-<a href="javascript:click_design_tab('menubaredit');" id="tab_menubaredit">メニューバー</a>
-<a href="javascript:click_design_tab('sidebardesign');" id="tab_sidebardesign">サイドバー</a>
-<a href="javascript:click_design_tab('twitterdesign');" id="tab_twitterdesign">Twitter</a>
+<div class="example">
+	<p>基本</p>
+	<TABLE BORDER=0 class="g-table">
+		<TR><TH>画面幅（800〜1280）（デフォルト800)</TH><TD><input type="text" name="content_width" value="{{bbs.content_width}}"></TD></TR>
+		<TR><TH>フォントサイズ（0もしくは8〜20)（デフォルト0)</TH><TD><input type="text" name="font_size" value="{{bbs.font_size}}"></TD></TR>
+		<TR><TH>背景画像のURL</TH><TD><input type="text" name="background_image" value="{{bbs.background_image}}" maxlength="512"></TD></TR>
+		<TR><TH>ロゴに表示する画像のURL(800*200px推奨)</TH><TD><input type="text" name="bottom_image" value="{{bbs.bottom_image}}" maxlength="512"></TD></TR>
+	</TABLE>
 </div>
 
-<p>&nbsp</p>
+<div class="example">
+	<p>全体</p>
+	<TABLE BORDER=0 class="g-table">
+		<TR><TH>背景色（デフォルトffffff)</TH><TD><input type="text" name="bg_color" value="{{bbs.bg_color}}" maxlength="6"></TD></TR>
+		<TR><TH>フォント色（デフォルト333333)</TH><TD><input type="text" name="font_color" value="{{bbs.font_color}}" maxlength="6"></TD></TR>
+		<TR><TH>ボタン色（デフォルト999999）</TH><TD><input type="text" name="button_color" value="{{bbs.button_color}}" maxlength="6"></TD></TR>
+		<TR><TH>ボタンアクティブ色（デフォルト777777）</TH><TD><input type="text" name="button_active_color" value="{{bbs.button_active_color}}" maxlength="6"></TD></TR>
+	</TABLE>
+</div>
 
-<div id="aff" class="tabin"> 	 
+<div class="example">
+<p>記事</p>
 	<TABLE BORDER=0 class="g-table">
 		<TR><TH>背景色（デフォルトffffff)</TH><TD><input type="text" name="content_bg_color" value="{{bbs.content_bg_color}}" maxlength="6"></TD></TR>
 		<TR><TH>フォント色（デフォルト333333)</TH><TD><input type="text" name="content_font_color" value="{{bbs.content_font_color}}" maxlength="6"></TD></TR>
 	</TABLE>
 </div>
 
-<div id="menubaredit" class="tabin"> 	 
+<div class="example">
+<p>メニューバー</p>
 	<TABLE BORDER=0 class="g-table">
 		<TR><TH>背景色（デフォルトffffff)</TH><TD><input type="text" name="menu_bg_color" value="{{bbs.menu_bg_color}}" maxlength="6"></TD></TR>
 		<TR><TH>フォント色（デフォルト333333)</TH><TD><input type="text" name="menu_font_color" value="{{bbs.menu_font_color}}" maxlength="6"></TD></TR>
 	</TABLE>
 </div>
 
-<div id="sidebardesign" class="tabin"> 	 
+<div class="example">
+<p>サイドバー</p>
 	<TABLE BORDER=0 class="g-table">
 		<TR><TH>背景色（デフォルトffffff)</TH><TD><input type="text" name="side_color" value="{{bbs.side_color}}" maxlength="6"></TD></TR>
 		<TR><TH>フォント色（デフォルト333333)</TH><TD><input type="text" name="side_font_color" value="{{bbs.side_font_color}}" maxlength="6"></TD></TR>
@@ -32,20 +45,8 @@
 	</TABLE>
 </div>
 
-<div id="design" class="tabin"> 	 
-	<TABLE BORDER=0 class="g-table">
-		<TR><TH>画面幅（800〜1280）（デフォルト800)</TH><TD><input type="text" name="content_width" value="{{bbs.content_width}}"></TD></TR>
-		<TR><TH>フォントサイズ（0もしくは8〜20)（デフォルト0)</TH><TD><input type="text" name="font_size" value="{{bbs.font_size}}"></TD></TR>
-		<TR><TH>背景色（デフォルトffffff)</TH><TD><input type="text" name="bg_color" value="{{bbs.bg_color}}" maxlength="6"></TD></TR>
-		<TR><TH>フォント色（デフォルト333333)</TH><TD><input type="text" name="font_color" value="{{bbs.font_color}}" maxlength="6"></TD></TR>
-		<TR><TH>ボタン色（デフォルト999999）</TH><TD><input type="text" name="button_color" value="{{bbs.button_color}}" maxlength="6"></TD></TR>
-		<TR><TH>ボタンアクティブ色（デフォルト777777）</TH><TD><input type="text" name="button_active_color" value="{{bbs.button_active_color}}" maxlength="6"></TD></TR>
-		<TR><TH>背景画像のURL</TH><TD><input type="text" name="background_image" value="{{bbs.background_image}}" maxlength="512"></TD></TR>
-		<TR><TH>ロゴに表示する画像のURL(800*200px推奨)</TH><TD><input type="text" name="bottom_image" value="{{bbs.bottom_image}}" maxlength="512"></TD></TR>
-	</TABLE>
-</div>
-
-<div id="twitterdesign" class="tabin"> 	 
+<div class="example">
+<p>Twitter</p>
 	<TABLE BORDER=0 class="g-table">
 		<TR><TH>背景色（デフォルトffffff)</TH><TD><input type="text" name="twitter_bg_color" value="{{bbs.twitter_bg_color}}" maxlength="6"></TD></TR>
 		<TR><TH>枠色（デフォルトffffff)</TH><TD><input type="text" name="twitter_shell_color" value="{{bbs.twitter_shell_color}}" maxlength="6"></TD></TR>

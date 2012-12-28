@@ -234,7 +234,10 @@ class DevPortal(webapp.RequestHandler):
 	@staticmethod
 	def ret(req,page):
 		if(req.request.get("redirect")):
-			req.redirect(str(req.request.get("redirect")))
+			tab=""
+			if(req.request.get("tab")):
+				tab="&tab="+req.request.get("tab")
+			req.redirect(str(req.request.get("redirect")+tab))
 			return
 	
 		user = users.get_current_user()

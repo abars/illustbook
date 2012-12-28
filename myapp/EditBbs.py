@@ -46,6 +46,10 @@ class EditBbs(webapp.RequestHandler):
 		if(user):
 			my_app_list=AppCode.all().filter("user_id =",user.user_id()).filter("mode =",2).fetch(limit=100,offset=0)
 		
+		tab="all"
+		if(self.request.get("tab")):
+			tab=self.request.get("tab")
+
 		template_values = {
 			'host': './',
 			'bbs': bbs,
@@ -55,6 +59,7 @@ class EditBbs(webapp.RequestHandler):
 			'is_iphone': CssDesign.is_iphone(self),
 			'my_app_list': my_app_list,
 			'user': user,
+			'tab': tab,
 			'redirect_url': self.request.path
 		}
 
