@@ -1,13 +1,3 @@
-{%if bbs.comment_rule_enable %}
-	<p>&nbsp</p>
-	コメントルール<hr/>
-	{{bbs.comment_rule|safe}}
-{% endif %}
-
-{% if thread.prohibit_comment %}
-	現在、このイラストへのコメントは禁止されています。詳細は運営までお問い合わせ下さい。
-{% endif %}
-
 {%if show_comment_form %}
 	<p>&nbsp</p>
 	<div class="g-button-group toggle-buttons">
@@ -23,6 +13,19 @@
 
 {%if show_comment_form %}
 	<div class="comment_tab_{{thread.key}}_body comment_tab_{{thread.key}}_body_text" style="display:none;">
+
+		{%if bbs.comment_rule_enable %}
+		<p>&nbsp</p>
+		<p>{{bbs.comment_rule|safe}}</p>
+		<p>&nbsp</p>
+		{% endif %}
+
+		{% if thread.prohibit_comment %}
+		<p>&nbsp</p>
+		<p>現在、このイラストへのコメントは禁止されています。詳細は運営までお問い合わせ下さい。</p>
+		<p>&nbsp</p>
+		{% endif %}
+
 		<form action='http://localhost/' enctype="multipart/form-data" method="post" onsubmit="this.action='{{host}}add_entry?bbs_key={{ bbs.key }}&thread_key={{ thread.key }}&seed={{0|set_seed}}';">
 			<table class="table_color">
 			<tr><td>名前（必須）</td>
