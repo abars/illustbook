@@ -157,8 +157,12 @@ class ShowBbs(webapp.RequestHandler):
 			bbs.enable_full_comment=1
 
 		#フルフラット表示をデフォルト化
-		bbs.enable_full_flat=1
-		bbs.enable_full_comment=1
+		if(bbs.bbs_mode==BbsConst.BBS_MODE_NO_IMAGE):
+			bbs.enable_full_flat=0
+			bbs.enable_full_comment=0
+		else:
+			bbs.enable_full_flat=1
+			bbs.enable_full_comment=1
 
 		#コメントを全て取得
 		user_name=""

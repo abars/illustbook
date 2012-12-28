@@ -48,7 +48,9 @@ class ShowEntry(webapp.RequestHandler):
 		for com in com_list_:
 			res_list=[]
 			for res in com.res_list:
-				res_list.append(db.get(res))
+				#one_res=db.get(res)
+				one_res=ApiObject.get_cached_object(res)
+				res_list.append(one_res)
 			com_list.append({'com':com, 'res_list':res_list})
 		return com_list
 	
