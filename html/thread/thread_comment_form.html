@@ -2,10 +2,10 @@
 	<p>&nbsp</p>
 	<div class="g-button-group toggle-buttons">
 	{%if not bbs.disable_normal_reply %}
-		<a href="javascript:display_comment_tab('text','{{thread.key}}');" class="g-button no-text comment_tab_{{thread.key}} comment_tab_{{thread.key}}_text"><i class="icon-pencil"></i>コメントを書く</a>
+		<a href="javascript:display_comment_tab('text','{{thread.key}}');" class="g-button no-text comment_tab_{{thread.key}} comment_tab_{{thread.key}}_text" style="color:#444;"><i class="icon-pencil"></i>コメントを書く</a>
 	{%endif%}
 	{%if bbs.enable_illust_reply %}
-		<a href="javascript:display_comment_tab('illust','{{thread.key}}');" class="g-button no-text comment_tab_{{thread.key}} comment_tab_{{thread.key}}_illust"><i class="icon-picture"></i>絵でコメントを描く</a>
+		<a href="javascript:display_comment_tab('illust','{{thread.key}}');" class="g-button no-text comment_tab_{{thread.key}} comment_tab_{{thread.key}}_illust" style="color:#444;"><i class="icon-picture"></i>絵でコメントを描く</a>
 	{%endif%}
 	</div>
 	<br>
