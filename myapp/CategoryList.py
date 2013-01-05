@@ -2,7 +2,7 @@
 #!/usr/bin/env python
 
 #---------------------------------------------------
-#ƒJƒeƒSƒŠ‚ğ’Ç‰Á‚·‚é
+#ã‚«ãƒ†ã‚´ãƒªã‚’è¿½åŠ ã™ã‚‹
 #copyright 2010-2012 ABARS all rights reserved.
 #---------------------------------------------------
 
@@ -41,14 +41,14 @@ class CategoryList(webapp.RequestHandler):
 
 	@staticmethod
 	def get_category_dic(bbs):
-		#•¶š—ñ->ƒŠƒXƒg
+		#æ–‡å­—åˆ—->ãƒªã‚¹ãƒˆ
 		category_list=[]
 		if(bbs.category_list and bbs.category_list!=""):
 			category_list=bbs.category_list.split(",")
 		else:
 			bbs.category_list=""
 		
-		#ƒJƒEƒ“ƒg•ª—£
+		#ã‚«ã‚¦ãƒ³ãƒˆåˆ†é›¢
 		dic=OrderedDict()
 		for text in category_list:
 			m = re.search('(.*)\(([0-9]*)\)', text)
@@ -58,14 +58,18 @@ class CategoryList(webapp.RequestHandler):
 			else:
 				name=text
 				count=-1
+			if(name==""):
+				continue
 			dic[name]=count
 		
-		#ƒJƒEƒ“ƒg’lXV
+		#ã‚«ã‚¦ãƒ³ãƒˆå€¤æ›´æ–°
 		updated=False
 		for category in dic.keys():
+			#logging.error(""+str(dic[category])+"/["+category+"]/"+str(len(category)))
 			if(dic[category]==-1):
 				dic[category]=MesThread.all().filter("bbs_key =",bbs).filter("category =",category).count(limit=100)
-				updated=True
+				if(dic[category]!=-1):
+					updated=True
 		if(updated):
 			CategoryList.put_category_dic(bbs,dic)
 		
@@ -88,6 +92,6 @@ class CategoryList(webapp.RequestHandler):
 	def add_new_category(bbs,category):
 		category_dic=CategoryList.get_category_dic(bbs)
 		if not (category in category_dic.keys()):
-			category_dic[category]=-1	#ƒJƒeƒSƒŠ‚ğ’Ç‰Á
-		category_dic[category]=-1	#ƒJƒEƒ“ƒgXVƒŠƒNƒGƒXƒg
+			category_dic[category]=-1	#ã‚«ãƒ†ã‚´ãƒªã‚’è¿½åŠ 
+		category_dic[category]=-1	#ã‚«ã‚¦ãƒ³ãƒˆæ›´æ–°ãƒªã‚¯ã‚¨ã‚¹ãƒˆ
 		CategoryList.put_category_dic(bbs,category_dic)

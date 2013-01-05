@@ -63,6 +63,6 @@
 		<p>絵で続きからコメント <input type="checkbox" id="continue_reply_{{thread.key}}"/></p>
 		{% endif %}
 
-		<input type="button" value="イラブペイントを開く" class="g-button" onclick="open_draw('{{thread.image_key.key}}',1,'{{host}}','{{thread.key}}','{{bbs.key}}',{{thread.illust_mode}});"/>
+		<input type="button" value="イラブペイントを開く" class="g-button" onclick="open_draw('{{thread.cached_image_key}}',1,'{{host}}','{{thread.key}}','{{bbs.key}}',{{thread.illust_mode}});"/>
 	</div>
 {% endif %}

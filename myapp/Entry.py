@@ -12,8 +12,9 @@ from google.appengine.api import users
 from myapp.Bbs import Bbs
 from myapp.MesThread import MesThread
 from myapp.ThreadImage import ThreadImage
+from myapp.CachedDbModel import CachedDbModel
 
-class Entry(db.Model):
+class Entry(CachedDbModel):
 	bbs_key = db.ReferenceProperty(Bbs)
 	thread_key = db.ReferenceProperty(MesThread)
 	editor = db.StringProperty()
