@@ -31,7 +31,7 @@ class RecentCommentCache():
 		if data:
 			return data
 
-		thread_query = MesThread.all().order("-date");
+		thread_query = MesThread.all().order("-create_date");
 		thread_query.filter('bbs_key =', bbs)
 		thread_list=thread_query.fetch(display_n);
 		thread_array=[]

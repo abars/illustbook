@@ -43,13 +43,20 @@ class ShowEntry(webapp.RequestHandler):
 		if(thread.illust_mode):
 			com_list_.reverse()
 		
+		#レスのkeyを全て取得
+		res_id_list=[]
+		for com in com_list_:
+			for res in com.res_list:
+				res_id_list.append(res)
+		res_hash=ApiObject.get_cached_object_hash(res_id_list)
+
 		#レスを取得
 		com_list=[]
 		for com in com_list_:
 			res_list=[]
 			for res in com.res_list:
 				#one_res=db.get(res)
-				one_res=ApiObject.get_cached_object(res)
+				one_res=res_hash[res]
 				res_list.append(one_res)
 			com_list.append({'com':com, 'res_list':res_list})
 		return com_list
