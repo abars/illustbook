@@ -78,11 +78,13 @@ from myapp.StackFeedData import StackFeedData
 from myapp.ApiObject import ApiObject
 from myapp.OwnerCheck import OwnerCheck
 from myapp.Ranking import Ranking
+from myapp.UTC import UTC
+from myapp.JST import JST
 
 class MyPage(webapp.RequestHandler):
 	@staticmethod
 	def get_age(bd_year,bd_month,bd_day):
-		at=datetime.datetime.today()
+		at=datetime.datetime.today().replace(tzinfo=UTC()).astimezone(JST())
 		age = at.year - bd_year
 		if (at.month, at.day) <= (bd_month, bd_day):
 			age -= 1
