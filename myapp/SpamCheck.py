@@ -92,7 +92,11 @@ class SpamCheck(webapp.RequestHandler):
 			return True;
 		if(re.search("viagra",content)):
 			return True;
-		return False;		
+		if(re.search(u"タオバオ",content) and re.search(u"代行",content)):
+			return True;
+		if(re.search(u"精力剤",content)):
+			return True;
+		return False;
 	
 	@staticmethod
 	def get_check_code():
