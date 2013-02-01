@@ -162,7 +162,7 @@ class ShowBbs(webapp.RequestHandler):
 			bbs.enable_full_comment=0
 		else:
 			bbs.enable_full_flat=1
-			bbs.enable_full_comment=1
+			#bbs.enable_full_comment=1 #デフォルト化を止める
 
 		#コメントを全て取得
 		user_name=""

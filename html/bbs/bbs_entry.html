@@ -92,38 +92,21 @@
 	　<p><a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{%endif%}.html'  class="g-button" style="color:#444;">続きを読む</a></p>
 	{% endif %}
 	</div>
-	<!-- {% include "thread/thread_drawtime.html" %} -->
 	
 	{% if not bbs.enable_full_comment %}
-		<!--コメントを書くボタン-->
-		<div class="entry-button">
-		{%if not bbs.disable_comment%}
-			<a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{%endif%}.html' 
-			{% if template_path %}
-				class="declink">
-				<img src="{{template_path}}images/btn_comment1.gif" alt="コメントを書く" width="116" height="20" />
-			{% else %}
-				class="g-button" style="color:#444;">
-				コメントを書く
+		<div class="g-button-group toggle-buttons">
+		{%if not bbs.disable_comment %}
+			{%if thread.comment_cnt %}
+				<a href="{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{%endif%}.html" class="g-button no-text comment_tab_{{thread.key}} comment_tab_{{thread.key}}_text">コメントを読む({{thread.comment_cnt}})</a>
 			{% endif %}
-			</a>
-			{% if not template_path %}　{% endif %}
-		{% endif %}
-
-		<!--コメントを読むボタン-->
-		{%if thread.comment_cnt %}
-		<a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{%endif%}.html' 
-			{% if template_path %}
-				class="declink">
-				<img src="{{template_path}}images/btn_comment2.gif" alt="コメントを読む" width="116" height="20" />
-			{% else %}
-				class="g-button" style="color:#444;">
-				コメントを読む({{thread.comment_cnt}})
-			{% endif %}
-		</a>
-		{% endif %}
+			{% if show_comment_form %}
+				<a href="{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{%endif%}.html" class="g-button no-text comment_tab_{{thread.key}} comment_tab_{{thread.key}}_text">コメントを書く</a>
+			{%endif%}
+		{%endif%}
 		</div>
+		<br>
 	{%endif%}
+
 {%endif%}
 
 {% if bbs.enable_full_comment %}

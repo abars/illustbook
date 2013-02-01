@@ -1,8 +1,11 @@
 	<p>掲示板の詳細情報を設定します。</p>
 
 	<input name="enable_full_flat" type="hidden" value="1"/>
-	<input name="enable_full_comment" type="hidden" value="1"/>
 
+	<!--
+	<input name="enable_full_comment" type="hidden" value="1"/>
+	-->
+	
 <div class="example">
 	<p>イラスト一覧</p>
 			<TABLE BORDER=0 class="g-table">
@@ -25,6 +28,7 @@
 						<option value="1">有効</option><option value="0" selected="selected">無効</option>
 				{% endifequal %}
 			</select></TD></TR>
+			-->
 
 			<TR><TH>イラスト一覧にコメントを表示</TH><TD>
 			<select name="enable_full_comment">
@@ -34,7 +38,6 @@
 						<option value="1">有効</option><option value="0" selected="selected">無効</option>
 				{% endifequal %}
 			</select></TD></TR>
-			-->
 
 			<TR><TH>イラスト一覧に画像を表示</TH><TD>
 			<select name="disable_content_image">
