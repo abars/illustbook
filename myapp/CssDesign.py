@@ -131,21 +131,19 @@ class CssDesign (webapp.RequestHandler):
 		bbs=None
 		user_css=None
 
-		if(mode=="css"):
-			#bbs apply
-			try:
+		try:
+			if(mode=="css"):
+				#bbs apply
 				bbs = db.get(bbs_or_css_key)
-			except:
-				bbs=None
-			if(bbs and bbs.design_template_no and bbs.design_template_no==32767):
-				if(bbs.css):
-					user_css=bbs.css
-		else:
-			#test apply
-			try:
+				if(bbs and bbs.design_template_no and bbs.design_template_no==32767):
+					if(bbs.css):
+						user_css=bbs.css
+			else:
+				#test apply
 				user_css = db.get(bbs_or_css_key)
-			except:
-				user_css=None
+		except:
+			bbs=None
+			user_css=None
 
 		if(bbs==None and user_css==None):
 			self.error(404)
