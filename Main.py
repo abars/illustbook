@@ -349,6 +349,19 @@ class DelRes(webapp.RequestHandler):
 
 
 class DelThread(webapp.RequestHandler):
+	@staticmethod
+	def delete_thread_core(thread):
+		entry_query=Entry.all().filter("thread_key =",thread)
+		for entry in entry_query:
+			if(entry.illust_reply_image_key):
+				entry.illust_reply_image_key.delete()
+		if(thread.image_key):
+			if(thread.image_key.chunk_list_key):
+				for key in thread.image_key.chunk_list_key:
+					db.get(key).delete()
+			thread.image_key.delete()
+		thread.delete()
+
 	def get(self):
 		try:
 			bbs = db.get(self.request.get("bbs_key"))
@@ -384,8 +397,8 @@ class DelThread(webapp.RequestHandler):
 				self.response.out.write(Alert.alert_msg("削除権限がありません。",self.request.host))
 				return
 
-		thread.delete()
-		
+		DelThread.delete_thread_core(thread)
+
 		bbs.cached_thumbnail_key=None
 		bbs.put()
 
