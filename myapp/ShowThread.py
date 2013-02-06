@@ -60,6 +60,8 @@ class ShowThread(webapp.RequestHandler):
 		page = 1
 		if self.request.get("page"):
 			page = int(self.request.get("page"))
+			if page < 1:
+				page=1
 		
 		#メンテナンス画面
 		is_maintenance=0

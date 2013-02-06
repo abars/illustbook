@@ -68,6 +68,8 @@ class ShowBbs(webapp.RequestHandler):
 		page = 1
 		if self.request.get("page"):
 			page = int(self.request.get("page"))
+			if page<1 :
+				page=1
 
 		#描画順を取得
 		order=ShowBbs.get_order(self,bbs)
