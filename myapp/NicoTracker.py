@@ -126,7 +126,7 @@ class NicoTracker(webapp.RequestHandler):
 	
 	def auto_update(self):
 		query=NicoTrackerRec.all()
-		rec_list=query.fetch(limit=10000)
+		rec_list=query.fetch(limit=100000)
 		for rec in rec_list:
 			self.update_core(rec,False)
 	
@@ -226,7 +226,7 @@ class NicoTracker(webapp.RequestHandler):
 				no=no+1
 		
 		query=NicoTrackerRec.all()
-		rec_cnt=query.count()
+		rec_cnt=query.count(limit=100000)
 		rec_list=query.order("-play_cnt_now").fetch(limit=10)
 		
 		query=NicoTrackerBookmark.all()
@@ -257,7 +257,11 @@ class NicoTracker(webapp.RequestHandler):
 				bookmark_list.append(del_button+"<A HREF='nico_tracker?url="+url_base+bookmark.bookmark_id_list[i]+"'>"+title+"</A>　"+str(playcnt)+"[play]　");
 		
 		is_anim_icon=self.request.get("is_anim_icon")
-		bbs_n=memcache.get("top_bbs_n")
+		
+		cache=memcache.get("top_bbs_and_illust_n")
+		if(not cache):
+			cache=SiteAnalyzer.get_cache()
+		bbs_n=cache["bbs_n"]
 
 		host_url =self.request.host
 		template_values = {
