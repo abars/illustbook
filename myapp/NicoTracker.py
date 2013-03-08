@@ -2,7 +2,7 @@
 #!/usr/bin/env python
 
 #---------------------------------------------------
-#ニコニコトラッカーメイン
+#ニコニコトラッカー メイン
 #copyright 2010-2012 ABARS all rights reserved.
 #---------------------------------------------------
 
@@ -21,6 +21,8 @@ from google.appengine.ext import db
 from google.appengine.api import urlfetch
 from google.appengine.api import memcache
 
+webapp.template.register_template_library('templatetags.django_filter')
+
 from myapp.SetUtf8 import SetUtf8
 from myapp.NicoTrackerRec import NicoTrackerRec
 from myapp.NicoTrackerBookmark import NicoTrackerBookmark
@@ -32,8 +34,6 @@ from myapp.Alert import Alert
 #--------------------------------------------------------
 #NicoTracker
 #--------------------------------------------------------
-
-webapp.template.register_template_library('templatetags.django_filter')
 
 class NicoTracker(webapp.RequestHandler):
 	@staticmethod
@@ -258,11 +258,6 @@ class NicoTracker(webapp.RequestHandler):
 		
 		is_anim_icon=self.request.get("is_anim_icon")
 		
-		cache=memcache.get("top_bbs_and_illust_n")
-		if(not cache):
-			cache=SiteAnalyzer.get_cache()
-		bbs_n=cache["bbs_n"]
-
 		host_url =self.request.host
 		template_values = {
 			'host': host_url,
@@ -277,7 +272,6 @@ class NicoTracker(webapp.RequestHandler):
 			'bookmark_list': bookmark_list,
 			'url_log': url_log,
 			'is_anim_icon': is_anim_icon,
-			'bbs_n': bbs_n,
 			'book_cnt': book_cnt
 			}
 		

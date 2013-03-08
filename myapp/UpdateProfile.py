@@ -126,10 +126,12 @@ class UpdateProfile(webapp.RequestHandler):
 			bookmark.icon_content_type=img.headers['content-type']
 			ApiObject.create_user_thumbnail(bookmark)
 
-		
-		#bookmark.put()
-		SyncPut.put_sync(bookmark)
-		
+		try:
+			SyncPut.put_sync(bookmark)
+		except:
+			Alert.alert_msg_with_write(self,"データストアへの保存に失敗しました。アイコンの容量が1MBを超えている場合は縮小してからアップロードして下さい。");
+			return
+
 		self.redirect(str("./mypage"))
 		
 
