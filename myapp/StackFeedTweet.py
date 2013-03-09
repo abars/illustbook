@@ -71,7 +71,7 @@ class StackFeedTweet(webapp.RequestHandler):
 		data=db.get(self.request.get("key"))
 		#comment=self.request.get("comment")
 		
-		#自分にフィード
+		#自分と相手にフィード
 		StackFeed._append_one(data,user.user_id())
 		if(data.to_user_id):
 			StackFeed._append_one(data,data.to_user_id)
@@ -109,7 +109,7 @@ class StackFeedTweet(webapp.RequestHandler):
 		#保存
 		data.put()
 		
-		#自分にフィード
+		#自分と相手にフィード
 		StackFeed._append_one(data,user.user_id())
 		if(data.to_user_id):
 			StackFeed._append_one(data,data.to_user_id)
@@ -123,8 +123,11 @@ class StackFeedTweet(webapp.RequestHandler):
 		#リダイレクト
 		host="http://"+MappingId.mapping_host(self.request.host)+"/";
 		redirect_url=host+"mypage?tab=feed";
-		if(self.request.get("to_user_id")):
-			redirect_url=redirect_url+"&user_id="+self.request.get("to_user_id")
+
+		#リダイレクト先は必ず自分とする（他人のタイムラインには投稿は表示されないので）
+		#if(self.request.get("to_user_id")):
+		#	redirect_url=redirect_url+"&user_id="+self.request.get("to_user_id")
+
 		if(self.request.get("feed_page")):
 			redirect_url=redirect_url+"&feed_page="+self.request.get("feed_page")
 		self.redirect(str(redirect_url))

@@ -18,7 +18,8 @@ class Bookmark(db.Model):
 	owner = db.UserProperty()
 	user_id = db.StringProperty()
 	feed_list = db.StringListProperty()
-	stack_feed_list = db.ListProperty(db.Key)
+	stack_feed_list = db.ListProperty(db.Key)	#自分と他人の投稿情報=home_timeline
+	my_timeline = db.ListProperty(db.Key)		#自分の投稿情報=my_timeline
 	thread_key_list = db.ListProperty(db.Key)
 	bbs_key_list = db.ListProperty(db.Key)
 	app_key_list = db.ListProperty(db.Key)

@@ -10,11 +10,24 @@
 		<a id="feed_previous_page" href="javascript:go_feed_previous_page();" class="g-button no-text"><i class="icon-chevron-left"></i></a>
 		<a id="feed_next_page" href="javascript:go_feed_next_page();" class="g-button no-text"><i class="icon-chevron-right"></i></a>
 	</div>
+
+	<!-- ホームタイムライン切り替え -->
+	{% if not view_mode %}
+	<div class="g-button-group">
+		{% ifequal tab "timeline" %}
+			<a href="./mypage?tab=feed" class="g-button no-text">ホームタイムライン</a>
+		{% else %}
+			<a href="./mypage?tab=timeline" class="g-button no-text">{{bookmark.name}}のタイムライン</a>
+		{% endifequal %}
+	</div>
+	{% endif %}
+
 </div>
 
 <!-- ツイート -->
+{% if login_flag %}
+
 <div class="example">
-		{% if login_flag %}
 		<form action="./feed_tweet" enctype="multipart/form-data" method="post" name="frm">
 		<textarea name="message" id="message" value="" style="width:90%" rows=4></textarea>
 		<input type="hidden" name="mode" id="mode" value="add">
@@ -23,8 +36,15 @@
 		{% endif %}
 		<br/><br/>
 		<div class="g-button-group">
-			<a href="javascript:document.frm.submit();" class="g-button"><i class="icon-comment"></i>コメントを投稿</a>
+			<a href="javascript:document.frm.submit();" class="g-button"><i class="icon-comment"></i>
+			{% if view_mode %}
+				{{bookmark.name}}さんに向けてツイート
+			{% else %}
+				ツイート
+			{% endif %}
+			</a>
 		</div>
 		</form>
-		{% endif %}
 </div>
+
+{% endif %}

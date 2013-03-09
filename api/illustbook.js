@@ -189,6 +189,10 @@ illustbook_user.prototype.getTimeline=function(user_id,offset,limit,order,callba
 	illustbook.request._getObject("api_user","getTimeline",null,user_id,offset,limit,order,callback);
 }
 
+illustbook_user.prototype.getHomeTimeline=function(user_id,offset,limit,order,callback){
+	illustbook.request._getObject("api_user","getHomeTimeline",null,user_id,offset,limit,order,callback);
+}
+
 illustbook_user.prototype.getFollow=function(user_id,offset,limit,order,callback){
 	illustbook.request._getObject("api_user","getFollow",null,user_id,offset,limit,order,callback);
 }

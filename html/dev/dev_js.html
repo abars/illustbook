@@ -291,6 +291,7 @@ MyApp.prototype.onTouchEnd=function(x,y){
 	illustbook.user.getBbsList(user_id,0,limit,illustbook.user.ORDER_NONE,callback);
 	illustbook.user.getThreadList(user_id,0,limit,illustbook.user.ORDER_NONE,callback);
 	illustbook.user.getTimeline(user_id,0,limit,illustbook.user.ORDER_NONE,callback);
+	illustbook.user.getHomeTimeline(user_id,0,limit,illustbook.user.ORDER_NONE,callback);
 
 	function callback(oj){
 		alert(oj.status);
@@ -359,6 +360,14 @@ MyApp.prototype.onTouchEnd=function(x,y){
 	<TR>
 		<TD>getTimeline</TD>
 		<TD>ユーザのフィードの一覧を取得</TD>
+		<TD>user_id,offset,limit,order,callback</TD>
+		<TD>Feedオブジェクトのリスト</TD>
+		<TD></TD>
+	</TR>
+
+	<TR>
+		<TD>getHomeTimeline</TD>
+		<TD>ユーザとユーザがフォローしているユーザのフィードの一覧を取得</TD>
 		<TD>user_id,offset,limit,order,callback</TD>
 		<TD>Feedオブジェクトのリスト</TD>
 		<TD></TD>

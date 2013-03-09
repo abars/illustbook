@@ -160,23 +160,28 @@ class StackFeed(webapp.RequestHandler):
 			return
 		bookmark=ApiObject.get_bookmark_of_user_id_for_write(user_id)
 		if(bookmark):
-			if(bookmark.user_id==data.from_user_id and data.feed_mode!="message"):
-				return	#自分にはフィードしない
+			#確保
 			if(not bookmark.stack_feed_list):
 				bookmark.stack_feed_list=[]
+			if(not bookmark.my_timeline):
+				bookmark.my_timeline=[]
 			
-			#重複判定
-			if(bookmark.stack_feed_list.count(data.key())>=1):
-				return
-			
-			bookmark.stack_feed_list.insert(0,data.key())
-			bookmark.stack_feed_list=bookmark.stack_feed_list[:256]
+			#ホームタイムラインに追加
+			if(bookmark.stack_feed_list.count(data.key())==0):
+				bookmark.stack_feed_list.insert(0,data.key())
+				bookmark.stack_feed_list=bookmark.stack_feed_list[:256]
+				if(bookmark.user_id!=data.from_user_id):
+					if(not bookmark.new_feed_count):
+						bookmark.new_feed_count=1
+					else:
+						bookmark.new_feed_count=bookmark.new_feed_count+1
 
-			if(bookmark.user_id!=data.from_user_id):
-				if(not bookmark.new_feed_count):
-					bookmark.new_feed_count=1
-				else:
-					bookmark.new_feed_count=bookmark.new_feed_count+1
+			#自分の投稿の場合はセルフタイムラインにも追加する
+			if(bookmark.user_id==data.from_user_id):
+				if(bookmark.my_timeline.count(data.key())==0):
+					bookmark.my_timeline.insert(0,data.key())
+					bookmark.my_timeline=bookmark.my_timeline[:256]
+
 			bookmark.put()
 	
 	#-----------------------------------------------
@@ -249,7 +254,13 @@ class StackFeed(webapp.RequestHandler):
 	#-----------------------------------------------
 	
 	@staticmethod
+	def _feed_to_mine(data,user_id):
+		#自分のタイムラインに追加
+		StackFeed._append_one(data,user_id)
+
+	@staticmethod
 	def _feed_to_follower(data,user_id):
+		#フォロワーに送信
 		follow_list=StackFeed._get_follow_list(user_id)
 		if(follow_list):
 			for bookmark in follow_list:
@@ -266,18 +277,16 @@ class StackFeed(webapp.RequestHandler):
 		if(not thread):
 			return
 		
-		query_bbs_bookmark=Bookmark.all().filter("bbs_key_list = ",db.Key(str(bbs.key())))
-		bookmark_list=query_bbs_bookmark.fetch(limit=100)
-		
-		follow_list=StackFeed._get_follow_list(user_id)
-		if(follow_list):
-			bookmark_list=bookmark_list+follow_list
-		
 		data=StackFeed._create_new_thread(user_id,bbs,thread)
 
+		query_bbs_bookmark=Bookmark.all().filter("bbs_key_list = ",db.Key(str(bbs.key())))
+		bookmark_list=query_bbs_bookmark.fetch(limit=100)
 		for bookmark in bookmark_list:
 			StackFeed._append_one(data,bookmark.user_id)
 	
+		StackFeed._feed_to_follower(data,user_id)
+		StackFeed._feed_to_mine(data,user_id)
+
 	@staticmethod
 	def _feed_new_bookmark_bbs_core(user_id,bbs):
 		#掲示板がブックマークされた場合、
@@ -293,6 +302,7 @@ class StackFeed(webapp.RequestHandler):
 		StackFeed._append_one(data,bbs_owner_user_id)
 
 		StackFeed._feed_to_follower(data,user_id)
+		StackFeed._feed_to_mine(data,user_id)
 
 	@staticmethod
 	def _feed_new_bookmark_thread_core(user_id,thread,comment):
@@ -309,6 +319,7 @@ class StackFeed(webapp.RequestHandler):
 		StackFeed._append_one(data,thread_owner_user_id)
 
 		StackFeed._feed_to_follower(data,user_id)
+		StackFeed._feed_to_mine(data,user_id)
 
 	@staticmethod
 	def _feed_new_applause_thread_core(user_id,thread):
@@ -325,6 +336,7 @@ class StackFeed(webapp.RequestHandler):
 		StackFeed._append_one(data,thread_owner_user_id)
 
 		StackFeed._feed_to_follower(data,user_id)
+		StackFeed._feed_to_mine(data,user_id)
 
 	@staticmethod
 	def _feed_new_comment_thread_and_entry_core(user_id,thread,entry):
@@ -353,6 +365,8 @@ class StackFeed(webapp.RequestHandler):
 		for bookmark in bookmark_list:
 			StackFeed._append_one(data,bookmark.user_id)
 
+		StackFeed._feed_to_mine(data,user_id)
+
 	@staticmethod
 	def _feed_new_follow_core(user_id,add_user_key):
 		#フォローした場合、フォローされたユーザと、
@@ -362,7 +376,8 @@ class StackFeed(webapp.RequestHandler):
 		StackFeed._append_one(data,add_user_key)
 
 		StackFeed._feed_to_follower(data,user_id)
-	
+		StackFeed._feed_to_mine(data,user_id)
+
 	@staticmethod
 	def _feed_new_message_core(user_id,data):
 		#宛先ユーザと、フォローしているユーザに通知
@@ -372,6 +387,7 @@ class StackFeed(webapp.RequestHandler):
 		#	StackFeed._append_one(data,data.to_user_id)
 
 		StackFeed._feed_to_follower(data,user_id)
+		StackFeed._feed_to_mine(data,user_id)
 		
 	def post(self):
 		mode=self.request.get("mode")

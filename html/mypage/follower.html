@@ -14,7 +14,11 @@
 			その他 <span class="caret"></span>
 		</a>
 		<ul class="dropdown-menu">
-			<li><a href="./mypage?user_id={{bookmark.user_id}}"">リンク用のURLを開く</a></li>
+			{% if view_mode %}
+				<li><a href="./mypage"">マイページへ戻る</a></li>
+			{% else %}
+				<li><a href="./mypage?user_id={{bookmark.user_id}}"">リンク用URLを開く</a></li>
+			{% endif %}
 			{% if user %}
 				<li><a href="./mypage?tab=profile&edit=1">フォロワーの管理</a></li>
 				<!--退会 -->

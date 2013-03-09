@@ -162,8 +162,12 @@ function feed_initialize(){
 	document.getElementById("feed").innerHTML="<p>Loading</p><p>&nbsp</p>"
 
 	var feed_unit=8;
-	illustbook.user.getTimeline(mypage_user_id,(mypage_feed_page-1)*feed_unit,feed_unit,illustbook.user.ORDER_NONE,get_timeline_callback);
-	
+	if(mypage_now_tab=="timeline" || mypage_view_mode){
+		illustbook.user.getTimeline(mypage_user_id,(mypage_feed_page-1)*feed_unit,feed_unit,illustbook.user.ORDER_NONE,get_timeline_callback);
+	}else{
+		illustbook.user.getHomeTimeline(mypage_user_id,(mypage_feed_page-1)*feed_unit,feed_unit,illustbook.user.ORDER_NONE,get_timeline_callback);
+	}
+
 	if(mypage_feed_page==1){
 		$("#feed_previous_page").addClass("disabled2");
 	}else{
@@ -215,6 +219,10 @@ function scroll_to_top(){
 
 function display_tab(id){
 	mypage_now_tab=id;
+
+	if(id=="timeline" || id=="home_timeline"){
+		id="feed";
+	}
 
 	$(".one_tab").hide();
 	$("#one_tab_"+id).show();
@@ -359,13 +367,17 @@ function feed_parse(feed){
 	txt+='<div style="float:right;text-align:right;">'
 	txt+=feed.create_date+"<BR>"
 	if(!mypage_view_mode){
-		if(feed.mode=="message" && feed.from_user.user_id==mypage_user_id){
-			txt+='<a href="#" onclick="if(confirm(\'ツイートを取り消してもよろしいですか？\')){window.location.href=\'feed_tweet?mode=del_tweet&key='+feed.key+'&feed_page='+mypage_feed_page+'\';}return false;" class="g-button mini">ツイートを取り消す</a><BR>'
-		}else{
-			txt+='<a href="#" onclick="if(confirm(\'フィードを消去してもよろしいですか？\')){window.location.href=\'feed_tweet?mode=del_feed&key='+feed.key+'&feed_page='+mypage_feed_page+'\';}return false;" class="g-button mini">フィードを消去</a><BR>'
+		//if(feed.mode=="message" && 
+		if(feed.from_user.user_id==mypage_user_id){
+			txt+='<a href="#" onclick="if(confirm(\'ツイートを削除してもよろしいですか？\')){window.location.href=\'feed_tweet?mode=del_tweet&key='+feed.key+'&feed_page='+mypage_feed_page+'\';}return false;" class="g-button mini">削除</a><BR>';
 		}
-	}else{
-			txt+='<a href="#" onclick="feed_retweet(\''+feed.key+'\',\''+mypage_feed_page+'\');return false;" class="g-button mini">リツイート</a><BR>'
+		if(feed.to_user.user_id==mypage_user_id){
+			txt+='<a href="mypage?user_id='+feed.from_user.user_id+'&tab=feed" class="g-button mini">返信</a><BR>';
+		}
+	}
+	if(feed.from_user.user_id!=mypage_user_id){
+		//txt+='<a href="#" onclick="feed_retweet(\''+feed.key+'\',\''+mypage_feed_page+'\');return false;" class="g-button mini">リツイート</a><BR>';
+		//txt+='<a href="#" onclick="if(confirm(\'フィードを消去してもよろしいですか？\')){window.location.href=\'feed_tweet?mode=del_feed&key='+feed.key+'&feed_page='+mypage_feed_page+'\';}return false;" class="g-button mini">フィードを消去</a><BR>'
 	}
 	txt+="</div>"
 	txt+="</div>"

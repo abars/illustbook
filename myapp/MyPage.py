@@ -160,8 +160,6 @@ class MyPage(webapp.RequestHandler):
 		#自分だったらビューモードにしない
 		if(user and self.request.get("user_id")==user.user_id() and not self.request.get("withdraw")):
 			view_mode=0
-			#self.redirect(str("./mypage"))
-			#return
 		
 		#ログインしているか
 		login_flag=0

@@ -150,14 +150,25 @@ class ApiUser(webapp.RequestHandler):
 
 	@staticmethod
 	def user_get_timeline(req,user_id):
+		#ユーザのタイムライン
+
 		bookmark=ApiObject.get_bookmark_of_user_id(user_id)
 		if(bookmark==None):
 			return []
-
-		feed_list=ApiObject.offset_and_limit(req,bookmark.stack_feed_list)
-		
+		feed_list=ApiObject.offset_and_limit(req,bookmark.my_timeline)
 		feed_list=ApiObject.get_cached_object_list(feed_list)
-		
+		dic=ApiObject.create_feed_object_list(req,feed_list)
+		return dic
+
+	@staticmethod
+	def user_get_home_timeline(req,user_id):
+		#そのユーザのフォローしているユーザのタイムライン
+
+		bookmark=ApiObject.get_bookmark_of_user_id(user_id)
+		if(bookmark==None):
+			return []
+		feed_list=ApiObject.offset_and_limit(req,bookmark.stack_feed_list)
+		feed_list=ApiObject.get_cached_object_list(feed_list)
 		dic=ApiObject.create_feed_object_list(req,feed_list)
 		return dic
 		
@@ -201,5 +212,7 @@ class ApiUser(webapp.RequestHandler):
 			dic=ApiUser.user_get_thread_list(self,user_id)
 		if(method=="getTimeline"):
 			dic=ApiUser.user_get_timeline(self,user_id)
+		if(method=="getHomeTimeline"):
+			dic=ApiUser.user_get_home_timeline(self,user_id)
 			
 		return ApiObject.add_json_success_header(dic)
