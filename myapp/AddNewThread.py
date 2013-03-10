@@ -44,32 +44,41 @@ from myapp.ApiFeed import ApiFeed
 from myapp.CategoryList import CategoryList
 
 class AddNewThread(webapp.RequestHandler):
+	def write_status(self,is_flash,msg):
+		if(is_flash):
+			self.response.headers ['Content-type'] = "text/html;charset=utf-8";
+			self.response.out.write(msg);
+		else:
+			Alert.alert_msg_with_write(self,msg);
+
 	def post(self):
+		is_flash=self.request.get('mode')=="illust" or self.request.get('mode')=="illust_all";
+
 		if(self.request.get('thread_title')==""):
-			Alert.alert_msg_with_write(self,"スレッドタイトルを入力して下さい。");
+			self.show_status(is_flash,"スレッドタイトルを入力して下さい。");
 			return                        
 		if(self.request.get('author')==""):
-			Alert.alert_msg_with_write(self,"投稿者名を入力して下さい。");
+			self.show_status(is_flash,"投稿者名を入力して下さい。");
 			return                        
 		bbs = db.get(self.request.get("bbs_key"))
 		user = users.get_current_user()
 		if(bbs.bbs_mode==BbsConst.BBS_MODE_ONLY_ADMIN):
 			if(OwnerCheck.check(bbs,user)):
-				Alert.alert_msg_with_write(self,"スレッドを作成する権限がありません。");
+				self.show_status(is_flash,"スレッドを作成する権限がありません。");
 				return
 		if(bbs.bbs_mode==BbsConst.BBS_MODE_NO_IMAGE):
 			if(bbs.disable_create_new_thread==1):
 				if(OwnerCheck.check(bbs,user)):
-					Alert.alert_msg_with_write(self,"スレッドを作成する権限がありません。");
+					self.show_status(is_flash,"スレッドを作成する権限がありません。");
 					return
 			if(bbs.disable_create_new_thread==2):
 				if(not user):
-					Alert.alert_msg_with_write(self,"スレッドを作成する権限がありません。");
+					self.show_status(is_flash,"スレッドを作成する権限がありません。");
 					return
 
 		checkcode=SpamCheck.get_check_code()
 		if(SpamCheck.check(self.request.get('thread_title'),checkcode)):
-			Alert.alert_msg_with_write(self,BbsConst.SPAM_CHECKED);
+			self.show_status(is_flash,BbsConst.SPAM_CHECKED);
 			return
 
 		homepage_addr=""
@@ -81,7 +90,7 @@ class AddNewThread(webapp.RequestHandler):
 			new_thread=db.get(self.request.get("thread_key"))
 			if(OwnerCheck.check(bbs,user)):
 				if(self.request.get("delete_key")!=new_thread.delete_key or new_thread.delete_key==""):
-					Alert.alert_msg_with_write(self,"上書きをする権限がありません。");
+					self.show_status(is_flash,"上書きをする権限がありません。");
 					return;
 		else:
 			#新規作成の場合
@@ -163,13 +172,17 @@ class AddNewThread(webapp.RequestHandler):
 				timage.thumbnail=db.Blob(self.request.get("thumbnail"))
 			
 			if(len(timage.image)<=0 or len(timage.thumbnail)<=0):
-				Alert.alert_msg_with_write(self,"画像データが不正です。");
+				self.show_status(is_flash,"画像データが不正です。");
 				return
 
 			timage.illust_mode=new_thread.illust_mode
 			timage.is_png=new_thread.is_png
-			timage.put()
-			new_thread.image_key=timage#db.Key(str(timage.key()))
+			try:
+				timage.put()
+			except:
+				self.write_status(is_flash,"画像の容量が大きすぎます。");
+				return
+			new_thread.image_key=timage
 			ImageFile.invalidate_cache(str(timage.key()))
 
 		#url assign
@@ -185,11 +198,10 @@ class AddNewThread(webapp.RequestHandler):
 
 		#新着イラストのキャッシュ無効化
 		RecentCommentCache.invalidate(bbs)
-	
+		
 		#ステータスを出力
-		if(self.request.get('mode')=="illust" or self.request.get('mode')=="illust_all"):
-			self.response.headers ['Content-type'] = "text/html;charset=utf-8"  
-			self.response.out.write("success")
+		if(is_flash):
+			self.write_status(is_flash,"success")
 		else:
 			self.redirect(str('./bbs_index?bbs_key='+self.request.get('bbs_key')))
 		
