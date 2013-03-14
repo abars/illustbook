@@ -55,30 +55,30 @@ class AddNewThread(webapp.RequestHandler):
 		is_flash=self.request.get('mode')=="illust" or self.request.get('mode')=="illust_all";
 
 		if(self.request.get('thread_title')==""):
-			self.show_status(is_flash,"スレッドタイトルを入力して下さい。");
+			self.write_status(is_flash,"スレッドタイトルを入力して下さい。");
 			return                        
 		if(self.request.get('author')==""):
-			self.show_status(is_flash,"投稿者名を入力して下さい。");
+			self.write_status(is_flash,"投稿者名を入力して下さい。");
 			return                        
 		bbs = db.get(self.request.get("bbs_key"))
 		user = users.get_current_user()
 		if(bbs.bbs_mode==BbsConst.BBS_MODE_ONLY_ADMIN):
 			if(OwnerCheck.check(bbs,user)):
-				self.show_status(is_flash,"スレッドを作成する権限がありません。");
+				self.write_status(is_flash,"スレッドを作成する権限がありません。");
 				return
 		if(bbs.bbs_mode==BbsConst.BBS_MODE_NO_IMAGE):
 			if(bbs.disable_create_new_thread==1):
 				if(OwnerCheck.check(bbs,user)):
-					self.show_status(is_flash,"スレッドを作成する権限がありません。");
+					self.write_status(is_flash,"スレッドを作成する権限がありません。");
 					return
 			if(bbs.disable_create_new_thread==2):
 				if(not user):
-					self.show_status(is_flash,"スレッドを作成する権限がありません。");
+					self.write_status(is_flash,"スレッドを作成する権限がありません。");
 					return
 
 		checkcode=SpamCheck.get_check_code()
 		if(SpamCheck.check(self.request.get('thread_title'),checkcode)):
-			self.show_status(is_flash,BbsConst.SPAM_CHECKED);
+			self.write_status(is_flash,BbsConst.SPAM_CHECKED);
 			return
 
 		homepage_addr=""
@@ -90,7 +90,7 @@ class AddNewThread(webapp.RequestHandler):
 			new_thread=db.get(self.request.get("thread_key"))
 			if(OwnerCheck.check(bbs,user)):
 				if(self.request.get("delete_key")!=new_thread.delete_key or new_thread.delete_key==""):
-					self.show_status(is_flash,"上書きをする権限がありません。");
+					self.write_status(is_flash,"上書きをする権限がありません。");
 					return;
 		else:
 			#新規作成の場合
@@ -172,7 +172,7 @@ class AddNewThread(webapp.RequestHandler):
 				timage.thumbnail=db.Blob(self.request.get("thumbnail"))
 			
 			if(len(timage.image)<=0 or len(timage.thumbnail)<=0):
-				self.show_status(is_flash,"画像データが不正です。");
+				self.write_status(is_flash,"画像データが不正です。");
 				return
 
 			timage.illust_mode=new_thread.illust_mode
