@@ -57,6 +57,11 @@ class AddRes(webapp.RequestHandler):
 			Alert.alert_msg_with_write(self,"シードが一致しません。");
 			return
 
+		#コメント禁止
+		if(thread_key.prohibit_comment):
+			Alert.alert_msg_with_write(self,"このイラストへのコメントは禁止されています。");
+			return
+
 		#書き込み権限チェック
 		user = users.get_current_user()
 		if(bbs_key.comment_login_require):
