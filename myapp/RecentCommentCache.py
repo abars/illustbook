@@ -12,6 +12,7 @@ from google.appengine.api import memcache
 from myapp.Entry import Entry
 from myapp.MesThread import MesThread
 from myapp.BbsConst import BbsConst
+from myapp.ApiObject import ApiObject
 
 class RecentCommentCache():
 	@staticmethod
@@ -73,14 +74,22 @@ class RecentCommentCache():
 			try:
 				if(not bbs and entry.thread_key.bbs_key.disable_news):
 					continue;
-				if(entry.del_flag==BbsConst.ENTRY_DELETED):	#treat put to query delay
-					continue;
 				thread_key=str(entry.thread_key.key())
 				if(entry.thread_key.short):
 					thread_key=entry.thread_key.short
+				
 				editor=entry.editor
-				if(entry.last_update_editor):	#for res update
-					editor=entry.last_update_editor
+				
+				#if(entry.last_update_editor):	#for res update
+				#	editor=entry.last_update_editor
+				
+				#treat res delete
+				res_n=len(entry.res_list)
+				if(res_n>=1):
+					res=ApiObject.get_cached_object(entry.res_list[res_n-1])
+					if(res):
+						editor=res.editor
+
 				mee={'short': str(entry.thread_key.bbs_key.short),
 						'bbs_key' : str(entry.thread_key.bbs_key.key()),
 						'thread_key':thread_key,

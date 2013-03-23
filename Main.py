@@ -338,6 +338,13 @@ class DelRes(webapp.RequestHandler):
 			res.delete()
 			idx = entry.res_list.index(db.Key(self.request.get("res_key")))
 			entry.res_list.pop(idx)
+		
+		res_n=len(entry.res_list)
+		if(res_n>=1):
+			entry.date=db.get(entry.res_list[res_n-1]).date
+		else:
+			entry.date=entry.create_date
+
 		entry.put()
 
 		url=MappingThreadId.get_thread_url("./",bbs_key,thread_key)
@@ -346,6 +353,8 @@ class DelRes(webapp.RequestHandler):
 		thread = db.get(str(thread_key.key()))
 		thread.comment_cnt=thread.comment_cnt-1
 		thread.put()
+
+		RecentCommentCache.invalidate(bbs_key)
 
 
 class DelThread(webapp.RequestHandler):

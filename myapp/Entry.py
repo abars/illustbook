@@ -30,7 +30,7 @@ class Entry(CachedDbModel):
 	illust_reply = db.IntegerProperty()
 	illust_reply_image = db.StringProperty()	#Deleted
 	illust_reply_image_key = db.ReferenceProperty(ThreadImage)
-	last_update_editor = db.StringProperty()	#for response update to comment cache
+	last_update_editor = db.StringProperty()	#Deleted(old:for response update to comment cache)
 	user_id= db.StringProperty()						#Submitter
 	hidden_flag = db.IntegerProperty()	#HiddenComment
 	violate_terms = db.IntegerProperty()
