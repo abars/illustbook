@@ -288,7 +288,7 @@ function feed_parse(feed){
 	
 	//アイコン
 	txt+='<div style="float:left;width:58px;padding-right:6px;text-align:center;margin:auto;">'
-	if(feed.from_user){
+	if(feed.from_user && feed.mode!="deleted"){
 		txt+='<a href="javascript:go_feed(\''+feed.from_user.profile_url+'\')"><img src="'+feed.from_user.icon_url+'&size=mini" width=50px height=50px class="radius_image"></a>';
 	}else{
 		txt+='<img src="static_files/empty_user.png" width=50px height=50px class="radius_image">'
@@ -300,13 +300,15 @@ function feed_parse(feed){
 	
 	//ユーザ名
 	txt+="<p><b>"
-	if(feed.from_user){
-		txt+='<a href="javascript:go_feed(\''+feed.from_user.profile_url+'\')">'+feed.from_user.name+'</a>'
-	}else{
-		txt+='匿名ユーザ'
-	}
-	if(feed.to_user){
-		txt+='　->　<a href="javascript:go_feed(\''+feed.to_user.profile_url+'\')">'+feed.to_user.name+'</A>'
+	if(feed.mode!="deleted"){
+		if(feed.from_user){
+			txt+='<a href="javascript:go_feed(\''+feed.from_user.profile_url+'\')">'+feed.from_user.name+'</a>'
+		}else{
+			txt+='匿名ユーザ'
+		}
+		if(feed.to_user){
+			txt+='　->　<a href="javascript:go_feed(\''+feed.to_user.profile_url+'\')">'+feed.to_user.name+'</A>'
+		}
 	}
 	txt+="</b></p>"
 	

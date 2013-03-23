@@ -63,11 +63,23 @@ class StackFeedTweet(webapp.RequestHandler):
 		if(bookmark==None):
 			self.response.out.write(Alert.alert_msg("フィードリストが見つかりません。",self.request.host));
 			return False
+
+		failed_cnt=0
+
 		try:
 			bookmark.stack_feed_list.remove(db.Key(self.request.get("key")))
 		except:
+			failed_cnt=failed_cnt+1
+
+		try:
+			bookmark.my_timeline.remove(db.Key(self.request.get("key")))
+		except:
+			failed_cnt=failed_cnt+1
+
+		if(failed_cnt==2):
 			self.response.out.write(Alert.alert_msg("既に削除されています。",self.request.host));
 			return False
+
 		bookmark.put()
 		return True
 	
@@ -126,7 +138,7 @@ class StackFeedTweet(webapp.RequestHandler):
 	def redirect_main(self):
 		#リダイレクト
 		host="http://"+MappingId.mapping_host(self.request.host)+"/";
-		redirect_url=host+"mypage?tab=feed";
+		redirect_url=host+"mypage?";
 
 		#リダイレクト先は必ず自分とする（他人のタイムラインには投稿は表示されないので）
 		#if(self.request.get("to_user_id")):
@@ -136,6 +148,8 @@ class StackFeedTweet(webapp.RequestHandler):
 			redirect_url=redirect_url+"&feed_page="+self.request.get("feed_page")
 		if(self.request.get("tab")):
 			redirect_url=redirect_url+"&tab="+self.request.get("tab")
+		else:
+			tredirect_url=redirect_url+"ab=feed"
 		if(self.request.get("edit")):
 			redirect_url=redirect_url+"&edit="+self.request.get("edit")
 

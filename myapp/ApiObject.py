@@ -399,7 +399,7 @@ class ApiObject(webapp.RequestHandler):
 		return thread_list
 
 	@staticmethod
-	def create_feed_object_list(req,feed_list):
+	def create_feed_object_list(req,feed_list,feed_key_list):
 		#出現するユーザと掲示板を全てリストアップ
 		user_list=ApiObject._get_feed_user_list(feed_list)
 		bbs_list=ApiObject._get_feed_bbs_list(feed_list)
@@ -424,17 +424,23 @@ class ApiObject(webapp.RequestHandler):
 		
 		#オブジェクト作成
 		dic=[]
-		for feed in feed_list:
-			if(feed==None):
-				continue
-			one_dic=ApiObject.create_feed_object(req,feed,user_hash,bbs_hash,thread_hash)
+		feed_n=len(feed_list)
+		for i in range(feed_n):
+			feed=feed_list[i]
+			feed_key=feed_key_list[i]
+			one_dic=ApiObject.create_feed_object(req,feed,user_hash,bbs_hash,thread_hash,feed_key)
 			if(one_dic==None):
 				continue
 			dic.append(one_dic)
 		return dic
 
 	@staticmethod
-	def create_feed_object(req,feed,user_hash,bbs_hash,thread_hash):
+	def create_feed_object(req,feed,user_hash,bbs_hash,thread_hash,feed_key):
+		#フィードが削除された
+		if(feed==None):
+			deleted_feed={"mode":"deleted","from_user":"","to_user":"","follow_user":"","bbs":"","thread":"","message":"ツイートが削除されました。","create_date":"","key":str(feed_key)}
+			return deleted_feed
+
 		#送信元ユーザ取得
 		from_user=""
 		if(feed.from_user_id):
@@ -472,15 +478,18 @@ class ApiObject(webapp.RequestHandler):
 		create_date=ApiObject.get_date_str(feed.create_date)
 		
 		#削除された場合のオブジェクト
-		deleted_feed={"mode":"deleted","from_user":"","to_user":"","follow_user":"","bbs":"","thread":"","message":"削除されました","create_date":create_date,"key":str(feed.key())}
+		deleted_feed={"mode":"deleted","from_user":from_user,"to_user":to_user,"follow_user":follow_user,"bbs":bbs,"thread":thread,"message":"コメントが削除されました。","create_date":create_date,"key":str(feed.key())}
 
 		#コメントを取得
 		message=feed.message
 		if(feed.feed_mode=="new_comment_thread"):
+			comment_deleted=False
+
 			entry_key=StackFeedData.entry_key.get_value_for_datastore(feed)
 			entry=ApiObject.get_cached_object(entry_key)
-			if(not entry or entry.del_flag==BbsConst.ENTRY_DELETED):
-				return deleted_feed #コメントが削除された
+			if(entry_key):
+				if(not entry or entry.del_flag==BbsConst.ENTRY_DELETED):
+					comment_deleted=True
 
 			#レス投稿フィードの場合のみres_keyを持つ
 			#コメント投稿フィードの場合はres_keyにはNoneが入っている
@@ -488,13 +497,16 @@ class ApiObject(webapp.RequestHandler):
 			res=ApiObject.get_cached_object(res_key)
 			if(res_key):
 				if(not res):	#レスが削除された
-					return deleted_feed
+					comment_deleted=True
 
 			message=""
-			if(entry):
-				message=entry.content
-			if(res):
-				message=res.content
+			if(comment_deleted):
+				message="コメントは削除されました。"
+			else:
+				if(entry):
+					message=entry.content
+				if(res):
+					message=res.content
 
 			split_length=40
 			if(len(message)>=split_length):

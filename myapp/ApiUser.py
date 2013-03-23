@@ -155,9 +155,9 @@ class ApiUser(webapp.RequestHandler):
 		bookmark=ApiObject.get_bookmark_of_user_id(user_id)
 		if(bookmark==None):
 			return []
-		feed_list=ApiObject.offset_and_limit(req,bookmark.my_timeline)
-		feed_list=ApiObject.get_cached_object_list(feed_list)
-		dic=ApiObject.create_feed_object_list(req,feed_list)
+		feed_key_list=ApiObject.offset_and_limit(req,bookmark.my_timeline)
+		feed_list=ApiObject.get_cached_object_list(feed_key_list)
+		dic=ApiObject.create_feed_object_list(req,feed_list,feed_key_list)
 		return dic
 
 	@staticmethod
@@ -167,9 +167,9 @@ class ApiUser(webapp.RequestHandler):
 		bookmark=ApiObject.get_bookmark_of_user_id(user_id)
 		if(bookmark==None):
 			return []
-		feed_list=ApiObject.offset_and_limit(req,bookmark.stack_feed_list)
-		feed_list=ApiObject.get_cached_object_list(feed_list)
-		dic=ApiObject.create_feed_object_list(req,feed_list)
+		feed_key_list=ApiObject.offset_and_limit(req,bookmark.stack_feed_list)
+		feed_list=ApiObject.get_cached_object_list(feed_key_list)
+		dic=ApiObject.create_feed_object_list(req,feed_list,feed_key_list)
 		return dic
 		
 #-------------------------------------------------------------------
