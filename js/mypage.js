@@ -360,7 +360,11 @@ function feed_parse(feed){
 	}
 
 	if(feed.message!=""){
-		txt+="<p>"+feed.message+"</p>";
+		if(feed.mode=="new_comment_thread"){
+			txt+="<blockquote><p>"+feed.message+"</p></blockquote>";
+		}else{
+			txt+="<p>"+feed.message+"</p>";
+		}
 	}
 
 	txt+="</div>"
