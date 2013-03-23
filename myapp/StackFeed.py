@@ -418,8 +418,8 @@ class StackFeed(webapp.RequestHandler):
 			thread=db.get(self.request.get("thread"))
 			entry=db.get(self.request.get("entry"))
 			res=None
-			if(self.request.get("entry")):
-				res=db.get(self.request.get("entry"))
+			if(self.request.get("res")):
+				res=db.get(self.request.get("res"))
 			StackFeed._feed_new_comment_thread_and_entry_core(user_id,thread,entry,res)
 		if(mode=="new_follow"):
 			add_user_key=self.request.get("follow_user_id")

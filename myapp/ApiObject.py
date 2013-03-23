@@ -477,9 +477,10 @@ class ApiObject(webapp.RequestHandler):
 			if(entry):
 				message=entry.content
 			if(res):
-				message=response.content
-			message=message[0:20]
-			if(message!=""):
+				message=res.content
+			split_length=40
+			if(len(message)>=split_length):
+				message=message[0:split_length]
 				message=""+message+"..."
 
 		#発生日取得

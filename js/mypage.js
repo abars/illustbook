@@ -361,7 +361,7 @@ function feed_parse(feed){
 
 	if(feed.message!=""){
 		if(feed.mode=="new_comment_thread"){
-			txt+="<blockquote><p>"+feed.message+"</p></blockquote>";
+			txt+='<blockquote><p><a href="javascript:go_feed(\''+feed.thread.thread_url+'\')">'+feed.message+'</a></p></blockquote>';
 		}else{
 			txt+="<p>"+feed.message+"</p>";
 		}
