@@ -61,9 +61,9 @@
 </div>
 
 <div class="entry-comment" style="word-break:break-all;">
-{{thread.summary|safe}}
+{{thread.summary|auto_link|safe}}
 {%if thread.postscript %}
-<br/>{{thread.postscript|safe}}
+<br/>{{thread.postscript|auto_link|safe}}
 {% endif%}
 </div>
 

@@ -9,6 +9,7 @@
 import datetime
 import sys
 import traceback
+import re
 
 from google.appengine.api import users
 from google.appengine.ext import db
@@ -306,6 +307,15 @@ def set_seed(no):
 	return BbsConst.SUBMIT_SEED
 
 #-----------------------------------------------------------------
+#URLの自動リンク
+#-----------------------------------------------------------------
+
+def auto_link(summary):
+	#compiled_line = re.compile("(http://[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)")
+	#summary = compiled_line.sub(r'<a href=\1 TARGET="_blank">\1</a>', summary)
+	return summary
+
+#-----------------------------------------------------------------
 #フィルタ登録
 #-----------------------------------------------------------------
 
@@ -332,3 +342,4 @@ register.filter(login_url)
 register.filter(logout_url)
 register.filter(new_feed_count)
 register.filter(set_seed)
+register.filter(auto_link)
