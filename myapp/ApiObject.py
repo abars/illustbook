@@ -468,13 +468,19 @@ class ApiObject(webapp.RequestHandler):
 				only_image=False
 				thread=ApiObject._create_thread_object_core(req,thread_object,bbs_object,only_image)
 
+		#発生日取得
+		create_date=ApiObject.get_date_str(feed.create_date)
+		
+		#削除された場合のオブジェクト
+		deleted_feed={"mode":"deleted","from_user":"","to_user":"","follow_user":"","bbs":"","thread":"","message":"削除されました","create_date":create_date,"key":str(feed.key())}
+
 		#コメントを取得
 		message=feed.message
 		if(feed.feed_mode=="new_comment_thread"):
 			entry_key=StackFeedData.entry_key.get_value_for_datastore(feed)
 			entry=ApiObject.get_cached_object(entry_key)
 			if(not entry or entry.del_flag==BbsConst.ENTRY_DELETED):
-				return None #コメントが削除された
+				return deleted_feed #コメントが削除された
 
 			#レス投稿フィードの場合のみres_keyを持つ
 			#コメント投稿フィードの場合はres_keyにはNoneが入っている
@@ -482,7 +488,7 @@ class ApiObject(webapp.RequestHandler):
 			res=ApiObject.get_cached_object(res_key)
 			if(res_key):
 				if(not res):	#レスが削除された
-					return None
+					return deleted_feed
 
 			message=""
 			if(entry):
@@ -495,9 +501,6 @@ class ApiObject(webapp.RequestHandler):
 				message=message[0:split_length]
 				message=""+message+"..."
 
-		#発生日取得
-		create_date=ApiObject.get_date_str(feed.create_date)
-		
 		#オブジェクトを返す
 		one_dic={"mode":feed.feed_mode,"from_user":from_user,"to_user":to_user,"follow_user":follow_user,"bbs":bbs,"thread":thread,"message":message,"create_date":create_date,"key":str(feed.key())}
 		return one_dic
