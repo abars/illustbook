@@ -83,11 +83,19 @@ class SpamCheck(webapp.RequestHandler):
 		return is_spam
 
 	@staticmethod
+	def is_ascii(string):
+		if string:
+			return max([ord(char) for char in string]) < 128
+		return True
+
+	@staticmethod
 	def check(content,checkcode):
 		p = re.compile(r'http')
 		list=p.split(content)
 		if(len(list)>=5):
-			return True;		
+			return True;
+		if(len(list)>=2 and SpamCheck.is_ascii(content)):
+			return True
 		if(re.search(checkcode,content)):
 			return True;
 		if(re.search("viagra",content)):

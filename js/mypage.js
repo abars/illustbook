@@ -367,9 +367,12 @@ function feed_parse(feed){
 	txt+='<div style="float:right;text-align:right;">'
 	txt+=feed.create_date+"<BR>"
 	if(!mypage_view_mode){
-		//if(feed.mode=="message" && 
-		if(feed.from_user.user_id==mypage_user_id){
-			txt+='<a href="#" onclick="if(confirm(\'ツイートを削除してもよろしいですか？\')){window.location.href=\'feed_tweet?mode=del_tweet&key='+feed.key+'&feed_page='+mypage_feed_page+'\';}return false;" class="g-button mini">削除</a><BR>';
+		if(mypage_edit_mode){
+			if(feed.from_user.user_id==mypage_user_id){
+				txt+='<a href="#" onclick="if(confirm(\'ツイートを削除してもよろしいですか？\')){window.location.href=\'feed_tweet?mode=del_tweet&key='+feed.key+'&feed_page='+mypage_feed_page+'&edit=1&tab='+mypage_now_tab+'\';}return false;" class="g-button mini">削除</a><BR>';
+			}else{
+				txt+='<a href="#" onclick="if(confirm(\'フィードをタイムラインから除外してもよろしいですか？\')){window.location.href=\'feed_tweet?mode=del_feed&key='+feed.key+'&feed_page='+mypage_feed_page+'&edit=1&tab='+mypage_now_tab+'\';}return false;" class="g-button mini">除外</a><BR>'
+			}
 		}
 		if(feed.to_user.user_id==mypage_user_id){
 			txt+='<a href="mypage?user_id='+feed.from_user.user_id+'&tab=feed" class="g-button mini">返信</a><BR>';
@@ -377,7 +380,6 @@ function feed_parse(feed){
 	}
 	if(feed.from_user.user_id!=mypage_user_id){
 		//txt+='<a href="#" onclick="feed_retweet(\''+feed.key+'\',\''+mypage_feed_page+'\');return false;" class="g-button mini">リツイート</a><BR>';
-		//txt+='<a href="#" onclick="if(confirm(\'フィードを消去してもよろしいですか？\')){window.location.href=\'feed_tweet?mode=del_feed&key='+feed.key+'&feed_page='+mypage_feed_page+'\';}return false;" class="g-button mini">フィードを消去</a><BR>'
 	}
 	txt+="</div>"
 	txt+="</div>"

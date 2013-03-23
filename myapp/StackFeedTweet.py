@@ -63,7 +63,11 @@ class StackFeedTweet(webapp.RequestHandler):
 		if(bookmark==None):
 			self.response.out.write(Alert.alert_msg("フィードリストが見つかりません。",self.request.host));
 			return False
-		bookmark.stack_feed_list.remove(db.Key(self.request.get("key")))
+		try:
+			bookmark.stack_feed_list.remove(db.Key(self.request.get("key")))
+		except:
+			self.response.out.write(Alert.alert_msg("既に削除されています。",self.request.host));
+			return False
 		bookmark.put()
 		return True
 	
@@ -130,6 +134,11 @@ class StackFeedTweet(webapp.RequestHandler):
 
 		if(self.request.get("feed_page")):
 			redirect_url=redirect_url+"&feed_page="+self.request.get("feed_page")
+		if(self.request.get("tab")):
+			redirect_url=redirect_url+"&tab="+self.request.get("tab")
+		if(self.request.get("edit")):
+			redirect_url=redirect_url+"&edit="+self.request.get("edit")
+
 		self.redirect(str(redirect_url))
 
 	def get(self):
