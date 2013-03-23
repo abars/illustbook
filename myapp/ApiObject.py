@@ -471,15 +471,25 @@ class ApiObject(webapp.RequestHandler):
 		#コメントを取得
 		message=feed.message
 		if(feed.feed_mode=="new_comment_thread"):
-			entry=ApiObject.get_cached_object(StackFeedData.entry_key.get_value_for_datastore(feed))
-			res=ApiObject.get_cached_object(StackFeedData.response_key.get_value_for_datastore(feed))
+			entry_key=StackFeedData.entry_key.get_value_for_datastore(feed)
+			entry=ApiObject.get_cached_object(entry_key)
+			if(not entry or entry.del_flag==BbsConst.ENTRY_DELETED):
+				return None #コメントが削除された
+
+			#レス投稿フィードの場合のみres_keyを持つ
+			#コメント投稿フィードの場合はres_keyにはNoneが入っている
+			res_key=StackFeedData.response_key.get_value_for_datastore(feed)
+			res=ApiObject.get_cached_object(res_key)
+			if(res_key):
+				if(not res):	#レスが削除された
+					return None
+
 			message=""
 			if(entry):
 				message=entry.content
-				if(entry.del_flag==BbsConst.ENTRY_DELETED):	#deleted
-					return None
 			if(res):
 				message=res.content
+
 			split_length=40
 			if(len(message)>=split_length):
 				message=message[0:split_length]
