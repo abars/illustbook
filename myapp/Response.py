@@ -9,7 +9,9 @@
 from google.appengine.ext import db
 from google.appengine.api import users
 
-class Response(db.Model):
+from myapp.CachedDbModel import CachedDbModel
+
+class Response(CachedDbModel):
 	editor = db.StringProperty()
 	content = db.TextProperty()
 	user_id = db.StringProperty()	#Submitter
