@@ -65,13 +65,15 @@ class RecentCommentCache():
 			return data
 		
 		entry_query = Entry.all().order("-date");
-		entry_query.filter("del_flag =",1)
+		entry_query.filter("del_flag =",BbsConst.ENTRY_EXIST)
 		entry_query.filter('bbs_key =', bbs)
 		entry_list=entry_query.fetch(display_n);
 		entry_array=[]
 		for entry in entry_list:
 			try:
 				if(not bbs and entry.thread_key.bbs_key.disable_news):
+					continue;
+				if(entry.del_flag==BbsConst.ENTRY_DELETED):	#treat put to query delay
 					continue;
 				thread_key=str(entry.thread_key.key())
 				if(entry.thread_key.short):

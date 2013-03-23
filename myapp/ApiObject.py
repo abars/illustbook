@@ -476,7 +476,7 @@ class ApiObject(webapp.RequestHandler):
 			message=""
 			if(entry):
 				message=entry.content
-				if(entry.del_flag):
+				if(entry.del_flag==BbsConst.ENTRY_DELETED):	#deleted
 					return None
 			if(res):
 				message=res.content

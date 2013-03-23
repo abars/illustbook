@@ -30,7 +30,7 @@ class BbsConst:
 	SPAM_CHECKED ="スパムと判定されました。<BR>通常投稿で表示された場合はabarsceo@gmail.comもしくはサポート掲示板までお問い合わせ下さい。"
 	
 	#memcacheコントロール
-	OBJECT_CACHE_HEADER="ocache40_"	#この値を変更することで全てのキャッシュが無効になる
+	OBJECT_CACHE_HEADER="ocache41_"	#この値を変更することで全てのキャッシュが無効になる
 	OBJECT_BOOKMARK_CACHE_HEADER="bookmark_"
 	OBJECT_ENTRY_CACHE_HEADER="entry_"
 	OBJECT_THREAD_CACHE_HEADER="thread_"
@@ -69,6 +69,10 @@ class BbsConst:
 	SCORE_ENTRY=1
 	SCORE_RES=1
 	SCORE_BOOKMARK=8
+
+	#削除フラグ
+	ENTRY_EXIST=1
+	ENTRY_DELETED=0
 
 	#スパムチェック用のシード
 	SUBMIT_SEED="1212"
