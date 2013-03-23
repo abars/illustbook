@@ -476,6 +476,8 @@ class ApiObject(webapp.RequestHandler):
 			message=""
 			if(entry):
 				message=entry.content
+				if(entry.del_flag):
+					return None
 			if(res):
 				message=res.content
 			split_length=40
