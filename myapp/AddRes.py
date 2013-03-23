@@ -144,5 +144,5 @@ class AddRes(webapp.RequestHandler):
 		#フィード
 		if(not link_to_profile):
 			user=None
-		StackFeed.feed_new_response_entry(user,thread,entry)
+		StackFeed.feed_new_response_entry(user,thread,entry,response)
 

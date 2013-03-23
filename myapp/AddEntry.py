@@ -176,4 +176,4 @@ class AddEntry(webapp.RequestHandler):
 		#フィード
 		if(not link_to_profile):
 			user=None
-		StackFeed.feed_new_comment_thread(user,thread)
+		StackFeed.feed_new_comment_thread(user,thread,entry)

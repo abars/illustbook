@@ -123,7 +123,7 @@ class StackFeed(webapp.RequestHandler):
 		return data
 
 	@staticmethod
-	def _create_new_comment_thread(user_id,thread):
+	def _create_new_comment_thread(user_id,thread,entry,res):
 		data=StackFeedData()
 		data.feed_mode="new_comment_thread"
 
@@ -133,6 +133,8 @@ class StackFeed(webapp.RequestHandler):
 		data.user_key=None
 		data.bbs_key=thread.bbs_key
 		data.thread_key=thread
+		data.entry_key=entry
+		data.response_key=res
 		data.message=""
 		data.create_date=datetime.datetime.today()
 		data.put()
@@ -210,11 +212,11 @@ class StackFeed(webapp.RequestHandler):
 		taskqueue.add(url="/stack_feed_worker",params={"mode":"new_bookmark_thread","user_id":user_id,"thread":str(thread.key()),"comment":comment},queue_name="feed")
 
 	@staticmethod
-	def feed_new_comment_thread(user,thread):
+	def feed_new_comment_thread(user,thread,entry):
 		user_id=""
 		if(user):
 			user_id=user.user_id()
-		taskqueue.add(url="/stack_feed_worker",params={"mode":"new_comment_thread","user_id":user_id,"thread":str(thread.key())},queue_name="feed")
+		taskqueue.add(url="/stack_feed_worker",params={"mode":"new_comment_thread","user_id":user_id,"thread":str(thread.key()),"entry":str(entry.key())},queue_name="feed")
 
 	@staticmethod
 	def feed_new_applause_thread(user,thread):
@@ -224,11 +226,11 @@ class StackFeed(webapp.RequestHandler):
 		taskqueue.add(url="/stack_feed_worker",params={"mode":"new_applause_thread","user_id":user_id,"thread":str(thread.key())},queue_name="feed")
 	
 	@staticmethod
-	def feed_new_response_entry(user,thread,entry):
+	def feed_new_response_entry(user,thread,entry,res):
 		user_id=""
 		if(user):
 			user_id=user.user_id()
-		taskqueue.add(url="/stack_feed_worker",params={"mode":"new_response_entry","user_id":user_id,"thread":str(thread.key()),"entry":str(entry.key())},queue_name="feed")
+		taskqueue.add(url="/stack_feed_worker",params={"mode":"new_response_entry","user_id":user_id,"thread":str(thread.key()),"entry":str(entry.key()),"res":str(res.key())},queue_name="feed")
 	
 	@staticmethod
 	def feed_new_follow(user,add_user_key):
@@ -339,7 +341,7 @@ class StackFeed(webapp.RequestHandler):
 		StackFeed._feed_to_mine(data,user_id)
 
 	@staticmethod
-	def _feed_new_comment_thread_and_entry_core(user_id,thread,entry):
+	def _feed_new_comment_thread_and_entry_core(user_id,thread,entry,res):
 		#コメントが投稿された場合、
 		#イラストのオーナーと、
 		#その掲示板をブックマークしているユーザにフィード
@@ -350,10 +352,10 @@ class StackFeed(webapp.RequestHandler):
 		
 		thread_owner_user_id=thread.user_id
 
-		data=StackFeed._create_new_comment_thread(user_id,thread)
+		data=StackFeed._create_new_comment_thread(user_id,thread,entry,res)
 		StackFeed._append_one(data,thread_owner_user_id)
 		
-		if(entry):
+		if(entry and res):
 			entry_owner_user_id=entry.user_id
 			StackFeed._append_one(data,entry_owner_user_id)
 		
@@ -405,14 +407,20 @@ class StackFeed(webapp.RequestHandler):
 			StackFeed._feed_new_bookmark_thread_core(user_id,thread,comment)
 		if(mode=="new_comment_thread"):
 			thread=db.get(self.request.get("thread"))
-			StackFeed._feed_new_comment_thread_and_entry_core(user_id,thread,None)
+			entry=None
+			if(self.request.get("entry")):
+				entry=db.get(self.request.get("entry"))
+			StackFeed._feed_new_comment_thread_and_entry_core(user_id,thread,entry,None)
 		if(mode=="new_applause_thread"):
 			thread=db.get(self.request.get("thread"))
 			StackFeed._feed_new_applause_thread_core(user_id,thread)
 		if(mode=="new_response_entry"):
 			thread=db.get(self.request.get("thread"))
 			entry=db.get(self.request.get("entry"))
-			StackFeed._feed_new_comment_thread_and_entry_core(user_id,thread,entry)
+			res=None
+			if(self.request.get("entry")):
+				res=db.get(self.request.get("entry"))
+			StackFeed._feed_new_comment_thread_and_entry_core(user_id,thread,entry,res)
 		if(mode=="new_follow"):
 			add_user_key=self.request.get("follow_user_id")
 			StackFeed._feed_new_follow_core(user_id,add_user_key)

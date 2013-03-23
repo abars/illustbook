@@ -468,11 +468,25 @@ class ApiObject(webapp.RequestHandler):
 				only_image=False
 				thread=ApiObject._create_thread_object_core(req,thread_object,bbs_object,only_image)
 
+		#コメントを取得
+		message=feed.message
+		if(feed.feed_mode=="new_comment_thread"):
+			entry=ApiObject.get_cached_object(StackFeedData.entry_key.get_value_for_datastore(feed))
+			res=ApiObject.get_cached_object(StackFeedData.response_key.get_value_for_datastore(feed))
+			message=""
+			if(entry):
+				message=entry.content
+			if(res):
+				message=response.content
+			message=message[0:20]
+			if(message!=""):
+				message=""+message+"..."
+
 		#発生日取得
 		create_date=ApiObject.get_date_str(feed.create_date)
 		
 		#オブジェクトを返す
-		one_dic={"mode":feed.feed_mode,"from_user":from_user,"to_user":to_user,"follow_user":follow_user,"bbs":bbs,"thread":thread,"message":feed.message,"create_date":create_date,"key":str(feed.key())}
+		one_dic={"mode":feed.feed_mode,"from_user":from_user,"to_user":to_user,"follow_user":follow_user,"bbs":bbs,"thread":thread,"message":message,"create_date":create_date,"key":str(feed.key())}
 		return one_dic
 
 #-------------------------------------------------------------------

@@ -312,9 +312,6 @@ function feed_parse(feed){
 	
 	//メッセージ
 	txt+="<p>"
-	if(feed.message!=""){
-		txt+=""+feed.message+"<BR>";
-	}
 	switch(feed.mode){
 	case "message":
 		//txt+=feed.message;
@@ -361,6 +358,11 @@ function feed_parse(feed){
 		}
 		break;
 	}
+
+	if(feed.message!=""){
+		txt+="<p>"+feed.message+"</p>";
+	}
+
 	txt+="</div>"
 
 	//オプション

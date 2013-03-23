@@ -2,7 +2,7 @@
 #!/usr/bin/env python
 
 #---------------------------------------------------
-#フィードデータひとつひとつ
+#繝輔ぅ繝ｼ繝峨ョ繝ｼ繧ｿ縺ｲ縺ｨ縺､縺ｲ縺ｨ縺､
 #copyright 2010-2012 ABARS all rights reserved.
 #---------------------------------------------------
 
@@ -12,6 +12,8 @@ from google.appengine.api import memcache
 
 from myapp.Bbs import Bbs
 from myapp.MesThread import MesThread
+from myapp.Entry import Entry
+from myapp.Response import Response
 from myapp.BbsConst import BbsConst
 
 class StackFeedData(db.Model):
@@ -22,6 +24,8 @@ class StackFeedData(db.Model):
 	user_key           = db.StringProperty()
 	bbs_key            = db.ReferenceProperty(Bbs)
 	thread_key         = db.ReferenceProperty(MesThread)
+	entry_key          = db.ReferenceProperty(Entry)
+	response_key       = db.ReferenceProperty(Response)
 
 	message            = db.TextProperty()
 	date               = db.DateTimeProperty(auto_now=True)
