@@ -45,6 +45,19 @@ class ApiObject(webapp.RequestHandler):
 		tmp=value.replace(tzinfo=UTC()).astimezone(JST())
 		return ""+str(tmp.year)+"/"+str(tmp.month)+"/"+str(tmp.day)
 
+	@staticmethod
+	def get_date_diff_str(value):
+		value=datetime.datetime.today()-value
+		if(value.seconds>=7*24*60*60):
+			return get_date_str(value)
+		if(value.seconds>=24*60*60):
+			return ""+str(value.seconds/60/60/24)+"日"
+		if(value.seconds>=60*60):
+			return ""+str(value.seconds/60/60)+"時間"
+		if(value.seconds>=60):
+			return ""+str(value.seconds/60)+"分"
+		return ""+str(value.seconds)+"秒"
+
 #-------------------------------------------------------------------
 #user object
 #-------------------------------------------------------------------
@@ -438,7 +451,7 @@ class ApiObject(webapp.RequestHandler):
 	def create_feed_object(req,feed,user_hash,bbs_hash,thread_hash,feed_key):
 		#フィードが削除された
 		if(feed==None):
-			deleted_feed={"mode":"deleted","from_user":"","to_user":"","follow_user":"","bbs":"","thread":"","message":"ツイートが削除されました。","create_date":"","key":str(feed_key)}
+			deleted_feed={"mode":"deleted","from_user":"","to_user":"","follow_user":"","bbs":"","thread":"","message":"ツイートは削除されました。","create_date":"","key":str(feed_key)}
 			return deleted_feed
 
 		#送信元ユーザ取得
@@ -475,11 +488,8 @@ class ApiObject(webapp.RequestHandler):
 				thread=ApiObject._create_thread_object_core(req,thread_object,bbs_object,only_image)
 
 		#発生日取得
-		create_date=ApiObject.get_date_str(feed.create_date)
+		create_date=ApiObject.get_date_diff_str(feed.create_date)
 		
-		#削除された場合のオブジェクト
-		deleted_feed={"mode":"deleted","from_user":from_user,"to_user":to_user,"follow_user":follow_user,"bbs":bbs,"thread":thread,"message":"コメントが削除されました。","create_date":create_date,"key":str(feed.key())}
-
 		#コメントを取得
 		message=feed.message
 		if(feed.feed_mode=="new_comment_thread"):

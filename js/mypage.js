@@ -348,6 +348,8 @@ function feed_parse(feed){
 	case "bbs_new_illust":
 		if(feed.thread.thumbnail_url){
 			txt+='<a href="javascript:go_feed(\''+feed.thread.thread_url+'\')"><img src="'+feed.thread.thumbnail_url+'" width=100px height=100px></a>'
+		}else{
+			txt+="<blockquote><p>イラストは削除されました。</p></blockquote>"
 		}
 		break;
 	case "new_follow":
