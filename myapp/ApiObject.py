@@ -47,16 +47,16 @@ class ApiObject(webapp.RequestHandler):
 
 	@staticmethod
 	def get_date_diff_str(value):
-		value=datetime.datetime.today()-value
-		if(value.seconds>=7*24*60*60):
-			return get_date_str(value)
-		if(value.seconds>=24*60*60):
-			return ""+str(value.seconds/60/60/24)+"日"
-		if(value.seconds>=60*60):
-			return ""+str(value.seconds/60/60)+"時間"
-		if(value.seconds>=60):
-			return ""+str(value.seconds/60)+"分"
-		return ""+str(value.seconds)+"秒"
+		delta_time=datetime.datetime.today()-value
+		if(delta_time.days>=7):
+			return ApiObject.get_date_str(value)
+		if(delta_time.days>=1):
+			return ""+str(delta_time.days)+"日"
+		if(delta_time.seconds>=60*60):
+			return ""+str(delta_time.seconds/60/60)+"時間"
+		if(delta_time.seconds>=60):
+			return ""+str(delta_time.seconds/60)+"分"
+		return ""+str(delta_time.seconds)+"秒"
 
 #-------------------------------------------------------------------
 #user object
