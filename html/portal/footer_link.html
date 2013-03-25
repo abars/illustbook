@@ -1,12 +1,27 @@
-{% if is_iphone %}<center><p>{% endif %}<a href="{{host}}">イラストブック</a> {% if is_iphone %}<BR>{% endif %}&copy; 2010-2013 <a href="http://www.abars.biz">ABARS</a> all rights reserved. {% if is_iphone %}</p></center>
+{% if is_iphone %}
+	<center>
+	<p>
+{% endif %}
+
+<a href="{{host}}">イラストブック</a>{% if is_iphone %}<BR>{%else%} {% endif %}
+&copy; 2010-2013 <a href="http://www.abars.biz">ABARS</a> all rights reserved.
+
+{% if is_iphone %}
+	</p>
+	</center>
+	{% ifequal mode "index"%}
+	<div style="text-align:right;">
+		<p>イラスト：<A HREF="http://pochigoya0423.blog.shinobi.jp/"><FONT COLOR=#000000>飯田のぎ</FONT></A></p>
+	</div>
+	{% endifequal %}
 {% else %}
-{% ifequal mode "chat"%}
-　イラスト：<a href="http://www.geocities.jp/tarowy85/makol.html">まことじ</a>
-{% endifequal %}
-{% ifequal mode "index"%}
-　イラスト：<a href="http://himao.ame-zaiku.com/">ひまお</a>
-{% endifequal %}
-{% ifequal mode "community"%}
-　イラスト：<a href="http://himao.ame-zaiku.com/">ひまお</a>
-{% endifequal %}
+	{% ifequal mode "chat"%}
+	　イラスト：<a href="http://www.geocities.jp/tarowy85/makol.html">まことじ</a>
+	{% endifequal %}
+	{% ifequal mode "index"%}
+	　イラスト：<a href="http://himao.ame-zaiku.com/">ひまお</a>
+	{% endifequal %}
+	{% ifequal mode "community"%}
+	　イラスト：<a href="http://himao.ame-zaiku.com/">ひまお</a>
+	{% endifequal %}
 {% endif %}

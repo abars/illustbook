@@ -232,15 +232,17 @@ class ShowBbs(webapp.RequestHandler):
 
 		entry_key_list=[]
 		for thread in all_threads_cached:
+			if not thread:
+				continue
 			for entry in thread.cached_entry_key:
 				entry_key_list.append(entry)
 		entry_hash=ApiObject.get_cached_object_hash(entry_key_list)
 
 		for thread in all_threads_cached:
+			if not thread:
+				continue
 			entry_list=[]
 			for entry in thread.cached_entry_key:
-				#one_entry=ApiObject.get_cached_object(entry)
-				#one_entry=db.get(entry)
 				one_entry=entry_hash[entry]
 				entry_list.append(one_entry)
 			thread.cached_render_comment=ShowEntry.render_comment(self,host_url,bbs,thread,entry_list,edit_flag,bbs_key,logined,show_comment_form,is_admin,user_name,user)
