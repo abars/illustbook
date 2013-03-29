@@ -7,6 +7,7 @@
 	var m_wacom_plugin=null;
 	var m_plugin_load_finish=false;
 	var m_abort_count=0;
+	var m_plugin_version="0.0.0.0";
 	
 	//================================================
 	//プラグインの読み込み
@@ -27,6 +28,7 @@
 		
 		//プラグインが存在すれば読み込み完了
 		if(m_wacom_plugin && m_wacom_plugin.penAPI){
+			m_plugin_version=m_wacom_plugin.version;
 			m_wacom_plugin=m_wacom_plugin.penAPI;
 			m_plugin_load_finish=true;
 			return;
@@ -40,22 +42,11 @@
 		}
 
 		//プラグインのインストールを要求する
-		requestPluginInstall();
+		m_wacom_plugin=null;
+		m_plugin_load_finish=true;
 	}
 
-	//プラグインのインストールを要求する
-	function requestPluginInstall(){
-		var txt="<A HREF='http://www.wacom.com/CustomerCare/Plugin.aspx' TARGET='_BLANK'>WacomTabletDataPlugin</A>のUpdateで全てのブラウザで筆圧が使用できるようになりました。<BR>";
-		txt+="次のリンクからプラグインをインストールして下さい。　<A HREF='http://www.wacomeng.com/web/fbWTPInstall.zip' TARGET='_BLANK'>Windows用</A>　<A HREF='http://www.wacomeng.com/web/Wacom%20Mac%20Plug-in%20Installer.zip' TARGET='_BLANK'>Mac用</A>　<A HREF='javascript:requestFinish();'>今回はインストールしない</A><BR>";
-		get_flex_object().height="90%";
-		document.getElementById("wacomPlugin").innerHTML=txt;
-	}
-	
-	function requestFinish(){
-		get_flex_object().height="100%";
-		document.getElementById("wacomPlugin").innerHTML="";
-	}
-	
+	//プラグインの読み込みが完了
 	function isPluginLoadFinish(){
 		return m_plugin_load_finish;
 	}
@@ -64,14 +55,48 @@
 	//互換性用
 	//================================================
 
-	//ver2になって必ず筆圧は取得できるようになった
+	//最新版は筆圧が取得できる
 	function isSupportBrowser(){
-		return true;
+		return checkIsRatestPlugin();
 	}
 	
 	//サポートしていなかった場合にFlash上に表示されるメッセージを取得する
+	var m_notify_text="";
+
 	function getNotifyText(){
-		return "";
+		return m_notify_text;
+	}
+	
+	function getWacomPluginVersion(){
+		var obj=new Object();
+		var ver=m_plugin_version.split(".");
+		if(ver.length!=4){
+			return null;
+		}
+		obj.major=Number(ver[0]);
+		obj.minur1=Number(ver[1]);
+		obj.minur2=Number(ver[2]);
+		obj.minur3=Number(ver[3]);
+		return obj;
+	}
+	
+	function checkIsRatestPlugin(){
+		var obj=getWacomPluginVersion();
+		if(m_wacom_plugin==null || obj==null){
+			m_notify_text="筆圧を使用するにはWacomの最新のドライバをインストールして下さい。";
+			return false;
+		}
+		
+		//alert("ver"+obj.major+"."+obj.minur1+"."+obj.minur2+"."+obj.minur3);
+		
+		if(obj.major<2 || obj.minur1<1 || obj.minur2<0 || obj.minur3<2){
+			m_notify_text="Wacomのドライバを更新すると筆圧を使用できます。　";
+			m_notify_text+="現在："+obj.major+"."+obj.minur1+"."+obj.minur2+"."+obj.minur3+"　";
+			m_notify_text+="要求：2.1.0.2以降\n";
+			return false;
+		}
+		
+		return true;
 	}
 
 	//================================================
@@ -79,22 +104,26 @@
 	//================================================
 	
 	function getPressure(){
-		if(!isPen())
+		if(!isPen()){
 			return 0.5;
+		}
 		return m_wacom_plugin.pressure;
 	}
 	
 	function isPen(){
-		if(!m_wacom_plugin)
+		if(!m_wacom_plugin){
 			return false;
+		}
 		var pointer_type=m_wacom_plugin.pointerType;
-		if(pointer_type==1 || pointer_type==3)	// 1==Pen 3==Eraser
+		if(pointer_type==1 || pointer_type==3){	// 1==Pen 3==Eraser
 			return true;
+		}
 		return false;
 	}
 	
 	function isEraser(){
-		if(!m_wacom_plugin)
+		if(!m_wacom_plugin){
 			return 0;
+		}
 		return m_wacom_plugin.isEraser;
 	}
