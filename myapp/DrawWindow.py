@@ -74,6 +74,9 @@ class DrawWindow(webapp.RequestHandler):
 			summary=""
 			author=""
 
+		wacom2=self.request.get("wacom2")
+		wacom2=True
+
 		#掲示板のデザインを取得
 		design=CssDesign.get_design_object(self,bbs,host_url,1)
 		
@@ -100,7 +103,7 @@ class DrawWindow(webapp.RequestHandler):
 		'is_iphone':design["is_iphone"],
 		'template_base_color':design["template_base_color"],
 		'version': self.request.get("version"),
-		'wacom2': self.request.get("wacom2"),
+		'wacom2': wacom2,
 		'selecting_category': None
 		}
 		
