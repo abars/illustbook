@@ -2,7 +2,7 @@
 
 {% ifequal bbs.bbs_mode 3 %}
 <div class="entry">
-	<H3>新規スレッドの作成</H3>
+	<H3>新しいスレッドの作成</H3>
 	{% if not bbs.disable_create_new_thread %}
 		この掲示板は誰でもスレッドが作成可能です。<BR>
 	{% else%}
@@ -15,16 +15,37 @@
 	<BR>
 
 	{% if can_create_thread %}
+	<div class="g-button-group toggle-buttons">
+		<a href="javascript:display_comment_tab('text','new_thread');" class="g-button no-text comment_tab_new_thread comment_tab_new_thread_text"><i class="icon-pencil"></i>新しいスレッドを作成する</a>
+	</div>
+	<br>
+	{% endif %}
+	
+	<div class="comment_tab_new_thread_body comment_tab_new_thread_body_text" style="display:none;">
+	{% if can_create_thread %}
 		<form action='http://localhost/' enctype="multipart/form-data" method="post" onSubmit="this.action='{{host}}add_thread?bbs_key={{bbs.key}}';">
 		<input type="hidden" name="illust_mode" value="0">
 		<table class="table_color"><tr><td>タイトル（必須）</td>
 		<td><textarea name="thread_title" rows="1" cols="40" style="width:90%;"></textarea></td></tr>
-		<tr><td>作成者（必須）</td><td><input name="author" maxlength="40"></td></tr>
+		<tr><td>作成者（必須）</td>
+		<td>
+			<input type="text" name="author" maxlength="50" value="{{user_name}}"/>
+			{% if logined %}
+				<input name="link_to_profile" type="checkbox" checked/>マイページにリンク
+			{% else %}
+				マイページにリンクするにはログインして下さい
+			{% endif %}
+		</td></tr>
+		{% if logined %}
+		{% else %}
 		<tr><td>ホームページアドレス</td><td><input name="homepage_addr" maxlength="40" value="http://"></td></tr>
+		<tr><td>削除キー</td><td><input name="delete_key" maxlength="40" value=""></td></tr>
+		{% endif %}
 		<tr><td>スレッド概要</td><td><textarea name="comment" rows="4" cols="40" style="width:90%;"></textarea></td></tr>
 		<tr><td></td><td>
 		<input type="submit" value="スレッドを作成する" class="g-button">
 		</td></tr></table></form>
 	{% endif %}
+	</div>
 </div>
 {% endifequal %}

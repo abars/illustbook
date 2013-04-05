@@ -242,7 +242,12 @@ class Chat(webapp.RequestHandler):
 			ApiObject.write_json_core(self,{"status":"disconnect"})
 			return
 
-		offset=int(self.request.get("offset"))
+		try:
+			offset=int(self.request.get("offset"))
+		except:
+			ApiObject.write_json_core(self,{"status":"offset_overflow"})
+			return
+
 		limit=int(self.request.get("limit"))
 		
 		now_len=room.command_cnt

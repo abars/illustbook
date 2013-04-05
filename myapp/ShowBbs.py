@@ -167,10 +167,10 @@ class ShowBbs(webapp.RequestHandler):
 			#bbs.enable_full_comment=1 #デフォルト化を止める
 
 		#コメントを全て取得
-		user_name=""
+		#user_name=""
+		user_name=ShowEntry.get_user_name(user)
 		if(bbs.enable_full_comment):
 			admin_user=OwnerCheck.is_admin(user)
-			user_name=ShowEntry.get_user_name(user)
 			self.get_all_comment(all_threads_cached,host_url,bbs,show_comment_form,logined,admin_user,user_name,user)
 
 		#デザインの編集ができるか
