@@ -1,11 +1,21 @@
-{% if template_path %}
-	<div class="entry-name">
-{% endif %}
-	<a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{%endif%}.html' class="declink">
-{% if template_path %}<H3>{% endif %}
-	{{ thread.title|escape }}
-{% if template_path %}</H3>{% endif %}
+{% ifequal bbs.bbs_mode 3 %}
+	<!--スレッド式掲示板-->
+	<a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{%endif%}.html' class="g-button" style="width:90%;text-align:left;">
+	{% if template_path %}<H3>{% endif %}
+	{{ thread.title|escape }}<BR>
+	投稿者：{{thread.author}}　{{thread.comment_cnt}}コメ　{{thread.create_date|time_JST_progress}}
+	{% if template_path %}</H3>{% endif %}
 	</a>
+{% else %}
+	<!--イラスト非表示モード-->
+	{% if template_path %}
+		<div class="entry-name">
+	{% endif %}
+		<a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{%endif%}.html' class="declink">
+	{% if template_path %}<H3>{% endif %}
+		{{ thread.title|escape }}
+	{% if template_path %}</H3>{% endif %}
+		</a>
 	<BR>
 
 	{% if thread.author %}
@@ -41,6 +51,7 @@
 		{{thread.date|time_JST_progress}}<BR>
 	{%endifequal%}
 
-{% if template_path %}
-	</div>
-{% endif %}
+	{% if template_path %}
+		</div>
+	{% endif %}
+{% endifequal %}

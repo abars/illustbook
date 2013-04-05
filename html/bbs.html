@@ -46,11 +46,9 @@
 			</div>
 
 			{% ifequal bbs.bbs_mode 3 %}
-				<!--スレッド掲示板の広告-->
-				{% if not is_iphone %}
-					<div class="entry">
-					</div>
-				{% endif %}
+				<!--空白を入れる（昔は広告だった）-->
+				<div class="entry">
+				</div>
 			{% endifequal %}
 
 			{% if bbs.disable_content_image  %}
@@ -90,6 +88,12 @@
 				{% endfor %}
 			{% endifequal%}
 			
+			{% ifequal bbs.bbs_mode 3 %}
+				<!--空白を入れる-->
+				<div class="entry">
+				</div>
+			{% endifequal %}
+
 			<!-- 並びかえ・ページ -->
 			<div id="entry-bottom">
 				<div><!-- id="page-bottom">-->
