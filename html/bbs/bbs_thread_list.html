@@ -31,14 +31,14 @@
 		{% else %}
 			投稿日：
 		{% endif %}
-		{{thread.create_date|time_JST}}<BR>
+		{{thread.create_date|time_JST_progress}}<BR>
 	{%else%}
 		{% if template_path %}
 			<img src="{{template_path}}images/i_day.gif" alt="投稿日" width="64" height="20" />
 		{% else %}
 			最終更新日：
 		{% endif %}
-		{{thread.date|time_JST}}<BR>
+		{{thread.date|time_JST_progress}}<BR>
 	{%endifequal%}
 
 {% if template_path %}

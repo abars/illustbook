@@ -7,7 +7,7 @@
 		<div class="actions g-button-container">
 		投稿者：
 		{{entry.com|author_name_comment:host|safe}}
-		　投稿日：{% if entry.com.create_date %}{{entry.com.create_date|time_JST_format:bbs.date_format}}{%else%}{{entry.com.date|time_JST_format:bbs.date_format}}{%endif%}
+		　投稿日：{% if entry.com.create_date %}{{entry.com.create_date|time_JST_progress}}{%else%}{{entry.com.date|time_JST_progress}}{%endif%}
 		
 		<div class="g-button-group" style="float:right;">
 		{%if is_admin or edit_flag %}
@@ -61,7 +61,7 @@
 	<div style="margin:16px 2px 16px 40px;">
 		<HR>
 		<div class="actions g-button-container">
-		投稿者：{{res|author_name_comment:host|safe}}　投稿日：{{res.date|time_JST_format:bbs.date_format}}
+		投稿者：{{res|author_name_comment:host|safe}}　投稿日：{{res.date|time_JST_progress}}
 			<div class="g-button-group" style="float:right;">
 			{% if forloop.first and is_admin %}
 				<input type="button" value="一括"  class="g-button" onclick="confirm_action_comment('{{host}}del_res?entry_key={{entry.com.key}}&res_key=all');"/>

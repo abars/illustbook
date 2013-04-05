@@ -21,6 +21,7 @@ from myapp.JST import JST
 from myapp.Bookmark import Bookmark
 from myapp.ApiObject import ApiObject
 from myapp.BbsConst import BbsConst
+from myapp.TimeProgress import TimeProgress
 
 #-----------------------------------------------------------------
 # 時間取得
@@ -46,6 +47,9 @@ def time_JST(value):
 
 def time_JST_short(value):
 	return time_JST_format(value,10)
+
+def time_JST_progress(value):
+	return TimeProgress.get_date_diff_str(value,"前")
 	
 #-----------------------------------------------------------------
 #絵で返信
@@ -322,6 +326,7 @@ def auto_link(summary):
 register.filter(time_JST)
 register.filter(time_JST_format)
 register.filter(time_JST_short)
+register.filter(time_JST_progress)
 register.filter(comment_with_except)
 register.filter(comment_with_except_no_hour)
 register.filter(reply_with_except)

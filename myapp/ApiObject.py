@@ -33,30 +33,9 @@ from myapp.UTC import UTC
 from myapp.JST import JST
 from myapp.Entry import Entry
 from myapp.UserIcon import UserIcon
+from myapp.TimeProgress import TimeProgress
 
 class ApiObject(webapp.RequestHandler):
-
-#-------------------------------------------------------------------
-#日付計算
-#-------------------------------------------------------------------
-
-	@staticmethod
-	def get_date_str(value):
-		tmp=value.replace(tzinfo=UTC()).astimezone(JST())
-		return ""+str(tmp.year)+"/"+str(tmp.month)+"/"+str(tmp.day)
-
-	@staticmethod
-	def get_date_diff_str(value):
-		delta_time=datetime.datetime.today()-value
-		if(delta_time.days>=7):
-			return ApiObject.get_date_str(value)
-		if(delta_time.days>=1):
-			return ""+str(delta_time.days)+"日"
-		if(delta_time.seconds>=60*60):
-			return ""+str(delta_time.seconds/60/60)+"時間"
-		if(delta_time.seconds>=60):
-			return ""+str(delta_time.seconds/60)+"分"
-		return ""+str(delta_time.seconds)+"秒"
 
 #-------------------------------------------------------------------
 #user object
@@ -300,7 +279,7 @@ class ApiObject(webapp.RequestHandler):
 				thumbnail_url+=".jpg"
 		if(bbs.del_flag):
 			thumbnail_url=""
-		create_date=ApiObject.get_date_str(thread.create_date)
+		create_date=TimeProgress.get_date_str(thread.create_date)
 
 		thread_url=url_header+"/"
 		if(bbs.short):
@@ -488,7 +467,7 @@ class ApiObject(webapp.RequestHandler):
 				thread=ApiObject._create_thread_object_core(req,thread_object,bbs_object,only_image)
 
 		#発生日取得
-		create_date=ApiObject.get_date_diff_str(feed.create_date)
+		create_date=TimeProgress.get_date_diff_str(feed.create_date,"")
 		
 		#コメントを取得
 		message=feed.message

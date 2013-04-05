@@ -48,7 +48,7 @@
 	{% else %}
 		投稿日：
 	{% endif%}
-	{{thread.create_date|time_JST_format:bbs.date_format}}　
+	{{thread.create_date|time_JST_format:bbs.date_format}}
 {% endif %}
 
 {% if thread.cached_image_key %}
