@@ -3,7 +3,7 @@
 	<a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{%endif%}.html' class="g-button" style="width:90%;text-align:left;">
 	{% if template_path %}<H3>{% endif %}
 	{{ thread.title|escape }}<BR>
-	投稿者：{{thread.author}}　{{thread.comment_cnt}}コメ　{{thread.create_date|time_JST_progress}}
+	{{thread.author}}　{{thread.comment_cnt}}コメ　{{thread.date|time_JST_progress}}
 	{% if template_path %}</H3>{% endif %}
 	</a>
 {% else %}

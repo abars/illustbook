@@ -85,14 +85,8 @@ class ApiFeed(webapp.RequestHandler):
 		return query
 		
 	@staticmethod
-	def feed_get_thread_list(req):
-		offset=0
-		if(req.request.get("offset")):
-			offset=int(req.request.get("offset"))
-
-		limit=10
-		if(req.request.get("limit")):
-			limit=int(req.request.get("limit"))
+	def feed_get_thread_list(req,offset,limit):
+		#最大取得数
 		if(limit>100):
 			limit=100
 
@@ -163,9 +157,22 @@ class ApiFeed(webapp.RequestHandler):
 
 		#フィードクラス
 		if(method=="getThreadList"):
-			dic=ApiFeed.feed_get_thread_list(self)
+			offset=0
+			if(self.request.get("offset")):
+				try:
+					offset=int(self.request.get("offset"))
+				except:
+					return {"status":"failed","message":"offset must be integer"}
+			limit=10
+			if(self.request.get("limit")):
+				try:
+					limit=int(self.request.get("limit"))
+				except:
+					return {"status":"failed","message":"limit must be integer"}
+			dic=ApiFeed.feed_get_thread_list(self,offset,limit)
 			if(dic==None):
 				return {"status":"failed","message":"bbs not found"}
+			#return {"status":"failed","message":"debug error message"}
 
 		dic=ApiObject.add_json_success_header(dic)
 		return dic

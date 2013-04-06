@@ -124,18 +124,36 @@ $(function(){
 //--------------------------------------------------------
 
 	function on_loaded_new(oj){
+		if(!is_success(oj,"news")){
+			return;
+		}
 		oj=oj.response;
 		on_loaded_core(oj,"news");
 	}
 	
 	function on_loaded_moper(oj){
+		if(!is_success(oj,"moper")){
+			return;
+		}
 		oj=oj.response;
 		on_loaded_core(oj,"moper");
 	}
 
 	function on_loaded_applause(oj){
+		if(!is_success(oj,"applause")){
+			return;
+		}
 		oj=oj.response;
 		on_loaded_core(oj,"applause");
+	}
+
+	function is_success(oj,id){
+		if(oj.status=="success"){
+			return true;
+		}
+		var txt="<div style='margin:8px;'><p>サーバからの情報取得に失敗しました。"+oj.message+"</p></div>";
+		document.getElementById(id).innerHTML=txt;
+		return false;
 	}
 
 //--------------------------------------------------------
