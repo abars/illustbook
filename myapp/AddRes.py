@@ -108,32 +108,39 @@ class AddRes(webapp.RequestHandler):
 		link_to_profile=StackFeed.is_link_to_profile(self)
 		if(link_to_profile and user):
 			response.user_id=user.user_id()
-		
+
+		#コメント番号を設定
+		response.comment_no=thread_key.comment_cnt+1
+		response.remote_addr=self.request.remote_addr
+
+		#レスを書き込み
 		response.put()
 		
-		#thread_key
+		#レスをコメントに追加
 		entry.res_list.append(response.key())
 		entry.last_update_editor = response.editor
 		entry.date=datetime.datetime.today()
 		entry.put()
 		
-		url=MappingThreadId.get_thread_url("./",bbs_key,thread_key)
-		if(self.request.get("redirect_url")):
-			url=self.request.get("redirect_url")
-		self.redirect(str(url))
-		
+		#スレッドのコメント数を更新
 		thread = thread_key
 		thread.comment_cnt = thread.comment_cnt+1
 		thread.date=datetime.datetime.today()
 		thread.put()
 
+		#コメント数を更新
 		if(bbs_key.comment_n) :
 			bbs_key.comment_n=bbs_key.comment_n+1
 		else:
 			bbs_key.comment_n=1
 		bbs_key.put()
-
 		RecentCommentCache.invalidate(bbs_key)
+
+		#ステータス出力
+		url=MappingThreadId.get_thread_url("./",bbs_key,thread_key)
+		if(self.request.get("redirect_url")):
+			url=self.request.get("redirect_url")
+		self.redirect(str(url))
 
 		#二重投稿ブロック
 		memcache.set("add_res_double_block",self.request.get("comment"),30)

@@ -58,5 +58,6 @@ class MesThread(CachedDbModel):
 	cached_entry_key_enable = db.BooleanProperty()	#is cached_entry_key is enable
 	
 	bookmark_comment = db.BlobProperty()
+	remote_addr = db.StringProperty()
 
 	sand = db.StringProperty()

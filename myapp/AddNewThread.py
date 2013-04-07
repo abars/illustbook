@@ -188,6 +188,9 @@ class AddNewThread(webapp.RequestHandler):
 		#url assign
 		MappingThreadId.assign(bbs,new_thread,False)
 		
+		#IPアドレスを描き恋
+		new_thread.remote_addr=self.request.remote_addr
+
 		#put
 		SyncPut.put_sync(new_thread)
 		

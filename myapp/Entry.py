@@ -34,3 +34,5 @@ class Entry(CachedDbModel):
 	user_id= db.StringProperty()						#Submitter
 	hidden_flag = db.IntegerProperty()	#HiddenComment
 	violate_terms = db.IntegerProperty()
+	remote_addr = db.StringProperty()
+	comment_no = db.IntegerProperty()

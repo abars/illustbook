@@ -17,3 +17,5 @@ class Response(CachedDbModel):
 	user_id = db.StringProperty()	#Submitter
 	homepage_addr = db.StringProperty() #Reserved
 	date = db.DateTimeProperty(auto_now=True)
+	remote_addr = db.StringProperty()
+	comment_no = db.IntegerProperty()

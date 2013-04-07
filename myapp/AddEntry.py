@@ -138,12 +138,33 @@ class AddEntry(webapp.RequestHandler):
 		link_to_profile=StackFeed.is_link_to_profile(self)
 		if(link_to_profile and user):
 			entry.user_id=user.user_id()
-		
+
+		#スレッドを取得
+		thread = db.get(self.request.get("thread_key"))
+
+		#コメント番号を設定
+		entry.comment_no=thread.comment_cnt+1
+		entry.remote_addr=self.request.remote_addr
+
 		#保存
 		entry.put()
-		thread = db.get(self.request.get("thread_key"))
-		#thread.put()
 
+		#スレッドのコメント数を更新
+		thread.comment_cnt = thread.comment_cnt+1
+		thread.date=datetime.datetime.today()
+		thread.cached_entry_key=[]
+		thread.cached_entry_key_enable=None
+		thread.put()
+
+		#掲示板のコメント数を追加
+		if(bbs.comment_n) :
+			bbs.comment_n=bbs.comment_n+1
+		else:
+			bbs.comment_n=1
+		bbs.put()
+		RecentCommentCache.invalidate(bbs)
+		
+		#ステータスコードを出力
 		if(self.request.get('image')):
 			self.response.headers ['Content-type'] = "text/html;charset=utf-8"  
 			self.response.out.write("success")			
@@ -152,20 +173,6 @@ class AddEntry(webapp.RequestHandler):
 			if(self.request.get("redirect_url")):
 				url=self.request.get("redirect_url")
 			self.redirect(str(url))
-
-		thread.comment_cnt = thread.comment_cnt+1
-		thread.date=datetime.datetime.today()
-		thread.cached_entry_key=[]
-		thread.cached_entry_key_enable=None
-		thread.put()
-
-		if(bbs.comment_n) :
-			bbs.comment_n=bbs.comment_n+1
-		else:
-			bbs.comment_n=1
-		bbs.put()
-		
-		RecentCommentCache.invalidate(bbs)
 
 		#二重投稿ブロック
 		memcache.set("add_entry_double_block",self.request.get("comment"),30)
