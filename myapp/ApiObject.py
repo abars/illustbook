@@ -301,16 +301,16 @@ class ApiObject(webapp.RequestHandler):
 		if(thread.applause):
 			app=thread.applause
 
+		comment_cnt=0
+		if(thread.comment_cnt):
+			comment_cnt=thread.comment_cnt
+
 		summary=thread.summary
-		#split_length=40
-		#if(len(summary)>=split_length):
-		#	summary=summary[0:split_length]
-		#	summary=""+summary+"..."
 
 		bookmark_cnt=0
 		if(thread.bookmark_count):
 			bookmark_cnt=thread.bookmark_count
-		one_dic={"title":thread.title,"summary":summary,"author":thread.author,"thumbnail_url":thumbnail_url,"image_url":image_url,"create_date":create_date,"thread_url":thread_url,"applause":app,"bookmark":bookmark_cnt,"key":str(thread.key()),"disable_news":disable_news}
+		one_dic={"title":thread.title,"summary":summary,"author":thread.author,"user_id":thread.user_id,"thumbnail_url":thumbnail_url,"image_url":image_url,"create_date":create_date,"thread_url":thread_url,"applause":app,"bookmark":bookmark_cnt,"comment":comment_cnt,"key":str(thread.key()),"disable_news":disable_news,"tag":thread.tag_list}
 		
 		return one_dic
 

@@ -103,6 +103,7 @@ from myapp.ChatConnected import ChatConnected
 from myapp.ChatDisconnected import ChatDisconnected
 from myapp.Ranking import Ranking
 from myapp.ApiPacked import ApiPacked
+from myapp.Pinterest import Pinterest
 
 #-----------------------------------------------------------------
 #ポータル
@@ -159,26 +160,6 @@ class MainPage(webapp.RequestHandler):
 		}
 
 		path = os.path.join(os.path.dirname(__file__), 'html/index.html')
-		self.response.out.write(template.render(path, template_values))
-
-class Pinterest(webapp.RequestHandler):
-	def get(self):
-		SetUtf8.set()
-		user = users.get_current_user()
-		unit=32
-		
-		page=0
-		if(self.request.get("page")):
-			page=int(self.request.get("page"))
-
-		thread_list=ApiFeed.feed_get_thread_list(self,page*unit,unit)
-		template_values = {
-			'host': "./",
-			'user': user,
-			'thread_list': thread_list,
-			'redirect_url': self.request.path
-		}
-		path = os.path.join(os.path.dirname(__file__), 'html/pinterest.html')
 		self.response.out.write(template.render(path, template_values))
 
 class Portal(webapp.RequestHandler):

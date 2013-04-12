@@ -94,6 +94,41 @@ class SearchTag(webapp.RequestHandler):
 		thread_list = ApiObject.get_cached_object_list(thread_key_list)
 		return thread_list
 
+	@staticmethod
+	def update_recent_tag(tag,cnt):
+		#最近のタグを取得
+		recent_tag=RecentTag.get_or_insert("recent_tag")
+		
+		#タグに対応するスレッドの数を更新
+		if(not recent_tag.tag_list):
+			recent_tag.tag_list=[]
+		if(not recent_tag.score_list):
+			recent_tag.score_list=[]
+		try:
+			search_index=recent_tag.tag_list.index(tag)
+		except:
+			search_index=-1
+
+		if(search_index!=-1):
+			recent_tag.tag_list.pop(search_index)
+			if(len(recent_tag.score_list)>search_index):
+				recent_tag.score_list.pop(search_index)
+
+		if(cnt>0):
+			recent_tag.tag_list.insert(0,tag)
+			recent_tag.score_list.insert(0,str(cnt))
+		
+		cnt=len(recent_tag.tag_list)
+		if(cnt>=100):
+			recent_tag.tag_list.pop(cnt-1)
+			recent_tag.score_list.pop(cnt-1)
+
+		recent_tag.put()
+
+		#最近のタグリストの構築
+		tag_list=SearchTag.get_recent_tag_core(recent_tag)
+		return tag_list
+
 	def get(self):
 		tag=self.request.get("tag")
 		
@@ -121,35 +156,8 @@ class SearchTag(webapp.RequestHandler):
 		host_url="./";
 
 		#最近のタグ
-		recent_tag=RecentTag.get_or_insert("recent_tag")
-		
-		#タグに対応するスレッドの数を更新
-		if(not recent_tag.tag_list):
-			recent_tag.tag_list=[]
-		if(not recent_tag.score_list):
-			recent_tag.score_list=[]
-		try:
-			search_index=recent_tag.tag_list.index(tag)
-		except:
-			search_index=-1
-
-		if(search_index!=-1):
-			recent_tag.tag_list.pop(search_index)
-			if(len(recent_tag.score_list)>search_index):
-				recent_tag.score_list.pop(search_index)
-
 		cnt=len(thread_list)+len(moper_list)+len(text_list)
-		if(cnt>0):
-			recent_tag.tag_list.insert(0,tag)
-			recent_tag.score_list.insert(0,str(cnt))
-		
-		cnt=len(recent_tag.tag_list)
-		if(cnt>=100):
-			recent_tag.tag_list.pop(cnt-1)
-			recent_tag.score_list.pop(cnt-1)
-
-		#最近のタグリストの構築
-		tag_list=SearchTag.get_recent_tag_core(recent_tag)
+		tag_list=SearchTag.update_recent_tag(tag,cnt)
 
 		#iPhoneかどうか
 		is_iphone=CssDesign.is_iphone(self)
@@ -170,5 +178,3 @@ class SearchTag(webapp.RequestHandler):
 
 		path = os.path.join(os.path.dirname(__file__), "../html/portal.html")
 		self.response.out.write(template.render(path, template_values))
-
-		recent_tag.put()
