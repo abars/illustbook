@@ -50,7 +50,14 @@
 			<img src="/thumbnail/{{bbs.cached_thumbnail_key}}.jpg" width="160" height="160" class="radius_image"/>
 		{% endif %}
 		<H1><p>{{bbs.bbs_name}}の編集</p></H1>
-		<p>&nbsp</p>
+		<div class="g-button-group">
+			<a class="g-button dropdown-toggle" data-toggle="dropdown" href="#">
+			その他の操作 <span class="caret"></span>
+			</a>
+			<ul class="dropdown-menu">
+				<li><a href="{{host}}analyze?bbs_key={{bbs.key}}"" target="_BLANK">アクセス解析の閲覧</a></li>
+			</ul>
+		</div>
 	</div>
 </div>
 

@@ -140,7 +140,7 @@ class MainPage(webapp.RequestHandler):
 
 		#iPhoneモードかどうか
 		is_iphone=CssDesign.is_iphone(self)
-		
+
 		#URL生成
 		template_values = {
 			'host': "./",
@@ -159,6 +159,26 @@ class MainPage(webapp.RequestHandler):
 		}
 
 		path = os.path.join(os.path.dirname(__file__), 'html/index.html')
+		self.response.out.write(template.render(path, template_values))
+
+class Pinterest(webapp.RequestHandler):
+	def get(self):
+		SetUtf8.set()
+		user = users.get_current_user()
+		unit=32
+		
+		page=0
+		if(self.request.get("page")):
+			page=int(self.request.get("page"))
+
+		thread_list=ApiFeed.feed_get_thread_list(self,page*unit,unit)
+		template_values = {
+			'host': "./",
+			'user': user,
+			'thread_list': thread_list,
+			'redirect_url': self.request.path
+		}
+		path = os.path.join(os.path.dirname(__file__), 'html/pinterest.html')
 		self.response.out.write(template.render(path, template_values))
 
 class Portal(webapp.RequestHandler):
@@ -464,6 +484,7 @@ class DropBox(webapp.RequestHandler):
 		
 application = webapp.WSGIApplication(
 	[('/', MainPage),
+	('/pinterest', Pinterest),
 	('/_ah/channel/connected/',ChatConnected),
 	('/_ah/channel/disconnected/',ChatDisconnected),
 	(r'/usr/(.*)/(.*)\.html',ShowThread),

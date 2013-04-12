@@ -46,7 +46,11 @@
 			{% include "portal_css/option_tab.html" %}
 			{% include "portal/toppage_iphone.html" %}
 		{% else %}
-			{% include "portal/toppage_pc.html" %}
+			{% if is_pinterest %}
+				{% include "pinterest.html" %}
+			{% else %}
+				{% include "portal/toppage_pc.html" %}
+			{% endif %}
 		{% endif %}
 	</div>
 
