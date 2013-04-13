@@ -12,11 +12,8 @@
 <meta http-equiv="Content-Script-Type" content="text/javascript" />
 <meta http-equiv="Content-Style-Type" content="text/css" />
 <meta name="Copyright" content="Copyright: ABARS" />
-</head>
-<body>
 
 {% include "floating_menu_css.html" %}
-{% include "floating_menu.html" %}
 {% include "portal_css/option_google_button.html" %}
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
@@ -31,6 +28,15 @@ img {
 body{
   background:#f2f2f2;
 }
+
+{% if is_iphone %}
+#floating_menu{
+  width:310px;
+  margin-left:auto;
+  margin-right:auto;
+  padding-left:0px;
+}
+{% endif %}
 
 #contents {
     {% if is_iphone %}
@@ -57,7 +63,7 @@ word-break:break-all;
 
 .guide {
 {% if is_iphone %}
-  width:120px;
+  width:123px;
 {% else %}
   width:216px;
   margin: 5px;
@@ -85,6 +91,7 @@ box-shadow: 0 2px 1px #eee;
 }
 
 .logo {
+position:relative;
 max-width:100%;
 margin:5px;
 float:left;
@@ -95,6 +102,24 @@ height: 180px;
 width: 360px;
 height: 360px;
 {% endif %}
+}
+
+{% if is_iphone %}
+.menu_list {
+  padding-top:4px;
+}
+{% endif %}
+
+#footer {
+position:absolute;
+right:0px;
+bottom:0px;
+background-color:#ffffff;
+font-size:12px;
+}
+
+#footer a{
+text-decoration: none;
 }
 
 #infscr-loading {
@@ -123,7 +148,7 @@ var $container = $('#container');
       nextSelector : '#page-nav a',  // selector for the NEXT link (to page 2)
       itemSelector : '.item',     // selector for all items you'll retrieve
       loading: {
-          finishedMsg: 'いっぱいいっぱいです',
+          finishedMsg: '<div style="background-color:#ffffff;">ページの終端です。</div>',
           img: 'static_files/loading.gif'
         }
       },
@@ -141,6 +166,10 @@ var $container = $('#container');
     );
 });
 </script>
+</head>
+<body>
+
+{% include "floating_menu.html" %}
 
 <div id="contents">
 
@@ -166,8 +195,14 @@ var $container = $('#container');
 {% endifequal %}
 
 {% ifequal page_mode "index" %}
-<div class="logo"><img src="static_files/banner_360.png"></div>
-<div>
+<div class="logo">
+  <img src="static_files/banner_360.png">
+  <div id="footer">
+  from <a href="http://pochigoya0423.blog.shinobi.jp/">飯田のぎ</a>
+  </div>
+</div>
+
+<div class="menu_list">
 <a href="{{host}}sample/" class="guide">試し描き</a>
 <a href="{{host}}mypage" class="guide">レンタル</a>
 <a href="{{host}}commu/" class="guide">コミュニティ</a>
