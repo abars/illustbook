@@ -133,7 +133,7 @@ class MainPage(webapp.RequestHandler):
 		illust_n=cache["illust_n"]
 		
 		#最近のタグ
-		tag_list=SearchTag.get_recent_tag()
+		tag_list=SearchTag.get_recent_tag("search_tag")
 		
 		#デベロッパーオプション
 		user = users.get_current_user()

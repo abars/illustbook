@@ -30,7 +30,7 @@ class BbsConst:
 	SPAM_CHECKED ="スパムと判定されました。<BR>通常投稿で表示された場合はabarsceo@gmail.comもしくはサポート掲示板までお問い合わせ下さい。"
 	
 	#memcacheコントロール
-	OBJECT_CACHE_HEADER="ocache49_"	#この値を変更することで全てのキャッシュが無効になる
+	OBJECT_CACHE_HEADER="ocache51_"	#この値を変更することで全てのキャッシュが無効になる
 	OBJECT_BOOKMARK_CACHE_HEADER="bookmark_"
 	OBJECT_ENTRY_CACHE_HEADER="entry_"
 	OBJECT_THREAD_CACHE_HEADER="thread_"
@@ -47,7 +47,12 @@ class BbsConst:
 	SIDEBAR_RECENT_ENTRY_CACHE_TIME=60*60*24
 	SIDEBAR_RECENT_THREAD_CACHE_TIME=60*60*24
 	COUNTER_IP_CACHE_TIME=60*30
+	RECENT_TAG_CACHE_TIME=60*60*24
 	
+	#tag
+	RECENT_TAG_CACHE_HEADER="recent_tag_list_"
+	RECENT_TAG_KEY_NAME="recent_tag"
+
 	#ranking
 	THREAD_RANKING_KEY_NAME="thread_ranking"
 	THREAD_RANKING_MAX=100

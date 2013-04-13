@@ -294,7 +294,8 @@ class ApiObject(webapp.RequestHandler):
 		image_url=""
 		if(thread.cached_image_key):
 			image_url=url_header+"/img/"+str(thread.cached_image_key)+".jpg"
-		if(bbs.dont_permit_app or bbs.del_flag):	#アプリでの画像データの参照を禁止
+		#if(bbs.dont_permit_app or 
+		if(bbs.del_flag):	#アプリでの画像データの参照を禁止
 			image_url=""
 
 		app=0
@@ -305,7 +306,7 @@ class ApiObject(webapp.RequestHandler):
 		if(thread.comment_cnt):
 			comment_cnt=thread.comment_cnt
 
-		summary=thread.summary
+		summary=ApiObject.truncate_html(thread.summary)
 
 		bookmark_cnt=0
 		if(thread.bookmark_count):
@@ -433,6 +434,16 @@ class ApiObject(webapp.RequestHandler):
 		return dic
 
 	@staticmethod
+	def truncate_html(message):
+		TAG_RE = re.compile(r'<[^>]+>')
+		message=TAG_RE.sub('', message)
+		split_length=40
+		if(len(message)>=split_length):
+			message=message[0:split_length]
+			message=""+message+"..."
+		return message
+
+	@staticmethod
 	def create_feed_object(req,feed,user_hash,bbs_hash,thread_hash,feed_key):
 		#フィードが削除された
 		if(feed==None):
@@ -503,10 +514,7 @@ class ApiObject(webapp.RequestHandler):
 				if(res):
 					message=res.content
 
-			split_length=40
-			if(len(message)>=split_length):
-				message=message[0:split_length]
-				message=""+message+"..."
+			message=ApiObject.truncate_html(message)
 
 		#オブジェクトを返す
 		one_dic={"mode":feed.feed_mode,"from_user":from_user,"to_user":to_user,"follow_user":follow_user,"bbs":bbs,"thread":thread,"message":message,"create_date":create_date,"key":str(feed.key())}

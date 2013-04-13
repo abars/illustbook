@@ -53,7 +53,7 @@
 						<option value="1">表示しない</option><option value="0" selected="selected">表示する</option>
 				{% endifequal %}
 			</select></TD></TR>
-
+<!--
 			<TR><TH>イラストブックアプリからのイラストの参照</TH><TD>
 			<select name="dont_permit_app">
 				{% ifequal bbs.dont_permit_app 1 %}
@@ -62,7 +62,7 @@
 						<option value="1">許可しない</option><option value="0" selected="selected">許可する</option>
 				{% endifequal %}
 			</select></TD></TR>
-
+-->
 			<TR><TH>デザインテンプレート</TH><TD>
 				<select name="design_template_no" id="design_template_no" onchange="javascript:design_template_change(''+this.value);">
 					<option value="0" {% if not bbs.design_template_no %} selected="selected" {% endif%}>フォームデザイン</option>

@@ -41,21 +41,21 @@ from myapp.ApiObject import ApiObject
 
 class SearchTag(webapp.RequestHandler):
 	@staticmethod
-	def get_recent_tag():
-		data=memcache.get("recent_tag_list")
+	def get_recent_tag(api):
+		data=memcache.get(BbsConst.RECENT_TAG_CACHE_HEADER+api)
 		if(not data):
 			recent_tag=None
 			try:
-				recent_tag=RecentTag.get_by_key_name("recent_tag")
+				recent_tag=RecentTag.get_by_key_name(BbsConst.RECENT_TAG_KEY_NAME)
 			except:
 				recent_tag=None
 			if(recent_tag==None):
 				return None
-			return SearchTag.get_recent_tag_core(recent_tag)
+			return SearchTag.get_recent_tag_core(recent_tag,api)
 		return data
 	
 	@staticmethod
-	def get_recent_tag_core(recent_tag):
+	def get_recent_tag_core(recent_tag,api):
 		tag_list=[]
 		cnt=0
 		for tag2 in recent_tag.tag_list:
@@ -68,7 +68,7 @@ class SearchTag(webapp.RequestHandler):
 				cnt=cnt+1
 				continue
 			
-			one_tag='<a href="./search_tag?tag='
+			one_tag='<a href="./'+api+'?tag='
 			one_tag+=urllib.quote_plus(tag2.encode('utf8'))
 			one_tag+='" class="decnone">'
 			
@@ -84,7 +84,7 @@ class SearchTag(webapp.RequestHandler):
 			tag_list.append(one_tag)
 			cnt=cnt+1
 		
-		memcache.set("recent_tag_list",tag_list,60*60*24)
+		memcache.set(BbsConst.RECENT_TAG_CACHE_HEADER+api,tag_list,BbsConst.RECENT_TAG_CACHE_TIME)
 		
 		return tag_list
 
@@ -95,9 +95,9 @@ class SearchTag(webapp.RequestHandler):
 		return thread_list
 
 	@staticmethod
-	def update_recent_tag(tag,cnt):
+	def update_recent_tag(tag,cnt,api):
 		#最近のタグを取得
-		recent_tag=RecentTag.get_or_insert("recent_tag")
+		recent_tag=RecentTag.get_or_insert(BbsConst.RECENT_TAG_KEY_NAME)
 		
 		#タグに対応するスレッドの数を更新
 		if(not recent_tag.tag_list):
@@ -126,7 +126,7 @@ class SearchTag(webapp.RequestHandler):
 		recent_tag.put()
 
 		#最近のタグリストの構築
-		tag_list=SearchTag.get_recent_tag_core(recent_tag)
+		tag_list=SearchTag.get_recent_tag_core(recent_tag,api)
 		return tag_list
 
 	def get(self):
@@ -157,7 +157,7 @@ class SearchTag(webapp.RequestHandler):
 
 		#最近のタグ
 		cnt=len(thread_list)+len(moper_list)+len(text_list)
-		tag_list=SearchTag.update_recent_tag(tag,cnt)
+		tag_list=SearchTag.update_recent_tag(tag,cnt,"search_tag")
 
 		#iPhoneかどうか
 		is_iphone=CssDesign.is_iphone(self)

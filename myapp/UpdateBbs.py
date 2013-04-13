@@ -286,7 +286,7 @@ class UpdateBbs(webapp.RequestHandler):
 		bbs.date_format=int(self.request.get("date_format"))
 		bbs.move_account=self.request.get("move_account")
 		bbs.show_only_movie=int(self.request.get("show_only_movie"))
-		bbs.dont_permit_app=int(self.request.get("dont_permit_app"))
+		#bbs.dont_permit_app=int(self.request.get("dont_permit_app"))
 		bbs.delete_when_upload_success=int(self.request.get("delete_when_upload_success"))
 		
 		bbs.tool_bg_color=self.request.get("tool_bg_color")
