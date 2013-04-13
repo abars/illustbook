@@ -130,6 +130,15 @@ left: 50%;
 bottom: 10px;
 text-align: center;
 }
+
+#pinterest_footer{
+  text-align: center;
+  font-size:12px;
+}
+
+#pinterest_footer a{
+  text-decoration: none;
+}
 </style>
 
 <script>
@@ -149,7 +158,8 @@ var $container = $('#container');
       itemSelector : '.item',     // selector for all items you'll retrieve
       loading: {
           finishedMsg: '<div style="background-color:#ffffff;">ページの終端です。</div>',
-          img: 'static_files/loading.gif'
+          img: 'static_files/loading.gif',
+          msgText: '<div style="background-color:#ffffff;">次のページを読込中</div>'
         }
       },
       // trigger Masonry as a callback
@@ -216,8 +226,7 @@ var $container = $('#container');
 </div>
 {% endifequal %}
 
-{% ifequal page_mode "user" %}
-{% else %}
+{% ifequal page_mode "index" %}
 <div class="message">
     <div class="g-button-group">
       <a class="g-button dropdown-toggle" data-toggle="dropdown" href="#">
@@ -274,9 +283,25 @@ var $container = $('#container');
   {% endfor %}
 </div>
 
+{% ifequal page_mode "tag" %}
+<div class="message">
+{% for tag2 in tag_list %}
+    {% if forloop.counter <= tag_list_view_n %}
+      {{tag2|safe}}　
+    {% endif %}
+{% endfor %}
+</div>
+{% endifequal %}
+
 <nav id="page-nav">
   <a href="pinterest?{{next_query}}&page={{next_page}}"></a>
 </nav>
+</div>
+
+<br clear="all">
+
+<div id="pinterest_footer">
+&copy 2010-2013 <a href="http://www.abars.biz">ABARS</a> all rights reserved.
 </div>
 
 </body>
