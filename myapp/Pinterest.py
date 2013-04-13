@@ -104,7 +104,7 @@ class Pinterest(webapp.RequestHandler):
 				page_mode="tag"
 				tag_list_view_n=100
 			else:
-				thread_list=ApiFeed.feed_get_thread_list(self,(page-1)*unit,unit)
+				thread_list=ApiFeed.feed_get_thread_list(self,order,(page-1)*unit,unit)
 				tag_list=SearchTag.get_recent_tag("pinterest")
 				next_query="order="+order
 

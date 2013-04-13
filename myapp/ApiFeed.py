@@ -85,7 +85,7 @@ class ApiFeed(webapp.RequestHandler):
 		return query
 		
 	@staticmethod
-	def feed_get_thread_list(req,offset,limit):
+	def feed_get_thread_list(req,order,offset,limit):
 		#最大取得数
 		if(limit>100):
 			limit=100
@@ -96,20 +96,20 @@ class ApiFeed(webapp.RequestHandler):
 			cache_enable=1
 		
 		#キャッシュ取得
-		cache_id=ApiFeed._get_cache_id(req.request.get("order"),req.request.get("bbs_id"),offset,limit)
+		cache_id=ApiFeed._get_cache_id(order,req.request.get("bbs_id"),offset,limit)
 		data=memcache.get(cache_id)
 		if(data and cache_enable):
 			return data
 		
 		#スレッド一覧取得
-		if(req.request.get("order")=="hot"):
+		if(order=="hot"):
 			rank=Ranking.get_by_key_name(BbsConst.THREAD_RANKING_KEY_NAME)
 			if(rank==None):
 				rank=Ranking.get_or_insert(BbsConst.THREAD_RANKING_KEY_NAME)
 			thread_list=rank.get_rank(offset,limit)
 			bbs_id=None
 		else:
-			query=ApiFeed._get_query(req.request.get("order"))
+			query=ApiFeed._get_query(order)
 
 			bbs_id=None
 			if(req.request.get("bbs_id")):
@@ -169,7 +169,8 @@ class ApiFeed(webapp.RequestHandler):
 					limit=int(self.request.get("limit"))
 				except:
 					return {"status":"failed","message":"limit must be integer"}
-			dic=ApiFeed.feed_get_thread_list(self,offset,limit)
+			order=self.request.get("order")
+			dic=ApiFeed.feed_get_thread_list(self,order,offset,limit)
 			if(dic==None):
 				return {"status":"failed","message":"bbs not found"}
 			#return {"status":"failed","message":"debug error message"}
