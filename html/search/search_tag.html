@@ -21,7 +21,7 @@
 	<TR><TD>
 	{% for thread in thread_list %}
 		{% if not thread.violate_photo %}
-			<a href='{% if thread.bbs_key.short %}./{{thread.bbs_key.short}}/{%else%}./usr/{{thread.bbs_key.key}}/{%endif%}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{%endif%}.html' class="imagelink"><IMG SRC="{{host}}thumbnail/{{thread.image_key.key}}.jpg" BORDER=0 ALT="{{thread.title}}" width=98px height=98px></A>
+			<a href='{{thread.thread_url}}' class="imagelink"><IMG SRC="{{thread.thumbnail_url}}" BORDER=0 ALT="{{thread.title}}" width=98px height=98px></A>
 		{% endif %}
 	{% endfor %}
 	</TD></TR>
@@ -35,7 +35,7 @@
 	<TABLE width="100%">
 	<TR><TD>
 	{% for thread in moper_list %}
-		<a href='{% if thread.bbs_key.short %}./{{thread.bbs_key.short}}/{%else%}./usr/{{thread.bbs_key.key}}/{%endif%}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{% endif %}.html' class="imagelink"><IMG SRC="{{host}}thumbnail/{{thread.image_key.key}}.gif" BORDER=0 ALT="{{thread.title}}" width=98px height=98px></A>
+		<a href='{{thread.thread_url}}' class="imagelink"><IMG SRC="{{thread.thumbnail_url}}" BORDER=0 ALT="{{thread.title}}" width=98px height=98px></A>
 	{% endfor %}
 	</TD></TR>
 	</TABLE>
@@ -48,7 +48,7 @@
 	<TABLE width="100%">
 	<TR><TD>
 	{% for thread in text_list %}
-		<p><a href='{% if thread.bbs_key.short %}./{{thread.bbs_key.short}}/{%else%}./usr/{{thread.bbs_key.key}}/{%endif%}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{% endif %}.html' class="imagelink">{{thread.title|safe}}</A></p>
+		<p><a href='{{thread.thread_url}}' class="imagelink">{{thread.title|safe}}</A></p>
 	{% endfor %}
 	</TD></TR>
 	</TABLE>

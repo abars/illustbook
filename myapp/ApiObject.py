@@ -219,6 +219,11 @@ class ApiObject(webapp.RequestHandler):
 				thread_list.append(thread)
 				bbs_list.append(thread.cached_bbs_key)
 		bbs_list=ApiObject.get_cached_object_list(bbs_list)
+
+		#文字だけのスレッドを含むか
+		only_image_thread=True
+		if(bbs_id=="search" or bbs_id=="pinterest"):
+			only_image_thread=False
 		
 		#スレッドをJSON形式に変換しながら格納
 		dic=[]
@@ -226,7 +231,7 @@ class ApiObject(webapp.RequestHandler):
 		for thread in thread_list:
 			bbs=bbs_list[cnt]
 			cnt=cnt+1
-			one_dic=ApiObject._create_thread_object_core(req,thread,bbs,True)	#文字だけのスレッドは含まない
+			one_dic=ApiObject._create_thread_object_core(req,thread,bbs,only_image_thread)	#文字だけのスレッドは含まない
 			if(not bbs_id):
 				if(one_dic and one_dic["disable_news"]):
 					continue

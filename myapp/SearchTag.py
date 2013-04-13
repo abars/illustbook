@@ -91,7 +91,8 @@ class SearchTag(webapp.RequestHandler):
 	def get_thread(self,query,tag,thread_num,page):
 		query.filter('tag_list =', tag)
 		thread_key_list = query.fetch(limit=thread_num, offset=(page-1)*thread_num)
-		thread_list = ApiObject.get_cached_object_list(thread_key_list)
+		#thread_list = ApiObject.get_cached_object_list(thread_key_list)
+		thread_list = ApiObject.create_thread_object_list(self,thread_key_list,"search")
 		return thread_list
 
 	@staticmethod

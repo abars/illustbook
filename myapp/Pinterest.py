@@ -94,7 +94,7 @@ class Pinterest(webapp.RequestHandler):
 			if(tag!=""):
 				query = db.Query(MesThread,keys_only=True)
 				query.filter('illust_mode =', BbsConst.ILLUSTMODE_ILLUST)
-				query.order('-applause')
+				query.order('-create_date')
 				query.filter('tag_list =', tag)
 				cnt=query.count(limit=100)
 				thread_key_list = query.fetch(limit=unit, offset=page*unit)
