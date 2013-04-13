@@ -578,6 +578,10 @@ class ApiObject(webapp.RequestHandler):
 		limit=10
 		if(req.request.get("limit")):
 			limit=int(req.request.get("limit"))
+
+		if(req.request.get("page")):
+			page=int(req.request.get("page"))
+			offset=limit*(page-1)
 		
 		return key_list[offset:offset+limit]
 

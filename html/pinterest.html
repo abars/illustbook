@@ -208,17 +208,23 @@ var $container = $('#container');
     <br clear="all">
   </div>
   <div class="message">
+    {% if follow or follower %}
     <div style="float:left">
+      {% if follow %}
      フォローしている<br>
      {% for user in follow %}
      <a href="{{user.profile_url}}"><img src="{{user.icon_url}}" width=36px height=36px></a>
      {% endfor %}
      <br>
+     {% endif %}
+     {% if follower %}
      フォローされている<br>
      {% for user in follower %}
      <a href="{{user.profile_url}}"><img src="{{user.icon_url}}" width=36px height=36px></a>
      {% endfor %}
+     {% endif %}
    </div>
+   {% endif %}
  </div>
 {% endifequal %}
 

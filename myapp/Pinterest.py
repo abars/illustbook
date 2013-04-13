@@ -97,7 +97,7 @@ class Pinterest(webapp.RequestHandler):
 			view_user=ApiUser.user_get_user(self,user_id)
 			view_user_profile=ApiUser.user_get_profile(self,user_id)
 			tag_list=SearchTag.get_recent_tag("pinterest")
-			next_query="user_id="+user_id
+			next_query="user_id="+user_id+"&order="+order
 			follow=ApiUser.user_get_follow(self,user_id,True)
 			follower=ApiUser.user_get_follower(self,user_id,True)
 		else:
