@@ -140,6 +140,10 @@ text-decoration: none;
 #pinterest_footer a{
   text-decoration: none;
 }
+
+#order{
+  margin:5px;
+}
 </style>
 
 <script>
@@ -203,6 +207,19 @@ var $container = $('#container');
     </div>
     <br clear="all">
   </div>
+  <div class="message">
+    <div style="float:left">
+     フォローしている<br>
+     {% for user in follow %}
+     <a href="{{user.profile_url}}"><img src="{{user.icon_url}}" width=36px height=36px></a>
+     {% endfor %}
+     <br>
+     フォローされている<br>
+     {% for user in follower %}
+     <a href="{{user.profile_url}}"><img src="{{user.icon_url}}" width=36px height=36px></a>
+     {% endfor %}
+   </div>
+ </div>
 {% endifequal %}
 
 {% ifequal page_mode "index" %}
@@ -229,14 +246,6 @@ var $container = $('#container');
 
 {% ifequal page_mode "index" %}
 <div class="message">
-  <div class="g-button-group toggle-buttons">
-    <a href="{{host}}pinterest?order=hot" class="g-button {%ifequal order "hot"%}checked{%endifequal%}">人気順</a>
-    <a href="{{host}}pinterest?order=new" class="g-button {%ifequal order "new"%}checked{%endifequal%}">新着順</a>
-    <a href="{{host}}pinterest?order=bookmark" class="g-button {%ifequal order "bookmark"%}checked{%endifequal%}">ブックマーク順</a>
-    <a href="{{host}}pinterest?order=applause" class="g-button {%ifequal order "applause"%}checked{%endifequal%}">拍手順</a>
-  </div>
-</div>
-<div class="message">
 {% for tag2 in tag_list %}
     {% if forloop.counter <= tag_list_view_n %}
       {{tag2|safe}}　
@@ -246,6 +255,26 @@ var $container = $('#container');
 {% endifequal %}
 
 <br clear="all">
+
+{% ifequal page_mode "user" %}
+<div id="order">
+  <div class="g-button-group toggle-buttons">
+    <a href="{{host}}pinterest?user_id={{user_id}}&order=submit" class="g-button {%ifequal order "submit"%}checked{%endifequal%}">投稿したイラスト</a>
+    <a href="{{host}}pinterest?user_id={{user_id}}&order=bookmark" class="g-button {%ifequal order "bookmark"%}checked{%endifequal%}">ブックマーク</a>
+  </div>
+</div>
+{% endifequal %}
+
+{% ifequal page_mode "index" %}
+<div id="order">
+  <div class="g-button-group toggle-buttons">
+    <a href="{{host}}pinterest?order=hot" class="g-button {%ifequal order "hot"%}checked{%endifequal%}">人気</a>
+    <a href="{{host}}pinterest?order=new" class="g-button {%ifequal order "new"%}checked{%endifequal%}">新着</a>
+    <a href="{{host}}pinterest?order=bookmark" class="g-button {%ifequal order "bookmark"%}checked{%endifequal%}">{%if is_iphone%}ブクマ{%else%}ブックマーク{%endif%}</a>
+    <a href="{{host}}pinterest?order=applause" class="g-button {%ifequal order "applause"%}checked{%endifequal%}">拍手</a>
+  </div>
+</div>
+{% endifequal %}
 
 {% if not thread_list %}
 {% ifequal next_page 2 %}

@@ -43,6 +43,7 @@ from myapp.ApiFeed import ApiFeed
 from myapp.ApiUser import ApiUser
 from myapp.MaintenanceCheck import MaintenanceCheck
 from myapp.SiteAnalyzer import SiteAnalyzer
+from myapp.ApiBookmark import ApiBookmark
 
 class Pinterest(webapp.RequestHandler):
 	def get(self):
@@ -82,14 +83,23 @@ class Pinterest(webapp.RequestHandler):
 		view_user=None
 		view_user_profile=None
 		tag_list_view_n=5
+		follow=None
+		follower=None
 
 		if(user_id!=""):
-			thread_list=ApiUser.user_get_thread_list(self,user_id)
+			if(not (order=="bookmark" or order=="submit")):
+				order="submit"
+			if(order=="bookmark"):
+				thread_list=ApiBookmark.bookmark_get_thread_list(self,user_id)
+			else:
+				thread_list=ApiUser.user_get_thread_list(self,user_id)
 			page_mode="user"
 			view_user=ApiUser.user_get_user(self,user_id)
 			view_user_profile=ApiUser.user_get_profile(self,user_id)
 			tag_list=SearchTag.get_recent_tag("pinterest")
 			next_query="user_id="+user_id
+			follow=ApiUser.user_get_follow(self,user_id,True)
+			follower=ApiUser.user_get_follower(self,user_id,True)
 		else:
 			if(tag!=""):
 				query = db.Query(MesThread,keys_only=True)
@@ -128,7 +138,10 @@ class Pinterest(webapp.RequestHandler):
 			'is_iphone': is_iphone,
 			'top_page': True,
 			'bbs_n': bbs_n,
-			'illust_n': illust_n
+			'illust_n': illust_n,
+			'user_id': user_id,
+			'follow': follow,
+			'follower': follower
 		}
 		path = os.path.join(os.path.dirname(__file__), '../html/pinterest.html')
 		self.response.out.write(template.render(path, template_values))
