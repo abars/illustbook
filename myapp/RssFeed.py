@@ -30,7 +30,10 @@ class RssFeed(webapp.RequestHandler):
 			entry_query.order('-date')
 			all_entry = entry_query.fetch(limit=20)
 			for entry in all_entry:
-				thread=entry.thread_key
+				try:
+					thread=entry.thread_key
+				except:
+					continue
 				url2=url+str(thread.key())+".html"
 				txt=""+entry.editor+"("+str(entry.date)+")<BR>"
 				

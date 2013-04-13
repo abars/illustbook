@@ -1,0 +1,240 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+{% if is_iphone %}
+<meta name="viewport" content="width=device-width">
+{% endif %}
+<meta name="Keywords" content="お絵かき掲示板,お絵かきブログ,無料,お絵かき,レンタル" />
+<meta name="Description" content="イラストブックはお絵かきツールがなくてもすぐに描ける完全無料のレンタルお絵かき掲示板サービスです。" />
+<title>イラストブック　Pinterest風</title>
+{%include "meta.html" %}
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="Copyright" content="Copyright: ABARS" />
+</head>
+<body>
+
+{% include "floating_menu_css.html" %}
+{% include "floating_menu.html" %}
+{% include "portal_css/option_google_button.html" %}
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery/jquery.masonry.min.js"></script>
+<script type="text/javascript" src="js/jquery/jquery.infinitescroll.min.js"></script>
+<script type="text/javascript" src="api_js"></script>
+<style>
+img {
+  max-width:100%;
+}
+
+body{
+  background:#f2f2f2;
+}
+
+#contents {
+    {% if is_iphone %}
+      width:320px;
+    {% else %}
+      width:850px;
+    {% endif %}
+    margin:auto;
+}
+
+.item {
+{% if is_iphone %}
+  max-width:140px;
+{% else %}
+  max-width:200px;
+{% endif %}
+margin: 5px;
+float: left;
+border: 1px solid #ccc;
+background: #eee;
+box-shadow: 0 2px 1px #eee;
+word-break:break-all;
+}
+
+.guide {
+{% if is_iphone %}
+  width:120px;
+{% else %}
+  width:216px;
+  margin: 5px;
+  padding: 5px;
+{% endif %}
+float: left;
+border: 1px solid #ccc;
+background: #ffffff;
+box-shadow: 0 2px 1px #eee;
+text-decoration: none;
+text-align: center;
+}
+
+.message {
+{% ifequal page_mode "index" %}
+max-width:455px;
+{% else %}
+{% endifequal %}
+margin: 5px;
+padding: 5px;
+float: left;
+border: 1px solid #ccc;
+background: #ffffff;
+box-shadow: 0 2px 1px #eee;
+}
+
+.logo {
+max-width:100%;
+margin:5px;
+float:left;
+{% if is_iphone %}
+width: 180px;
+height: 180px;
+{% else %}
+width: 360px;
+height: 360px;
+{% endif %}
+}
+
+#infscr-loading {
+margin-left: -100px;
+width: 200px;
+position: fixed;
+left: 50%;
+bottom: 10px;
+text-align: center;
+}
+</style>
+
+<script>
+$(function(){
+	
+var $container = $('#container');	
+	
+  $container.imagesLoaded(function(){
+      $container.masonry({
+        itemSelector: '.item',
+      });
+    });
+
+	$container.infinitescroll({
+      navSelector  : '#page-nav',    // selector for the paged navigation 
+      nextSelector : '#page-nav a',  // selector for the NEXT link (to page 2)
+      itemSelector : '.item',     // selector for all items you'll retrieve
+      loading: {
+          finishedMsg: 'いっぱいいっぱいです',
+          img: 'static_files/loading.gif'
+        }
+      },
+      // trigger Masonry as a callback
+      function( newElements ) {
+        // hide new items while they are loading
+        var $newElems = $( newElements ).css({ opacity: 0 });
+        // ensure that images load before adding to masonry layout
+        $newElems.imagesLoaded(function(){
+          // show elems now they're ready
+          $newElems.animate({ opacity: 1 });
+          $container.masonry( 'appended', $newElems, true ); 
+        });
+      }
+    );
+});
+</script>
+
+<div id="contents">
+
+{% ifequal page_mode "tag" %}
+  <div class="message">
+    タグ「{{tag}}」の付けられたイラスト　<A HREF="{{host}}pinterest" class="g-button">トップページ</A>
+  </div>
+{% endifequal %}
+
+{% ifequal page_mode "user" %}
+  <div class="message">
+    <div style="float:left">
+      <img src="{{view_user.icon_url}}" width=160px height=160px>
+    </div>
+    <div style="float:left">
+     <p><b>{{view_user.name}}</b></p>
+     <p>{{view_user_profile.profile|safe}}</p>
+     <A HREF="{{view_user_profile.profile_url}}" class="g-button">詳細</A>
+     <A HREF="{{host}}pinterest" class="g-button">トップページ</A>
+    </div>
+    <br clear="all">
+  </div>
+{% endifequal %}
+
+{% ifequal page_mode "index" %}
+<div class="logo"><img src="static_files/banner_360.png"></div>
+<div>
+<a href="{{host}}sample/" class="guide">試し描き</a>
+<a href="{{host}}mypage" class="guide">レンタル</a>
+<a href="{{host}}commu/" class="guide">コミュニティ</a>
+<a href="{{host}}anything/" class="guide">何でも投稿</a>
+<a href="{{host}}chat" class="guide">チャット</a>
+<a href="{{host}}guide" class="guide">使い方</a>
+<a href="{{host}}support/" class="guide">サポート</a>
+<a href="{{host}}terms" class="guide">利用規約</a>
+</div>
+<div class="message">「イラストブック」に搭載されたお絵かきツールとあなた専用のお絵かき掲示版を使って、作品を世界中に公開しましょう。
+</div>
+{% endifequal %}
+
+{% ifequal page_mode "user" %}
+{% else %}
+<div class="message">
+    <div class="g-button-group">
+      <a class="g-button dropdown-toggle" data-toggle="dropdown" href="#">
+        {% ifequal order "hot" %}人気順{% else %}新着順{% endifequal %} <span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu">
+        {% ifequal order "hot" %}
+          <li><a href="{{host}}pinterest?order=new">新着順</a></li>
+        {% else %}
+          <li><a href="{{host}}pinterest?order=hot">人気順</a></li>
+        {% endifequal %}
+      </ul>　
+{% for tag2 in tag_list %}
+    {% if forloop.counter <= tag_list_view_n %}
+      {{tag2|safe}}　
+    {% endif %}
+{% endfor %}
+    </div>
+</div>
+{% endifequal %}
+
+<br clear="all">
+
+<div id="container" class="transitions-enabled infinite-scroll clearfix">
+  {% for thread in thread_list %}
+    {% if thread.image_url %}
+      <div class="item">
+      <a href="{{thread.thread_url}}" target="_BLANK"><img src="{{thread.image_url}}"></a>
+      <b>{{thread.title}}</b><br>
+      {% if thread.tag %}
+      {% for tag in thread.tag %}
+        <a href="{{host}}pinterest?tag={{tag}}" class="g-button mini">{{tag}}</a>
+      {% endfor %}
+      <br>
+      {% endif %}
+      {{thread.summary|safe}}
+      <br>
+      <div style="text-align:right;"><small>{{thread.comment}} comment<br>
+      from 
+      {%if thread.user_id %}<a href="pinterest?user_id={{thread.user_id}}" class="g-button mini">{% endif %}
+      {{thread.author}}
+      {%if thread.user_id %}</a>{% endif %}
+      <br>{{thread.create_date}}</small></div>
+      </div>
+    {% endif %}
+  {% endfor %}
+</div>
+
+<nav id="page-nav">
+  <a href="pinterest?{{next_query}}&page={{next_page}}"></a>
+</nav>
+</div>
+
+</body>
+</html>

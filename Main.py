@@ -124,11 +124,7 @@ class MainPage(webapp.RequestHandler):
 			is_maintenance=1
 		
 		#BBS COUNT
-		cache=memcache.get("top_bbs_and_illust_n")
-		if(not cache):
-			cache=SiteAnalyzer.get_cache()
-			cache={"bbs_n":cache.bbs_n,"illust_n":cache.illust_n}
-			memcache.set("top_bbs_and_illust_n",cache,60*60*12)
+		cache=SiteAnalyzer.get_cache()
 		bbs_n=cache["bbs_n"]
 		illust_n=cache["illust_n"]
 		

@@ -308,10 +308,18 @@ class ApiObject(webapp.RequestHandler):
 
 		summary=ApiObject.truncate_html(thread.summary)
 
+		user_id=""
+		if(thread.user_id):
+			user_id=thread.user_id
+
+		tag_list=[]
+		if(thread.tag_list):
+			tag_list=thread.tag_list
+
 		bookmark_cnt=0
 		if(thread.bookmark_count):
 			bookmark_cnt=thread.bookmark_count
-		one_dic={"title":thread.title,"summary":summary,"author":thread.author,"user_id":thread.user_id,"thumbnail_url":thumbnail_url,"image_url":image_url,"create_date":create_date,"thread_url":thread_url,"applause":app,"bookmark":bookmark_cnt,"comment":comment_cnt,"key":str(thread.key()),"disable_news":disable_news,"tag":thread.tag_list}
+		one_dic={"title":thread.title,"summary":summary,"author":thread.author,"user_id":user_id,"thumbnail_url":thumbnail_url,"image_url":image_url,"create_date":create_date,"thread_url":thread_url,"applause":app,"bookmark":bookmark_cnt,"comment":comment_cnt,"key":str(thread.key()),"disable_news":disable_news,"tag":tag_list}
 		
 		return one_dic
 

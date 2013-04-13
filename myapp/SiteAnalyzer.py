@@ -38,7 +38,11 @@ from myapp.ApiFeed import ApiFeed
 class SiteAnalyzer(webapp.RequestHandler):
 	@staticmethod
 	def get_cache():
-		cache=TopPageCache.get_or_insert(key_name="top_page_cache")
+		cache=memcache.get("top_bbs_and_illust_n")
+		if(not cache):
+			cache=TopPageCache.get_or_insert(key_name="top_page_cache")
+			cache={"bbs_n":cache.bbs_n,"illust_n":cache.illust_n}
+			memcache.set("top_bbs_and_illust_n",cache,60*60*12)
 		return cache
 
 	def get(self):
