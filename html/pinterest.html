@@ -110,18 +110,6 @@ height: 360px;
 }
 {% endif %}
 
-#footer {
-position:absolute;
-right:0px;
-bottom:0px;
-background-color:#ffffff;
-font-size:12px;
-}
-
-#footer a{
-text-decoration: none;
-}
-
 #infscr-loading {
 margin-left: -100px;
 width: 200px;
@@ -131,9 +119,22 @@ bottom: 10px;
 text-align: center;
 }
 
+#logo_fotter {
+position:absolute;
+right:0px;
+bottom:0px;
+background-color:#ffffff;
+font-size:12px;
+}
+
+#logo_fotter a{
+text-decoration: none;
+}
+
 #pinterest_footer{
   text-align: center;
   font-size:12px;
+  background-color:#ffffff;
 }
 
 #pinterest_footer a{
@@ -207,7 +208,7 @@ var $container = $('#container');
 {% ifequal page_mode "index" %}
 <div class="logo">
   <img src="static_files/banner_360.png">
-  <div id="footer">
+  <div id="logo_fotter">
   from <a href="http://pochigoya0423.blog.shinobi.jp/">飯田のぎ</a>
   </div>
 </div>
