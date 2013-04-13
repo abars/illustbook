@@ -62,7 +62,7 @@ class Pinterest(webapp.RequestHandler):
 		user = users.get_current_user()
 		unit=32
 
-		order="new"
+		order="hot"
 		if(self.request.get("order")):
 			order=self.request.get("order")
 		
