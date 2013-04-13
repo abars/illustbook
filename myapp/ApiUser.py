@@ -141,6 +141,11 @@ class ApiUser(webapp.RequestHandler):
 			except:
 				limit=10
 
+		page=1
+		if(req.request.get("page")):
+			page=int(req.request.get("page"))
+			offset=limit*(page-1)
+
 		thread_key_list=[]
 		thread_list=query.fetch(limit=limit,offset=offset)
 		for thread in thread_list:

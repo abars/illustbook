@@ -175,7 +175,7 @@ var $container = $('#container');
 <a href="{{host}}chat" class="guide">チャット</a>
 <a href="{{host}}guide" class="guide">使い方</a>
 <a href="{{host}}support/" class="guide">サポート</a>
-<a href="{{host}}terms" class="guide">利用規約</a>
+{% if not is_iphone %}<a href="{{host}}terms" class="guide">利用規約</a>{% endif %}
 </div>
 <div class="message">「イラストブック」に搭載されたお絵かきツールとあなた専用のお絵かき掲示版を使って、作品を世界中に公開しましょう。
 </div>
@@ -205,6 +205,14 @@ var $container = $('#container');
 {% endifequal %}
 
 <br clear="all">
+
+{% if not thread_list %}
+{% ifequal next_page 2 %}
+<div class="message">
+イラストは見つかりませんでした。
+</div>
+{% endifequal %}
+{% endif %}
 
 <div id="container" class="transitions-enabled infinite-scroll clearfix">
   {% for thread in thread_list %}

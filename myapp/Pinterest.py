@@ -60,13 +60,13 @@ class Pinterest(webapp.RequestHandler):
 
 		#User
 		user = users.get_current_user()
-		unit=32
+		unit=16
 
 		order="new"
 		if(self.request.get("order")):
 			order=self.request.get("order")
 		
-		page=0
+		page=1
 		if(self.request.get("page")):
 			page=int(self.request.get("page"))
 
@@ -97,14 +97,14 @@ class Pinterest(webapp.RequestHandler):
 				query.order('-create_date')
 				query.filter('tag_list =', tag)
 				cnt=query.count(limit=100)
-				thread_key_list = query.fetch(limit=unit, offset=page*unit)
+				thread_key_list = query.fetch(limit=unit, offset=(page-1)*unit)
 				thread_list=ApiObject.create_thread_object_list(self,thread_key_list,"pinterest")
 				tag_list=SearchTag.update_recent_tag(tag,cnt,"pinterest")
 				next_query="tag="+tag
 				page_mode="tag"
 				tag_list_view_n=100
 			else:
-				thread_list=ApiFeed.feed_get_thread_list(self,page*unit,unit)
+				thread_list=ApiFeed.feed_get_thread_list(self,(page-1)*unit,unit)
 				tag_list=SearchTag.get_recent_tag("pinterest")
 				next_query="order="+order
 
