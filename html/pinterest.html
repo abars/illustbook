@@ -252,7 +252,7 @@
   {% include "mypage/feed.html" %}
   <script type="text/javascript" src="js/timeline.js"></script>
   <script>
-    feed_set_env("feed",{{view_mode}},{{edit_mode}},"{{user_id}}",1);
+    feed_set_env("{{tab}}",{{view_mode}},{{edit_mode}},"{{user_id}}",1);
     feed_initialize();
   </script>
 {% endif %}

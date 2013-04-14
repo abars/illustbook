@@ -166,7 +166,7 @@ class Pinterest(webapp.RequestHandler):
 				thread_list=None
 				illust_enable=False
 			else:
-				if(tab=="feed"):
+				if(tab=="feed" or tab=="timeline"):
 					thread_list=None
 					is_timeline_enable=1
 					illust_enable=False
