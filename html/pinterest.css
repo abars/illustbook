@@ -155,4 +155,16 @@ color: #333;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
 }
+
+.deletable {
+  position:relative;
+  float:left;
+}
+
+.delete_button {
+  position:absolute;
+  top:0px;
+  left:0px;
+}
+
 </style>

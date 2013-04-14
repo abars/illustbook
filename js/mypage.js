@@ -46,35 +46,6 @@ $(function(){
 });
 
 //--------------------------------------------------------
-//レンタル系
-//--------------------------------------------------------
-
-function check_id(host){
-	var id=document.getElementById("check_short").value;
-	window.open(""+host+"check_id?id="+id);
-}
-
-function confirm_action_bbs(url,title) {
-	if (confirm("お絵かき掲示板「"+title+"」を削除してもよろしいですか?")){
-		confirm_action_bbs2(url);
-	}	 
-}	 
-
-function confirm_action_bbs2(url) {
-	if (confirm("お絵かき掲示板を一度削除すると復活はできません。本当に削除してもよろしいですか?")){
-		location.href = url; 
-	}	 
-}
-		
-function confirm_withdraw(url) {
-	if (confirm("イラストブックから退会しますか？")){
-		if (confirm("退会した場合はブックマーク情報などのユーザ情報が全て削除され復帰できません。本当に削除してもよろしいですか？")){
-			location.href = url; 
-		}
-	}
-}
-
-//--------------------------------------------------------
 //リクエスト
 //--------------------------------------------------------
 
@@ -238,9 +209,7 @@ function get_user(oj,id,initial_text){
 		txt+="<img src='"+user.icon_url+"&size=mini' width=50px height=50px class='radius_image'>";
 		txt+="</a>";
 		if(id=="follow" && mypage_is_edit[id]){
-			txt+="<div style='position:absolute;top:0px;left:0px;'>";
 			txt+=add_delete_button("del_user&user_key="+user.user_id,0,"フォロー",user.name);
-			txt+="</div>";
 		}
 		txt+="</div>";
 	}
@@ -276,9 +245,7 @@ function get_app_list(oj,id,initial_text){
 		txt+="<img src='"+app.icon_url+"' width=50px height=50px class='radius_image'>";		
 		txt+="</a>";
 		if(mypage_is_edit[id]){
-			txt+="<div style='position:absolute;left:0px;top:0px;'>";
 			txt+=add_delete_button("del_app&app_key="+app.key,0,"アプリ",app.name);
-			txt+="</div>";
 		}
 		txt+="</div>";
 	}
@@ -308,14 +275,10 @@ function get_bbs_list(oj,id,initial_text){
 				txt+="</a>";
 			}
 			if(id=="bookmark_bbs" && mypage_is_edit[id]){
-				txt+="<div style='position:absolute;left:0px;top:0px;'>";
 				txt+=add_delete_button("del_bbs&bbs_key="+bbs.key,0,"ブックマーク",bbs.title);
-				txt+="</div>";
 			}
 			if(id=="rental" && mypage_is_edit[id]){
-				txt+="<div style='position:absolute;left:0px;top:0px;'>";
 				txt+=add_delete_button(bbs.key,1,"",bbs.title);
-				txt+="</div>";
 			}
 		txt+="</div>";
 		
@@ -402,9 +365,7 @@ function update_thread_list(div_id,message){
 		txt+="<img src='"+thread.thumbnail_url+"' width="+size+"px height="+size+"px style='display:none;' onload='$(this).fadeIn(500);'>";
 		txt+="</a>";
 		if(mypage_is_edit["bookmark_thread"] && div_id=="bookmark_thread"){
-			txt+="<div style='position:absolute;left:0px;top:0px;'>";
 			txt+=add_delete_button("del&thread_key="+thread.key,0,"ブックマーク",thread.title);
-			txt+="</div>";
 		}
 		txt+="</div>";
 	}
@@ -458,12 +419,10 @@ function add_delete_button(url,rental_mode,prefix,title){
 	if(rental_mode){
 		script+="confirm_action_bbs('./del_bbs?bbs_key="+url+"','"+title+"');";
 	}else{
-		script+="if(confirm('"+prefix+"から「"+title+"」を削除してもいいですか？')){";
-		script+="window.location.href='./add_bookmark?mode="+url+"'}";
+		script="confirm_delete('"+url+"','"+prefix+"','"+title+"')";
 	}
-
 	var txt="";
-	txt+='<a href="javascript:'+script+';" class="g-button no-text"><i class="icon-remove"></i></a>';
-	
+	txt+='<a href="javascript:'+script+';" class="g-button no-text delete_button"><i class="icon-remove"></i></a>';
 	return txt;
 }
+

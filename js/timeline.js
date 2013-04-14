@@ -209,3 +209,4 @@ function go_feed_previous_page(){
 function scroll_to_top(){
 	$('html, body').animate({scrollTop:0},'fast');
 }
+

@@ -1,0 +1,47 @@
+			<form action="./add_bbs" enctype="multipart/form-data" method="post" name="rental_frm">
+			<input type="hidden" name="official" value="0">
+			<input type="hidden" name="redirect" value="./regist">
+			<table width="100%">
+				<tr>
+					<td>タイトル（必須）<br/></td>
+					<td><input type="text" name="bbs_title" size="38" style="width:90%;"><br/></td>
+				</tr>
+				<tr>
+					<td>概要（必須）</td>
+					<td><textarea name="bbs_summary" rows="3" cols="40" style="width:90%;"></textarea></td>
+				</tr>
+				<tr>
+					<td>
+						希望するID(半角英数16文字以下)
+					</td>
+					<td><input type="text" id="check_short" name="short" value="{% if bbs.short %}{{bbs.short}}{% endif %}" maxlength="16">
+					</td>
+				</tr>	  
+				<tr>
+					<td>モード</td>
+					<td>
+						<select name="mode">
+							<option value="1">お絵かき掲示板{% if not is_iphone %}（誰でも投稿可能）{% endif %}
+							<option value="2">お絵かきブログ{% if not is_iphone %}（管理人だけ投稿可能）{% endif %}
+							<option value="3">スレッド式掲示板{% if not is_iphone %}（イラストなし）{% endif %}
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>
+					</td>
+					<td>
+					<div style="float:left;padding-right:4px;">
+						<div class="g-button-group">
+			<a href="javascript:check_id('{{host}}');" class="g-button"><i class="icon-check"></i>IDを利用可能か確認</a>
+		</div>
+					</div>
+					<div style="float:left;">
+							<div class="g-button-group">
+			<a href="javascript:document.rental_frm.submit();" class="g-button"><i class="icon-plus"></i>レンタルを実行</a>
+		</div>
+		</div>
+					</td>
+				</tr>
+			</table>
+			</form>

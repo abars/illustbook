@@ -20,6 +20,7 @@
 <script type="text/javascript" src="js/jquery/jquery.masonry.min.js"></script>
 <script type="text/javascript" src="js/jquery/jquery.infinitescroll.min.js"></script>
 <script type="text/javascript" src="api_js"></script>
+<script language="javascript" src="js/mypage_common.js" type="text/javascript"></script>
 
 {% include "pinterest.css" %}
 {% include "pinterest.js" %}
@@ -45,6 +46,10 @@
 
 {% ifequal page_mode "user" %}
   <div class="message">
+    {% ifequal edit_mode 2%}
+      プロフィールを編集<BR>
+      {%include "mypage/edit_profile.html"%}
+    {% else %}
     <div style="float:left">
       <img src="{{view_user.icon_url}}" width=160px height=160px>
     </div>
@@ -62,14 +67,25 @@
        {% endif %}
       {% endif %}
        {% if not view_mode %}
-         <A HREF="{{host}}pinterest?user_id={{user_id}}&tab={{tab}}&edit=1" class="g-button">編集</A>
+         <A HREF="{{host}}pinterest?user_id={{user_id}}&tab={{tab}}&edit=2" class="g-button">編集</A>
+
+    <a class="g-button dropdown-toggle" data-toggle="dropdown" href="#">
+      その他 <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu">
+          <li><A HREF="{{host}}pinterest">トップへ戻る</A></li>
+        {% if not view_mode or is_admin%}
+          <li><a href="javascript:confirm_withdraw('mypage?withdraw=go&user_id={{bookmark.user_id}}')">退会する{% if is_admin %}（＊管理モード）{% endif %}</a></li>
+        {% endif %}
+    </ul>
+
        {% endif %}
       </ul>
-       <A HREF="{{host}}pinterest" class="g-button">トップ</A>
      </div>
 
     </div>
     <br clear="all">
+    {% endifequal %}
   </div>
 
     {% if follow or follower %}
@@ -77,14 +93,19 @@
       {% if follow %}
      フォローしている<br>
      {% for user in follow %}
-     <a href="pinterest?user_id={{user.user_id}}"><img src="{{user.icon_url}}" width=36px height=36px></a>
+     <div class="deletable">
+       <a href="pinterest?user_id={{user.user_id}}"><img src="{{user.icon_url}}" width=50px height=50px></a>
+       {% if edit_mode %}
+       <a href="javascript:confirm_delete('del_user&user_key={{user.user_id}}','フォロー','{{user.name}}');" class="g-button no-text delete_button"><i class="icon-remove"></i></a>
+       {% endif %}
+     </div>
      {% endfor %}
      <br>
      {% endif %}
      {% if follower %}
      フォローされている<br>
      {% for user in follower %}
-     <a href="pinterest?user_id={{user.user_id}}"><img src="{{user.icon_url}}" width=36px height=36px></a>
+     <a href="pinterest?user_id={{user.user_id}}"><img src="{{user.icon_url}}" width=50px height=50px></a>
      {% endfor %}
      {% endif %}
  </div>
@@ -144,37 +165,75 @@
 
 {% ifequal page_mode "user" %}
 <div id="order">
+  <div style="float:left">
   <div class="g-button-group toggle-buttons">
     <a href="{{host}}pinterest?user_id={{user_id}}&tab=submit" class="g-button {%ifequal tab "submit"%}checked{%endifequal%}">{% if is_iphone %}投稿した{%else%}投稿したイラスト{% endif %}</a>
     <a href="{{host}}pinterest?user_id={{user_id}}&tab=bookmark" class="g-button {%ifequal tab "bookmark"%}checked{%endifequal%}">ブックマーク</a>
     <a href="{{host}}pinterest?user_id={{user_id}}&tab=bbs" class="g-button {%ifequal tab "bbs"%}checked{%endifequal%}">掲示板</a>
     <a href="{{host}}pinterest?user_id={{user_id}}&tab=feed" class="g-button {%ifequal tab "feed"%}checked{%endifequal%}">{% if is_iphone %}TL{%else%}タイムライン{% endif %}</a>
   </div>
+  </div>
+  {% if not is_iphone %}
+  <div style="float:left">
+  {% ifequal tab "submit" %}
+  {% else %}
+    {% if edit_mode %}
+    　<A HREF="{{host}}pinterest?user_id={{user_id}}&tab={{tab}}" class="g-button">戻る</A>
+    {% else %}
+    　<A HREF="{{host}}pinterest?user_id={{user_id}}&tab={{tab}}&edit=1" class="g-button">編集</A>
+    {% endif %}
+  {% endifequal %}
+  </div>
+  {% endif %}
+  <br clear="all">
 </div>
 {% endifequal %}
 
 <!-- 掲示板 -->
 
 {% ifequal tab "bbs" %}
-<div class="message">
+
   {% if rental_bbs_list %}
+  <div class="message">
   レンタルしている<br>
   {% for bbs in rental_bbs_list %}
   <a href="{{bbs.bbs_url}}">
-  <img src="{{bbs.thumbnail_url}}" width=36px height=36px>{{bbs.title}}</a><br>
-  {% endfor %}
+  <img src="{{bbs.thumbnail_url}}" width=36px height=36px>{{bbs.title}}</a>
+  {% if edit_mode %}
+    <a href="javascript:confirm_action_bbs('del_bbs&bbs_key={{bbs.key}}','{{bbs.title}}');" class="g-button no-text"><i class="icon-remove"></i></a>
   {% endif %}
-</div>
+  {% if bbs.bookmark %}
+    <a href='show_bookmark?bbs_key={{bbs.key}}' class='g-button no-text'><i class="icon-star"></i>{{bbs.bookmark}}</a>
+  {% endif %}
 
-<div class="message">
+  <br>
+  {% endfor %}
+  </div>
+  {% endif %}
+
   {% if bookmark_bbs_list %}
+  <div class="message">
   ブックマークしている<br>
   {% for bbs in bookmark_bbs_list %}
   <a href="{{bbs.bbs_url}}">
-  <img src="{{bbs.thumbnail_url}}" width=36px height=36px>{{bbs.title}}</a><br>
-  {% endfor %}
+  <img src="{{bbs.thumbnail_url}}" width=36px height=36px>{{bbs.title}}</a>
+  {% if edit_mode %}
+    <a href="javascript:confirm_action('del_bbs&bbs_key={{bbs.key}}','ブックマーク',{{bbs.title}}');" class="g-button no-text"><i class="icon-remove"></i></a>
   {% endif %}
- </div>
+    {% if bbs.bookmark %}
+    <a href='show_bookmark?bbs_key={{bbs.key}}' class='g-button no-text'><i class="icon-star"></i>{{bbs.bookmark}}</a>
+  {% endif %}
+  <br>
+  {% endfor %}
+  </div>
+  {% endif %}
+
+  {% if not view_mode %}
+  <div class="message">
+    新しい掲示板をレンタルする<br>
+    {%include "mypage/rental.html" %}
+  </div> 
+  {% endif %}
 {% endifequal %}
 
 <!-- タイムライン -->
@@ -219,7 +278,14 @@
   {% for thread in thread_list %}
     {% if thread.image_url %}
       <div class="item">
-      <a href="{{thread.thread_url}}" target="_BLANK"><img src="{{thread.image_url}}"></a>
+      <div class="deletable">
+        <a href="{{thread.thread_url}}" target="_BLANK"><img src="{{thread.image_url}}"></a>
+        {% if edit_mode %}
+          {% ifequal tab "bookmark" %}
+            <a href="javascript:confirm_delete('del&thread_key={{thread.key}}','ブックマーク','{{thread.title}}');" class="g-button no-text delete_button"><i class="icon-remove"></i></a>
+          {% endifequal %}
+        {% endif %}
+      </div>
       <b>{{thread.title}}</b><br>
       {% if thread.tag %}
       {% for tag in thread.tag %}

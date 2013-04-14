@@ -153,6 +153,14 @@ class Pinterest(webapp.RequestHandler):
 		#iPhoneかどうか
 		is_iphone=CssDesign.is_iphone(self)
 
+		#プロフィール
+		bookmark=None
+		if(user_id):
+			bookmark=ApiObject.get_bookmark_of_user_id(user_id)
+
+		#プロフィールを編集
+		edit_profile=MyPage.get_profile_for_edit(bookmark,view_mode)
+
 		template_values = {
 			'host': "./",
 			'user': user,
@@ -177,12 +185,13 @@ class Pinterest(webapp.RequestHandler):
 			'edit_mode': edit_mode,
 			'tab': tab,
 			'login_flag': login_flag,
-			'bookmark': view_user,
+			'bookmark': bookmark,
 			'is_timeline_enable': is_timeline_enable,
 			'following':following,
 			'bookmark_bbs_list': bookmark_bbs_list,
 			'rental_bbs_list': rental_bbs_list,
-			'illust_enable': illust_enable
+			'illust_enable': illust_enable,
+			'edit_profile': edit_profile
 		}
 		path = os.path.join(os.path.dirname(__file__), '../html/pinterest.html')
 		self.response.out.write(template.render(path, template_values))

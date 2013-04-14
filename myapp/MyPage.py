@@ -132,6 +132,17 @@ class MyPage(webapp.RequestHandler):
 						return True
 		return False
 
+	@staticmethod
+	def get_profile_for_edit(bookmark,view_mode):
+		edit_profile="None"
+		if(bookmark):
+			if(not view_mode):
+				if(bookmark.profile):
+					edit_profile=bookmark.profile
+					compiled_line = re.compile("<br>")
+					edit_profile = compiled_line.sub(r'\r\n', edit_profile)
+		return edit_profile
+
 	def get(self,regist_mode):
 		SetUtf8.set()
 
@@ -191,13 +202,7 @@ class MyPage(webapp.RequestHandler):
 			regist_finish=True
 		
 		#プロフィールを編集
-		edit_profile="None"
-		if(bookmark):
-			if(not view_mode):
-				if(bookmark.profile):
-					edit_profile=bookmark.profile
-					compiled_line = re.compile("<br>")
-					edit_profile = compiled_line.sub(r'\r\n', edit_profile)
+		edit_profile=MyPage.get_profile_for_edit(bookmark,view_mode)
 		
 		#退会
 		if(self.request.get("withdraw") and self.request.get("withdraw")=="go"):
