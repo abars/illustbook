@@ -12,6 +12,7 @@ import sys
 import re
 import datetime
 import json
+import logging
 
 from google.appengine.api import users
 from google.appengine.ext import webapp
@@ -60,7 +61,9 @@ class ApiObject(webapp.RequestHandler):
 	
 	@staticmethod
 	def get_bookmark_of_user_id(user_id):
-		ret=memcache.get(BbsConst.OBJECT_CACHE_HEADER+BbsConst.OBJECT_BOOKMARK_CACHE_HEADER+user_id)
+		key=BbsConst.OBJECT_CACHE_HEADER+BbsConst.OBJECT_BOOKMARK_CACHE_HEADER+user_id
+		#logging.error("load:"+key)
+		ret=memcache.get(key)
 		if(ret):
 			return ret
 		return ApiObject.get_bookmark_from_datastore(user_id)

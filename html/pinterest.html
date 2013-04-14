@@ -61,9 +61,9 @@
       {% if not view_mode %}
       {% else %}
        {% if following %}
-         <a href="add_bookmark?mode=add_user&user_key={{bookmark.user_id}}" class="g-button">フォロー中</a>
+         <a href="javascript:confirm_follow('{{view_user.user_id}}','{{view_user.name}}');" class="g-button">フォロー中</a>
        {% else %}
-         <a href="add_bookmark?mode=add_user&user_key={{bookmark.user_id}}" class="g-button"><i class="icon-plus"></i>フォロー</a>
+         <a href="javascript:confirm_follow('{{view_user.user_id}}','{{view_user.name}}');" class="g-button"><i class="icon-plus"></i>フォロー</a>
        {% endif %}
       {% endif %}
        {% if not view_mode %}
@@ -100,7 +100,7 @@
        {% endif %}
      </div>
      {% endfor %}
-     <br>
+     <br clear="all">
      {% endif %}
      {% if follower %}
      フォローされている<br>
@@ -177,11 +177,13 @@
   <div style="float:left">
   {% ifequal tab "submit" %}
   {% else %}
-    {% if edit_mode %}
-    　<A HREF="{{host}}pinterest?user_id={{user_id}}&tab={{tab}}" class="g-button">戻る</A>
-    {% else %}
-    　<A HREF="{{host}}pinterest?user_id={{user_id}}&tab={{tab}}&edit=1" class="g-button">編集</A>
-    {% endif %}
+    {% if not view_mode %}
+      {% if edit_mode %}
+     　<A HREF="{{host}}pinterest?user_id={{user_id}}&tab={{tab}}" class="g-button">戻る</A>
+      {% else %}
+     　<A HREF="{{host}}pinterest?user_id={{user_id}}&tab={{tab}}&edit=1" class="g-button">編集</A>
+     {% endif %}
+     {% endif %}
   {% endifequal %}
   </div>
   {% endif %}

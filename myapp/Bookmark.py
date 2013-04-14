@@ -6,6 +6,8 @@
 #copyright 2010-2012 ABARS all rights reserved.
 #---------------------------------------------------
 
+import logging
+
 from google.appengine.ext import db
 from google.appengine.api import users
 from google.appengine.api import memcache
@@ -59,7 +61,9 @@ class Bookmark(db.Model):
 	def put(self,**kwargs):
 		super(Bookmark, self).put(**kwargs)
 		if(self.key()):
-			memcache.delete(BbsConst.OBJECT_CACHE_HEADER+BbsConst.OBJECT_BOOKMARK_CACHE_HEADER+self.user_id)
+			key=BbsConst.OBJECT_CACHE_HEADER+BbsConst.OBJECT_BOOKMARK_CACHE_HEADER+self.user_id
+			memcache.delete(key)
+			#logging.error("save:"+key)
 
 	def delete(self,**kwargs):
 		memcache.delete(BbsConst.OBJECT_CACHE_HEADER+BbsConst.OBJECT_BOOKMARK_CACHE_HEADER+self.user_id)

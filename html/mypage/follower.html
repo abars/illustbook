@@ -5,9 +5,9 @@
 			<a href="mypage" class="g-button">マイアカウント</a>
 		{% else %}
 		{% if following %}
-			<a href="add_bookmark?mode=add_user&user_key={{bookmark.user_id}}" class="g-button">フォロー中</a>
+			<a href="javascript:confirm_follow('{{bookmark.user_id}}','{{bookmark.name}}');" class="g-button">フォロー中</a>
 		{% else %}
-			<a href="add_bookmark?mode=add_user&user_key={{bookmark.user_id}}" class="g-button"><i class="icon-plus"></i>フォロー</a>
+			<a href="javascript:confirm_follow('{{bookmark.user_id}}','{{bookmark.name}}');" class="g-button"><i class="icon-plus"></i>フォロー</a>
 		{% endif %}
 		{% endif %}
 		<a class="g-button dropdown-toggle" data-toggle="dropdown" href="#">

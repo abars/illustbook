@@ -28,3 +28,9 @@ function confirm_withdraw(url) {
 		}
 	}
 }
+
+function confirm_follow(user_key,name){
+	if(confirm(""+name+"をフォローしますか？")){
+		location.href="add_bookmark?mode=add_user&user_key="+user_key
+	}
+}

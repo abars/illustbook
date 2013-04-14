@@ -234,7 +234,9 @@ class MyPage(webapp.RequestHandler):
 		is_iphone=CssDesign.is_iphone(self)
 		
 		#フォロー中かどうか
-		following=MyPage.is_following(user,bookmark.user_id,view_mode)
+		following=False
+		if(bookmark):
+			following=MyPage.is_following(user,bookmark.user_id,view_mode)
 
 		#年齢
 		age=None
