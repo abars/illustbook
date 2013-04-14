@@ -121,9 +121,15 @@ class ApiUser(webapp.RequestHandler):
 		return dic;
 
 	@staticmethod
+	def user_get_is_submit_thread_exist(req,user_id):
+		query=db.Query(MesThread)
+		query=query.filter("illust_mode IN",[BbsConst.ILLUSTMODE_ILLUST,BbsConst.ILLUSTMODE_MOPER])
+		query=query.filter("user_id =",user_id)
+		return query.count(limit=10)
+
+	@staticmethod
 	def user_get_thread_list(req,user_id):
 		query=db.Query(MesThread)
-
 		query=query.filter("illust_mode IN",[BbsConst.ILLUSTMODE_ILLUST,BbsConst.ILLUSTMODE_MOPER])
 		query=query.filter("user_id =",user_id).order("-create_date")
 

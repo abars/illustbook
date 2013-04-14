@@ -58,7 +58,7 @@ class Pinterest(webapp.RequestHandler):
 
 	@staticmethod
 	def get_profile_for_edit(bookmark,view_mode):
-		edit_profile="None"
+		edit_profile="コメントを入力して下さい"
 		if(bookmark):
 			if(not view_mode):
 				if(bookmark.profile):
@@ -153,6 +153,8 @@ class Pinterest(webapp.RequestHandler):
 		rental_bbs_list=None
 		illust_enable=True
 		new_feed_count=0
+		submit_illust_exist=True
+		submit_illust_list=None
 
 		if(user_id!=""):
 			if(not tab):
@@ -173,6 +175,16 @@ class Pinterest(webapp.RequestHandler):
 						thread_list=ApiBookmark.bookmark_get_thread_list(self,user_id)
 					else:
 						thread_list=ApiUser.user_get_thread_list(self,user_id)
+						submit_illust_list=thread_list
+			
+			#投稿したイラストが存在しない場合はブックマークを表示
+			submit_illust_count=ApiUser.user_get_is_submit_thread_exist(self,user_id)
+			if(submit_illust_count==0):
+				submit_illust_exist=False
+				if(tab=="submit"):
+					tab="bookmark"
+					thread_list=ApiBookmark.bookmark_get_thread_list(self,user_id)
+
 			if(self.request.get("edit")):
 				edit_mode=int(self.request.get("edit"))
 			page_mode="user"
@@ -236,7 +248,8 @@ class Pinterest(webapp.RequestHandler):
 			'illust_enable': illust_enable,
 			'edit_profile': edit_profile,
 			'redirect_url': self.request.path,
-			'new_feed_count': new_feed_count
+			'new_feed_count': new_feed_count,
+			'submit_illust_exist': submit_illust_exist
 		}
 		path = os.path.join(os.path.dirname(__file__), '../html/pinterest.html')
 		self.response.out.write(template.render(path, template_values))

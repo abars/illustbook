@@ -50,7 +50,7 @@
       プロフィールを編集<BR>
       {%include "mypage/edit_profile.html"%}
     {% else %}
-    <div style="float:left">
+    <div style="float:left;margin-right:4px;">
       <img src="{{view_user.icon_url}}" width=160px height=160px>
     </div>
     <div style="float:left">
@@ -172,7 +172,9 @@
 <div id="order">
   <div style="float:left">
   <div class="g-button-group toggle-buttons">
-    <a href="{{host}}pinterest?user_id={{user_id}}&tab=submit" class="g-button {%ifequal tab "submit"%}checked{%endifequal%}">{% if is_iphone %}投稿した{%else%}投稿したイラスト{% endif %}</a>
+    {% if submit_illust_exist %}
+      <a href="{{host}}pinterest?user_id={{user_id}}&tab=submit" class="g-button {%ifequal tab "submit"%}checked{%endifequal%}">{% if is_iphone %}投稿した{%else%}投稿したイラスト{% endif %}</a>
+    {% endif %}
     <a href="{{host}}pinterest?user_id={{user_id}}&tab=bookmark" class="g-button {%ifequal tab "bookmark"%}checked{%endifequal%}">ブックマーク</a>
     <a href="{{host}}pinterest?user_id={{user_id}}&tab=bbs" class="g-button {%ifequal tab "bbs"%}checked{%endifequal%}">掲示板</a>
     <a href="{{host}}pinterest?user_id={{user_id}}&tab=feed" class="g-button {%ifequal tab "feed"%}checked{%endifequal%}">{% if is_iphone %}TL{%else%}タイムライン{% if not view_mode %}{% if new_feed_count %}({{new_feed_count}}){% endif %}{% endif %}{% endif %}</a>
