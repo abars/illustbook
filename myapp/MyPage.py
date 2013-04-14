@@ -200,9 +200,11 @@ class MyPage(webapp.RequestHandler):
 		
 		#タブ
 		tab=self.request.get("tab")
+		new_feed_count=0
 		if(not tab):
 			tab="illust"
-			if(not view_mode and bookmark and bookmark.new_feed_count):
+			new_feed_count=Pinterest.consume_feed(user,view_mode,bookmark)
+			if(new_feed_count):
 				tab="feed"
 
 		#ページ
@@ -268,15 +270,11 @@ class MyPage(webapp.RequestHandler):
 			'mypage': not view_mode,
 			'following': following,
 			'user_rank': user_rank,
-			'owner_rank': owner_rank
+			'owner_rank': owner_rank,
+			'new_feed_count': new_feed_count
 		}
 		
 		path = os.path.join(os.path.dirname(__file__), '../html/mypage.html')
 		self.response.out.write(template.render(path, template_values))
 		
-		if(user and bookmark):
-			if(not view_mode):
-				if(tab=="feed" and bookmark.new_feed_count):
-					bookmark.new_feed_count=0
-					bookmark.put()
-			
+

@@ -168,7 +168,6 @@
 <br clear="all">
 
 <!-- ユーザ情報タブ -->
-
 {% ifequal page_mode "user" %}
 <div id="order">
   <div style="float:left">
@@ -176,7 +175,7 @@
     <a href="{{host}}pinterest?user_id={{user_id}}&tab=submit" class="g-button {%ifequal tab "submit"%}checked{%endifequal%}">{% if is_iphone %}投稿した{%else%}投稿したイラスト{% endif %}</a>
     <a href="{{host}}pinterest?user_id={{user_id}}&tab=bookmark" class="g-button {%ifequal tab "bookmark"%}checked{%endifequal%}">ブックマーク</a>
     <a href="{{host}}pinterest?user_id={{user_id}}&tab=bbs" class="g-button {%ifequal tab "bbs"%}checked{%endifequal%}">掲示板</a>
-    <a href="{{host}}pinterest?user_id={{user_id}}&tab=feed" class="g-button {%ifequal tab "feed"%}checked{%endifequal%}">{% if is_iphone %}TL{%else%}タイムライン{% endif %}</a>
+    <a href="{{host}}pinterest?user_id={{user_id}}&tab=feed" class="g-button {%ifequal tab "feed"%}checked{%endifequal%}">{% if is_iphone %}TL{%else%}タイムライン{% if not view_mode %}{% if new_feed_count %}({{new_feed_count}}){% endif %}{% endif %}{% endif %}</a>
   </div>
   </div>
   {% if not is_iphone %}

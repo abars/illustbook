@@ -67,6 +67,18 @@ class Pinterest(webapp.RequestHandler):
 					edit_profile = compiled_line.sub(r'\r\n', edit_profile)
 		return edit_profile
 
+	@staticmethod
+	def consume_feed(user,view_mode,bookmark):
+		new_feed_count=0
+		if(not view_mode and bookmark and bookmark.new_feed_count):
+			new_feed_count=bookmark.new_feed_count
+		if(user and bookmark):
+			if(not view_mode):
+				if(bookmark.new_feed_count):
+					bookmark.new_feed_count=0
+					bookmark.put()
+		return new_feed_count
+
 	def get(self):
 		Pinterest.get_core(self,False)
 
@@ -97,7 +109,7 @@ class Pinterest(webapp.RequestHandler):
 		if(self.request.get("order")):
 			order=self.request.get("order")
 
-		tab="submit"
+		tab=None
 		if(self.request.get("tab")):
 			tab=self.request.get("tab")
 		
@@ -115,10 +127,19 @@ class Pinterest(webapp.RequestHandler):
 		if user_id=="" and is_mypage and user:
 			user_id=user.user_id()
 
+		#マイユーザか
 		view_mode=1
 		if(user):
 			if(user_id==user.user_id()):
 				view_mode=0
+
+		#プロフィール
+		bookmark=None
+		if(user_id):
+			bookmark=ApiObject.get_bookmark_of_user_id(user_id)
+
+		#プロフィールを編集
+		edit_profile=Pinterest.get_profile_for_edit(bookmark,view_mode)
 
 		page_mode="index"
 		view_user=None
@@ -131,10 +152,14 @@ class Pinterest(webapp.RequestHandler):
 		bookmark_bbs_list=None
 		rental_bbs_list=None
 		illust_enable=True
+		new_feed_count=0
 
 		if(user_id!=""):
 			if(not tab):
 				tab="submit"
+				new_feed_count=Pinterest.consume_feed(user,view_mode,bookmark)
+				if(new_feed_count):
+					tab="feed"
 			if(tab=="bbs"):
 				thread_list=None
 				illust_enable=False
@@ -180,14 +205,6 @@ class Pinterest(webapp.RequestHandler):
 		#iPhoneかどうか
 		is_iphone=CssDesign.is_iphone(self)
 
-		#プロフィール
-		bookmark=None
-		if(user_id):
-			bookmark=ApiObject.get_bookmark_of_user_id(user_id)
-
-		#プロフィールを編集
-		edit_profile=Pinterest.get_profile_for_edit(bookmark,view_mode)
-
 		template_values = {
 			'host': "./",
 			'user': user,
@@ -218,7 +235,8 @@ class Pinterest(webapp.RequestHandler):
 			'rental_bbs_list': rental_bbs_list,
 			'illust_enable': illust_enable,
 			'edit_profile': edit_profile,
-			'redirect_url': self.request.path
+			'redirect_url': self.request.path,
+			'new_feed_count': new_feed_count
 		}
 		path = os.path.join(os.path.dirname(__file__), '../html/pinterest.html')
 		self.response.out.write(template.render(path, template_values))

@@ -7,6 +7,8 @@ body{
   background:#f2f2f2;
 }
 
+hr {border:0; border-top:1px solid #cccccc;}
+
 {% if is_iphone %}
 #floating_menu{
   width:310px;
@@ -58,6 +60,7 @@ background: #ffffff;
 box-shadow: 0 2px 1px #eee;
 text-decoration: none;
 text-align: center;
+color: rgb(37, 143, 184);
 }
 
 .message {
@@ -75,6 +78,7 @@ box-shadow: 0 2px 1px #eee;
 
 .message a{
   text-decoration: none;
+  color: #333;
 }
 
 .logo {

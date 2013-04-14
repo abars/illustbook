@@ -56,7 +56,7 @@
 	<div class="g-button-group toggle-buttons">
 		<a id="illust_tab" href="javascript:display_tab('illust');" class="g-button no-text {% ifequal tab "illust" %}checked{% endifequal %}">イラスト</a>
 		<a id="profile_tab" href="javascript:display_tab('profile');" class="g-button no-text {% ifequal tab "profile" %}checked{% endifequal %}">プロフ</a>
-		<a id="feed_tab" href="javascript:display_tab('feed');" class="g-button no-text {% ifequal tab "feed" %}checked{% endifequal %}">{% if view_mode %}タイムライン{%else%}TL{% endif %}{% if bookmark.new_feed_count %}{% if not view_mode %}({{bookmark.new_feed_count}}){% endif %}{% endif %}</a>
+		<a id="feed_tab" href="javascript:display_tab('feed');" class="g-button no-text {% ifequal tab "feed" %}checked{% endifequal %}">{% if view_mode %}タイムライン{%else%}TL{% endif %}{% if new_feed_count %}{% if not view_mode %}({{new_feed_count}}){% endif %}{% endif %}</a>
 		{% if not view_mode %}
 			<a id="rental_tab" href="javascript:display_tab('rental');" class="g-button no-text {% ifequal tab "rental" %}checked{% endifequal %}">レンタル</a>
 		{% endif %}
@@ -65,7 +65,7 @@
 		<div class="g-button-group toggle-buttons">
 		<a id="illust_tab" href="javascript:display_tab('illust');" class="g-button {% ifequal tab "illust" %}checked{% endifequal %}">イラスト</a>
 		<a id="profile_tab" href="javascript:display_tab('profile');" class="g-button {% ifequal tab "profile" %}checked{% endifequal %}">プロフィール</a>
-		<a id="feed_tab" href="javascript:display_tab('feed');" class="g-button {% ifequal tab "feed" %}checked{% endifequal %}">タイムライン{% if bookmark.new_feed_count %}{% if not view_mode %}({{bookmark.new_feed_count}}){% endif %}{% endif %}</a>
+		<a id="feed_tab" href="javascript:display_tab('feed');" class="g-button {% ifequal tab "feed" %}checked{% endifequal %}">タイムライン{% if new_feed_count %}{% if not view_mode %}({{new_feed_count}}){% endif %}{% endif %}</a>
 		{% if not view_mode %}
 			<a id="rental_tab" href="javascript:display_tab('rental');" class="g-button {% ifequal tab "rental" %}checked{% endifequal %}">レンタル</a>
 		{% endif %}
