@@ -120,6 +120,7 @@ font-size:12px;
 
 #logo_fotter a{
 text-decoration: none;
+color: #333;
 }
 
 #pinterest_footer{
@@ -130,6 +131,7 @@ text-decoration: none;
 
 #pinterest_footer a{
   text-decoration: none;
+  color: #333;
 }
 
 #order{

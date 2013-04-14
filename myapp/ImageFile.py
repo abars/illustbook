@@ -102,7 +102,7 @@ class ImageFile (webapp.RequestHandler):
 					return (content.thumbnail2)
 			img = images.Image(content.image)
 			img.resize(width=200)
-			img.im_feeling_lucky()
+			#img.im_feeling_lucky()	#エッジ強調されてしまう
 			content.thumbnail2=img.execute_transforms(output_encoding=images.JPEG)
 			content.thumbnail2_version=BbsConst.THUMBNAIL2_VERSION
 			content.put()

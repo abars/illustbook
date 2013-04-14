@@ -139,7 +139,7 @@ class ApiObject(webapp.RequestHandler):
 		if(bookmark and bookmark.icon and (not bookmark.thumbnail_created)):
 			img = images.Image(bookmark.icon)
 			img.resize(width=180, height=180)
-			img.im_feeling_lucky()
+			#img.im_feeling_lucky()
 			try:
 				bookmark.icon=img.execute_transforms(output_encoding=images.PNG)
 				bookmark.icon_content_type = 'image/png'
@@ -152,7 +152,7 @@ class ApiObject(webapp.RequestHandler):
 		if(bookmark and bookmark.icon and (not bookmark.icon_mini)):
 			img = images.Image(bookmark.icon)
 			img.resize(width=50, height=50)
-			img.im_feeling_lucky()
+			#img.im_feeling_lucky()
 			try:
 				bookmark.icon_mini=img.execute_transforms(output_encoding=images.PNG)
 				bookmark.icon_mini_content_type = 'image/png'
