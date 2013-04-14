@@ -138,6 +138,11 @@ class MainPage(webapp.RequestHandler):
 		#iPhoneモードかどうか
 		is_iphone=CssDesign.is_iphone(self)
 
+		#リダイレクト
+		if(BbsConst.PINTEREST_MODE):
+			if(user and OwnerCheck.is_admin(user)):
+				return Pinterest.get_core(self,False)
+
 		#URL生成
 		template_values = {
 			'host': "./",
@@ -481,6 +486,7 @@ application = webapp.WSGIApplication(
 	('/(thumbnail)/([^\.]*)\.(jpg)', ImageFile),
 	('/(thumbnail)/([^\.]*)\.(gif)', ImageFile),
 	('/(thumbnail)/([^\.]*)\.(png)', ImageFile),
+	('/(thumbnail2)/([^\.]*)\.(jpg)', ImageFile),
 	('/add_thread', AddNewThread),
 	('/add_bbs', AddNewBbs),
 	('/show_thread', RedirectThread),

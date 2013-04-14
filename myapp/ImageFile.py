@@ -84,6 +84,31 @@ class ImageFile (webapp.RequestHandler):
 		serve=ImageFile.is_serve(p_self,content_key,content_date,tag)
 		ImageFile.output_content(p_self,content_date,content_key,content_header,content_blob, serve, tag)
 
+	@staticmethod
+	def get_content(content,tag):
+		if(not content):
+			return None
+		if tag=="icon":
+			return (content.icon)
+		if tag=="thumbnail":
+			if content.gif_thumbnail:
+				return (content.gif_thumbnail)
+			return (content.thumbnail)
+		if tag=="thumbnail2":
+			if content.gif_thumbnail:
+				return (content.gif_thumbnail)
+			if content.thumbnail2_version and content.thumbnail2:
+				if content.thumbnail2_version==BbsConst.THUMBNAIL2_VERSION:
+					return (content.thumbnail2)
+			img = images.Image(content.image)
+			img.resize(width=200)
+			img.im_feeling_lucky()
+			content.thumbnail2=img.execute_transforms(output_encoding=images.JPEG)
+			content.thumbnail2_version=BbsConst.THUMBNAIL2_VERSION
+			content.put()
+			return (content.thumbnail2)
+		return (content.image)
+
 	#イメージとサムネイルを供給
 	@staticmethod
 	def serve_file(p_self,path,type_name,tag):
@@ -128,19 +153,7 @@ class ImageFile (webapp.RequestHandler):
 				return
 		
 		#バイナリ取得
-		content_blob=None
-		if(content):
-			if tag=="icon":
-				content_blob=(content.icon)
-			else:
-				if tag=="thumbnail":
-					if content.gif_thumbnail:
-						content_blob=(content.gif_thumbnail)
-					else:
-						content_blob=(content.thumbnail)
-				else:
-					content_blob=(content.image)
-
+		content_blob=ImageFile.get_content(content,tag)
 		content_header=ImageFile.get_content_type(type_name)
 
 		ImageFile.output_content(p_self,content_date,content_key,content_header,content_blob, serve, tag)

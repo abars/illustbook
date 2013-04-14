@@ -281,14 +281,19 @@ class ApiObject(webapp.RequestHandler):
 			url_header="."
 
 		thumbnail_url=""
+		thumbnail2_url=""
 		if(thread.cached_image_key):
 			thumbnail_url=url_header+"/thumbnail/"+str(thread.cached_image_key)
+			thumbnail2_url=url_header+"/thumbnail2/"+str(thread.cached_image_key)
 			if(thread.illust_mode==BbsConst.ILLUSTMODE_MOPER):
 				thumbnail_url+=".gif"
 			else:
 				thumbnail_url+=".jpg"
+			thumbnail2_url+=".jpg"
 		if(bbs.del_flag):
 			thumbnail_url=""
+			thumbnail2_url=""
+
 		create_date=TimeProgress.get_date_str(thread.create_date)
 
 		thread_url=url_header+"/"
@@ -329,7 +334,7 @@ class ApiObject(webapp.RequestHandler):
 		bookmark_cnt=0
 		if(thread.bookmark_count):
 			bookmark_cnt=thread.bookmark_count
-		one_dic={"title":thread.title,"summary":summary,"author":thread.author,"user_id":user_id,"thumbnail_url":thumbnail_url,"image_url":image_url,"create_date":create_date,"thread_url":thread_url,"applause":app,"bookmark":bookmark_cnt,"comment":comment_cnt,"key":str(thread.key()),"disable_news":disable_news,"tag":tag_list}
+		one_dic={"title":thread.title,"summary":summary,"author":thread.author,"user_id":user_id,"thumbnail_url":thumbnail_url,"thumbnail2_url":thumbnail2_url,"image_url":image_url,"create_date":create_date,"thread_url":thread_url,"applause":app,"bookmark":bookmark_cnt,"comment":comment_cnt,"key":str(thread.key()),"disable_news":disable_news,"tag":tag_list}
 		
 		return one_dic
 

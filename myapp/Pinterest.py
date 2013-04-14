@@ -44,11 +44,36 @@ from myapp.ApiUser import ApiUser
 from myapp.MaintenanceCheck import MaintenanceCheck
 from myapp.SiteAnalyzer import SiteAnalyzer
 from myapp.ApiBookmark import ApiBookmark
-from myapp.MyPage import MyPage
 
 class Pinterest(webapp.RequestHandler):
+	@staticmethod
+	def is_following(user,user_id,view_mode):
+		if(view_mode):
+			if(user):
+				my_bookmark=ApiObject.get_bookmark_of_user_id(user.user_id())
+				if(my_bookmark):
+					if(user_id in my_bookmark.user_list):
+						return True
+		return False
+
+	@staticmethod
+	def get_profile_for_edit(bookmark,view_mode):
+		edit_profile="None"
+		if(bookmark):
+			if(not view_mode):
+				if(bookmark.profile):
+					edit_profile=bookmark.profile
+					compiled_line = re.compile("<br>")
+					edit_profile = compiled_line.sub(r'\r\n', edit_profile)
+		return edit_profile
+
 	def get(self):
+		Pinterest.get_core(self,False)
+
+	@staticmethod
+	def get_core(self,is_mypage):
 		SetUtf8.set()
+
 		unit=32
 
 		#メンテナンス画面
@@ -87,6 +112,8 @@ class Pinterest(webapp.RequestHandler):
 		user_id=""
 		if(self.request.get("user_id")):
 			user_id=self.request.get("user_id")
+		if user_id=="" and is_mypage and user:
+			user_id=user.user_id()
 
 		view_mode=1
 		if(user):
@@ -132,7 +159,7 @@ class Pinterest(webapp.RequestHandler):
 			next_query="user_id="+user_id+"&tab="+tab
 			follow=ApiUser.user_get_follow(self,user_id,True)
 			follower=ApiUser.user_get_follower(self,user_id,True)
-			following=MyPage.is_following(user,user_id,view_mode)
+			following=Pinterest.is_following(user,user_id,view_mode)
 		else:
 			if(tag!=""):
 				query = db.Query(MesThread,keys_only=True)
@@ -159,7 +186,7 @@ class Pinterest(webapp.RequestHandler):
 			bookmark=ApiObject.get_bookmark_of_user_id(user_id)
 
 		#プロフィールを編集
-		edit_profile=MyPage.get_profile_for_edit(bookmark,view_mode)
+		edit_profile=Pinterest.get_profile_for_edit(bookmark,view_mode)
 
 		template_values = {
 			'host': "./",
@@ -175,7 +202,6 @@ class Pinterest(webapp.RequestHandler):
 			'view_user': view_user,
 			'view_user_profile': view_user_profile,
 			'is_iphone': is_iphone,
-			'top_page': True,
 			'bbs_n': bbs_n,
 			'illust_n': illust_n,
 			'user_id': user_id,
@@ -191,7 +217,8 @@ class Pinterest(webapp.RequestHandler):
 			'bookmark_bbs_list': bookmark_bbs_list,
 			'rental_bbs_list': rental_bbs_list,
 			'illust_enable': illust_enable,
-			'edit_profile': edit_profile
+			'edit_profile': edit_profile,
+			'redirect_url': self.request.path
 		}
 		path = os.path.join(os.path.dirname(__file__), '../html/pinterest.html')
 		self.response.out.write(template.render(path, template_values))

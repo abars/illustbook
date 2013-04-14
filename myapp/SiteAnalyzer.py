@@ -40,10 +40,14 @@ class SiteAnalyzer(webapp.RequestHandler):
 	def get_cache():
 		cache=memcache.get("top_bbs_and_illust_n")
 		if(not cache):
-			cache=TopPageCache.get_or_insert(key_name="top_page_cache")
+			cache=SiteAnalyzer.get_cache_from_db()
 			cache={"bbs_n":cache.bbs_n,"illust_n":cache.illust_n}
 			memcache.set("top_bbs_and_illust_n",cache,60*60*12)
 		return cache
+
+	@staticmethod
+	def get_cache_from_db():
+		return TopPageCache.get_or_insert(key_name="top_page_cache")
 
 	def get(self):
 		SetUtf8.set()
@@ -54,7 +58,7 @@ class SiteAnalyzer(webapp.RequestHandler):
 		ApiFeed.invalidate_cache();
 
 		#キャッシュ取得
-		cache=SiteAnalyzer.get_cache();
+		cache=SiteAnalyzer.get_cache_from_db();
 
 		#1日単位で習得
 		force=False
@@ -91,7 +95,7 @@ class SiteAnalyzer(webapp.RequestHandler):
 	
 	@staticmethod
 	def create_graph(self,no):
-		cache=SiteAnalyzer.get_cache()
+		cache=SiteAnalyzer.get_cache_from_db()
 		if(no==0):
 			return NicoTracker.create_graph(cache.day_list,cache.bbs_cnt_list)
 		if(no==1):

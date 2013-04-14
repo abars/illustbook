@@ -40,4 +40,9 @@ function show_more_tag(){
   $('#more_tag').show();
   $('#show_more_tag_button').hide();
 }
+
+function show_follower(){
+  $('#follower').show();
+  $('#follower_button').hide();  
+}
 </script>

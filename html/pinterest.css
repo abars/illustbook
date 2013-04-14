@@ -39,6 +39,11 @@ box-shadow: 0 2px 1px #eee;
 word-break:break-all;
 }
 
+.item a{
+  text-decoration: none;
+  color: #333;
+}
+
 .guide {
 {% if is_iphone %}
   width:123px;
@@ -165,6 +170,22 @@ color: #333;
   position:absolute;
   top:0px;
   left:0px;
+}
+
+#follower{
+  {% if is_iphone %}
+  display:none;
+  {%else%}
+  display:block;
+  {%endif%}
+}
+
+#follower_button{
+  {% if is_iphone %}
+  display:block;
+  {%else%}
+  display:none;
+  {%endif%}
 }
 
 </style>

@@ -80,6 +80,7 @@ from myapp.OwnerCheck import OwnerCheck
 from myapp.Ranking import Ranking
 from myapp.UTC import UTC
 from myapp.JST import JST
+from myapp.Pinterest import Pinterest
 
 class MyPage(webapp.RequestHandler):
 	@staticmethod
@@ -121,27 +122,6 @@ class MyPage(webapp.RequestHandler):
 			return True
 
 		return True
-
-	@staticmethod
-	def is_following(user,user_id,view_mode):
-		if(view_mode):
-			if(user):
-				my_bookmark=ApiObject.get_bookmark_of_user_id(user.user_id())
-				if(my_bookmark):
-					if(user_id in my_bookmark.user_list):
-						return True
-		return False
-
-	@staticmethod
-	def get_profile_for_edit(bookmark,view_mode):
-		edit_profile="None"
-		if(bookmark):
-			if(not view_mode):
-				if(bookmark.profile):
-					edit_profile=bookmark.profile
-					compiled_line = re.compile("<br>")
-					edit_profile = compiled_line.sub(r'\r\n', edit_profile)
-		return edit_profile
 
 	def get(self,regist_mode):
 		SetUtf8.set()
@@ -202,7 +182,7 @@ class MyPage(webapp.RequestHandler):
 			regist_finish=True
 		
 		#プロフィールを編集
-		edit_profile=MyPage.get_profile_for_edit(bookmark,view_mode)
+		edit_profile=Pinterest.get_profile_for_edit(bookmark,view_mode)
 		
 		#退会
 		if(self.request.get("withdraw") and self.request.get("withdraw")=="go"):
@@ -212,6 +192,11 @@ class MyPage(webapp.RequestHandler):
 			your_bbs_count=Bbs.all().filter("del_flag =",0).filter("user_id =",bookmark.user_id).count()
 			if(self.withdraw(bookmark,your_bbs_count)):
 				return;
+
+		#リダイレクト
+		if(BbsConst.PINTEREST_MODE):
+			if(user and OwnerCheck.is_admin(user)):
+				return Pinterest.get_core(self,True)
 		
 		#タブ
 		tab=self.request.get("tab")
@@ -236,7 +221,7 @@ class MyPage(webapp.RequestHandler):
 		#フォロー中かどうか
 		following=False
 		if(bookmark):
-			following=MyPage.is_following(user,bookmark.user_id,view_mode)
+			following=Pinterest.is_following(user,bookmark.user_id,view_mode)
 
 		#年齢
 		age=None
@@ -257,7 +242,6 @@ class MyPage(webapp.RequestHandler):
 		#ランキング
 		user_rank=0
 		owner_rank=0
-		#if(tab=="profile"):
 		if(bookmark):
 			rank=Ranking.get_or_insert(BbsConst.THREAD_RANKING_KEY_NAME)
 			user_rank=rank.get_user_rank(bookmark.user_id)

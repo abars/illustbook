@@ -90,6 +90,11 @@
 
     {% if follow or follower %}
   <div class="message">
+    <div id="follower_button">
+      フォロー{{follow|length}}　フォロワー{{follower|length}}
+      <a href="javascript:show_follower();" class="g-button">詳細</a>
+    </div>
+    <div id="follower">
       {% if follow %}
      フォローしている<br>
      {% for user in follow %}
@@ -108,6 +113,7 @@
      <a href="pinterest?user_id={{user.user_id}}"><img src="{{user.icon_url}}" width=50px height=50px></a>
      {% endfor %}
      {% endif %}
+   </div>
  </div>
    {% endif %}
 
@@ -200,7 +206,7 @@
   レンタルしている<br>
   {% for bbs in rental_bbs_list %}
   <a href="{{bbs.bbs_url}}">
-  <img src="{{bbs.thumbnail_url}}" width=36px height=36px>{{bbs.title}}</a>
+  <img src="{{bbs.thumbnail_url}}" width=50px height=50px>{{bbs.title}}</a>
   {% if edit_mode %}
     <a href="javascript:confirm_action_bbs('del_bbs&bbs_key={{bbs.key}}','{{bbs.title}}');" class="g-button no-text"><i class="icon-remove"></i></a>
   {% endif %}
@@ -218,7 +224,7 @@
   ブックマークしている<br>
   {% for bbs in bookmark_bbs_list %}
   <a href="{{bbs.bbs_url}}">
-  <img src="{{bbs.thumbnail_url}}" width=36px height=36px>{{bbs.title}}</a>
+  <img src="{{bbs.thumbnail_url}}" width=50px height=50px>{{bbs.title}}</a>
   {% if edit_mode %}
     <a href="javascript:confirm_action('del_bbs&bbs_key={{bbs.key}}','ブックマーク',{{bbs.title}}');" class="g-button no-text"><i class="icon-remove"></i></a>
   {% endif %}
@@ -281,14 +287,14 @@
     {% if thread.image_url %}
       <div class="item">
       <div class="deletable">
-        <a href="{{thread.thread_url}}" target="_BLANK"><img src="{{thread.image_url}}"></a>
+        <a href="{{thread.thread_url}}" target="_BLANK"><img src="{{thread.thumbnail2_url}}" width=200px></a>
         {% if edit_mode %}
           {% ifequal tab "bookmark" %}
             <a href="javascript:confirm_delete('del&thread_key={{thread.key}}','ブックマーク','{{thread.title}}');" class="g-button no-text delete_button"><i class="icon-remove"></i></a>
           {% endifequal %}
         {% endif %}
       </div>
-      <b>{{thread.title}}</b><br>
+      <a href="{{thread.thread_url}}" target="_BLANK"><b>{{thread.title}}</b></a><br>
       {% if thread.tag %}
       {% for tag in thread.tag %}
         <a href="{{host}}pinterest?tag={{tag}}" class="g-button mini">{{tag}}</a>
