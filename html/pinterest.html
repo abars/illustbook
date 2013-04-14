@@ -51,7 +51,7 @@
       {%include "mypage/edit_profile.html"%}
     {% else %}
     <div style="float:left;margin-right:4px;">
-      <img src="{{view_user.icon_url}}" width=160px height=160px>
+      <img src="{{view_user.icon_url}}" {% if is_iphone %}width=100px height=100px{%else%}width=160px height=160px{% endif %}>
     </div>
     <div style="float:left">
      <p><b>{{view_user.name}}</b></p>
