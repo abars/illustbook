@@ -1,0 +1,158 @@
+<style>
+img {
+  max-width:100%;
+}
+
+body{
+  background:#f2f2f2;
+}
+
+{% if is_iphone %}
+#floating_menu{
+  width:310px;
+  margin-left:auto;
+  margin-right:auto;
+  padding-left:0px;
+}
+{% endif %}
+
+#contents {
+    {% if is_iphone %}
+      width:320px;
+    {% else %}
+      width:850px;
+    {% endif %}
+    margin:auto;
+}
+
+.item {
+{% if is_iphone %}
+  max-width:140px;
+{% else %}
+  max-width:200px;
+{% endif %}
+margin: 5px;
+float: left;
+border: 1px solid #ccc;
+background: #eee;
+box-shadow: 0 2px 1px #eee;
+word-break:break-all;
+}
+
+.guide {
+{% if is_iphone %}
+  width:123px;
+{% else %}
+  width:216px;
+  margin: 5px;
+  padding: 5px;
+{% endif %}
+float: left;
+border: 1px solid #ccc;
+background: #ffffff;
+box-shadow: 0 2px 1px #eee;
+text-decoration: none;
+text-align: center;
+}
+
+.message {
+{% ifequal page_mode "index" %}
+max-width:455px;
+{% else %}
+{% endifequal %}
+margin: 5px;
+padding: 5px;
+float: left;
+border: 1px solid #ccc;
+background: #ffffff;
+box-shadow: 0 2px 1px #eee;
+}
+
+.message a{
+  text-decoration: none;
+}
+
+.logo {
+position:relative;
+max-width:100%;
+margin:5px;
+float:left;
+{% if is_iphone %}
+width: 180px;
+height: 180px;
+{% else %}
+width: 360px;
+height: 360px;
+{% endif %}
+}
+
+{% if is_iphone %}
+.menu_list {
+  padding-top:4px;
+}
+{% endif %}
+
+#infscr-loading {
+margin-left: -100px;
+width: 200px;
+position: fixed;
+left: 50%;
+bottom: 10px;
+text-align: center;
+}
+
+#logo_fotter {
+position:absolute;
+right:0px;
+bottom:0px;
+background-color:#ffffff;
+font-size:12px;
+}
+
+#logo_fotter a{
+text-decoration: none;
+}
+
+#pinterest_footer{
+  text-align: center;
+  font-size:12px;
+  background-color:#ffffff;
+}
+
+#pinterest_footer a{
+  text-decoration: none;
+}
+
+#order{
+  margin:5px;
+}
+
+#more_tag{
+  display:none;
+}
+
+/* feed */
+.example {
+border: 1px solid #CCC;
+margin: 5px;
+background-color: #ffffff;
+}
+
+.example a{
+text-decoration: none;
+color: #333;
+}
+
+.example h2{
+font-size: 16px;
+font-weight: bold;
+color: #333;
+}
+
+.radius_image{
+  margin:1px;
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+}
+</style>

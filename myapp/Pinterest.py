@@ -44,10 +44,12 @@ from myapp.ApiUser import ApiUser
 from myapp.MaintenanceCheck import MaintenanceCheck
 from myapp.SiteAnalyzer import SiteAnalyzer
 from myapp.ApiBookmark import ApiBookmark
+from myapp.MyPage import MyPage
 
 class Pinterest(webapp.RequestHandler):
 	def get(self):
 		SetUtf8.set()
+		unit=32
 
 		#メンテナンス画面
 		is_maintenance=0
@@ -61,11 +63,18 @@ class Pinterest(webapp.RequestHandler):
 
 		#User
 		user = users.get_current_user()
-		unit=32
+
+		login_flag=0
+		if(user):
+			login_flag=1
 
 		order="hot"
 		if(self.request.get("order")):
 			order=self.request.get("order")
+
+		tab="submit"
+		if(self.request.get("tab")):
+			tab=self.request.get("tab")
 		
 		page=1
 		if(self.request.get("page")):
@@ -79,27 +88,51 @@ class Pinterest(webapp.RequestHandler):
 		if(self.request.get("user_id")):
 			user_id=self.request.get("user_id")
 
+		view_mode=1
+		if(user):
+			if(user_id==user.user_id()):
+				view_mode=0
+
 		page_mode="index"
 		view_user=None
 		view_user_profile=None
-		tag_list_view_n=5
 		follow=None
 		follower=None
+		edit_mode=0
+		is_timeline_enable=0
+		following=False
+		bookmark_bbs_list=None
+		rental_bbs_list=None
+		illust_enable=True
 
 		if(user_id!=""):
-			if(not (order=="bookmark" or order=="submit")):
-				order="submit"
-			if(order=="bookmark"):
-				thread_list=ApiBookmark.bookmark_get_thread_list(self,user_id)
+			if(not tab):
+				tab="submit"
+			if(tab=="bbs"):
+				thread_list=None
+				illust_enable=False
 			else:
-				thread_list=ApiUser.user_get_thread_list(self,user_id)
+				if(tab=="feed"):
+					thread_list=None
+					is_timeline_enable=1
+					illust_enable=False
+				else:
+					if(tab=="bookmark"):
+						thread_list=ApiBookmark.bookmark_get_thread_list(self,user_id)
+					else:
+						thread_list=ApiUser.user_get_thread_list(self,user_id)
+			if(self.request.get("edit")):
+				edit_mode=int(self.request.get("edit"))
 			page_mode="user"
 			view_user=ApiUser.user_get_user(self,user_id)
 			view_user_profile=ApiUser.user_get_profile(self,user_id)
+			bookmark_bbs_list=ApiBookmark.bookmark_get_bbs_list(self,user_id)
+			rental_bbs_list=ApiUser.user_get_bbs_list(self,user_id)
 			tag_list=SearchTag.get_recent_tag("pinterest")
-			next_query="user_id="+user_id+"&order="+order
+			next_query="user_id="+user_id+"&tab="+tab
 			follow=ApiUser.user_get_follow(self,user_id,True)
 			follower=ApiUser.user_get_follower(self,user_id,True)
+			following=MyPage.is_following(user,user_id,view_mode)
 		else:
 			if(tag!=""):
 				query = db.Query(MesThread,keys_only=True)
@@ -112,7 +145,6 @@ class Pinterest(webapp.RequestHandler):
 				tag_list=SearchTag.update_recent_tag(tag,cnt,"pinterest")
 				next_query="tag="+tag
 				page_mode="tag"
-				tag_list_view_n=100
 			else:
 				thread_list=ApiFeed.feed_get_thread_list(self,order,(page-1)*unit,unit)
 				tag_list=SearchTag.get_recent_tag("pinterest")
@@ -132,7 +164,6 @@ class Pinterest(webapp.RequestHandler):
 			'next_query': next_query,
 			'page_mode': page_mode,
 			'tag': tag,
-			'tag_list_view_n': tag_list_view_n,
 			'view_user': view_user,
 			'view_user_profile': view_user_profile,
 			'is_iphone': is_iphone,
@@ -141,7 +172,17 @@ class Pinterest(webapp.RequestHandler):
 			'illust_n': illust_n,
 			'user_id': user_id,
 			'follow': follow,
-			'follower': follower
+			'follower': follower,
+			'view_mode': view_mode,
+			'edit_mode': edit_mode,
+			'tab': tab,
+			'login_flag': login_flag,
+			'bookmark': view_user,
+			'is_timeline_enable': is_timeline_enable,
+			'following':following,
+			'bookmark_bbs_list': bookmark_bbs_list,
+			'rental_bbs_list': rental_bbs_list,
+			'illust_enable': illust_enable
 		}
 		path = os.path.join(os.path.dirname(__file__), '../html/pinterest.html')
 		self.response.out.write(template.render(path, template_values))

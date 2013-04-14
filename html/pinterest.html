@@ -20,179 +20,28 @@
 <script type="text/javascript" src="js/jquery/jquery.masonry.min.js"></script>
 <script type="text/javascript" src="js/jquery/jquery.infinitescroll.min.js"></script>
 <script type="text/javascript" src="api_js"></script>
-<style>
-img {
-  max-width:100%;
-}
 
-body{
-  background:#f2f2f2;
-}
+{% include "pinterest.css" %}
+{% include "pinterest.js" %}
 
-{% if is_iphone %}
-#floating_menu{
-  width:310px;
-  margin-left:auto;
-  margin-right:auto;
-  padding-left:0px;
-}
-{% endif %}
-
-#contents {
-    {% if is_iphone %}
-      width:320px;
-    {% else %}
-      width:850px;
-    {% endif %}
-    margin:auto;
-}
-
-.item {
-{% if is_iphone %}
-  max-width:140px;
-{% else %}
-  max-width:200px;
-{% endif %}
-margin: 5px;
-float: left;
-border: 1px solid #ccc;
-background: #eee;
-box-shadow: 0 2px 1px #eee;
-word-break:break-all;
-}
-
-.guide {
-{% if is_iphone %}
-  width:123px;
-{% else %}
-  width:216px;
-  margin: 5px;
-  padding: 5px;
-{% endif %}
-float: left;
-border: 1px solid #ccc;
-background: #ffffff;
-box-shadow: 0 2px 1px #eee;
-text-decoration: none;
-text-align: center;
-}
-
-.message {
-{% ifequal page_mode "index" %}
-max-width:455px;
-{% else %}
-{% endifequal %}
-margin: 5px;
-padding: 5px;
-float: left;
-border: 1px solid #ccc;
-background: #ffffff;
-box-shadow: 0 2px 1px #eee;
-}
-
-.logo {
-position:relative;
-max-width:100%;
-margin:5px;
-float:left;
-{% if is_iphone %}
-width: 180px;
-height: 180px;
-{% else %}
-width: 360px;
-height: 360px;
-{% endif %}
-}
-
-{% if is_iphone %}
-.menu_list {
-  padding-top:4px;
-}
-{% endif %}
-
-#infscr-loading {
-margin-left: -100px;
-width: 200px;
-position: fixed;
-left: 50%;
-bottom: 10px;
-text-align: center;
-}
-
-#logo_fotter {
-position:absolute;
-right:0px;
-bottom:0px;
-background-color:#ffffff;
-font-size:12px;
-}
-
-#logo_fotter a{
-text-decoration: none;
-}
-
-#pinterest_footer{
-  text-align: center;
-  font-size:12px;
-  background-color:#ffffff;
-}
-
-#pinterest_footer a{
-  text-decoration: none;
-}
-
-#order{
-  margin:5px;
-}
-</style>
-
-<script>
-$(function(){
-	
-var $container = $('#container');	
-	
-  $container.imagesLoaded(function(){
-      $container.masonry({
-        itemSelector: '.item',
-      });
-    });
-
-	$container.infinitescroll({
-      navSelector  : '#page-nav',    // selector for the paged navigation 
-      nextSelector : '#page-nav a',  // selector for the NEXT link (to page 2)
-      itemSelector : '.item',     // selector for all items you'll retrieve
-      loading: {
-          finishedMsg: '<div style="background-color:#ffffff;">ページの終端です。</div>',
-          img: 'static_files/loading.gif',
-          msgText: '<div style="background-color:#ffffff;">次のページを読込中</div>'
-        }
-      },
-      // trigger Masonry as a callback
-      function( newElements ) {
-        // hide new items while they are loading
-        var $newElems = $( newElements ).css({ opacity: 0 });
-        // ensure that images load before adding to masonry layout
-        $newElems.imagesLoaded(function(){
-          // show elems now they're ready
-          $newElems.animate({ opacity: 1 });
-          $container.masonry( 'appended', $newElems, true ); 
-        });
-      }
-    );
-});
-</script>
 </head>
 <body>
 
 {% include "floating_menu.html" %}
 
+<!-- コンテンツ -->
+
 <div id="contents">
+
+<!-- タグサーチ -->
 
 {% ifequal page_mode "tag" %}
   <div class="message">
     タグ「{{tag}}」の付けられたイラスト　<A HREF="{{host}}pinterest" class="g-button">トップページ</A>
   </div>
 {% endifequal %}
+
+<!-- ユーザ情報 -->
 
 {% ifequal page_mode "user" %}
   <div class="message">
@@ -202,31 +51,48 @@ var $container = $('#container');
     <div style="float:left">
      <p><b>{{view_user.name}}</b></p>
      <p>{{view_user_profile.profile|safe}}</p>
-     <A HREF="{{view_user_profile.profile_url}}" class="g-button">詳細</A>
-     <A HREF="{{host}}pinterest" class="g-button">トップページ</A>
+
+     <div class="g-button-group">
+      {% if not view_mode %}
+      {% else %}
+       {% if following %}
+         <a href="add_bookmark?mode=add_user&user_key={{bookmark.user_id}}" class="g-button">フォロー中</a>
+       {% else %}
+         <a href="add_bookmark?mode=add_user&user_key={{bookmark.user_id}}" class="g-button"><i class="icon-plus"></i>フォロー</a>
+       {% endif %}
+      {% endif %}
+       {% if not view_mode %}
+         <A HREF="{{host}}pinterest?user_id={{user_id}}&tab={{tab}}&edit=1" class="g-button">編集</A>
+       {% endif %}
+      </ul>
+       <A HREF="{{host}}pinterest" class="g-button">トップ</A>
+     </div>
+
     </div>
     <br clear="all">
   </div>
-  <div class="message">
+
     {% if follow or follower %}
-    <div style="float:left">
+  <div class="message">
       {% if follow %}
      フォローしている<br>
      {% for user in follow %}
-     <a href="{{user.profile_url}}"><img src="{{user.icon_url}}" width=36px height=36px></a>
+     <a href="pinterest?user_id={{user.user_id}}"><img src="{{user.icon_url}}" width=36px height=36px></a>
      {% endfor %}
      <br>
      {% endif %}
      {% if follower %}
      フォローされている<br>
      {% for user in follower %}
-     <a href="{{user.profile_url}}"><img src="{{user.icon_url}}" width=36px height=36px></a>
+     <a href="pinterest?user_id={{user.user_id}}"><img src="{{user.icon_url}}" width=36px height=36px></a>
      {% endfor %}
      {% endif %}
-   </div>
-   {% endif %}
  </div>
+   {% endif %}
+
 {% endifequal %}
+
+<!-- ポータル -->
 
 {% ifequal page_mode "index" %}
 <div class="logo">
@@ -250,26 +116,81 @@ var $container = $('#container');
 </div>
 {% endifequal %}
 
-{% ifequal page_mode "index" %}
+<!-- タグ一覧 -->
+
+{% ifnotequal page_mode "user" %}
 <div class="message">
 {% for tag2 in tag_list %}
-    {% if forloop.counter <= tag_list_view_n %}
+    {% if forloop.counter <= 5 %}
       {{tag2|safe}}　
     {% endif %}
 {% endfor %}
+    <div id="more_tag">
+{% for tag2 in tag_list %}
+    {% if forloop.counter >= 6 %}
+      {% if forloop.counter <= 100 %}
+        {{tag2|safe}}　
+      {% endif %}
+    {% endif %}
+{% endfor %}
+    </div>
+      <a id="show_more_tag_button" href="javascript:show_more_tag();" class="g-button mini">もっと見る</a>
 </div>
-{% endifequal %}
+{% endifnotequal %}
 
 <br clear="all">
+
+<!-- ユーザ情報タブ -->
 
 {% ifequal page_mode "user" %}
 <div id="order">
   <div class="g-button-group toggle-buttons">
-    <a href="{{host}}pinterest?user_id={{user_id}}&order=submit" class="g-button {%ifequal order "submit"%}checked{%endifequal%}">投稿したイラスト</a>
-    <a href="{{host}}pinterest?user_id={{user_id}}&order=bookmark" class="g-button {%ifequal order "bookmark"%}checked{%endifequal%}">ブックマーク</a>
+    <a href="{{host}}pinterest?user_id={{user_id}}&tab=submit" class="g-button {%ifequal tab "submit"%}checked{%endifequal%}">{% if is_iphone %}投稿した{%else%}投稿したイラスト{% endif %}</a>
+    <a href="{{host}}pinterest?user_id={{user_id}}&tab=bookmark" class="g-button {%ifequal tab "bookmark"%}checked{%endifequal%}">ブックマーク</a>
+    <a href="{{host}}pinterest?user_id={{user_id}}&tab=bbs" class="g-button {%ifequal tab "bbs"%}checked{%endifequal%}">掲示板</a>
+    <a href="{{host}}pinterest?user_id={{user_id}}&tab=feed" class="g-button {%ifequal tab "feed"%}checked{%endifequal%}">{% if is_iphone %}TL{%else%}タイムライン{% endif %}</a>
   </div>
 </div>
 {% endifequal %}
+
+<!-- 掲示板 -->
+
+{% ifequal tab "bbs" %}
+<div class="message">
+  {% if rental_bbs_list %}
+  レンタルしている<br>
+  {% for bbs in rental_bbs_list %}
+  <a href="{{bbs.bbs_url}}">
+  <img src="{{bbs.thumbnail_url}}" width=36px height=36px>{{bbs.title}}</a><br>
+  {% endfor %}
+  {% endif %}
+</div>
+
+<div class="message">
+  {% if bookmark_bbs_list %}
+  ブックマークしている<br>
+  {% for bbs in bookmark_bbs_list %}
+  <a href="{{bbs.bbs_url}}">
+  <img src="{{bbs.thumbnail_url}}" width=36px height=36px>{{bbs.title}}</a><br>
+  {% endfor %}
+  {% endif %}
+ </div>
+{% endifequal %}
+
+<!-- タイムライン -->
+
+{% ifequal page_mode "user" %}
+{% if is_timeline_enable %}
+  {% include "mypage/feed.html" %}
+  <script type="text/javascript" src="js/timeline.js"></script>
+  <script>
+    feed_set_env("feed",{{view_mode}},{{edit_mode}},"{{user_id}}",1);
+    feed_initialize();
+  </script>
+{% endif %}
+{% endifequal %}
+
+<!-- ポータルタブ -->
 
 {% ifequal page_mode "index" %}
 <div id="order">
@@ -282,11 +203,15 @@ var $container = $('#container');
 </div>
 {% endifequal %}
 
+<!-- Pinterest -->
+
 {% if not thread_list %}
 {% ifequal next_page 2 %}
+{% if illust_enable %}
 <div class="message">
 イラストは見つかりませんでした。
 </div>
+{% endif %}
 {% endifequal %}
 {% endif %}
 
@@ -315,20 +240,12 @@ var $container = $('#container');
   {% endfor %}
 </div>
 
-{% ifequal page_mode "tag" %}
-<div class="message">
-{% for tag2 in tag_list %}
-    {% if forloop.counter <= tag_list_view_n %}
-      {{tag2|safe}}　
-    {% endif %}
-{% endfor %}
-</div>
-{% endifequal %}
-
 <nav id="page-nav">
   <a href="pinterest?{{next_query}}&page={{next_page}}"></a>
 </nav>
 </div>
+
+<!-- フッター -->
 
 <br clear="all">
 

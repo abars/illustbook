@@ -122,6 +122,16 @@ class MyPage(webapp.RequestHandler):
 
 		return True
 
+	@staticmethod
+	def is_following(user,user_id,view_mode):
+		if(view_mode):
+			if(user):
+				my_bookmark=ApiObject.get_bookmark_of_user_id(user.user_id())
+				if(my_bookmark):
+					if(user_id in my_bookmark.user_list):
+						return True
+		return False
+
 	def get(self,regist_mode):
 		SetUtf8.set()
 
@@ -219,14 +229,8 @@ class MyPage(webapp.RequestHandler):
 		is_iphone=CssDesign.is_iphone(self)
 		
 		#フォロー中かどうか
-		following=False
-		if(view_mode):
-			if(user):
-				my_bookmark=ApiObject.get_bookmark_of_user_id(user.user_id())
-				if(my_bookmark):
-					if(bookmark.user_id in my_bookmark.user_list):
-						following=True
-			
+		following=MyPage.is_following(user,bookmark.user_id,view_mode)
+
 		#年齢
 		age=None
 		if(bookmark):

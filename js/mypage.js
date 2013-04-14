@@ -104,7 +104,7 @@ function mypage_init(tab,login,view_mode,edit_mode,feed_page,is_admin,is_iphone)
 	mypage_edit_mode=edit_mode;
 	mypage_view_mode=view_mode;
 	mypage_feed_page=feed_page;
-	
+
 	if(mypage_edit_mode){
 		mypage_is_edit["bookmark_app"]=1;
 		mypage_is_edit["rental"]=1;
@@ -158,23 +158,6 @@ function user_initialize(){
 	}
 }
 
-function feed_initialize(){
-	document.getElementById("feed").innerHTML="<p>Loading</p><p>&nbsp</p>"
-
-	var feed_unit=8;
-	if(mypage_now_tab=="timeline" || mypage_view_mode){
-		illustbook.user.getTimeline(mypage_user_id,(mypage_feed_page-1)*feed_unit,feed_unit,illustbook.user.ORDER_NONE,get_timeline_callback);
-	}else{
-		illustbook.user.getHomeTimeline(mypage_user_id,(mypage_feed_page-1)*feed_unit,feed_unit,illustbook.user.ORDER_NONE,get_timeline_callback);
-	}
-
-	if(mypage_feed_page==1){
-		$("#feed_previous_page").addClass("disabled2");
-	}else{
-		$("#feed_previous_page").removeClass("disabled2");
-	}
-}
-
 function illust_initialize(){
 	var offset=0;
 	var limit=illust_limit;
@@ -198,27 +181,10 @@ function go_edit_mode(edit_mode){
 	window.location.href="./mypage?tab="+mypage_now_tab+edit_sufix;
 }
 
-function go_feed_next_page(){
-	mypage_feed_page++;
-	feed_initialize();
-	scroll_to_top();
-}
-
-function go_feed_previous_page(){
-	if(mypage_feed_page<=1){
-		return;
-	}
-	mypage_feed_page--;
-	feed_initialize();
-	scroll_to_top();
-}
-
-function scroll_to_top(){
-	$('html, body').animate({scrollTop:0},'fast');
-}
-
 function display_tab(id){
 	mypage_now_tab=id;
+
+	feed_set_env(mypage_now_tab,mypage_view_mode,mypage_edit_mode,mypage_user_id,mypage_feed_page);
 
 	if(id=="timeline" || id=="home_timeline"){
 		id="feed";
@@ -244,175 +210,6 @@ function display_tab(id){
 		}
 		mypage_initialized[id]=true;
 	}
-
-	//scroll_to_top();
-
-	//return false;
-}
-
-//--------------------------------------------------------
-//タイムライン
-//--------------------------------------------------------
-
-function get_timeline_callback(oj){
-	get_feed(oj,"feed");
-}
-
-function get_feed(oj,id){
-	if(oj.status!="success"){
-		document.getElementById(id).innerHTML="<p>"+oj.message+"</p>";
-		return;
-	}
-	oj=oj.response;
-	if(oj.length==0){
-		document.getElementById(id).innerHTML="<p>フィードはありません。</p><p>&nbsp</p>";
-		return;
-	}
-	var txt="<HR>";
-	for(var i=0;i<oj.length;i++){
-		var feed=oj[i];
-		try{
-			ret=feed_parse(feed)
-		}catch(e){
-			ret=""+e+"<BR>"
-		}
-		txt+=ret
-	}
-	document.getElementById(id).innerHTML=txt;
-}
-
-function feed_parse(feed){
-	var txt="";
-	
-	txt+="<div>"
-	
-	//アイコン
-	txt+='<div style="float:left;width:58px;padding-right:6px;text-align:center;margin:auto;">'
-	if(feed.from_user && feed.mode!="deleted"){
-		txt+='<a href="javascript:go_feed(\''+feed.from_user.profile_url+'\')"><img src="'+feed.from_user.icon_url+'&size=mini" width=50px height=50px class="radius_image"></a>';
-	}else{
-		txt+='<img src="static_files/empty_user.png" width=50px height=50px class="radius_image">'
-	}
-	txt+='</div>'
-
-	//メインブロック
-	txt+='<div style="float:left;">'
-	
-	//ユーザ名
-	txt+="<p><b>"
-	if(feed.mode!="deleted"){
-		if(feed.from_user){
-			txt+='<a href="javascript:go_feed(\''+feed.from_user.profile_url+'\')">'+feed.from_user.name+'</a>'
-		}else{
-			txt+='匿名ユーザ'
-		}
-		if(feed.to_user){
-			txt+='　->　<a href="javascript:go_feed(\''+feed.to_user.profile_url+'\')">'+feed.to_user.name+'</A>'
-		}
-	}
-	txt+="</b></p>"
-	
-	//メッセージ
-	txt+="<p>"
-	switch(feed.mode){
-	case "message":
-		//txt+=feed.message;
-		break;
-	case "bbs_new_illust":
-		if(feed.thread.thumbnail_url==""){
-			txt+='<a href="javascript:go_feed(\''+feed.thread.thread_url+'\')">'+feed.bbs.title+'に記事を投稿しました。</a>'
-		}else{
-			txt+='<a href="javascript:go_feed(\''+feed.thread.thread_url+'\')">'+feed.bbs.title+'にイラストを投稿しました。</a>'
-		}
-		break;
-	case "new_follow":
-		txt+='<a href="javascript:go_feed(\''+feed.follow_user.profile_url+'\')">'+feed.follow_user.name+'をフォローしました。</a>'
-		break;
-	case "new_bookmark_thread":
-		txt+='<a href="javascript:go_feed(\''+feed.thread.thread_url+'\')">'+feed.thread.title+'をブックマークしました。</a>'
-		break;
-	case "new_comment_thread":
-		txt+='<a href="javascript:go_feed(\''+feed.thread.thread_url+'\')">'+feed.thread.title+'にコメントしました。</a>'
-		break;
-	case "new_bookmark_bbs":
-		txt+='<a href="javascript:go_feed(\''+feed.bbs.bbs_url+'\')">'+feed.bbs.title+'をブックマークしました。</a>'
-		break;
-	case "new_applause_thread":
-		txt+='<a href="javascript:go_feed(\''+feed.thread.thread_url+'\')">'+feed.thread.title+'に拍手しました。</a>'
-		break;
-	}
-	txt+="</p>"
-
-	//付加画像データ
-	switch(feed.mode){
-	case "bbs_new_illust":
-		if(feed.thread.thumbnail_url){
-			txt+='<a href="javascript:go_feed(\''+feed.thread.thread_url+'\')"><img src="'+feed.thread.thumbnail_url+'" width=100px height=100px></a>'
-		}else{
-			txt+="<blockquote><p>イラストは削除されました。</p></blockquote>"
-		}
-		break;
-	case "new_follow":
-		txt+='<a href="javascript:go_feed(\''+feed.follow_user.profile_url+'\')"><img src="'+feed.follow_user.icon_url+'&size=mini" width=50px height=50px class="radius_image"></a>'
-		break;
-	case "new_applause_thread":
-	case "new_bookmark_thread":
-		if(feed.thread.thumbnail_url){
-			txt+='<a href="javascript:go_feed(\''+feed.thread.thread_url+'\')"><img src="'+feed.thread.thumbnail_url+'" width=100px height=100px></a>'
-		}
-		break;
-	}
-
-	if(feed.message!=""){
-		if(feed.mode=="new_comment_thread"){
-			txt+='<blockquote><p><a href="javascript:go_feed(\''+feed.thread.thread_url+'\')">'+feed.message+'</a></p></blockquote>';
-		}else{
-			txt+="<p>"+feed.message+"</p>";
-		}
-	}
-
-	txt+="</div>"
-
-	//オプション
-	txt+='<div style="float:right;text-align:right;">'
-	txt+=feed.create_date+"<BR>"
-	if(!mypage_view_mode){
-		if(mypage_edit_mode){
-			if(feed.from_user.user_id==mypage_user_id){
-				txt+='<a href="#" onclick="if(confirm(\'ツイートを削除してもよろしいですか？\')){window.location.href=\'feed_tweet?mode=del_tweet&key='+feed.key+'&feed_page='+mypage_feed_page+'&edit=1&tab='+mypage_now_tab+'\';}return false;" class="g-button mini">削除</a><BR>';
-			}else{
-				txt+='<a href="#" onclick="if(confirm(\'フィードをタイムラインから除外してもよろしいですか？\')){window.location.href=\'feed_tweet?mode=del_feed&key='+feed.key+'&feed_page='+mypage_feed_page+'&edit=1&tab='+mypage_now_tab+'\';}return false;" class="g-button mini">除外</a><BR>'
-			}
-		}
-		if(feed.to_user.user_id==mypage_user_id){
-			txt+='<a href="mypage?user_id='+feed.from_user.user_id+'&tab=feed" class="g-button mini">返信</a><BR>';
-		}
-	}
-	if(feed.from_user.user_id!=mypage_user_id){
-		//txt+='<a href="#" onclick="feed_retweet(\''+feed.key+'\',\''+mypage_feed_page+'\');return false;" class="g-button mini">リツイート</a><BR>';
-	}
-	txt+="</div>"
-	txt+="</div>"
-	txt+="<BR CLEAR='all'>"
-	txt+="<HR>"
-
-	return txt;
-}
-
-function feed_retweet(feed_key,feed_page){
-	var comment=confirm("リツイートしますか？");
-	if(!comment){
-		return;
-	}
-	window.location.href='feed_tweet?mode=retweet&key='+feed_key;
-}
-
-function go_feed(url){
-	var return_url="#feed="+mypage_feed_page;
-	if(window.location.href!=return_url){//} && mypage_feed_page!=1){
-		window.location.href=return_url;
-	}
-	window.location.href=url;
 }
 
 //--------------------------------------------------------
