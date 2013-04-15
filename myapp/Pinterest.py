@@ -159,7 +159,7 @@ class Pinterest(webapp.RequestHandler):
 			edit_mode=int(self.request.get("edit"))
 
 		#リダイレクト先API
-		redirect_api=""
+		redirect_api="./"
 		if(is_mypage):
 			redirect_api="mypage"
 		if(self.request.get("is_pinterest")):
@@ -226,7 +226,7 @@ class Pinterest(webapp.RequestHandler):
 				dic=Pinterest.get_tag_image(self,tag,page,unit)
 				thread_list=dic["thread_list"]
 				tag_list=SearchTag.update_recent_tag(tag,dic["cnt"],"pinterest")
-				next_query="tag="+tag
+				next_query="tag="+urllib.quote_plus(str(tag))
 				page_mode="tag"
 			else:
 				thread_list=ApiFeed.feed_get_thread_list(self,order,(page-1)*unit,unit)
