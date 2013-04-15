@@ -155,6 +155,7 @@ class Pinterest(webapp.RequestHandler):
 		edit_profile=Pinterest.get_profile_for_edit(bookmark,view_mode)
 
 		#編集モードかどうか
+		edit_mode=0
 		if(self.request.get("edit")):
 			edit_mode=int(self.request.get("edit"))
 
@@ -170,7 +171,6 @@ class Pinterest(webapp.RequestHandler):
 		view_user_profile=None
 		follow=None
 		follower=None
-		edit_mode=0
 		is_timeline_enable=0
 		following=False
 		bookmark_bbs_list=None
