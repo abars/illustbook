@@ -181,19 +181,11 @@ color: #333;
 }
 
 #follower{
-  {% if is_iphone %}
   display:none;
-  {%else%}
-  display:block;
-  {%endif%}
 }
 
 #follower_button{
-  {% if is_iphone %}
   display:block;
-  {%else%}
-  display:none;
-  {%endif%}
 }
 
 </style>
