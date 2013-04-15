@@ -80,13 +80,13 @@ class Pinterest(webapp.RequestHandler):
 		return new_feed_count
 
 	def get(self):
-		Pinterest.get_core(self,False)
+		Pinterest.get_core(self,False,False)
 
 	@staticmethod
-	def get_core(self,is_mypage):
+	def get_core(self,is_mypage,regist_finish):
 		SetUtf8.set()
 
-		unit=32
+		unit=BbsConst.PINTEREST_PAGE_UNIT
 
 		#メンテナンス画面
 		is_maintenance=0
@@ -112,6 +112,8 @@ class Pinterest(webapp.RequestHandler):
 		tab=None
 		if(self.request.get("tab")):
 			tab=self.request.get("tab")
+		if(regist_finish):
+			tab="bbs"
 		
 		page=1
 		if(self.request.get("page")):
@@ -249,7 +251,9 @@ class Pinterest(webapp.RequestHandler):
 			'edit_profile': edit_profile,
 			'redirect_url': self.request.path,
 			'new_feed_count': new_feed_count,
-			'submit_illust_exist': submit_illust_exist
+			'submit_illust_exist': submit_illust_exist,
+			'regist_finish': regist_finish,
+			'is_maintenance': is_maintenance
 		}
 		path = os.path.join(os.path.dirname(__file__), '../html/pinterest.html')
 		self.response.out.write(template.render(path, template_values))

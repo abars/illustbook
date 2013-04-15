@@ -42,6 +42,20 @@
   </div>
 {% endifequal %}
 
+<!-- アラート -->
+
+{% if regist_finish %}
+  <div class="message">
+    お絵かき掲示板の新規作成が完了しました。
+  </div>
+{% endif %}
+
+{% if is_maintenance %}
+  <div class="message">
+    現在、サーバメンテナンス中です。ご迷惑をおかけします。数時間後に、再度、アクセスをお願い致します。
+  </div>
+{% endif %}
+
 <!-- ユーザ情報 -->
 
 {% ifequal page_mode "user" %}
@@ -173,7 +187,7 @@
   <div style="float:left">
   <div class="g-button-group toggle-buttons">
     {% if submit_illust_exist %}
-      <a href="{{host}}pinterest?user_id={{user_id}}&tab=submit" class="g-button {%ifequal tab "submit"%}checked{%endifequal%}">{% if is_iphone %}投稿した{%else%}投稿したイラスト{% endif %}</a>
+      <a href="{{host}}pinterest?user_id={{user_id}}&tab=submit" class="g-button {%ifequal tab "submit"%}checked{%endifequal%}">{% if is_iphone %}投稿{%else%}投稿したイラスト{% endif %}</a>
     {% endif %}
     <a href="{{host}}pinterest?user_id={{user_id}}&tab=bookmark" class="g-button {%ifequal tab "bookmark"%}checked{%endifequal%}">ブックマーク</a>
     <a href="{{host}}pinterest?user_id={{user_id}}&tab=bbs" class="g-button {%ifequal tab "bbs"%}checked{%endifequal%}">掲示板</a>

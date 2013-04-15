@@ -87,4 +87,6 @@ class BbsConst:
 
 	#ピンタレストモードを強制設定するか
 	PINTEREST_MODE=1
+	PINTEREST_PAGE_UNIT=32	#先読み枚数
+
 

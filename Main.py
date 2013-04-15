@@ -141,7 +141,7 @@ class MainPage(webapp.RequestHandler):
 		#リダイレクト
 		if(BbsConst.PINTEREST_MODE):
 			if(user and OwnerCheck.is_admin(user)):
-				return Pinterest.get_core(self,False)
+				return Pinterest.get_core(self,False,False)
 
 		#URL生成
 		template_values = {

@@ -589,6 +589,7 @@ class ApiObject(webapp.RequestHandler):
 
 		if(req.request.get("page")):
 			page=int(req.request.get("page"))
+			limit=BbsConst.PINTEREST_PAGE_UNIT
 			offset=limit*(page-1)
 		
 		return key_list[offset:offset+limit]
