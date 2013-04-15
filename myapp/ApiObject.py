@@ -287,9 +287,10 @@ class ApiObject(webapp.RequestHandler):
 			thumbnail2_url=url_header+"/thumbnail2/"+str(thread.cached_image_key)
 			if(thread.illust_mode==BbsConst.ILLUSTMODE_MOPER):
 				thumbnail_url+=".gif"
+				thumbnail2_url=thumbnail_url
 			else:
 				thumbnail_url+=".jpg"
-			thumbnail2_url+=".jpg"
+				thumbnail2_url+=".jpg"
 		if(bbs.del_flag):
 			thumbnail_url=""
 			thumbnail2_url=""

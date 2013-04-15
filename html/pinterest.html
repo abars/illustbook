@@ -7,7 +7,15 @@
 {% endif %}
 <meta name="Keywords" content="お絵かき掲示板,お絵かきブログ,無料,お絵かき,レンタル" />
 <meta name="Description" content="イラストブックはお絵かきツールがなくてもすぐに描ける完全無料のレンタルお絵かき掲示板サービスです。" />
-<title>イラストブック　Pinterest風</title>
+{% if tag %}
+<title>{{tag}} - イラストブック</title>
+{% else %}
+{% ifequal page_mode "user" %}
+<title>{{view_user.name}} - イラストブック</title>
+{% else %}
+<title>イラストブック - 無料レンタルお絵かき掲示板</title>
+{% endifequal %}
+{% endif %}
 {%include "meta.html" %}
 <meta http-equiv="Content-Script-Type" content="text/javascript" />
 <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -38,7 +46,7 @@
 
 {% ifequal page_mode "tag" %}
   <div class="message">
-    タグ「{{tag}}」の付けられたイラスト　<A HREF="{{host}}pinterest" class="g-button">トップページ</A>
+    タグ「{{tag}}」の付けられたイラスト　<A HREF="{{host}}{{redirect_api}}" class="g-button">トップページ</A>
   </div>
 {% endifequal %}
 
@@ -81,13 +89,13 @@
        {% endif %}
       {% endif %}
        {% if not view_mode %}
-         <A HREF="{{host}}pinterest?user_id={{user_id}}&tab={{tab}}&edit=2" class="g-button">編集</A>
+         <A HREF="{{host}}{{redirect_api}}?user_id={{user_id}}&tab={{tab}}&edit=2" class="g-button">編集</A>
 
     <a class="g-button dropdown-toggle" data-toggle="dropdown" href="#">
       その他 <span class="caret"></span>
     </a>
     <ul class="dropdown-menu">
-          <li><A HREF="{{host}}pinterest">トップへ戻る</A></li>
+          <li><A HREF="{{host}}{{redirect_api}}">トップへ戻る</A></li>
         {% if not view_mode or is_admin%}
           <li><a href="javascript:confirm_withdraw('mypage?withdraw=go&user_id={{bookmark.user_id}}')">退会する{% if is_admin %}（＊管理モード）{% endif %}</a></li>
         {% endif %}
@@ -113,7 +121,7 @@
      フォローしている<br>
      {% for user in follow %}
      <div class="deletable">
-       <a href="pinterest?user_id={{user.user_id}}"><img src="{{user.icon_url}}" width=50px height=50px></a>
+       <a href="{{redirect_api}}?user_id={{user.user_id}}"><img src="{{user.icon_url}}" width=50px height=50px></a>
        {% if edit_mode %}
        <a href="javascript:confirm_delete('del_user&user_key={{user.user_id}}','フォロー','{{user.name}}');" class="g-button no-text delete_button"><i class="icon-remove"></i></a>
        {% endif %}
@@ -124,7 +132,7 @@
      {% if follower %}
      フォローされている<br>
      {% for user in follower %}
-     <a href="pinterest?user_id={{user.user_id}}"><img src="{{user.icon_url}}" width=50px height=50px></a>
+     <a href="{{redirect_api}}?user_id={{user.user_id}}"><img src="{{user.icon_url}}" width=50px height=50px></a>
      {% endfor %}
      {% endif %}
    </div>
@@ -137,7 +145,11 @@
 
 {% ifequal page_mode "index" %}
 <div class="logo">
+{% if is_iphone %}
   <img src="static_files/banner_360.png">
+{% else %}
+  <img src="static_files/banner_360b.png">
+{% endif %}
   <div id="logo_fotter">
   from <a href="http://pochigoya0423.blog.shinobi.jp/">飯田のぎ</a>
   </div>
@@ -187,11 +199,11 @@
   <div style="float:left">
   <div class="g-button-group toggle-buttons">
     {% if submit_illust_exist %}
-      <a href="{{host}}pinterest?user_id={{user_id}}&tab=submit" class="g-button {%ifequal tab "submit"%}checked{%endifequal%}">{% if is_iphone %}投稿{%else%}投稿したイラスト{% endif %}</a>
+      <a href="{{host}}{{redirect_api}}?user_id={{user_id}}&tab=submit" class="g-button {%ifequal tab "submit"%}checked{%endifequal%}">{% if is_iphone %}投稿{%else%}投稿したイラスト{% endif %}</a>
     {% endif %}
-    <a href="{{host}}pinterest?user_id={{user_id}}&tab=bookmark" class="g-button {%ifequal tab "bookmark"%}checked{%endifequal%}">ブックマーク</a>
-    <a href="{{host}}pinterest?user_id={{user_id}}&tab=bbs" class="g-button {%ifequal tab "bbs"%}checked{%endifequal%}">掲示板</a>
-    <a href="{{host}}pinterest?user_id={{user_id}}&tab=feed" class="g-button {%ifequal tab "feed"%}checked{%endifequal%}">{% if is_iphone %}TL{%else%}タイムライン{% if not view_mode %}{% if new_feed_count %}({{new_feed_count}}){% endif %}{% endif %}{% endif %}</a>
+    <a href="{{host}}{{redirect_api}}?user_id={{user_id}}&tab=bookmark" class="g-button {%ifequal tab "bookmark"%}checked{%endifequal%}">ブックマーク</a>
+    <a href="{{host}}{{redirect_api}}?user_id={{user_id}}&tab=bbs" class="g-button {%ifequal tab "bbs"%}checked{%endifequal%}">掲示板</a>
+    <a href="{{host}}{{redirect_api}}?user_id={{user_id}}&tab=feed" class="g-button {%ifequal tab "feed"%}checked{%endifequal%}">{% if is_iphone %}TL{%else%}タイムライン{% if not view_mode %}{% if new_feed_count %}({{new_feed_count}}){% endif %}{% endif %}{% endif %}</a>
   </div>
   </div>
   {% if not is_iphone %}
@@ -200,9 +212,9 @@
   {% else %}
     {% if not view_mode %}
       {% if edit_mode %}
-     　<A HREF="{{host}}pinterest?user_id={{user_id}}&tab={{tab}}" class="g-button">戻る</A>
+     　<A HREF="{{host}}{{redirect_api}}?user_id={{user_id}}&tab={{tab}}" class="g-button">戻る</A>
       {% else %}
-     　<A HREF="{{host}}pinterest?user_id={{user_id}}&tab={{tab}}&edit=1" class="g-button">編集</A>
+     　<A HREF="{{host}}{{redirect_api}}?user_id={{user_id}}&tab={{tab}}&edit=1" class="g-button">編集</A>
      {% endif %}
      {% endif %}
   {% endifequal %}
@@ -277,10 +289,13 @@
 {% ifequal page_mode "index" %}
 <div id="order">
   <div class="g-button-group toggle-buttons">
-    <a href="{{host}}pinterest?order=hot" class="g-button {%ifequal order "hot"%}checked{%endifequal%}">人気</a>
-    <a href="{{host}}pinterest?order=new" class="g-button {%ifequal order "new"%}checked{%endifequal%}">新着</a>
-    <a href="{{host}}pinterest?order=bookmark" class="g-button {%ifequal order "bookmark"%}checked{%endifequal%}">{%if is_iphone%}ブクマ{%else%}ブックマーク{%endif%}</a>
-    <a href="{{host}}pinterest?order=applause" class="g-button {%ifequal order "applause"%}checked{%endifequal%}">拍手</a>
+    <a href="{{host}}{{redirect_api}}?order=new" class="g-button {%ifequal order "new"%}checked{%endifequal%}">新着</a>
+    <a href="{{host}}{{redirect_api}}?order=hot" class="g-button {%ifequal order "hot"%}checked{%endifequal%}">人気</a>
+    <a href="{{host}}{{redirect_api}}?order=bookmark" class="g-button {%ifequal order "bookmark"%}checked{%endifequal%}">{%if is_iphone%}ブクマ{%else%}ブックマーク{%endif%}</a>
+    <a href="{{host}}{{redirect_api}}?order=applause" class="g-button {%ifequal order "applause"%}checked{%endifequal%}">拍手</a>
+    {% if not is_iphone %}
+      <a href="{{host}}{{redirect_api}}?order=moper" class="g-button {%ifequal order "moper"%}checked{%endifequal%}">アニメ</a>
+    {% endif %}
   </div>
 </div>
 {% endifequal %}
@@ -312,15 +327,19 @@
       <a href="{{thread.thread_url}}" target="_BLANK"><b>{{thread.title}}</b></a><br>
       {% if thread.tag %}
       {% for tag in thread.tag %}
-        <a href="{{host}}pinterest?tag={{tag}}" class="g-button mini">{{tag}}</a>
+        <a href="{{host}}{{redirect_api}}?tag={{tag}}" class="g-button mini">{{tag}}</a>
       {% endfor %}
       <br>
       {% endif %}
       {{thread.summary|safe}}
       <br>
-      <div style="text-align:right;"><small>{{thread.comment}} comment<br>
+      <div style="text-align:right;">
+      <small>
+      {%if thread.comment %}{{thread.comment}} comment<br>{% endif %}
+      {%if thread.bookmark %}{{thread.bookmark}} bookmark<br>{% endif %}
+      {%if thread.applause %}{{thread.applause}} applause<br>{% endif %}
       from 
-      {%if thread.user_id %}<a href="pinterest?user_id={{thread.user_id}}" class="g-button mini">{% endif %}
+      {%if thread.user_id %}<a href="{{redirect_api}}?user_id={{thread.user_id}}" class="g-button mini">{% endif %}
       {{thread.author}}
       {%if thread.user_id %}</a>{% endif %}
       <br>{{thread.create_date}}</small></div>
@@ -330,7 +349,7 @@
 </div>
 
 <nav id="page-nav">
-  <a href="pinterest?{{next_query}}&page={{next_page}}"></a>
+  <a href="{{redirect_api}}?{{next_query}}&page={{next_page}}"></a>
 </nav>
 </div>
 

@@ -20,6 +20,8 @@ class TimeProgress():
 
 	@staticmethod
 	def get_date_diff_str(value,footer):
+		if isinstance(value,str):
+			return value
 		delta_time=datetime.datetime.today()-value
 		if(delta_time.days>=7):
 			return TimeProgress.get_date_str(value)

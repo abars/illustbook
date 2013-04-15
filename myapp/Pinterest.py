@@ -105,7 +105,7 @@ class Pinterest(webapp.RequestHandler):
 		if(user):
 			login_flag=1
 
-		order="hot"
+		order="new"
 		if(self.request.get("order")):
 			order=self.request.get("order")
 
@@ -142,6 +142,13 @@ class Pinterest(webapp.RequestHandler):
 
 		#プロフィールを編集
 		edit_profile=Pinterest.get_profile_for_edit(bookmark,view_mode)
+
+		#リダイレクト先API
+		redirect_api=""
+		if(is_mypage):
+			redirect_api="mypage"
+		if(self.request.get("is_pinterest")):
+			redirect_api="pinterest"
 
 		page_mode="index"
 		view_user=None
@@ -253,7 +260,8 @@ class Pinterest(webapp.RequestHandler):
 			'new_feed_count': new_feed_count,
 			'submit_illust_exist': submit_illust_exist,
 			'regist_finish': regist_finish,
-			'is_maintenance': is_maintenance
+			'is_maintenance': is_maintenance,
+			'redirect_api': redirect_api
 		}
 		path = os.path.join(os.path.dirname(__file__), '../html/pinterest.html')
 		self.response.out.write(template.render(path, template_values))
