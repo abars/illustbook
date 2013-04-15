@@ -326,17 +326,17 @@
     {% if thread.image_url %}
       <div class="item">
       <div class="deletable">
-        <a href="{{thread.thread_url}}" target="_BLANK"><img src="{{thread.thumbnail2_url}}" width=200px></a>
+        <a href="{{thread.thread_url}}"><img src="{{thread.thumbnail2_url}}" width=200px></a>
         {% if edit_mode %}
           {% ifequal tab "bookmark" %}
             <a href="javascript:confirm_delete('del&thread_key={{thread.key}}','ブックマーク','{{thread.title}}');" class="g-button no-text delete_button"><i class="icon-remove"></i></a>
           {% endifequal %}
         {% endif %}
       </div>
-      <a href="{{thread.thread_url}}" target="_BLANK"><b>{{thread.title}}</b></a><br>
+      <a href="{{thread.thread_url}}"><b>{{thread.title}}</b></a><br>
       {% if thread.tag %}
       {% for tag in thread.tag %}
-        <a href="{{host}}{{redirect_api}}?tag={{tag}}" class="g-button mini">{{tag}}</a>
+        <a href="{{host}}{{search_api}}?tag={{tag}}" class="g-button mini">{{tag}}</a>
       {% endfor %}
       <br>
       {% endif %}
@@ -367,7 +367,7 @@
 <br clear="all">
 
 <div id="pinterest_footer">
-&copy 2010-2013 <a href="http://www.abars.biz">ABARS</a> all rights reserved.
+<a href="{{host}}">イラストブック</a>{% if is_iphone %}<br>{%else%} {%endif%}&copy 2010-2013 <a href="http://www.abars.biz">ABARS</a> all rights reserved.
 </div>
 
 </body>

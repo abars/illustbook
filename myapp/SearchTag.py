@@ -38,6 +38,7 @@ from myapp.MappingThreadId import MappingThreadId
 from myapp.MesThread import MesThread
 from myapp.RecentTag import RecentTag
 from myapp.ApiObject import ApiObject
+from myapp.OwnerCheck import OwnerCheck
 
 class SearchTag(webapp.RequestHandler):
 	@staticmethod
@@ -134,6 +135,13 @@ class SearchTag(webapp.RequestHandler):
 		tag=self.request.get("tag")
 		
 		SetUtf8.set()
+
+		#リダイレクト
+		user=users.get_current_user()
+		if(BbsConst.PINTEREST_MODE):
+			if(user and OwnerCheck.is_admin(user)):
+				self.redirect(str("./pinterest?tag="+urllib.quote_plus(str(tag))))
+				return
 
 		page=1
 		thread_num=100

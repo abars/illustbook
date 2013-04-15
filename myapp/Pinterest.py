@@ -165,6 +165,7 @@ class Pinterest(webapp.RequestHandler):
 			redirect_api="mypage"
 		if(self.request.get("is_pinterest")):
 			redirect_api="pinterest"
+		search_api="pinterest"
 
 		page_mode="index"
 		view_user=None
@@ -271,7 +272,8 @@ class Pinterest(webapp.RequestHandler):
 			'submit_illust_exist': submit_illust_exist,
 			'regist_finish': regist_finish,
 			'is_maintenance': is_maintenance,
-			'redirect_api': redirect_api
+			'redirect_api': redirect_api,
+			'search_api': search_api
 		}
 		path = os.path.join(os.path.dirname(__file__), '../html/pinterest.html')
 		self.response.out.write(template.render(path, template_values))
