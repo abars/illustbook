@@ -5,8 +5,7 @@ img {
 
 body{
   background:#f2f2f2;
-  margin-left:0px;
-  margin-right:0px;
+  margin: 0px;
 }
 
 hr {border:0; border-top:1px solid #cccccc;}
@@ -149,6 +148,7 @@ color: #333;
 border: 1px solid #CCC;
 margin: 5px;
 background-color: #ffffff;
+padding: 5px;
 }
 
 .example a{
