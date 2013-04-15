@@ -584,13 +584,12 @@ class ApiObject(webapp.RequestHandler):
 		if(req.request.get("offset")):
 			offset=int(req.request.get("offset"))
 		
-		limit=10
+		limit=BbsConst.PINTEREST_PAGE_UNIT
 		if(req.request.get("limit")):
 			limit=int(req.request.get("limit"))
 
 		if(req.request.get("page")):
 			page=int(req.request.get("page"))
-			limit=BbsConst.PINTEREST_PAGE_UNIT
 			offset=limit*(page-1)
 		
 		return key_list[offset:offset+limit]

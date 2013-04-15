@@ -42,6 +42,9 @@
 
 <div id="contents">
 
+<!-- 2ページ目以降はコンテンツだけでよい -->
+{% ifequal next_page 2 %}
+
 <!-- タグサーチ -->
 
 {% ifequal page_mode "tag" %}
@@ -298,6 +301,10 @@
     {% endif %}
   </div>
 </div>
+{% endifequal %}
+
+<!-- 1ページ目 -->
+
 {% endifequal %}
 
 <!-- Pinterest -->

@@ -79,6 +79,17 @@ class Pinterest(webapp.RequestHandler):
 					bookmark.put()
 		return new_feed_count
 
+	@staticmethod
+	def get_tag_image(self,tag,page,unit):
+		query = db.Query(MesThread,keys_only=True)
+		query.filter('illust_mode =', BbsConst.ILLUSTMODE_ILLUST)
+		query.order('-create_date')
+		query.filter('tag_list =', tag)
+		cnt=query.count(limit=100)
+		thread_key_list = query.fetch(limit=unit, offset=(page-1)*unit)
+		thread_list=ApiObject.create_thread_object_list(self,thread_key_list,"pinterest")
+		return {"thread_list":thread_list,"cnt":cnt}
+
 	def get(self):
 		Pinterest.get_core(self,False,False)
 
@@ -143,6 +154,10 @@ class Pinterest(webapp.RequestHandler):
 		#プロフィールを編集
 		edit_profile=Pinterest.get_profile_for_edit(bookmark,view_mode)
 
+		#編集モードかどうか
+		if(self.request.get("edit")):
+			edit_mode=int(self.request.get("edit"))
+
 		#リダイレクト先API
 		redirect_api=""
 		if(is_mypage):
@@ -171,20 +186,24 @@ class Pinterest(webapp.RequestHandler):
 				new_feed_count=Pinterest.consume_feed(user,view_mode,bookmark)
 				if(new_feed_count):
 					tab="feed"
+
 			if(tab=="bbs"):
 				thread_list=None
 				illust_enable=False
-			else:
-				if(tab=="feed" or tab=="timeline"):
-					thread_list=None
-					is_timeline_enable=1
-					illust_enable=False
-				else:
-					if(tab=="bookmark"):
-						thread_list=ApiBookmark.bookmark_get_thread_list(self,user_id)
-					else:
-						thread_list=ApiUser.user_get_thread_list(self,user_id)
-						submit_illust_list=thread_list
+				bookmark_bbs_list=ApiBookmark.bookmark_get_bbs_list(self,user_id)
+				rental_bbs_list=ApiUser.user_get_bbs_list(self,user_id)
+	
+			if(tab=="feed" or tab=="timeline"):
+				thread_list=None
+				is_timeline_enable=1
+				illust_enable=False
+	
+			if(tab=="bookmark"):
+				thread_list=ApiBookmark.bookmark_get_thread_list(self,user_id)
+	
+			if(tab=="submit"):
+				thread_list=ApiUser.user_get_thread_list(self,user_id)
+				submit_illust_list=thread_list
 			
 			#投稿したイラストが存在しない場合はブックマークを表示
 			submit_illust_count=ApiUser.user_get_is_submit_thread_exist(self,user_id)
@@ -194,13 +213,9 @@ class Pinterest(webapp.RequestHandler):
 					tab="bookmark"
 					thread_list=ApiBookmark.bookmark_get_thread_list(self,user_id)
 
-			if(self.request.get("edit")):
-				edit_mode=int(self.request.get("edit"))
 			page_mode="user"
 			view_user=ApiUser.user_get_user(self,user_id)
 			view_user_profile=ApiUser.user_get_profile(self,user_id)
-			bookmark_bbs_list=ApiBookmark.bookmark_get_bbs_list(self,user_id)
-			rental_bbs_list=ApiUser.user_get_bbs_list(self,user_id)
 			tag_list=SearchTag.get_recent_tag("pinterest")
 			next_query="user_id="+user_id+"&tab="+tab
 			follow=ApiUser.user_get_follow(self,user_id,True)
@@ -208,14 +223,9 @@ class Pinterest(webapp.RequestHandler):
 			following=Pinterest.is_following(user,user_id,view_mode)
 		else:
 			if(tag!=""):
-				query = db.Query(MesThread,keys_only=True)
-				query.filter('illust_mode =', BbsConst.ILLUSTMODE_ILLUST)
-				query.order('-create_date')
-				query.filter('tag_list =', tag)
-				cnt=query.count(limit=100)
-				thread_key_list = query.fetch(limit=unit, offset=(page-1)*unit)
-				thread_list=ApiObject.create_thread_object_list(self,thread_key_list,"pinterest")
-				tag_list=SearchTag.update_recent_tag(tag,cnt,"pinterest")
+				dic=Pinterest.get_tag_image(self,tag,page,unit)
+				thread_list=dic["thread_list"]
+				tag_list=SearchTag.update_recent_tag(tag,dic["cnt"],"pinterest")
 				next_query="tag="+tag
 				page_mode="tag"
 			else:
