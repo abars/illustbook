@@ -292,6 +292,7 @@
 {% ifequal page_mode "user" %}
 {% if is_timeline_enable %}
   {% include "mypage/feed.html" %}
+  <script type="text/javascript" src="api_js"></script>
   <script type="text/javascript" src="js/timeline.js"></script>
   <script>
     feed_set_env("{{tab}}",{{view_mode}},{{edit_mode}},"{{user_id}}",1);
