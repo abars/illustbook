@@ -14,7 +14,7 @@
 	li{
 		{% if is_iphone %}
 			width:60px;
-			height:45px;
+			height:60px;
 		{% else %}
 			width:100px;
 			height:100px;
@@ -68,9 +68,11 @@
 </ul><br clear="all"><ul>
 {% endif %}
 	<a href="{{host}}chat"><li class="color5"><p>チャット</p></li></a>
-	<a href="{{host}}?order=guide"><li class="color6"><p>使い方</p></li></a>
 	<a href="{{host}}support/"><li class="color7"><p>サポート</p></li></a>
+{% if not is_iphone %}
+	<a href="{{host}}?order=guide"><li class="color6"><p>使い方</p></li></a>
 	<a href="{{host}}terms"><li class="color8"><p>利用規約</p></li></a>
+{% endif %}
 	</li>
 </ul>
 </div>
