@@ -85,6 +85,19 @@ class ImageFile (webapp.RequestHandler):
 		ImageFile.output_content(p_self,content_date,content_key,content_header,content_blob, serve, tag)
 
 	@staticmethod
+	def create_thumbail(w,image):
+		img = images.Image(image)
+		img.resize(width=w)
+
+		#for alpha png
+		jpeg=images.composite([(img, 0, 0, 1.0, images.TOP_LEFT)], img.width, img.height, 0xffffffff, images.JPEG, 90)
+		
+		#encode
+		#jpeg=img.execute_transforms(output_encoding=images.JPEG)
+
+		return jpeg
+
+	@staticmethod
 	def get_content(content,tag):
 		if(not content):
 			return None
@@ -100,10 +113,7 @@ class ImageFile (webapp.RequestHandler):
 			if content.thumbnail2_version and content.thumbnail2:
 				if content.thumbnail2_version==BbsConst.THUMBNAIL2_VERSION:
 					return (content.thumbnail2)
-			img = images.Image(content.image)
-			img.resize(width=200)
-			#img.im_feeling_lucky()	#エッジ強調されてしまう
-			content.thumbnail2=img.execute_transforms(output_encoding=images.JPEG)
+			content.thumbnail2=ImageFile.create_thumbail(200,content.image)
 			content.thumbnail2_version=BbsConst.THUMBNAIL2_VERSION
 			content.put()
 			return (content.thumbnail2)
