@@ -27,11 +27,11 @@
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script type="text/javascript" src="js/jquery/jquery.masonry.min.js"></script>
 <script type="text/javascript" src="js/jquery/jquery.infinitescroll.min.js"></script>
-<script type="text/javascript" src="api_js"></script>
+<script type="text/javascript" src="js/jquery/jquery.easing.1.3.js"></script>
 <script language="javascript" src="js/mypage_common.js" type="text/javascript"></script>
 
-{% include "pinterest.css" %}
-{% include "pinterest.js" %}
+{% include "pinterest/pinterest.css" %}
+{% include "pinterest/pinterest.js" %}
 
 </head>
 <body>
@@ -158,16 +158,8 @@
   </div>
 </div>
 
-<div class="menu_list">
-<a href="{{host}}sample/" class="guide">試し描き</a>
-<a href="{{host}}mypage" class="guide">レンタル</a>
-<a href="{{host}}commu/" class="guide">コミュニティ</a>
-<a href="{{host}}anything/" class="guide">何でも投稿</a>
-<a href="{{host}}chat" class="guide">チャット</a>
-<a href="{{host}}guide" class="guide">使い方</a>
-<a href="{{host}}support/" class="guide">サポート</a>
-{% if not is_iphone %}<a href="{{host}}terms" class="guide">利用規約</a>{% endif %}
-</div>
+{% include "pinterest/menulist.html" %}
+
 <div class="message">「イラストブック」に搭載されたお絵かきツールとあなた専用のお絵かき掲示版を使って、作品を世界中に公開しましょう。
 </div>
 {% endifequal %}

@@ -1,0 +1,99 @@
+<!--サークルメニュー-->
+
+<!-- デザイン -->
+<style>
+	ul{
+		margin:0;
+		padding:0;
+	}
+
+	ul a{
+		text-decoration: none;
+	}
+
+	li{
+		{% if is_iphone %}
+			width:100px;
+			height:25px;
+		{% else %}
+			float:left;
+			width:100px;
+			height:100px;
+		{% endif %}
+		color:#191919;
+		overflow:hidden;
+		
+	}
+
+	li p{
+		{% if not is_iphone %}
+			padding:0px 5px;
+		{% else %}
+			margin:0px;
+			margin-left:2px;
+		{% endif %}
+		text-decoration: none;
+	}
+
+	/*Menu Color Classes*/
+	.color1{background:rgb(191,47,47);color:#fff;}
+	.color2{background:rgb(191,155,47);color:#fff;}
+	.color3{background:rgb(119,191,47);color:#fff;}
+	.color4{background:rgb(47,191,83);color:#fff;}
+	.color5{background:rgb(47,191,191);color:#fff;}
+	.color6{background:rgb(47,83,191);color:#fff;}
+	.color7{background:rgb(119,47,191);color:#fff;}
+	.color8{background:rgb(191,47,155);color:#fff;}
+</style>
+
+<!-- メニュー -->
+<div style="float:left;margin:5px;">
+<ul>
+	<a href="{{host}}sample/"><li class="color1"><p>試し描き</p></li></a>
+	<a href="{{host}}mypage"><li class="color2"><p>レンタル</p></li></a>
+	<a href="{{host}}commu/"><li class="color3"><p>コミュニティ</p></li></a>
+	<a href="{{host}}anything/"><li class="color4"><p>何でも投稿</p></li></a>
+{% if not is_iphone %}
+</ul><br clear="all"><ul>
+{% endif %}
+	<a href="{{host}}chat"><li class="color5"><p>チャット</p></li></a>
+	<a href="{{host}}guide"><li class="color6"><p>使い方</p></li></a>
+	<a href="{{host}}support/"><li class="color7"><p>サポート</p></li></a>
+{% if not is_iphone %}
+	<a href="{{host}}terms"><li class="color8"><p>利用規約</p></li></a>
+{% endif %}
+	</li>
+</ul>
+</div>
+
+<!-- スクリプト -->
+<script>
+	$(document).ready(function(){
+		//Remove outline from links
+		$("a").click(function(){
+			$(this).blur();
+		});
+
+		//When mouse rolls over
+		$("li").bind("mouseover click",function(){
+			$(this).stop().animate(
+				{% if is_iphone %}
+					{width:'120px',height:'40px'},
+				{% else %}
+					{width:'160px',height:'160px'},
+				{% endif %}
+				{queue:false, duration:600, easing: 'easeOutBounce'})
+		});
+		
+		//When mouse is removed
+		$("li").mouseout(function(){
+			$(this).stop().animate(
+				{% if is_iphone %}
+					{width:'100px',height:'25px'},
+				{% else %}
+					{width:'100px',height:'100px'},
+				{% endif %}
+				{queue:false, duration:600, easing: 'easeOutBounce'})
+		});
+	});
+</script>

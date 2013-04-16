@@ -1,0 +1,53 @@
+
+<div id="test"></div>
+
+<script>
+hsv_to_rgb();
+
+function get_rgb_color(hi,s,v,p,q,t){
+	var r,g,b;
+	switch(hi){
+	case 0:
+		r=v;g=t;b=p;break;
+	case 1:
+		r=q;g=v;b=p;break;
+	case 2:
+		r=p;g=v;b=t;break;
+	case 3:
+		r=p;g=q;b=v;break;
+	case 4:
+		r=t;g=p;b=v;break;
+	case 5:
+		r=v;g=p;b=q;break;
+	}
+	
+	r=Math.floor(r*255);
+	g=Math.floor(g*255);
+	b=Math.floor(b*255);
+	
+	var rgb_code="rgb("+r+","+g+","+b+")";
+	return rgb_code;
+}
+
+function hsv_to_rgb(){
+	var txt="";
+
+	var unit=360/8;
+	for(var h=0;h<360;h=h+unit){
+		var v=0.75;
+		var s=0.75;
+	
+		hi=Math.floor(h/60)%6;
+		f=h/60-hi;
+		p=v*(1-s)
+		q=v*(1-f*s)
+		t=v*(1-(1-f)*s)
+		
+		var rgb_code=get_rgb_color(hi,s,v,p,q,t);
+		var rgb_code2=".color"+Math.floor(h/unit+1)+"{background:"+rgb_code+";}";
+		
+		txt+="<div style='background-color:"+rgb_code+";width:10px;height:10px;'></div>"+rgb_code2+"<BR>";
+	}
+	document.getElementById("test").innerHTML=txt;
+}
+</script>
