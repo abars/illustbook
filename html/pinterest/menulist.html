@@ -13,13 +13,13 @@
 
 	li{
 		{% if is_iphone %}
-			width:100px;
-			height:25px;
+			width:60px;
+			height:45px;
 		{% else %}
-			float:left;
 			width:100px;
 			height:100px;
 		{% endif %}
+		float:left;
 		color:#191919;
 		overflow:hidden;
 		
@@ -36,6 +36,16 @@
 	}
 
 	/*Menu Color Classes*/
+{% if is_iphone %}
+.color1{background:rgb(45,229,198);color:#fff;}
+.color2{background:rgb(45,229,225);color:#fff;}
+.color3{background:rgb(45,207,229);color:#fff;}
+.color4{background:rgb(45,181,229);color:#fff;}
+.color5{background:rgb(45,155,229);color:#fff;}
+.color6{background:rgb(45,128,229);color:#fff;}
+.color7{background:rgb(45,102,229);color:#fff;}
+.color8{background:rgb(45,76,229);color:#fff;}
+{% else %}
 	.color1{background:rgb(191,47,47);color:#fff;}
 	.color2{background:rgb(191,155,47);color:#fff;}
 	.color3{background:rgb(119,191,47);color:#fff;}
@@ -44,10 +54,11 @@
 	.color6{background:rgb(47,83,191);color:#fff;}
 	.color7{background:rgb(119,47,191);color:#fff;}
 	.color8{background:rgb(191,47,155);color:#fff;}
+{% endif %}
 </style>
 
 <!-- メニュー -->
-<div style="float:left;margin:5px;">
+<div style="float:left;margin:5px;{% if is_iphone %}width:120px;{% endif %}">
 <ul>
 	<a href="{{host}}sample/"><li class="color1"><p>試し描き</p></li></a>
 	<a href="{{host}}mypage"><li class="color2"><p>レンタル</p></li></a>
@@ -59,9 +70,7 @@
 	<a href="{{host}}chat"><li class="color5"><p>チャット</p></li></a>
 	<a href="{{host}}guide"><li class="color6"><p>使い方</p></li></a>
 	<a href="{{host}}support/"><li class="color7"><p>サポート</p></li></a>
-{% if not is_iphone %}
 	<a href="{{host}}terms"><li class="color8"><p>利用規約</p></li></a>
-{% endif %}
 	</li>
 </ul>
 </div>
@@ -75,10 +84,10 @@
 		});
 
 		//When mouse rolls over
-		$("li").bind("mouseover click",function(){
+		$("li").bind("{% if is_iphone %}click{%else%}mouseover{% endif %}",function(){
 			$(this).stop().animate(
 				{% if is_iphone %}
-					{width:'120px',height:'40px'},
+					{width:'120px',height:'120px'},
 				{% else %}
 					{width:'160px',height:'160px'},
 				{% endif %}
@@ -89,7 +98,7 @@
 		$("li").mouseout(function(){
 			$(this).stop().animate(
 				{% if is_iphone %}
-					{width:'100px',height:'25px'},
+					{width:'60px',height:'45px'},
 				{% else %}
 					{width:'100px',height:'100px'},
 				{% endif %}

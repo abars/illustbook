@@ -31,12 +31,20 @@ function get_rgb_color(hi,s,v,p,q,t){
 
 function hsv_to_rgb(){
 	var txt="";
+	var no=1;
 
-	var unit=360/8;
-	for(var h=0;h<360;h=h+unit){
+	/*
+	//PC向け
+	for(var h=0;h<360;h=h+360/8){
 		var v=0.75;
 		var s=0.75;
-	
+	*/
+
+	//iPhone向け
+	for(var h=170;h<240;h=h+60/7){
+		var v=0.90;
+		var s=0.80;
+
 		hi=Math.floor(h/60)%6;
 		f=h/60-hi;
 		p=v*(1-s)
@@ -44,9 +52,11 @@ function hsv_to_rgb(){
 		t=v*(1-(1-f)*s)
 		
 		var rgb_code=get_rgb_color(hi,s,v,p,q,t);
-		var rgb_code2=".color"+Math.floor(h/unit+1)+"{background:"+rgb_code+";}";
+		var rgb_code2=".color"+no+"{background:"+rgb_code+";color:#fff;}";
 		
-		txt+="<div style='background-color:"+rgb_code+";width:10px;height:10px;'></div>"+rgb_code2+"<BR>";
+		txt+="<div style='background-color:"+rgb_code+";width:100px;height:40px;'></div>"+rgb_code2+"<BR>";
+
+		no++;
 	}
 	document.getElementById("test").innerHTML=txt;
 }
