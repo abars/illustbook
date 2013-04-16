@@ -217,7 +217,7 @@ class Pinterest(webapp.RequestHandler):
 			page_mode="user"
 			view_user=ApiUser.user_get_user(self,user_id)
 			view_user_profile=ApiUser.user_get_profile(self,user_id)
-			tag_list=SearchTag.get_recent_tag("pinterest")
+			tag_list=None#SearchTag.get_recent_tag("pinterest")
 			next_query="user_id="+user_id+"&tab="+tab
 			follow=ApiUser.user_get_follow(self,user_id,True)
 			follower=ApiUser.user_get_follower(self,user_id,True)
@@ -230,9 +230,15 @@ class Pinterest(webapp.RequestHandler):
 				next_query="tag="+urllib.quote_plus(str(tag))
 				page_mode="tag"
 			else:
-				thread_list=ApiFeed.feed_get_thread_list(self,order,(page-1)*unit,unit)
-				tag_list=SearchTag.get_recent_tag("pinterest")
-				next_query="order="+order
+				if(order=="guide"):
+					thread_list=None
+					tag_list=None
+					next_query=""
+					page_mode="guide"
+				else:
+					thread_list=ApiFeed.feed_get_thread_list(self,order,(page-1)*unit,unit)
+					tag_list=SearchTag.get_recent_tag("pinterest")
+					next_query="order="+order
 
 		#iPhoneかどうか
 		is_iphone=CssDesign.is_iphone(self)

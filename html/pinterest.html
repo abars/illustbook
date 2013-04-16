@@ -13,7 +13,11 @@
 {% ifequal page_mode "user" %}
 <title>{{view_user.name}} - イラストブック</title>
 {% else %}
+{% ifequal page_mode "guide" %}
+<title>イラストブックの使い方 - イラストブック</title>
+{% else %}
 <title>イラストブック - 無料レンタルお絵かき掲示板</title>
+{% endifequal %}
 {% endifequal %}
 {% endif %}
 {%include "meta.html" %}
@@ -31,7 +35,10 @@
 <script language="javascript" src="js/mypage_common.js" type="text/javascript"></script>
 
 {% include "pinterest/pinterest.css" %}
-{% include "pinterest/pinterest.js" %}
+
+{% if next_query %}
+  {% include "pinterest/pinterest.js" %}
+{% endif %}
 
 </head>
 <body>
@@ -166,7 +173,7 @@
 
 <!-- タグ一覧 -->
 
-{% ifnotequal page_mode "user" %}
+{% if tag_list %}
 <div class="message">
 {% for tag2 in tag_list %}
     {% if forloop.counter <= 5 %}
@@ -184,7 +191,7 @@
     </div>
       <a id="show_more_tag_button" href="javascript:show_more_tag();" class="g-button mini">もっと見る</a>
 </div>
-{% endifnotequal %}
+{% endif %}
 
 <br clear="all">
 
@@ -268,6 +275,18 @@
   {% endif %}
 {% endifequal %}
 
+<!-- ガイド -->
+{% ifequal page_mode "guide" %}
+  <style>
+    h1 {font-size:100%;color:#E47911;}
+    h2,h3 {font-size:100%;}
+  </style>
+  <div style="background-color:#fff;padding:5px;color:#333;">
+    <a href="./" class="g-button mini">トップページ</a><br>
+    {%include "portal/guide.html"%}
+  </div>
+{% endifequal %}
+
 <!-- タイムライン -->
 
 {% ifequal page_mode "user" %}
@@ -306,9 +325,12 @@
 {% if not thread_list %}
 {% ifequal next_page 2 %}
 {% if illust_enable %}
+{% ifequal page_mode "guide" %}
+{% else %}
 <div class="message">
 イラストは見つかりませんでした。
 </div>
+{% endifequal %}
 {% endif %}
 {% endifequal %}
 {% endif %}
@@ -349,9 +371,12 @@
   {% endfor %}
 </div>
 
+{% if next_query %}
 <nav id="page-nav">
   <a href="{{redirect_api}}?{{next_query}}&page={{next_page}}"></a>
 </nav>
+{% endif %}
+
 </div>
 
 <!-- フッター -->
