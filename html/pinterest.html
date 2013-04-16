@@ -49,7 +49,7 @@
 
 {% ifequal page_mode "tag" %}
   <div class="message">
-    タグ「{{tag}}」の付けられたイラスト　<A HREF="{{host}}{{redirect_api}}" class="g-button">トップページ</A>
+    タグ「{{tag}}」の付けられたイラスト　<A HREF="{{host}}{{redirect_api}}" class="g-button mini">トップページ</A>
   </div>
 {% endifequal %}
 
@@ -117,7 +117,7 @@
   <div class="message">
     <div id="follower_button">
       フォロー{{follow|length}}　フォロワー{{follower|length}}
-      <a href="javascript:show_follower();" class="g-button">詳細</a>
+      <a href="javascript:show_follower();" class="g-button mini">詳細</a>
     </div>
     <div id="follower">
       {% if follow %}

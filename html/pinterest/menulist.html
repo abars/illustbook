@@ -84,7 +84,7 @@
 		});
 
 		//When mouse rolls over
-		$("li").bind("{% if is_iphone %}click{%else%}mouseover{% endif %}",function(){
+		$("li").bind("click",function(){
 			$(this).stop().animate(
 				{% if is_iphone %}
 					{width:'120px',height:'120px'},
@@ -95,6 +95,7 @@
 		});
 		
 		//When mouse is removed
+		/*
 		$("li").mouseout(function(){
 			$(this).stop().animate(
 				{% if is_iphone %}
@@ -104,5 +105,6 @@
 				{% endif %}
 				{queue:false, duration:600, easing: 'easeOutBounce'})
 		});
+		*/
 	});
 </script>
