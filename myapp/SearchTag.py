@@ -139,7 +139,7 @@ class SearchTag(webapp.RequestHandler):
 		#リダイレクト
 		user=users.get_current_user()
 		if(BbsConst.PINTEREST_MODE):
-			if(user and OwnerCheck.is_admin(user)):
+			if((user and OwnerCheck.is_admin(user)) or BbsConst.PINTEREST_MODE==2):
 				self.redirect(str("./pinterest?tag="+urllib.quote_plus(str(tag))))
 				return
 

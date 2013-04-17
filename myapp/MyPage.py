@@ -195,7 +195,7 @@ class MyPage(webapp.RequestHandler):
 
 		#リダイレクト
 		if(BbsConst.PINTEREST_MODE):
-			if(user and OwnerCheck.is_admin(user)):
+			if((user and OwnerCheck.is_admin(user)) or BbsConst.PINTEREST_MODE==2):
 				return Pinterest.get_core(self,True,regist_finish)
 		
 		#タブ

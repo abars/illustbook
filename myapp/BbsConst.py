@@ -83,10 +83,10 @@ class BbsConst:
 	SUBMIT_SEED="1212"
 
 	#サムネイル2のバージョン番号、これを変えると新しいサムネイルを生成
-	THUMBNAIL2_VERSION=2
+	THUMBNAIL2_VERSION=3
 
 	#ピンタレストモードを強制設定するか
 	PINTEREST_MODE=1
-	PINTEREST_PAGE_UNIT=24	#先読み枚数
+	PINTEREST_PAGE_UNIT=32	#先読み枚数
 
 
