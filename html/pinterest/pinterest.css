@@ -10,17 +10,6 @@ body{
 
 hr {border:0; border-top:1px solid #cccccc;}
 
-/*
-{% if is_iphone %}
-#floating_menu{
-  width:310px;
-  margin-left:auto;
-  margin-right:auto;
-  padding-left:0px;
-}
-{% endif %}
-*/
-
 #contents {
     {% if is_iphone %}
       width:320px;
@@ -171,6 +160,10 @@ color: #333;
 
 #follower_button{
   display:block;
+}
+
+#profile{
+  display:none;
 }
 
 </style>

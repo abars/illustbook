@@ -35,6 +35,7 @@ from myapp.JST import JST
 from myapp.Entry import Entry
 from myapp.UserIcon import UserIcon
 from myapp.TimeProgress import TimeProgress
+from myapp.ImageFile import ImageFile
 
 class ApiObject(webapp.RequestHandler):
 
@@ -137,43 +138,20 @@ class ApiObject(webapp.RequestHandler):
 		
 		#180pxサムネイル作成
 		if(bookmark and bookmark.icon and (not bookmark.thumbnail_created)):
-			img = images.Image(bookmark.icon)
-			img.resize(width=180, height=180)
-			#img.im_feeling_lucky()
-			try:
-				bookmark.icon=img.execute_transforms(output_encoding=images.PNG)
-				bookmark.icon_content_type = 'image/png'
+			thumb=ImageFile.create_thumbail(180,180,bookmark.icon,"png")
+			if(thumb):
+				bookmark.icon=thumb["code"]
+				bookmark.icon_content_type = thumb["content_type"]
 				bookmark.thumbnail_created=1
 				bookmark.put()
-			except:
-				img=None
 		
 		#50pxサムネイル作成
 		if(bookmark and bookmark.icon and (not bookmark.icon_mini)):
-			img = images.Image(bookmark.icon)
-			img.resize(width=50, height=50)
-			#img.im_feeling_lucky()
-			try:
-				bookmark.icon_mini=img.execute_transforms(output_encoding=images.PNG)
-				bookmark.icon_mini_content_type = 'image/png'
+			thumb=ImageFile.create_thumbail(50,50,bookmark.icon,"png")
+			if(thumb):
+				bookmark.icon_mini=thumb["code"]
+				bookmark.icon_mini_content_type = thumb["content_type"]
 				bookmark.put()
-			except:
-				img=None
-		
-		#BookmarkからUserIconに退避させていたが速度が出ないのでBookmarkに統合した
-		#if(bookmark and bookmark.icon and (not bookmark.user_icon)):
-		#	user_icon=UserIcon()
-		#	user_icon.icon=bookmark.icon
-		#	user_icon.icon_content_type=bookmark.icon_content_type
-		#	user_icon.user_id=bookmark.user_id
-		#	user_icon.put()
-		#	bookmark.user_icon=user_icon
-		#	bookmark.put()
-		
-		#Bookmarkクラスのアイコンを削除
-		#if(bookmark and bookmark.icon and bookmark.user_icon):
-		#	bookmark.icon=None
-		#	bookmark.put()
 
 	@staticmethod
 	def get_bookmark_of_user_id_for_write(user_id):
@@ -335,7 +313,11 @@ class ApiObject(webapp.RequestHandler):
 		bookmark_cnt=0
 		if(thread.bookmark_count):
 			bookmark_cnt=thread.bookmark_count
-		one_dic={"title":thread.title,"summary":summary,"author":thread.author,"user_id":user_id,"thumbnail_url":thumbnail_url,"thumbnail2_url":thumbnail2_url,"image_url":image_url,"create_date":create_date,"thread_url":thread_url,"applause":app,"bookmark":bookmark_cnt,"comment":comment_cnt,"key":str(thread.key()),"disable_news":disable_news,"tag":tag_list}
+		one_dic={"title":thread.title,"summary":summary,"author":thread.author,
+		"user_id":user_id,"thumbnail_url":thumbnail_url,"thumbnail2_url":thumbnail2_url,
+		"image_url":image_url,"create_date":create_date,"thread_url":thread_url,
+		"applause":app,"bookmark":bookmark_cnt,"comment":comment_cnt,"key":str(thread.key()),
+		"disable_news":disable_news,"tag":tag_list,"width":thread.cached_width,"height":thread.cached_height}
 		
 		return one_dic
 
@@ -672,6 +654,10 @@ class ApiObject(webapp.RequestHandler):
 			image_key=MesThread.image_key.get_value_for_datastore(ds_obj)
 			if(image_key):
 				ds_obj.cached_image_key=str(image_key)
+				ImageFile.create_thumbnail2(ds_obj.image_key)
+				ds_obj.cached_width=ds_obj.image_key.width
+				ds_obj.cached_height=ds_obj.image_key.height
+
 			bbs_key=MesThread.bbs_key.get_value_for_datastore(ds_obj)
 			if(bbs_key):
 				ds_obj.cached_bbs_key=str(bbs_key)

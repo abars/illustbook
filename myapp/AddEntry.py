@@ -102,6 +102,7 @@ class AddEntry(webapp.RequestHandler):
 			else:
 				timage.image=db.Blob(self.request.get("image"))
 				timage.thumbnail=db.Blob(self.request.get("thumbnail"))
+			timage.thumbnail2=None
 			timage.illust_mode=1;
 			timage.put()
 

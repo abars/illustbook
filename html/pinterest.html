@@ -89,6 +89,33 @@
      <p><b>{{view_user.name}}</b></p>
      <p>{{view_user_profile.profile|safe}}</p>
 
+      <div id="profile">
+            <table>
+            {% if bookmark.sex %}<tr><td>性別</td><td>　</td><td>
+              {% ifequal bookmark.sex 1 %}
+                男
+              {%else%}
+                女
+              {%endifequal%}
+            </td></tr>
+            {% endif %}
+            {% if age %}<tr><td>年齢</td><td>　</td><td>{{age}}才</td></tr>{%endif%}
+            {% if bookmark.birthday_month %}<tr><td>誕生日</td><td>　</td><td>{{bookmark.birthday_month}}月{{bookmark.birthday_day}}日</td></tr>{%endif %}
+            {%if not bookmark.disable_rankwatch %}
+            <tr><td>ランキング</td><td>　</td><td>
+                <a href="ranking?mode=user" class="g-button mini">
+                  {% if user_rank %}{{user_rank}}位{% else %}-{% endif %}
+                </a>
+            </td></tr>
+            {%endif%}
+            {% if bookmark.homepage %}<tr><td>ホームページ</td><td>　</td><td><a href="{{bookmark.homepage}}" class="declink"><div class="linebreak">{{bookmark.homepage}}</div></a></td></tr>{% endif %}
+            {% if bookmark.mail %}<tr><td>メール</td><td>　</td><td><a href="mailto:{{bookmark.mail}}" class="declink"><div class="linebreak">{{bookmark.mail|safe}}</div></a></td></tr>{% endif %}
+            {% if bookmark.twitter_id %}<tr><td>Twitter</td><td>　</td><td>{% if bookmark.twitter_id %}<a href="https://twitter.com/#!/{{bookmark.twitter_id}}" class="declink"><div class="linebreak">{{bookmark.twitter_id}}</div></a>{% endif %}</td></tr>{% endif %}
+            {% if is_admin %}{% if bookmark.owner %}<tr><td>アカウント(＊管理モード)</td><td>　</td><td>{{bookmark.owner.email}}</td></tr>{% endif %}{% endif %}
+            </table>
+      </div>
+
+
      <div class="g-button-group">
       {% if not view_mode %}
       {% else %}
@@ -98,6 +125,7 @@
          <a href="javascript:confirm_follow('{{view_user.user_id}}','{{view_user.name}}');" class="g-button"><i class="icon-plus"></i>フォロー</a>
        {% endif %}
       {% endif %}
+      <a id="profile_button" href="javascript:show_profile();" class="g-button">詳細</a>
        {% if not view_mode %}
          <A HREF="{{host}}{{redirect_api}}?user_id={{user_id}}&tab={{tab}}&edit=2" class="g-button">編集</A>
 
@@ -145,11 +173,12 @@
      <a href="{{redirect_api}}?user_id={{user.user_id}}"><img src="{{user.icon_url}}&size=mini" width=50px height=50px></a>
      {% endfor %}
      {% endif %}
+      <br><a href="javascript:show_follower();" class="g-button mini">閉じる</a>
    </div>
  </div>
    {% endif %}
-
 {% endifequal %}
+
 
 <!-- ポータル -->
 
@@ -188,6 +217,7 @@
       {% endif %}
     {% endif %}
 {% endfor %}
+      <a href="javascript:show_more_tag();" class="g-button mini">閉じる</a>
     </div>
       <a id="show_more_tag_button" href="javascript:show_more_tag();" class="g-button mini">もっと見る</a>
 </div>
@@ -340,14 +370,14 @@
     {% if thread.image_url %}
       <div class="item">
       <div class="deletable">
-        <a href="{{thread.thread_url}}"><img src="{{thread.thumbnail2_url}}" width=200px></a>
+        <a href="{{thread.thread_url}}" target="_BLANK"><img src="{{thread.thumbnail2_url}}" width="200px" height="{{thread|thumbnail2_height}}px"></a>
         {% if edit_mode %}
           {% ifequal tab "bookmark" %}
             <a href="javascript:confirm_delete('del&thread_key={{thread.key}}','ブックマーク','{{thread.title}}');" class="g-button no-text delete_button"><i class="icon-remove"></i></a>
           {% endifequal %}
         {% endif %}
       </div>
-      <a href="{{thread.thread_url}}"><b>{{thread.title}}</b></a><br>
+      <a href="{{thread.thread_url}}" target="_BLANK"><b>{{thread.title}}</b></a><br>
       {% if thread.tag %}
       {% for tag in thread.tag %}
         <a href="{{host}}{{search_api}}?tag={{tag}}" class="g-button mini">{{tag}}</a>

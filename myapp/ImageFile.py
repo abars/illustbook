@@ -85,17 +85,59 @@ class ImageFile (webapp.RequestHandler):
 		ImageFile.output_content(p_self,content_date,content_key,content_header,content_blob, serve, tag)
 
 	@staticmethod
-	def create_thumbail(w,image):
+	def create_thumbail(w,h,image,format):
+		if(image==None):
+			return None
+
 		img = images.Image(image)
-		img.resize(width=w)
 
-		#for alpha png
-		jpeg=images.composite([(img, 0, 0, 1.0, images.TOP_LEFT)], img.width, img.height, 0xffffffff, images.JPEG, 90)
-		
-		#encode
-		#jpeg=img.execute_transforms(output_encoding=images.JPEG)
+		src_w=img.width
+		src_h=img.height
 
-		return jpeg
+		if(h==0):
+			img.resize(width=w)
+		else:
+			img.resize(width=w,height=h)
+
+		if(format=="jepg"):
+			try:
+				code=images.composite([(img, 0, 0, 1.0, images.TOP_LEFT)], img.width, img.height, 0xffffffff, images.JPEG, 90)
+			except:
+				return None
+			content_type='image/jpeg'
+		else:
+			if(format=="png"):
+				try:
+					code=img.execute_transforms(output_encoding=images.PNG)
+				except:
+					return None
+				content_type='image/png'
+			else:
+				return None
+
+		return {"code":code,"width":src_w,"height":src_h,"content_type":content_type}
+
+	@staticmethod
+	def create_thumbnail2(content):
+		#動画の場合はサムネイルは作れない
+		if content.gif_thumbnail:
+			return
+
+		#既にサムネイルを作っている
+		if content.thumbnail2_version and content.thumbnail2:
+			if content.thumbnail2_version==BbsConst.THUMBNAIL2_VERSION:
+				return
+
+		#新規サムネイル作成
+		thumb=ImageFile.create_thumbail(200,0,content.image,"jpeg")
+		if(thumb==None):
+			return
+		content.thumbnail2=thumb["code"]
+		content.thumbnail2_version=BbsConst.THUMBNAIL2_VERSION
+		if((not content.width) and (not content.height)):	#動画の場合をケア、なくてもいいかも
+			content.width=thumb["width"]	#画像サイズを設定
+			content.height=thumb["height"]
+		content.put()
 
 	@staticmethod
 	def get_content(content,tag):
@@ -110,12 +152,6 @@ class ImageFile (webapp.RequestHandler):
 		if tag=="thumbnail2":
 			if content.gif_thumbnail:
 				return (content.gif_thumbnail)
-			if content.thumbnail2_version and content.thumbnail2:
-				if content.thumbnail2_version==BbsConst.THUMBNAIL2_VERSION:
-					return (content.thumbnail2)
-			content.thumbnail2=ImageFile.create_thumbail(200,content.image)
-			content.thumbnail2_version=BbsConst.THUMBNAIL2_VERSION
-			content.put()
 			return (content.thumbnail2)
 		return (content.image)
 

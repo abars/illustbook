@@ -177,6 +177,8 @@ class AddNewThread(webapp.RequestHandler):
 
 			timage.illust_mode=new_thread.illust_mode
 			timage.is_png=new_thread.is_png
+			timage.thumbnail2=None
+
 			try:
 				timage.put()
 			except:

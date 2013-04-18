@@ -26,23 +26,43 @@ var $container = $('#container');
         // hide new items while they are loading
         var $newElems = $( newElements ).css({ opacity: 0 });
         // ensure that images load before adding to masonry layout
-        $newElems.imagesLoaded(function(){
+        //$newElems.imagesLoaded(function(){
           // show elems now they're ready
           $newElems.animate({ opacity: 1 });
           $container.masonry( 'appended', $newElems, true ); 
-        });
+        //});
       }
     );
 });
 {% endif %}
 
 function show_more_tag(){
-  $('#more_tag').show();
-  $('#show_more_tag_button').hide();
+  if($('#more_tag').is(':visible')){
+   $('#more_tag').hide();
+   $('#show_more_tag_button').show();
+  }else{
+   $('#more_tag').show();
+   $('#show_more_tag_button').hide();
+  }
 }
 
 function show_follower(){
-  $('#follower').show();
-  $('#follower_button').hide();  
+  if($('#follower').is(':visible')){
+    $('#follower').hide();
+    $('#follower_button').show();  
+  }else{
+    $('#follower').show();
+    $('#follower_button').hide();  
+  }
+}
+
+function show_profile(){
+  if($('#profile').is(':visible')){
+    $('#profile').hide();
+    $('#profile_button').text("詳細")
+  }else{
+   $('#profile').show();  
+    $('#profile_button').text("閉じる")
+  }
 }
 </script>

@@ -56,6 +56,8 @@ class MesThread(CachedDbModel):
 	cached_bbs_key = db.StringProperty() #For object cache
 	cached_entry_key = db.ListProperty(db.Key) #For object cache
 	cached_entry_key_enable = db.BooleanProperty()	#is cached_entry_key is enable
+	cached_width = db.IntegerProperty()	#For object cache
+	cached_height = db.IntegerProperty()	#For object cache
 	
 	bookmark_comment = db.BlobProperty()
 	remote_addr = db.StringProperty()

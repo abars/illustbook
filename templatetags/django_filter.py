@@ -320,6 +320,16 @@ def auto_link(summary):
 	return summary
 
 #-----------------------------------------------------------------
+#サムネイルの高さ
+#-----------------------------------------------------------------
+
+def thumbnail2_height(thread):
+	try:
+		return thread["height"]*200/thread["width"]
+	except:
+		return 200
+
+#-----------------------------------------------------------------
 #フィルタ登録
 #-----------------------------------------------------------------
 
@@ -348,3 +358,4 @@ register.filter(logout_url)
 register.filter(new_feed_count)
 register.filter(set_seed)
 register.filter(auto_link)
+register.filter(thumbnail2_height)
