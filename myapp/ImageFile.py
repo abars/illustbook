@@ -124,15 +124,17 @@ class ImageFile (webapp.RequestHandler):
 		#新規サムネイル作成
 		thumb=ImageFile.create_thumbail(200,0,content.image,"jpeg")
 		if(thumb==None):
-			return
+			return False
 		content.thumbnail2=thumb["code"]
 		if((not content.width) and (not content.height)):	#動画の場合をケア、なくてもいいかも
 			content.width=thumb["width"]	#画像サイズを設定
 			content.height=thumb["height"]
 		try:
 			content.put()
+			return True
 		except:
 			logging.error("ImageFile:create_thumbnail:too large image:key:"+str(content.key()))
+			return False
 
 	@staticmethod
 	def create_thumbnail2(thread):
@@ -144,7 +146,8 @@ class ImageFile (webapp.RequestHandler):
 		#動画以外の場合にサムネイルを作成する
 		content=thread.image_key
 		if not content.gif_thumbnail:
-			ImageFile._create_thumbnail2_core(content)
+			if(not ImageFile._create_thumbnail2_core(content)):
+				return	#作成失敗
 
 		#画像サイズをスレッドに設定
 		thread.width=content.width
@@ -205,7 +208,7 @@ class ImageFile (webapp.RequestHandler):
 			if(tag=="thumbnail2"):
 				ImageFile._create_thumbnail2_core(db.get(path))
 
-		#サーブする場合
+		#サーブする場合、実データを取得
 		if(serve and content is None):
 			try:
 				content = db.get(path)
@@ -218,7 +221,9 @@ class ImageFile (webapp.RequestHandler):
 		#バイナリ取得
 		content_blob=ImageFile.get_content(content,tag)
 		content_header=ImageFile.get_content_type(type_name)
-
+		if(serve and content_blob==None):
+			p_self.error(404)
+			return
 		ImageFile.output_content(p_self,content_date,content_key,content_header,content_blob, serve, tag)
 	
 	@staticmethod
