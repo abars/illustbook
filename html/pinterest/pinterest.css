@@ -21,7 +21,7 @@ hr {border:0; border-top:1px solid #cccccc;}
 
 .item {
 {% if is_iphone %}
-  max-width:140px;
+  max-width:148px;
 {% else %}
   max-width:210px;
 {% endif %}
