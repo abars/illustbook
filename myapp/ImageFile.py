@@ -200,6 +200,10 @@ class ImageFile (webapp.RequestHandler):
 
 		#サーブするかを決定する
 		serve=ImageFile.is_serve(p_self,content_key,content_date,tag)
+		if(p_self.request.get("force")):
+			serve=True
+			if(tag=="thumbnail2"):
+				ImageFile._create_thumbnail2_core(db.get(path))
 
 		#サーブする場合
 		if(serve and content is None):
