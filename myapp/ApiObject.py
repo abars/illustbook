@@ -680,7 +680,9 @@ class ApiObject(webapp.RequestHandler):
 							ds_obj.put()
 				except:
 					ds_obj.cached_thumbnail_key=""
-			ds_obj.cached_threads_num=MesThread.all().filter("bbs_key =",ds_obj).count()
+			if not ds_obj.cached_threads_num:
+				ds_obj.cached_threads_num=MesThread.all().filter("bbs_key =",ds_obj).count()
+				ds_obj.put()
 
 		try:
 			memcache.set(BbsConst.OBJECT_CACHE_HEADER+str(ds_obj.key()),ds_obj,BbsConst.OBJECT_CACHE_TIME)

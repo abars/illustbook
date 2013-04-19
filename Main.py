@@ -367,6 +367,9 @@ class DelRes(webapp.RequestHandler):
 class DelThread(webapp.RequestHandler):
 	@staticmethod
 	def delete_thread_core(thread):
+		thread.bbs_key.cached_threads_num=None	#イラストの総数の更新リクエスト
+		thread.bbs_key.put()
+
 		entry_query=Entry.all().filter("thread_key =",thread)
 		for entry in entry_query:
 			if(entry.illust_reply_image_key):

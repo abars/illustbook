@@ -102,6 +102,7 @@ class AddNewThread(webapp.RequestHandler):
 			new_thread.comment_cnt=0
 
 			bbs.illust_n=bbs.illust_n+1
+			bbs.cached_threads_num=None	#キャッシュ更新リクエスト
 			bbs.put()
 			
 			#上書きモードの場合は作成日を更新しない
