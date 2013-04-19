@@ -236,6 +236,11 @@ class Community(webapp.RequestHandler):
 
 class GuidePage(webapp.RequestHandler):
 	def get(self):
+		user=users.get_current_user()
+		if(BbsConst.PINTEREST_MODE):
+			if((user and OwnerCheck.is_admin(user)) or BbsConst.PINTEREST_MODE==2):
+				self.redirect(str("./pinterest?order=guide"))
+				return
 		Portal.get(self,"guide",True)
 
 class LinkPage(webapp.RequestHandler):
