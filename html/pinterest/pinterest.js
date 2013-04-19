@@ -16,9 +16,9 @@ var $container = $('#container');
       nextSelector : '#page-nav a',  // selector for the NEXT link (to page 2)
       itemSelector : '.item',     // selector for all items you'll retrieve
       loading: {
-          finishedMsg: '<div style="background-color:#ffffff;z-index:100;">ページの終端です。</div>',
+          finishedMsg: '<div style="background-color:#ffffff;z-index:2;">ページの終端です。</div>',
           img: 'static_files/loading.gif',
-          msgText: '<div style="background-color:#ffffff;z-index:100;">次のページを読込中</div>'
+          msgText: '<div style="background-color:#ffffff;z-index:2;">次のページを読込中</div>'
         }
       },
       // trigger Masonry as a callback

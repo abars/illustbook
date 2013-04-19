@@ -36,7 +36,7 @@
       {%if thread.applause %}{{thread.applause}} applause<br>{% endif %}
       {{thread.create_date}}<br>
       from 
-      {%if thread.user_id %}<a href="{{redirect_api}}?user_id={{thread.user_id}}" class="g-button mini">{% endif %}
+      {%if thread.user_id %}<a href="{{redirect_api}}?user_id={{thread.user_id}}" class="g-button mini" style="overflow:hidden;max-width:80%;">{% endif %}
       {{thread.author}}
       {%if thread.user_id %}</a>{% endif %}
       </small></div>
