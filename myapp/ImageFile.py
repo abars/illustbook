@@ -102,6 +102,7 @@ class ImageFile (webapp.RequestHandler):
 
 		if(format=="jpeg"):
 			try:
+				img.execute_transforms()	#exec resize
 				code=images.composite([(img, 0, 0, 1.0, images.TOP_LEFT)], img.width, img.height, 0xffffffff, images.JPEG, 90)
 			except:
 				return None

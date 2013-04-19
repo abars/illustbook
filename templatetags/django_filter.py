@@ -320,14 +320,20 @@ def auto_link(summary):
 	return summary
 
 #-----------------------------------------------------------------
-#サムネイルの高さ
+#サムネイルのサイズ
 #-----------------------------------------------------------------
 
-def thumbnail2_height(thread):
+def thumbnail2_width(thread,is_iphone):
+	if(is_iphone):
+		return 140
+	return 200
+
+def thumbnail2_height(thread,is_iphone):
+	width=thumbnail2_width(thread,is_iphone)
 	try:
-		return thread["height"]*200/thread["width"]
+		return thread["height"]*width/thread["width"]
 	except:
-		return 200
+		return width
 
 #-----------------------------------------------------------------
 #フィルタ登録
@@ -358,4 +364,5 @@ register.filter(logout_url)
 register.filter(new_feed_count)
 register.filter(set_seed)
 register.filter(auto_link)
+register.filter(thumbnail2_width)
 register.filter(thumbnail2_height)

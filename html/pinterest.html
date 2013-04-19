@@ -370,7 +370,7 @@
     {% if thread.image_url %}
       <div class="item">
       <div class="deletable">
-        <a href="{{thread.thread_url}}" target="_BLANK"><img src="{{thread.thumbnail2_url}}" width="200px" height="{{thread|thumbnail2_height}}px"></a>
+        <a href="{{thread.thread_url}}" target="_BLANK"><img src="{{thread.thumbnail2_url}}" width="{{thread|thumbnail2_width:is_iphone}}px" height="{{thread|thumbnail2_height:is_iphone}}px"></a>
         {% if edit_mode %}
           {% ifequal tab "bookmark" %}
             <a href="javascript:confirm_delete('del&thread_key={{thread.key}}','ブックマーク','{{thread.title}}');" class="g-button no-text delete_button"><i class="icon-remove"></i></a>
