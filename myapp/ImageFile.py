@@ -100,6 +100,8 @@ class ImageFile (webapp.RequestHandler):
 		else:
 			img.resize(width=w,height=h)
 
+		code=None
+
 		if(format=="jpeg"):
 			try:
 				img.execute_transforms()	#exec resize
@@ -116,6 +118,9 @@ class ImageFile (webapp.RequestHandler):
 				content_type='image/png'
 			else:
 				return None
+
+		if(code==None):
+			return None
 
 		return {"code":code,"width":src_w,"height":src_h,"content_type":content_type}
 

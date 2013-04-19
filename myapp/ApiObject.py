@@ -317,7 +317,8 @@ class ApiObject(webapp.RequestHandler):
 		"user_id":user_id,"thumbnail_url":thumbnail_url,"thumbnail2_url":thumbnail2_url,
 		"image_url":image_url,"create_date":create_date,"thread_url":thread_url,
 		"applause":app,"bookmark":bookmark_cnt,"comment":comment_cnt,"key":str(thread.key()),
-		"disable_news":disable_news,"tag":tag_list,"width":thread.width,"height":thread.height}
+		"disable_news":disable_news,"tag":tag_list,"width":thread.width,"height":thread.height,
+		"version":thread.thumbnail2_version}
 		
 		return one_dic
 
