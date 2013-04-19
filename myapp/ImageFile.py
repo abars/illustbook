@@ -11,6 +11,7 @@ import os
 import sys
 import re
 import datetime
+import logging
 
 from google.appengine.ext.webapp import template
 from google.appengine.api import users
@@ -99,7 +100,7 @@ class ImageFile (webapp.RequestHandler):
 		else:
 			img.resize(width=w,height=h)
 
-		if(format=="jepg"):
+		if(format=="jpeg"):
 			try:
 				code=images.composite([(img, 0, 0, 1.0, images.TOP_LEFT)], img.width, img.height, 0xffffffff, images.JPEG, 90)
 			except:
@@ -137,7 +138,10 @@ class ImageFile (webapp.RequestHandler):
 		if((not content.width) and (not content.height)):	#動画の場合をケア、なくてもいいかも
 			content.width=thumb["width"]	#画像サイズを設定
 			content.height=thumb["height"]
-		content.put()
+		try:
+			content.put()
+		except:
+			logging.error("too large image for thumbnail store key:"+str(content.key()))
 
 	@staticmethod
 	def get_content(content,tag):
