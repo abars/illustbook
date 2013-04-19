@@ -34,7 +34,7 @@
       {%if thread.comment %}{{thread.comment}} comment<br>{% endif %}
       {%if thread.bookmark %}{{thread.bookmark}} bookmark<br>{% endif %}
       {%if thread.applause %}{{thread.applause}} applause<br>{% endif %}
-      {%if thread.version %}version {{thread.version}}<br>{% endif %}
+      <!-- {%if thread.version %}version {{thread.version}} {{thread.width}}x{{thread.height}}<br>{% endif %} -->
       {{thread.create_date}}<br>
       from 
       {%if thread.user_id %}<a href="{{redirect_api}}?user_id={{thread.user_id}}" class="g-button mini" style="overflow:hidden;max-width:80%;">{% endif %}
