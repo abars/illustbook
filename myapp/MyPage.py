@@ -83,14 +83,6 @@ from myapp.JST import JST
 from myapp.Pinterest import Pinterest
 
 class MyPage(webapp.RequestHandler):
-	@staticmethod
-	def get_age(bd_year,bd_month,bd_day):
-		at=datetime.datetime.today().replace(tzinfo=UTC()).astimezone(JST())
-		age = at.year - bd_year
-		if (at.month, at.day) <= (bd_month, bd_day):
-			age -= 1
-		return age
-
 	def delete_user_thread(self,user_id):
 		query=MesThread.all().filter("user_id =",user_id)
 		thread_list=query.fetch(limit=1000)
@@ -226,11 +218,8 @@ class MyPage(webapp.RequestHandler):
 			following=Pinterest.is_following(user,bookmark.user_id,view_mode)
 
 		#年齢
-		age=None
-		if(bookmark):
-			if(bookmark.birthday_year and bookmark.birthday_month and bookmark.birthday_day):
-				age=MyPage.get_age(bookmark.birthday_year,bookmark.birthday_month,bookmark.birthday_day)
-		
+		age=Pinterest.get_age(bookmark)
+
 		#フィードURL
 		feed_previous_page=host+"mypage?"
 		if(view_mode and bookmark):

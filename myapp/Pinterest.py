@@ -44,8 +44,25 @@ from myapp.ApiUser import ApiUser
 from myapp.MaintenanceCheck import MaintenanceCheck
 from myapp.SiteAnalyzer import SiteAnalyzer
 from myapp.ApiBookmark import ApiBookmark
+from myapp.UTC import UTC
+from myapp.JST import JST
 
 class Pinterest(webapp.RequestHandler):
+	@staticmethod
+	def get_age(bookmark):
+		if(bookmark):
+			if(bookmark.birthday_year and bookmark.birthday_month and bookmark.birthday_day):
+				return Pinterest._get_age_core(bookmark.birthday_year,bookmark.birthday_month,bookmark.birthday_day)
+		return None
+
+	@staticmethod
+	def _get_age_core(bd_year,bd_month,bd_day):
+		at=datetime.datetime.today().replace(tzinfo=UTC()).astimezone(JST())
+		age = at.year - bd_year
+		if (at.month, at.day) <= (bd_month, bd_day):
+			age -= 1
+		return age
+
 	@staticmethod
 	def is_following(user,user_id,view_mode):
 		if(view_mode):
@@ -180,6 +197,7 @@ class Pinterest(webapp.RequestHandler):
 		new_feed_count=0
 		submit_illust_exist=True
 		submit_illust_list=None
+		age=None
 
 		if(user_id!=""):
 			if(not tab):
@@ -222,6 +240,7 @@ class Pinterest(webapp.RequestHandler):
 			follow=ApiUser.user_get_follow(self,user_id,True)
 			follower=ApiUser.user_get_follower(self,user_id,True)
 			following=Pinterest.is_following(user,user_id,view_mode)
+			age=Pinterest.get_age(bookmark)
 		else:
 			if(tag!=""):
 				dic=Pinterest.get_tag_image(self,tag,page,unit)
@@ -279,7 +298,8 @@ class Pinterest(webapp.RequestHandler):
 			'regist_finish': regist_finish,
 			'is_maintenance': is_maintenance,
 			'redirect_api': redirect_api,
-			'search_api': search_api
+			'search_api': search_api,
+			'age': age
 		}
 		path = os.path.join(os.path.dirname(__file__), '../html/pinterest.html')
 		self.response.out.write(template.render(path, template_values))
