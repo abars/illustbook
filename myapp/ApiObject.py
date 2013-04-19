@@ -683,7 +683,12 @@ class ApiObject(webapp.RequestHandler):
 				except:
 					ds_obj.cached_thumbnail_key=""
 			ds_obj.cached_threads_num=MesThread.all().filter("bbs_key =",ds_obj).count()
-		memcache.set(BbsConst.OBJECT_CACHE_HEADER+str(ds_obj.key()),ds_obj,BbsConst.OBJECT_CACHE_TIME)
+
+		try:
+			memcache.set(BbsConst.OBJECT_CACHE_HEADER+str(ds_obj.key()),ds_obj,BbsConst.OBJECT_CACHE_TIME)
+		except:
+			logging.error("ApiObject:memcache:too large image:key:"+str(ds_obj.key()))
+
 		return ds_obj
 
 #-------------------------------------------------------------------

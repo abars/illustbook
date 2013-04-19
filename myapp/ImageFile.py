@@ -141,7 +141,7 @@ class ImageFile (webapp.RequestHandler):
 		try:
 			content.put()
 		except:
-			logging.error("too large image for thumbnail store key:"+str(content.key()))
+			logging.error("ImageFile:create_thumbnail:too large image:key:"+str(content.key()))
 
 	@staticmethod
 	def get_content(content,tag):
