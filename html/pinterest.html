@@ -11,7 +11,11 @@
 <title>{{tag}} - イラストブック</title>
 {% else %}
 {% ifequal page_mode "user" %}
+{% if not view_user.name %}
+<title>未登録ユーザ - イラストブック</title>
+{% else %}
 <title>{{view_user.name}} - イラストブック</title>
+{% endif %}
 {% else %}
 {% ifequal page_mode "guide" %}
 <title>イラストブックの使い方 - イラストブック</title>
@@ -65,7 +69,8 @@
 
 {% if regist_finish %}
   <div class="message">
-    お絵かき掲示板の新規作成が完了しました。
+    お絵かき掲示板の新規作成が完了しました。<br>
+    掲示板の名前をクリックすると掲示板に飛びます。
   </div>
 {% endif %}
 
@@ -78,106 +83,7 @@
 <!-- ユーザ情報 -->
 
 {% ifequal page_mode "user" %}
-  <div class="message">
-    {% ifequal edit_mode 2%}
-      プロフィールを編集<BR>
-      {%include "mypage/edit_profile.html"%}
-    {% else %}
-    <div style="float:left;margin-right:4px;">
-      <img src="{{view_user.icon_url}}" {% if is_iphone %}width=100px height=100px{%else%}width=160px height=160px{% endif %}>
-    </div>
-    <div style="float:left">
-     <p><b>{{view_user.name}}</b></p>
-     <p>{{view_user_profile.profile|safe}}</p>
-
-      <div id="profile">
-            <table>
-            {% if bookmark.sex %}<tr><td>性別</td><td>　</td><td>
-              {% ifequal bookmark.sex 1 %}
-                男
-              {%else%}
-                女
-              {%endifequal%}
-            </td></tr>
-            {% endif %}
-            {% if age %}<tr><td>年齢</td><td>　</td><td>{{age}}才</td></tr>{%endif%}
-            {% if bookmark.birthday_month %}<tr><td>誕生日</td><td>　</td><td>{{bookmark.birthday_month}}月{{bookmark.birthday_day}}日</td></tr>{%endif %}
-            {%if not bookmark.disable_rankwatch %}
-            <tr><td>ランキング</td><td>　</td><td>
-                <a href="ranking?mode=user" class="g-button mini">
-                  {% if user_rank %}{{user_rank}}位{% else %}-{% endif %}
-                </a>
-            </td></tr>
-            {%endif%}
-            {% if bookmark.homepage %}<tr><td>ホームページ</td><td>　</td><td><a href="{{bookmark.homepage}}" class="declink"><div class="linebreak">{{bookmark.homepage}}</div></a></td></tr>{% endif %}
-            {% if bookmark.mail %}<tr><td>メール</td><td>　</td><td><a href="mailto:{{bookmark.mail}}" class="declink"><div class="linebreak">{{bookmark.mail|safe}}</div></a></td></tr>{% endif %}
-            {% if bookmark.twitter_id %}<tr><td>Twitter</td><td>　</td><td>{% if bookmark.twitter_id %}<a href="https://twitter.com/#!/{{bookmark.twitter_id}}" class="declink"><div class="linebreak">{{bookmark.twitter_id}}</div></a>{% endif %}</td></tr>{% endif %}
-            {% if is_admin %}{% if bookmark.owner %}<tr><td>アカウント(＊管理モード)</td><td>　</td><td>{{bookmark.owner.email}}</td></tr>{% endif %}{% endif %}
-            </table>
-      </div>
-
-
-     <div class="g-button-group">
-      {% if not view_mode %}
-      {% else %}
-       {% if following %}
-         <a href="javascript:confirm_follow('{{view_user.user_id}}','{{view_user.name}}');" class="g-button">フォロー中</a>
-       {% else %}
-         <a href="javascript:confirm_follow('{{view_user.user_id}}','{{view_user.name}}');" class="g-button"><i class="icon-plus"></i>フォロー</a>
-       {% endif %}
-      {% endif %}
-      <a id="profile_button" href="javascript:show_profile();" class="g-button">詳細</a>
-       {% if not view_mode %}
-         <A HREF="{{host}}{{redirect_api}}?user_id={{user_id}}&tab={{tab}}&edit=2" class="g-button">編集</A>
-
-    <a class="g-button dropdown-toggle" data-toggle="dropdown" href="#">
-      その他 <span class="caret"></span>
-    </a>
-    <ul class="dropdown-menu">
-          <li><A HREF="{{host}}{{redirect_api}}">トップへ戻る</A></li>
-        {% if not view_mode or is_admin%}
-          <li><a href="javascript:confirm_withdraw('mypage?withdraw=go&user_id={{bookmark.user_id}}')">退会する{% if is_admin %}（＊管理モード）{% endif %}</a></li>
-        {% endif %}
-    </ul>
-
-       {% endif %}
-      </ul>
-     </div>
-
-    </div>
-    <br clear="all">
-    {% endifequal %}
-  </div>
-
-    {% if follow or follower %}
-  <div class="message">
-    <div id="follower_button">
-      フォロー{{follow|length}}　フォロワー{{follower|length}}
-      <a href="javascript:show_follower();" class="g-button mini">詳細</a>
-    </div>
-    <div id="follower">
-      {% if follow %}
-     フォローしている<br>
-     {% for user in follow %}
-     <div class="deletable">
-       <a href="{{redirect_api}}?user_id={{user.user_id}}"><img src="{{user.icon_url}}&size=mini" width=50px height=50px></a>
-       {% if edit_mode %}
-       <a href="javascript:confirm_delete('del_user&user_key={{user.user_id}}','フォロー','{{user.name}}');" class="g-button no-text delete_button"><i class="icon-remove"></i></a>
-       {% endif %}
-     </div>
-     {% endfor %}
-     <br clear="all">
-     {% endif %}
-     {% if follower %}
-     フォローされている<br>
-     {% for user in follower %}
-     <a href="{{redirect_api}}?user_id={{user.user_id}}"><img src="{{user.icon_url}}&size=mini" width=50px height=50px></a>
-     {% endfor %}
-     {% endif %}
-      <br><a href="javascript:show_follower();" class="g-button mini">閉じる</a>
-   </div>
- </div>
-   {% endif %}
+  {% include "pinterest/user.html" %}
 {% endifequal %}
 
 
@@ -228,92 +134,26 @@
 
 <!-- ユーザ情報タブ -->
 {% ifequal page_mode "user" %}
-<div id="order">
-  <div style="float:left">
-  <div class="g-button-group toggle-buttons">
-    {% if submit_illust_exist %}
-      <a href="{{host}}{{redirect_api}}?user_id={{user_id}}&tab=submit" class="g-button {%ifequal tab "submit"%}checked{%endifequal%}">{% if is_iphone %}投稿{%else%}投稿したイラスト{% endif %}</a>
-    {% endif %}
-    <a href="{{host}}{{redirect_api}}?user_id={{user_id}}&tab=bookmark" class="g-button {%ifequal tab "bookmark"%}checked{%endifequal%}">ブックマーク</a>
-    <a href="{{host}}{{redirect_api}}?user_id={{user_id}}&tab=bbs" class="g-button {%ifequal tab "bbs"%}checked{%endifequal%}">掲示板</a>
-    <a href="{{host}}{{redirect_api}}?user_id={{user_id}}&tab=feed" class="g-button {%ifequal tab "feed"%}checked{%endifequal%}">{% if is_iphone %}TL{%else%}タイムライン{% if not view_mode %}{% if new_feed_count %}({{new_feed_count}}){% endif %}{% endif %}{% endif %}</a>
-  </div>
-  </div>
-  {% if not is_iphone %}
-  <div style="float:left">
-  {% ifequal tab "submit" %}
-  {% else %}
-    {% if not view_mode %}
-      {% if edit_mode %}
-     　<A HREF="{{host}}{{redirect_api}}?user_id={{user_id}}&tab={{tab}}" class="g-button">戻る</A>
-      {% else %}
-     　<A HREF="{{host}}{{redirect_api}}?user_id={{user_id}}&tab={{tab}}&edit=1" class="g-button">編集</A>
-     {% endif %}
-     {% endif %}
-  {% endifequal %}
-  </div>
-  {% endif %}
-  <br clear="all">
-</div>
+  {% include "pinterest/user_menu.html" %}
 {% endifequal %}
 
 <!-- 掲示板 -->
 
 {% ifequal tab "bbs" %}
-
-  {% if rental_bbs_list %}
-  <div class="message">
-  レンタルしている<br>
-  {% for bbs in rental_bbs_list %}
-  <a href="{{bbs.bbs_url}}">
-  {% if bbs.thumbnail_url %}<img src="{{bbs.thumbnail_url}}" width=50px height=50px>{%else%}<img src="{{host}}static_files/empty_user.png" width=50px height=50px>{% endif %}
-  {{bbs.title}}</a>
-  {% if edit_mode %}
-    <a href="javascript:confirm_action_bbs('del_bbs&bbs_key={{bbs.key}}','{{bbs.title}}');" class="g-button no-text"><i class="icon-remove"></i></a>
-  {% endif %}
-  {% if bbs.bookmark %}
-    <a href='show_bookmark?bbs_key={{bbs.key}}' class='g-button no-text'><i class="icon-star"></i>{{bbs.bookmark}}</a>
-  {% endif %}
-
-  <br>
-  {% endfor %}
-  </div>
-  {% endif %}
-
-  {% if bookmark_bbs_list %}
-  <div class="message">
-  ブックマークしている<br>
-  {% for bbs in bookmark_bbs_list %}
-  <a href="{{bbs.bbs_url}}">
-  {% if bbs.thumbnail_url %}<img src="{{bbs.thumbnail_url}}" width=50px height=50px>{%else%}<img src="{{host}}static_files/empty_user.png" width=50px height=50px>{% endif %}
-  {{bbs.title}}</a>
-  {% if edit_mode %}
-    <a href="javascript:confirm_action('del_bbs&bbs_key={{bbs.key}}','ブックマーク',{{bbs.title}}');" class="g-button no-text"><i class="icon-remove"></i></a>
-  {% endif %}
-    {% if bbs.bookmark %}
-    <a href='show_bookmark?bbs_key={{bbs.key}}' class='g-button no-text'><i class="icon-star"></i>{{bbs.bookmark}}</a>
-  {% endif %}
-  <br>
-  {% endfor %}
-  </div>
-  {% endif %}
-
-  {% if not view_mode %}
-  <div class="message">
-    新しい掲示板をレンタルする<br>
-    {%include "mypage/rental.html" %}
-  </div> 
-  {% endif %}
+  {% include "pinterest/bbs.html" %}
 {% endifequal %}
 
 <!-- ガイド -->
 {% ifequal page_mode "guide" %}
-  <style>
-    h1 {font-size:100%;color:#E47911;}
-    h2,h3 {font-size:100%;}
-  </style>
   <div style="background-color:#fff;padding:5px;color:#333;">
     {%include "portal/guide.html"%}
+  </div>
+{% endifequal %}
+
+<!-- ログイン要求 -->
+{% ifequal page_mode "login_require" %}
+  <div style="background-color:#fff;padding:5px;color:#333;">
+    {%include "mypage/login_require.html"%}
   </div>
 {% endifequal %}
 
@@ -334,17 +174,7 @@
 <!-- ポータルタブ -->
 
 {% ifequal page_mode "index" %}
-<div id="order">
-  <div class="g-button-group toggle-buttons">
-    <a href="{{host}}{{redirect_api}}?order=new" class="g-button {%ifequal order "new"%}checked{%endifequal%}">新着</a>
-    <a href="{{host}}{{redirect_api}}?order=hot" class="g-button {%ifequal order "hot"%}checked{%endifequal%}">人気</a>
-    <a href="{{host}}{{redirect_api}}?order=bookmark" class="g-button {%ifequal order "bookmark"%}checked{%endifequal%}">{%if is_iphone%}ブクマ{%else%}ブックマーク{%endif%}</a>
-    <a href="{{host}}{{redirect_api}}?order=applause" class="g-button {%ifequal order "applause"%}checked{%endifequal%}">拍手</a>
-    {% if not is_iphone %}
-      <a href="{{host}}{{redirect_api}}?order=moper" class="g-button {%ifequal order "moper"%}checked{%endifequal%}">アニメ</a>
-    {% endif %}
-  </div>
-</div>
+  {% include "pinterest/index_menu.html" %}
 {% endifequal %}
 
 <!-- 1ページ目 -->
@@ -356,58 +186,19 @@
 {% if not thread_list %}
 {% ifequal next_page 2 %}
 {% if illust_enable %}
-{% ifequal page_mode "guide" %}
-{% else %}
+{% ifnotequal page_mode "guide" %}
+{% ifnotequal page_mode "login_require" %}
 <div class="message">
 イラストは見つかりませんでした。
 </div>
-{% endifequal %}
+{% endifnotequal %}
+{% endifnotequal %}
 {% endif %}
 {% endifequal %}
 {% endif %}
 
 <div id="container" class="transitions-enabled infinite-scroll clearfix">
-  {% for thread in thread_list %}
-    {% if thread.image_url %}
-      <div class="item">
-      <div class="deletable">
-        <a href="{{thread.thread_url}}" target="_BLANK">
-          <div class="side-corner-tag">
-            <img src="{{thread.thumbnail2_url}}" width="{{thread|thumbnail2_width:is_iphone}}px" height="{{thread|thumbnail2_height:is_iphone}}px">
-          {% ifequal page_mode "index" %}
-           {% if forloop.counter == 1 %}{% ifequal order "new" %}<p><span>Newest</span></p>{% endifequal %}{% endif %}
-           {% if forloop.counter <= 3 %}{% ifequal order "hot" %}<p><span>{{forloop.counter}}</span></p>{% endifequal %}{% endif %}
-          {% endifequal %}
-         </div>
-        </a>
-        {% if edit_mode %}
-          {% ifequal tab "bookmark" %}
-            <a href="javascript:confirm_delete('del&thread_key={{thread.key}}','ブックマーク','{{thread.title}}');" class="g-button no-text delete_button"><i class="icon-remove"></i></a>
-          {% endifequal %}
-        {% endif %}
-      </div>
-      <a href="{{thread.thread_url}}" target="_BLANK"><b>{{thread.title}}</b></a><br>
-      {% if thread.tag %}
-      {% for tag in thread.tag %}
-        <a href="{{host}}{{search_api}}?tag={{tag}}" class="g-button mini">{{tag}}</a>
-      {% endfor %}
-      <br>
-      {% endif %}
-      {{thread.summary|safe}}
-      <br>
-      <div style="text-align:right;">
-      <small>
-      {%if thread.comment %}{{thread.comment}} comment<br>{% endif %}
-      {%if thread.bookmark %}{{thread.bookmark}} bookmark<br>{% endif %}
-      {%if thread.applause %}{{thread.applause}} applause<br>{% endif %}
-      from 
-      {%if thread.user_id %}<a href="{{redirect_api}}?user_id={{thread.user_id}}" class="g-button mini">{% endif %}
-      {{thread.author}}
-      {%if thread.user_id %}</a>{% endif %}
-      <br>{{thread.create_date}}</small></div>
-      </div>
-    {% endif %}
-  {% endfor %}
+  {% include "pinterest/illust.html" %}
 </div>
 
 {% if next_query %}

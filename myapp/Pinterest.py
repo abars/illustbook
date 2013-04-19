@@ -259,6 +259,15 @@ class Pinterest(webapp.RequestHandler):
 					thread_list=ApiFeed.feed_get_thread_list(self,order,(page-1)*unit,unit)
 					tag_list=SearchTag.get_recent_tag("pinterest")
 					next_query="order="+order
+
+		#ログイン要求
+		if(is_mypage and user_id==""):
+			thread_list=None
+			tag_list=None
+			next_query=""
+			page_mode="login_require"
+			view_mode=0
+
 		#ランキング
 		user_rank=0
 		if(bookmark):

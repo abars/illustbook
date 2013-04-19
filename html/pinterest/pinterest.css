@@ -10,6 +10,9 @@ body{
 
 hr {border:0; border-top:1px solid #cccccc;}
 
+h1 {font-size:100%;color:#E47911;}
+h2,h3 {font-size:100%;}
+
 #contents {
     {% if is_iphone %}
       width:320px;
@@ -164,6 +167,10 @@ color: #333;
 
 #profile{
   display:none;
+}
+
+.illust_summary{
+  margin:5px;
 }
 
 </style>

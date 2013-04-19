@@ -26,6 +26,8 @@ from myapp.Bbs import Bbs
 from myapp.Counter import Counter
 from myapp.Alert import Alert
 from myapp.MappingId import MappingId
+from myapp.SyncPut import SyncPut
+from myapp.BbsConst import BbsConst
 
 class AddNewBbs(webapp.RequestHandler):
 	def post(self):
@@ -41,12 +43,6 @@ class AddNewBbs(webapp.RequestHandler):
 		if(int(self.request.get('official'))==1):
 			self.response.out.write(Alert.alert_msg("オフィシャル掲示板は廃止されました。",self.request.host));
 			return                        
-
-#			user=None
-#			checkcode=SpamCheck.get_check_code()
-#			if(SpamCheck.check(self.request.get('bbs_summary'),checkcode)):
-#				self.response.out.write(Alert.alert_msg(BbsConst.SPAM_CHECKED,self.request.host));
-#				return          	
 		
 		if (not user):
 			if(int(self.request.get('official'))==0):
@@ -63,6 +59,9 @@ class AddNewBbs(webapp.RequestHandler):
 			return		
 		if(MappingId.check_capability(short,"")==0):
 			self.response.out.write(Alert.alert_msg("ID:"+short+"は既に登録されています。",self.request.host))
+			return
+		if(short==""):
+			self.response.out.write(Alert.alert_msg("IDを入力する必要があります。",self.request.host))
 			return
 				
 		new_bbs = Bbs()
@@ -141,11 +140,17 @@ class AddNewBbs(webapp.RequestHandler):
 		new_bbs.amazon_title=""
 		
 		new_bbs.create_date=datetime.datetime.today()
+
+		if(memcache.get(BbsConst.OBJECT_NEW_BBS_CREATING_HEADER+short)):
+			self.response.out.write(Alert.alert_msg("二重投稿を検知しました。戻ってリロードして下さい。",self.request.host))
+			return
+		memcache.set(BbsConst.OBJECT_NEW_BBS_CREATING_HEADER+short,"creating",BbsConst.NEW_BBS_CACHE_TIME)
 		
 		counter=Counter()
 		counter.init_cnt()
 		counter.put()
 		new_bbs.counter=counter.key()
-		new_bbs.put()
+		SyncPut.put_sync(new_bbs)
+
 		self.redirect(str(self.request.get('redirect')))
 

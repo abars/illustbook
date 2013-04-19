@@ -10,10 +10,7 @@
 {% if not user %}
 	{% if not view_mode %}
 	<div class="example">
-		<p><h2>マイページへのログイン</h2></p>
-		<p>お絵かき掲示板のレンタルを行うにはGoogleアカウントでログインする必要があります。</p>
-		<p><a href='{{redirect_url|login_url}}' class="g-button">Googleアカウントでログイン</a></p>
-		<p><a href="https://www.google.com/accounts/NewAccount?hl=ja" class="g-button" target="_BLANK">Googleアカウントを新規作成</a></p>
+		{% include "mypage/login_require.html" %}
 	</div>
 	{% endif %}
 {% endif %}
