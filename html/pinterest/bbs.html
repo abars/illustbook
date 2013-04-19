@@ -1,0 +1,43 @@
+  {% if rental_bbs_list %}
+  <div class="message">
+  レンタルしている<br>
+  {% for bbs in rental_bbs_list %}
+  <a href="{{bbs.bbs_url}}">
+  {% if bbs.thumbnail_url %}<img src="{{bbs.thumbnail_url}}" width=50px height=50px>{%else%}<img src="{{host}}static_files/empty_user.png" width=50px height=50px>{% endif %}
+  {{bbs.title}}</a>
+  {% if edit_mode %}
+    <a href="javascript:confirm_action_bbs('del_bbs?bbs_key={{bbs.key}}','{{bbs.title}}');" class="g-button no-text"><i class="icon-remove"></i></a>
+  {% endif %}
+  {% if bbs.bookmark %}
+    <a href='show_bookmark?bbs_key={{bbs.key}}' class='g-button no-text'><i class="icon-star"></i>{{bbs.bookmark}}</a>
+  {% endif %}
+
+  <br>
+  {% endfor %}
+  </div>
+  {% endif %}
+
+  {% if bookmark_bbs_list %}
+  <div class="message">
+  ブックマークしている<br>
+  {% for bbs in bookmark_bbs_list %}
+  <a href="{{bbs.bbs_url}}">
+  {% if bbs.thumbnail_url %}<img src="{{bbs.thumbnail_url}}" width=50px height=50px>{%else%}<img src="{{host}}static_files/empty_user.png" width=50px height=50px>{% endif %}
+  {{bbs.title}}</a>
+  {% if edit_mode %}
+    <a href="javascript:confirm_action('del_bbs&bbs_key={{bbs.key}}','ブックマーク',{{bbs.title}}');" class="g-button no-text"><i class="icon-remove"></i></a>
+  {% endif %}
+    {% if bbs.bookmark %}
+    <a href='show_bookmark?bbs_key={{bbs.key}}' class='g-button no-text'><i class="icon-star"></i>{{bbs.bookmark}}</a>
+  {% endif %}
+  <br>
+  {% endfor %}
+  </div>
+  {% endif %}
+
+  {% if not view_mode %}
+  <div class="message">
+    新しい掲示板をレンタルする<br>
+    {%include "mypage/rental.html" %}
+  </div> 
+  {% endif %}
