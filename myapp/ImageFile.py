@@ -120,22 +120,12 @@ class ImageFile (webapp.RequestHandler):
 		return {"code":code,"width":src_w,"height":src_h,"content_type":content_type}
 
 	@staticmethod
-	def create_thumbnail2(content):
-		#動画の場合はサムネイルは作れない
-		if content.gif_thumbnail:
-			return
-
-		#既にサムネイルを作っている
-		if content.thumbnail2_version and content.thumbnail2:
-			if content.thumbnail2_version==BbsConst.THUMBNAIL2_VERSION:
-				return
-
+	def _create_thumbnail2_core(content):
 		#新規サムネイル作成
 		thumb=ImageFile.create_thumbail(200,0,content.image,"jpeg")
 		if(thumb==None):
 			return
 		content.thumbnail2=thumb["code"]
-		content.thumbnail2_version=BbsConst.THUMBNAIL2_VERSION
 		if((not content.width) and (not content.height)):	#動画の場合をケア、なくてもいいかも
 			content.width=thumb["width"]	#画像サイズを設定
 			content.height=thumb["height"]
@@ -143,6 +133,24 @@ class ImageFile (webapp.RequestHandler):
 			content.put()
 		except:
 			logging.error("ImageFile:create_thumbnail:too large image:key:"+str(content.key()))
+
+	@staticmethod
+	def create_thumbnail2(thread):
+		#既にサムネイルを作っている
+		if thread.thumbnail2_version:
+			if thread.thumbnail2_version==BbsConst.THUMBNAIL2_VERSION:
+				return
+
+		#動画以外の場合にサムネイルを作成する
+		content=thread.image_key
+		if not content.gif_thumbnail:
+			ImageFile._create_thumbnail2_core(content)
+
+		#画像サイズをスレッドに設定
+		thread.width=content.width
+		thread.height=content.height
+		thread.thumbnail2_version=BbsConst.THUMBNAIL2_VERSION
+		thread.put()
 
 	@staticmethod
 	def get_content(content,tag):

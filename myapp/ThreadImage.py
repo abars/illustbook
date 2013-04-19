@@ -17,7 +17,7 @@ class ThreadImage(db.Model):
 
 	thumbnail = db.BlobProperty()	#100px thumbanil(投稿時に生成)(jpeg)
 	thumbnail2 = db.BlobProperty()	#200px thumbnail(ImageFileで初期読み込み時に生成)(jpeg)
-	thumbnail2_version = db.IntegerProperty()	#thumbnail2を生成済みかどうか
+	#thumbnail2_version = db.IntegerProperty()	#thumbnail2を生成済みかどうか
 
 	moper = db.BlobProperty()			#moperのデータ
 	gif_thumbnail = db.BlobProperty()	#moperのサムネイル

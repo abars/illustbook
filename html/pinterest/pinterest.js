@@ -5,20 +5,20 @@ $(function(){
 	
 var $container = $('#container');	
 	
-  $container.imagesLoaded(function(){
+  //$container.imagesLoaded(function(){
       $container.masonry({
         itemSelector: '.item',
       });
-    });
+  //  });
 
 	$container.infinitescroll({
       navSelector  : '#page-nav',    // selector for the paged navigation 
       nextSelector : '#page-nav a',  // selector for the NEXT link (to page 2)
       itemSelector : '.item',     // selector for all items you'll retrieve
       loading: {
-          finishedMsg: '<div style="background-color:#ffffff;">ページの終端です。</div>',
+          finishedMsg: '<div style="background-color:#ffffff;z-index:100;">ページの終端です。</div>',
           img: 'static_files/loading.gif',
-          msgText: '<div style="background-color:#ffffff;">次のページを読込中</div>'
+          msgText: '<div style="background-color:#ffffff;z-index:100;">次のページを読込中</div>'
         }
       },
       // trigger Masonry as a callback

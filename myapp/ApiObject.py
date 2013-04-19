@@ -317,7 +317,7 @@ class ApiObject(webapp.RequestHandler):
 		"user_id":user_id,"thumbnail_url":thumbnail_url,"thumbnail2_url":thumbnail2_url,
 		"image_url":image_url,"create_date":create_date,"thread_url":thread_url,
 		"applause":app,"bookmark":bookmark_cnt,"comment":comment_cnt,"key":str(thread.key()),
-		"disable_news":disable_news,"tag":tag_list,"width":thread.cached_width,"height":thread.cached_height}
+		"disable_news":disable_news,"tag":tag_list,"width":thread.width,"height":thread.height}
 		
 		return one_dic
 
@@ -654,9 +654,7 @@ class ApiObject(webapp.RequestHandler):
 			image_key=MesThread.image_key.get_value_for_datastore(ds_obj)
 			if(image_key):
 				ds_obj.cached_image_key=str(image_key)
-				ImageFile.create_thumbnail2(ds_obj.image_key)
-				ds_obj.cached_width=ds_obj.image_key.width
-				ds_obj.cached_height=ds_obj.image_key.height
+				ImageFile.create_thumbnail2(ds_obj)
 
 			bbs_key=MesThread.bbs_key.get_value_for_datastore(ds_obj)
 			if(bbs_key):

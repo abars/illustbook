@@ -46,6 +46,7 @@ from myapp.SiteAnalyzer import SiteAnalyzer
 from myapp.ApiBookmark import ApiBookmark
 from myapp.UTC import UTC
 from myapp.JST import JST
+from myapp.Ranking import Ranking
 
 class Pinterest(webapp.RequestHandler):
 	@staticmethod
@@ -258,6 +259,11 @@ class Pinterest(webapp.RequestHandler):
 					thread_list=ApiFeed.feed_get_thread_list(self,order,(page-1)*unit,unit)
 					tag_list=SearchTag.get_recent_tag("pinterest")
 					next_query="order="+order
+		#ランキング
+		user_rank=0
+		if(bookmark):
+			rank=Ranking.get_or_insert(BbsConst.THREAD_RANKING_KEY_NAME)
+			user_rank=rank.get_user_rank(bookmark.user_id)
 
 		#iPhoneかどうか
 		is_iphone=CssDesign.is_iphone(self)
@@ -299,7 +305,8 @@ class Pinterest(webapp.RequestHandler):
 			'is_maintenance': is_maintenance,
 			'redirect_api': redirect_api,
 			'search_api': search_api,
-			'age': age
+			'age': age,
+			'user_rank': user_rank
 		}
 		path = os.path.join(os.path.dirname(__file__), '../html/pinterest.html')
 		self.response.out.write(template.render(path, template_values))

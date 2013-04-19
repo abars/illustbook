@@ -56,9 +56,14 @@ class MesThread(CachedDbModel):
 	cached_bbs_key = db.StringProperty() #For object cache
 	cached_entry_key = db.ListProperty(db.Key) #For object cache
 	cached_entry_key_enable = db.BooleanProperty()	#is cached_entry_key is enable
-	cached_width = db.IntegerProperty()	#For object cache
-	cached_height = db.IntegerProperty()	#For object cache
 	
+	#cached_width = db.IntegerProperty()	#For object cache
+	#cached_height = db.IntegerProperty()	#For object cache
+
+	thumbnail2_version = db.IntegerProperty()	#thumbnail2を生成済みかどうか
+	width = db.IntegerProperty()	#画像の横幅、thumbnail2を作成するタイミングで代入される
+	height = db.IntegerProperty()	#画像の高さ、同上
+
 	bookmark_comment = db.BlobProperty()
 	remote_addr = db.StringProperty()
 
