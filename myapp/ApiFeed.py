@@ -46,15 +46,11 @@ class ApiFeed(webapp.RequestHandler):
 	@staticmethod
 	def invalidate_cache():
 		offset=0
-		#memcache.delete(ApiFeed._get_cache_id("bookmark",None,offset,0))
-		memcache.delete(ApiFeed._get_cache_id("new",None,offset,16))	#pc
-		memcache.delete(ApiFeed._get_cache_id("new",None,offset,18))	#iphone
-		#memcache.delete(ApiFeed._get_cache_id("applause",None,offset,0))
-		memcache.delete(ApiFeed._get_cache_id("moper",None,offset,6))	#pc
-		memcache.delete(ApiFeed._get_cache_id("hot",None,offset,12))	#pc
-		memcache.delete(ApiFeed._get_cache_id("hot",None,offset,18))	#iphone
-		#memcache.delete(ApiFeed._get_cache_id(None,None,offset))
-		return
+		mode=["bookmark","new","moper","hot","applause"]
+		count=[16,18,BbsConst.PINTEREST_PAGE_UNIT]
+		for m in mode:
+			for c in count:
+				memcache.delete(ApiFeed._get_cache_id(m,None,offset,c))
 	
 	@staticmethod
 	def _get_cache_id(order,bbs_id,offset,limit):
