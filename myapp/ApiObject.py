@@ -566,7 +566,7 @@ class ApiObject(webapp.RequestHandler):
 		if(req.request.get("offset")):
 			offset=int(req.request.get("offset"))
 		
-		limit=BbsConst.PINTEREST_PAGE_UNIT
+		limit=BbsConst.PINTEREST_MYPAGE_PAGE_UNIT
 		if(req.request.get("limit")):
 			limit=int(req.request.get("limit"))
 

@@ -140,7 +140,7 @@ class ApiUser(webapp.RequestHandler):
 			except:
 				offset=0
 		
-		limit=BbsConst.PINTEREST_PAGE_UNIT
+		limit=BbsConst.PINTEREST_MYPAGE_PAGE_UNIT
 		if(req.request.get("limit")):
 			try:
 				limit=int(req.request.get("limit"))

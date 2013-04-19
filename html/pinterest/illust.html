@@ -6,8 +6,10 @@
           <div class="side-corner-tag">
             <img src="{{thread.thumbnail2_url}}" width="{{thread|thumbnail2_width:is_iphone}}px" height="{{thread|thumbnail2_height:is_iphone}}px">
           {% ifequal page_mode "index" %}
+          {% ifequal next_page 2 %}
            {% if forloop.counter == 1 %}{% ifequal order "new" %}<p><span>Newest</span></p>{% endifequal %}{% endif %}
            {% if forloop.counter <= 3 %}{% ifequal order "hot" %}<p><span>{{forloop.counter}}</span></p>{% endifequal %}{% endif %}
+          {% endifequal %}
           {% endifequal %}
          </div>
         </a>
