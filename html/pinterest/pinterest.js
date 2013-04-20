@@ -6,11 +6,13 @@ $(function(){
 var $container = $('#container');	
 	
   function masonry_exec(){
-      $container.masonry({
-        itemSelector: '.item',
-        isFitWidth: true
-      });
+    $container.show();
+    $container.masonry({
+      itemSelector: '.item',
+      isFitWidth: true
+    });
     $('#index').width($container.width())
+    $('#index').show();
   }
 
 masonry_exec();
@@ -23,7 +25,7 @@ $( window ).resize(function(){
       navSelector  : '#page-nav',    // selector for the paged navigation 
       nextSelector : '#page-nav a',  // selector for the NEXT link (to page 2)
       itemSelector : '.item',     // selector for all items you'll retrieve
-      bufferPx : 1000, // 最も下に行く前にロードをかける
+      bufferPx : 2000, // 最も下に行く前にロードをかける
       loading: {
           finishedMsg: '<div style="background-color:#ffffff;z-index:2;">ページの終端です。</div>',
           img: 'static_files/loading.gif',

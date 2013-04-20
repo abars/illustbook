@@ -26,6 +26,9 @@ h2,h3 {font-size:100%;}
 
 #index{
   margin:auto;
+  {% if thread_list %}
+  display:none;
+  {% endif %}
 }
 
 #container {
@@ -35,6 +38,7 @@ h2,h3 {font-size:100%;}
   {% else %}
    min-width:890px;
   {% endif %}
+  display:none;
 }
 
 .guide{
