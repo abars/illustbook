@@ -5,11 +5,20 @@ $(function(){
 	
 var $container = $('#container');	
 	
-  //$container.imagesLoaded(function(){
+  function masonry_exec(){
       $container.masonry({
         itemSelector: '.item',
+        isFitWidth: true
       });
-  //  });
+
+  $('#index').width($container.width())
+}
+
+masonry_exec();
+
+$( window ).resize(function(){
+  masonry_exec();
+});
 
 	$container.infinitescroll({
       navSelector  : '#page-nav',    // selector for the paged navigation 
@@ -23,14 +32,8 @@ var $container = $('#container');
       },
       // trigger Masonry as a callback
       function( newElements ) {
-        // hide new items while they are loading
-        var $newElems = $( newElements );//.css({ opacity: 0 });
-        // ensure that images load before adding to masonry layout
-        //$newElems.imagesLoaded(function(){
-          // show elems now they're ready
-          //$newElems.animate({ opacity: 1 });
-          $container.masonry( 'appended', $newElems, true ); 
-        //});
+        var $newElems = $( newElements );
+        $container.masonry( 'appended', $newElems, true ); 
       }
     );
 });

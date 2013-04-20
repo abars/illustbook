@@ -56,6 +56,7 @@
 
 <!-- 2ページ目以降はコンテンツだけでよい -->
 {% ifequal next_page 2 %}
+<div id="index">
 
 <!-- タグサーチ -->
 
@@ -87,26 +88,25 @@
   {% include "pinterest/user.html" %}
 {% endifequal %}
 
-
 <!-- ポータル -->
 
 {% ifequal page_mode "index" %}
-<div class="logo">
-{% if is_iphone %}
-  <img src="static_files/banner_360.png">
-{% else %}
-  <img src="static_files/banner_360b.png">
-{% endif %}
-  <div id="logo_fotter">
-  from <a href="http://pochigoya0423.blog.shinobi.jp/">飯田のぎ</a>
+  <div class="logo">
+  {% if is_iphone %}
+   <img src="static_files/banner_360.png">
+  {% else %}
+   <img src="static_files/banner_360b.png">
+  {% endif %}
+   <div id="logo_fotter">
+     from <a href="http://pochigoya0423.blog.shinobi.jp/">飯田のぎ</a>
+    </div>
   </div>
-</div>
 
-{% include "pinterest/menulist.html" %}
+  {% include "pinterest/menulist.html" %}
 
-<div class="message">「イラストブック」に搭載されたお絵かきツールとあなた専用のお絵かき掲示版を使って、作品を世界中に公開しましょう。
-{% if not is_iphone %}現在、{{bbs_n}}件の掲示板がレンタルされ、{{illust_n}}のイラストが公開されています。{% endif %}
-</div>
+  <div class="message">「イラストブック」に搭載されたお絵かきツールとあなた専用のお絵かき掲示版を使って、作品を世界中に公開しましょう。
+  {% if not is_iphone %}現在、{{bbs_n}}件の掲示板がレンタルされ、{{illust_n}}のイラストが公開されています。{% endif %}
+  </div>
 {% endifequal %}
 
 <!-- タグ一覧 -->
@@ -147,14 +147,14 @@
 
 <!-- ガイド -->
 {% ifequal page_mode "guide" %}
-  <div style="background-color:#fff;padding:5px;color:#333;">
+  <div class="guide">
     {%include "portal/guide.html"%}
   </div>
 {% endifequal %}
 
 <!-- ログイン要求 -->
 {% ifequal page_mode "login_require" %}
-  <div style="background-color:#fff;padding:5px;color:#333;">
+  <div class="guide">
     {%include "mypage/login_require.html"%}
   </div>
 {% endifequal %}
@@ -180,6 +180,7 @@
 {% endifequal %}
 
 <!-- 1ページ目 -->
+</div>
 
 {% endifequal %}
 

@@ -17,9 +17,25 @@ h2,h3 {font-size:100%;}
     {% if is_iphone %}
       width:320px;
     {% else %}
-      width:890px;
+      {% if not thread_list %}
+        width:890px;
+      {% endif %}
     {% endif %}
-    margin:auto;
+    margin:0 auto;
+}
+
+#index{
+  margin:auto;
+}
+
+#container {
+  margin:auto;
+}
+
+.guide{
+  background-color:#fff;
+  padding:5px;
+  color:#333;
 }
 
 .item {
@@ -31,7 +47,7 @@ h2,h3 {font-size:100%;}
 margin: 5px;
 float: left;
 border: 1px solid #ccc;
-background: #eee;
+background: #fff;
 box-shadow: 0 2px 1px #eee;
 word-break:break-all;
 }
