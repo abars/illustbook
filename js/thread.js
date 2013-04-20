@@ -31,17 +31,19 @@ var isFlashInstalled=function(){if(navigator.plugins["Shockwave Flash"]){return 
 		} 
 
 		function prompt_action_thread(th, bbs, host) {
-			var key=prompt("イラスト投稿時に入力した削除キーを入力して下さい","");
-			if (key){
-				location.href = ""+host+"del_thread?thread_key="+th+"&bbs_key="+bbs+"&del_key="+key;
-			}
+			jPrompt("イラスト投稿時に入力した削除キーを入力して下さい","","削除のための削除キーの入力",function(key){
+				if (key){
+					location.href = ""+host+"del_thread?thread_key="+th+"&bbs_key="+bbs+"&del_key="+key;
+				}
+			});
 		} 
 
 		function prompt_action_thread_edit(th, bbs) {
-			var key=prompt("イラスト投稿時に入力した削除キーを入力して下さい","");
-			if (key){
-				location.href = ""+host+"draw_moper?thread_key="+th+"&bbs_key="+bbs+"&del_key="+key;
-			}
+			jPrompt("イラスト投稿時に入力した削除キーを入力して下さい","","編集のための削除キーの入力",function(key){
+				if (key){
+					location.href = ""+host+"draw_moper?thread_key="+th+"&bbs_key="+bbs+"&del_key="+key;
+				}
+			});
 		} 
 
 		function open_draw(url,reply_mode,host,thread_key,bbs_key,illust_mode){
@@ -84,18 +86,14 @@ var isFlashInstalled=function(){if(navigator.plugins["Shockwave Flash"]){return 
 		}
 		
 		function AddBookmark(host,thread_key){
-			try{
-				var comment=prompt("このイラストをブックマークしますか？以下のフォームからブックマークにコメントを付加することもできます。","");
-				if(comment==null){
-					return;
+			jPrompt("このイラストをブックマークしますか？<BR>以下のフォームからブックマークにコメントを付加することもできます。","","ブックマーク",
+				function(comment){
+					if(comment==null){
+						return;
+					}
+					window.location.href=host+'add_bookmark?mode=add&thread_key='+thread_key+'&comment='+comment;
 				}
-			}catch(e){
-				if(!confirm("このイラストをブックマークしますか？")){
-					return;
-				}
-				comment="";
-			}
-			window.location.href=host+'add_bookmark?mode=add&thread_key='+thread_key+'&comment='+comment;
+			);
 		}
 		
 		function show_comment_form(id){
