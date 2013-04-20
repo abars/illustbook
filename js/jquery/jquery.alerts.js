@@ -147,7 +147,7 @@
 						if( e.keyCode == 27 ) $("#popup_cancel").trigger('click');
 					});
 					if( value ) $("#popup_prompt").val(value);
-					$("#popup_prompt").focus().select();
+					//$("#popup_prompt").focus().select();
 				break;
 			}
 			
