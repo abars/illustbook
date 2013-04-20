@@ -1,6 +1,7 @@
   {% for thread in thread_list %}
-    {% if thread.image_url %}
       <div class="item">
+
+    {% if thread.image_url %}
       <div class="deletable">
         <a href="{{thread.thread_url}}" target="_BLANK">
           <div class="side-corner-tag">
@@ -19,6 +20,8 @@
           {% endifequal %}
         {% endif %}
       </div>
+    {% endif %}
+
       <div class="illust_summary">
       <a href="{{thread.thread_url}}" target="_BLANK"><b>{{thread.title}}</b></a><br>
       {% if thread.tag %}
@@ -44,5 +47,4 @@
 
       </div>
       </div>
-    {% endif %}
   {% endfor %}

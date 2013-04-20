@@ -100,7 +100,7 @@ class Pinterest(webapp.RequestHandler):
 	@staticmethod
 	def get_tag_image(self,tag,page,unit):
 		query = db.Query(MesThread,keys_only=True)
-		query.filter('illust_mode =', BbsConst.ILLUSTMODE_ILLUST)
+		#query.filter('illust_mode =', BbsConst.ILLUSTMODE_ILLUST)
 		query.order('-create_date')
 		query.filter('tag_list =', tag)
 		cnt=query.count(limit=100)

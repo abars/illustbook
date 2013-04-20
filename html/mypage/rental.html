@@ -1,3 +1,19 @@
+<script>
+	function create_new_bbs(){
+		$("#rental").hide();
+		$("#rental_exec").show();
+		document.rental_frm.submit();
+	}
+</script>
+
+<div id="rental_exec" style="display:none;">
+	<img src="./static_files/loading.gif"><BR>
+	掲示板を作成しています。<BR>
+	しばらくお待ち下さい。
+</div>
+
+<div id="rental">
+    新しい掲示板をレンタルする
 			<form action="./add_bbs" enctype="multipart/form-data" method="post" name="rental_frm">
 			<input type="hidden" name="official" value="0">
 			<input type="hidden" name="redirect" value="./regist">
@@ -38,10 +54,11 @@
 					</div>
 					<div style="float:left;">
 							<div class="g-button-group">
-			<a href="javascript:document.rental_frm.submit();" class="g-button"><i class="icon-plus"></i>レンタルを実行</a>
+			<a href="javascript:create_new_bbs();" class="g-button"><i class="icon-plus"></i>レンタルを実行</a>
 		</div>
 		</div>
 					</td>
 				</tr>
 			</table>
 			</form>
+</div>

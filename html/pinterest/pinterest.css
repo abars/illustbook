@@ -24,9 +24,9 @@ h2,h3 {font-size:100%;}
 
 .item {
 {% if is_iphone %}
-  max-width:148px;
+  width:148px;
 {% else %}
-  max-width:210px;
+  width:210px;
 {% endif %}
 margin: 5px;
 float: left;

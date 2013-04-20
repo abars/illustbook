@@ -91,9 +91,16 @@ class ApiFeed(webapp.RequestHandler):
 		if(offset==0):
 			cache_enable=1
 		
+		#更新されたときにページ間で不整合が発生するために無効化
+		if(order=="bookmark" or order=="applause"):
+			cache_enable=0
+
 		#キャッシュ取得
 		cache_id=ApiFeed._get_cache_id(order,req.request.get("bbs_id"),offset,limit)
-		data=memcache.get(cache_id)
+		if(cache_enable):
+			data=memcache.get(cache_id)
+		else:
+			data=None
 		if(data and cache_enable):
 			return data
 		

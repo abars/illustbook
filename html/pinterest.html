@@ -70,8 +70,9 @@
 {% if regist_finish %}
   <div class="message">
     お絵かき掲示板の新規作成が完了しました。<br>
-    掲示板の名前をクリックすると掲示板に飛びます。
+    掲示板の名前をクリックして掲示板にアクセスして下さい。
   </div>
+  <br clear="all">
 {% endif %}
 
 {% if is_maintenance %}
@@ -104,7 +105,7 @@
 {% include "pinterest/menulist.html" %}
 
 <div class="message">「イラストブック」に搭載されたお絵かきツールとあなた専用のお絵かき掲示版を使って、作品を世界中に公開しましょう。
-現在、{{bbs_n}}件の掲示板がレンタルされ、{{illust_n}}のイラストが公開されています。
+{% if not is_iphone %}現在、{{bbs_n}}件の掲示板がレンタルされ、{{illust_n}}のイラストが公開されています。{% endif %}
 </div>
 {% endifequal %}
 
