@@ -104,6 +104,14 @@ from myapp.ChatDisconnected import ChatDisconnected
 from myapp.Ranking import Ranking
 from myapp.ApiPacked import ApiPacked
 from myapp.Pinterest import Pinterest
+from myapp.DropBox import DropBox
+from myapp.DelThread import DelThread
+from myapp.DelBbs import DelBbs
+from myapp.DelEn import DelEn
+from myapp.DelRes import DelRes
+from myapp.RedirectBbs import RedirectBbs
+from myapp.RedirectThread import RedirectThread
+from myapp.VisibilityChangeEntry import VisibilityChangeEntry
 
 #-----------------------------------------------------------------
 #ポータル
@@ -248,230 +256,9 @@ class LinkPage(webapp.RequestHandler):
 		Portal.get(self,"link",False)
 
 #-----------------------------------------------------------------
-#削除系
+#振り分け
 #-----------------------------------------------------------------
 
-class DelBbs(webapp.RequestHandler):
-	def get(self):
-		bbs=None
-		try:
-			bbs = db.get(self.request.get("bbs_key"))
-		except:
-			bbs=None
-		if(bbs==None):
-			self.response.out.write(Alert.alert_msg("削除対象が見つかりません。",self.request.host))
-			return
-		user = users.get_current_user()
-		if(OwnerCheck.check(bbs,user)):
-			self.response.out.write(Alert.alert_msg("削除する権限がありません。",self.request.host))
-			return
-		bbs.del_flag=1
-		bbs.put()
-		self.redirect(str('./mypage'))
-
-class VisibilityChangeEntry(webapp.RequestHandler):
-	def get(self):
-		bbs = db.get(self.request.get("bbs_key"))
-		user = users.get_current_user()
-		if(OwnerCheck.check(bbs,user)):
-			return
-		entry = db.get(self.request.get("entry_key"))
-		if(entry.hidden_flag):
-			entry.hidden_flag = 0
-		else:
-			entry.hidden_flag = 1
-		entry.put()
-
-		thread = db.get(self.request.get("thread_key"))
-		url=MappingThreadId.get_thread_url("./",bbs,thread)
-		self.redirect(str(url))
-
-class DelEn(webapp.RequestHandler):
-	def get(self):
-		bbs = db.get(self.request.get("bbs_key"))
-		user = users.get_current_user()
-		entry = db.get(self.request.get("entry_key"))
-
-		entry_owner=False
-		if(user and user.user_id()==entry.user_id):
-			entry_owner=True
-		
-		bbs_owner=not OwnerCheck.check(bbs,user)
-
-		if(not bbs_owner and not OwnerCheck.is_admin(user) and not entry_owner):
-			self.response.out.write(Alert.alert_msg("削除する権限がありません。",self.request.host))
-			return
-		entry.del_flag = 0
-		entry.put()
-
-		thread = db.get(self.request.get("thread_key"))
-		thread.comment_cnt=thread.comment_cnt-1
-		thread.cached_entry_key=[]
-		thread.cached_entry_key_enable=None
-		thread.put()
-
-		url=MappingThreadId.get_thread_url("./",bbs,thread)
-		self.redirect(str(url))
-
-		RecentCommentCache.invalidate(bbs)
-
-class DelRes(webapp.RequestHandler):
-	def get(self):
-		entry = db.get(self.request.get("entry_key"))
-		
-		if(self.request.get("res_key")=="all"):
-			res=None
-		else:
-			res= db.get(self.request.get("res_key"))
-
-		thread_key=entry.thread_key
-		bbs_key=thread_key.bbs_key
-
-		user = users.get_current_user()
-		bbs_owner =not OwnerCheck.check(bbs_key,user)
-		res_owner=False
-		if(user and res and user.user_id()==res.user_id):
-			res_owner=True
-		
-		if(not bbs_owner and not OwnerCheck.is_admin(user) and not res_owner):
-			self.response.out.write(Alert.alert_msg("削除する権限がありません。",self.request.host))
-			return
-
-		if(not res):
-			for res in entry.res_list:
-				db.get(res).delete()
-			entry.res_list=[]
-		else:
-			res.delete()
-			idx = entry.res_list.index(db.Key(self.request.get("res_key")))
-			entry.res_list.pop(idx)
-		
-		res_n=len(entry.res_list)
-		if(res_n>=1):
-			entry.date=db.get(entry.res_list[res_n-1]).date
-		else:
-			entry.date=entry.create_date
-
-		entry.put()
-
-		url=MappingThreadId.get_thread_url("./",bbs_key,thread_key)
-		self.redirect(str(url))
-		
-		thread = db.get(str(thread_key.key()))
-		thread.comment_cnt=thread.comment_cnt-1
-		thread.put()
-
-		RecentCommentCache.invalidate(bbs_key)
-
-
-class DelThread(webapp.RequestHandler):
-	@staticmethod
-	def delete_thread_core(thread):
-		thread.bbs_key.cached_threads_num=None	#イラストの総数の更新リクエスト
-		thread.bbs_key.put()
-
-		entry_query=Entry.all().filter("thread_key =",thread)
-		for entry in entry_query:
-			if(entry.illust_reply_image_key):
-				entry.illust_reply_image_key.delete()
-		if(thread.image_key):
-			if(thread.image_key.chunk_list_key):
-				for key in thread.image_key.chunk_list_key:
-					db.get(key).delete()
-			thread.image_key.delete()
-		thread.delete()
-
-	def get(self):
-		try:
-			bbs = db.get(self.request.get("bbs_key"))
-		except:
-			bbs=None
-		try:
-			thread = db.get(self.request.get("thread_key"))
-		except:
-			thread=None
-		
-		if(not bbs or not thread):
-			self.response.out.write(Alert.alert_msg("削除対象が見つかりません。",self.request.host))
-			return
-		
-		del_ok=0		
-		if(self.request.get("del_key")):
-			if(thread.delete_key):
-				if(thread.delete_key==self.request.get("del_key")):
-					del_ok=1
-				else:
-					self.response.out.write(Alert.alert_msg("削除キーが一致しません。",self.request.host))
-					return;
-		
-		user = users.get_current_user()
-
-		bbs_owner = not OwnerCheck.check(bbs,user)
-		thread_owner=False
-		if(user and user.user_id()==thread.user_id):
-			thread_owner=True
-		
-		if(del_ok==0):
-			if(not bbs_owner and not thread_owner):
-				self.response.out.write(Alert.alert_msg("削除権限がありません。",self.request.host))
-				return
-
-		DelThread.delete_thread_core(thread)
-
-		bbs.cached_thumbnail_key=None
-		bbs.put()
-
-		url=MappingId.get_usr_url("./",bbs)
-		self.redirect(str(url))
-
-#-----------------------------------------------------------------
-#リダイレクト
-#-----------------------------------------------------------------
-
-class RedirectThread(webapp.RequestHandler):
-	def get(self):
-		try:
-			bbs=db.get(self.request.get("bbs_key"))
-		except:
-			bbs=None
-		if(bbs==None):
-			self.response.out.write(Alert.alert_msg_notfound(self.request.host))
-			return
-		host_name=self.request.host
-		if(host_name=="http://www.illust-book.appspot.com/"):
-			host_name="http://www.illustbook.net/";		
-		host_url="http://"+MappingId.mapping_host(host_name)+"/";
-		url=MappingId.get_usr_url(host_url,bbs)
-		self.redirect(str(url+self.request.get("thread_key")+".html"))
-
-class RedirectBbs(webapp.RequestHandler):
-	def get(self):
-		try:
-			bbs=db.get(self.request.get("bbs_key"))
-		except:
-			bbs=None
-		if(bbs==None):
-			self.response.out.write(Alert.alert_msg_notfound(self.request.host))
-			return			
-		host_name=self.request.host
-		if(host_name=="http://www.illust-book.appspot.com/"):
-			host_name="http://www.illustbook.net/";		
-		host_url="http://"+MappingId.mapping_host(host_name)+"/";
-		url=MappingId.get_usr_url(host_url,bbs)
-		self.redirect(str(url))
-
-#-----------------------------------------------------------------
-#DropBox redirect
-#-----------------------------------------------------------------
-
-class DropBox(webapp.RequestHandler):
-	def get(self):
-		template_values = {
-			'host': "./"
-		}
-		path = os.path.join(os.path.dirname(__file__), 'html/dropbox.html')
-		self.response.out.write(template.render(path, template_values))
-		
 application = webapp.WSGIApplication(
 	[('/', MainPage),
 	('/pinterest', Pinterest),

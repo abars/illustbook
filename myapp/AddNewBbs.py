@@ -32,16 +32,16 @@ from myapp.BbsConst import BbsConst
 class AddNewBbs(webapp.RequestHandler):
 	def post(self):
 		if(self.request.get('bbs_title')==""):
-			self.response.out.write(Alert.alert_msg("タイトルを入力して下さい。",self.request.host));
+			Alert.alert_msg_with_write(self,"タイトルを入力して下さい。");
 			return                        
 		if(self.request.get('bbs_summary')==""):
-			self.response.out.write(Alert.alert_msg("概要を入力して下さい。",self.request.host));
+			Alert.alert_msg_with_write(self,"概要を入力して下さい。");
 			return                        
 		user = users.get_current_user()
 		summary = self.request.get('bbs_summary')		
 		
 		if(int(self.request.get('official'))==1):
-			self.response.out.write(Alert.alert_msg("オフィシャル掲示板は廃止されました。",self.request.host));
+			Alert.alert_msg_with_write(self,"オフィシャル掲示板は廃止されました。");
 			return                        
 		
 		if (not user):
@@ -55,13 +55,13 @@ class AddNewBbs(webapp.RequestHandler):
 
 		short=self.request.get('short')
 		if(MappingId.key_format_check(short)):
-			self.response.out.write(Alert.alert_msg("IDは半角英数である必要があります。",self.request.host))
+			Alert.alert_msg_with_write(self,"IDは半角英数である必要があります。")
 			return		
 		if(MappingId.check_capability(short,"")==0):
-			self.response.out.write(Alert.alert_msg("ID:"+short+"は既に登録されています。",self.request.host))
+			Alert.alert_msg_with_write(self,"ID:"+short+"は既に登録されています。")
 			return
 		if(short==""):
-			self.response.out.write(Alert.alert_msg("IDを入力する必要があります。",self.request.host))
+			Alert.alert_msg_with_write(self,"IDを入力する必要があります。")
 			return
 				
 		new_bbs = Bbs()
@@ -142,7 +142,7 @@ class AddNewBbs(webapp.RequestHandler):
 		new_bbs.create_date=datetime.datetime.today()
 
 		if(memcache.get(BbsConst.OBJECT_NEW_BBS_CREATING_HEADER+short)):
-			self.response.out.write(Alert.alert_msg("二重投稿を検知しました。戻ってリロードして下さい。",self.request.host))
+			Alert.alert_msg_with_write(self,"二重投稿を検知しました。戻ってリロードして下さい。")
 			return
 		memcache.set(BbsConst.OBJECT_NEW_BBS_CREATING_HEADER+short,"creating",BbsConst.NEW_BBS_CACHE_TIME)
 		
