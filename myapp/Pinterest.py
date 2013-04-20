@@ -271,8 +271,9 @@ class Pinterest(webapp.RequestHandler):
 		#ランキング
 		user_rank=0
 		if(bookmark):
-			rank=Ranking.get_or_insert(BbsConst.THREAD_RANKING_KEY_NAME)
-			user_rank=rank.get_user_rank(bookmark.user_id)
+			rank=Ranking.get_by_key_name(BbsConst.THREAD_RANKING_KEY_NAME)
+			if(rank):
+				user_rank=rank.get_user_rank(bookmark.user_id)
 
 		#iPhoneかどうか
 		is_iphone=CssDesign.is_iphone(self)
