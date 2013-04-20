@@ -10,9 +10,8 @@ var $container = $('#container');
         itemSelector: '.item',
         isFitWidth: true
       });
-
-  $('#index').width($container.width())
-}
+    $('#index').width($container.width())
+  }
 
 masonry_exec();
 

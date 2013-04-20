@@ -84,9 +84,16 @@ var isFlashInstalled=function(){if(navigator.plugins["Shockwave Flash"]){return 
 		}
 		
 		function AddBookmark(host,thread_key){
-			var comment=prompt("このイラストをブックマークしますか？以下のフォームからブックマークにコメントを付加することもできます。");
-			if(comment==null){
-				return;
+			try{
+				var comment=prompt("このイラストをブックマークしますか？以下のフォームからブックマークにコメントを付加することもできます。","");
+				if(comment==null){
+					return;
+				}
+			}catch(e){
+				if(!confirm("このイラストをブックマークしますか？")){
+					return;
+				}
+				comment="";
 			}
 			window.location.href=host+'add_bookmark?mode=add&thread_key='+thread_key+'&comment='+comment;
 		}

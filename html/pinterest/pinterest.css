@@ -30,6 +30,11 @@ h2,h3 {font-size:100%;}
 
 #container {
   margin:auto;
+  {% if is_iphone %}
+   min-width:320px;
+  {% else %}
+   min-width:890px;
+  {% endif %}
 }
 
 .guide{
