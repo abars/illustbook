@@ -23,6 +23,7 @@ $( window ).resize(function(){
       navSelector  : '#page-nav',    // selector for the paged navigation 
       nextSelector : '#page-nav a',  // selector for the NEXT link (to page 2)
       itemSelector : '.item',     // selector for all items you'll retrieve
+      bufferPx : 1000, // 最も下に行く前にロードをかける
       loading: {
           finishedMsg: '<div style="background-color:#ffffff;z-index:2;">ページの終端です。</div>',
           img: 'static_files/loading.gif',
