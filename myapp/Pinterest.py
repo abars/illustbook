@@ -199,6 +199,7 @@ class Pinterest(webapp.RequestHandler):
 		submit_illust_exist=True
 		submit_illust_list=None
 		age=None
+		thread_list=None
 
 		if(user_id!=""):
 			if(not tab):
