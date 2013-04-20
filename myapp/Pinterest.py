@@ -200,6 +200,10 @@ class Pinterest(webapp.RequestHandler):
 		submit_illust_list=None
 		age=None
 		thread_list=None
+		contents_only=None
+
+		if(self.request.get("contents_only")):
+			contents_only=True
 
 		if(user_id!=""):
 			if(not tab):
@@ -286,6 +290,7 @@ class Pinterest(webapp.RequestHandler):
 			'tag_list': tag_list,
 			'thread_list': thread_list,
 			'redirect_url': self.request.path,
+			'page': page,
 			'next_page': page+1,
 			'next_query': next_query,
 			'page_mode': page_mode,
@@ -317,7 +322,8 @@ class Pinterest(webapp.RequestHandler):
 			'redirect_api': redirect_api,
 			'search_api': search_api,
 			'age': age,
-			'user_rank': user_rank
+			'user_rank': user_rank,
+			'contents_only': contents_only
 		}
 		path = os.path.join(os.path.dirname(__file__), '../html/pinterest.html')
 		self.response.out.write(template.render(path, template_values))

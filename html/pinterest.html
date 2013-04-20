@@ -55,7 +55,7 @@
 <div id="contents">
 
 <!-- 2ページ目以降はコンテンツだけでよい -->
-{% ifequal next_page 2 %}
+{% if not contents_only %}
 <div id="index">
 
 <!-- タグサーチ -->
@@ -182,12 +182,12 @@
 <!-- 1ページ目 -->
 </div>
 
-{% endifequal %}
+{% endif %}
 
 <!-- Pinterest -->
 
 {% if not thread_list %}
-{% ifequal next_page 2 %}
+{% if not contents_only %}
 {% if illust_enable %}
 {% ifnotequal page_mode "guide" %}
 {% ifnotequal page_mode "login_require" %}
@@ -197,7 +197,7 @@
 {% endifnotequal %}
 {% endifnotequal %}
 {% endif %}
-{% endifequal %}
+{% endif %}
 {% endif %}
 
 <div id="container" class="transitions-enabled infinite-scroll clearfix">
@@ -206,7 +206,7 @@
 
 {% if next_query %}
 <nav id="page-nav">
-  <a href="{{redirect_api}}?{{next_query}}&page={{next_page}}"></a>
+  <a href="{{redirect_api}}?{{next_query}}&contents_only=1&page={{next_page}}"></a>
 </nav>
 {% endif %}
 

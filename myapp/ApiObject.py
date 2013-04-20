@@ -620,7 +620,10 @@ class ApiObject(webapp.RequestHandler):
 
 		#メモリにまとめて格納
 		if(len(put_multi_dic)):
-			memcache.set_multi(put_multi_dic,key_prefix=BbsConst.OBJECT_CACHE_HEADER,time=BbsConst.OBJECT_CACHE_TIME)
+			try:
+				memcache.set_multi(put_multi_dic,key_prefix=BbsConst.OBJECT_CACHE_HEADER,time=BbsConst.OBJECT_CACHE_TIME)
+			except:
+				logging.error("set_multi_overflow trap")
 
 		return all_threads_cached
 

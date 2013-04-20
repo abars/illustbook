@@ -8,4 +8,13 @@
       <a href="{{host}}{{redirect_api}}?order=moper" class="g-button {%ifequal order "moper"%}checked{%endifequal%}">アニメ</a>
     {% endif %}
   </div>
+
+    {% if not is_iphone %}
+  <div class="g-button-group toggle-buttons">
+    <a href="{{host}}{{redirect_api}}?order={{order}}&page={{page|add:1}}" class="g-button">+1</a>
+    <a href="{{host}}{{redirect_api}}?order={{order}}&page={{page|add:10}}" class="g-button">+10</a>
+    <a href="{{host}}{{redirect_api}}?order={{order}}&page={{page|add:100}}" class="g-button">+100</a>
+  </div>
+    {% endif %}
+
 </div>
