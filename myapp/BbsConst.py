@@ -88,7 +88,7 @@ class BbsConst:
 	THUMBNAIL2_VERSION=7
 
 	#ピンタレストモードを強制設定するか
-	PINTEREST_MODE=1 #1だと管理者だけ、2だと全員
+	PINTEREST_MODE=2 #1だと管理者だけ、2だと全員
 	PINTEREST_PAGE_UNIT=32	#先読み枚数(非表示ユーザがいるので多めに)
 	PINTEREST_MYPAGE_PAGE_UNIT=24
 
