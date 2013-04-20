@@ -92,4 +92,8 @@ class BbsConst:
 	PINTEREST_PAGE_UNIT=32	#先読み枚数(非表示ユーザがいるので多めに)
 	PINTEREST_MYPAGE_PAGE_UNIT=24
 
+	#keyname
+	KEY_NAME_TOP_PAGE_CACHE="top_page_cache"
+
+
 

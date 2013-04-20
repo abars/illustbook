@@ -47,7 +47,10 @@ class SiteAnalyzer(webapp.RequestHandler):
 
 	@staticmethod
 	def get_cache_from_db():
-		return TopPageCache.get_or_insert(key_name="top_page_cache")
+		data=TopPageCache.get_by_key_name(BbsConst.KEY_NAME_TOP_PAGE_CACHE)
+		if(data):
+			return data
+		return TopPageCache.get_or_insert(key_name=BbsConst.KEY_NAME_TOP_PAGE_CACHE)
 
 	def get(self):
 		SetUtf8.set()

@@ -599,21 +599,29 @@ class ApiObject(webapp.RequestHandler):
 		for thread in all_threads:
 			key_list.append(str(thread))
 		
-		#まとめて取ってくる
+		#メモリからまとめて取得
 		cache_list=memcache.get_multi(key_list,key_prefix=BbsConst.OBJECT_CACHE_HEADER)
 		
 		#キャッシュヒットしたものはキャッシュから、
 		#ヒットしなかったものはdbから取ってくる
 		all_threads_cached=[]
+		put_multi_dic={}
 		for thread in all_threads:
 			if(str(thread) in cache_list):
+				#キャッシュから取得
 				data=cache_list[str(thread)]
 				all_threads_cached.append(data)
 			else:
-				data=ApiObject.get_datastore_object(thread)
+				#dbから取得
+				data=ApiObject._get_datastore_object_no_mem_set(thread)
 				all_threads_cached.append(data)
 				cache_list[str(thread)]=data	#このループで同じものが参照された場合のため
-		
+				put_multi_dic[str(thread)]=data
+
+		#メモリにまとめて格納
+		if(len(put_multi_dic)):
+			memcache.set_multi(put_multi_dic,key_prefix=BbsConst.OBJECT_CACHE_HEADER,time=BbsConst.OBJECT_CACHE_TIME)
+
 		return all_threads_cached
 
 	@staticmethod
@@ -640,56 +648,73 @@ class ApiObject(webapp.RequestHandler):
 			query.order("-date")
 		entry_list=query.fetch(limit=100)
 		return entry_list
-	
+
 	@staticmethod
-	def get_datastore_object(ds_obj):
+	def _update_thread(ds_obj):
+		image_key=MesThread.image_key.get_value_for_datastore(ds_obj)
+		if(image_key):
+			ds_obj.cached_image_key=str(image_key)
+			ImageFile.create_thumbnail2(ds_obj)
+
+		bbs_key=MesThread.bbs_key.get_value_for_datastore(ds_obj)
+		if(bbs_key):
+			ds_obj.cached_bbs_key=str(bbs_key)
+			
+		#コメント一覧を取得
+		#コメント更新時にはcached_entry_key=Noneで代入される
+		if not ds_obj.cached_entry_key_enable:
+			ds_obj.cached_entry_key=ApiObject._get_cached_entry_key(ds_obj)
+			ds_obj.cached_entry_key_enable=True
+			ds_obj.put()
+
+	@staticmethod
+	def _update_bbs(ds_obj):
+		#現在はスレッド追加時にcached_thumbnail_keyを上書きしている
+		#将来的にDSの以降などでkeyが変わる場合は以下のifをTrueにしてキャッシュを全更新すること
+		if not ds_obj.cached_thumbnail_key:
+			try:
+				recent_thread=MesThread.all().filter("bbs_key =",ds_obj).order("-create_date").fetch(limit=1)
+				if(recent_thread):
+					image=recent_thread[0].image_key;
+					if(image):
+						ds_obj.cached_thumbnail_key=str(image.key());
+						ds_obj.put()
+			except:
+				ds_obj.cached_thumbnail_key=""
+
+		#スレッド数を更新する
+		#スレッドの追加時にcached_threads_numにNoneが代入される
+		if not ds_obj.cached_threads_num:
+			ds_obj.cached_threads_num=MesThread.all().filter("bbs_key =",ds_obj).count()
+			ds_obj.put()
+
+	@staticmethod
+	def _get_datastore_object_no_mem_set(ds_obj):
+		#keyの場合は実データを取得してくる
 		if(type(ds_obj)==db.Key or type(ds_obj)==str):
 			try:
 				ds_obj=db.get(ds_obj);
 			except:
 				return None
+
+		#データが見つからなかった
 		if(not ds_obj):
 			return None
 
+		#データの更新
 		if(type(ds_obj)==MesThread):
-			image_key=MesThread.image_key.get_value_for_datastore(ds_obj)
-			if(image_key):
-				ds_obj.cached_image_key=str(image_key)
-				ImageFile.create_thumbnail2(ds_obj)
-
-			bbs_key=MesThread.bbs_key.get_value_for_datastore(ds_obj)
-			if(bbs_key):
-				ds_obj.cached_bbs_key=str(bbs_key)
-			
-			#コメント一覧を取得
-			#コメント更新時にはcached_entry_key=Noneで代入される
-			if not ds_obj.cached_entry_key_enable:
-				ds_obj.cached_entry_key=ApiObject._get_cached_entry_key(ds_obj)
-				ds_obj.cached_entry_key_enable=True
-				ds_obj.put()
-
+			ApiObject._update_thread(ds_obj)
 		if(type(ds_obj)==Bbs):
-			#現在はスレッド追加時にcached_thumbnail_keyを上書きしている
-			#将来的にDSの以降などでkeyが変わる場合は以下のifをTrueにしてキャッシュを全更新すること
-			if not ds_obj.cached_thumbnail_key:
-				try:
-					recent_thread=MesThread.all().filter("bbs_key =",ds_obj).order("-create_date").fetch(limit=1)
-					if(recent_thread):
-						image=recent_thread[0].image_key;
-						if(image):
-							ds_obj.cached_thumbnail_key=str(image.key());
-							ds_obj.put()
-				except:
-					ds_obj.cached_thumbnail_key=""
-			if not ds_obj.cached_threads_num:
-				ds_obj.cached_threads_num=MesThread.all().filter("bbs_key =",ds_obj).count()
-				ds_obj.put()
+			ApiObject._update_bbs(ds_obj)
 
-		try:
-			memcache.set(BbsConst.OBJECT_CACHE_HEADER+str(ds_obj.key()),ds_obj,BbsConst.OBJECT_CACHE_TIME)
-		except:
-			logging.error("ApiObject:memcache:too large image:key:"+str(ds_obj.key()))
+		return ds_obj
 
+	@staticmethod
+	def get_datastore_object(ds_obj):
+		ds_obj=ApiObject._get_datastore_object_no_mem_set(ds_obj)
+		if(ds_obj==None):
+			return None
+		memcache.set(BbsConst.OBJECT_CACHE_HEADER+str(ds_obj.key()),ds_obj,BbsConst.OBJECT_CACHE_TIME)
 		return ds_obj
 
 #-------------------------------------------------------------------
