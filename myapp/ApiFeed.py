@@ -75,6 +75,11 @@ class ApiFeed(webapp.RequestHandler):
 		if(order=="moper"):
 			query.order("-applause")
 			query.filter("illust_mode =",BbsConst.ILLUSTMODE_MOPER)
+		if(order=="2010" or order=="2011" or order=="2012" or order=="2013"):
+			date=datetime.date(int(order)+1,1,1)
+			query.order("-create_date")
+			query.filter("create_date <",date)
+			query.filter("illust_mode =",BbsConst.ILLUSTMODE_ILLUST)
 		if(not order):
 			query.order("-create_date")
 			query.filter("illust_mode =",BbsConst.ILLUSTMODE_ILLUST)
@@ -92,8 +97,9 @@ class ApiFeed(webapp.RequestHandler):
 			cache_enable=1
 		
 		#更新されたときにページ間で不整合が発生するために無効化
-		if(order=="bookmark" or order=="applause"):
-			cache_enable=0
+		if(order):
+			if(not(order=="new" or order=="hot")):
+				cache_enable=0
 
 		#キャッシュ取得
 		cache_id=ApiFeed._get_cache_id(order,req.request.get("bbs_id"),offset,limit)
