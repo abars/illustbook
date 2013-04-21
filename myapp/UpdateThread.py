@@ -86,6 +86,8 @@ class UpdateThread(webapp.RequestHandler):
 			Alert.alert_msg_with_write(self,"コメント数は数値である必要があります。");
 			return
 
+		thread.search_index_version=0	#インデックス更新
+
 		thread.put()
 		url=MappingThreadId.get_thread_url("./",bbs,thread)
 		self.redirect(str(url))

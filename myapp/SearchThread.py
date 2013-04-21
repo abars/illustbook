@@ -80,7 +80,7 @@ class SearchThread(webapp.RequestHandler):
 		
 		key_list=[]
 		for doc in results:
-			key_list.append(doc.doc_id)
+			key_list.append(db.Key(encoded=str(doc.doc_id)))
 		return key_list
 
 

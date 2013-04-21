@@ -70,4 +70,14 @@ function show_profile(){
     $('#profile_button').text("閉じる")
   }
 }
+
+function show_search(){
+  if($('#search').is(':visible')){
+    $('#search').hide();
+    $('#search_button').text("検索")
+  }else{
+   $('#search').show();  
+    $('#search_button').text("閉じる")
+  }
+}
 </script>

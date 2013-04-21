@@ -27,8 +27,15 @@ h2,h3 {font-size:100%;}
 #index{
   margin:auto;
   {% if thread_list %}
+  {% if not is_iphone %}
   display:none;
   {% endif %}
+  {% endif %}
+}
+
+#search{
+	display:none;
+	margin:5px;
 }
 
 #container {
@@ -38,7 +45,9 @@ h2,h3 {font-size:100%;}
   {% else %}
    min-width:890px;
   {% endif %}
+  {% if not is_iphone %}
   display:none;
+  {% endif %}
 }
 
 .guide{
