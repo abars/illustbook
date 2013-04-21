@@ -20,11 +20,13 @@
   -->
 
     {% if is_iphone %}
-  <div class="g-button-group toggle-buttons">
+  <div class="g-button-group toggle-buttons" style="float:right;">
     <a href="javascript:show_search();" class="g-button" id="search_button">検索</a>
   </div>
     {% else %}
+     <div style="float:right;">
       {% include "pinterest/search.html" %}
+    </div>
     {% endif %}
 </div>
 
