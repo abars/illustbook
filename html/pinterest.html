@@ -7,6 +7,9 @@
 {% endif %}
 <meta name="Keywords" content="お絵かき掲示板,お絵かきブログ,無料,お絵かき,レンタル" />
 <meta name="Description" content="イラストブックはお絵かきツールがなくてもすぐに描ける完全無料のレンタルお絵かき掲示板サービスです。" />
+{% if search %}
+<title>{{search}} - イラストブック</title>
+{% else %}
 {% if tag %}
 <title>{{tag}} - イラストブック</title>
 {% else %}
@@ -23,6 +26,7 @@
 <title>イラストブック - 無料レンタルお絵かき掲示板</title>
 {% endifequal %}
 {% endifequal %}
+{% endif %}
 {% endif %}
 {%include "meta.html" %}
 <meta http-equiv="Content-Script-Type" content="text/javascript" />
@@ -62,7 +66,13 @@
 
 {% ifequal page_mode "tag" %}
   <div class="message">
-    タグ「{{tag}}」の付けられたイラスト　<A HREF="{{host}}{{redirect_api}}" class="g-button mini">トップページ</A>
+    タグ「{{tag}}」の付けられたイラスト
+  </div>
+{% endifequal %}
+
+{% ifequal page_mode "search" %}
+  <div class="message">
+    {% include "pinterest/search.html" %}
   </div>
 {% endifequal %}
 
@@ -140,7 +150,6 @@
 {% endifequal %}
 
 <!-- 掲示板 -->
-
 {% ifequal tab "bbs" %}
   {% include "pinterest/bbs.html" %}
 {% endifequal %}
@@ -160,7 +169,6 @@
 {% endifequal %}
 
 <!-- タイムライン -->
-
 {% ifequal page_mode "user" %}
 {% if is_timeline_enable %}
   {% include "mypage/feed.html" %}
@@ -174,7 +182,6 @@
 {% endifequal %}
 
 <!-- ポータルタブ -->
-
 {% ifequal page_mode "index" %}
   {% include "pinterest/index_menu.html" %}
 {% endifequal %}

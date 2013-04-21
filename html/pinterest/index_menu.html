@@ -17,4 +17,8 @@
   </div>
     {% endif %}
 
+    {% if not is_iphone %}
+      {% include "pinterest/search.html" %}
+    {% endif %}
+
 </div>

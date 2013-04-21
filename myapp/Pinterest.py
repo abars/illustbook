@@ -47,6 +47,7 @@ from myapp.ApiBookmark import ApiBookmark
 from myapp.UTC import UTC
 from myapp.JST import JST
 from myapp.Ranking import Ranking
+from myapp.SearchThread import SearchThread
 
 class Pinterest(webapp.RequestHandler):
 	@staticmethod
@@ -143,6 +144,10 @@ class Pinterest(webapp.RequestHandler):
 			tab=self.request.get("tab")
 		if(regist_finish):
 			tab="bbs"
+
+		search=None
+		if(self.request.get("search")):
+			search=self.request.get("search")
 		
 		page=1
 		if(self.request.get("page")):
@@ -201,6 +206,7 @@ class Pinterest(webapp.RequestHandler):
 		age=None
 		thread_list=None
 		contents_only=None
+		top_page=False
 
 		if(self.request.get("contents_only")):
 			contents_only=True
@@ -261,9 +267,17 @@ class Pinterest(webapp.RequestHandler):
 					next_query=""
 					page_mode="guide"
 				else:
-					thread_list=ApiFeed.feed_get_thread_list(self,order,(page-1)*unit,unit)
-					tag_list=SearchTag.get_recent_tag("pinterest")
-					next_query="order="+order
+					if(search):
+						thread_list=SearchThread.search(search,page,unit)
+						thread_list=ApiObject.create_thread_object_list(self,thread_list,"search")
+						next_query="search="+urllib.quote_plus(str(search))
+						tag_list=SearchTag.get_recent_tag("pinterest")
+						page_mode="search"
+					else:
+						thread_list=ApiFeed.feed_get_thread_list(self,order,(page-1)*unit,unit)
+						next_query="order="+order
+						tag_list=SearchTag.get_recent_tag("pinterest")
+						top_page=True
 
 		#ログイン要求
 		if(is_mypage and user_id==""):
@@ -323,7 +337,9 @@ class Pinterest(webapp.RequestHandler):
 			'search_api': search_api,
 			'age': age,
 			'user_rank': user_rank,
-			'contents_only': contents_only
+			'contents_only': contents_only,
+			'search': search,
+			'top_page': top_page
 		}
 		path = os.path.join(os.path.dirname(__file__), '../html/pinterest.html')
 		self.response.out.write(template.render(path, template_values))

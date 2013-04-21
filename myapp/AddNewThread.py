@@ -194,6 +194,7 @@ class AddNewThread(webapp.RequestHandler):
 		#IPアドレスを書き込み
 		new_thread.remote_addr=self.request.remote_addr
 		new_thread.thumbnail2_version=0
+		new_thread.search_index_version=0
 
 		#put
 		SyncPut.put_sync(new_thread)

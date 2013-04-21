@@ -64,6 +64,8 @@ class MesThread(CachedDbModel):
 	width = db.IntegerProperty()	#画像の横幅、thumbnail2を作成するタイミングで代入される
 	height = db.IntegerProperty()	#画像の高さ、同上
 
+	search_index_version = db.IntegerProperty()	#サーチ用のインデックスを生成済みかどうか
+
 	bookmark_comment = db.BlobProperty()
 	remote_addr = db.StringProperty()
 

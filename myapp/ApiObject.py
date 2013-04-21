@@ -36,6 +36,7 @@ from myapp.Entry import Entry
 from myapp.UserIcon import UserIcon
 from myapp.TimeProgress import TimeProgress
 from myapp.ImageFile import ImageFile
+from myapp.SearchThread import SearchThread
 
 class ApiObject(webapp.RequestHandler):
 
@@ -669,6 +670,9 @@ class ApiObject(webapp.RequestHandler):
 			ds_obj.cached_entry_key=ApiObject._get_cached_entry_key(ds_obj)
 			ds_obj.cached_entry_key_enable=True
 			ds_obj.put()
+
+		#検索インデックスに追加
+		SearchThread.add_index(ds_obj)
 
 	@staticmethod
 	def _update_bbs(ds_obj):
