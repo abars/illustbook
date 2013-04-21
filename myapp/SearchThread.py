@@ -69,12 +69,17 @@ class SearchThread(webapp.RequestHandler):
 
 	@staticmethod
 	def search(query,page,unit):
+		sort_options = search.SortOptions(
+			expressions=[
+				search.SortExpression(expression='date', direction=search.SortExpression.DESCENDING, default_value=0)
+			],limit=1000)
 		options = search.QueryOptions(
 			limit=unit,
-			offset=(page-1)*unit)
+			offset=(page-1)*unit,
+			sort_options=sort_options)
 		query=search.Query(
 			query_string=query,
-			options=options)
+			options=options,)
 		index = search.Index(name=BbsConst.SEARCH_THREAD_INDEX_NAME)
 		results=index.search(query)
 		
