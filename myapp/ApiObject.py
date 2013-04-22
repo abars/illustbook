@@ -603,6 +603,16 @@ class ApiObject(webapp.RequestHandler):
 		#メモリからまとめて取得
 		cache_list=memcache.get_multi(key_list,key_prefix=BbsConst.OBJECT_CACHE_HEADER)
 		
+		#キャッシュヒットしなかったものをDBに問い合わせる
+		require_key_list=[]
+		require_key_map={}
+		for thread in all_threads:
+			if(not (str(thread) in cache_list)):
+				if(not (str(thread) in require_key_map)):
+					require_key_map[str(thread)]=len(require_key_list)
+					require_key_list.append(thread)
+		object_list=db.get(require_key_list)
+
 		#キャッシュヒットしたものはキャッシュから、
 		#ヒットしなかったものはdbから取ってくる
 		all_threads_cached=[]
@@ -614,7 +624,12 @@ class ApiObject(webapp.RequestHandler):
 				all_threads_cached.append(data)
 			else:
 				#dbから取得
-				data=ApiObject._get_datastore_object_no_mem_set(thread)
+				no=require_key_map[str(thread)]
+				data=object_list[no]
+				ApiObject._update_object(data)
+				
+				#data=ApiObject._get_datastore_object_no_mem_set(thread)
+				
 				all_threads_cached.append(data)
 				cache_list[str(thread)]=data	#このループで同じものが参照された場合のため
 				put_multi_dic[str(thread)]=data
@@ -696,6 +711,13 @@ class ApiObject(webapp.RequestHandler):
 			ds_obj.put()
 
 	@staticmethod
+	def _update_object(ds_obj):
+		if(type(ds_obj)==MesThread):
+			ApiObject._update_thread(ds_obj)
+		if(type(ds_obj)==Bbs):
+			ApiObject._update_bbs(ds_obj)
+
+	@staticmethod
 	def _get_datastore_object_no_mem_set(ds_obj):
 		#keyの場合は実データを取得してくる
 		if(type(ds_obj)==db.Key or type(ds_obj)==str):
@@ -709,10 +731,7 @@ class ApiObject(webapp.RequestHandler):
 			return None
 
 		#データの更新
-		if(type(ds_obj)==MesThread):
-			ApiObject._update_thread(ds_obj)
-		if(type(ds_obj)==Bbs):
-			ApiObject._update_bbs(ds_obj)
+		ApiObject._update_object(ds_obj)
 
 		return ds_obj
 
