@@ -609,8 +609,12 @@ class ApiObject(webapp.RequestHandler):
 		for thread in all_threads:
 			if(not (str(thread) in cache_list)):
 				if(not (str(thread) in require_key_map)):
-					require_key_map[str(thread)]=len(require_key_list)
-					require_key_list.append(thread)
+					if(thread):
+						require_key_map[str(thread)]=len(require_key_list)
+						one_key=thread
+						if(type(one_key)==str):
+							one_key=db.Key(encoded=one_key)
+						require_key_list.append(one_key)
 		object_list=db.get(require_key_list)
 
 		#キャッシュヒットしたものはキャッシュから、
@@ -624,12 +628,13 @@ class ApiObject(webapp.RequestHandler):
 				all_threads_cached.append(data)
 			else:
 				#dbから取得
-				no=require_key_map[str(thread)]
-				data=object_list[no]
-				ApiObject._update_object(data)
-				
+				if(thread):
+					no=require_key_map[str(thread)]
+					data=object_list[no]
+					ApiObject._update_object(data)
+				else:
+					data=None
 				#data=ApiObject._get_datastore_object_no_mem_set(thread)
-				
 				all_threads_cached.append(data)
 				cache_list[str(thread)]=data	#このループで同じものが参照された場合のため
 				put_multi_dic[str(thread)]=data
