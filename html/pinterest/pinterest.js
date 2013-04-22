@@ -35,7 +35,9 @@ $( window ).resize(function(){
       // trigger Masonry as a callback
       function( newElements ) {
         var $newElems = $( newElements );
+        $newElems.css({ opacity: 0 });
         $container.masonry( 'appended', $newElems, true ); 
+        $newElems.animate({ opacity: 1 });
       }
     );
 });
