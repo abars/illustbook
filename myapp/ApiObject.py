@@ -644,7 +644,7 @@ class ApiObject(webapp.RequestHandler):
 			try:
 				memcache.set_multi(put_multi_dic,key_prefix=BbsConst.OBJECT_CACHE_HEADER,time=BbsConst.OBJECT_CACHE_TIME)
 			except:
-				logging.error("set_multi_overflow trap")
+				logging.error("memset_multi_overflow trap")
 
 		return all_threads_cached
 
@@ -745,7 +745,10 @@ class ApiObject(webapp.RequestHandler):
 		ds_obj=ApiObject._get_datastore_object_no_mem_set(ds_obj)
 		if(ds_obj==None):
 			return None
-		memcache.set(BbsConst.OBJECT_CACHE_HEADER+str(ds_obj.key()),ds_obj,BbsConst.OBJECT_CACHE_TIME)
+		try:
+			memcache.set(BbsConst.OBJECT_CACHE_HEADER+str(ds_obj.key()),ds_obj,BbsConst.OBJECT_CACHE_TIME)
+		except:
+			logging.error("memset_overflow trap")
 		return ds_obj
 
 #-------------------------------------------------------------------

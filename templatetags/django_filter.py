@@ -325,7 +325,7 @@ def auto_link(summary):
 
 def thumbnail2_width(thread,is_iphone):
 	if(is_iphone):
-		return 138
+		return 148
 	return 200
 
 def thumbnail2_height(thread,is_iphone):

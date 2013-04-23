@@ -2,12 +2,13 @@
 body{
   background:#f2f2f2;
   margin: 0px;
+  font-size: 13px;
 }
 
 hr {border:0; border-top:1px solid #cccccc;}
 
 h1 {font-size:100%;color:#E47911;}
-h2,h3 {font-size:100%;}
+h2,h3 {font-size:100%;color:#E47911;}
 
 #contents {
     {% if is_iphone %}
@@ -56,7 +57,7 @@ h2,h3 {font-size:100%;}
 {% if is_iphone %}
   width:148px;
 {% else %}
-  width:210px;
+  width:200px;
 {% endif %}
 margin: 5px;
 float: left;
