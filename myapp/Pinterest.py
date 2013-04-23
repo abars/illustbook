@@ -299,9 +299,7 @@ class Pinterest(webapp.RequestHandler):
 		is_iphone=CssDesign.is_iphone(self)
 
 		#タグの表示数
-		tag_display_n=14
-		if(is_iphone):
-			tag_display_n=5
+		tag_display_n=5
 
 		template_values = {
 			'host': "./",
