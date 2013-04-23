@@ -211,6 +211,15 @@ class Pinterest(webapp.RequestHandler):
 		if(self.request.get("contents_only")):
 			contents_only=True
 
+		#タグサーチをindexサーチに置換
+		if(tag!=""):
+			dic=Pinterest.get_tag_image(self,tag,page,unit)	#一度、タグから取得してインデックスを更新
+			thread_list=dic["thread_list"]
+			tag_list=SearchTag.update_recent_tag(tag,dic["cnt"],"pinterest")
+			search=""+tag
+			#next_query="tag="+urllib.quote_plus(str(tag))
+			#page_mode="tag"
+
 		if(user_id!=""):
 			if(not tab):
 				tab="submit"
@@ -254,30 +263,23 @@ class Pinterest(webapp.RequestHandler):
 			following=Pinterest.is_following(user,user_id,view_mode)
 			age=Pinterest.get_age(bookmark)
 		else:
-			if(tag!=""):
-				dic=Pinterest.get_tag_image(self,tag,page,unit)
-				thread_list=dic["thread_list"]
-				tag_list=SearchTag.update_recent_tag(tag,dic["cnt"],"pinterest")
-				next_query="tag="+urllib.quote_plus(str(tag))
-				page_mode="tag"
+			if(order=="guide"):
+				thread_list=None
+				tag_list=None
+				next_query=""
+				page_mode="guide"
 			else:
-				if(order=="guide"):
-					thread_list=None
-					tag_list=None
-					next_query=""
-					page_mode="guide"
+				if(search):
+					thread_list=SearchThread.search(search,page,unit)
+					thread_list=ApiObject.create_thread_object_list(self,thread_list,"search")
+					next_query="search="+urllib.quote_plus(str(search))
+					tag_list=SearchTag.get_recent_tag("pinterest")
+					page_mode="search"
 				else:
-					if(search):
-						thread_list=SearchThread.search(search,page,unit)
-						thread_list=ApiObject.create_thread_object_list(self,thread_list,"search")
-						next_query="search="+urllib.quote_plus(str(search))
-						tag_list=SearchTag.get_recent_tag("pinterest")
-						page_mode="search"
-					else:
-						thread_list=ApiFeed.feed_get_thread_list(self,order,(page-1)*unit,unit)
-						next_query="order="+order
-						tag_list=SearchTag.get_recent_tag("pinterest")
-						top_page=True
+					thread_list=ApiFeed.feed_get_thread_list(self,order,(page-1)*unit,unit)
+					next_query="order="+order
+					tag_list=SearchTag.get_recent_tag("pinterest")
+					top_page=True
 
 		#ログイン要求
 		if(is_mypage and user_id==""):
@@ -296,6 +298,11 @@ class Pinterest(webapp.RequestHandler):
 
 		#iPhoneかどうか
 		is_iphone=CssDesign.is_iphone(self)
+
+		#タグの表示数
+		tag_display_n=10
+		if(is_iphone):
+			tag_display_n=5
 
 		template_values = {
 			'host': "./",
@@ -339,7 +346,8 @@ class Pinterest(webapp.RequestHandler):
 			'user_rank': user_rank,
 			'contents_only': contents_only,
 			'search': search,
-			'top_page': top_page
+			'top_page': top_page,
+			'tag_display_n': tag_display_n
 		}
 		path = os.path.join(os.path.dirname(__file__), '../html/pinterest.html')
 		self.response.out.write(template.render(path, template_values))

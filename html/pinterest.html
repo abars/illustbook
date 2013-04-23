@@ -125,13 +125,13 @@
 {% if tag_list %}
 <div class="message">
 {% for tag2 in tag_list %}
-    {% if forloop.counter <= 5 %}
+    {% if forloop.counter <= tag_display_n %}
       {{tag2|safe}}　
     {% endif %}
 {% endfor %}
     <div id="more_tag">
 {% for tag2 in tag_list %}
-    {% if forloop.counter >= 6 %}
+    {% if forloop.counter > tag_display_n %}
       {% if forloop.counter <= 100 %}
         {{tag2|safe}}　
       {% endif %}
