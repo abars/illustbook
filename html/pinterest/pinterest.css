@@ -15,7 +15,7 @@ h2,h3 {font-size:100%;color:#E47911;}
       width:320px;
     {% else %}
       {% if not thread_list %}
-        width:890px;
+        width:848px;
       {% endif %}
     {% endif %}
     margin:0 auto;
@@ -40,7 +40,7 @@ h2,h3 {font-size:100%;color:#E47911;}
   {% if is_iphone %}
    min-width:320px;
   {% else %}
-   min-width:890px;
+   min-width:848px;
   {% endif %}
   {% if not is_iphone %}
   display:none;

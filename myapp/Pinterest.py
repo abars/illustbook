@@ -297,6 +297,7 @@ class Pinterest(webapp.RequestHandler):
 
 		#iPhoneかどうか
 		is_iphone=CssDesign.is_iphone(self)
+		is_tablet=CssDesign.is_tablet(self)
 
 		#タグの表示数
 		tag_display_n=5
@@ -316,6 +317,7 @@ class Pinterest(webapp.RequestHandler):
 			'view_user': view_user,
 			'view_user_profile': view_user_profile,
 			'is_iphone': is_iphone,
+			'is_tablet': is_tablet,
 			'bbs_n': bbs_n,
 			'illust_n': illust_n,
 			'user_id': user_id,
