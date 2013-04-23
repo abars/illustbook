@@ -111,19 +111,19 @@
      from <a href="http://pochigoya0423.blog.shinobi.jp/">飯田のぎ</a>
     </div>
   </div>
+{% endifequal %}
 
+{% if not is_iphone %}<div style="float:left;">{% endif %}
+
+{% ifequal page_mode "index" %}
   {% include "pinterest/menulist.html" %}
-  
-  <!--
-  <div class="message">「イラストブック」に搭載されたお絵かきツールとあなた専用のお絵かき掲示版を使って、作品を世界中に公開しましょう。
-  </div>
--->
+  <br clear="all">
 {% endifequal %}
 
 <!-- タグ一覧 -->
 
 {% if tag_list %}
-<div class="message">
+<div class="message" {% if not is_iphone %}style="width:390px;"{% endif %}>
 {% for tag2 in tag_list %}
     {% if forloop.counter <= tag_display_n %}
       {{tag2|safe}}　
@@ -142,6 +142,8 @@
       <a id="show_more_tag_button" href="javascript:show_more_tag();" class="g-button mini">もっと見る</a>
 </div>
 {% endif %}
+
+{% if not is_iphone %}</div>{% endif %}
 
 <br clear="all">
 
