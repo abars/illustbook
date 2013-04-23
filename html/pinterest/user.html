@@ -28,6 +28,7 @@
             {% endif %}
             {% if age %}<tr><td>年齢</td><td>　</td><td>{{age}}才</td></tr>{%endif%}
             {% if bookmark.birthday_month %}<tr><td>誕生日</td><td>　</td><td>{{bookmark.birthday_month}}月{{bookmark.birthday_day}}日</td></tr>{%endif %}
+            <!--
             {%if not bookmark.disable_rankwatch %}
             <tr><td>ランキング</td><td>　</td><td>
                 <a href="ranking?mode=user" class="g-button mini">
@@ -35,6 +36,7 @@
                 </a>
             </td></tr>
             {%endif%}
+            -->
             {% if bookmark.homepage %}<tr><td>ホームページ</td><td>　</td><td><a href="{{bookmark.homepage}}" class="declink"><div class="linebreak">{{bookmark.homepage}}</div></a></td></tr>{% endif %}
             {% if bookmark.mail %}<tr><td>メール</td><td>　</td><td><a href="mailto:{{bookmark.mail}}" class="declink"><div class="linebreak">{{bookmark.mail|safe}}</div></a></td></tr>{% endif %}
             {% if bookmark.twitter_id %}<tr><td>Twitter</td><td>　</td><td>{% if bookmark.twitter_id %}<a href="https://twitter.com/#!/{{bookmark.twitter_id}}" class="declink"><div class="linebreak">{{bookmark.twitter_id}}</div></a>{% endif %}</td></tr>{% endif %}
