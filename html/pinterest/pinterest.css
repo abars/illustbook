@@ -151,6 +151,9 @@ color: #333;
   text-align: center;
   font-size:12px;
   background-color:#ffffff;
+  {% if not is_iphone %}
+  display:none;
+  {% endif %}
 }
 
 #pinterest_footer a{

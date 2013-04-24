@@ -43,6 +43,7 @@ var $container = $('#container');
     });
     $('#index').width($container.width())
     $('#index').show();
+    $('#pinterest_footer').show();
   }
 
 $(document).ready(function(){
