@@ -217,8 +217,9 @@ class ApiObject(webapp.RequestHandler):
 			if(not bbs_id):
 				if(one_dic and one_dic["disable_news"]):
 					continue
-			if(one_dic and one_dic["violate_terms"]):
-				continue
+			if(bbs_id and (bbs_id=="search" or "pinterest")):
+				if(one_dic and one_dic["violate_terms"]):
+					continue
 			if(one_dic):
 				dic.append(one_dic)
 		

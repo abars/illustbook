@@ -8,6 +8,12 @@
 		}
 		window.location.href="./chat?mode=tool&key="+key+"&viewmode="+viewmode+"&pass="+pass
 	}
+
+	function delete_room(url){
+		if(confirm("ルームを削除してもよろしいですか？")){
+			window.location.href=url;
+		}
+	}
 </script>
 
 <div style="margin-left:4px;margin-right:4px;">
@@ -37,10 +43,12 @@
 
 <div>
 
+<p>&nbsp</p>
+
 <H1>稼働中のルーム</H1>
 
 {% if not user %}
-<p>参加と閲覧には<A HREF="{{redirect_url|login_url}}" class="declink">Googleアカウントでのログイン</A>が必要です。</H1>
+<p>ルームへの参加には<A HREF="{{redirect_url|login_url}}" class="declink">ログイン</A>が必要です。</H1>
 <p>&nbsp</p>
 {% endif %}
 
@@ -60,10 +68,9 @@
 			</div>
 		</td>
 		<td>
-		<BR>
-		ルーム名：{{room.name}}{% if room.is_always %}(常時稼動ルーム){% endif %}　{% if is_iphone %}<BR>{% endif %}
-		作成者：<A HREF="./mypage?user_id={{room.user_id}}" class="g-button">{{room.user_name}}</A><BR>
-		最終更新から：{{room.from_last_update}}分　{% if is_iphone %}<BR>{% endif %}作成から：{{room.from_created}}分　{% if is_iphone %}<BR>{% endif %}
+		<H2>{{room.name}}{% if room.is_always %}(常時稼動ルーム){% endif %}</H2>
+		from <A HREF="./mypage?user_id={{room.user_id}}">{{room.user_name}}</A><BR>
+		最終更新から{{room.from_last_update}}分経過<BR>
 		{% if room.password %}
 			パスワードが必要{% if user %}{% ifequal user.user_id room.user_id %}（{{room.password}}）{% endifequal %}{% endif %}　
 		{% else %}
@@ -73,12 +80,12 @@
 		<BR>
 		<div class="actions g-button-container">
 		<div class="g-button-group">
-		<A HREF="javascript:join_chat('{{room.key}}',false,{% if room.password %}true{%else%}false{%endif%});" class="g-button green">{% if not is_iphone %}ルームに{% endif %}参加（{{room.user_count}}人）</A>
-		<!--<A HREF="javascript:join_chat('{{room.key}}',true,{% if room.password %}true{%else%}false{%endif%});" class="g-button green">{% if not is_iphone %}ルームを{% endif %}閲覧</A>-->
+		<A HREF="javascript:join_chat('{{room.key}}',false,{% if room.password %}true{%else%}false{%endif%});" class="g-button green">{% if not is_iphone %}{% endif %}参加（{{room.user_count}}人）</A>
+		{% if user %}{% ifequal user.user_id room.user_id %}<A HREF="javascript:delete_room('./chat?mode=delete&key={{room.key}}');" class="g-button green">{% if not is_iphone %}{% endif %}削除</A>{% endifequal %}{% endif %}
+		<!--<A HREF="javascript:join_chat('{{room.key}}',true,{% if room.password %}true{%else%}false{%endif%});" class="g-button 
+		green">{% if not is_iphone %}{% endif %}閲覧</A>-->
 		{% endif %}
 		</div>
-		{% if is_iphone %}<BR>{% endif %}
-		{% if user %}{% ifequal user.user_id room.user_id %}<A HREF="./chat?mode=delete&key={{room.key}}" class="g-button green">{% if not is_iphone %}ルームを{% endif %}削除</A>{% endifequal %}{% endif %}
 		</div>
 		</td></tr>
 		</table>
@@ -89,12 +96,29 @@
 	<p>&nbsp</p>
 </div>
 
+<script>
+	function create_new_room(){
+		$("#new_room").hide();
+		$("#new_room_exec").show();
+		document.new_room_form.submit();
+	}
+</script>
+
 <div>
 <H1>ルームの作成</H1>
+
+<div id="new_room_exec" style="display:none;">
+	<img src="./static_files/loading.gif"><BR>
+	<p>ルームを作成しています。<BR>
+	しばらくお待ち下さい。</p>
+</div>
+
+<div id="new_room">
+
 {% if not user %}
-<p>ルームの作成には<A HREF="{{redirect_url|login_url}}" class="declink">Googleアカウントでのログイン</A>が必要です。</p>
+<p>ルームの作成には<A HREF="{{redirect_url|login_url}}" class="declink">ログイン</A>が必要です。</p>
 {% else %}
-<form action="./chat">
+<form action="./chat" enctype="multipart/form-data" method="GET" name="new_room_form">
 <input type="hidden" name="mode" value="create">
 <TABLE class="g-table">
 <TR><TH>ルーム名（必須）</TH><TD><input type="text" name="name" style="width:200px"></TD></TR>
@@ -105,28 +129,19 @@
 </select>
 </TABLE>
 <BR>
-<input type="submit" value="ルームを作成" class="g-button green">
+<a href="javascript:create_new_room();" class="g-button green">ルームを作成</a>
 </form>
 {% endif %}
-{% if is_admin %}<BR><p>管理者向け補足：パスワードにalwaysと入れると常時稼動ルームになります</p>{% endif %}
+</div>
 </div>
 
 <p>&nbsp</p>
 <p>&nbsp</p>
 <H1>利用ガイド</H1>
-<p>チャットで使用する名前とサムネイルは<A HREF="./mypage" class="declink">マイページ</A>で設定することができます。</p>
+<p>ご利用にはイラストブックへのログインが必要です。</p>
 <p>制限時間はありません。ルームは最終更新から10分が経過すると自動的に削除されます。</p>
-<p>UNDO/REDOはサーバに送信されるまでの一定時間のみ可能です。</p>
-<p>レイヤーは2枚まで使用できます。筆圧は使用できません。</p>
 <p>バグ報告や要望は<A HREF="./support/" class="declink">サポート掲示板</A>までどうぞ。</p>
+{% if is_admin %}<p>管理者向け：パスワードにalwaysと入れると常時稼動ルームになります</p>{% endif %}
 <p>&nbsp</p>
 
-<H1>動作環境</H1>
-<TABLE BORDER=1>
-<TR><TD>PC</TD><TD>HTML5に対応したブラウザ(Chrome、Safari、FireFox)(IEは9以降のみ対応)</TD></TR>
-<TR><TD>iPad</TD><TD>第２世代以降のiPad(第一世代だと速度が遅いです)</TD></TR>
-<TR><TD>Android</TD><TD>4.0(ICS)以降のChromeのみ対応(標準ブラウザでは動作しません)</TD></TR>
-</TABLE>
-<p>&nbsp</p>
-<p>クライアントとの非同期通信にはGoogle AppEngine ChannelAPIを使用しています。</p>
 </div>

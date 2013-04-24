@@ -33,6 +33,7 @@ from myapp.ChatRoom import ChatRoom
 from myapp.ApiObject import ApiObject
 from myapp.Bbs import Bbs
 from myapp.OwnerCheck import OwnerCheck
+from myapp.SyncPut import SyncPut
 
 class Chat(webapp.RequestHandler):
 	#エラー定数
@@ -81,7 +82,7 @@ class Chat(webapp.RequestHandler):
 			room.is_always=1
 			room.password=""
 		
-		room.put()
+		SyncPut.put_sync(room)
 		self.redirect("./chat")
 	
 	#ルームを終了する
@@ -271,10 +272,16 @@ class Chat(webapp.RequestHandler):
 	#ポータル
 	def show_portal(self,user):
 		is_iphone=CssDesign.is_iphone(self)
-		room_list=ChatRoom.all().order("-create_date").fetch(limit=100)
+		room_list=db.Query(ChatRoom,keys_only=True).order("-create_date").fetch(limit=100)
 		
 		show_room=[]
-		for room in room_list:
+		for room_key in room_list:
+			try:
+				room=db.get(room_key)	#削除のインデックスの反映が遅延するため再取得
+			except:
+				room=None
+			if(not room):
+				continue
 			room.from_last_update=(Chat.get_sec(datetime.datetime.now())-Chat.get_sec(room.date))/60
 			room.from_created=(Chat.get_sec(datetime.datetime.now())-Chat.get_sec(room.create_date))/60
 			if(room.from_last_update>=10 and (not room.is_always)):
