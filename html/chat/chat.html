@@ -54,8 +54,7 @@
 
 {% if room_list %}
 	{% for room in room_list %}
-		<table>
-		<tr><td>
+		<div style="float:left;">
 			<div style="background-color:#aaaaaa;padding:1px;margin-right:4px;">
 				{% if user %}
 		<A HREF="javascript:join_chat('{{room.key}}',false,{% if room.password %}true{%else%}false{%endif%});" class="declink">{% endif %}
@@ -66,18 +65,18 @@
 				{% endif %}
 				{% if user %}</A>{% endif %}
 			</div>
-		</td>
-		<td>
-		<H2>{{room.name}}{% if room.is_always %}(常時稼動ルーム){% endif %}</H2>
-		from <A HREF="./mypage?user_id={{room.user_id}}">{{room.user_name}}</A><BR>
-		最終更新から{{room.from_last_update}}分経過<BR>
+		</div><div>
+		<p><H2>{{room.name}}{% if room.is_always %}(常時稼動ルーム){% endif %}
 		{% if room.password %}
-			パスワードが必要{% if user %}{% ifequal user.user_id room.user_id %}（{{room.password}}）{% endifequal %}{% endif %}　
+			（パスワードが必要）{% if user %}{% ifequal user.user_id room.user_id %}（{{room.password}}）{% endifequal %}{% endif %}　
 		{% else %}
-			誰でも参加可能<BR>
+			（誰でも参加可能）
 		{% endif %}
+		</H2></p>
+		<p>from <A HREF="./mypage?user_id={{room.user_id}}">{{room.user_name}}</A><br>
+		最終更新から{{room.from_last_update}}分経過<br>
 		{% if user %}
-		<BR>
+		</p>
 		<div class="actions g-button-container">
 		<div class="g-button-group">
 		<A HREF="javascript:join_chat('{{room.key}}',false,{% if room.password %}true{%else%}false{%endif%});" class="g-button green">{% if not is_iphone %}{% endif %}参加（{{room.user_count}}人）</A>
@@ -87,8 +86,8 @@
 		{% endif %}
 		</div>
 		</div>
-		</td></tr>
-		</table>
+		</div>
+		<br clear="all">
 	{% endfor %}
 {% else %}
 	<p>稼働中のルームはありません。</p>
