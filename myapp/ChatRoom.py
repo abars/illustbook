@@ -36,3 +36,4 @@ class ChatRoom(db.Model):
 	is_always=db.IntegerProperty()	#for always room search
 	create_date = db.DateTimeProperty(auto_now=False)
 	date = db.DateTimeProperty(auto_now=True)
+	sand = db.StringProperty()

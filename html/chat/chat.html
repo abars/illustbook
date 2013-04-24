@@ -66,7 +66,7 @@
 				{% if user %}</A>{% endif %}
 			</div>
 		</div><div>
-		<p><H2>{{room.name}}{% if room.is_always %}(常時稼動ルーム){% endif %}
+		<p><H2>{{room.name}}{% if room.is_always %}（常時稼動ルーム）{% endif %}
 		{% if room.password %}
 			（パスワードが必要）{% if user %}{% ifequal user.user_id room.user_id %}（{{room.password}}）{% endifequal %}{% endif %}　
 		{% else %}
@@ -83,9 +83,9 @@
 		{% if user %}{% ifequal user.user_id room.user_id %}<A HREF="javascript:delete_room('./chat?mode=delete&key={{room.key}}');" class="g-button green">{% if not is_iphone %}{% endif %}削除</A>{% endifequal %}{% endif %}
 		<!--<A HREF="javascript:join_chat('{{room.key}}',true,{% if room.password %}true{%else%}false{%endif%});" class="g-button 
 		green">{% if not is_iphone %}{% endif %}閲覧</A>-->
+		</div>
+		</div>
 		{% endif %}
-		</div>
-		</div>
 		</div>
 		<br clear="all">
 	{% endfor %}
@@ -103,7 +103,10 @@
 	}
 </script>
 
+<p>&nbsp</p>
+
 <div>
+
 <H1>ルームの作成</H1>
 
 <div id="new_room_exec" style="display:none;">
