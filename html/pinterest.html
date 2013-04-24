@@ -61,26 +61,11 @@
 
 <div id="contents">
 
-<!-- 2ページ目以降はコンテンツだけでよい -->
 {% if not contents_only %}
 <div id="index">
 
-<!-- タグサーチ -->
-
-{% ifequal page_mode "tag" %}
-  <div class="message">
-    タグ「{{tag}}」の付けられたイラスト
-  </div>
-{% endifequal %}
-
-{% ifequal page_mode "search" %}
-  <div class="message">
-    {% include "pinterest/search.html" %}
-  </div>
-{% endifequal %}
 
 <!-- アラート -->
-
 {% if regist_finish %}
   <div class="message">
     お絵かき掲示板の新規作成が完了しました。<br>
@@ -96,69 +81,18 @@
 {% endif %}
 
 <!-- ユーザ情報 -->
-
 {% ifequal page_mode "user" %}
   {% include "pinterest/user.html" %}
 {% endifequal %}
 
-<!-- ポータル -->
-
-{% ifequal page_mode "index" %}
-  <div class="logo">
-  {% if is_iphone %}
-   <img src="static_files/banner_360.png" width="180px" height="180px">
-  {% else %}
-   <img src="static_files/banner_360b.png">
-  {% endif %}
-   <div id="logo_fotter">
-     from <a href="http://pochigoya0423.blog.shinobi.jp/">飯田のぎ</a>
-    </div>
-  </div>
-{% endifequal %}
-
-{% if not is_iphone %}<div style="float:left;">{% endif %}
-
-{% ifequal page_mode "index" %}
-  {% include "pinterest/menulist.html" %}
-  <br clear="all">
-{% endifequal %}
-
-<!-- タグ一覧 -->
-
-{% if tag_list %}
-<div class="message" {% if not is_iphone %}style="width:390px;"{% endif %}>
-{% for tag2 in tag_list %}
-    {% if forloop.counter <= tag_display_n %}
-      {{tag2|safe}}　
-    {% endif %}
-{% endfor %}
-    <div id="more_tag">
-{% for tag2 in tag_list %}
-    {% if forloop.counter > tag_display_n %}
-      {% if forloop.counter <= 100 %}
-        {{tag2|safe}}　
-      {% endif %}
-    {% endif %}
-{% endfor %}
-      <a href="javascript:show_more_tag();" class="g-button mini">閉じる</a>
-    </div>
-      <a id="show_more_tag_button" href="javascript:show_more_tag();" class="g-button mini">もっと見る</a>
-</div>
-{% endif %}
-
-{% if not is_iphone %}</div>{% endif %}
-
-<br clear="all">
-
 <!-- ユーザ情報タブ -->
 {% ifequal page_mode "user" %}
+  <br clear="all">
   {% include "pinterest/user_menu.html" %}
 {% endifequal %}
 
-<!-- 掲示板 -->
-{% ifequal tab "bbs" %}
-  {% include "pinterest/bbs.html" %}
-{% endifequal %}
+<!-- ユーザタイムライン -->
+{% include "pinterest/user_timeline.html" %}
 
 <!-- ガイド -->
 {% ifequal page_mode "guide" %}
@@ -172,19 +106,6 @@
   <div class="guide">
     {%include "mypage/login_require.html"%}
   </div>
-{% endifequal %}
-
-<!-- タイムライン -->
-{% ifequal page_mode "user" %}
-{% if is_timeline_enable %}
-  {% include "mypage/feed.html" %}
-  <script type="text/javascript" src="api_js"></script>
-  <script type="text/javascript" src="js/timeline.js"></script>
-  <script>
-    feed_set_env("{{tab}}",{{view_mode}},{{edit_mode}},"{{user_id}}",1);
-    feed_initialize();
-  </script>
-{% endif %}
 {% endifequal %}
 
 <!-- ポータルタブ -->
@@ -214,6 +135,11 @@
 {% endif %}
 
 <div id="container" class="transitions-enabled infinite-scroll clearfix">
+  <div class="corner-stamp">
+  {% if not contents_only %}
+   {% include "corner_stamp.html" %}
+  {% endif %}
+  </div>
   {% include "pinterest/illust.html" %}
 </div>
 

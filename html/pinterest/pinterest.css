@@ -21,6 +21,15 @@ h2,h3 {font-size:100%;color:#E47911;}
     margin:0 auto;
 }
 
+.corner-stamp{
+   float:right;
+   {% if is_iphone %}
+   width: 320px;
+   {% else %}
+   width: 420px;
+   {% endif %}
+}
+
 #index{
   margin:auto;
   {% if thread_list %}
