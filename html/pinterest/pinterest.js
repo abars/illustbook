@@ -12,6 +12,7 @@ $.Mason.prototype._reLayout = function( callback ) {
     var $cornerStamp = this.element.find( this.options.cornerStampSelector ),
       cornerStampX = $cornerStamp.offset().left - 
       ( this.element.offset().left + this.offset.x + parseInt($cornerStamp.css('marginLeft')) );
+      //alert(""+cornerStampX+"/"+this.columnWidth);
     freeCols = Math.floor( cornerStampX / this.columnWidth );
   }
   // reset columns
@@ -44,7 +45,10 @@ var $container = $('#container');
     $('#index').show();
   }
 
-masonry_exec();
+$(document).ready(function(){
+  masonry_exec(); //windowの確定
+  masonry_exec(); //corner stampに対応
+});
 
 $( window ).resize(function(){
   masonry_exec();
