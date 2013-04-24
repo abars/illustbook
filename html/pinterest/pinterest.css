@@ -26,9 +26,11 @@ h2,h3 {font-size:100%;color:#E47911;}
    {% if is_iphone %}
    width: 320px;
    {% else %}
+   {% if not bookmark %}
    width: 362px;
    padding:1px;
    margin:5px;
+   {% endif %}
    {% endif %}
 }
 

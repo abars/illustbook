@@ -1,12 +1,9 @@
 <!-- 2ページ目以降はコンテンツだけでよい -->
 
-
 <!-- タグサーチ -->
 
 {% ifequal page_mode "search" %}
-  <div class="message">
     {% include "pinterest/search.html" %}
-  </div>
 {% endifequal %}
 
 <!-- ポータル -->
@@ -23,8 +20,6 @@
     </div>
   </div>
 {% endifequal %}
-
-{% if not is_iphone %}<div style="float:left;">{% endif %}
 
 {% ifequal page_mode "index" %}
   {% include "pinterest/menulist.html" %}
@@ -54,4 +49,3 @@
 </div>
 {% endif %}
 
-{% if not is_iphone %}</div>{% endif %}
