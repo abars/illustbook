@@ -26,7 +26,9 @@ h2,h3 {font-size:100%;color:#E47911;}
    {% if is_iphone %}
    width: 320px;
    {% else %}
-   width: 420px;
+   width: 362px;
+   padding:1px;
+   margin:5px;
    {% endif %}
 }
 
@@ -102,7 +104,9 @@ box-shadow: 0 2px 1px #eee;
 .logo {
 position:relative;
 max-width:100%;
+{% if is_iphone %}
 margin:5px;
+{% endif %}
 float:left;
 {% if is_iphone %}
 width: 180px;

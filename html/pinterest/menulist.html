@@ -47,7 +47,7 @@
 </style>
 
 <!-- メニュー -->
-<div style="float:left;margin:5px;{% if is_iphone %}width:120px;{% endif %}">
+<div style="float:left;{% if is_iphone %}margin:5px;width:120px;{% endif %}">
 <ul>
 	<a href="{{host}}sample/"><li class="color1"><p>試し描き</p></li></a>
 	<a href="{{host}}mypage"><li class="color2"><p>レンタル</p></li></a>
