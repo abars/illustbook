@@ -90,7 +90,10 @@ class ImageFile (webapp.RequestHandler):
 		if(image==None):
 			return None
 
-		img = images.Image(image)
+		try:
+			img = images.Image(image)
+		except:
+			return None
 
 		src_w=img.width
 		src_h=img.height

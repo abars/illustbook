@@ -287,6 +287,7 @@ class Pinterest(webapp.RequestHandler):
 			next_query=""
 			page_mode="login_require"
 			view_mode=0
+			top_page=0
 
 		#ランキング
 		user_rank=0
