@@ -49,6 +49,24 @@ var $container = $('#container');
 $(document).ready(function(){
   masonry_exec(); //windowの確定
   masonry_exec(); //corner stampに対応
+
+  // back to top
+    $(function () {
+        $(window).scroll(function () {
+            if ($(this).scrollTop() > 100) {
+                $('#back-top').fadeIn();
+            } else {
+                $('#back-top').stop().fadeOut();
+            }
+        });
+        // scroll body to 0px on click
+        $('#back-top a').click(function () {
+            $('body,html').animate({
+                scrollTop: 0
+            }, 800);
+            return false;
+        });
+    });
 });
 
 $( window ).resize(function(){
@@ -61,9 +79,9 @@ $( window ).resize(function(){
       itemSelector : '.item',     // selector for all items you'll retrieve
       bufferPx : 2000, // 最も下に行く前にロードをかける
       loading: {
-          finishedMsg: '<div style="background-color:#ffffff;z-index:2;">ページの終端です。</div>',
+          finishedMsg: '<div class="loading">ページの終端です。</div>',
           img: 'static_files/loading.gif',
-          msgText: '<div style="background-color:#ffffff;z-index:2;">次のページを読込中</div>'
+          msgText: '<div class="loading">次のページを読込中</div>'
         }
       },
       // trigger Masonry as a callback
