@@ -46,11 +46,7 @@ var $container = $('#container');
     $('#pinterest_footer').show();
   }
 
-$(document).ready(function(){
-  masonry_exec(); //windowの確定
-  masonry_exec(); //corner stampに対応
-
-  // back to top
+  function set_return_to_top(){
     $(function () {
         $(window).scroll(function () {
             if ($(this).scrollTop() > 100) {
@@ -66,7 +62,15 @@ $(document).ready(function(){
             }, 800);
             return false;
         });
-    });
+    });    
+  }
+
+$(document).ready(function(){
+  masonry_exec(); //windowの確定
+  masonry_exec(); //corner stampに対応
+  {% if not is_iphone %}
+    set_return_to_top();
+  {% endif %}
 });
 
 $( window ).resize(function(){

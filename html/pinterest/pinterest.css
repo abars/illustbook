@@ -227,9 +227,7 @@ color: #333;
   bottom: 10px;
   right: 5px;
   margin-left: -100px;
-  border: 1px solid #ccc;
   background: #fff;
-  box-shadow: 0 2px 1px #eee;
   display:none;
   text-align: center;
 }
@@ -244,9 +242,7 @@ color: #333;
 
 .loading{
   z-index:2;
-  border: 1px solid #ccc;
   background: #fff;
-  box-shadow: 0 2px 1px #eee;
 }
 
 </style>
