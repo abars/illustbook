@@ -64,7 +64,6 @@ class ApiObject(webapp.RequestHandler):
 	@staticmethod
 	def get_bookmark_of_user_id(user_id):
 		key=BbsConst.OBJECT_CACHE_HEADER+BbsConst.OBJECT_BOOKMARK_CACHE_HEADER+user_id
-		#logging.error("load:"+key)
 		ret=memcache.get(key)
 		if(ret):
 			return ret
@@ -649,7 +648,7 @@ class ApiObject(webapp.RequestHandler):
 			try:
 				memcache.set_multi(put_multi_dic,key_prefix=BbsConst.OBJECT_CACHE_HEADER,time=BbsConst.OBJECT_CACHE_TIME)
 			except:
-				logging.error("memset_multi_overflow trap")
+				logging.warning("memset_multi_overflow trap")
 
 		return all_threads_cached
 

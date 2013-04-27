@@ -65,8 +65,11 @@ class CounterWorker(webapp.RequestHandler):
 			thread_key=str(thread.key())
 
 		#カウンターを進める
-		taskqueue.add(url="/counter_worker",params={"bbs":str(bbs.key()),"thread":thread_key,"dont_count":str(dont_count),"referer":referer,"url":url,"remote_addr":remote_addr},queue_name="counter")
-	
+		try:
+			taskqueue.add(url="/counter_worker",params={"bbs":str(bbs.key()),"thread":thread_key,"dont_count":str(dont_count),"referer":referer,"url":url,"remote_addr":remote_addr},queue_name="counter")
+		except:
+			logging.warning("counter taskqueue add failed")
+
 	def post(self):
 		#BBS取得
 		bbs_key=self.request.get("bbs")
