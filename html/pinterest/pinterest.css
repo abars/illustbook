@@ -285,4 +285,9 @@ color: #333;
   .color7{background:rgb(119,47,191);color:#fff;}
   .color8{background:rgb(191,47,155);color:#fff;}
 
+/* guide page */
+  .result{
+    padding:4px;
+    padding-bottom:40px;
+  }
 </style>
