@@ -110,10 +110,15 @@ class Pinterest(webapp.RequestHandler):
 		return {"thread_list":thread_list,"cnt":cnt}
 
 	def get(self):
-		Pinterest.get_core(self,False,False)
+		Pinterest.get_core(self,Pinterest.PAGE_MODE_NORMAL)
+
+	PAGE_MODE_NORMAL=0
+	PAGE_MODE_MYPAGE=1
+	PAGE_MODE_GUIDE=2
+	PAGE_MODE_REGIST=3
 
 	@staticmethod
-	def get_core(self,is_mypage,regist_finish):
+	def get_core(self,request_page_mode):
 		SetUtf8.set()
 
 		unit=BbsConst.PINTEREST_PAGE_UNIT
@@ -142,7 +147,7 @@ class Pinterest(webapp.RequestHandler):
 		tab=None
 		if(self.request.get("tab")):
 			tab=self.request.get("tab")
-		if(regist_finish):
+		if(request_page_mode==Pinterest.PAGE_MODE_REGIST):
 			tab="bbs"
 
 		search=None
@@ -160,7 +165,7 @@ class Pinterest(webapp.RequestHandler):
 		user_id=""
 		if(self.request.get("user_id")):
 			user_id=self.request.get("user_id")
-		if user_id=="" and is_mypage and user:
+		if user_id=="" and (request_page_mode==Pinterest.PAGE_MODE_MYPAGE or request_page_mode==Pinterest.PAGE_MODE_REGIST) and user:
 			user_id=user.user_id()
 
 		#マイユーザか
@@ -184,11 +189,11 @@ class Pinterest(webapp.RequestHandler):
 
 		#リダイレクト先API
 		redirect_api="./"
-		if(is_mypage):
+		if(request_page_mode==Pinterest.PAGE_MODE_MYPAGE or request_page_mode==Pinterest.PAGE_MODE_REGIST):
 			redirect_api="mypage"
 		if(self.request.get("is_pinterest")):
 			redirect_api="pinterest"
-		search_api="pinterest"
+		search_api="search_tag"#pinterest"
 
 		page_mode="index"
 		view_user=None
@@ -254,7 +259,7 @@ class Pinterest(webapp.RequestHandler):
 			following=Pinterest.is_following(user,user_id,view_mode)
 			age=Pinterest.get_age(bookmark)
 		else:
-			if(order=="guide"):
+			if(order=="guide" or request_page_mode==Pinterest.PAGE_MODE_GUIDE):
 				thread_list=None
 				tag_list=None
 				next_query=""
@@ -263,7 +268,7 @@ class Pinterest(webapp.RequestHandler):
 				if(tag!=""):
 					dic=Pinterest.get_tag_image(self,tag,page,unit)	#一度、タグから取得してインデックスを更新
 					thread_list=dic["thread_list"]
-					tag_list=SearchTag.update_recent_tag(tag,dic["cnt"],"pinterest")
+					tag_list=SearchTag.update_recent_tag(tag,dic["cnt"],search_api)
 					#search=""+tag
 					next_query="tag="+urllib.quote_plus(str(tag))
 					page_mode="tag"
@@ -272,16 +277,16 @@ class Pinterest(webapp.RequestHandler):
 						thread_list=SearchThread.search(search,page,unit)
 						thread_list=ApiObject.create_thread_object_list(self,thread_list,"search")
 						next_query="search="+urllib.quote_plus(str(search))
-						tag_list=SearchTag.get_recent_tag("pinterest")
+						tag_list=SearchTag.get_recent_tag(search_api)
 						page_mode="search"
 					else:
 						thread_list=ApiFeed.feed_get_thread_list(self,order,(page-1)*unit,unit)
 						next_query="order="+order
-						tag_list=SearchTag.get_recent_tag("pinterest")
+						tag_list=SearchTag.get_recent_tag(search_api)
 						top_page=True
 
 		#ログイン要求
-		if(is_mypage and user_id==""):
+		if(request_page_mode==Pinterest.PAGE_MODE_MYPAGE and user_id==""):
 			thread_list=None
 			tag_list=None
 			next_query=""
@@ -338,7 +343,7 @@ class Pinterest(webapp.RequestHandler):
 			'redirect_url': self.request.path,
 			'new_feed_count': new_feed_count,
 			'submit_illust_exist': submit_illust_exist,
-			'regist_finish': regist_finish,
+			'regist_finish': (request_page_mode==Pinterest.PAGE_MODE_REGIST),
 			'is_maintenance': is_maintenance,
 			'redirect_api': redirect_api,
 			'search_api': search_api,

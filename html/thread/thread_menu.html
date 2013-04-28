@@ -1,11 +1,11 @@
 <div class="g-button-group toggle-buttons">
 	
 {% if owner or my_illust%}
-<a class="g-button" href="#" onclick='location.href="{{host}}edit_thread?bbs_key={{bbs.key}}&thread_key={{thread.key}}"' style="color:#333;">投稿の編集</a>
-<a class="g-button" href="#" onclick='confirm_action_thread("{{thread.key}}", "{{bbs.key}}", "{{host}}")'  style="color:#333;">投稿の削除</a>
+<a class="g-button" href="#" onclick='location.href="{{host}}edit_thread?bbs_key={{bbs.key}}&amp;thread_key={{thread.key}}"' style="color:#333;">投稿の編集</a>
+<a class="g-button" href="#" onclick='confirm_action_thread("{{thread.key}}", "{{bbs.key}}", "{{host}}")' style="color:#333;">投稿の削除</a>
 {% else %}
 	{% if thread.delete_key %}
-	<a class="g-button" href="#" onclick='prompt_action_thread("{{thread.key}}", "{{bbs.key}}", "{{host}}")'  style="color:#333;">削除キーで削除</a>
+	<a class="g-button" href="#" onclick='prompt_action_thread("{{thread.key}}", "{{bbs.key}}", "{{host}}")' style="color:#333;">削除キーで削除</a>
 	{% endif %}
 {% endif %}
 
@@ -15,12 +15,12 @@
 	{% endifequal %}
 	{% if bbs.enable_continue_draw %}
 		{% ifequal bbs.bbs_mode 1 %}
-		<a class="g-button" href="#"  onclick="open_draw('{{thread.cached_image_key}}',0,'{{host}}','{{thread.key}}','{{bbs.key}}',{{thread.illust_mode}})"  style="color:#333;">続きから描く</a>
+		<a class="g-button" href="#" onclick="open_draw('{{thread.cached_image_key}}',0,'{{host}}','{{thread.key}}','{{bbs.key}}',{{thread.illust_mode}})" style="color:#333;">続きから描く</a>
 		{% endifequal %}
 		
 		{% ifequal bbs.bbs_mode 2 %}
 			{% if owner %}
-				<a class="g-button" href="#" onclick="open_draw('{{thread.cached_image_key}}',0,'{{host}}','{{thread.key}}','{{bbs.key}}',{{thread.illust_mode}})"  style="color:#333;">続きから描く</a>
+				<a class="g-button" href="#" onclick="open_draw('{{thread.cached_image_key}}',0,'{{host}}','{{thread.key}}','{{bbs.key}}',{{thread.illust_mode}})" style="color:#333;">続きから描く</a>
 			{% endif %}
 		{% endifequal %}
 	{% endif %}
@@ -34,10 +34,10 @@
 		特権管理 <span class="caret"></span>
 		</a>
 		<ul class="dropdown-menu">
-			<li><a href="{{host}}violation?bbs_key={{bbs.key}}&thread_key={{thread.key}}&mode=adult">アダルト</a></li>
-			<li><a href="{{host}}violation?bbs_key={{bbs.key}}&thread_key={{thread.key}}&mode=terms">規約</a></li>
-			<li><a href="{{host}}violation?bbs_key={{bbs.key}}&thread_key={{thread.key}}&mode=comment">コメント禁止</a></li>
-			<li><a href="{{host}}violation?bbs_key={{bbs.key}}&thread_key={{thread.key}}&mode=photo">非表示{% if thread.violate_photo %}(適用中){% endif %}</a></li>
+			<li><a href="{{host}}violation?bbs_key={{bbs.key}}&amp;thread_key={{thread.key}}&amp;mode=adult">アダルト</a></li>
+			<li><a href="{{host}}violation?bbs_key={{bbs.key}}&amp;thread_key={{thread.key}}&amp;mode=terms">規約</a></li>
+			<li><a href="{{host}}violation?bbs_key={{bbs.key}}&amp;thread_key={{thread.key}}&amp;mode=comment">コメント禁止</a></li>
+			<li><a href="{{host}}violation?bbs_key={{bbs.key}}&amp;thread_key={{thread.key}}&amp;mode=photo">非表示{% if thread.violate_photo %}(適用中){% endif %}</a></li>
 			<li><a href="#">{{bbs.owner.email}}</a></li>
 			<li><a href="#">{{bbs.user_id}}</a></li>
 		</ul>

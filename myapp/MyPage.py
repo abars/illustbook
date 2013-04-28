@@ -188,79 +188,82 @@ class MyPage(webapp.RequestHandler):
 		#リダイレクト
 		if(BbsConst.PINTEREST_MODE):
 			if((user and OwnerCheck.is_admin(user)) or BbsConst.PINTEREST_MODE==2):
-				return Pinterest.get_core(self,True,regist_finish)
+				if(regist_finish):
+					return Pinterest.get_core(self,Pinterest.PAGE_MODE_REGIST)
+				else:
+					return Pinterest.get_core(self,Pinterest.PAGE_MODE_MYPAGE)
 		
 		#タブ
-		tab=self.request.get("tab")
-		new_feed_count=0
-		if(not tab):
-			tab="illust"
-			new_feed_count=Pinterest.consume_feed(user,view_mode,bookmark)
-			if(new_feed_count):
-				tab="feed"
+		#tab=self.request.get("tab")
+		#new_feed_count=0
+		#if(not tab):
+		#	tab="illust"
+		#	new_feed_count=Pinterest.consume_feed(user,view_mode,bookmark)
+		#	if(new_feed_count):
+		#		tab="feed"
 
 		#ページ
-		feed_page=1
-		if(self.request.get("feed_page")):
-			feed_page=int(self.request.get("feed_page"))
+		#feed_page=1
+		#if(self.request.get("feed_page")):
+		#	feed_page=int(self.request.get("feed_page"))
 		
-		feed_page_n=1
-		feed_page_unit=10
-		if(bookmark and bookmark.stack_feed_list):
-			feed_page_n=(len(bookmark.stack_feed_list)+(feed_page_unit-1))/feed_page_unit
+		#feed_page_n=1
+		#feed_page_unit=10
+		#if(bookmark and bookmark.stack_feed_list):
+		#	feed_page_n=(len(bookmark.stack_feed_list)+(feed_page_unit-1))/feed_page_unit
 		
 		#iPhoneモードかどうか
-		is_iphone=CssDesign.is_iphone(self)
+		#is_iphone=CssDesign.is_iphone(self)
 		
 		#フォロー中かどうか
-		following=False
-		if(bookmark):
-			following=Pinterest.is_following(user,bookmark.user_id,view_mode)
+		#following=False
+		#if(bookmark):
+		#	following=Pinterest.is_following(user,bookmark.user_id,view_mode)
 
 		#年齢
-		age=Pinterest.get_age(bookmark)
+		#age=Pinterest.get_age(bookmark)
 
 		#フィードURL
-		feed_previous_page=host+"mypage?"
-		if(view_mode and bookmark):
-			feed_previous_page+="user_id="+bookmark.user_id+"&"
-		feed_previous_page+="tab=feed&feed_page="
-		feed_next_page=feed_previous_page+str(feed_page+1)
-		feed_previous_page=feed_previous_page+str(feed_page-1)
-		if(feed_page==feed_page_n):
-			feed_next_page=""
+		#feed_previous_page=host+"mypage?"
+		#if(view_mode and bookmark):
+		#	feed_previous_page+="user_id="+bookmark.user_id+"&"
+		#feed_previous_page+="tab=feed&feed_page="
+		#feed_next_page=feed_previous_page+str(feed_page+1)
+		#feed_previous_page=feed_previous_page+str(feed_page-1)
+		#if(feed_page==feed_page_n):
+		#	feed_next_page=""
 		
 		#ランキング
-		user_rank=0
-		if(bookmark):
-			rank=Ranking.get_or_insert(BbsConst.THREAD_RANKING_KEY_NAME)
-			user_rank=rank.get_user_rank(bookmark.user_id)
+		#user_rank=0
+		#if(bookmark):
+		#	rank=Ranking.get_or_insert(BbsConst.THREAD_RANKING_KEY_NAME)
+		#	user_rank=rank.get_user_rank(bookmark.user_id)
 		
-		template_values = {
-			'host': host,
-			'user':user,
-			'regist_finish':regist_finish,
-			'bookmark': bookmark,
-			'edit_profile': edit_profile,
-			'view_mode': view_mode,
-			'edit_mode': edit_mode,
-			'is_iphone': is_iphone,
-			'tab': tab,
-			'age': age,
-			'feed_page': feed_page,
-			'feed_previous_page': feed_previous_page,
-			'feed_next_page': feed_next_page,
-			'feed_page_n': feed_page_n,
-			'login_flag': login_flag,
-			'is_admin': is_admin,
-			'redirect_url': self.request.path,
-			'mypage': not view_mode,
-			'following': following,
-			'user_rank': user_rank,
-			'new_feed_count': new_feed_count
-		}
+		#template_values = {
+		#	'host': host,
+		#	'user':user,
+		#	'regist_finish':regist_finish,
+		#	'bookmark': bookmark,
+		#	'edit_profile': edit_profile,
+		#	'view_mode': view_mode,
+		#	'edit_mode': edit_mode,
+		#	'is_iphone': is_iphone,
+		#	'tab': tab,
+		#	'age': age,
+		#	'feed_page': feed_page,
+		#	'feed_previous_page': feed_previous_page,
+		#	'feed_next_page': feed_next_page,
+		#	'feed_page_n': feed_page_n,
+		#	'login_flag': login_flag,
+		#	'is_admin': is_admin,
+		#	'redirect_url': self.request.path,
+		#	'mypage': not view_mode,
+		#	'following': following,
+		#	'user_rank': user_rank,
+		#	'new_feed_count': new_feed_count
+		#}
 		
-		path = os.path.join(os.path.dirname(__file__), '../html/mypage.html')
-		self.response.out.write(template.render(path, template_values))
+		#path = os.path.join(os.path.dirname(__file__), '../html/mypage.html')
+		#self.response.out.write(template.render(path, template_values))
 		
 

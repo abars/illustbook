@@ -149,7 +149,7 @@ class MainPage(webapp.RequestHandler):
 		#リダイレクト
 		if(BbsConst.PINTEREST_MODE):
 			if((user and OwnerCheck.is_admin(user)) or BbsConst.PINTEREST_MODE==2):
-				return Pinterest.get_core(self,False,False)
+				return Pinterest.get_core(self,Pinterest.PAGE_MODE_NORMAL)
 
 		#URL生成
 		template_values = {
@@ -247,7 +247,7 @@ class GuidePage(webapp.RequestHandler):
 		user=users.get_current_user()
 		if(BbsConst.PINTEREST_MODE):
 			if((user and OwnerCheck.is_admin(user)) or BbsConst.PINTEREST_MODE==2):
-				self.redirect(str("./pinterest?order=guide"))
+				Pinterest.get_core(self,Pinterest.PAGE_MODE_GUIDE)
 				return
 		Portal.get(self,"guide",True)
 
@@ -325,7 +325,7 @@ application = webapp.WSGIApplication(
 	('/profile',Profile),
 	('/support',Support),
 	('/terms',Terms),
-	('/search_tag',SearchTag),
+	('/search_tag',Pinterest),#SearchTag),
 	('/move_account',MoveAccount),
 	('/violation',ViolationTerms),
 	('/nico_tracker',NicoTracker),

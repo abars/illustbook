@@ -131,59 +131,59 @@ class SearchTag(webapp.RequestHandler):
 		tag_list=SearchTag.get_recent_tag_core(recent_tag,api)
 		return tag_list
 
-	def get(self):
-		tag=self.request.get("tag")
+	#def get(self):
+	#	tag=self.request.get("tag")
 		
-		SetUtf8.set()
+	#	SetUtf8.set()
 
 		#リダイレクト
-		user=users.get_current_user()
-		if(BbsConst.PINTEREST_MODE):
-			if((user and OwnerCheck.is_admin(user)) or BbsConst.PINTEREST_MODE==2):
-				self.redirect(str("./pinterest?tag="+urllib.quote_plus(str(tag))))
-				return
+	#	user=users.get_current_user()
+	#	if(BbsConst.PINTEREST_MODE):
+	#		if((user and OwnerCheck.is_admin(user)) or BbsConst.PINTEREST_MODE==2):
+	#			self.redirect(str("./pinterest?tag="+urllib.quote_plus(str(tag))))
+	#			return
 
-		page=1
-		thread_num=100
+	#	page=1
+	#	thread_num=100
 
 		#タグに対応するクエリを作成
-		query = db.Query(MesThread,keys_only=True)
-		query.filter('illust_mode =', BbsConst.ILLUSTMODE_ILLUST)
-		query.order('-applause')
-		thread_list = self.get_thread(query,tag,thread_num,page)
+	#	query = db.Query(MesThread,keys_only=True)
+	#	query.filter('illust_mode =', BbsConst.ILLUSTMODE_ILLUST)
+	#	query.order('-applause')
+	#	thread_list = self.get_thread(query,tag,thread_num,page)
 
-		query = db.Query(MesThread,keys_only=True)
-		query.filter('illust_mode =', BbsConst.ILLUSTMODE_MOPER)
-		query.order('-applause')
-		moper_list = self.get_thread(query,tag,thread_num,page)
+	#	query = db.Query(MesThread,keys_only=True)
+	#	query.filter('illust_mode =', BbsConst.ILLUSTMODE_MOPER)
+	#	query.order('-applause')
+	#	moper_list = self.get_thread(query,tag,thread_num,page)
 		
-		query = db.Query(MesThread,keys_only=True)
-		query.filter('illust_mode =', BbsConst.ILLUSTMODE_NONE)
-		query.order('-date')
-		text_list = self.get_thread(query,tag,thread_num,page)
+	#	query = db.Query(MesThread,keys_only=True)
+	#	query.filter('illust_mode =', BbsConst.ILLUSTMODE_NONE)
+	#	query.order('-date')
+	#	text_list = self.get_thread(query,tag,thread_num,page)
 		
-		host_url="./";
+	#	host_url="./";
 
 		#最近のタグ
-		cnt=len(thread_list)+len(moper_list)+len(text_list)
-		tag_list=SearchTag.update_recent_tag(tag,cnt,"search_tag")
+	#	cnt=len(thread_list)+len(moper_list)+len(text_list)
+	#	tag_list=SearchTag.update_recent_tag(tag,cnt,"search_tag")
 
 		#iPhoneかどうか
-		is_iphone=CssDesign.is_iphone(self)
+	#	is_iphone=CssDesign.is_iphone(self)
 		
 		#レンダリング
-		template_values = {
-			'host': host_url,
-			'thread_list': thread_list,
-			'moper_list': moper_list,
-			'text_list': text_list,
-			'tag': tag,
-			'tag_list': tag_list,
-			'is_iphone': is_iphone,
-			'user': users.get_current_user(),
-			'redirect_url': self.request.path,
-			'mode': "bookmark"
-		}
+	#	template_values = {
+	#		'host': host_url,
+	#		'thread_list': thread_list,
+	#		'moper_list': moper_list,
+	#		'text_list': text_list,
+	#		'tag': tag,
+	#		'tag_list': tag_list,
+	#		'is_iphone': is_iphone,
+	#		'user': users.get_current_user(),
+	#		'redirect_url': self.request.path,
+	#		'mode': "bookmark"
+	#	}
 
-		path = os.path.join(os.path.dirname(__file__), "../html/portal.html")
-		self.response.out.write(template.render(path, template_values))
+	#	path = os.path.join(os.path.dirname(__file__), "../html/portal.html")
+	#	self.response.out.write(template.render(path, template_values))

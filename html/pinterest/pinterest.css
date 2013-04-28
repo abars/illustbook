@@ -240,6 +240,8 @@ color: #333;
 #back-top a {
   width: 100px;
   height: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   text-decoration: none;
   color: #333;
   display: block;

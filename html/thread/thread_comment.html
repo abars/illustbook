@@ -66,20 +66,20 @@
 		{% if res.comment_no %}　投稿番号：{{res.comment_no}}{%endif%}
 			<div class="g-button-group" style="float:right;">
 			{% if forloop.first and is_admin %}
-				<input type="button" value="一括"  class="g-button" onclick="confirm_action_comment('{{host}}del_res?entry_key={{entry.com.key}}&amp;res_key=all');"/>
+				<input type="button" value="一括" class="g-button" onclick="confirm_action_comment('{{host}}del_res?entry_key={{entry.com.key}}&amp;res_key=all');"/>
 			{% endif %}
 			{%if is_admin or edit_flag %}
-				<input type="button" value="削除"  class="g-button" onclick="confirm_action_comment('{{host}}del_res?entry_key={{entry.com.key}}&amp;res_key={{res.key}}');">
+				<input type="button" value="削除" class="g-button" onclick="confirm_action_comment('{{host}}del_res?entry_key={{entry.com.key}}&amp;res_key={{res.key}}');"/>
 			{% else %}
 				{% if user %}
 					{% ifequal user.user_id res.user_id %}
-						<input type="button" value="削除"  class="g-button" onclick="confirm_action_comment('{{host}}del_res?entry_key={{entry.com.key}}&amp;res_key={{res.key}}');">
+						<input type="button" value="削除" class="g-button" onclick="confirm_action_comment('{{host}}del_res?entry_key={{entry.com.key}}&amp;res_key={{res.key}}');"/>
 					{% endifequal %}
 				{% endif %}
 			{% endif %}
 			{% if forloop.last %}
 				{%if show_comment_form %}
-					<input type="button" value="返信"  class="g-button" onclick="show('{{ entry.com.key }}');">
+					<input type="button" value="返信" class="g-button" onclick="show('{{ entry.com.key }}');"/>
 				{%endif%}
 			{% endif %}
 			</div>
