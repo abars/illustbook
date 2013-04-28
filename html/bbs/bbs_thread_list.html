@@ -1,10 +1,10 @@
 {% ifequal bbs.bbs_mode 3 %}
 	<!--スレッド式掲示板-->
 	<a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{%endif%}.html' class="g-button" style="width:90%;text-align:left;">
-	{% if template_path %}<H3>{% endif %}
-	{{ thread.title|escape }}<BR>
+	{% if template_path %}<h3>{% endif %}
+	{{ thread.title|escape }}<br/>
 	{{thread.author}}　{{thread.comment_cnt}}コメ　{{thread.date|time_JST_progress}}
-	{% if template_path %}</H3>{% endif %}
+	{% if template_path %}</h3>{% endif %}
 	</a>
 {% else %}
 	<!--イラスト非表示モード-->
@@ -12,11 +12,11 @@
 		<div class="entry-name">
 	{% endif %}
 		<a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{%endif%}.html' class="declink">
-	{% if template_path %}<H3>{% endif %}
+	{% if template_path %}<h3>{% endif %}
 		{{ thread.title|escape }}
-	{% if template_path %}</H3>{% endif %}
+	{% if template_path %}</h3>{% endif %}
 		</a>
-	<BR>
+	<br/>
 
 	{% if thread.author %}
 		{% if template_path %}
@@ -26,14 +26,14 @@
 		{% endif %}
 		{{thread|author_name_thread:host|safe}}
 	{% endif %}
-	<BR>
+	<br/>
 
 	{% if template_path %}
 		<img src="{{template_path}}images/i_comment.gif" alt="コメント数" width="64" height="20" />
 	{% else %}
 	コメント数：
 	{% endif %}
-	<a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{%endif%}.html' class="declink">{{thread.comment_cnt}}</a><BR>
+	<a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{%endif%}.html' class="declink">{{thread.comment_cnt}}</a><br/>
 
 	{% ifequal order "new" %}
 		{% if template_path %}
@@ -41,14 +41,14 @@
 		{% else %}
 			投稿日：
 		{% endif %}
-		{{thread.create_date|time_JST_progress}}<BR>
+		{{thread.create_date|time_JST_progress}}<br/>
 	{%else%}
 		{% if template_path %}
 			<img src="{{template_path}}images/i_day.gif" alt="投稿日" width="64" height="20" />
 		{% else %}
 			最終更新日：
 		{% endif %}
-		{{thread.date|time_JST_progress}}<BR>
+		{{thread.date|time_JST_progress}}<br/>
 	{%endifequal%}
 
 	{% if template_path %}

@@ -46,9 +46,9 @@
 {% endif %}
 
 		<div class="entry">
-		投稿の編集<HR><BR>
-		投稿を編集するには下記項目を編集してから”投稿を更新する”ボタンを押して下さい。<BR>
-		<BR>
+		投稿の編集<HR><br/>
+		投稿を編集するには下記項目を編集してから”投稿を更新する”ボタンを押して下さい。<br/>
+		<br/>
 		<form id="submit_form" action="./update_thread?bbs_key={{bbs.key}}&thread_key={{thread.key}}" enctype="multipart/form-data" method="post">
 		<TABLE>
 		<TR><TD>タイトル</TD><TD><input type="text" name="thread_title" value="{{thread.title}}" size=60></TD></TR>
@@ -62,7 +62,7 @@
 		<textarea id="thread_postscript" name="thread_postscript" cols=60 rows=16 style="display:none;"></textarea>
 		<input id="thread_category" name="thread_category" style="display:none;"/>
 		</form>
-		<BR>
+		<br/>
 
 		<TABLE>
 		<TR><TD>記事</TD><TD>
@@ -74,7 +74,7 @@
 		</TD></TR>
 		</TABLE>
 		
-		<BR><BR>
+		<br/><br/>
 		
 		<TABLE>
 		<TR><TD>追記</TD><TD>
@@ -86,10 +86,10 @@
 		</TD></TR>
 		</TABLE>
 		
-		<BR><BR>
+		<br/><br/>
 		
 		<input type="button" value="投稿を更新する" class="g-button" onclick="submit_info();">
-		<br>
+		<br/>
 		</div>
 		</div>
 

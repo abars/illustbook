@@ -20,18 +20,18 @@
 		{% ifequal page 1 %}
 			<a href="#" class="g-button no-text mini disabled2"><i class="icon-chevron-left"></i></a>
 		{% else %}
-			<a href="{{page_url_base}}{{page|add:"-1"}}&order={{order}}" class="g-button no-text mini"><i class="icon-chevron-left"></i></a>
+			<a href="{{page_url_base}}{{page|add:"-1"}}&amp;order={{order}}" class="g-button no-text mini"><i class="icon-chevron-left"></i></a>
 		{% endifequal %}
 
 		{%for p in page_list%}
 			{%ifequal p page%}
 				<div class="g-button checked no-text mini" style="color:#444">{{p}}</div>
 			{%else%}
-				<a href="{{page_url_base}}{{p}}&order={{order}}" class="g-button no-text mini" style="color:#444">{{p}}</a>
+				<a href="{{page_url_base}}{{p}}&amp;order={{order}}" class="g-button no-text mini" style="color:#444">{{p}}</a>
 			{%endifequal %}
 		{%endfor%}
 
-		<a href="{{page_url_base}}{{page|add:"1"}}&order={{order}}" class="g-button no-text mini"><i class="icon-chevron-right"></i></a>
+		<a href="{{page_url_base}}{{page|add:"1"}}&amp;order={{order}}" class="g-button no-text mini"><i class="icon-chevron-right"></i></a>
 	</div>
 
 </div>

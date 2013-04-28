@@ -26,13 +26,13 @@
 		<a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{%endif%}.html' class="imagelink">
 		{% include "bbs_thread/image.html" %}
 		{% ifequal thread.illust_mode 2 %}
-		<BR>[クリックで再生]
+		<br/>[クリックで再生]
 		{%endifequal%}
 		</a>
 	</div>
 	{% else %}
 		{% if template_path %}
-			<BR>
+			<br/>
 		{% endif %}
 	{% endif %}
 	
@@ -104,7 +104,7 @@
 			{%endif%}
 		{%endif%}
 		</div>
-		<br>
+		<br/>
 	{%endif%}
 
 {%endif%}
@@ -115,7 +115,7 @@
 	<!--コメント統合表示-->
 	{% if not thread.cached_render_comment %}
 	{% else %}
-		<p>&nbsp</p>
+		<p>&nbsp;</p>
 		<div style="margin-left:10%;">
 			{{thread.cached_render_comment}}
 		</div>

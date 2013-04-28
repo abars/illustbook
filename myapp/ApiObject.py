@@ -449,6 +449,10 @@ class ApiObject(webapp.RequestHandler):
 	def truncate_html(message):
 		TAG_RE = re.compile(r'<[^>]+>')
 		message=TAG_RE.sub('', message)
+
+		TAG_SP = re.compile(r'&nbsp;')
+		message=TAG_SP.sub(' ', message)
+
 		split_length=40
 		if(len(message)>=split_length):
 			message=message[0:split_length]

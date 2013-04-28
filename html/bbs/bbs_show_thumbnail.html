@@ -5,9 +5,9 @@
 			<a href='{{usrhost}}{{thread.key}}.html' class='imagelink'>
 			{% if thread.image_key %}
 				{%ifequal thread.illust_mode 2%}
-					<img src="{{host}}thumbnail/{{thread.image_key.key}}.gif" alt="{{thread.title}}">
+					<img src="{{host}}thumbnail/{{thread.image_key.key}}.gif" alt="{{thread.title}}"/>
 				{%else%}
-					<img src="{{host}}thumbnail/{{thread.image_key.key}}.jpg" alt="{{thread.title}}">
+					<img src="{{host}}thumbnail/{{thread.image_key.key}}.jpg" alt="{{thread.title}}"/>
 				{%endifequal%}
 			{% endif%}
 			</a>
