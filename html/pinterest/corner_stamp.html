@@ -51,3 +51,9 @@
 </div>
 {% endif %}
 
+<!-- 広告 -->
+{% if is_iphone %}
+{% include "adsense/adsense_wide.html" %}
+{% else %}
+{% include "adsense/adsense_top.html" %}
+{% endif %}
