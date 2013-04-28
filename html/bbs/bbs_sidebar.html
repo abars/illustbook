@@ -23,12 +23,12 @@
 		</h4>
 		<p>
 		{% if now_category %}
-		<A HREF="{{page_url_category_base}}" class="decnone">全て</A><BR>
+		<a href="{{page_url_category_base}}" class="decnone">全て</a><br/>
 		{% endif%}
 		{% for category in category_list %}
 			{% ifequal category.category "" %}
 			{% else %}
-			<A HREF="{{page_url_category_base}}{{category.category|iriencode}}" class="decnone">{{category.category}}({{category.count}})</A><BR>
+			<a href="{{page_url_category_base}}{{category.category|iriencode}}" class="decnone">{{category.category}}({{category.count}})</a><br/>
 			{% endifequal %}
 		{% endfor %}
 		</p>
@@ -60,10 +60,10 @@
 		カウンター
 		</h4>
 		<p>
-		今日：{{bbs.counter.today_cnt}}<br>
-		昨日：{{bbs.counter.yesterday_cnt}}<br>
-		一昨日：{{bbs.counter.yesterday_yesterday_cnt}}<br>
-		合計：{{bbs.counter.total_cnt}}<br>
+		今日：{{bbs.counter.today_cnt}}<br/>
+		昨日：{{bbs.counter.yesterday_cnt}}<br/>
+		一昨日：{{bbs.counter.yesterday_yesterday_cnt}}<br/>
+		合計：{{bbs.counter.total_cnt}}<br/>
 		</p>
 	{%endifequal%}
 	
@@ -74,10 +74,10 @@
 		</h4>
 		<p>
 		{% if bbs.my_homepage %}
-			<A HREF="{{bbs.my_homepage}}" class="decnone">ホームページ</A><BR>
+			<a href="{{bbs.my_homepage}}" class="decnone">ホームページ</a><br/>
 		{% endif %}
 		{% if not bbs.disable_analyze and owner %}
-			<A HREF="{{host}}analyze?bbs_key={{bbs.key}}" class="decnone">アクセス解析</A><BR>
+			<a href="{{host}}analyze?bbs_key={{bbs.key}}" class="decnone">アクセス解析</a><br/>
 		{% endif %}
 		</p>
 		{% endif %}

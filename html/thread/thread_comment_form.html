@@ -26,7 +26,7 @@
 		<p>&nbsp</p>
 		{% endif %}
 
-		<form action='http://localhost/' enctype="multipart/form-data" method="post" onsubmit="this.action='{{host}}add_entry?bbs_key={{ bbs.key }}&thread_key={{ thread.key }}&seed={{0|set_seed}}';">
+		<form action='http://localhost/' enctype="multipart/form-data" method="post" onsubmit="this.action='{{host}}add_entry?bbs_key={{ bbs.key }}&amp;thread_key={{ thread.key }}&amp;seed={{0|set_seed}}';">
 			<table class="table_color">
 			<tr><td>名前（必須）</td>
 			<td>

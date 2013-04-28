@@ -11,9 +11,9 @@
 		{% if not bbs.disable_applause %}
 			<div class="clap" align="right">
 			{% if template_path%}
-				<a href="{{host}}applause?bbs_key={{bbs.key}}&thread_key={{thread.key}}&mode=bbs&order={{order}}&page={{page}}" rel="nofollow"><img src="{{template_path}}images/i_crap.gif" alt="拍手" width="53" height="20"/></a>{%if thread.applause %}{{thread.applause}}{%else%}0{%endif%}
+				<a href="{{host}}applause?bbs_key={{bbs.key}}&amp;thread_key={{thread.key}}&amp;mode=bbs&amp;order={{order}}&amp;page={{page}}" rel="nofollow"><img src="{{template_path}}images/i_crap.gif" alt="拍手" width="53" height="20"/></a>{%if thread.applause %}{{thread.applause}}{%else%}0{%endif%}
 			{% else %}
-				<input type="button" value="拍手{%if thread.applause %}{{thread.applause}}{%else%}0{%endif%}"  class="g-button" onClick="location.href='{{host}}applause?bbs_key={{bbs.key}}&thread_key={{thread.key}}&mode=bbs&order={{order}}&page={{page}}'">
+				<input type="button" value="拍手{%if thread.applause %}{{thread.applause}}{%else%}0{%endif%}"  class="g-button" onClick="location.href='{{host}}applause?bbs_key={{bbs.key}}&amp;thread_key={{thread.key}}&amp;mode=bbs&amp;order={{order}}&amp;page={{page}}'">
 			{% endif %}
 			</div>
 		{% endif %}
@@ -48,7 +48,7 @@
 
 		<!--
 		{%if not bbs.disable_comment%}
-			{%if is_iphone%} <BR>{%else%}&nbsp;&nbsp;{%endif%}
+			{%if is_iphone%} <br/>{%else%}&nbsp;&nbsp;{%endif%}
 			{% if template_path %}
 				<img src="{{template_path}}images/i_comment.gif" alt="コメント数" width="64" height="20" />
 			{% else %}
@@ -59,7 +59,7 @@
 		-->
 
 		{% if thread.category %}
-			{%if is_iphone%} <BR>{%else%}&nbsp;&nbsp;{%endif%}
+			{%if is_iphone%} <br/>{%else%}&nbsp;&nbsp;{%endif%}
 			{%if template_path %}
 				<img src="{{template_path}}images/i_category.gif" alt="カテゴリ" width="64" height="20" />
 			{% else %}
@@ -68,7 +68,7 @@
 				<a href="{{usrhost}}?category={{thread.category|iriencode}}" class="g-button mini" style="margin-left:1px;">{{thread.category}}</a>
 		{%endif%}
 
-		{%if is_iphone%} <BR>{%else%}&nbsp;&nbsp;{%endif%}
+		{%if is_iphone%} <br/>{%else%}&nbsp;&nbsp;{%endif%}
 		{% if template_path %}
 			<img src="{{template_path}}images/i_day.gif" alt="投稿日" width="64" height="20" />
 		{% else %}

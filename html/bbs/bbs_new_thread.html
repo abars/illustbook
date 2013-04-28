@@ -4,15 +4,15 @@
 <div class="entry">
 	<H3>新しいスレッドの作成</H3>
 	{% if not bbs.disable_create_new_thread %}
-		この掲示板は誰でもスレッドが作成可能です。<BR>
+		この掲示板は誰でもスレッドが作成可能です。<br/>
 	{% else%}
 		{% ifequal bbs.disable_create_new_thread 1 %}
-			この掲示板は管理人のみスレッドが作成可能です。<BR>
+			この掲示板は管理人のみスレッドが作成可能です。<br/>
 		{% else %}
-			この掲示板はログインしていれば誰でもスレッドが作成可能です。<BR>
+			この掲示板はログインしていれば誰でもスレッドが作成可能です。<br/>
 		{% endifequal %}
 	{% endif %}
-	<BR>
+	<br/>
 
 	{% if can_create_thread %}
 	<div class="g-button-group toggle-buttons">

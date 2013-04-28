@@ -1,6 +1,6 @@
 {% if side_thread %}
 	{% for thread in side_thread %}
-		<a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.thread_key}}{%endif%}.html'>{{ thread.title|escape }}</a><BR>
+		<a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.thread_key}}{%endif%}.html'>{{ thread.title|escape }}</a><br/>
 	{%endfor%}
 {% else %}
 	まだイラストはありません
