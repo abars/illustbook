@@ -27,7 +27,7 @@ class BbsConst:
 	APP_SUPPORT_BBS_ID="app_support"
 	
 	#スパム時のメッセージ
-	SPAM_CHECKED ="スパムと判定されました。<BR>通常投稿で表示された場合はabarsceo@gmail.comもしくはサポート掲示板までお問い合わせ下さい。"
+	SPAM_CHECKED ="スパムと判定されました。通常投稿で表示された場合はabarsceo@gmail.comもしくはサポート掲示板までお問い合わせ下さい。"
 	
 	#memcacheコントロール
 	OBJECT_CACHE_HEADER="ocache64_"	#この値を変更することで全てのキャッシュが無効になる

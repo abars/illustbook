@@ -37,6 +37,7 @@ from myapp.MappingThreadId import MappingThreadId
 from myapp.SpamCheck import SpamCheck
 from myapp.StackFeed import StackFeed
 from myapp.Ranking import Ranking
+from myapp.EscapeComment import EscapeComment
 
 class AddRes(webapp.RequestHandler):
 	def post(self):
@@ -87,11 +88,8 @@ class AddRes(webapp.RequestHandler):
 			Alert.alert_msg_with_write(self,BbsConst.SPAM_CHECKED);
 			return
 		
-		compiled_line = re.compile("\r\n|\r|\n")
-		response.content = compiled_line.sub(r'<br>', response.content)
-		
-		compiled_line = re.compile("(http://[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)")
-		response.content = compiled_line.sub(r'<a href=\1 TARGET="_blank">\1</a>', response.content)
+		response.content=EscapeComment.escape_br(response.content)
+		response.content=EscapeComment.auto_link(response.content)
 		
 		if(self.request.get('author')):
 			try:

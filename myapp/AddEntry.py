@@ -37,9 +37,21 @@ from myapp.MappingId import MappingId
 from myapp.MappingThreadId import MappingThreadId
 from myapp.StackFeed import StackFeed
 from myapp.Ranking import Ranking
+from myapp.EscapeComment import EscapeComment
 
 class AddEntry(webapp.RequestHandler):
+	def write_status(self,is_flash,msg):
+		if(is_flash):
+			self.response.headers ['Content-type'] = "text/html;charset=utf-8";
+			self.response.out.write(msg);
+		else:
+			Alert.alert_msg_with_write(self,msg);
+
 	def post(self):
+		is_flash=False
+		if(self.request.get('image')):
+			is_flash=True
+
 		entry = Entry()
 		if(self.request.get('comment')):
 			entry.content = self.request.get('comment')
@@ -47,12 +59,12 @@ class AddEntry(webapp.RequestHandler):
 			if(self.request.get('image')):
 				entry.content = ""
 			else:
-				Alert.alert_msg_with_write(self,"コメントを入力して下さい。");
+				self.write_status(is_flash,"コメントを入力して下さい。");
 				return
 
 		if(not self.request.get('image')):
 			if(self.request.get("seed")!=BbsConst.SUBMIT_SEED):
-				Alert.alert_msg_with_write(self,"シードが一致しません。");
+				self.write_status(is_flash,"シードが一致しません。");
 				return
 
 		if(self.request.get('mail_addr')):
@@ -67,7 +79,7 @@ class AddEntry(webapp.RequestHandler):
 
 		checkcode=SpamCheck.get_check_code()
 		if(SpamCheck.check(entry.content,checkcode)):			
-			Alert.alert_msg_with_write(self,BbsConst.SPAM_CHECKED);
+			self.write_status(is_flash,BbsConst.SPAM_CHECKED);
 			return
 
 		thread=db.Key(self.request.get("thread_key"))
@@ -81,7 +93,7 @@ class AddEntry(webapp.RequestHandler):
 		
 		#コメント禁止
 		if(db.get(thread).prohibit_comment):
-			Alert.alert_msg_with_write(self,"このイラストへのコメントは禁止されています。");
+			self.write_status(is_flash,"このイラストへのコメントは禁止されています。");
 			return
 		
 		#書き込み権限確認
@@ -89,7 +101,7 @@ class AddEntry(webapp.RequestHandler):
 
 		if(bbs.comment_login_require):
 			if(not(user)):
-				Alert.alert_msg_with_write(self,"この掲示板ではコメントする際にログインが必須です。");
+				self.write_status(is_flash,"この掲示板ではコメントする際にログインが必須です。");
 				return
 		
 		if(self.request.get('image')):
@@ -107,24 +119,18 @@ class AddEntry(webapp.RequestHandler):
 			timage.put()
 
 			entry.illust_reply=1
-			entry.illust_reply_image_key=timage#str(timage.key())	
+			entry.illust_reply_image_key=timage
 		else:
 			entry.content=cgi.escape(entry.content)
-		
-			compiled_line = re.compile("(http://[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)")
-			entry.content = compiled_line.sub(r'<a href=\1 TARGET="_blank">\1</a>', entry.content)		
+			entry.content=EscapeComment.auto_link(entry.content)
 
-		compiled_line = re.compile("\r\n|\r|\n")
-		entry.content = compiled_line.sub(r'<br>', entry.content)
+		entry.content=EscapeComment.escape_br(entry.content)
 
-		compiled_line = re.compile("<P>|</P>")
-		entry.content = compiled_line.sub(r'', entry.content)
-		
 		if(self.request.get('author')):
 			entry.editor = cgi.escape(self.request.get('author'))
 		else:
 			entry.editor = "no_name"
-			Alert.alert_msg_with_write(self,"名前を入力して下さい。");
+			self.write_status(is_flash,"名前を入力して下さい。");
 			return
 			
 		entry.thread_key = thread

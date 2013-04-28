@@ -42,6 +42,7 @@ from myapp.StackFeed import StackFeed
 from myapp.SyncPut import SyncPut
 from myapp.ApiFeed import ApiFeed
 from myapp.CategoryList import CategoryList
+from myapp.EscapeComment import EscapeComment
 
 class AddNewThread(webapp.RequestHandler):
 	def write_status(self,is_flash,msg):
@@ -120,12 +121,8 @@ class AddNewThread(webapp.RequestHandler):
 			new_thread.summary = cgi.escape(self.request.get('comment'))
 		new_thread.bbs_key = db.Key(self.request.get('bbs_key'))
 
-		compiled_line = re.compile("\r\n|\r|\n")
-		new_thread.summary = compiled_line.sub(r'<br>', new_thread.summary)
+		new_thread.summary=EscapeComment.escape_br(new_thread.summary)
 
-		compiled_line = re.compile("<P>|</P>")
-		new_thread.summary = compiled_line.sub(r'', new_thread.summary)
-				
 		new_thread.homepage_addr=homepage_addr
 		new_thread.author=self.request.get('author')
 		if(self.request.get("draw_time")):
