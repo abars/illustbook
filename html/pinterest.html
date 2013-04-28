@@ -144,23 +144,23 @@
 </div>
 
 {% if next_query %}
-<nav id="page-nav">
-  <a href="{{redirect_api}}?{{next_query}}&contents_only=1&page={{next_page}}"></a>
-</nav>
+<div id="page-nav">
+  <a href="{{redirect_api}}?{{next_query}}&amp;contents_only=1&amp;page={{next_page}}"></a>
+</div>
 {% endif %}
 
 </div>
 
 <!-- フッター -->
 
-<br clear="all">
+<br clear="all"/>
 
 <div id="back-top">
   <a href="#top">先頭へ戻る</a>
 </div>
 
 <div id="pinterest_footer">
-<a href="{{host}}">イラストブック</a>{% if is_iphone %}<br>{%else%} {%endif%}&copy 2010-2013 <a href="http://www.abars.biz">ABARS</a> all rights reserved.
+<a href="{{host}}">イラストブック</a>{% if is_iphone %}<br>{%else%} {%endif%}&copy; 2010-2013 <a href="http://www.abars.biz">ABARS</a> all rights reserved.
 </div>
 
 </body>

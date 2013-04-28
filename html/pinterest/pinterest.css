@@ -1,4 +1,6 @@
-<style>
+<style type="text/css">
+
+/* main */
 body{
   background:#f2f2f2;
   margin: 0px;
@@ -247,5 +249,38 @@ color: #333;
   z-index:2;
   background: #fff;
 }
+
+/* portal modern menu */
+  .menulist{
+    float:left;
+    {% if is_iphone %}
+      margin:5px;
+      width:120px;
+    {% endif %}
+  }
+
+  .menu{
+    text-decoration: none;
+    color:#fff;
+    display:block;
+    padding:2px;
+    {% if is_iphone %}
+      width:56px;
+      height:56px;
+    {% else %}
+      width:86px;
+      height:86px;
+    {% endif %}
+    float:left;
+  }
+
+  .color1{background:rgb(191,47,47);color:#fff;}
+  .color2{background:rgb(191,155,47);color:#fff;}
+  .color3{background:rgb(119,191,47);color:#fff;}
+  .color4{background:rgb(47,191,83);color:#fff;}
+  .color5{background:rgb(47,191,191);color:#fff;}
+  .color6{background:rgb(47,83,191);color:#fff;}
+  .color7{background:rgb(119,47,191);color:#fff;}
+  .color8{background:rgb(191,47,155);color:#fff;}
 
 </style>

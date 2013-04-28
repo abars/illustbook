@@ -1,70 +1,19 @@
-<!--サークルメニュー-->
+<!-- ModernStyleMenu -->
 
-<!-- デザイン -->
-<style>
-	ul{
-		margin:0;
-		padding:0;
-	}
-
-	ul a{
-		text-decoration: none;
-	}
-
-	li{
-		{% if is_iphone %}
-			width:60px;
-			height:60px;
-		{% else %}
-			width:90px;
-			height:90px;
-		{% endif %}
-		float:left;
-		color:#191919;
-		overflow:hidden;
-		
-	}
-
-	li p{
-		{% if not is_iphone %}
-			padding:0px 5px;
-		{% else %}
-			margin:0px;
-			margin-left:2px;
-		{% endif %}
-		text-decoration: none;
-	}
-
-	/*Menu Color Classes*/
-	.color1{background:rgb(191,47,47);color:#fff;}
-	.color2{background:rgb(191,155,47);color:#fff;}
-	.color3{background:rgb(119,191,47);color:#fff;}
-	.color4{background:rgb(47,191,83);color:#fff;}
-	.color5{background:rgb(47,191,191);color:#fff;}
-	.color6{background:rgb(47,83,191);color:#fff;}
-	.color7{background:rgb(119,47,191);color:#fff;}
-	.color8{background:rgb(191,47,155);color:#fff;}
-</style>
-
-<!-- メニュー -->
-<div style="float:left;{% if is_iphone %}margin:5px;width:120px;{% endif %}">
-<ul>
-	<a href="{{host}}sample/"><li class="color1"><p>試し描き</p></li></a>
-	<a href="{{host}}mypage"><li class="color2"><p>レンタル</p></li></a>
-	<a href="{{host}}commu/"><li class="color3"><p>コミュニティ</p></li></a>
-	<a href="{{host}}anything/"><li class="color4"><p>何でも投稿</p></li></a>
-	<a href="{{host}}chat"><li class="color5"><p>チャット</p></li></a>
-	<a href="{{host}}support/"><li class="color7"><p>サポート</p></li></a>
+<div class="menulist">
+	<a class="color1 menu" href="{{host}}sample/">試し描き</a>
+	<a class="color2 menu" href="{{host}}mypage">レンタル</a>
+	<a class="color3 menu" href="{{host}}commu/">コミュニティ</a>
+	<a class="color4 menu" href="{{host}}anything/">何でも投稿</a>
+	<a class="color5 menu" href="{{host}}chat">チャット</a>
+	<a class="color6 menu" href="{{host}}support/">サポート</a>
 {% if not is_iphone %}
-	<a href="{{host}}?order=guide"><li class="color6"><p>使い方</p></li></a>
-	<a href="{{host}}terms"><li class="color8"><p>利用規約</p></li></a>
+	<a class="color7 menu" href="{{host}}?order=guide">使い方</a>
+	<a class="color8 menu" href="{{host}}terms">利用規約</a>
 {% endif %}
-	</li>
-</ul>
 </div>
 
-<!-- スクリプト -->
-<script>
+<script type="text/javascript">
 	$(document).ready(function(){
 		//Remove outline from links
 		$("a").click(function(){
@@ -72,7 +21,7 @@
 		});
 
 		//When mouse rolls over
-		$("li").bind("click",function(){
+		$(".menu").bind("click",function(){
 			$(this).stop().animate(
 				{% if is_iphone %}
 					{width:'120px',height:'120px'},
@@ -84,7 +33,7 @@
 		
 		//When mouse is removed
 		/*
-		$("li").mouseout(function(){
+		$(".menu").mouseout(function(){
 			$(this).stop().animate(
 				{% if is_iphone %}
 					{width:'60px',height:'45px'},

@@ -1,4 +1,6 @@
-<script>
+<script type="text/javascript">
+/* for w3c validater */
+/* <![CDATA[ */
 
 // Masonry corner stamp modifications
 $.Mason.prototype.resize = function() {
@@ -145,4 +147,6 @@ function show_search(){
   }
   masonry_reload();
 }
+
+/* ]]> */
 </script>

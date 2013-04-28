@@ -1,50 +1,64 @@
-  {% for thread in thread_list %}
-      <div class="item">
-
-    {% if thread.image_url %}
+{% for thread in thread_list %}
+<div class="item">
+  <!--Image-->
+  {% if thread.image_url %}
       <div class="deletable">
-        <a href="{{thread.thread_url}}" target="_BLANK">
-          <div class="side-corner-tag">
-            <img src="{{thread.thumbnail2_url}}" width="{{thread|thumbnail2_width:is_iphone}}px" height="{{thread|thumbnail2_height:is_iphone}}px">
-          {% ifequal page_mode "index" %}
-          {% ifequal next_page 2 %}
-           {% if forloop.counter == 1 %}{% ifequal order "new" %}<p><span>Newest</span></p>{% endifequal %}{% endif %}
-           {% if forloop.counter <= 3 %}{% ifequal order "hot" %}<p><span>{{forloop.counter}}</span></p>{% endifequal %}{% endif %}
-          {% endifequal %}
-          {% endifequal %}
-         </div>
-        </a>
+        <div class="side-corner-tag">
+          <a href="{{thread.thread_url}}" target="_BLANK">
+            <img src="{{thread.thumbnail2_url}}" width="{{thread|thumbnail2_width:is_iphone}}px" height="{{thread|thumbnail2_height:is_iphone}}px" alt="{{thread.title}}"/>
+          </a>
+
+            {% ifequal page_mode "index" %}
+             {% ifequal next_page 2 %}
+              {% if forloop.counter == 1 %}{% ifequal order "new" %}
+                <p><span>Newest</span></p>
+              {% endifequal %}{% endif %}
+              {% if forloop.counter <= 3 %}{% ifequal order "hot" %}
+                <p><span>{{forloop.counter}}</span></p>
+              {% endifequal %}{% endif %}
+             {% endifequal %}
+            {% endifequal %}
+        </div>
         {% if edit_mode %}
           {% ifequal tab "bookmark" %}
-            <a href="javascript:confirm_delete('del&thread_key={{thread.key}}','ブックマーク','{{thread.title}}');" class="g-button no-text delete_button"><i class="icon-remove"></i></a>
+            <a href="javascript:confirm_delete('del&thread_key={{thread.key}}','ブックマーク','{{thread.title}}');" class="g-button no-text delete_button">
+              <i class="icon-remove"></i>
+            </a>
           {% endifequal %}
         {% endif %}
       </div>
-    {% endif %}
+  {% endif %}
 
-      <div class="illust_summary">
-      <a href="{{thread.thread_url}}" target="_BLANK"><b>{{thread.title}}</b></a><br>
-      {% if thread.tag %}
+  <!--Summary-->
+  <div class="illust_summary">
+    <a href="{{thread.thread_url}}" target="_BLANK">
+      <b>{{thread.title}}</b>
+    </a>
+    <br/>
+    {% if thread.tag %}
       {% for tag in thread.tag %}
-        <a href="{{host}}{{search_api}}?tag={{tag}}" class="g-button mini" style="margin-left:0px;">{{tag}}</a>
+        <a href="{{host}}{{search_api}}?tag={{tag}}" class="g-button mini" style="margin-left:0px;">
+          {{tag}}
+        </a>
       {% endfor %}
-      <br>
-      {% endif %}
-      {{thread.summary|safe}}
-      <br>
-      <div style="text-align:right;">
+      <br/>
+    {% endif %}
+    {{thread.summary|safe}}
+    <br/>
+    <div style="text-align:right;">
       <small>
-      {%if thread.comment %}{{thread.comment}} comment<br>{% endif %}
-      {%if thread.bookmark %}{{thread.bookmark}} bookmark<br>{% endif %}
-      {%if thread.applause %}{{thread.applause}} applause<br>{% endif %}
-      <!-- {%if thread.version %}version {{thread.version}} {{thread.width}}x{{thread.height}}<br>{% endif %} -->
-      {{thread.create_date}}<br>
+      {%if thread.comment %}{{thread.comment}} comment<br/>{% endif %}
+      {%if thread.bookmark %}{{thread.bookmark}} bookmark<br/>{% endif %}
+      {%if thread.applause %}{{thread.applause}} applause<br/>{% endif %}
+      <!-- {%if thread.version %}version {{thread.version}} {{thread.width}}x{{thread.height}}<br/>{% endif %} -->
+      {{thread.create_date}}<br/>
       from 
       {%if thread.user_id %}<a href="{{redirect_api}}?user_id={{thread.user_id}}" class="g-button mini" style="overflow:hidden;max-width:80%;">{% endif %}
       {{thread.author}}
       {%if thread.user_id %}</a>{% endif %}
-      </small></div>
+      </small>
+    </div>
+  </div>
 
-      </div>
-      </div>
-  {% endfor %}
+</div>
+{% endfor %}

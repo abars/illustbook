@@ -1,6 +1,6 @@
   <div class="message">
     {% ifequal edit_mode 2%}
-      プロフィールを編集<BR>
+      プロフィールを編集<br/>
       {%include "mypage/edit_profile.html"%}
     {% else %}
     <div style="float:left;margin-right:4px;">
@@ -11,8 +11,8 @@
      <p><b>{{view_user.name}}</b></p>
      <p>{{view_user_profile.profile|safe}}</p>
      {% else %}
-     <p>イラストブックへようこそ。<br>
-     編集ボタンを押すと、ユーザ情報を登録することができます。<br>
+     <p>イラストブックへようこそ。<br/>
+     編集ボタンを押すと、ユーザ情報を登録することができます。<br/>
      掲示板ボタンを押すと、掲示板をレンタルすることができます。</p>
      {% endif %}
 
@@ -89,7 +89,7 @@
     </div>
     <div id="follower">
       {% if follow %}
-     フォローしている<br>
+     フォローしている<br/>
      {% for user in follow %}
      <div class="deletable">
        <a href="{{redirect_api}}?user_id={{user.user_id}}"><img src="{{user.icon_url}}&size=mini" width=50px height=50px></a>
@@ -98,15 +98,15 @@
        {% endif %}
      </div>
      {% endfor %}
-     <br clear="all">
+     <br clear="all"/>
      {% endif %}
      {% if follower %}
-     フォローされている<br>
+     フォローされている<br/>
      {% for user in follower %}
      <a href="{{redirect_api}}?user_id={{user.user_id}}"><img src="{{user.icon_url}}&size=mini" width=50px height=50px></a>
      {% endfor %}
      {% endif %}
-      <br><a href="javascript:show_follower();" class="g-button mini">閉じる</a>
+      <br/><a href="javascript:show_follower();" class="g-button mini">閉じる</a>
    </div>
  </div>
    {% endif %}

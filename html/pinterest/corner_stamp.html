@@ -13,9 +13,9 @@
 {% ifequal page_mode "index" %}
   <div class="logo">
   {% if is_iphone %}
-   <img src="static_files/banner_360.png" width="180px" height="180px">
+   <img src="static_files/banner_360.png" width="180px" height="180px" alt="ロゴ"/>
   {% else %}
-   <img src="static_files/banner_360b.png">
+   <img src="static_files/banner_360b.png" alt="ロゴ"/>
   {% endif %}
    <div id="logo_fotter">
      from <a href="http://pochigoya0423.blog.shinobi.jp/">飯田のぎ</a>
@@ -25,7 +25,7 @@
 
 {% ifequal page_mode "index" %}
   {% include "pinterest/menulist.html" %}
-  <br clear="all">
+  <br clear="all"/>
 {% endifequal %}
 
 <!-- タグ一覧 -->
