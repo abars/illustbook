@@ -28,9 +28,9 @@ h2,h3 {font-size:100%;color:#E47911;}
    {% else %}
    {% if not bookmark %}
    width: 362px;
+   {% endif %}
    padding:1px;
    margin:5px;
-   {% endif %}
    {% endif %}
 }
 
@@ -90,6 +90,9 @@ word-break:break-all;
 max-width:495px;
 {% else %}
 {% endifequal %}
+{% if is_iphone %}
+width:298px;
+{% endif %}
 margin: 5px;
 padding: 5px;
 float: left;

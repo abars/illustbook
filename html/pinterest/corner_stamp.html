@@ -57,5 +57,7 @@
     {% include "adsense/adsense_wide.html" %}
   {% endif %}
 {% else %}
-  {% include "adsense/adsense_top.html" %}
+  {% if thread_list %}
+    {% include "adsense/adsense_top.html" %}
+  {% endif %}
 {% endif %}
