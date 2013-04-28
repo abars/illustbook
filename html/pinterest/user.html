@@ -77,6 +77,10 @@
     {% endifequal %}
   </div>
 
+  {% if is_iphone %}
+   {% include "adsense/adsense_wide.html" %}
+  {% endif %}
+
     {% if follow or follower %}
   <div class="message">
     <div id="follower_button">

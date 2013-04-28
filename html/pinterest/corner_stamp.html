@@ -53,7 +53,9 @@
 
 <!-- 広告 -->
 {% if is_iphone %}
-{% include "adsense/adsense_wide.html" %}
+  {% if not bookmark %}
+    {% include "adsense/adsense_wide.html" %}
+  {% endif %}
 {% else %}
-{% include "adsense/adsense_top.html" %}
+  {% include "adsense/adsense_top.html" %}
 {% endif %}
