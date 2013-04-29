@@ -12,6 +12,7 @@ import sys
 import urllib
 import re
 import datetime
+import logging
 
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
@@ -125,11 +126,21 @@ class NicoTracker(webapp.RequestHandler):
 		return rec
 	
 	def auto_update(self):
-		query=NicoTrackerRec.all()
+		query=db.Query(NicoTrackerRec,keys_only=True)
+		total_count=query.count(limit=100000)
 		rec_list=query.fetch(limit=100000)
-		for rec in rec_list:
+		cnt=0
+		for rec_key in rec_list:
+			#get and update
+			rec=db.get(rec_key)
 			self.update_core(rec,False)
-	
+			rec=None #release memory
+
+			#next
+			cnt=cnt+1
+			if(cnt%100==0):
+				logging.info("update nico_tracker "+str(cnt)+" of "+str(total_count))
+
 	@staticmethod
 	def create_graph(day_list,play_cnt_list):
 		play_cnt_graph=""
