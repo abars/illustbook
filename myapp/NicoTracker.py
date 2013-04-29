@@ -123,23 +123,33 @@ class NicoTracker(webapp.RequestHandler):
 		
 		rec.put()
 
+		#更新を通知
+		rec.updated=1
+
 		return rec
 	
 	def auto_update(self):
 		query=db.Query(NicoTrackerRec,keys_only=True)
-		total_count=query.count(limit=100000)
-		rec_list=query.fetch(limit=100000)
+		query=query.order("date")	#古い順
+		update_unit=400	#out of timeにならない範囲で取得
+						#400*12times=4800件が毎日更新できるリミット
+		rec_list=query.fetch(limit=update_unit)
 		cnt=0
+		update_cnt=0
 		for rec_key in rec_list:
 			#get and update
 			rec=db.get(rec_key)
-			self.update_core(rec,False)
+			rec=self.update_core(rec,False)
+			if(rec.updated):
+				update_cnt=update_cnt+1
 			rec=None #release memory
 
 			#next
 			cnt=cnt+1
 			if(cnt%100==0):
-				logging.info("update nico_tracker "+str(cnt)+" of "+str(total_count))
+				logging.info("update nico_tracker "+str(cnt))
+
+		logging.info("updated "+str(update_cnt)+" of "+str(cnt))
 
 	@staticmethod
 	def create_graph(day_list,play_cnt_list):

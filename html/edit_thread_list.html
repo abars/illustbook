@@ -44,9 +44,31 @@
 			<p>{{deleted_count}}件のイラストを削除しました。</p>
 		{% endif %}
 		<p>削除するイラストを選択して下さい。<p/>
+
+		<div class="g-button-group">
+			<a class="g-button dropdown-toggle" data-toggle="dropdown" href="#">
+			{%ifequal order "new"%}
+			新しい順
+			{%else%}
+			古い順
+			{%endifequal%}
+			<span class="caret"></span>
+			</a>
+			<ul class="dropdown-menu">
+			{%ifequal order "new"%}
+				<li><a href="{{host}}edit_thread_list?bbs_key={{bbs.key}}&order=old">古い順</a></li>
+			{%else%}
+				<li><a href="{{host}}edit_thread_list?bbs_key={{bbs.key}}&order=new">新しい順</a></li>
+			{%endifequal%}
+			</ul>
+		</div>
+
+		<p>&nbsp;</p>
+
 		<form method="post" action="{{host}}edit_thread_list" id="del_thread_list">
 		<input type="hidden" name="bbs_key" value="{{bbs.key}}"/>
 		<input type="hidden" name="page" value="{{page}}"/>
+		<input type="hidden" name="order" value="{{order}}"/>
 		<table class="g-table">
 			<tr><th>タイトル</th><th>サムネイル</th><th>投稿者</th><th>投稿日</th><th>削除</th></tr>
 		{% for thread in thread_list %}
@@ -73,12 +95,13 @@
 		</form>
 
 		<hr>
+
 		<p>
 		{% ifnotequal page 1 %}
-			<a href="{{host}}edit_thread_list?bbs_key={{bbs.key}}&amp;page={{page|add:-1}}">前のページ</a>　
+			<a href="{{host}}edit_thread_list?bbs_key={{bbs.key}}&amp;page={{page|add:-1}}&amp;order={{order}}">前のページ</a>　
 		{% endifnotequal %}
 			ページ{{page}}　
-			<a href="{{host}}edit_thread_list?bbs_key={{bbs.key}}&amp;page={{page|add:1}}">次のページ</a>　
+			<a href="{{host}}edit_thread_list?bbs_key={{bbs.key}}&amp;page={{page|add:1}}&amp;order={{order}}">次のページ</a>　
 			<a href="{{host}}{{bbs.short}}/">掲示板に戻る</a>
 		</p>
 		<hr>

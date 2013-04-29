@@ -6,5 +6,5 @@ cron:
 
 - description: daily nico update
   url: /nico_tracker?url=update_all
-  schedule: every 3 hours
+  schedule: every 2 hours
   target: backend1

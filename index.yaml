@@ -206,6 +206,11 @@ indexes:
   properties:
   - name: bbs_key
   - name: create_date
+
+- kind: MesThread
+  properties:
+  - name: bbs_key
+  - name: create_date
     direction: desc
 
 - kind: MesThread

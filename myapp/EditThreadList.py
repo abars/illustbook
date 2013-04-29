@@ -57,7 +57,8 @@ class EditThreadList(webapp.RequestHandler):
 		ApiFeed.invalidate_cache()
 
 		page=self.request.get("page")
-		url="./edit_thread_list?bbs_key="+str(bbs.key())+"&page="+str(page)+"&deleted_count="+str(count)
+		order=self.request.get("order")
+		url="./edit_thread_list?bbs_key="+str(bbs.key())+"&page="+str(page)+"&order="+order+"&deleted_count="+str(count)
 		self.redirect(str(url))
 
 	def get(self):
@@ -77,11 +78,19 @@ class EditThreadList(webapp.RequestHandler):
 		page=1
 		if(self.request.get("page")):
 			page=int(self.request.get("page"))
+
+		order="new"
+		if(self.request.get("order")):
+			order=self.request.get("order")
 		
 		limit=20
 		offset=(page-1)*limit
 
-		query=MesThread.all().filter("bbs_key =",bbs).order("-create_date")
+		query=MesThread.all().filter("bbs_key =",bbs)
+		if(order=="new"):
+			query=query.order("-create_date")
+		else:
+			query=query.order("create_date")
 		thread_list=query.fetch(offset=offset,limit=limit)
 
 		deleted_count=self.request.get("deleted_count")
@@ -93,6 +102,7 @@ class EditThreadList(webapp.RequestHandler):
 			'thread_list': thread_list,
 			'redirect_url': self.request.path,
 			'page': page,
+			'order': order,
 			'deleted_count': deleted_count
 		}
 

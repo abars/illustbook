@@ -18,5 +18,6 @@ class NicoTrackerRec(db.Model):
 	comment_cnt_list = db.StringListProperty()
 	play_cnt_now = db.IntegerProperty()
 	comment_cnt_now = db.IntegerProperty()
+	updated = db.IntegerProperty()
 	date = db.DateTimeProperty(auto_now=True)
 
