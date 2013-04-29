@@ -54,7 +54,9 @@
 <!-- 広告 -->
 {% if is_iphone %}
   {% if not bookmark %}
-    {% include "adsense/adsense_wide.html" %}
+    {% ifnotequal page_mode "login_require" %}
+      {% include "adsense/adsense_wide.html" %}
+    {% endifnotequal %}
   {% endif %}
 {% else %}
   {% if thread_list %}

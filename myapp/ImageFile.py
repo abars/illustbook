@@ -141,7 +141,7 @@ class ImageFile (webapp.RequestHandler):
 			content.put()
 			return True
 		except:
-			logging.error("ImageFile:create_thumbnail:too large image:key:"+str(content.key()))
+			logging.warning("ImageFile:create_thumbnail:too large image:key:"+str(content.key()))
 			return False
 
 	@staticmethod

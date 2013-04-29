@@ -112,6 +112,7 @@ from myapp.DelRes import DelRes
 from myapp.RedirectBbs import RedirectBbs
 from myapp.RedirectThread import RedirectThread
 from myapp.VisibilityChangeEntry import VisibilityChangeEntry
+from myapp.EditThreadList import EditThreadList
 
 #-----------------------------------------------------------------
 #ポータル
@@ -294,6 +295,7 @@ application = webapp.WSGIApplication(
 	('/draw_beta', DrawWindow),
 	('/del_thread', DelThread),
 	('/edit_bbs', EditBbs),
+	('/edit_thread_list', EditThreadList),
 	('/update_bbs', UpdateBbs),
 	('/edit_thread', EditThread),
 	('/update_thread', UpdateThread),

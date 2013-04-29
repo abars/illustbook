@@ -17,6 +17,7 @@ from myapp.Bbs import Bbs
 from myapp.MappingId import MappingId
 from myapp.Alert import Alert
 from myapp.ReeditEscape import ReeditEscape
+from myapp.CssDesign import CssDesign
 
 class MoperDraw(webapp.RequestHandler):
 	def get(self):
@@ -28,7 +29,13 @@ class MoperDraw(webapp.RequestHandler):
 		except:
 			 bbs=None
 		if(bbs==None):
-			self.response.out.write(Alert.alert_msg("ブックが見つかりません。",self.request.host))
+			Alert.alert_msg_with_write(self,"ブックが見つかりません。")
+			return
+
+		ipad=CssDesign.is_tablet(self)
+		iphone=CssDesign.is_iphone(self)
+		if(ipad or iphone):
+			Alert.alert_msg_with_write(self,"iPhoneやiPadでは動画お絵かきツールは使用できません。")
 			return
 
 		draw_time=0
@@ -42,7 +49,7 @@ class MoperDraw(webapp.RequestHandler):
 			except:
 				thread=None
 			if(thread==None):
-				self.response.out.write(Alert.alert_msg("スレッドが見つかりません。",self.request.host))
+				Alert.alert_msg_with_write(self,"スレッドが見つかりません。")
 				return
 			draw_time=thread.draw_time
 

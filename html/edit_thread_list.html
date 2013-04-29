@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+{% if is_iphone %}
+<meta name="viewport" content="width=device-width">
+{% endif %}
+<title>「{{bbs.bbs_name}}」のイラストの編集｜イラストブック</title>
+{%include "meta.html" %}
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="Copyright" content="Copyright: ABARS" />
+{% if is_iphone %}
+	{% include "portal_css/css_iphone.html" %}
+{% else %}
+	{% include "portal_css/css_pc.html" %}
+{% endif %}
+<script language="javascript" src="api_js" type="text/javascript"></script>
+<script language="javascript" src="js/mypage.js" type="text/javascript"></script>
+{% if not is_iphone %}
+	{% include "portal_css/option_2col.html" %}
+{% endif %}
+{% include "portal_css/option_tab.html" %}
+{% include "floating_menu_css.html" %}
+</head>
+<body>
+
+{% include "floating_menu.html" %}
+
+<script type="text/javascript">
+	function confirm_delete(){
+
+	}
+</script>
+
+<div id="container">
+	<p>&nbsp</p>
+	<div id="contents">
+		<p>削除するイラストを選択して下さい。<p/>
+		<table border=1>
+			<tr><td>タイトル</td><td>サムネイル</td><td>削除</td></tr>
+		{% for thread in thread_list %}
+		<tr><td>
+			<a href="{{host}}{{bbs.short}}/{{thread.key}}.html" target="_blank">
+				<p>{{thread.title}}</p>
+			</a>
+		</td><td>
+		{% if thread.image_key %}
+			<a href="{{host}}{{bbs.short}}/{{thread.key}}.html" target="_blank">
+			<img src="{{host}}thumbnail/{{thread.image_key.key}}.jpg" width="40px" height="40px"/>
+			</a>
+		{% endif %}
+		</td><td><input type="checkbox" name="thread" value="{{thread.key}}"/></td></tr>
+		{% endfor %}
+		</table>
+		
+		<p>&nbsp;</p>
+		<p>
+		{% ifnotequal page 1 %}
+			<a href="{{host}}edit_thread_list?bbs_key={{bbs.key}}&amp;page={{page|add:-1}}">前のページ</a>　
+		{% endifnotequal %}
+			ページ{{page}}　
+			<a href="{{host}}edit_thread_list?bbs_key={{bbs.key}}&amp;page={{page|add:1}}">次のページ</a>
+		</p>
+
+		<p>&nbsp;</p>
+		<p><a href="{{host}}{{bbs.short}}/">掲示板に戻る</a></p>
+	</div>
+</div>
+</body>
+</html>

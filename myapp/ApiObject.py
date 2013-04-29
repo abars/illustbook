@@ -756,7 +756,7 @@ class ApiObject(webapp.RequestHandler):
 		try:
 			memcache.set(BbsConst.OBJECT_CACHE_HEADER+str(ds_obj.key()),ds_obj,BbsConst.OBJECT_CACHE_TIME)
 		except:
-			logging.error("memset_overflow trap")
+			logging.warning("memset_overflow trap")
 		return ds_obj
 
 #-------------------------------------------------------------------
