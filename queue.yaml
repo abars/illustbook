@@ -1,7 +1,5 @@
 queue:
 - name: feed
-  rate: 1/s
   max_concurrent_requests: 1
 - name: counter
-  rate: 1/s
   max_concurrent_requests: 1
