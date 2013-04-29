@@ -214,7 +214,11 @@ class AddNewThread(webapp.RequestHandler):
 		if(not link_to_profile):
 			user=None
 		url=self.get_thread_url(bbs,new_thread)
-		StackFeed.feed_new_thread(user,bbs,new_thread)
+
+		try:
+			StackFeed.feed_new_thread(user,bbs,new_thread)
+		except:
+			logging.error("new thread stack feed add error")
 		
 		#news
 		ApiFeed.invalidate_cache()

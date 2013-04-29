@@ -3,6 +3,7 @@
 //copyright 2010-2012 ABARS all rights reserved.
 //--------------------------------------------------------
 
+/*
 //--------------------------------------------------------
 //Ajaxの戻る用
 //--------------------------------------------------------
@@ -425,4 +426,4 @@ function add_delete_button(url,rental_mode,prefix,title){
 	txt+='<a href="javascript:'+script+';" class="g-button no-text delete_button"><i class="icon-remove"></i></a>';
 	return txt;
 }
-
+*/

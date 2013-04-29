@@ -55,7 +55,8 @@
 			その他の操作 <span class="caret"></span>
 			</a>
 			<ul class="dropdown-menu">
-				<li><a href="{{host}}analyze?bbs_key={{bbs.key}}"" target="_BLANK">アクセス解析の閲覧</a></li>
+				<li><a href="{{host}}edit_thread_list?bbs_key={{bbs.key}}"" target="_blank">イラストの管理</a></li>
+				<li><a href="{{host}}analyze?bbs_key={{bbs.key}}"" target="_blank">アクセス解析の閲覧</a></li>
 			</ul>
 		</div>
 	</div>
@@ -70,7 +71,7 @@
 	<a href="javascript:click_top_tab('account');" id="top_tab_account" class="g-button">アカウント</a>
 	</div>
 
-	<p>&nbsp</p>
+	<p>&nbsp;</p>
 	
 	<form action="./update_bbs?bbs_key={{bbs.key}}" enctype="multipart/form-data" method="post" id="update_bbs_form">
 			<!-- 基本設定 -->
@@ -104,7 +105,7 @@
 	</div>
 </div>
 
-<p>&nbsp</p>
+<p>&nbsp;</p>
 
 <div id="footer">
 	{% if not is_iphone %}

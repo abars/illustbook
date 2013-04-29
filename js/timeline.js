@@ -89,16 +89,22 @@ function feed_parse(feed){
 	txt+="</b></p>"
 	
 	//メッセージ
+	deleted_style_header="<font color='#666'>"
+	deleted_style_footer="</font>"
 	txt+="<p>"
 	switch(feed.mode){
 	case "message":
 		//txt+=feed.message;
 		break;
 	case "bbs_new_illust":
-		if(feed.thread.thumbnail_url==""){
-			txt+='<a href="javascript:go_feed(\''+feed.thread.thread_url+'\')">'+feed.bbs.title+'に記事を投稿しました。</a>'
+		if(!feed.thread.thumbnail_url){
+			txt+=deleted_style_header+"投稿したイラストは削除されました。"+deleted_style_footer
 		}else{
-			txt+='<a href="javascript:go_feed(\''+feed.thread.thread_url+'\')">'+feed.bbs.title+'にイラストを投稿しました。</a>'
+			if(feed.thread.thumbnail_url==""){
+				txt+='<a href="javascript:go_feed(\''+feed.thread.thread_url+'\')">'+feed.bbs.title+'に記事を投稿しました。</a>'
+			}else{
+				txt+='<a href="javascript:go_feed(\''+feed.thread.thread_url+'\')">'+feed.bbs.title+'にイラストを投稿しました。</a>'
+			}
 		}
 		break;
 	case "new_follow":
@@ -108,7 +114,12 @@ function feed_parse(feed){
 		txt+='<a href="javascript:go_feed(\''+feed.thread.thread_url+'\')">'+feed.thread.title+'をブックマークしました。</a>'
 		break;
 	case "new_comment_thread":
-		txt+='<a href="javascript:go_feed(\''+feed.thread.thread_url+'\')">'+feed.thread.title+'にコメントしました。</a>'
+		if(!feed.thread){
+			txt+=deleted_style_header+"コメントしたイラストは削除されました。"+deleted_style_footer;
+			feed.message="";
+		}else{
+			txt+='<a href="javascript:go_feed(\''+feed.thread.thread_url+'\')">'+feed.thread.title+'にコメントしました。</a>'
+		}
 		break;
 	case "new_bookmark_bbs":
 		txt+='<a href="javascript:go_feed(\''+feed.bbs.bbs_url+'\')">'+feed.bbs.title+'をブックマークしました。</a>'
@@ -124,8 +135,6 @@ function feed_parse(feed){
 	case "bbs_new_illust":
 		if(feed.thread.thumbnail_url){
 			txt+='<a href="javascript:go_feed(\''+feed.thread.thread_url+'\')"><img src="'+feed.thread.thumbnail_url+'" width=100px height=100px></a>'
-		}else{
-			txt+="<blockquote><p>イラストは削除されました。</p></blockquote>"
 		}
 		break;
 	case "new_follow":

@@ -5,7 +5,7 @@
 {% if is_iphone %}
 <meta name="viewport" content="width=device-width">
 {% endif %}
-<title>「{{bbs.bbs_name}}」のイラストの編集｜イラストブック</title>
+<title>「{{bbs.bbs_name}}」のイラストの管理｜イラストブック</title>
 {%include "meta.html" %}
 <meta http-equiv="Content-Script-Type" content="text/javascript" />
 <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -29,16 +29,26 @@
 
 <script type="text/javascript">
 	function confirm_delete(){
-
+		if(confirm("本当にイラストを削除してもよろしいですか？")){
+			if(confirm("削除したイラストは復旧できません。本当によろしいですか？")){
+				$("#del_thread_list").submit();
+			}
+		}
 	}
 </script>
 
 <div id="container">
 	<p>&nbsp</p>
 	<div id="contents">
+		{% if deleted_count %}
+			<p>{{deleted_count}}件のイラストを削除しました。</p>
+		{% endif %}
 		<p>削除するイラストを選択して下さい。<p/>
-		<table border=1>
-			<tr><td>タイトル</td><td>サムネイル</td><td>削除</td></tr>
+		<form method="post" action="{{host}}edit_thread_list" id="del_thread_list">
+		<input type="hidden" name="bbs_key" value="{{bbs.key}}"/>
+		<input type="hidden" name="page" value="{{page}}"/>
+		<table class="g-table">
+			<tr><th>タイトル</th><th>サムネイル</th><th>投稿者</th><th>投稿日</th><th>削除</th></tr>
 		{% for thread in thread_list %}
 		<tr><td>
 			<a href="{{host}}{{bbs.short}}/{{thread.key}}.html" target="_blank">
@@ -47,24 +57,31 @@
 		</td><td>
 		{% if thread.image_key %}
 			<a href="{{host}}{{bbs.short}}/{{thread.key}}.html" target="_blank">
-			<img src="{{host}}thumbnail/{{thread.image_key.key}}.jpg" width="40px" height="40px"/>
+			<img src="{{host}}thumbnail/{{thread|image_key_with_except}}.jpg" width="40px" height="40px"/>
 			</a>
 		{% endif %}
-		</td><td><input type="checkbox" name="thread" value="{{thread.key}}"/></td></tr>
+		</td>
+		<td>{{thread.author}}</td>
+		<td>{{thread.create_date|time_JST_progress}}</td>
+		<td><input type="checkbox" name="thread_list" value="{{thread.key}}"/></td></tr>
 		{% endfor %}
 		</table>
-		
-		<p>&nbsp;</p>
+		<br/>
+
+			<a href="javascript:confirm_delete();" class="g-button">削除の実行</a>　
+
+		</form>
+
+		<hr>
 		<p>
 		{% ifnotequal page 1 %}
 			<a href="{{host}}edit_thread_list?bbs_key={{bbs.key}}&amp;page={{page|add:-1}}">前のページ</a>　
 		{% endifnotequal %}
 			ページ{{page}}　
-			<a href="{{host}}edit_thread_list?bbs_key={{bbs.key}}&amp;page={{page|add:1}}">次のページ</a>
+			<a href="{{host}}edit_thread_list?bbs_key={{bbs.key}}&amp;page={{page|add:1}}">次のページ</a>　
+			<a href="{{host}}{{bbs.short}}/">掲示板に戻る</a>
 		</p>
-
-		<p>&nbsp;</p>
-		<p><a href="{{host}}{{bbs.short}}/">掲示板に戻る</a></p>
+		<hr>
 	</div>
 </div>
 </body>

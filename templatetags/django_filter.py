@@ -75,6 +75,12 @@ def reply_with_except(entry,host):
 		return ""#+traceback.format_exc()
 	return ret
 
+def image_key_with_except(thread):
+	try:
+		return str(thread.image_key.key())
+	except:
+		return ""
+
 #-----------------------------------------------------------------
 #新着コメント表記
 #-----------------------------------------------------------------
@@ -346,6 +352,7 @@ register.filter(time_JST_progress)
 register.filter(comment_with_except)
 register.filter(comment_with_except_no_hour)
 register.filter(reply_with_except)
+register.filter(image_key_with_except)
 register.filter(div)
 register.filter(admin_comment_with_except)
 register.filter(show_bookmark)

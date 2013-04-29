@@ -87,8 +87,11 @@ class AddEntry(webapp.RequestHandler):
 
 		#二重投稿ブロック
 		if(entry.content!="" and memcache.get("add_entry_double_block")==entry.content):
-			url=MappingThreadId.get_thread_url("./",bbs,db.get(self.request.get("thread_key")))
-			self.redirect(str(url))
+			if(is_flash):
+				self.write_status(is_flash,"二重投稿を検出しました。時間を置いて、再度、投稿して下さい。");
+			else:
+				url=MappingThreadId.get_thread_url("./",bbs,db.get(self.request.get("thread_key")))
+				self.redirect(str(url))
 			return
 		
 		#コメント禁止
@@ -190,4 +193,7 @@ class AddEntry(webapp.RequestHandler):
 		#フィード
 		if(not link_to_profile):
 			user=None
-		StackFeed.feed_new_comment_thread(user,thread,entry)
+		try:
+			StackFeed.feed_new_comment_thread(user,thread,entry)
+		except:
+			logging.error("new entry stackfeed add error")
