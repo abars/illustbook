@@ -140,7 +140,7 @@ class NicoTracker(webapp.RequestHandler):
 			#get and update
 			rec=db.get(rec_key)
 			rec=self.update_core(rec,False)
-			if(rec.updated):
+			if(rec and rec.updated):
 				update_cnt=update_cnt+1
 			rec=None #release memory
 
