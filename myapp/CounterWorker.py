@@ -65,8 +65,9 @@ class CounterWorker(webapp.RequestHandler):
 			thread_key=str(thread.key())
 
 		#カウンターを進める
+		headers['X-AppEngine-FailFast'] = 'true' #新規インスタンスの作成の抑制
 		try:
-			taskqueue.add(url="/counter_worker",params={"bbs":str(bbs.key()),"thread":thread_key,"dont_count":str(dont_count),"referer":referer,"url":url,"remote_addr":remote_addr},queue_name="counter")
+			taskqueue.add(url="/counter_worker",params={"bbs":str(bbs.key()),"thread":thread_key,"dont_count":str(dont_count),"referer":referer,"url":url,"remote_addr":remote_addr},queue_name="counter",headers=headers)
 		except:
 			logging.warning("counter taskqueue add failed")
 
