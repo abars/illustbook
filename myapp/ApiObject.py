@@ -771,7 +771,13 @@ class ApiObject(webapp.RequestHandler):
 	@staticmethod
 	def add_json_success_header(dic):
 		return {"response":dic,"status":"success","message":""}
-		
+	
+	class JsonDatetimeEncoder(json.JSONEncoder):
+		def default(self, obj):
+			if isinstance(obj, datetime.datetime):
+				return str(obj)
+			return json.JSONEncoder.default(self, obj)
+
 	@staticmethod
 	def write_json_core(req,dic):
 		#JSONPかどうか
@@ -780,8 +786,7 @@ class ApiObject(webapp.RequestHandler):
 			callback_func=req.request.get("callback")
 		
 		#JSON作成
-		#json_code = simplejson.dumps(dic, ensure_ascii=False)
-		json_code = json.dumps(dic)
+		json_code = json.dumps(dic, cls = ApiObject.JsonDatetimeEncoder)
 		req.response.content_type = 'application/json'
 		
 		#JSONP作成

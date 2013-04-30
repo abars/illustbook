@@ -149,7 +149,7 @@ class StackFeedTweet(webapp.RequestHandler):
 		if(self.request.get("tab")):
 			redirect_url=redirect_url+"&tab="+self.request.get("tab")
 		else:
-			tredirect_url=redirect_url+"ab=feed"
+			redirect_url=redirect_url+"&tab=feed"
 		if(self.request.get("edit")):
 			redirect_url=redirect_url+"&edit="+self.request.get("edit")
 
