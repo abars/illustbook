@@ -31,3 +31,11 @@ function bbs_add_bookmark(bbs_name,bbs_key,host){
 		window.location.href=host+"add_bookmark?mode=add_bbs&bbs_key="+bbs_key;
 	}
 }
+
+function bbs_open_ipad_canvas_size(){
+	if($('#ipad_canvas_size').is(':visible')){
+		$("#ipad_canvas_size").hide();
+	}else{
+		$("#ipad_canvas_size").show();
+	}
+}
