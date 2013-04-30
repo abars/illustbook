@@ -103,12 +103,10 @@ def comment_with_except_core(entry,host,no_hour):
 		ret+=".html' class='decnone'>"
 		title=str(entry["thread_title"])
 		ret+=title
-		ret+="</a><br/>（"
-		if(no_hour):
-			ret+=time_JST_progress(entry["date"])#,11);
-		else:
-			ret+=time_JST_progress(entry["date"])#,10);
-		ret+="）"
+		ret+="<br/> "
+		ret+=time_JST_progress(entry["date"])
+		ret+=" from "+entry["editor"]
+		ret+="</a> "
 	except:
 		return "title get error"+traceback.format_exc()
 	return ret

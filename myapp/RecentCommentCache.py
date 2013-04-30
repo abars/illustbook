@@ -117,7 +117,8 @@ class RecentCommentCache():
 				mee={'short': str(bbs.short),
 						'bbs_key' : str(bbs.key()),
 						'thread_key':thread_short,
-						'thread_title':thread_title+"("+editor+")",
+						'thread_title':thread_title,
+						'editor':editor,
 						'date':entry.date}
 				entry_array.append(mee)
 			except:
