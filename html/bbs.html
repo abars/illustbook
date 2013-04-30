@@ -23,7 +23,7 @@
 	{% include "bbs/bbs_top_menu.html" %}
 
 	<!-- コンテンツ -->
-	<div id="contents">
+	<div id="contents" style="margin-bottom:0px;">
 		<!-- メインエリア -->
 		{% if template_path %}
 			<div id="main">
@@ -95,10 +95,14 @@
 			{% endifequal %}
 
 			<!-- ページ -->
-			<div id="entry-bottom" style="line-height:0;">
-				<div><!-- id="page-bottom">-->
+			<div id="entry-bottom">
+				<!--
+				<div id="page-bottom">
+				-->
 					{% include "bbs/bbs_order.html" %}
-				</div>　
+				<!--
+				</div>
+				-->
 			</div>
 
 			<!-- サイドバー非表示時の要素 -->
