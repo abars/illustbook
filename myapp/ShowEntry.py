@@ -58,7 +58,7 @@ class ShowEntry(webapp.RequestHandler):
 				one_res=res_hash[res]
 				res_list.append(one_res)
 			image_key=None
-			if(com.illust_reply_image_key):
+			if(com.illust_reply):
 				image_key=Entry.illust_reply_image_key.get_value_for_datastore(com)
 			com_list.append({'com':com, 'image_key':image_key, 'res_list':res_list})
 		return com_list
