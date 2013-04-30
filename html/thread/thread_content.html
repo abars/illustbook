@@ -54,7 +54,7 @@
 {% if thread.cached_image_key %}
 {% if not template_path %}
 {% if not bbs.disable_applause %}
-<input type="button" value="拍手{%if thread.applause %}{{thread.applause}}{%else%}0{%endif%}"  class="g-button" onClick="location.href='{{host}}applause?bbs_key={{bbs_key}}&amp;thread_key={{thread.key}}&amp;mode=thread'"/>
+<input type="button" value="拍手{%if thread.applause %}{{thread.applause}}{%else%}0{%endif%}" class="g-button" onClick="location.href='{{host}}applause?bbs_key={{bbs_key}}&amp;thread_key={{thread.key}}&amp;mode=thread'"/>
 {% endif %}
 {% endif %}
 {% endif %}

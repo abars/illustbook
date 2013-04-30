@@ -11,7 +11,7 @@
 			<input type="text" name="text" id="canvas_height" value="{%if bbs.default_canvas_height%}{{bbs.default_canvas_height}}{%else%}400{%endif%}"/>
 			<img src="{{template_path}}images/header_px.gif" alt="px" width="17" height="17" />
 		{% else%}
-			<div class="g-button">キャンバスサイズ　<input type="text" id="canvas_width" value="{%if bbs.default_canvas_width%}{{bbs.default_canvas_width}}{%else%}400{%endif%}" maxlength=3 size=3/><i class="icon-remove"></i><input type="text" id="canvas_height" value="{%if bbs.default_canvas_height%}{{bbs.default_canvas_height}}{%else%}400{%endif%}" maxlength=3 size=3/>px</div>
+			<div class="g-button">キャンバスサイズ　<input type="text" id="canvas_width" value="{%if bbs.default_canvas_width%}{{bbs.default_canvas_width}}{%else%}400{%endif%}" maxlength="3" size="3"/><i class="icon-remove"></i><input type="text" id="canvas_height" value="{%if bbs.default_canvas_height%}{{bbs.default_canvas_height}}{%else%}400{%endif%}" maxlength="3" size="3"/>px</div>
 		{% endif%}
 		</div>
 	{% endif%}

@@ -1,0 +1,15 @@
+	<div class="g-button-group" style="margin:5px;">
+		{% ifequal page 1 %}
+			<a href="#" class="g-button no-text mini disabled2"><i class="icon-chevron-left"></i></a>
+		{% else %}
+			<a href="{{page_url_base}}{{page|add:"-1"}}" class="g-button no-text mini"><i class="icon-chevron-left"></i></a>
+		{% endifequal %}
+		{%for p in page_list%}
+			{%ifequal p page%}
+					<div class="g-button checked no-text mini" style="color:#444">{{p}}</div>
+			{%else%}
+				<a href="{{page_url_base}}{{p}}" class="g-button no-text mini" style="color:#444">{{p}}</a>
+			{%endifequal %}
+		{%endfor%}
+		<a href="{{page_url_base}}{{page|add:"1"}}" class="g-button no-text mini"><i class="icon-chevron-right"></i></a>
+	</div>
