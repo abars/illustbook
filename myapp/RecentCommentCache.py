@@ -61,7 +61,11 @@ class RecentCommentCache():
 		data = memcache.get(key)
 		if data:
 			return data
-		
+
+		return RecentCommentCache._get_entry_core(bbs,display_n,key)
+	
+	@staticmethod
+	def _get_entry_core(bbs,display_n,key):
 		entry_query = db.Query(Entry,keys_only=True)
 		entry_query.order("-date");
 		entry_query.filter("del_flag =",BbsConst.ENTRY_EXIST)
@@ -72,17 +76,18 @@ class RecentCommentCache():
 
 		thread_key_list=[]
 		res_key_list=[]
-		thread_to_res={}
+		entry_to_res={}
 		for entry in entry_list:
+			entry_key=entry.key()
 			thread_key=Entry.thread_key.get_value_for_datastore(entry)
 			thread_key_list.append(thread_key)
 			res_n=len(entry.res_list)
 			if(res_n>=1):
 				res_key=entry.res_list[res_n-1]
 				res_key_list.append(res_key)
-				thread_to_res[thread_key]=res_key
+				entry_to_res[entry_key]=res_key
 			else:
-				thread_to_res[thread_key]=None
+				entry_to_res[entry_key]=None
 		thread_list=ApiObject.get_cached_object_hash(thread_key_list)
 		res_list=ApiObject.get_cached_object_hash(res_key_list)
 
@@ -90,8 +95,11 @@ class RecentCommentCache():
 		for entry in entry_list:
 			#if(True):
 			try:
+				entry_key=entry.key()
 				thread_key=Entry.thread_key.get_value_for_datastore(entry)
 				thread=thread_list[thread_key]
+				if(not thread):
+					continue
 				thread_title=thread.title
 
 				#URLに使用するキーを決定
@@ -101,8 +109,8 @@ class RecentCommentCache():
 					thread_short=thread_key
 
 				#レスが付いている場合は一番新しいレスの投稿者名を表示
-				if(thread_to_res[thread_key]):
-					editor=res_list[thread_to_res[thread_key]].editor
+				if(entry_to_res[entry_key]):
+					editor=res_list[entry_to_res[entry_key]].editor
 				else:
 					editor=entry.editor
 				
