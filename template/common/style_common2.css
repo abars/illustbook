@@ -1,5 +1,6 @@
 @charset "utf-8";
 
+/*
 .menubutton,.menubutton_active{
 color: #000000;
 font-size: 80%;
@@ -13,6 +14,7 @@ background-color: #f2f2f2;
 .menubutton_active{
 background-color: #a2a2a2;
 }
+*/
 
 hr {border:0; border-top:1px dotted #999999;}
 
@@ -27,4 +29,8 @@ img {
 
 td {
 	font-size: 100%;
+}
+
+#rss{
+	width:140px;
 }
