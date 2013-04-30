@@ -105,9 +105,9 @@ def comment_with_except_core(entry,host,no_hour):
 		ret+=title
 		ret+="</a><br/>（"
 		if(no_hour):
-			ret+=time_JST_format(entry["date"],11);
+			ret+=time_JST_progress(entry["date"])#,11);
 		else:
-			ret+=time_JST_format(entry["date"],10);
+			ret+=time_JST_progress(entry["date"])#,10);
 		ret+="）"
 	except:
 		return "title get error"+traceback.format_exc()

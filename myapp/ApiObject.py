@@ -323,7 +323,7 @@ class ApiObject(webapp.RequestHandler):
 		"image_url":image_url,"create_date":create_date,"thread_url":thread_url,
 		"applause":app,"bookmark":bookmark_cnt,"comment":comment_cnt,"key":str(thread.key()),
 		"disable_news":disable_news,"tag":tag_list,"width":thread.width,"height":thread.height,
-		"version":thread.thumbnail2_version,"violate_terms":violate_terms}
+		"version":thread.thumbnail2_version,"violate_terms":violate_terms,"create_date_original":thread.create_date}
 		
 		return one_dic
 
