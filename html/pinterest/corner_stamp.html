@@ -60,6 +60,8 @@
   {% endif %}
 {% else %}
   {% if thread_list %}
-    {% include "adsense/adsense_top.html" %}
+    {% if not tag_list %}
+      {% include "adsense/adsense_top.html" %}
+    {% endif %}
   {% endif %}
 {% endif %}
