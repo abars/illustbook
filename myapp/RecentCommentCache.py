@@ -37,14 +37,11 @@ class RecentCommentCache():
 		thread_list=thread_query.fetch(display_n);
 		thread_array=[]
 		for thread in thread_list:
-			if(True):#try:
-				mee={'short': str(thread.short),
-						'thread_key':str(thread.key()),
-						'title':str(thread.title),
-						'date':thread.date}
-				thread_array.append(mee)
-			#except:
-			#	mee=""
+			mee={'short': str(thread.short),
+					'thread_key':str(thread.key()),
+					'title':str(thread.title),
+					'date':thread.date}
+			thread_array.append(mee)
 		memcache.add(key, thread_array, BbsConst.SIDEBAR_RECENT_THREAD_CACHE_TIME)
 		return thread_array
 
@@ -65,39 +62,59 @@ class RecentCommentCache():
 		if data:
 			return data
 		
-		entry_query = Entry.all().order("-date");
+		entry_query = db.Query(Entry,keys_only=True)
+		entry_query.order("-date");
 		entry_query.filter("del_flag =",BbsConst.ENTRY_EXIST)
 		entry_query.filter('bbs_key =', bbs)
-		entry_list=entry_query.fetch(display_n);
+
+		entry_key_list=entry_query.fetch(display_n)
+		entry_list=ApiObject.get_cached_object_list(entry_key_list)
+
+		thread_key_list=[]
+		res_key_list=[]
+		thread_to_res={}
+		for entry in entry_list:
+			thread_key=Entry.thread_key.get_value_for_datastore(entry)
+			thread_key_list.append(thread_key)
+			res_n=len(entry.res_list)
+			if(res_n>=1):
+				res_key=entry.res_list[res_n-1]
+				res_key_list.append(res_key)
+				thread_to_res[thread_key]=res_key
+			else:
+				thread_to_res[thread_key]=None
+		thread_list=ApiObject.get_cached_object_hash(thread_key_list)
+		res_list=ApiObject.get_cached_object_hash(res_key_list)
+
 		entry_array=[]
 		for entry in entry_list:
+			#if(True):
 			try:
-				if(not bbs and entry.thread_key.bbs_key.disable_news):
-					continue;
-				thread_key=str(entry.thread_key.key())
-				if(entry.thread_key.short):
-					thread_key=entry.thread_key.short
-				
-				editor=entry.editor
-				
-				#if(entry.last_update_editor):	#for res update
-				#	editor=entry.last_update_editor
-				
-				#treat res delete
-				res_n=len(entry.res_list)
-				if(res_n>=1):
-					res=ApiObject.get_cached_object(entry.res_list[res_n-1])
-					if(res):
-						editor=res.editor
+				thread_key=Entry.thread_key.get_value_for_datastore(entry)
+				thread=thread_list[thread_key]
+				thread_title=thread.title
 
-				mee={'short': str(entry.thread_key.bbs_key.short),
-						'bbs_key' : str(entry.thread_key.bbs_key.key()),
-						'thread_key':thread_key,
-						'thread_title':str(entry.thread_key.title)+"("+editor+")",
+				#URLに使用するキーを決定
+				if(thread.short):
+					thread_short=thread.short
+				else:
+					thread_short=thread_key
+
+				#レスが付いている場合は一番新しいレスの投稿者名を表示
+				if(thread_to_res[thread_key]):
+					editor=res_list[thread_to_res[thread_key]].editor
+				else:
+					editor=entry.editor
+				
+				mee={'short': str(bbs.short),
+						'bbs_key' : str(bbs.key()),
+						'thread_key':thread_short,
+						'thread_title':thread_title+"("+editor+")",
 						'date':entry.date}
 				entry_array.append(mee)
 			except:
-				mee=""
+				continue
+		
 		memcache.add(key, entry_array, BbsConst.SIDEBAR_RECENT_ENTRY_CACHE_TIME)
 		return entry_array
 		

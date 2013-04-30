@@ -55,10 +55,12 @@ class ShowEntry(webapp.RequestHandler):
 		for com in com_list_:
 			res_list=[]
 			for res in com.res_list:
-				#one_res=db.get(res)
 				one_res=res_hash[res]
 				res_list.append(one_res)
-			com_list.append({'com':com, 'res_list':res_list})
+			image_key=None
+			if(com.illust_reply_image_key):
+				image_key=Entry.illust_reply_image_key.get_value_for_datastore(com)
+			com_list.append({'com':com, 'image_key':image_key, 'res_list':res_list})
 		return com_list
 	
 	#ユーザ名を取得
