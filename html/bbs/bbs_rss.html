@@ -1,15 +1,23 @@
 {% if template_path %}
-	<table><tr><td width="46px">
+	<table><tr>
+<!--
+	<td width="46px">
 	<a href="{{usrhost}}index.xml" class="decnone"><img src="{{template_path}}images/i_rss.jpg" alt="RSS" width="44" height="20" /></a>
-	</td><td>
+	</td>
+-->
+	<td>
 	{%if not bbs.tweet_disable %}
 		{% include "bbs_thread/tweet.html" %}
 	{%endif%}
 	</td></tr></table>
 {% else %}
-	<table><tr><td width="14px">
+	<table><tr>
+<!--
+	<td width="14px">
 	<a href="{{usrhost}}index.xml" class="decnone"><img src="{{host}}static_files/rss.png" alt="RSS"/></a>
-	</td><td>
+	</td>
+-->
+	<td>
 	{%if not bbs.tweet_disable %}
 		{% include "bbs_thread/tweet.html" %}
 	{%endif%}
