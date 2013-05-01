@@ -99,7 +99,11 @@
 				<!--
 				<div id="page-bottom">
 				-->
+				{% if is_iphone %}
+					{% include "bbs/bbs_page_no.html" %}
+				{% else %}
 					{% include "bbs/bbs_order.html" %}
+				{% endif %}
 				<!--
 				</div>
 				-->

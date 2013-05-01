@@ -48,12 +48,12 @@
     <div style="text-align:right;">
       <small>
       {%if thread.comment %}{{thread.comment}} comment<br/>{% endif %}
-      {%if thread.bookmark %}{{thread.bookmark}} bookmark<br/>{% endif %}
+      {%if thread.bookmark %}<a href="{{host}}show_bookmark?thread_key={{thread.key}}">{{thread.bookmark}} bookmark</a><br/>{% endif %}
       {%if thread.applause %}{{thread.applause}} applause<br/>{% endif %}
       <!-- {%if thread.version %}version {{thread.version}} {{thread.width}}x{{thread.height}}<br/>{% endif %} -->
       {{thread.create_date_original|time_JST_progress}}<br/>
       from 
-      {%if thread.user_id %}<a href="{{redirect_api}}?user_id={{thread.user_id}}" class="g-button mini" style="overflow:hidden;max-width:80%;">{% endif %}
+      {%if thread.user_id %}<a href="{{host}}mypage?user_id={{thread.user_id}}" class="g-button mini" style="overflow:hidden;max-width:80%;">{% endif %}
       {{thread.author}}
       {%if thread.user_id %}</a>{% endif %}
       </small>

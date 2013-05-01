@@ -10,6 +10,14 @@
 {% endif %}
 <meta name="Keywords" content="お絵かき掲示板,お絵かきブログ,無料,お絵かき,レンタル" />
 <meta name="Description" content="イラストブックはお絵かきツールがなくてもすぐに描ける完全無料のレンタルお絵かき掲示板サービスです。" />
+{% ifequal page_mode "bookmark" %}
+  <title>
+  {% if search_app %}{{search_app.app_name}}{%endif %}
+  {% if search_thread %}{{search_thread.title}}{% endif%}
+  {% if search_bbs %}{{search_bbs.bbs_name}}{% endif %}
+  をブックマークしているユーザ
+  </title>
+{%else%}
 {% if search %}
 <title>{{search}} - イラストブック</title>
 {% else %}
@@ -31,6 +39,7 @@
 {% endifequal %}
 {% endif %}
 {% endif %}
+{% endifequal %}
 {%include "meta.html" %}
 <meta http-equiv="Content-Script-Type" content="text/javascript" />
 <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -64,7 +73,6 @@
 {% if not contents_only %}
 <div id="index">
 
-
 <!-- アラート -->
 {% if regist_finish %}
   <div class="message">
@@ -79,6 +87,19 @@
     現在、サーバメンテナンス中です。ご迷惑をおかけします。数時間後に、再度、アクセスをお願い致します。
   </div>
 {% endif %}
+
+<!-- ブックマークしているユーザ -->
+{% ifequal page_mode "bookmark" %}
+  <script type="text/javascript" src="api_js"></script>
+  <script type="text/javascript" src="js/bookmark.js"></script>
+  <div class="message">
+    ブックマークしているユーザ<br/>
+    <div id="user_list">Loading...</div>
+  </div>
+  <script type="text/javascript">
+    request_user_list('{{search_thread.key}}','{{search_bbs.key}}','{{search_app.key}}');
+  </script>
+{% endifequal %}
 
 <!-- ユーザ情報 -->
 {% ifequal page_mode "user" %}

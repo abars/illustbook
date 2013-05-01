@@ -13,7 +13,7 @@
      {% else %}
      <p>イラストブックへようこそ。<br/>
      編集ボタンを押すと、ユーザ情報を登録することができます。<br/>
-     掲示板ボタンを押すと、掲示板をレンタルすることができます。</p>
+     掲示板タブでは、掲示板をレンタルすることができます。</p>
      {% endif %}
 
       <div id="profile">
@@ -54,8 +54,10 @@
          <a href="javascript:confirm_follow('{{view_user.user_id}}','{{view_user.name}}');" class="g-button"><i class="icon-plus"></i>フォロー</a>
        {% endif %}
       {% endif %}
-      <a id="profile_button" href="javascript:show_profile();" class="g-button">詳細</a>
-       {% if not view_mode %}
+      {% if detail_exist %}
+        <a id="profile_button" href="javascript:show_profile();" class="g-button">詳細</a>
+      {% endif %}
+      {% if not view_mode %}
          <A HREF="{{host}}{{redirect_api}}?tab={{tab}}&edit=2" class="g-button">編集</A>
 
     <a class="g-button dropdown-toggle" data-toggle="dropdown" href="#">

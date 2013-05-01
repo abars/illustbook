@@ -87,16 +87,19 @@ class Pinterest(webapp.RequestHandler):
 		return edit_profile
 
 	@staticmethod
-	def consume_feed(user,view_mode,bookmark):
+	def _get_new_feed_count(user,view_mode,bookmark):
 		new_feed_count=0
 		if(not view_mode and bookmark and bookmark.new_feed_count):
 			new_feed_count=bookmark.new_feed_count
+		return new_feed_count
+
+	@staticmethod
+	def _consume_feed(user,view_mode,bookmark):
 		if(user and bookmark):
 			if(not view_mode):
 				if(bookmark.new_feed_count):
 					bookmark.new_feed_count=0
 					bookmark.put()
-		return new_feed_count
 
 	@staticmethod
 	def get_tag_image(self,tag,page,unit):
@@ -116,6 +119,7 @@ class Pinterest(webapp.RequestHandler):
 	PAGE_MODE_MYPAGE=1
 	PAGE_MODE_GUIDE=2
 	PAGE_MODE_REGIST=3
+	PAGE_MODE_BOOKMARK=4
 
 	@staticmethod
 	def get_core(self,request_page_mode):
@@ -123,32 +127,7 @@ class Pinterest(webapp.RequestHandler):
 
 		unit=BbsConst.PINTEREST_PAGE_UNIT
 
-		#メンテナンス画面
-		is_maintenance=0
-		if(MaintenanceCheck.is_appengine_maintenance()):
-			is_maintenance=1
-		
-		#BBS COUNT
-		cache=SiteAnalyzer.get_cache()
-		bbs_n=cache["bbs_n"]
-		illust_n=cache["illust_n"]
-
-		#User
 		user = users.get_current_user()
-
-		login_flag=0
-		if(user):
-			login_flag=1
-
-		order="new"
-		if(self.request.get("order")):
-			order=self.request.get("order")
-
-		tab=None
-		if(self.request.get("tab")):
-			tab=self.request.get("tab")
-		if(request_page_mode==Pinterest.PAGE_MODE_REGIST):
-			tab="bbs"
 
 		search=None
 		if(self.request.get("search")):
@@ -168,6 +147,218 @@ class Pinterest(webapp.RequestHandler):
 		if user_id=="" and (request_page_mode==Pinterest.PAGE_MODE_MYPAGE or request_page_mode==Pinterest.PAGE_MODE_REGIST) and user:
 			user_id=user.user_id()
 
+		#リダイレクト先API
+		redirect_api="./"
+		if(request_page_mode==Pinterest.PAGE_MODE_MYPAGE or request_page_mode==Pinterest.PAGE_MODE_REGIST):
+			redirect_api="mypage"
+
+		#コンテンツのみを供給するか
+		contents_only=None
+		if(self.request.get("contents_only")):
+			contents_only=True
+
+		if(user_id!=""):
+			Pinterest._user_page(self,user,user_id,page,request_page_mode,redirect_api,contents_only)
+			return
+		if(request_page_mode==Pinterest.PAGE_MODE_BOOKMARK):
+			Pinterest._bookmark(self,user,user_id,page,request_page_mode,redirect_api,contents_only)
+			return
+		if(request_page_mode==Pinterest.PAGE_MODE_GUIDE):
+			Pinterest._guide(self,user,user_id,page,request_page_mode,redirect_api,contents_only)
+			return
+		if(tag!=""):
+			Pinterest._tag_search(self,tag,user,user_id,page,request_page_mode,redirect_api,contents_only)
+			return
+		if(search):
+			Pinterest._text_search(self,search,user,user_id,page,request_page_mode,redirect_api,contents_only)
+			return
+		if(request_page_mode==Pinterest.PAGE_MODE_MYPAGE and user_id==""):
+			Pinterest._login_require(self,user,user_id,page,request_page_mode,redirect_api,contents_only)
+			return
+
+		Pinterest._index(self,user,user_id,page,request_page_mode,redirect_api,contents_only)
+		return
+
+	@staticmethod
+	def initialize_template_value(self,user,user_id,page,request_page_mode,redirect_api,contents_only):
+		template_values = {
+			'user': user,
+			'order': None,
+			'tag_list': None,
+			'thread_list': None,
+			'redirect_url': self.request.path,
+			'page': page,
+			'next_page': page+1,
+			'next_query': "",
+			'tag': None,
+			'user_id': user_id,
+			'tab': None,
+			'bookmark': None,
+			'illust_enable': False,
+			'redirect_url': self.request.path,
+			'regist_finish': False,
+			'redirect_api': redirect_api,
+			'search_api': None,
+			'contents_only': contents_only,
+			'search': None,
+			'top_page': False
+		}
+		return template_values
+
+	@staticmethod
+	def _index(self,user,user_id,page,request_page_mode,redirect_api,contents_only):
+		template_values=Pinterest.initialize_template_value(self,user,user_id,page,request_page_mode,redirect_api,contents_only)
+
+		unit=BbsConst.PINTEREST_PAGE_UNIT
+
+		order="new"
+		if(self.request.get("order")):
+			order=self.request.get("order")
+
+		search_api="search_tag"
+
+		template_values['thread_list']=ApiFeed.feed_get_thread_list(self,order,(page-1)*unit,unit)
+		template_values['next_query']="order="+order
+		template_values['tag_list']=SearchTag.get_recent_tag(search_api)
+		template_values['top_page']=True
+		template_values['order']=order
+		template_values['page_mode']="index"
+		template_values['illust_enable']=True
+
+		Pinterest._render_page(self,template_values)
+
+	@staticmethod
+	def _text_search(self,search,user,user_id,page,request_page_mode,redirect_api,contents_only):
+		template_values=Pinterest.initialize_template_value(self,user,user_id,page,request_page_mode,redirect_api,contents_only)
+
+		search_api="search_tag"
+		unit=BbsConst.PINTEREST_PAGE_UNIT
+
+		thread_list=SearchThread.search(search,page,unit)
+		thread_list=ApiObject.create_thread_object_list(self,thread_list,"search")
+
+		template_values['thread_list']=thread_list
+		template_values['next_query']="search="+urllib.quote_plus(str(search))
+		template_values['tag_list']=SearchTag.get_recent_tag(search_api)
+		template_values['page_mode']="search"
+		template_values['illust_enable']=True
+		template_values['search']=search
+
+		Pinterest._render_page(self,template_values)
+
+	@staticmethod
+	def _tag_search(self,tag,user,user_id,page,request_page_mode,redirect_api,contents_only):
+		template_values=Pinterest.initialize_template_value(self,user,user_id,page,request_page_mode,redirect_api,contents_only)
+
+		search_api="search_tag"
+		unit=BbsConst.PINTEREST_PAGE_UNIT
+		dic=Pinterest.get_tag_image(self,tag,page,unit)
+		template_values['thread_list']=dic["thread_list"]
+		template_values['tag_list']=SearchTag.update_recent_tag(tag,dic["cnt"],search_api)
+		template_values['next_query']="tag="+urllib.quote_plus(str(tag))
+		template_values['page_mode']="tag"
+		template_values['illust_enable']=True
+		template_values['search']=tag
+
+		Pinterest._render_page(self,template_values)
+
+	@staticmethod
+	def _login_require(self,user,user_id,page,request_page_mode,redirect_api,contents_only):
+		template_values=Pinterest.initialize_template_value(self,user,user_id,page,request_page_mode,redirect_api,contents_only)
+		template_values['page_mode']="login_require"
+
+		Pinterest._render_page(self,template_values)
+
+	@staticmethod
+	def _guide(self,user,user_id,page,request_page_mode,redirect_api,contents_only):
+		template_values=Pinterest.initialize_template_value(self,user,user_id,page,request_page_mode,redirect_api,contents_only)
+
+		cache=SiteAnalyzer.get_cache()
+		template_values["bbs_n"]=cache["bbs_n"]
+		template_values["illust_n"]=cache["illust_n"]
+		template_values['page_mode']="guide"
+
+		Pinterest._render_page(self,template_values)
+
+	@staticmethod
+	def _bookmark(self,user,user_id,page,request_page_mode,redirect_api,contents_only):
+		template_values=Pinterest.initialize_template_value(self,user,user_id,page,request_page_mode,redirect_api,contents_only)
+
+		thread=None
+		if(self.request.get("thread_key")):
+			try:
+				thread = db.get(self.request.get("thread_key"))
+			except:
+				thread=None
+
+		bbs=None
+		if(self.request.get("bbs_key")):
+			try:
+				bbs = db.get(self.request.get("bbs_key"))
+			except:
+				bbs=None
+
+		app=None
+		if(self.request.get("app_key")):
+			try:
+				app = db.get(self.request.get("app_key"))
+			except:
+				app=None
+		
+		cache=SiteAnalyzer.get_cache()
+		template_values["search_thread"]=thread
+		template_values["search_bbs"]=bbs
+		template_values["search_app"]=app
+		template_values['page_mode']="bookmark"
+
+		Pinterest._render_page(self,template_values)
+
+	@staticmethod
+	def _decide_default_tab(self,bookmark_illust_exist,submit_illust_exist,view_mode,bookmark,user,request_page_mode):
+		#掲示板作成完了時はbbsに飛ばす
+		if(request_page_mode==Pinterest.PAGE_MODE_REGIST):
+			return "bbs"
+
+		#タブの取得
+		tab=self.request.get("tab")
+		if(tab):
+			return tab
+
+		#タブ指定なしでフィードが存在する場合はフィードに飛ばす
+
+		#デフォルトタブの決定
+		if(not tab and Pinterest._get_new_feed_count(user,view_mode,bookmark)):
+			return "feed"
+
+		#投稿したイラストもブックマークしたイラストも存在しない場合
+		if((not submit_illust_exist) and (not bookmark_illust_exist)):
+			#自分の場合は掲示板、他人の場合はフィードを表示
+			if(view_mode):
+				return "feed"
+			return "bbs"
+		
+		#投稿したイラストかブックマークしたイラストが存在する場合はそれを表示
+		if(submit_illust_exist):
+			return "submit"
+		if(bookmark_illust_exist):
+			return "bookmark"
+
+		return None
+
+	@staticmethod
+	def _user_page(self,user,user_id,page,request_page_mode,redirect_api,contents_only):
+		illust_enable=False
+		submit_illust_exist=True
+		bookmark_illust_exist=True
+
+		#イラストの存在を検出
+		submit_illust_count=ApiUser.user_get_is_submit_thread_exist(self,user_id)
+		bookmark_illust_count=ApiBookmark.bookmark_get_is_bookmark_thread_exist(self,user_id)
+		if(bookmark_illust_count==0):
+			bookmark_illust_exist=False
+		if(submit_illust_count==0):
+			submit_illust_exist=False
+
 		#マイユーザか
 		view_mode=1
 		if(user):
@@ -179,6 +370,14 @@ class Pinterest(webapp.RequestHandler):
 		if(user_id):
 			bookmark=ApiObject.get_bookmark_of_user_id(user_id)
 
+		#タブ
+		tab=Pinterest._decide_default_tab(self,bookmark_illust_exist,submit_illust_exist,view_mode,bookmark,user,request_page_mode)
+
+		#フィード数の消化
+		new_feed_count=Pinterest._get_new_feed_count(user,view_mode,bookmark)
+		if(tab=="feed"):
+			Pinterest._consume_feed(user,view_mode,bookmark)
+
 		#プロフィールを編集
 		edit_profile=Pinterest.get_profile_for_edit(bookmark,view_mode)
 
@@ -187,112 +386,36 @@ class Pinterest(webapp.RequestHandler):
 		if(self.request.get("edit")):
 			edit_mode=int(self.request.get("edit"))
 
-		#リダイレクト先API
-		redirect_api="./"
-		if(request_page_mode==Pinterest.PAGE_MODE_MYPAGE or request_page_mode==Pinterest.PAGE_MODE_REGIST):
-			redirect_api="mypage"
-		if(self.request.get("is_pinterest")):
-			redirect_api="pinterest"
-		search_api="search_tag"#pinterest"
-
-		page_mode="index"
-		view_user=None
-		view_user_profile=None
-		follow=None
-		follower=None
-		is_timeline_enable=0
-		following=False
 		bookmark_bbs_list=None
 		rental_bbs_list=None
-		illust_enable=True
-		new_feed_count=0
-		submit_illust_exist=True
-		submit_illust_list=None
-		age=None
-		thread_list=None
-		contents_only=None
-		top_page=False
-
-		if(self.request.get("contents_only")):
-			contents_only=True
-
-		if(user_id!=""):
-			if(not tab):
-				tab="submit"
-				new_feed_count=Pinterest.consume_feed(user,view_mode,bookmark)
-				if(new_feed_count):
-					tab="feed"
-
-			if(tab=="bbs"):
-				thread_list=None
-				illust_enable=False
-				bookmark_bbs_list=ApiBookmark.bookmark_get_bbs_list(self,user_id)
-				rental_bbs_list=ApiUser.user_get_bbs_list(self,user_id)
-	
-			if(tab=="feed" or tab=="timeline"):
-				thread_list=None
-				is_timeline_enable=1
-				illust_enable=False
-	
-			if(tab=="bookmark"):
-				thread_list=ApiBookmark.bookmark_get_thread_list(self,user_id)
-	
-			if(tab=="submit"):
-				thread_list=ApiUser.user_get_thread_list(self,user_id)
-				submit_illust_list=thread_list
-			
-			#投稿したイラストが存在しない場合はブックマークを表示
-			submit_illust_count=ApiUser.user_get_is_submit_thread_exist(self,user_id)
-			if(submit_illust_count==0):
-				submit_illust_exist=False
-				if(tab=="submit"):
-					tab="bookmark"
-					thread_list=ApiBookmark.bookmark_get_thread_list(self,user_id)
-
-			page_mode="user"
-			view_user=ApiUser.user_get_user(self,user_id)
-			view_user_profile=ApiUser.user_get_profile(self,user_id)
-			tag_list=None#SearchTag.get_recent_tag("pinterest")
-			next_query="user_id="+user_id+"&tab="+tab+"&edit="+str(edit_mode)
-			follow=ApiUser.user_get_follow(self,user_id,True)
-			follower=ApiUser.user_get_follower(self,user_id,True)
-			following=Pinterest.is_following(user,user_id,view_mode)
-			age=Pinterest.get_age(bookmark)
-		else:
-			if(order=="guide" or request_page_mode==Pinterest.PAGE_MODE_GUIDE):
-				thread_list=None
-				tag_list=None
-				next_query=""
-				page_mode="guide"
-			else:
-				if(tag!=""):
-					dic=Pinterest.get_tag_image(self,tag,page,unit)	#一度、タグから取得してインデックスを更新
-					thread_list=dic["thread_list"]
-					tag_list=SearchTag.update_recent_tag(tag,dic["cnt"],search_api)
-					#search=""+tag
-					next_query="tag="+urllib.quote_plus(str(tag))
-					page_mode="tag"
-				else:
-					if(search):
-						thread_list=SearchThread.search(search,page,unit)
-						thread_list=ApiObject.create_thread_object_list(self,thread_list,"search")
-						next_query="search="+urllib.quote_plus(str(search))
-						tag_list=SearchTag.get_recent_tag(search_api)
-						page_mode="search"
-					else:
-						thread_list=ApiFeed.feed_get_thread_list(self,order,(page-1)*unit,unit)
-						next_query="order="+order
-						tag_list=SearchTag.get_recent_tag(search_api)
-						top_page=True
-
-		#ログイン要求
-		if(request_page_mode==Pinterest.PAGE_MODE_MYPAGE and user_id==""):
+		if(tab=="bbs"):
 			thread_list=None
-			tag_list=None
-			next_query=""
-			page_mode="login_require"
-			view_mode=0
-			top_page=0
+			illust_enable=False
+			bookmark_bbs_list=ApiBookmark.bookmark_get_bbs_list(self,user_id)
+			rental_bbs_list=ApiUser.user_get_bbs_list(self,user_id)
+		
+		is_timeline_enable=0
+		if(tab=="feed" or tab=="timeline"):
+			thread_list=None
+			is_timeline_enable=1
+			illust_enable=False
+	
+		if(tab=="bookmark"):
+			thread_list=ApiBookmark.bookmark_get_thread_list(self,user_id)
+	
+		if(tab=="submit"):
+			thread_list=ApiUser.user_get_thread_list(self,user_id)
+			submit_illust_list=thread_list
+			
+		page_mode="user"
+		view_user=ApiUser.user_get_user(self,user_id)
+		view_user_profile=ApiUser.user_get_profile(self,user_id)
+		tag_list=None
+		next_query="user_id="+user_id+"&tab="+tab+"&edit="+str(edit_mode)
+		follow=ApiUser.user_get_follow(self,user_id,True)
+		follower=ApiUser.user_get_follower(self,user_id,True)
+		following=Pinterest.is_following(user,user_id,view_mode)
+		age=Pinterest.get_age(bookmark)
 
 		#ランキング
 		user_rank=0
@@ -301,38 +424,32 @@ class Pinterest(webapp.RequestHandler):
 			if(rank):
 				user_rank=rank.get_user_rank(bookmark.user_id)
 
-		#iPhoneかどうか
-		is_iphone=CssDesign.is_iphone(self)
-		is_tablet=CssDesign.is_tablet(self)
-
-		#タグの表示数
-		tag_display_n=5
+		detail_exist=False
+		if(bookmark):
+			if(bookmark.sex or age):
+				detail_exist=True
+			if(bookmark.birthday_month or bookmark.birthday_day or bookmark.birthday_year):
+				detail_exist=True
+			if(bookmark.homepage or bookmark.mail or bookmark.twitter_id):
+				detail_exist=True
 
 		template_values = {
-			'host': "./",
 			'user': user,
-			'order': order,
-			'tag_list': tag_list,
 			'thread_list': thread_list,
 			'redirect_url': self.request.path,
 			'page': page,
 			'next_page': page+1,
 			'next_query': next_query,
 			'page_mode': page_mode,
-			'tag': tag,
+			'tag': None,
 			'view_user': view_user,
 			'view_user_profile': view_user_profile,
-			'is_iphone': is_iphone,
-			'is_tablet': is_tablet,
-			'bbs_n': bbs_n,
-			'illust_n': illust_n,
 			'user_id': user_id,
 			'follow': follow,
 			'follower': follower,
 			'view_mode': view_mode,
 			'edit_mode': edit_mode,
 			'tab': tab,
-			'login_flag': login_flag,
 			'bookmark': bookmark,
 			'is_timeline_enable': is_timeline_enable,
 			'following':following,
@@ -343,17 +460,31 @@ class Pinterest(webapp.RequestHandler):
 			'redirect_url': self.request.path,
 			'new_feed_count': new_feed_count,
 			'submit_illust_exist': submit_illust_exist,
+			'bookmark_illust_exist': bookmark_illust_exist,
 			'regist_finish': (request_page_mode==Pinterest.PAGE_MODE_REGIST),
-			'is_maintenance': is_maintenance,
 			'redirect_api': redirect_api,
-			'search_api': search_api,
 			'age': age,
 			'user_rank': user_rank,
 			'contents_only': contents_only,
-			'search': search,
-			'top_page': top_page,
-			'tag_display_n': tag_display_n
+			'search': None,
+			'top_page': False,
+			'detail_exist': detail_exist
 		}
+		Pinterest._render_page(self,template_values)
+
+	@staticmethod
+	def _render_page(self,template_values):
+		template_values['host']="./"
+		template_values['is_iphone']=CssDesign.is_iphone(self)
+		template_values['is_tablet']=CssDesign.is_tablet(self)
+		template_values['tag_display_n']=5
+		template_values['is_maintenance']=MaintenanceCheck.is_appengine_maintenance()
+		if(template_values['user']):
+			template_values['login_flag']=1
+		else:
+			template_values['login_flag']=0
 		path = os.path.join(os.path.dirname(__file__), '../html/pinterest.html')
 		self.response.out.write(template.render(path, template_values))
+
+
 
