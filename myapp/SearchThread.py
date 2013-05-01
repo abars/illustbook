@@ -77,15 +77,15 @@ class SearchThread(webapp.RequestHandler):
 			limit=unit,
 			offset=(page-1)*unit,
 			sort_options=sort_options)
-		query=search.Query(
-			query_string=query,
-			options=options,)
-		index = search.Index(name=BbsConst.SEARCH_THREAD_INDEX_NAME)
-
 		try:
-			results=index.search(query)
+			query=search.Query(
+				query_string=query,
+				options=options,)
 		except:
 			return []
+
+		index = search.Index(name=BbsConst.SEARCH_THREAD_INDEX_NAME)
+		results=index.search(query)
 		
 		key_list=[]
 		for doc in results:
