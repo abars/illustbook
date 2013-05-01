@@ -1,5 +1,9 @@
 <div class="result">
 
+{% if is_iphone %}
+<style> img {max-width:100%;} </style>
+{% endif %}
+
 {% if order %}
 {% if not is_iphone %}
 
