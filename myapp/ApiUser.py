@@ -42,8 +42,9 @@ class ApiUser(webapp.RequestHandler):
 #-------------------------------------------------------------------
 
 	@staticmethod
-	def user_get_profile(req,user_id):
-		bookmark=ApiObject.get_bookmark_of_user_id(user_id)
+	def user_get_profile(req,user_id,bookmark=None):
+		if(not bookmark):
+			bookmark=ApiObject.get_bookmark_of_user_id(user_id)
 		if(not bookmark):
 			return []
 		one_dic=ApiObject.create_user_object(req,bookmark)
@@ -51,8 +52,9 @@ class ApiUser(webapp.RequestHandler):
 		return one_dic
 	
 	@staticmethod
-	def user_get_follow(req,user_id,fast):
-		bookmark=ApiObject.get_bookmark_of_user_id(user_id)
+	def user_get_follow(req,user_id,fast,bookmark=None):
+		if(not bookmark):
+			bookmark=ApiObject.get_bookmark_of_user_id(user_id)
 		if(not bookmark):
 			return []
 		return ApiUser.user_list_to_user_object_list(req,bookmark.user_list,fast)
@@ -79,29 +81,13 @@ class ApiUser(webapp.RequestHandler):
 	
 	@staticmethod
 	def user_get_follower(req,user_id,fast):
-		#フォロワー情報が更新された場合のみ再計算する
-		#bookmark=ApiObject.get_bookmark_of_user_id(user_id)
-		#if(not bookmark):
-		#	return []
 		follower_list=ApiObject.get_follower_list(user_id)
 		return ApiUser.user_list_to_user_object_list(req,follower_list,fast)
-		
-		#毎回計算する場合はこちら
-		#follower=None
-		#try:
-		#	query=Bookmark.all().filter("user_list =",user_id)
-		#	follower=query.fetch(limit=1000)
-		#except:
-		#	return []
-		#dic=[]
-		#for bookmark in follower:
-		#	one_dic=ApiObject.create_user_object(req,bookmark)
-		#	dic.append(one_dic)
-		#return dic
 	
 	@staticmethod
-	def user_get_user(req,user_id):
-		bookmark=ApiObject.get_bookmark_of_user_id(user_id)
+	def user_get_user(req,user_id,bookmark=None):
+		if(not bookmark):
+			bookmark=ApiObject.get_bookmark_of_user_id(user_id)
 		if(not bookmark):
 			return []
 		return ApiObject.create_user_object(req,bookmark)
@@ -125,11 +111,11 @@ class ApiUser(webapp.RequestHandler):
 		query=db.Query(MesThread)
 		query=query.filter("illust_mode IN",[BbsConst.ILLUSTMODE_ILLUST,BbsConst.ILLUSTMODE_MOPER])
 		query=query.filter("user_id =",user_id)
-		return query.count(limit=10)
+		return query.count(limit=1)
 
 	@staticmethod
 	def user_get_thread_list(req,user_id):
-		query=db.Query(MesThread)
+		query=db.Query(MesThread)	#keys onlyはINが使えない
 		query=query.filter("illust_mode IN",[BbsConst.ILLUSTMODE_ILLUST,BbsConst.ILLUSTMODE_MOPER])
 		query=query.filter("user_id =",user_id).order("-create_date")
 

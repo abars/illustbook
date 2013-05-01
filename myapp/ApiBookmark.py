@@ -71,8 +71,9 @@ class ApiBookmark(webapp.RequestHandler):
 				dic.append(removed_thread)
 
 	@staticmethod
-	def bookmark_get_thread_list(req,user_id):
-		bookmark=ApiObject.get_bookmark_of_user_id(user_id)
+	def bookmark_get_thread_list(req,user_id,bookmark=None):
+		if(not bookmark):
+			bookmark=ApiObject.get_bookmark_of_user_id(user_id)
 		if(bookmark==None):
 			return []
 
@@ -85,8 +86,9 @@ class ApiBookmark(webapp.RequestHandler):
 		return dic
 
 	@staticmethod
-	def bookmark_get_is_bookmark_thread_exist(req,user_id):
-		bookmark=ApiObject.get_bookmark_of_user_id(user_id)
+	def bookmark_get_is_bookmark_thread_exist(req,user_id,bookmark=None):
+		if(not bookmark):
+			bookmark=ApiObject.get_bookmark_of_user_id(user_id)
 		if(bookmark==None):
 			return 0
 		return len(bookmark.thread_key_list)

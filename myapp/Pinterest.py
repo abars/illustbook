@@ -24,6 +24,8 @@ from google.appengine.ext import db
 from google.appengine.api import images
 from google.appengine.api import memcache
 
+from django.utils.html import strip_spaces_between_tags
+
 from myapp.Bbs import Bbs
 from myapp.Counter import Counter
 from myapp.Alert import Alert
@@ -352,10 +354,16 @@ class Pinterest(webapp.RequestHandler):
 		illust_enable=False
 		submit_illust_exist=True
 		bookmark_illust_exist=True
+		thread_list=None
+
+		#プロフィール
+		bookmark=None
+		if(user_id):
+			bookmark=ApiObject.get_bookmark_of_user_id(user_id)
 
 		#イラストの存在を検出
 		submit_illust_count=ApiUser.user_get_is_submit_thread_exist(self,user_id)
-		bookmark_illust_count=ApiBookmark.bookmark_get_is_bookmark_thread_exist(self,user_id)
+		bookmark_illust_count=ApiBookmark.bookmark_get_is_bookmark_thread_exist(self,user_id,bookmark)
 		if(bookmark_illust_count==0):
 			bookmark_illust_exist=False
 		if(submit_illust_count==0):
@@ -366,11 +374,6 @@ class Pinterest(webapp.RequestHandler):
 		if(user):
 			if(user_id==user.user_id()):
 				view_mode=0
-
-		#プロフィール
-		bookmark=None
-		if(user_id):
-			bookmark=ApiObject.get_bookmark_of_user_id(user_id)
 
 		#タブ
 		tab=Pinterest._decide_default_tab(self,bookmark_illust_exist,submit_illust_exist,view_mode,bookmark,user,request_page_mode)
@@ -403,15 +406,15 @@ class Pinterest(webapp.RequestHandler):
 			illust_enable=False
 	
 		if(tab=="bookmark"):
-			thread_list=ApiBookmark.bookmark_get_thread_list(self,user_id)
+			thread_list=ApiBookmark.bookmark_get_thread_list(self,user_id,bookmark)
 	
 		if(tab=="submit"):
 			thread_list=ApiUser.user_get_thread_list(self,user_id)
 			submit_illust_list=thread_list
 			
 		page_mode="user"
-		view_user=ApiUser.user_get_user(self,user_id)
-		view_user_profile=ApiUser.user_get_profile(self,user_id)
+		view_user=ApiUser.user_get_user(self,user_id,bookmark)
+		view_user_profile=ApiUser.user_get_profile(self,user_id,bookmark)
 		tag_list=None
 		next_query="user_id="+user_id+"&tab="+tab+"&edit="+str(edit_mode)
 		
@@ -419,7 +422,7 @@ class Pinterest(webapp.RequestHandler):
 		if(edit_mode):
 			only_icon=False
 
-		follow=ApiUser.user_get_follow(self,user_id,only_icon)
+		follow=ApiUser.user_get_follow(self,user_id,only_icon,bookmark)
 		follower=ApiUser.user_get_follower(self,user_id,only_icon)
 		following=Pinterest.is_following(user,user_id,view_mode)
 		age=Pinterest.get_age(bookmark)
@@ -491,7 +494,9 @@ class Pinterest(webapp.RequestHandler):
 		else:
 			template_values['login_flag']=0
 		path = os.path.join(os.path.dirname(__file__), '../html/pinterest.html')
-		self.response.out.write(template.render(path, template_values))
+		render=template.render(path, template_values)
+		render=strip_spaces_between_tags(render)
+		self.response.out.write(render)
 
 
 
