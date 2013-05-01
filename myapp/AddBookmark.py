@@ -14,6 +14,7 @@ import datetime
 import random
 import logging
 import pickle
+import time
 
 from google.appengine.ext.webapp import template
 from google.appengine.api import users
@@ -34,6 +35,7 @@ from myapp.RecentTag import RecentTag
 from myapp.Bookmark import Bookmark
 from myapp.StackFeed import StackFeed
 from myapp.ApiObject import ApiObject
+from myapp.ApiBookmark import ApiBookmark
 from myapp.Ranking import Ranking
 from myapp.BbsConst import BbsConst
 
@@ -170,20 +172,19 @@ class AddBookmark(webapp.RequestHandler):
 		if(self.request.get("comment")):
 			comment=self.request.get("comment")
 
+		#add bookmark
+		feed_enable=False
 		if(mode=="add"):
-			if(AddBookmark.add_one(bookmark.thread_key_list,add_thread_key,thread)):
-				StackFeed.feed_new_bookmark_thread(user,thread,comment)
-				Ranking.add_rank_global(thread,BbsConst.SCORE_BOOKMARK)
+			feed_enable=AddBookmark.add_one(bookmark.thread_key_list,add_thread_key,thread)
 			AddBookmark.add_comment(thread,user.user_id(),comment)
 		if(mode=="add_bbs"):
-			if(AddBookmark.add_one(bookmark.bbs_key_list,add_bbs_key,bbs)):
-				StackFeed.feed_new_bookmark_bbs(user,bbs)
+			feed_enable=AddBookmark.add_one(bookmark.bbs_key_list,add_bbs_key,bbs)
 		if(mode=="add_app"):
 			AddBookmark.add_one(bookmark.app_key_list,add_app_key,app)
 		if(mode=="add_user"):
-			if(AddBookmark.add_user(bookmark.user_list,add_user_key)):
-				StackFeed.feed_new_follow(user,add_user_key)
-			
+			feed_enable=AddBookmark.add_user(bookmark.user_list,add_user_key)
+		
+		#del bookmark
 		if(mode=="del"):
 			AddBookmark.del_one(bookmark.thread_key_list,add_thread_key,thread)
 		if(mode=="del_bbs"):
@@ -196,13 +197,29 @@ class AddBookmark(webapp.RequestHandler):
 		#フォロー先のユーザのフォロワーを更新するようにリクエスト
 		if(mode=="add_user" or mode=="del_user"):
 			ApiObject.invalidate_follower_list(add_user_key)
-		#	target_user=ApiObject.get_bookmark_of_user_id(add_user_key)
-		#	if(target_user):
-		#		target_user.follower_list_enable=0
-		#		target_user.put()
 
+		#write
 		bookmark.put()
-		
-		self.redirect(str("./mypage"))
+
+		#feed(feed内でもbookmark.putを行うため、bookmark.putの前に置いてはいけない)
+		if(mode=="add"):
+			if(feed_enable):
+				StackFeed.feed_new_bookmark_thread(user,thread,comment)
+				Ranking.add_rank_global(thread,BbsConst.SCORE_BOOKMARK)
+		if(mode=="add_bbs"):
+			if(feed_enable):
+				StackFeed.feed_new_bookmark_bbs(user,bbs)
+		if(mode=="add_user"):
+			if(feed_enable):
+				StackFeed.feed_new_follow(user,add_user_key)
+
+		#redirect
+		url="./mypage"
+		if(mode=="del" or mode=="add"):
+			url=url+"?tab=bookmark"
+		if(mode=="del_bbs" or mode=="add_bbs"):
+			url=url+"?tab=bbs"
+
+		self.redirect(str(url))
 		
 

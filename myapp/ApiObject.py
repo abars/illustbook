@@ -83,10 +83,10 @@ class ApiObject(webapp.RequestHandler):
 	@staticmethod
 	def get_bookmark_from_datastore(user_id):
 		#データストアから読込
-		query=Bookmark.all().filter("user_id =",user_id)
+		query=db.Query(Bookmark,keys_only=True).filter("user_id =",user_id)
 		target_bookmark=None
 		try:
-			target_bookmark=query.fetch(1)[0]
+			target_bookmark=db.get(query.fetch(1)[0])	#強い整合性を保証
 		except:
 			target_bookmark=None
 		
@@ -99,7 +99,40 @@ class ApiObject(webapp.RequestHandler):
 		except:
 			mee=None
 		return target_bookmark
-	
+
+	@staticmethod
+	def get_bookmark_of_user_id_for_write(user_id):
+		#データストアから実体を読込(書き込み用)
+		bookmark=None
+		try:
+			bookmark=db.Query(Bookmark,keys_only=True).filter("user_id =",user_id)
+		except:
+			return None
+		
+		count=bookmark.count()
+		if(count>=2):
+			logging.error("bookmark duplicate error user_id="+str(user_id))
+
+		if(count==0):
+			bookmark=Bookmark()
+			bookmark.user_id=user_id
+			bookmark.put()
+		else:
+			bookmark=bookmark.fetch(1)
+			bookmark=db.get(bookmark[0])	#強い整合性を保証
+		
+		if(not bookmark.thread_key_list):
+			bookmark.thread_key_list=[]
+		if(not bookmark.bbs_key_list):
+			bookmark.bbs_key_list=[]
+		if(not bookmark.app_key_list):
+			bookmark.app_key_list=[]
+
+		if(not bookmark.user_list):
+			bookmark.user_list=[]
+
+		return bookmark;
+
 	@staticmethod
 	def get_follower_list(user_id):
 		follower_string=memcache.get(BbsConst.OBJECT_CACHE_HEADER+BbsConst.OBJECT_FOLLOWER_HEADER+user_id)
@@ -152,36 +185,6 @@ class ApiObject(webapp.RequestHandler):
 				bookmark.icon_mini=thumb["code"]
 				bookmark.icon_mini_content_type = thumb["content_type"]
 				bookmark.put()
-
-	@staticmethod
-	def get_bookmark_of_user_id_for_write(user_id):
-		#データストアから実体を読込(書き込み用)
-		bookmark=None
-		try:
-			bookmark=Bookmark.all().filter("user_id =",user_id)
-		except:
-			return None
-		
-		if(bookmark.count()==0):
-			bookmark=Bookmark()
-			#bookmark.owner=user #deleted
-			bookmark.user_id=user_id#bookmark.owner.user_id()
-			bookmark.put()
-		else:
-			bookmark=bookmark.fetch(1)
-			bookmark=bookmark[0]
-		
-		if(not bookmark.thread_key_list):
-			bookmark.thread_key_list=[]
-		if(not bookmark.bbs_key_list):
-			bookmark.bbs_key_list=[]
-		if(not bookmark.app_key_list):
-			bookmark.app_key_list=[]
-
-		if(not bookmark.user_list):
-			bookmark.user_list=[]
-
-		return bookmark;
 
 #-------------------------------------------------------------------
 #thread object

@@ -34,7 +34,6 @@ from myapp.MappingId import MappingId
 from myapp.Bbs import Bbs
 from myapp.BbsConst import BbsConst
 from myapp.Bookmark import Bookmark
-from myapp.AddBookmark import AddBookmark
 from myapp.ApiObject import ApiObject
 
 class ApiBookmark(webapp.RequestHandler):

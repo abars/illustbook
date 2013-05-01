@@ -94,7 +94,7 @@
      フォローしている<br/>
      {% for user in follow %}
      <div class="deletable">
-       <a href="{{redirect_api}}?user_id={{user.user_id}}"><img src="{{user.icon_url}}&size=mini" width=50px height=50px></a>
+       <a href="{{redirect_api}}?user_id={{user.user_id}}"><img src="{{user.icon_url}}&size=mini" width="50px" height="50px" alt='{{user.name}}'/></a>
        {% if edit_mode %}
        <a href="javascript:confirm_delete('del_user&user_key={{user.user_id}}','フォロー','{{user.name}}');" class="g-button no-text delete_button"><i class="icon-remove"></i></a>
        {% endif %}

@@ -212,11 +212,19 @@ color: #333;
 }
 
 #follower{
+{% if edit_mode %}
+  display:block;
+{% else %}
   display:none;
+{% endif %}
 }
 
 #follower_button{
+{% if edit_mode %}
+  display:none;
+{% else %}
   display:block;
+{% endif %}
 }
 
 #profile{

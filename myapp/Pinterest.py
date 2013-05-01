@@ -181,6 +181,8 @@ class Pinterest(webapp.RequestHandler):
 
 	@staticmethod
 	def initialize_template_value(self,user,user_id,page,request_page_mode,redirect_api,contents_only):
+		search_api="search_tag"
+
 		template_values = {
 			'user': user,
 			'order': None,
@@ -198,7 +200,7 @@ class Pinterest(webapp.RequestHandler):
 			'redirect_url': self.request.path,
 			'regist_finish': False,
 			'redirect_api': redirect_api,
-			'search_api': None,
+			'search_api': search_api,
 			'contents_only': contents_only,
 			'search': None,
 			'top_page': False
@@ -412,8 +414,13 @@ class Pinterest(webapp.RequestHandler):
 		view_user_profile=ApiUser.user_get_profile(self,user_id)
 		tag_list=None
 		next_query="user_id="+user_id+"&tab="+tab+"&edit="+str(edit_mode)
-		follow=ApiUser.user_get_follow(self,user_id,True)
-		follower=ApiUser.user_get_follower(self,user_id,True)
+		
+		only_icon=True
+		if(edit_mode):
+			only_icon=False
+
+		follow=ApiUser.user_get_follow(self,user_id,only_icon)
+		follower=ApiUser.user_get_follower(self,user_id,only_icon)
 		following=Pinterest.is_following(user,user_id,view_mode)
 		age=Pinterest.get_age(bookmark)
 
