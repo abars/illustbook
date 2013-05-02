@@ -3,7 +3,7 @@
 	<div class="entry-title">
 		<h3>{{ thread.title|escape }}</h3>
 		{% if not bbs.disable_applause %}
-			<div class="clap"><a href="javascript:location.href='{{host}}applause?bbs_key={{bbs_key}}&amp;thread_key={{thread.key}}&amp;mode=thread'" rel="nofollow"><img src="{{template_path}}images/i_crap.gif" alt="拍手" width="53" height="20"/></a>{%if thread.applause %}{{thread.applause}}{%else%}0{%endif%}</div>
+			<div class="clap"><a href="javascript:applause('{{host}}','{{bbs.key}}','{{thread.key}}','thread');" rel="nofollow"><img src="{{template_path}}images/i_crap.gif" alt="拍手" width="53" height="20"/></a>{%if thread.applause %}{{thread.applause}}{%else%}0{%endif%}</div>
 		{% endif %}
 		<div class="clr"></div>
 	</div><br/>
@@ -54,7 +54,7 @@
 {% if thread.cached_image_key %}
 {% if not template_path %}
 {% if not bbs.disable_applause %}
-<input type="button" value="拍手{%if thread.applause %}{{thread.applause}}{%else%}0{%endif%}" class="g-button" onClick="location.href='{{host}}applause?bbs_key={{bbs_key}}&amp;thread_key={{thread.key}}&amp;mode=thread'"/>
+<input type="button" value="拍手{%if thread.applause %}{{thread.applause}}{%else%}0{%endif%}" class="g-button" onClick="javascript:applause('{{host}}','{{bbs.key}}','{{thread.key}}','thread');"/>
 {% endif %}
 {% endif %}
 {% endif %}

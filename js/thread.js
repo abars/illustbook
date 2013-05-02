@@ -119,3 +119,21 @@ var isFlashInstalled=function(){if(navigator.plugins["Shockwave Flash"]){return 
 			$(".comment_tab_"+thread_key+"_body").hide();
 			$(".comment_tab_"+thread_key+"_body_"+type).show();
 		}
+
+		function applause(host,bbs_key,thread_key,mode,order,page){
+			jPrompt("このイラストに拍手しますか？<BR>以下のフォームからコメントを付加することもできます。","","拍手",
+				function(comment){
+					if(comment==null){
+						return;
+					}
+					url=host+'applause?bbs_key='+bbs_key+'&amp;thread_key='+thread_key+'&amp;mode='+mode;
+					if(mode=="bbs"){
+						url+="&amp;order="+order+"&amp;page="+page
+					}
+					if(comment!=""){
+						url+="&amp;comment="+comment
+					}
+					window.location.href=url
+				}
+			);
+		}

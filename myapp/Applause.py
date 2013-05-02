@@ -69,7 +69,12 @@ class Applause(webapp.RequestHandler):
 			bbs.put()
 
 			user = users.get_current_user()
-			StackFeed.feed_new_applause_thread(user,thread)
+
+			comment=""
+			if(self.request.get("comment")):
+				comment=self.request.get("comment")
+
+			StackFeed.feed_new_applause_thread(user,thread,comment)
 			Ranking.add_rank_global(thread,BbsConst.SCORE_APPLAUSE)
 
 		if(self.request.get("mode")=="bbs"):

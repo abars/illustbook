@@ -11,9 +11,9 @@
 		{% if not bbs.disable_applause %}
 			<div class="clap" align="right">
 			{% if template_path%}
-				<a href="{{host}}applause?bbs_key={{bbs.key}}&amp;thread_key={{thread.key}}&amp;mode=bbs&amp;order={{order}}&amp;page={{page}}" rel="nofollow"><img src="{{template_path}}images/i_crap.gif" alt="拍手" width="53" height="20"/></a>{%if thread.applause %}{{thread.applause}}{%else%}0{%endif%}
+				<a href="javascript:applause('{{host}}','{{bbs.key}}','{{thread.key}}','bbs','{{order}}','{{page}}');" rel="nofollow"><img src="{{template_path}}images/i_crap.gif" alt="拍手" width="53" height="20"/></a>{%if thread.applause %}{{thread.applause}}{%else%}0{%endif%}
 			{% else %}
-				<input type="button" value="拍手{%if thread.applause %}{{thread.applause}}{%else%}0{%endif%}"  class="g-button" onClick="location.href='{{host}}applause?bbs_key={{bbs.key}}&amp;thread_key={{thread.key}}&amp;mode=bbs&amp;order={{order}}&amp;page={{page}}'"/>
+				<input type="button" value="拍手{%if thread.applause %}{{thread.applause}}{%else%}0{%endif%}"  class="g-button" onClick="javascript:applause('{{host}}','{{bbs.key}}','{{thread.key}}','bbs','{{order}}','{{page}}');"/>
 			{% endif %}
 			</div>
 		{% endif %}

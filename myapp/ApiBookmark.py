@@ -56,14 +56,15 @@ class ApiBookmark(webapp.RequestHandler):
 			key=str(key)
 			if key not in appear:
 				#logging.error('not key:'+key)
-				removed_url="http://"+req.request.host+"/static_files/removed.png";
+				removed_url="";#http://"+req.request.host+"/static_files/removed.png";
 				removed_thread={
-					"title":"removed",
-					"author":"removed",
+					"title":"",
+					"author":"",
+					"summary":"イラストは削除されました",
 					"thumbnail_url":removed_url,
 					"image_url":removed_url,
-					"create_date":"removed",
-					"thread_url":"removed",
+					"create_date":"",
+					"thread_url":"",
 					"applause":0,
 					"bookmark":0,
 					"key":str(key),

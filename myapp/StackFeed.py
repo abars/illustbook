@@ -107,7 +107,7 @@ class StackFeed(webapp.RequestHandler):
 		return data
 
 	@staticmethod
-	def _create_new_applause_thread(user_id,thread):
+	def _create_new_applause_thread(user_id,thread,comment):
 		data=StackFeedData()
 		data.feed_mode="new_applause_thread"
 
@@ -118,6 +118,8 @@ class StackFeed(webapp.RequestHandler):
 		data.bbs_key=thread.bbs_key
 		data.thread_key=thread
 		data.message=""
+		if(comment):
+			data.message=comment
 		data.create_date=datetime.datetime.today()
 		data.put()
 		return data
@@ -219,11 +221,11 @@ class StackFeed(webapp.RequestHandler):
 		taskqueue.add(url="/stack_feed_worker",params={"mode":"new_comment_thread","user_id":user_id,"thread":str(thread.key()),"entry":str(entry.key())},queue_name="feed")
 
 	@staticmethod
-	def feed_new_applause_thread(user,thread):
+	def feed_new_applause_thread(user,thread,comment):
 		user_id=""
 		if(user):
 			user_id=user.user_id()
-		taskqueue.add(url="/stack_feed_worker",params={"mode":"new_applause_thread","user_id":user_id,"thread":str(thread.key())},queue_name="feed")
+		taskqueue.add(url="/stack_feed_worker",params={"mode":"new_applause_thread","user_id":user_id,"thread":str(thread.key()),"comment":comment},queue_name="feed")
 	
 	@staticmethod
 	def feed_new_response_entry(user,thread,entry,res):
@@ -324,7 +326,7 @@ class StackFeed(webapp.RequestHandler):
 		StackFeed._feed_to_mine(data,user_id)
 
 	@staticmethod
-	def _feed_new_applause_thread_core(user_id,thread):
+	def _feed_new_applause_thread_core(user_id,thread,comment):
 		#イラストに拍手された場合、
 		#イラストのオーナーと、
 		#拍手したユーザをフォローしているユーザにフィード
@@ -334,7 +336,7 @@ class StackFeed(webapp.RequestHandler):
 
 		thread_owner_user_id=thread.user_id
 
-		data=StackFeed._create_new_applause_thread(user_id,thread)
+		data=StackFeed._create_new_applause_thread(user_id,thread,comment)
 		StackFeed._append_one(data,thread_owner_user_id)
 
 		StackFeed._feed_to_follower(data,user_id)
@@ -413,7 +415,8 @@ class StackFeed(webapp.RequestHandler):
 			StackFeed._feed_new_comment_thread_and_entry_core(user_id,thread,entry,None)
 		if(mode=="new_applause_thread"):
 			thread=db.get(self.request.get("thread"))
-			StackFeed._feed_new_applause_thread_core(user_id,thread)
+			comment=self.request.get("comment")
+			StackFeed._feed_new_applause_thread_core(user_id,thread,comment)
 		if(mode=="new_response_entry"):
 			thread=db.get(self.request.get("thread"))
 			entry=db.get(self.request.get("entry"))
