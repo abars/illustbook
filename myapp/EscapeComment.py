@@ -34,7 +34,7 @@ class EscapeComment(webapp.RequestHandler):
 
 		return summary
 
-	#@staticmethod
+	@staticmethod
 	def auto_link(content):
 		compiled_line = re.compile("(http://[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)")
 		content = compiled_line.sub(r'<a href=\1 target="_blank">\1</a>', content)
