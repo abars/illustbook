@@ -38,6 +38,7 @@ from myapp.MappingThreadId import MappingThreadId
 from myapp.StackFeed import StackFeed
 from myapp.Ranking import Ranking
 from myapp.EscapeComment import EscapeComment
+from myapp.SyncPut import SyncPut
 
 class AddEntry(webapp.RequestHandler):
 	def write_status(self,is_flash,msg):
@@ -157,7 +158,8 @@ class AddEntry(webapp.RequestHandler):
 		entry.remote_addr=self.request.remote_addr
 
 		#保存
-		entry.put()
+		SyncPut.put_sync(entry)
+		#entry.put()
 
 		#スレッドのコメント数を更新
 		thread.comment_cnt = thread.comment_cnt+1

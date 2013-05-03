@@ -84,7 +84,7 @@ class AddRes(webapp.RequestHandler):
 			return
 
 		checkcode=SpamCheck.get_check_code()
-		if(SpamCheck.check(response.content,checkcode)):			
+		if(SpamCheck.check(response.content,checkcode)):
 			Alert.alert_msg_with_write(self,BbsConst.SPAM_CHECKED);
 			return
 		

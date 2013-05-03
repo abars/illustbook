@@ -36,3 +36,4 @@ class Entry(CachedDbModel):
 	violate_terms = db.IntegerProperty()
 	remote_addr = db.StringProperty()
 	comment_no = db.IntegerProperty()
+	sand = db.StringProperty()
