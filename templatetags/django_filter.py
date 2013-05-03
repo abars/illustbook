@@ -319,8 +319,17 @@ def set_seed(no):
 #-----------------------------------------------------------------
 
 def auto_link(summary):
-	#compiled_line = re.compile("(http://[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)")
-	#summary = compiled_line.sub(r'<a href=\1 TARGET="_blank">\1</a>', summary)
+	#Chromeのiframeのeditableがbrではなくdivを生成する問題の対策
+	summary=summary.replace('<div>', '<br/>')
+	summary=summary.replace('</div>', '')
+
+	#自動リンク
+	#PlaneText以外に適用すると変な挙動になるので、
+	#aタグが含まれていない場合のみに適用する
+	if(not(re.match(r'<a',summary))):
+		compiled_line = re.compile("(http://[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)")
+		summary = compiled_line.sub(r'<a href=\1 target="_BLANK">\1</a>', summary)
+
 	return summary
 
 #-----------------------------------------------------------------
