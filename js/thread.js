@@ -5,9 +5,9 @@
 
 var isFlashInstalled=function(){if(navigator.plugins["Shockwave Flash"]){return true;}try{new ActiveXObject("ShockwaveFlash.ShockwaveFlash");return true;}catch(a){return false;}}();
 
-		function select_change(order_value,url_base,page){
+		function select_change(order_value,url_base,page,limit){
 			var order=order_value;
-			window.location.href=''+url_base+page+"&order="+order;
+			window.location.href=''+url_base+page+"&order="+order+"&limit="+limit;
 		}
 
 		function confirm_action_comment(url) {

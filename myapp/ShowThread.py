@@ -85,7 +85,9 @@ class ShowThread(webapp.RequestHandler):
 		#コメント数を更新
 		if(bbs.page_comment_n):
 			col_num=bbs.page_comment_n
-		
+		if(self.request.get("limit")):
+			col_num=int(self.request.get("limit"))
+
 		#コメントの一覧を取得
 		query=ShowThread.get_comment_query(thread,order)
 		entry_num = query.count()
@@ -98,7 +100,8 @@ class ShowThread(webapp.RequestHandler):
 		search=""
 		if(self.request.get("search")):
 			search=self.request.get("search")
-			com_list_=SearchThread.search(search,page,col_num,BbsConst.SEARCH_ENTRY_INDEX_NAME)
+			query=""+search+' thread_key:"'+str(thread.key())+'"'
+			com_list_=SearchThread.search(query,page,col_num,BbsConst.SEARCH_ENTRY_INDEX_NAME)
 		
 		#実体への変換
 		com_list_=ApiObject.get_cached_object_list(com_list_)
@@ -174,7 +177,8 @@ class ShowThread(webapp.RequestHandler):
 			'comment':comment,
 			'show_comment_form':show_comment_form,
 			'user_name':user_name,
-			'search': search
+			'search': search,
+			'limit': col_num
 			}
 
 		path = os.path.join(os.path.dirname(__file__), "../html/"+design["base_name"])

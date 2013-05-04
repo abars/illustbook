@@ -54,20 +54,34 @@ class SearchThread(webapp.RequestHandler):
 	@staticmethod
 	def _create_document_entry(entry):
 		res_text=""
-		for res_key in entry.res_list:
-			try:
-				res=db.get(res_key)
-			except:
-				continue
-			res_text+=""+res.content+" from "+res.editor+"<br/>"
+		res_list=db.get(entry.res_list)
+		for res in res_list:
+			comment_no=0
+			if(res.comment_no):
+				comment_no=res.comment_no
+			res_text+=""+comment_no+" "+res.content+" from "+res.editor+"<br/>"
+
+		try:
+			thread_key=str(entry.thread_key.key())
+			bbs_key=str(entry.bbs_key.key())
+		except:
+			thread_key=""
+			bbs_key=""
+
+		comment_no=0
+		if(entry.comment_no):
+			comment_no=entry.comment_no
 
 		return search.Document(
 			doc_id=str(entry.key()),
 			fields=[
 				search.TextField(name='editor', value=entry.editor),
-				search.TextField(name='content', value=entry.content),
-				search.TextField(name='response', value=res_text),
-				search.DateField(name='date', value=entry.create_date)
+				search.HtmlField(name='content', value=entry.content),
+				search.HtmlField(name='response', value=res_text),
+				search.TextField(name='thread_key', value=thread_key),
+				search.TextField(name='bbs_key', value=bbs_key),
+				search.DateField(name='date', value=entry.create_date),
+				search.NumberField(name='comment_no', value=comment_no)
 			])
 
 
