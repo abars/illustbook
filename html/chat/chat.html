@@ -1,12 +1,29 @@
+<script language="javascript" src="{{host}}js/jquery/jquery.alerts.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" media="screen,print" href="{{host}}js/jquery/jquery.alerts.css" />
+
 <script>
+	function require_password(key,viewmode,pass){
+		jPrompt("ルームのパスワードを入力して下さい","","パスワードの入力",function(pass){
+			if(pass){
+				require_username(key,viewmode,pass);
+			}
+		});
+	}
+
+	function require_username(key,viewmode,pass){
+		jPrompt("チャットで使用する名前を入力して下さい","{{user_name}}","名前の入力",function(name){
+			if(name){
+				window.location.href="./chat?mode=tool&key="+key+"&viewmode="+viewmode+"&name="+name+"&pass="+pass
+			}
+		});
+	}
+
 	function join_chat(key,viewmode,pass){
 		if(pass!=""){
-			var pass=window.prompt("ルームのパスワードを入力","");
-			if(pass==null){
-				return;
-			}
+			require_password(key,viewmode,pass);
+		}else{
+			require_username(key,viewmode,pass);
 		}
-		window.location.href="./chat?mode=tool&key="+key+"&viewmode="+viewmode+"&pass="+pass
 	}
 
 	function delete_room(url){
@@ -45,37 +62,30 @@
 
 <p>&nbsp</p>
 
-<H1>稼働中のルーム</H1>
-
-{% if not user %}
-<p>ルームへの参加には<A HREF="{{redirect_url|login_url}}" class="declink">ログイン</A>が必要です。</H1>
-<p>&nbsp</p>
-{% endif %}
+<h1>稼働中のルーム</h1>
 
 {% if room_list %}
 	{% for room in room_list %}
 		<div style="float:left;">
 			<div style="background-color:#aaaaaa;padding:1px;margin-right:4px;">
-				{% if user %}
-		<A HREF="javascript:join_chat('{{room.key}}',false,{% if room.password %}true{%else%}false{%endif%});" class="declink">{% endif %}
+		<a href="javascript:join_chat('{{room.key}}',false,{% if room.password %}true{%else%}false{%endif%});" class="declink">
 				{% if room.password %}
-					<div style="width:100px;height:100px;background-color:#ffffff;color:#333333;">password lock</div>
+					<div style="width:100px;height:100px;background-color:#ffffff;color:#333333;"></div>
 				{% else %}
-					<img src="./chat?mode=thumbnail&key={{room.key}}" WIDTH=100px HEIGHT=100px>
+					<img src="./chat?mode=thumbnail&key={{room.key}}" width="100px" height="100px"/>
 				{% endif %}
-				{% if user %}</A>{% endif %}
+				</a>
 			</div>
 		</div><div>
-		<p><H2>{{room.name}}{% if room.is_always %}（常時稼動ルーム）{% endif %}
+		<p><h2>{{room.name}}{% if room.is_always %}（常時稼動ルーム）{% endif %}
 		{% if room.password %}
 			（パスワードが必要）{% if user %}{% ifequal user.user_id room.user_id %}（{{room.password}}）{% endifequal %}{% endif %}　
 		{% else %}
 			（誰でも参加可能）
 		{% endif %}
-		</H2></p>
-		<p>from <A HREF="./mypage?user_id={{room.user_id}}">{{room.user_name}}</A><br>
-		最終更新から{{room.from_last_update}}分経過<br>
-		{% if user %}
+		</h2></p>
+		<p>from <a href="./mypage?user_id={{room.user_id}}">{{room.user_name}}</a><br/>
+		最終更新から{{room.from_last_update}}分経過<br/>
 		</p>
 		<div class="actions g-button-container">
 		<div class="g-button-group">
@@ -85,7 +95,6 @@
 		green">{% if not is_iphone %}{% endif %}閲覧</A>-->
 		</div>
 		</div>
-		{% endif %}
 		</div>
 		<br clear="all">
 	{% endfor %}
@@ -140,9 +149,9 @@
 <p>&nbsp</p>
 <p>&nbsp</p>
 <H1>利用ガイド</H1>
-<p>ご利用にはイラストブックへのログインが必要です。</p>
 <p>制限時間はありません。ルームは最終更新から10分が経過すると自動的に削除されます。</p>
 <p>バグ報告や要望は<A HREF="./support/" class="declink">サポート掲示板</A>までどうぞ。</p>
+<p>ログインしなくてもチャットに参加できるようになりました。</p>
 {% if is_admin %}<p>管理者向け：パスワードにalwaysと入れると常時稼動ルームになります</p>{% endif %}
 <p>&nbsp</p>
 

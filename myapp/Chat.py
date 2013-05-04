@@ -15,6 +15,7 @@ import datetime
 import random
 import logging
 import base64
+import urllib
 
 from google.appengine.api import channel
 from google.appengine.ext.webapp import template
@@ -42,7 +43,10 @@ class Chat(webapp.RequestHandler):
 
 	#ユーザ名を取得する
 	def get_user_name(self,user):
-		bookmark=ApiObject.get_bookmark_of_user_id(user.user_id())
+		if(user):
+			bookmark=ApiObject.get_bookmark_of_user_id(user.user_id())
+		else:
+			bookmark=None
 		user_name="名無しさん"
 		if(bookmark and bookmark.name and bookmark.name!="None"):
 			user_name=bookmark.name
@@ -226,6 +230,8 @@ class Chat(webapp.RequestHandler):
 			bookmark=ApiObject.get_bookmark_of_user_id(user_id)
 			if(bookmark):
 				name=bookmark.name
+			name=str(client.split("_")[2]).replace("-","%")
+			name=urllib.unquote_plus(name)
 			dic[client]=name
 		
 		ApiObject.write_json_core(self,{"status":"success","user_list":dic});
@@ -295,6 +301,8 @@ class Chat(webapp.RequestHandler):
 		if(OwnerCheck.is_admin(user)):
 			is_admin=True
 
+		user_name=self.get_user_name(user)
+
 		template_values = {
 			'host': "./",
 			'is_iphone': is_iphone,
@@ -303,7 +311,8 @@ class Chat(webapp.RequestHandler):
 			'mode': "chat",
 			'header_enable': False,
 			'room_list': show_room,
-			'is_admin':is_admin
+			'is_admin':is_admin,
+			'user_name': user_name
 		}
 		path = os.path.join(os.path.dirname(__file__), '../html/portal.html')
 		self.response.out.write(template.render(path, template_values))
@@ -402,7 +411,7 @@ class Chat(webapp.RequestHandler):
 		except:
 			room=None
 
-		alert_footer="<BR><A HREF='./chat'><IMG SRC='./static_files/chat/logo.png'/></A>"
+		alert_footer=""#<BR><A HREF='./chat'><IMG SRC='./static_files/chat/logo.png'/></A>"
 
 		login_message=""
 		if(not user):
@@ -417,20 +426,30 @@ class Chat(webapp.RequestHandler):
 			Alert.alert_msg_with_write(self,"チャットルームのパスワードが一致しません。"+alert_footer)
 			return
 		
-		if(not user):
-			Alert.alert_msg_with_write(self,"チャットルームへの参加にはログインが必要です。<BR>"+login_message+alert_footer)
-			return
+		#if(not user):
+		#	Alert.alert_msg_with_write(self,"チャットルームへの参加にはログインが必要です。<BR>"+login_message+alert_footer)
+		#	return
 
 		canvas_width=room.canvas_width
 		canvas_height=room.canvas_height
 
-		user_id=user.user_id()
-		user_name=self.get_user_name(user)
+		if(user):
+			user_id=user.user_id()
+			#user_name=self.get_user_name(user)
+		else:
+			user_id=0
+		
+		user_name=self.request.get("name")
+
 		server_time=Chat.get_sec(datetime.datetime.now())
 		
-		bbs_list=Bbs.all().filter("user_id =",user.user_id()).filter("del_flag =",0).fetch(limit=10)
+		if(user):
+			bbs_list=Bbs.all().filter("user_id =",user.user_id()).filter("del_flag =",0).fetch(limit=10)
+		else:
+			bbs_list=None
 
-		client_id=str(user.user_id()) + "_"+ str(server_time)
+		quote_name=urllib.quote_plus(str(user_name)).replace("%","-")
+		client_id=str(user_id)+"_"+str(server_time)+"_"+quote_name
 		token = channel.create_channel(client_id)
 
 		#排他制御が必要
