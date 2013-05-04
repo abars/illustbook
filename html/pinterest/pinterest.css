@@ -80,11 +80,16 @@ border: 1px solid #ccc;
 background: #fff;
 box-shadow: 0 2px 1px #eee;
 word-break:break-all;
+color: #333;
+}
+
+.item b{
+  color:#E47911;
 }
 
 .item a{
   text-decoration: none;
-  color: #333;
+  color:#E47911;
 }
 
 .message {
