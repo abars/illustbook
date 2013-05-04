@@ -41,7 +41,7 @@
     {% endif %}
     {% if thread.tag %}
       {% for tag in thread.tag %}
-        <a href="{{host}}{{search_api}}?tag={{tag}}" style="background:#f0f0f0;padding:4px;margin-right:4px;">
+        <a href="{{host}}{{search_api}}?tag={{tag}}" style="background:#f0f0f0;padding:4px;margin-right:4px;margin-bottom:2px;">
           {{tag}}
         </a>
       {% endfor %}
