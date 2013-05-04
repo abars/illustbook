@@ -18,7 +18,14 @@
    <img src="static_files/banner_360b.png" alt="ロゴ"/>
   {% endif %}
    <div id="logo_fotter">
-     from <a href="http://pochigoya0423.blog.shinobi.jp/">飯田のぎ</a>
+    {% if not user %}
+    {% if not is_iphone %}
+      {% include "pinterest/about.html" %}<br/>
+    {% endif %}
+    {% endif %}
+     <div style="float:right;">
+       イラスト：<a href="http://pochigoya0423.blog.shinobi.jp/">飯田のぎ</a>
+     </div>
     </div>
   </div>
 {% endifequal %}
@@ -26,6 +33,13 @@
 {% ifequal page_mode "index" %}
   {% include "pinterest/menulist.html" %}
   <br clear="all"/>
+  {% if is_iphone %}
+  {% if not user %}
+  <div class="message">
+    {% include "pinterest/about.html" %}
+  </div>
+  {% endif %}
+  {% endif %}
 {% endifequal %}
 
 <!-- タグ一覧 -->
@@ -53,10 +67,12 @@
 
 <!-- 広告 -->
 {% if is_iphone %}
+  {% if 0 %}
   {% if not bookmark %}
     {% ifnotequal page_mode "login_require" %}
       {% include "adsense/adsense_wide.html" %}
     {% endifnotequal %}
+  {% endif %}
   {% endif %}
 {% else %}
   {% if thread_list %}

@@ -64,7 +64,8 @@
       その他 <span class="caret"></span>
     </a>
     <ul class="dropdown-menu">
-          <li><A HREF="{{host}}{{redirect_api}}">トップへ戻る</A></li>
+          <li><a href="{{host}}{{redirect_api}}">トップへ戻る</a></li>
+          <li><a href="{{redirect_url|logout_url}}">ログアウト</a></li>
         {% if not view_mode or is_admin%}
           <li><a href="javascript:confirm_withdraw('mypage?withdraw=go&user_id={{bookmark.user_id}}')">退会する{% if is_admin %}（＊管理モード）{% endif %}</a></li>
         {% endif %}
