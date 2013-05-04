@@ -243,6 +243,9 @@ color: #333;
   background: #fff;
   display:none;
   text-align: center;
+  border: 1px solid #ccc;
+  background: #fff;
+  box-shadow: 0 2px 1px #eee;
 }
 
 #back-top a {

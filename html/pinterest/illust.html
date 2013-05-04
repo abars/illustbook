@@ -79,9 +79,9 @@
 
     <div style="text-align:right;margin:4px;">
       <small>
-      {%if thread.comment %}{{thread.comment}} comment<br/>{% endif %}
-      {%if thread.bookmark %}<a href="{{host}}show_bookmark?thread_key={{thread.key}}">{{thread.bookmark}} bookmark</a><br/>{% endif %}
-      {%if thread.applause %}{{thread.applause}} applause<br/>{% endif %}
+      {%if thread.comment %}{{thread.comment}} com{%if not is_iphone %}ment{% endif %}<br/>{% endif %}
+      {%if thread.bookmark %}<a href="{{host}}show_bookmark?thread_key={{thread.key}}">{{thread.bookmark}} {%if not is_iphone %}bookmark{%else%}bmk{%endif%}</a><br/>{% endif %}
+      {%if thread.applause %}{{thread.applause}} {%if not is_iphone %}applause{% else %}apl{% endif %}<br/>{% endif %}
       </small>
     </div>
 </div>
