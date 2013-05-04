@@ -41,7 +41,7 @@
     {% endif %}
     {% if thread.tag %}
       {% for tag in thread.tag %}
-        <a href="{{host}}{{search_api}}?tag={{tag}}" class="g-button mini" style="margin-left:0px;">
+        <a href="{{host}}{{search_api}}?tag={{tag}}" class="g-button mini" style="margin-left:0px;margin-right:2px;">
           {{tag}}
         </a>
       {% endfor %}
@@ -49,24 +49,40 @@
     {% endif %}
     {{thread.summary|safe}}
     <br/>
-    <div style="text-align:right;">
+  </div>
+
+  <hr style="margin:0px;"/>
+
+    <div style="float:left;margin:4px;">
+      <div style="float:left;margin-top:4px;margin-bottom:4px;margin-right:4px;">
+        {%if thread.user_id %}<a href="{{host}}mypage?user_id={{thread.user_id}}">{% endif %}
+        <img src="{{host}}show_icon?key={{thread.user_id}}&size=mini" width="24px" height="24px" alt="{{thread.user_id}}"/>
+        {%if thread.user_id %}</a>{% endif %}
+      </div>
+      <div style="float:left;">
+      {% if thread.author %}
+       {%if thread.user_id %}<a href="{{host}}mypage?user_id={{thread.user_id}}" style="overflow:hidden;max-width:80%;">{% endif %}
+      <small>{{thread.author}}</small>
+        {%if thread.user_id %}</a>{% endif %}
+        <br/>
+              {% if thread.create_date_original %}
+        <small>
+          {{thread.create_date_original|time_JST_progress}}
+        </small>
+        <br/> 
+      {% endif %}
+    </div>
+
+      {% endif %}
+
+    </div>
+
+    <div style="text-align:right;margin:4px;">
       <small>
       {%if thread.comment %}{{thread.comment}} comment<br/>{% endif %}
       {%if thread.bookmark %}<a href="{{host}}show_bookmark?thread_key={{thread.key}}">{{thread.bookmark}} bookmark</a><br/>{% endif %}
       {%if thread.applause %}{{thread.applause}} applause<br/>{% endif %}
-      <!-- {%if thread.version %}version {{thread.version}} {{thread.width}}x{{thread.height}}<br/>{% endif %} -->
-      {% if thread.create_date_original %}
-        {{thread.create_date_original|time_JST_progress}}<br/> 
-      {% endif %}
-      {% if thread.author %}
-        from 
-       {%if thread.user_id %}<a href="{{host}}mypage?user_id={{thread.user_id}}" class="g-button mini" style="overflow:hidden;max-width:80%;">{% endif %}
-      {{thread.author}}
-        {%if thread.user_id %}</a>{% endif %}
-      {% endif %}
       </small>
     </div>
-  </div>
-
 </div>
 {% endfor %}
