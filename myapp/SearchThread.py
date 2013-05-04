@@ -59,7 +59,7 @@ class SearchThread(webapp.RequestHandler):
 			comment_no=0
 			if(res.comment_no):
 				comment_no=res.comment_no
-			res_text+=""+comment_no+" "+res.content+" from "+res.editor+"<br/>"
+			res_text+=""+str(comment_no)+" "+res.content+" from "+res.editor+"<br/>"
 
 		try:
 			thread_key=str(entry.thread_key.key())
@@ -72,6 +72,10 @@ class SearchThread(webapp.RequestHandler):
 		if(entry.comment_no):
 			comment_no=entry.comment_no
 
+		date=entry.date
+		if(entry.create_date):
+			date=entry.create_date
+
 		return search.Document(
 			doc_id=str(entry.key()),
 			fields=[
@@ -80,7 +84,7 @@ class SearchThread(webapp.RequestHandler):
 				search.HtmlField(name='response', value=res_text),
 				search.TextField(name='thread_key', value=thread_key),
 				search.TextField(name='bbs_key', value=bbs_key),
-				search.DateField(name='date', value=entry.create_date),
+				search.DateField(name='date', value=date),
 				search.NumberField(name='comment_no', value=comment_no)
 			])
 
