@@ -38,6 +38,7 @@ from myapp.ShowBbs import ShowBbs
 from myapp.CounterWorker import CounterWorker
 from myapp.ApiObject import ApiObject
 from myapp.ShowEntry import ShowEntry
+from myapp.SearchThread import SearchThread
 
 class ShowThread(webapp.RequestHandler):
 	def get(self,bbs_key,thread_key):
@@ -93,6 +94,15 @@ class ShowThread(webapp.RequestHandler):
 		else:
 			com_list_ = query.fetch(limit=col_num, offset=(page-1)*col_num)
 		
+		#検索
+		search=""
+		if(self.request.get("search")):
+			search=self.request.get("search")
+			com_list_=SearchThread.search(search,page,col_num,BbsConst.SEARCH_ENTRY_INDEX_NAME)
+		
+		#実体への変換
+		com_list_=ApiObject.get_cached_object_list(com_list_)
+
 		#現在のスレッドへのURLを取得
 		host_url="http://"+MappingId.mapping_host(self.request.host)+"/"
 		
@@ -163,7 +173,8 @@ class ShowThread(webapp.RequestHandler):
 			'redirect_url': self.request.path,
 			'comment':comment,
 			'show_comment_form':show_comment_form,
-			'user_name':user_name
+			'user_name':user_name,
+			'search': search
 			}
 
 		path = os.path.join(os.path.dirname(__file__), "../html/"+design["base_name"])
@@ -198,7 +209,8 @@ class ShowThread(webapp.RequestHandler):
 	
 	@staticmethod
 	def get_comment_query(thread,order):
-		query = Entry.all()
+		#query = Entry.all()
+		query=db.Query(Entry,keys_only=True)
 		query.filter('thread_key =', thread)
 		query.filter("del_flag =",1)
 		if(order=="new"):

@@ -99,5 +99,8 @@ class BbsConst:
 	SEARCH_THREAD_INDEX_NAME="search_thread_index"
 	SEARCH_THREAD_VERSION=1
 
+	SEARCH_ENTRY_INDEX_NAME="search_entry_index"
+	SEARCH_ENTRY_VERSION=2
+
 
 

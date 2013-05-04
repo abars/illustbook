@@ -152,7 +152,11 @@ function feed_parse(feed){
 		if(feed.mode=="new_comment_thread"){
 			txt+='<blockquote><p><a href="javascript:go_feed(\''+feed.thread.thread_url+'\')">'+feed.message+'</a></p></blockquote>';
 		}else{
-			txt+="<p>"+feed.message+"</p>";
+			if(feed.mode=="deleted"){
+				txt+="<p>"+deleted_style_header+feed.message+deleted_style_footer+"</p>";
+			}else{
+				txt+="<p>"+feed.message+"</p>";
+			}
 		}
 	}
 

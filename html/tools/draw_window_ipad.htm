@@ -35,6 +35,7 @@
 <script language="JavaScript" src="./js/ipad/ilbpaint_ipad_palette.js"></script>
 <script language="JavaScript" src="./js/ipad/ilbpaint_ipad_colorcircle.js"></script>
 <script language="JavaScript" src="./js/ipad/ilbpaint_ipad_bottom_tool.js"></script>
+<script language="JavaScript" src="./js/ipad/ilbpaint_ipad_storage.js"></script>
 <script language="JavaScript" src="./js/ipad/ilbpaint_ipad.js"></script>
 
 <script language="JavaScript" src="./js/cookie.js"></script>
@@ -183,6 +184,12 @@
 					{% endif %}
 				</div>
 			</div>
+	</div>
+
+	<div id="storage_form" class="upload_form">
+		ブラウザのローカルストレージに現在のイラストを保存し、後で読込を行うことができます。<br/>
+		<input class="g-button blue" value="保存" onclick="javascript:g_storage.save();">
+		<input class="g-button blue" value="読込" onclick="javascript:g_storage.load();">
 	</div>
 
 		<div id="uploading" class="upload_form">

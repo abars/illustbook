@@ -118,6 +118,7 @@ class AddRes(webapp.RequestHandler):
 		entry.res_list.append(response.key())
 		entry.last_update_editor = response.editor
 		entry.date=datetime.datetime.today()
+		entry.search_index_version=0
 		entry.put()
 		
 		#スレッドのコメント数を更新

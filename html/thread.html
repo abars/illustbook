@@ -47,13 +47,14 @@
 
 				<!-- タグ -->
 				{% include "thread/thread_tag.html" %}
-							
+
 				<!-- コメント一覧 -->
 				{% if not bbs.disable_comment %}
 					<div class="entry">
+					{% if search %}{{search}}を含む{% endif %}
 					コメント
 					{% if not comment %}
-						<hr/>コメントはまだありません。<br/>
+						<hr/>{% if search %}コメントは見つかりませんでした。{%else%}コメントはまだありません。{% endif %}<br/>
 					{% else %}
 						{{comment}}
 					{% endif %}
@@ -63,6 +64,19 @@
 					</div>
 				{% endif %}
 
+				<!--検索-->
+				{% ifequal bbs.bbs_mode 3 %}
+				<div class="entry">
+				コメント検索<hr/>
+				<div class="g-button-group toggle-buttons">
+					<form method="get" action="{{usrhost}}{{thread.short}}.html">
+					<input name="search" style="float:left;width:200px;margin-top:2px;margin-right:2px;" value="{% if search	 %}{{search}}{% endif %}"/>
+					<input type="submit" value="検索" class="g-button"/>
+					</form>
+				</div>
+				</div>
+				{% endifequal %}
+				
 				<!-- スレッドメニュー -->
 				<div class="entry">
 				メニュー

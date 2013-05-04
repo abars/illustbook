@@ -238,7 +238,7 @@ class Pinterest(webapp.RequestHandler):
 		search_api="search_tag"
 		unit=BbsConst.PINTEREST_PAGE_UNIT
 
-		thread_list=SearchThread.search(search,page,unit)
+		thread_list=SearchThread.search(search,page,unit,BbsConst.SEARCH_THREAD_INDEX_NAME)
 		thread_list=ApiObject.create_thread_object_list(self,thread_list,"search")
 
 		template_values['thread_list']=thread_list

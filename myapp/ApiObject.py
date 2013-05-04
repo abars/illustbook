@@ -706,6 +706,11 @@ class ApiObject(webapp.RequestHandler):
 		SearchThread.add_index(ds_obj)
 
 	@staticmethod
+	def _update_entry(ds_obj):
+		#検索インデックスに追加
+		SearchThread.add_index_entry(ds_obj)
+
+	@staticmethod
 	def _update_bbs(ds_obj):
 		#現在はスレッド追加時にcached_thumbnail_keyを上書きしている
 		#将来的にDSの以降などでkeyが変わる場合は以下のifをTrueにしてキャッシュを全更新すること
@@ -730,6 +735,8 @@ class ApiObject(webapp.RequestHandler):
 	def _update_object(ds_obj):
 		if(type(ds_obj)==MesThread):
 			ApiObject._update_thread(ds_obj)
+		if(type(ds_obj)==Entry):
+			ApiObject._update_entry(ds_obj)
 		if(type(ds_obj)==Bbs):
 			ApiObject._update_bbs(ds_obj)
 

@@ -52,23 +52,54 @@ class SearchThread(webapp.RequestHandler):
 			])
 
 	@staticmethod
+	def _create_document_entry(entry):
+		res_text=""
+		for res_key in entry.res_list:
+			try:
+				res=db.get(res_key)
+			except:
+				continue
+			res_text+=""+res.content+" from "+res.editor+"<br/>"
+
+		return search.Document(
+			doc_id=str(entry.key()),
+			fields=[
+				search.TextField(name='editor', value=entry.editor),
+				search.TextField(name='content', value=entry.content),
+				search.TextField(name='response', value=res_text),
+				search.DateField(name='date', value=entry.create_date)
+			])
+
+
+	@staticmethod
 	def add_index(thread):
 		if(thread.search_index_version):
 			if(thread.search_index_version==BbsConst.SEARCH_THREAD_VERSION):
 				return
-
 		document=SearchThread._create_document(thread)
-
 		try:
 			search.Index(name=BbsConst.SEARCH_THREAD_INDEX_NAME).put(document)
 		except search.Error:
 			logging.exception('Search Put failed')
-
 		thread.search_index_version=BbsConst.SEARCH_THREAD_VERSION
 		thread.put()
 
 	@staticmethod
-	def search(query,page,unit):
+	def add_index_entry(entry):
+		if(entry.search_index_version):
+			if(entry.search_index_version==BbsConst.SEARCH_ENTRY_VERSION):
+				return
+		document=SearchThread._create_document_entry(entry)
+		try:
+			search.Index(name=BbsConst.SEARCH_ENTRY_INDEX_NAME).put(document)
+		except search.Error:
+			logging.exception('Search Put failed')
+
+		entry.search_index_version=BbsConst.SEARCH_ENTRY_VERSION
+		entry.put()
+
+	@staticmethod
+	def search(query,page,unit,index):
 		sort_options = search.SortOptions(
 			expressions=[
 				search.SortExpression(expression='date', direction=search.SortExpression.DESCENDING, default_value=0)
@@ -84,7 +115,7 @@ class SearchThread(webapp.RequestHandler):
 		except:
 			return []
 
-		index = search.Index(name=BbsConst.SEARCH_THREAD_INDEX_NAME)
+		index = search.Index(name=index)
 
 		try:
 			results=index.search(query)
