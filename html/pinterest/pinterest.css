@@ -237,6 +237,15 @@ color: #333;
 }
 
 .illust_summary{
+  clear:both;
+  margin:4px;
+}
+
+.tag{
+  background:#f0f0f0;
+  padding:4px;
+  margin:2px;
+  float:left;
 }
 
 #back-top {

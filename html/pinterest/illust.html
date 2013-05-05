@@ -1,7 +1,7 @@
 {% for thread in thread_list %}
 <div class="item">
   <!--Image-->
-      <div class="deletable">
+  <div class="deletable">
 
   {% if thread.image_url %}
         <div class="side-corner-tag">
@@ -29,31 +29,27 @@
             </a>
           {% endifequal %}
         {% endif %}
-      </div>
+  </div>
 
   <!--Summary-->
   <div class="illust_summary">
     {% if thread.title %}
     {% ifnotequal thread.title "notitle" %}
-    <div style="margin:4px;">
       <a href="{{thread.thread_url}}" target="_BLANK">
        <b>{{thread.title}}</b>
       </a>
-    </div>
+      <br/>
     {% endifnotequal %}
     {% endif %}
     {% if thread.tag %}
-      <div style="margin:4px;">
       {% for tag in thread.tag %}
-        <a href="{{host}}{{search_api}}?tag={{tag}}" style="background:#f0f0f0;padding:4px;margin:2px;">
+        <a href="{{host}}{{search_api}}?tag={{tag}}" class="tag">
           {{tag}}
         </a>
       {% endfor %}
-      </div>
+        <br clear="all"/>
     {% endif %}
-    <div style="margin:4px;">
       {{thread.summary|safe}}
-    </div>
   </div>
 
   <hr style="margin:0px;"/>
