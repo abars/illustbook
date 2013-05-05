@@ -57,7 +57,7 @@
 {% include "pinterest/pinterest.css" %}
 {% include "pinterest/ribbon.css" %}
 
-{% if next_query %}
+{% if not contents_only %}
   {% include "pinterest/pinterest.js" %}
 {% endif %}
 

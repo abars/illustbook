@@ -51,12 +51,10 @@ class ApiBookmark(webapp.RequestHandler):
 		appear={}
 		for thread in dic:
 			appear[thread["key"]]=True
-			#logging.error('key:'+thread["key"])
 		for key in thread_key_list:
 			key=str(key)
 			if key not in appear:
-				#logging.error('not key:'+key)
-				removed_url="";#http://"+req.request.host+"/static_files/removed.png";
+				removed_url="";
 				removed_thread={
 					"title":"",
 					"author":"",
@@ -70,6 +68,28 @@ class ApiBookmark(webapp.RequestHandler):
 					"key":str(key),
 					"disable_news":0}
 				dic.append(removed_thread)
+
+	@staticmethod
+	def add_removed_bbs_to_dic(req,dic,bbs_key_list):
+		if len(dic)==len(bbs_key_list):
+			return
+
+		#削除された掲示板も一覧に表示する
+		appear={}
+		for bbs in dic:
+			appear[bbs["key"]]=True
+		for key in bbs_key_list:
+			key=str(key)
+			if key not in appear:
+				removed_url="";
+				removed_bbs={
+					"title":"掲示板は削除されました",
+					"author":"",
+					"thumbnail_url":removed_url,
+					"create_date":"",
+					"bookmark":0,
+					"key":str(key)}
+				dic.append(removed_bbs)
 
 	@staticmethod
 	def bookmark_get_thread_list(req,user_id,bookmark=None):
@@ -100,10 +120,15 @@ class ApiBookmark(webapp.RequestHandler):
 		if(bookmark==None):
 			return []
 		dic=[]
-		bbs_list=ApiObject.get_cached_object_list(bookmark.bbs_key_list)
+		bbs_key_list=bookmark.bbs_key_list
+		bbs_list=ApiObject.get_cached_object_list(bbs_key_list)
 		for bbs in bbs_list:
 			one_dic=ApiObject.create_bbs_object(req,bbs)
-			dic.append(one_dic)
+			if(one_dic):
+				dic.append(one_dic)
+		
+		ApiBookmark.add_removed_bbs_to_dic(req,dic,bbs_key_list)
+
 		return dic
 
 	@staticmethod

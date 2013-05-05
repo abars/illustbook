@@ -44,7 +44,7 @@
     {% if thread.tag %}
       {% for tag in thread.tag %}
         <a href="{{host}}{{search_api}}?tag={{tag}}" class="tag">
-          {{tag}}
+          <small>{{tag}}</small>
         </a>
       {% endfor %}
         <br clear="all"/>
@@ -52,8 +52,8 @@
       {{thread.summary|safe}}
   </div>
 
+{% if thread.author %}
   <hr style="margin:0px;"/>
-
     <div style="float:left;margin:4px;">
       <div style="float:left;margin-top:4px;margin-bottom:4px;margin-right:4px;">
         {%if thread.user_id %}<a href="{{host}}mypage?user_id={{thread.user_id}}">{% endif %}
@@ -61,22 +61,23 @@
         {%if thread.user_id %}</a>{% endif %}
       </div>
       <div style="float:left;">
-      {% if thread.author %}
-       {%if thread.user_id %}<a href="{{host}}mypage?user_id={{thread.user_id}}" style="overflow:hidden;max-width:80%;">{% endif %}
-      <small>{{thread.author}}</small>
-        {%if thread.user_id %}</a>{% endif %}
-        <br/>
-              {% if thread.create_date_original %}
-        <small>
-          {{thread.create_date_original|time_JST_progress}}
-        </small>
-        <br/> 
-      {% endif %}
+       {%if thread.user_id %}
+        <a href="{{host}}mypage?user_id={{thread.user_id}}" style="overflow:hidden;max-width:80%;">
+       {% endif %}
+        <small>{{thread.author}}</small>
+       {%if thread.user_id %}
+         </a>
+       {% endif %}
+       <br/>
+       {% if thread.create_date_original %}
+          <small>
+           {{thread.create_date_original|time_JST_progress}}
+          </small>
+          <br/> 
+       {% endif %}
+      </div>
     </div>
-
-      {% endif %}
-
-    </div>
+{% endif %}
 
     <div style="text-align:right;margin:4px;">
       <small>
