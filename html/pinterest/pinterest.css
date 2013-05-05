@@ -106,6 +106,7 @@ float: left;
 border: 1px solid #ccc;
 background: #ffffff;
 box-shadow: 0 2px 1px #eee;
+color:#333;
 }
 
 .message a{
@@ -185,6 +186,7 @@ border: 1px solid #CCC;
 margin: 5px;
 background-color: #ffffff;
 padding: 5px;
+color:#333;
 }
 
 .example a{
