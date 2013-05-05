@@ -320,8 +320,11 @@ def set_seed(no):
 
 def auto_link(summary):
 	#Chromeのiframeのeditableがbrではなくdivを生成する問題の対策
-	summary=summary.replace('<div>', '<br/>')
-	summary=summary.replace('</div>', '')
+	#フォントを変えた場合のdivも削ってしまってdivで閉じれなくなるので断念
+	#summary=summary.replace('<div>', '<br/>')
+	#summary=summary.replace('</div>', '')
+	
+	#改行コードの修正
 	summary=summary.replace('<br>', '<br/>')
 
 	#自動リンク
