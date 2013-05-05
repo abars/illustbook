@@ -322,6 +322,7 @@ def auto_link(summary):
 	#Chromeのiframeのeditableがbrではなくdivを生成する問題の対策
 	summary=summary.replace('<div>', '<br/>')
 	summary=summary.replace('</div>', '')
+	summary=summary.replace('<br>', '<br/>')
 
 	#自動リンク
 	#PlaneText以外に適用すると変な挙動になるので、
