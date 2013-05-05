@@ -298,6 +298,7 @@ color: #333;
     {% else %}
       width:86px;
       height:86px;
+      font-size:14px;
     {% endif %}
     float:left;
   }
