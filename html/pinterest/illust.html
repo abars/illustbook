@@ -34,11 +34,13 @@
   <!--Summary-->
   <div class="illust_summary">
     {% if thread.title %}
+    {% ifnotequal thread.title "notitle" %}
     <div style="margin:4px;">
       <a href="{{thread.thread_url}}" target="_BLANK">
        <b>{{thread.title}}</b>
       </a>
     </div>
+    {% endifnotequal %}
     {% endif %}
     {% if thread.tag %}
       <div style="margin:4px;">
