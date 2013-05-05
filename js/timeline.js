@@ -65,9 +65,9 @@ function feed_parse(feed){
 	//アイコン
 	txt+='<div style="float:left;width:58px;padding-right:6px;text-align:center;margin:auto;">'
 	if(feed.from_user && feed.mode!="deleted"){
-		txt+='<a href="javascript:go_feed(\''+feed.from_user.profile_url+'\')"><img src="'+feed.from_user.icon_url+'&size=mini" width=50px height=50px class="radius_image"></a>';
+		txt+='<a href="javascript:go_feed(\''+feed.from_user.profile_url+'\')"><img src="'+feed.from_user.icon_url+'&size=mini" width="50px" height="50px"/></a>';// class="radius_image"></a>';
 	}else{
-		txt+='<img src="static_files/empty_user.png" width=50px height=50px class="radius_image">'
+		txt+='<img src="static_files/empty_user.png" width="50px" height="50px"/>'//' class="radius_image">'
 	}
 	txt+='</div>'
 
