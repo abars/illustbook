@@ -293,14 +293,16 @@ class UpdateBbs(webapp.RequestHandler):
 		if(bbs.tool_bg_color=="None"):
 			bbs.tool_bg_color=None
 		
-		if(self.request.get("page_illust_n")=="None"):
-			bbs.page_illust_n=5
-		else:
+		try:
 			bbs.page_illust_n=int(self.request.get("page_illust_n"))
-		if(self.request.get("page_comment_n")=="None"):
-			bbs.page_comment_n=10
-		else:
+		except:
+			bbs.page_illust_n=5
+
+		try:
 			bbs.page_comment_n=int(self.request.get("page_comment_n"))
+		except:
+			bbs.page_comment_n=10
+		
 		if(bbs.page_illust_n<1) :bbs.page_illust_n=1
 		if(bbs.page_illust_n>10) :bbs.page_illust_n=10
 		if(bbs.page_comment_n<1) :bbs.page_comment_n=1
