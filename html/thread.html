@@ -59,7 +59,9 @@
 						{{comment}}
 					{% endif %}
 					<p>&nbsp;</p>
-					{% include "./thread/thread_comment_order.html" %}
+					{% if comment %}
+						{% include "thread/thread_comment_order.html" %}
+					{% endif %}
 					{% include "thread/thread_comment_form.html" %}
 					</div>
 				{% endif %}

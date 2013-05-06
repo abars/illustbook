@@ -6,21 +6,21 @@
 			<div class="clap"><a href="javascript:applause('{{host}}','{{bbs.key}}','{{thread.key}}','thread');" rel="nofollow"><img src="{{template_path}}images/i_crap.gif" alt="拍手" width="53" height="20"/></a>{%if thread.applause %}{{thread.applause}}{%else%}0{%endif%}</div>
 		{% endif %}
 		<div class="clr"></div>
-	</div><br/>
+	</div>
 	{% else%}
 	{{thread.title}}
-	<HR>
+	<hr/>
 	{%endif%}
 	
 
 {% if thread.cached_image_key %}
-	{% ifequal thread.illust_mode 2 %}
-		<script type="text/javascript" src="{{host}}moper_player?bbs_key={{bbs_key}}&amp;thread_key={{thread.key}}{% if is_iphone %}&amp;is_iphone=1{% endif %}"></script><br/>
-	{%else%}
+	<div class="entry-illust" style="text-align:left;">
+		{% ifequal thread.illust_mode 2 %}
+			<script type="text/javascript" src="{{host}}moper_player?bbs_key={{bbs_key}}&amp;thread_key={{thread.key}}{% if is_iphone %}&amp;is_iphone=1{% endif %}"></script><br/>
+		{%else%}
 			{% include "bbs_thread/image.html" %}
-			<br/>
-			{% if template_path %}<br/>{%endif%}
-	{% endifequal %}
+		{% endifequal %}
+	</div>
 {% endif %}
 
 <div class="entry-name">
@@ -38,7 +38,7 @@
 	{% else %}
 		カテゴリ：
 	{% endif%}
-	<a href="{{usrhost}}?category={{thread.category|iriencode}}" class="g-button mini" style="margin-left:1px;">{{thread.category}}</a>　
+	<a href="{{usrhost}}?category={{thread.category|iriencode}}" class="g-button mini" style="margin-left:2px;margin-bottom:2px;">{{thread.category}}</a>　
 {%endif%}
 
 {% if thread.create_date %}

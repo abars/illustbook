@@ -262,12 +262,13 @@ def user_id_to_user_name(user_id):
 
 def author_name_core(user_id,homepage_addr,author,host):
 	txt=""
+	style="color:#444;margin-left:2px;margin-bottom:2px;"
 	if user_id:
 		txt+='<a href="'
 		txt+=host
 		txt+='mypage?user_id='
 		txt+=user_id
-		txt+='" class="g-button mini" style="color:#444;">'
+		txt+='" class="g-button mini" style="'+style+'">'
 		txt+=author
 		txt+='</a>'
 		return txt
@@ -275,7 +276,7 @@ def author_name_core(user_id,homepage_addr,author,host):
 		txt+='<a href="'
 		txt+=''+homepage_addr
 		txt+='"'
-		txt+=' class="g-button mini" style="color:#444;">'
+		txt+=' class="g-button mini" style="'+style+'">'
 		txt+=author
 		txt+="</a>"
 		return txt
