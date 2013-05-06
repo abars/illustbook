@@ -27,8 +27,24 @@ from myapp.CategoryList import CategoryList
 
 class EditThread(webapp.RequestHandler):
 	def get(self):
-		bbs=db.get(self.request.get("bbs_key"));
-		thread = db.get(self.request.get("thread_key"))
+		try:
+			bbs=db.get(self.request.get("bbs_key"));
+		except:
+			bbs=None
+
+		if(not bbs):
+			Alert.alert_msg_with_write(self,"編集する掲示板が見つかりません。")
+			return
+
+		try:
+			thread = db.get(self.request.get("thread_key"))
+		except:
+			thread = None
+
+		if(not thread):
+			Alert.alert_msg_with_write(self,"編集するスレッドが見つかりません。")
+			return
+
 		user = users.get_current_user()
 		
 		bbs_owner=not OwnerCheck.check(bbs,user)

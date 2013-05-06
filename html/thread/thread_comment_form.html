@@ -1,5 +1,10 @@
 {%if show_comment_form %}
-	<p>&nbsp;</p>
+	{% if template_path %}
+		<p>&nbsp;</p>
+	{% else %}
+		<br clear="all"/>
+	{% endif %}
+	
 	<div class="g-button-group toggle-buttons">
 	{%if not bbs.disable_normal_reply %}
 		<a href="javascript:display_comment_tab('text','{{thread.key}}');" class="g-button no-text comment_tab_{{thread.key}} comment_tab_{{thread.key}}_text"><i class="icon-pencil"></i>コメントを書く</a>
