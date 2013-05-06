@@ -262,7 +262,7 @@ def user_id_to_user_name(user_id):
 
 def author_name_core(user_id,homepage_addr,author,host):
 	txt=""
-	style="color:#444;"
+	style="color:#444;margin-left:0px;margin-bottom:2px;"
 	if user_id:
 		txt+='<a href="'
 		txt+=host
