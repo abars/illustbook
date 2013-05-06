@@ -1,5 +1,11 @@
 {% for thread in thread_list %}
 <div class="item">
+  <!-- bbs -->
+  <div style="margin:4px;text-align:center;">
+    <a href="{{thread.bbs_url}}" target="_BLANK"><small>{{thread.bbs_title}}</small></a>
+  </div>
+  <hr style="margin:0px;"/>  
+
   <!--Image-->
   <div class="deletable">
 

@@ -1,10 +1,12 @@
 <div id="order">
   <div class="g-button-group toggle-buttons">
-    <a href="{{host}}{{redirect_api}}?order=new" class="g-button {%ifequal order "new"%}checked{%endifequal%}">新着</a>
     <a href="{{host}}{{redirect_api}}?order=hot" class="g-button {%ifequal order "hot"%}checked{%endifequal%}">人気</a>
-    <a href="{{host}}{{redirect_api}}?order=bookmark" class="g-button {%ifequal order "bookmark"%}checked{%endifequal%}">{%if is_iphone%}ブクマ{%else%}ブックマーク{%endif%}</a>
+    <a href="{{host}}{{redirect_api}}?order=new" class="g-button {%ifequal order "new"%}checked{%endifequal%}">新着</a>
+    <a href="{{host}}{{redirect_api}}?order=bookmark" class="g-button {%ifequal order "bookmark"%}checked{%endifequal%}">ブクマ</a>
     {% if not is_iphone %}
-    <a href="{{host}}{{redirect_api}}?order=applause" class="g-button {%ifequal order "applause"%}checked{%endifequal%}">拍手</a>
+    <!--
+      <a href="{{host}}{{redirect_api}}?order=applause" class="g-button {%ifequal order "applause"%}checked{%endifequal%}">拍手</a>
+    -->
       <a href="{{host}}{{redirect_api}}?order=moper" class="g-button {%ifequal order "moper"%}checked{%endifequal%}">動画</a>
     {% endif %}
   </div>

@@ -321,18 +321,32 @@ class ApiObject(webapp.RequestHandler):
 		bookmark_cnt=0
 		if(thread.bookmark_count):
 			bookmark_cnt=thread.bookmark_count
+
+		bbs_title=bbs.bbs_name
+		bbs_url=ApiObject._get_bbs_url(req,bbs)
+
 		one_dic={"title":thread.title,"summary":summary,"author":thread.author,
 		"user_id":user_id,"thumbnail_url":thumbnail_url,"thumbnail2_url":thumbnail2_url,
 		"image_url":image_url,"create_date":create_date,"thread_url":thread_url,
 		"applause":app,"bookmark":bookmark_cnt,"comment":comment_cnt,"key":str(thread.key()),
 		"disable_news":disable_news,"tag":tag_list,"width":thread.width,"height":thread.height,
-		"version":thread.thumbnail2_version,"violate_terms":violate_terms,"create_date_original":thread.create_date}
+		"version":thread.thumbnail2_version,"violate_terms":violate_terms,"create_date_original":thread.create_date,
+		"bbs_title":bbs_title,"bbs_url":bbs_url}
 		
 		return one_dic
 
 #-------------------------------------------------------------------
 #bbs object
 #-------------------------------------------------------------------
+	
+	@staticmethod
+	def _get_bbs_url(req,bbs):
+		bbs_url="http://"+req.request.host+"/"
+		if(bbs.short):
+			bbs_url+=bbs.short+"/"
+		else:
+			bbs_url+="usr/"+str(bbs.key())+"/"
+		return bbs_url
 
 	@staticmethod
 	def create_bbs_object(req,bbs):
@@ -342,12 +356,8 @@ class ApiObject(webapp.RequestHandler):
 		bookmark_cnt=0
 		if(bbs.bookmark_count):
 			bookmark_cnt=bbs.bookmark_count
-		
-		bbs_url="http://"+req.request.host+"/"
-		if(bbs.short):
-			bbs_url+=bbs.short+"/"
-		else:
-			bbs_url+="usr/"+str(bbs.key())+"/"
+
+		bbs_url=ApiObject._get_bbs_url(req,bbs)
 		
 		thumbnail_url=""
 		if(bbs.cached_thumbnail_key and not bbs.del_flag):
