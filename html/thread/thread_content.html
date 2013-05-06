@@ -24,40 +24,17 @@
 {% endif %}
 
 <div class="entry-name">
-{%if template_path %}
-	<img src="{{template_path}}images/i_name.gif" alt="投稿者" width="64" height="20" />
-{%else%}
-	投稿者：
-{%endif%}
-{{thread|author_name_thread:host|safe}}　
+	<p>
+	{%include "bbs_thread/info.html" %}
 
-{% if thread.category %}
-	{% if is_iphone %}<br/>{% endif %}
-	{%if template_path %}
-		<img src="{{template_path}}images/i_category.gif" alt="カテゴリ" width="64" height="20" />
-	{% else %}
-		カテゴリ：
-	{% endif%}
-	<a href="{{usrhost}}?category={{thread.category|iriencode}}" class="g-button mini" style="margin-left:2px;margin-bottom:2px;">{{thread.category}}</a>　
-{%endif%}
-
-{% if thread.create_date %}
-	{% if is_iphone %}<br/>{% endif %}
-	{%if template_path %}
-		<img src="{{template_path}}images/i_day.gif" alt="投稿日" width="64" height="20" />
-	{% else %}
-		投稿日：
-	{% endif%}
-	{{thread.create_date|time_JST_format:bbs.date_format}}
-{% endif %}
-
-{% if thread.cached_image_key %}
-{% if not template_path %}
-{% if not bbs.disable_applause %}
-<input type="button" value="拍手{%if thread.applause %}{{thread.applause}}{%else%}0{%endif%}" class="g-button" onClick="javascript:applause('{{host}}','{{bbs.key}}','{{thread.key}}','thread');"/>
-{% endif %}
-{% endif %}
-{% endif %}
+	{% if thread.cached_image_key %}
+	{% if not template_path %}
+	{% if not bbs.disable_applause %}
+		<input type="button" value="拍手{%if thread.applause %}{{thread.applause}}{%else%}0{%endif%}" class="g-button" onClick="javascript:applause('{{host}}','{{bbs.key}}','{{thread.key}}','thread');"/>
+	{% endif %}
+	{% endif %}
+	{% endif %}
+	</p>
 </div>
 
 <div class="entry-comment" style="word-break:break-all;">
