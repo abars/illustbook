@@ -68,6 +68,9 @@ class CssDesign (webapp.RequestHandler):
 		p = re.compile('iPhone')
 		if(p.search(agent)):
 			return 1
+		p = re.compile('Nintendo.*3DS')
+		if(p.search(agent)):
+			return 1
 		p = re.compile("Android.*Mobile");
 		if(p.search(agent)):
 			return 1
