@@ -13,15 +13,15 @@
 	{%endif%}
 	
 
-{% if thread.cached_image_key %}
 	<div class="entry-illust" style="text-align:left;">
+{% if thread.cached_image_key %}
 		{% ifequal thread.illust_mode 2 %}
 			<script type="text/javascript" src="{{host}}moper_player?bbs_key={{bbs_key}}&amp;thread_key={{thread.key}}{% if is_iphone %}&amp;is_iphone=1{% endif %}"></script><br/>
 		{%else%}
 			{% include "bbs_thread/image.html" %}
 		{% endifequal %}
-	</div>
 {% endif %}
+	</div>
 
 <div class="entry-name">
 	<p>

@@ -1,5 +1,9 @@
 <!--イラスト一つ-->
-<div class="entry">
+{% ifequal bbs.bbs_mode 3 %}
+	<div class="entry" style="padding:8px;">
+{% else %}
+	<div class="entry">
+{% endifequal %}
 
 {% if thread.illust_mode and not bbs.disable_content_image %}
 	<!--イラスト掲示板-->
