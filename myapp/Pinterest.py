@@ -215,7 +215,7 @@ class Pinterest(webapp.RequestHandler):
 
 		unit=BbsConst.PINTEREST_PAGE_UNIT
 
-		order="hot"#new"
+		order="new"
 		if(self.request.get("order")):
 			order=self.request.get("order")
 

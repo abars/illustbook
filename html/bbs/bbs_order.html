@@ -33,7 +33,10 @@
 	{% else %}
 		{% if can_create_new_image %}
 			{% if not bbs.disable_create_new_illust %}
+				<!--
 				<a class="g-button no-text" href="javascript:bbs_open_ipad_canvas_size();" style="color:#444;">イラストを描く</a>
+				-->
+				<a class="g-button no-text" href="javascript:bbs_open_draw('','{{bbs.key}}','{{host}}');" style="color:#444;">イラストを描く</a>
 			{% endif %}
 		{% endif %}
 	{% endifequal %}

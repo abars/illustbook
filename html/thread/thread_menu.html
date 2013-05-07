@@ -9,9 +9,13 @@
 	{% endif %}
 {% endif %}
 
+{% if not my_illust %}
+	<a class="g-button" href="javascript:applause_with_comment('{{host}}','{{bbs.key}}','{{thread.key}}','thread');" style="color:#333;" rel="nofollow">コメントで拍手</a>
+{% endif %}
+
 {% if thread.cached_image_key %}
 	{% ifequal thread.illust_mode 2 %}
-	<a class="g-button" href="{{host}}embedded?thread_key={{thread.key}}"  style="color:#333;">埋込タグ</a>
+	<a class="g-button" href="{{host}}embedded?thread_key={{thread.key}}" style="color:#333;">埋込タグ</a>
 	{% endifequal %}
 	{% if bbs.enable_continue_draw %}
 		{% ifequal bbs.bbs_mode 1 %}
