@@ -10,7 +10,9 @@
 {% endif %}
 
 {% if not my_illust %}
-	<a class="g-button" href="javascript:applause_with_comment('{{host}}','{{bbs.key}}','{{thread.key}}','thread');" style="color:#333;" rel="nofollow">コメントで拍手</a>
+	{% if not bbs.disable_applause %}
+		<a class="g-button" href="javascript:applause_with_comment('{{host}}','{{bbs.key}}','{{thread.key}}','thread');" style="color:#333;" rel="nofollow">コメントで拍手</a>
+	{% endif %}
 {% endif %}
 
 {% if thread.cached_image_key %}
