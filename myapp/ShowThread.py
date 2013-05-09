@@ -48,7 +48,7 @@ class ShowThread(webapp.RequestHandler):
 		bbs_key=MappingId.mapping(bbs_key)
 		bbs=ApiObject.get_cached_object(bbs_key)
 		if(bbs == None):
-			self.response.out.write(Alert.alert_msg_notfound(self.request.host))		
+			Alert.alert_msg_notfound(self)
 			return
 
 		#BBSが削除されていた場合
@@ -79,7 +79,7 @@ class ShowThread(webapp.RequestHandler):
 		#スレッド取得
 		thread=ShowThread.get_thread(bbs,thread_key)
 		if(thread == None):
-			self.response.out.write(Alert.alert_msg_notfound(self.request.host))
+			Alert.alert_msg_notfound(self)
 			return
 
 		#コメント数を更新

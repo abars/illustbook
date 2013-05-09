@@ -54,7 +54,7 @@ class DrawWindow(webapp.RequestHandler):
 			except:
 				thread=None
 			if(thread==None):
-				self.response.out.write(Alert.alert_msg_notfound(self.request.host))
+				Alert.alert_msg_notfound(self)
 				return
 			draw_time=thread.draw_time
 			is_png=thread.is_png

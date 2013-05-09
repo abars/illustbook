@@ -31,7 +31,7 @@ class Embedded(webapp.RequestHandler):
 			bbs=None
 
 		if(bbs == None):
-			self.response.out.write(Alert.alert_msg_notfound(self.request.host))
+			Alert.alert_msg_notfound(self)
 			return
 		
 		host_url="http://"+MappingId.mapping_host(self.request.host)+"/"

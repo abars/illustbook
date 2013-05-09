@@ -36,7 +36,7 @@ class AnalyzeAccess(webapp.RequestHandler):
 			except:
 				bbs=None
 			if(bbs==None):
-				self.response.out.write(Alert.alert_msg_notfound(self.request.host))
+				Alert.alert_msg_notfound(self)
 				return
 
 			user = users.get_current_user()

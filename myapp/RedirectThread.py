@@ -35,7 +35,7 @@ class RedirectThread(webapp.RequestHandler):
 		except:
 			bbs=None
 		if(bbs==None):
-			self.response.out.write(Alert.alert_msg_notfound(self.request.host))
+			Alert.alert_msg_notfound(self)
 			return
 		host_name=self.request.host
 		if(host_name=="http://www.illust-book.appspot.com/"):

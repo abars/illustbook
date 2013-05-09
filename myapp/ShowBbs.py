@@ -314,11 +314,11 @@ class ShowBbs(webapp.RequestHandler):
 	def get_bbs(req,bbs_key):
 		bbs_key=MappingId.mapping(bbs_key)
 		if(bbs_key==""):
-			req.response.out.write(Alert.alert_msg_notfound(req.request.host))
+			Alert.alert_msg_notfound(req)
 			return None
 		bbs=ApiObject.get_cached_object(bbs_key)
 		if(bbs == None):
-			req.response.out.write(Alert.alert_msg_notfound(req.request.host))
+			Alert.alert_msg_notfound(req)
 			return None
 		return bbs
 	
