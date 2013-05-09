@@ -14,36 +14,32 @@
 	}
 --></script>
 
-	<p>基本設定のデザインテンプレートでCSSデザインを選択した場合のデザインを設定します。</p>
+	<p>デザインテンプレートにCSSで作成したデザインを追加します。</p>
 	<div class="example">
-		<p>既存デザインの編集</p>
+		<p>作成済みのデザイン</p>
 				{% if my_app_list %}
-				<TABLE class="g-table">
+				<table class="g-table">
+					<tr><th>名称</th><th>ID</th><th>操作</th></tr>
 					{% for app2 in my_app_list %}
-					<TR><TH><p>{{app2.app_name}}({{app2.app_id}})</p></TH>
+					<TR>
+					<td><p>{{app2.app_name}}</p></td>
+					<td><p>{{app2.app_id}}</p></td>
 					<TD>
 					<div class="g-button-group">
-					<a class="g-button" href="dev?page=edit&app_key={{app2.key()}}&bbs_key={{bbs.key()}}" target="_BLANK">CSS編集</a>
-					<a class="g-button" href="dev?page=info&app_key={{app2.key()}}&bbs_key={{bbs.key()}}" target="_BLANK">設定</a>
+					<a class="g-button" href="dev?page=edit&app_key={{app2.key()}}&bbs_key={{bbs.key()}}" target="_BLANK">編集</a>
 					<a class="g-button" href="javascript:confirm_delete('dev?page=delete&app_key={{app2.key()}}&redirect=edit_bbs?bbs_key={{bbs.key()}}&tab=css_design');">削除</a>
-					</div>
-					</TD>
-					<TD>
-					<div class="g-button-group">
-					<a href="app?mode=play&app_key={{app2.key()}}" target="_BLANK" class="g-button">プレビュー</a>
-					<a class="g-button" href="javascript:setCss('{{app2.app_id}}');">掲示板に適用</a>
 					</div>
 					</TD>
 					</TR>
 					{% endfor %}
-				</TABLE>
+				</table>
 				{% else %}
 					<p>作成したCSSデザインはまだありません。</p>
 				{% endif %}
 	</div>
 
 	<div class="example">
-		<p>新規デザインの作成</p>
+		<p>デザインの新規作成</p>
 
 				<form action="dev" method="POST">
 				<input name="mode" type="hidden" value="2"/>
@@ -51,15 +47,16 @@
 				<input type="hidden" name="redirect" value="edit_bbs?bbs_key={{bbs.key()}}&tab=css_design"/>
 
 				<TABLE class="g-table">
-				<TR><TH>CSSデザインの名称</TH><TD><input name="app_name" style="width:200px;"></TD></TR>
-				<TR><TH>CSSデザインID(半角英数)</TH><TD><input name="app_id" style="width:200px;"></TD></TR>
-				<TR><TD></TD><TD><input type="submit" value="CSSデザインの新規作成" class="g-button"></TD></TR></TABLE>
-
+				<TR><td>デザインの名称</td><TD><input name="app_name" style="width:200px;"></TD></TR>
+				<TR><td>デザインID(半角英数)(数値以外)</td><TD><input name="app_id" style="width:200px;"></TD></TR>
+				</TABLE>
+				<br/>
+				<input type="submit" value="作成" class="g-button">
 				</form>
-				
-				<p>&nbsp</p>
 	</div>
 
+<!--
 	<div class="example">
 		<p>CSSデザインは、<a href="./app" TARGET="_BLANK" class="declink">イラストブックマーケット</A>からも入手することができます。また、CSSデザインの設定から、CSSデザインを<a href="./app" TARGET="_BLANK" class="declink">イラストブックマーケット</A>に公開することができます。</p>
 	</div>
+-->

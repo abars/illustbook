@@ -240,6 +240,7 @@ window.onbeforeunload = function (evt) {
 	<div style="float:left;">
 	<input type="button" value="保存" onclick="javascript:save(editor.getSession().getValue(),true);">
 	<input type="button" value="保存して実行" onclick="script:save(editor.getSession().getValue(),false);">
+	<input type="button" value="設定" onclick="javascript:window.open('dev?page=info&app_key={{app.key()}}',null);">
 	{% if app.mode == 2 %}
 	{% else %}
 		<input type="button" value="lintチェック" onclick="script:lint_check(editor.getSession().getValue());">

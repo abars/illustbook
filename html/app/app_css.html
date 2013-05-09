@@ -2,17 +2,20 @@
 
 <p>&nbsp</p>
 
-<p class="bar">デザインの適用方法</p>
-
-<div class="app_text">
-	<p>このデザインを掲示板に適用するには、掲示板のデザインの設定から、次のデザインIDを設定して下さい。</p>
-	<p>デザインID：<input value="{{app.app_id}}"></p>
-</div>
-
-<p>&nbsp</p>
-
 <p class="bar">デザイン適用例</p>
 
 <iframe src="./sample/?css_key={{app.key()}}" width={% if is_iphone %}440{% else %}840{% endif %}px height=600px style="border:none;"></iframe>
+
+<p>&nbsp</p>
+
+<p class="bar">デザインの適用方法</p>
+
+<div class="app_text">
+	<p>このデザインを掲示板に適用するには、掲示板のデザインの設定から、次のCSSを設定して下さい。</p>
+	<pre class="brush: css">
+		{{app.css_code|safe}}
+	</pre>
+	<!-- <p>デザインID：<input value="{{app.app_id}}"></p> -->
+</div>
 
 <p>&nbsp</p>

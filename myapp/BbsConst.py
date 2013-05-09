@@ -102,5 +102,8 @@ class BbsConst:
 	SEARCH_ENTRY_INDEX_NAME="search_entry_index"
 	SEARCH_ENTRY_VERSION=4
 
+	#css custom template
+	CSS_CUSTOM=32767
+
 
 

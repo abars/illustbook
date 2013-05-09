@@ -1,5 +1,20 @@
 	<p>掲示板の基本情報を設定します。</p>
 
+<script type="text/javascript">
+	function css_preview(){
+		var no=document.getElementById('design_template_no').value
+		var url='{{host}}usr/{{bbs.key()}}/?css='+no
+
+		{% for app2 in my_app_list %}
+			if(no=="{{app2.app_id}}"){
+				url='{{host}}usr/{{bbs.key()}}/?css_key={{app2.key()}}'
+			}
+		{% endfor %}
+
+		window.open(url);
+	}
+</script>
+
 <div class="example">
 			<TABLE BORDER=0 class="g-table">
 			<TR><TH>掲示板のタイトル</TH><TD><input type="text" name="title" value="{{bbs.bbs_name}}" style="width:95%;"></TD></TR>
@@ -66,18 +81,25 @@
 			<TR><TH>デザインテンプレート</TH><TD>
 				<select name="design_template_no" id="design_template_no" onchange="javascript:design_template_change(''+this.value);">
 					<option value="0" {% if not bbs.design_template_no %} selected="selected" {% endif%}>フォームデザイン</option>
+					<!--
 					<option value="32767" {% if bbs.design_template_no == 32767 %} selected="selected" {% endif%}>CSSデザイン</option>
+				-->
 					<option value="1" {% if bbs.design_template_no == 1 %} selected="selected" {% endif%}>ブルー</option>
 					<option value="2" {% if bbs.design_template_no == 2 %} selected="selected" {% endif%}>グリーン</option>
 					<option value="3" {% if bbs.design_template_no == 3 %} selected="selected" {% endif%}>ピンク</option>
 					<option value="4" {% if bbs.design_template_no == 4 %} selected="selected" {% endif%}>ホワイト</option>
+					{% for app2 in my_app_list %}
+						<option value="{{app2.app_id}}" {% if bbs.design_template_no == 32767 and bbs.css.app_id == app2.app_id %} selected="selected" {% endif%}>{{app2.app_name}}</option>
+					{% endfor %}
 				</select>
-				<input type="button" value="プレビュー" class="g-button" onclick="window.open('{{host}}usr/{{bbs.key()}}/?css='+document.getElementById('design_template_no').value);">
+				<input type="button" value="プレビュー" class="g-button" onclick="css_preview();">
 			</TD></TR>
 			
+			<!--
 			<TR><TH>CSSデザインID</TH><TD>
 				<input name="css" id="css" value="{% if bbs.css and bbs.css.app_id %}{{bbs.css.app_id}}{% endif %}"><BR>デザインテンプレートでCSSを選択した場合のみ有効<BR>
 			</TD></TR>
+			-->
 			
 			</TABLE>
 </div>

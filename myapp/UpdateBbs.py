@@ -266,7 +266,16 @@ class UpdateBbs(webapp.RequestHandler):
 		bbs.side_color=side_color
 		bbs.side_font_color=side_font_color
 		bbs.disable_content_image=int(self.request.get("disable_content_image"))
-		bbs.design_template_no=int(self.request.get("design_template_no"))
+
+		try:
+			bbs.design_template_no=int(self.request.get("design_template_no"))
+		except:
+			css=self.request.get("design_template_no")
+			bbs.design_template_no=BbsConst.CSS_CUSTOM
+			#css=self.request.get("css")
+			if(not UpdateBbs.set_css(self,css,bbs)):
+				return
+
 		bbs.bbs_mode=int(self.request.get("mode"))
 		bbs.comment_rule_enable=int(self.request.get("comment_rule_enable"))
 		bbs.category_list=self.request.get("category_list")
@@ -307,12 +316,7 @@ class UpdateBbs(webapp.RequestHandler):
 		if(bbs.page_illust_n>10) :bbs.page_illust_n=10
 		if(bbs.page_comment_n<1) :bbs.page_comment_n=1
 		if(bbs.page_comment_n>50) :bbs.page_comment_n=50
-		
-		#css
-		css=self.request.get("css")
-		if(not UpdateBbs.set_css(self,css,bbs)):
-			return
-		
+				
 		bbs.put()
 		
 		RecentCommentCache.invalidate(bbs);

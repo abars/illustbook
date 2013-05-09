@@ -78,8 +78,7 @@
 			{% if app2.mode == 1 %}（プラグイン）{% endif %}
 			{% if app2.mode == 2 %}（デザイン）{% endif %}
 			</a></p></TD>
-			<TD><input type="button" onclick="script:window.location.href='dev?page=edit&app_key={{app2.key()}}'" value="コードを編集"></TD>
-			<TD><input type="button" onclick="script:window.location.href='dev?page=info&app_key={{app2.key()}}'" value="情報を編集"></TD>
+			<TD><input type="button" onclick="script:window.location.href='dev?page=edit&app_key={{app2.key()}}'" value="編集"></TD>
 			<TD><input type="button" onclick="script:confirm_delete('dev?page=delete&app_key={{app2.key()}}');" value="削除"></TD>
 		</TR>
 	{% endfor %}

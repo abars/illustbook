@@ -11,6 +11,7 @@ import logging
 import jinja2
 
 import custom_filter
+from myapp.SetUtf8 import SetUtf8
 
 def set_jinja_filter(jinja_environment):
 	jinja_environment.filters.update({
@@ -49,6 +50,7 @@ jinja_environment = jinja2.Environment(loader=jinja2.FileSystemLoader("html/"))
 set_jinja_filter(jinja_environment)
 
 def render(template_path, template_dict, debug=False):
+	SetUtf8.set()
 	path_list=template_path.split("/")
 	#set_jinja_filter(jinja_environment)
 	new_path=""
