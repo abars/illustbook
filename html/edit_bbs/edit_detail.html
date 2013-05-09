@@ -14,29 +14,29 @@
 
 			<TR><TH>デフォルト表示順（初期設定は新着順）</TH><TD>
 			<select name="order">	
-			<option value="1" {% ifequal bbs.default_order 1 %}selected="selected"{% endifequal %}>新着順</option>
-			<option value="2" {% ifequal bbs.default_order 2 %}selected="selected"{% endifequal %}>更新順</option>
+			<option value="1" {% if bbs.default_order == 1 %}selected="selected"{% endif %}>新着順</option>
+			<option value="2" {% if bbs.default_order == 2 %}selected="selected"{% endif %}>更新順</option>
 			</select>
 			</TD></TR>
 			
 			<!--
 			<TR><TH>イラスト一覧に本文を表示</TH><TD>
 			<select name="enable_full_flat">
-				{% ifequal bbs.enable_full_flat 1 %}
+				{% if bbs.enable_full_flat == 1 %}
 						<option value="1" selected="selected">有効</option><option value="0">無効</option>
 				{% else%}
 						<option value="1">有効</option><option value="0" selected="selected">無効</option>
-				{% endifequal %}
+				{% endif %}
 			</select></TD></TR>
 			-->
 
 			<TR><TH>イラスト一覧にコメントを表示</TH><TD>
 			<select name="enable_full_comment">
-				{% ifequal bbs.enable_full_comment 1 %}
+				{% if bbs.enable_full_comment == 1 %}
 						<option value="1" selected="selected">有効</option><option value="0">無効</option>
 				{% else%}
 						<option value="1">有効</option><option value="0" selected="selected">無効</option>
-				{% endifequal %}
+				{% endif %}
 			</select></TD></TR>
 
 			<TR><TH>イラスト一覧に画像を表示</TH><TD>
@@ -66,8 +66,8 @@
 			<TR><TH>日付表記</TH><TD>
 			<select name="date_format">	
 			<option value="0" {% if not bbs.date_format  %}selected="selected"{% endif %}>年月日時分</option>
-			<option value="1" {% ifequal bbs.date_format 1 %}selected="selected"{% endifequal %}>年月日時</option>
-			<option value="2" {% ifequal bbs.date_format 2 %}selected="selected"{% endifequal %}>年月日</option>
+			<option value="1" {% if bbs.date_format == 1 %}selected="selected"{% endif %}>年月日時</option>
+			<option value="2" {% if bbs.date_format == 2 %}selected="selected"{% endif %}>年月日</option>
 			</select>
 			</TD></TR>
 
@@ -103,73 +103,73 @@
 
 			<TR><TH>コメント</TH><TD>
 			<select name="disable_comment">
-				<option value="1" {% ifequal bbs.disable_comment 1 %}selected="selected"{% endifequal %}>表示しない</option>
+				<option value="1" {% if bbs.disable_comment == 1 %}selected="selected"{% endif %}>表示しない</option>
 				<option value="0" {% if not bbs.disable_comment %}selected="selected"{% endif %}>表示する</option>
 			</select></TD></TR>
 
 			<TR><TH>コメント権限</TH><TD>
 			<select name="comment_login_require">
-				{% ifequal bbs.comment_login_require 1 %}
+				{% if bbs.comment_login_require == 1 %}
 					<option value="0">誰でもコメント可能</option><option value="1" selected="selected">管理人のみコメント可能</option>
 				{% else%}
 					<option value="0" selected="selected">誰でもコメント可能</option><option value="1">管理人のみコメント可能</option>
-				{% endifequal %}
+				{% endif %}
 			</select></TD></TR>
 
 			<TR><TH>文字でコメント</TH><TD>
 			<select name="disable_normal_reply">
-				{% ifequal bbs.disable_normal_reply 1 %}
+				{% if bbs.disable_normal_reply == 1 %}
 						<option value="1" selected="selected">無効</option><option value="0">有効</option>
 				{% else%}
 						<option value="1">無効</option><option value="0" selected="selected">有効</option>
-				{% endifequal %}
+				{% endif %}
 			</select></TD></TR>
 
 			<TR><TH>絵でコメント</TH><TD>
 			<select name="enable_illust_reply">
-				{% ifequal bbs.enable_illust_reply 1 %}
+				{% if bbs.enable_illust_reply == 1 %}
 						<option value="1" selected="selected">有効</option><option value="0">無効</option>
 				{% else%}
 						<option value="1">有効</option><option value="0" selected="selected">無効</option>
-				{% endifequal %}
+				{% endif %}
 			</select></TD></TR>
 
 			<TR><TH>絵で続きからコメント</TH><TD>
 			<select name="enable_illust_reply_continue">
-				{% ifequal bbs.enable_illust_reply_continue 1 %}
+				{% if bbs.enable_illust_reply_continue == 1 %}
 						<option value="1" selected="selected">有効</option><option value="0">無効</option>
 				{% else%}
 						<option value="1">有効</option><option value="0" selected="selected">無効</option>
-				{% endifequal %}
+				{% endif %}
 			</select></TD></TR>
 
 			<TR><TH>表示コメント数(デフォルト10、最大50)</TH><TD><input type="text" name="page_comment_n" maxlength="2" value="{{bbs.page_comment_n}}"></TD></TR>		
 
 			<TR><TH>デフォルト表示順（初期設定は更新順）</TH><TD>
 			<select name="comment_order">	
-			<option value="2" {% ifequal bbs.default_comment_order 2 %}selected="selected"{% endifequal %}>更新順</option>
-			<option value="1" {% ifequal bbs.default_comment_order 1 %}selected="selected"{% endifequal %}>新着順</option>
+			<option value="2" {% if bbs.default_comment_order == 2 %}selected="selected"{% endif %}>更新順</option>
+			<option value="1" {% if bbs.default_comment_order == 1 %}selected="selected"{% endif %}>新着順</option>
 			</select>
 			</TD></TR>
 
 			<TR><TH>コメントルールの表示</TH><TD>
 			<select name="comment_rule_enable">
-				{% ifequal bbs.comment_rule_enable 1 %}
+				{% if bbs.comment_rule_enable == 1 %}
 						<option value="0">無効</option><option value="1" selected="selected">有効</option>
 				{% else%}
 						<option value="0" selected="selected">無効</option><option value="1">有効</option>
-				{% endifequal %}
+				{% endif %}
 			</select></TD></TR>
 
 			<TR><TH>コメントルール</TH><TD><textarea name="comment_rule"	rows="4" cols="40" style="width:95%;">{{bbs.comment_rule}}</textarea></TD></TR>
 			
 			<TR><TH>コメント非表示ボタン</TH><TD>
 			<select name="comment_hidden_button">
-				{% ifequal bbs.comment_hidden_button 1 %}
+				{% if bbs.comment_hidden_button == 1 %}
 						<option value="0">使用しない</option><option value="1" selected="selected">使用する</option>
 				{% else%}
 						<option value="0" selected="selected">使用しない</option><option value="1">使用する</option>
-				{% endifequal %}
+				{% endif %}
 			</select></TD></TR>						
 	 </TABLE>
 </div>
@@ -179,20 +179,20 @@
 			<TABLE BORDER=0 class="g-table">
 			<TR><TH>イラストを描く</TH><TD>
 			<select name="disable_create_new_illust">
-				{% ifequal bbs.disable_create_new_illust 1 %}
+				{% if bbs.disable_create_new_illust == 1 %}
 						<option value="0">有効</option><option value="1" selected="selected">無効</option>
 				{% else%}
 						<option value="0" selected="selected">有効</option><option value="1">無効</option>
-				{% endifequal %}
+				{% endif %}
 			</select></TD></TR>
 
 			<TR><TH>動画を描く</TH><TD>
 			<select name="enable_moper">
-				{% ifequal bbs.enable_moper 1 %}
+				{% if bbs.enable_moper == 1 %}
 						<option value="1" selected="selected">有効</option><option value="0">無効</option>
 				{% else%}
 						<option value="1">有効</option><option value="0" selected="selected">無効</option>
-				{% endifequal %}
+				{% endif %}
 			</select></TD></TR>
 
 			<TR><TH>初期キャンバス幅（デフォルト0)</TH><TD><input type="text" name="default_canvas_width" value="{{bbs.default_canvas_width}}" maxlength="4"></TD></TR>
@@ -205,30 +205,30 @@
 
 			<TR><TH>描画時間表示</TH><TD>
 			<select name="disable_draw_time">
-				{% ifequal bbs.disable_draw_time 1 %}
+				{% if bbs.disable_draw_time == 1 %}
 						<option value="1" selected="selected">無効</option><option value="0">有効</option>
 				{% else%}
 						<option value="1">無効</option><option value="0" selected="selected">有効</option>
-				{% endifequal %}
+				{% endif %}
 			</select>
 			</TD></TR>
 
 			<TR><TH>続きから描く</TH><TD>
 			<select name="enable_continue_draw">
-				{% ifequal bbs.enable_continue_draw 1 %}
+				{% if bbs.enable_continue_draw == 1 %}
 						<option value="1" selected="selected">有効</option><option value="0">無効</option>
 				{% else%}
 						<option value="1">有効</option><option value="0" selected="selected">無効</option>
-				{% endifequal %}
+				{% endif %}
 			</select></TD></TR>
 
 			<TR><TH>投稿に成功したら一時保存データを削除</TH><TD>
 			<select name="delete_when_upload_success">
-				{% ifequal bbs.delete_when_upload_success 1 %}
+				{% if bbs.delete_when_upload_success == 1 %}
 						<option value="0">無効</option><option value="1" selected="selected">有効</option>
 				{% else%}
 						<option value="0" selected="selected">無効</option><option value="1">有効</option>
-				{% endifequal %}
+				{% endif %}
 			</select>
 			</TD></TR>
 	 </TABLE>
@@ -239,11 +239,11 @@
 			<TABLE BORDER=0 class="g-table">
 			<TR><TH>サイドバーの表示</TH><TD>
 			<select name="in_frame_mode">
-				{% ifequal bbs.in_frame_mode 1 %}
+				{% if bbs.in_frame_mode == 1 %}
 						<option value="1" selected="selected">表示しない</option><option value="0">表示する</option>
 				{% else%}
 						<option value="1">表示しない</option><option value="0" selected="selected">表示する</option>
-				{% endifequal %}
+				{% endif %}
 			</select></TD></TR>
 
 			<TR><TH>サイドバーフリーエリアタイトル</TH><TD><input type="text" name="freearea_title" value="{{bbs.freearea_title}}"></TD></TR>
@@ -267,29 +267,29 @@
 			<TABLE BORDER=0 class="g-table">
 			<TR><TH>カウンター表示</TH><TD>
 			<select name="disable_counter">
-				{% ifequal bbs.disable_counter 1 %}
+				{% if bbs.disable_counter == 1 %}
 						<option value="1" selected="selected">無効</option><option value="0">有効</option>
 				{% else%}
 						<option value="1">無効</option><option value="0" selected="selected">有効</option>
-				{% endifequal %}
+				{% endif %}
 			</select></TD></TR>
 			
 			 <TR><TH>管理人のアクセスでカウンターを加算するか</TH><TD>
 			<select name="dont_count_owner">
-				{% ifequal bbs.dont_count_owner 1 %}
+				{% if bbs.dont_count_owner == 1 %}
 						<option value="1" selected="selected">加算しない</option><option value="0">加算する</option>
 				{% else%}
 						<option value="1">加算しない</option><option value="0" selected="selected">加算する</option>
-				{% endifequal %}
+				{% endif %}
 			</select></TD></TR>
 			
 			<TR><TH>アクセス解析を使用するか</TH><TD>
 			<select name="disable_analyze">
-				{% ifequal bbs.disable_analyze 1 %}
+				{% if bbs.disable_analyze == 1 %}
 						<option value="1" selected="selected">使用しない</option><option value="0">使用する</option>
 				{% else%}
 						<option value="1">使用しない</option><option value="0" selected="selected">使用する</option>
-				{% endifequal %}
+				{% endif %}
 			</select></TD></TR>
 	 </TABLE>
 </div>
@@ -300,21 +300,21 @@
 
 		<TR><TH>Tweetボタン</TH><TD>
 		<select name="tweet_disable">
-		{% ifequal bbs.tweet_disable 1 %}
+		{% if bbs.tweet_disable == 1 %}
 			<option value="0">表示</option><option value="1" selected="selected">非表示</option>
 		{% else%}
 			<option value="0" selected="selected">表示</option><option value="1">非表示</option>
-		{% endifequal %}
+		{% endif %}
 		</select>
 		</TD></TR>
 
 		<TR><TH>Twitterタイムライン</TH><TD>
 		<select name="twitter_enable">
-		{% ifequal bbs.twitter_enable 1 %}
+		{% if bbs.twitter_enable == 1 %}
 		<option value="0">非表示</option><option value="1" selected="selected">有効</option>
 		{% else%}
 		<option value="0" selected="selected">非表示</option><option value="1">表示</option>
-		{% endifequal %}
+		{% endif %}
 		</select>
 		</TD></TR>			
 	

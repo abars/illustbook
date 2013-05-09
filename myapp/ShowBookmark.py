@@ -14,7 +14,7 @@ import datetime
 import random
 import logging
 
-from google.appengine.ext.webapp import template
+import template_select
 from google.appengine.api import users
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
@@ -74,7 +74,7 @@ class ShowBookmark(webapp.RequestHandler):
 		#	'mode': 'bookmark'
 		#}
 		
-		#path = os.path.join(os.path.dirname(__file__), '../html/portal.html')
-		#self.response.out.write(template.render(path, template_values))
+		#path = '/html/portal.html'
+		#self.response.out.write(template_select.render(path, template_values))
 		
 

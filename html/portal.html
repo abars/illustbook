@@ -7,31 +7,16 @@
 {% endif %}
 
 <title>
-{% ifequal mode "support" %}よくある質問・サポート{% endifequal %}
-{% ifequal mode "terms" %}ご利用規約{% endifequal %}
-{% ifequal mode "guide" %}イラストブックの使い方{% endifequal %}
-{% ifequal mode "questionnaire" %}アンケート{% endifequal %}
-{% ifequal mode "community" %}コミュニティ{% endifequal %}
-{% ifequal mode "profile" %}会社概要{% endifequal %}
-{% ifequal mode "link" %}リンク{% endifequal %}
-{% ifequal mode "chat" %}お絵かきチャット{% endifequal %}
-{% ifequal mode "ranking" %}ランキング{% endifequal %}
-{% ifequal mode "bookmark" %}
-	{% if tag %}
-	タグ「{{tag}}」を含むイラスト
-	{% else %}
-	「
-	{% if search_app %}{{search_app.app_name}}{%endif %}
-	{% if search_thread %}{{search_thread.title}}{% endif%}
-	{% if search_bbs %}{{search_bbs.bbs_name}}{% endif %}
-	」をブックマークしているユーザ
-	{% endif %}
-{% endifequal %}
+{% if mode == "support" %}よくある質問・サポート{% endif %}
+{% if mode == "terms" %}ご利用規約{% endif %}
+{% if mode == "guide" %}イラストブックの使い方{% endif %}
+{% if mode == "questionnaire" %}アンケート{% endif %}
+{% if mode == "community" %}コミュニティ{% endif %}
+{% if mode == "profile" %}会社概要{% endif %}
+{% if mode == "link" %}リンク{% endif %}
+{% if mode == "chat" %}お絵かきチャット{% endif %}
+{% if mode == "ranking" %}ランキング{% endif %}
 ｜イラストブック</title>
-
-{% ifequal mode "bookmark" %}
-	<script language="javascript" src="js/mypage.js" type="text/javascript"></script>
-{% endifequal %}
 
 {%include "meta.html" %}
 <meta http-equiv="Content-Script-Type" content="text/javascript" />
@@ -45,11 +30,7 @@
 {% include "floating_menu_css.html" %}
 </head>
 
-{% ifequal mode "bookmark" %}
-	<body onload="request_user_list('{{search_thread.key}}','{{search_bbs.key}}','{{search_app.key}}');">
-{% else %}
-	<body>
-{% endifequal %}
+<body>
 
 {% include "floating_menu.html" %}
 
@@ -61,11 +42,11 @@
 	<div id="g-menu">
 		<ul>
 			<li><a href="{{host}}"><img src="static_files/general/images/top/m_home.gif" alt="ホーム" width="132" height="45" class="swap" /></a></li>
-			<li><a href="{{host}}guide"><img src="static_files/general/images/top/m_howto{% ifequal mode "guide" %}_on{% endifequal %}.gif" alt="イラストブックの使い方" width="195" height="45" class="swap" /></a></li>
-			<li><a href="{{host}}community"><img src="static_files/general/images/top/m_community{% ifequal mode "community" %}_on{% endifequal %}.gif" alt="コミュニティ" width="152" height="45" class="swap" /></a></li>
-			<li><a href="{{host}}questionnaire"><img src="static_files/general/images/top/m_enq{% ifequal mode "questionnaire" %}_on{% endifequal %}.gif" alt="アンケート" width="124" height="45" class="swap" /></a></li>
-			<li><a href="{{host}}support"><img src="static_files/general/images/top/m_support{% ifequal mode "support" %}_on{% endifequal %}.gif" alt="よくある質問・サポート" width="209" height="45" class="swap" /></a></li>
-			<li><a href="{{host}}profile"><img src="static_files/general/images/top/m_profile{% ifequal mode "profile" %}_on{% endifequal %}.gif" alt="会社概要" width="138" height="45" class="swap" /></a></li>
+			<li><a href="{{host}}guide"><img src="static_files/general/images/top/m_howto{% if mode == "guide" %}_on{% endif %}.gif" alt="イラストブックの使い方" width="195" height="45" class="swap" /></a></li>
+			<li><a href="{{host}}community"><img src="static_files/general/images/top/m_community{% if mode == "community" %}_on{% endif %}.gif" alt="コミュニティ" width="152" height="45" class="swap" /></a></li>
+			<li><a href="{{host}}questionnaire"><img src="static_files/general/images/top/m_enq{% if mode == "questionnaire" %}_on{% endif %}.gif" alt="アンケート" width="124" height="45" class="swap" /></a></li>
+			<li><a href="{{host}}support"><img src="static_files/general/images/top/m_support{% if mode == "support" %}_on{% endif %}.gif" alt="よくある質問・サポート" width="209" height="45" class="swap" /></a></li>
+			<li><a href="{{host}}profile"><img src="static_files/general/images/top/m_profile{% if mode == "profile" %}_on{% endif %}.gif" alt="会社概要" width="138" height="45" class="swap" /></a></li>
 		</ul>
 		<div class="clr"></div>
 	</div>
@@ -73,39 +54,27 @@
 		<p>&nbsp</p>
 	{% endif %}
 	<div id="contents">
-		{% ifequal mode "questionnaire" %}
+		{% if mode == "questionnaire" %}
 			<h1><img src="static_files/general/images/enq/title_enq.gif" alt="アンケート" width="880" height="46" /></h1>
 			<iframe src="https://spreadsheets.google.com/embeddedform?formkey=dGxzRGw0TnRYQmhPVC1JOTJfS1NhcEE6MQ" width="100%" height="1503" frameborder="0" marginheight="0" marginwidth="0">読み込み中...</iframe>
-		{% endifequal %}
+		{% endif %}
 
-		{% ifequal mode "profile" %}
+		{% if mode == "profile" %}
 			<h1><img src="static_files/general/images/profile/title_profile.gif" alt="会社概要" width="880" height="40" /></h1>
 			{% include "portal/profile.html" %}
-		{% endifequal %}
+		{% endif %}
 
-		{% ifequal mode "community" %}
+		{% if mode == "community" %}
 			<h1><img src="static_files/general/images/community/title_community.gif" alt="コミュニティ" width="880" height="40" /></h1>
 			{% include "portal/community.html" %}
-		{% endifequal %}
+		{% endif %}
 
-		{% ifequal mode "bookmark" %}
-			{% if not is_iphone %}
-				{% include "portal_css/option_2col.html" %}
-			{% endif %}
-			{% include "portal_css/option_tab.html" %}
-			{% if tag %}
-				{% include "search/search_tag.html" %}
-			{% else %}
-				{%include "search/search_bookmark.html" %}
-			{% endif %}
-		{% endifequal %}
-
-		{% ifequal mode "ranking" %}
+		{% if mode == "ranking" %}
 			{% include "portal_css/option_tab.html" %}
 			{% include "ranking/ranking.html" %}
-		{% endifequal %}
+		{% endif %}
 		
-		{% ifequal mode "link" %}
+		{% if mode == "link" %}
 			{% if is_iphone %}
 				{% include "portal_css/option_tab.html" %}
 				<p class="bar">リンク</p>
@@ -113,19 +82,19 @@
 				<h1><img src="static_files/general/images/top/title_link.gif" alt="リンク" width="880" height="40" /></h1>
 			{% endif %}
 			<p>{% include "portal/link.html" %}</p>
-		{% endifequal %}
+		{% endif %}
 
-		{% ifequal mode "guide" %}
+		{% if mode == "guide" %}
 <!--			<h1><img src="static_files/general/images/howto/title_howto.gif" alt="イラストブックの使い方" width="880" height="40" /></h1>			-->
 			{%include "portal/guide.html"%}
-		{% endifequal %}
+		{% endif %}
 
-		{% ifequal mode "support" %}
+		{% if mode == "support" %}
 			<h1><img src="static_files/general/images/support/title_support.gif" alt="よくある質問・サポート" width="880" height="41" /></h1>
 			{%include "portal/support.html" %}
-		{% endifequal %}
+		{% endif %}
 
-		{% ifequal mode "terms" %}
+		{% if mode == "terms" %}
 			{% if is_iphone %}
 				{% include "portal_css/option_tab.html" %}
 				<p class="bar">ご利用規約</p>
@@ -140,26 +109,25 @@
 				<h1><img src="static_files/general/images/top/title_privacy.gif" alt="プライバシーポリシー" width="880" height="36" /></h1>	
 			{% endif %}
 			{% include "portal/privacy.html" %}
-		{% endifequal %}
+		{% endif %}
 		
-		{% ifequal mode "chat" %}
+		{% if mode == "chat" %}
 			{% include "chat/chat.html" %}
-		{% endifequal %}
+		{% endif %}
 		
 		{% if not is_iphone and header_enable %}
 		<p>&nbsp;</p>
 		<p>&nbsp;</p>
 		<div id="pan"> 
 			<p><a href="{{host}}">イラストブック ホーム</a> &gt; 
-				{% ifequal mode "support" %}よくある質問・サポート{% endifequal %}
-				{% ifequal mode "terms" %}ご利用規約{% endifequal %}
-				{% ifequal mode "guide" %}イラストブックの使い方{% endifequal %}
-				{% ifequal mode "questionnaire" %}アンケート{% endifequal %}
-				{% ifequal mode "community" %}コミュニティ{% endifequal %}
-				{% ifequal mode "profile" %}会社概要{% endifequal %}
-				{% ifequal mode "link" %}リンク{% endifequal %}
-				{% ifequal mode "bookmark" %}ブックマーク{% endifequal %}
-				{% ifequal mode "chat" %}イラブチャット{% endifequal %}
+				{% if mode == "support" %}よくある質問・サポート{% endif %}
+				{% if mode == "terms" %}ご利用規約{% endif %}
+				{% if mode == "guide" %}イラストブックの使い方{% endif %}
+				{% if mode == "questionnaire" %}アンケート{% endif %}
+				{% if mode == "community" %}コミュニティ{% endif %}
+				{% if mode == "profile" %}会社概要{% endif %}
+				{% if mode == "link" %}リンク{% endif %}
+				{% if mode == "chat" %}イラブチャット{% endif %}
 			</p>
 		</div>
 		{% endif %}

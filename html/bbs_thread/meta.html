@@ -7,7 +7,7 @@
 {% endif %}
 <meta name="google-site-verification" content="tDxCTlHc4ZiHH3ufegQflliprI4XMLpK6OsChsk5FCA" />
 {%if bbs %}
-{%ifequal bbs.short "moper"%}
+{%if bbs.short == "moper"%}
 <script type="text/javascript">
 window.google_analytics_uacct = "UA-8633292-7";
 </script>
@@ -43,7 +43,7 @@ window.google_analytics_uacct = "UA-8633292-4";
   })();
 
 </script>
-{%endifequal%}
+{%endif%}
 {%else%}
 <script type="text/javascript">
 window.google_analytics_uacct = "UA-8633292-4";

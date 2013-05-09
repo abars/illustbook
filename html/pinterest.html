@@ -10,7 +10,8 @@
 {% endif %}
 <meta name="Keywords" content="お絵かき掲示板,お絵かきブログ,無料,お絵かき,レンタル" />
 <meta name="Description" content="イラストブックはお絵かきツールがなくてもすぐに描ける完全無料のレンタルお絵かき掲示板サービスです。" />
-{% ifequal page_mode "bookmark" %}
+
+{% if page_mode == "bookmark" %}
   <title>
   {% if search_app %}{{search_app.app_name}}{%endif %}
   {% if search_thread %}{{search_thread.title}}{% endif%}
@@ -24,22 +25,23 @@
 {% if tag %}
 <title>{{tag}} - イラストブック</title>
 {% else %}
-{% ifequal page_mode "user" %}
+{% if page_mode == "user" %}
 {% if not view_user.name %}
 <title>未登録ユーザ - イラストブック</title>
 {% else %}
 <title>{{view_user.name}} - イラストブック</title>
 {% endif %}
 {% else %}
-{% ifequal page_mode "guide" %}
+{% if page_mode == "guide" %}
 <title>イラストブックの使い方 - イラストブック</title>
 {% else %}
 <title>イラストブック - 無料レンタルお絵かき掲示板</title>
-{% endifequal %}
-{% endifequal %}
 {% endif %}
 {% endif %}
-{% endifequal %}
+{% endif %}
+{% endif %}
+{% endif %}
+
 {%include "meta.html" %}
 <meta http-equiv="Content-Script-Type" content="text/javascript" />
 <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -90,7 +92,7 @@
 {% endif %}
 
 <!-- ブックマークしているユーザ -->
-{% ifequal page_mode "bookmark" %}
+{% if page_mode == "bookmark" %}
   <script type="text/javascript" src="api_js"></script>
   <script type="text/javascript" src="js/bookmark.js"></script>
   <div class="message">
@@ -98,42 +100,58 @@
     <div id="user_list">Loading...</div>
   </div>
   <script type="text/javascript">
-    request_user_list('{{search_thread.key}}','{{search_bbs.key}}','{{search_app.key}}');
+    request_user_list(
+      '{%if search_thread %}{{search_thread.key()}}{% endif %}',
+      '{%if search_bbs %}{{search_bbs.key()}}{% endif %}',
+      '{%if search_app %}{{search_app.key()}}{% endif %}');
   </script>
-{% endifequal %}
+{% endif %}
 
 <!-- ユーザ情報 -->
-{% ifequal page_mode "user" %}
-  {% include "pinterest/user.html" %}
-{% endifequal %}
+{% if page_mode == "user" %}
+  {% if bookmark and bookmark.frozen %}
+    <div class="message">
+    現在、このユーザは凍結されています。<br/>
+    凍結の解除につきましては、abarsceo@gmail.comまでお問い合せ下さい。<br/>
+    {% if is_admin %}
+    <a href="{{host}}mypage?user_id={{bookmark.user_id}}&freez=0" class="g-button">凍結解除（＊管理モード）</a>
+    {% endif %}
+    </div>
+  {% else %}
+    {% include "pinterest/user.html" %}
+  {% endif %}
+{% endif %}
 
 <!-- ユーザ情報タブ -->
-{% ifequal page_mode "user" %}
-  <br clear="all">
-  {% include "pinterest/user_menu.html" %}
-{% endifequal %}
+{% if page_mode == "user" %}
+  {% if bookmark and bookmark.frozen %}
+  {% else %}
+    <br clear="all">
+   {% include "pinterest/user_menu.html" %}
+  {% endif %}
+{% endif %}
 
 <!-- ユーザタイムライン -->
 {% include "pinterest/user_timeline.html" %}
 
 <!-- ガイド -->
-{% ifequal page_mode "guide" %}
+{% if page_mode == "guide" %}
   <div class="guide">
     {%include "portal/guide.html"%}
   </div>
-{% endifequal %}
+{% endif %}
 
 <!-- ログイン要求 -->
-{% ifequal page_mode "login_require" %}
+{% if page_mode == "login_require" %}
   <div class="guide">
     {%include "mypage/login_require.html"%}
   </div>
-{% endifequal %}
+{% endif %}
 
 <!-- ポータルタブ -->
-{% ifequal page_mode "index" %}
+{% if page_mode == "index" %}
   {% include "pinterest/order_menu.html" %}
-{% endifequal %}
+{% endif %}
 
 <!-- 1ページ目 -->
 </div>
@@ -145,13 +163,13 @@
 {% if not thread_list %}
 {% if not contents_only %}
 {% if illust_enable %}
-{% ifnotequal page_mode "guide" %}
-{% ifnotequal page_mode "login_require" %}
+{% if page_mode != "guide" %}
+{% if page_mode != "login_require" %}
 <div class="message">
 イラストは見つかりませんでした。
 </div>
-{% endifnotequal %}
-{% endifnotequal %}
+{% endif %}
+{% endif %}
 {% endif %}
 {% endif %}
 {% endif %}

@@ -9,14 +9,13 @@
 import re
 import os
 
-from google.appengine.ext.webapp import template
+import template_select
+
 from google.appengine.ext import webapp
 from google.appengine.api import memcache
 
 from myapp.MappingId import MappingId
 from myapp.CssDesign import CssDesign
-
-webapp.template.register_template_library('templatetags.django_filter')
 
 class Alert(webapp.RequestHandler):
 	@staticmethod
@@ -38,8 +37,8 @@ class Alert(webapp.RequestHandler):
 		'alert_msg': msg,
 		'is_iphone': is_iphone
 		}
-		path = os.path.join(os.path.dirname(__file__), '../html/alert.html')
-		return template.render(path, template_values)
+		path = '/html/alert.html'
+		return template_select.render(path, template_values)
 	
 	@staticmethod
 	def alert_msg_notfound(host):

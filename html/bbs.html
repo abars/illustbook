@@ -45,11 +45,11 @@
 				<div class="clr"></div>
 			</div>
 
-			{% ifequal bbs.bbs_mode 3 %}
+			{% if bbs.bbs_mode == 3 %}
 				<!--空白を入れる（昔は広告だった）-->
 				<div class="entry">
 				</div>
-			{% endifequal %}
+			{% endif %}
 
 			{% if bbs.disable_content_image  %}
 				{% if not is_iphone %}
@@ -63,15 +63,15 @@
 			{% include "bbs/bbs_no_illust.html" %}
 	
 			<!--イラストループ-->
-			{% ifequal order "thumbnail" %}
+			{% if order == "thumbnail" %}
 				<!-- サムネイル -->
 					{% include 'bbs/bbs_show_thumbnail.html' %}
 			{% else%}
 				<!-- エントリー -->
 				{% for thread in threads %}
-					{% ifequal forloop.counter 2 %}
+					{% if loop.index == 2 %}
 						<!--広告を一つ目の記事の後に入れる-->
-						{% ifequal bbs.bbs_mode 3 %}
+						{% if bbs.bbs_mode == 3 %}
 						{% else %}
 							{% if not is_iphone or not template_path%}
 								{% if not bbs.disable_content_image %}
@@ -80,19 +80,19 @@
 									</div>
 								{% endif %}
 							{% endif %}
-						{% endifequal %}
-					{%endifequal%}
+						{% endif %}
+					{%endif%}
 			
 					<!--イラスト一つ-->
 					{% include "bbs/bbs_entry.html" %}
 				{% endfor %}
-			{% endifequal%}
+			{% endif%}
 			
-			{% ifequal bbs.bbs_mode 3 %}
+			{% if bbs.bbs_mode == 3 %}
 				<!--空白を入れる-->
 				<div class="entry">
 				</div>
-			{% endifequal %}
+			{% endif %}
 
 			<!-- ページ -->
 			<div id="entry-bottom">

@@ -14,7 +14,7 @@ import datetime
 
 from google.appengine.ext import webapp
 
-from google.appengine.ext.webapp import template
+import template_select
 from google.appengine.api import users
 from google.appengine.ext.webapp.util import run_wsgi_app
 from google.appengine.ext import db
@@ -87,7 +87,7 @@ from myapp.ChatDisconnected import ChatDisconnected
 from myapp.Ranking import Ranking
 from myapp.ApiPacked import ApiPacked
 
-webapp.template.register_template_library('templatetags.django_filter')
+import template_select
 
 class DelThread(webapp.RequestHandler):
 	@staticmethod

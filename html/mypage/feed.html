@@ -14,11 +14,11 @@
 	<!-- ホームタイムライン切り替え -->
 	{% if not view_mode %}
 	<div class="g-button-group">
-		{% ifequal tab "timeline" %}
+		{% if tab == "timeline" %}
 			<a href="./mypage?tab=feed" class="g-button no-text">ホームタイムライン</a>
 		{% else %}
 			<a href="./mypage?tab=timeline" class="g-button no-text">{{bookmark.name}}のタイムライン</a>
-		{% endifequal %}
+		{% endif %}
 	</div>
 	{% endif %}
 

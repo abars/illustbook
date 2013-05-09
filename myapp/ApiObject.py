@@ -85,6 +85,11 @@ class ApiObject(webapp.RequestHandler):
 		#データストアから読込
 		query=db.Query(Bookmark,keys_only=True).filter("user_id =",user_id)
 		target_bookmark=None
+
+		#count=query.count(limit=2)
+		#if(count>=2):
+		#	logging.error("bookmark duplicate error user_id="+str(user_id))
+
 		try:
 			target_bookmark=db.get(query.fetch(1)[0])	#強い整合性を保証
 		except:
@@ -109,7 +114,7 @@ class ApiObject(webapp.RequestHandler):
 		except:
 			return None
 		
-		count=bookmark.count()
+		count=bookmark.count(limit=2)
 		if(count>=2):
 			logging.error("bookmark duplicate error user_id="+str(user_id))
 
@@ -240,6 +245,16 @@ class ApiObject(webapp.RequestHandler):
 		thread=ApiObject.get_cached_object(thread)
 		bbs=ApiObject.get_cached_object(thread.cached_bbs_key)
 		return ApiObject._create_thread_object_core(req,thread,bbs,False)	#文字だけのスレッドも含む
+
+	@staticmethod
+	def is_frozen_thread(thread):
+		if(thread and thread.user_id):
+			logging.error(str(thread.user_id))
+			bookmark=ApiObject.get_bookmark_of_user_id(thread.user_id)
+			if(bookmark):
+				if(bookmark.frozen):
+					return True
+		return False
 	
 	@staticmethod
 	def _create_thread_object_core(req,thread,bbs,only_image_thread):

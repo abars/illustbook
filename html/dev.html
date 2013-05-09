@@ -3,11 +3,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>
-{% ifequal page "intro"%}プラットフォームの基本{% endifequal%}
-{% ifequal page "js"%}JavaScript API{% endifequal%}
-{% ifequal page "json"%}JSON API{% endifequal%}
-{% ifequal page "top"%}デベロッパーポータル{% endifequal%}
-{% ifequal page "css"%}CSS{% endifequal%}
+{% if page == "intro"%}プラットフォームの基本{% endif%}
+{% if page == "js"%}JavaScript API{% endif%}
+{% if page == "json"%}JSON API{% endif%}
+{% if page == "top"%}デベロッパーポータル{% endif%}
+{% if page == "css"%}CSS{% endif%}
  - イラストブック</title>
 {%include "meta.html" %}
 <meta http-equiv="Content-Script-Type" content="text/javascript" />
@@ -44,40 +44,39 @@ SyntaxHighlighter.all();
 	<p>&nbsp</p>
 	<div id="contents">
 		<div id="main">
-			{%ifequal page "top" %}
+			{%if page == "top" %}
 				{% include "./dev/dev.html" %}
-			{%endifequal %}
-			{%ifequal page "intro" %}
+			{%endif %}
+			{%if page == "intro" %}
 				{% include "./dev/dev_intro.html" %}
-			{%endifequal %}
-			{%ifequal page "js" %}
+			{%endif %}
+			{%if page == "js" %}
 				{% include "./dev/dev_js.html" %}
-			{%endifequal %}
-			{%ifequal page "json" %}
+			{%endif %}
+			{%if page == "json" %}
 				{% include "./dev/dev_json.html" %}
-			{%endifequal %}
-			{%ifequal page "css" %}
+			{%endif %}
+			{%if page == "css" %}
 				{% include "./dev/dev_css.html" %}
-			{%endifequal %}
-			{%ifequal page "top" %}
-			{%else%}
+			{%endif %}
+			{%if page != "top" %}
 				<p>&nbsp</p>
-				{%ifequal page "intro" %} 
+				{%if page == "intro" %} 
 					<p><A HREF="./dev?page=json" class="declink">次のページ(JSON API)</a></p>
-				{%endifequal%}
-				{%ifequal page "json" %} 
+				{%endif%}
+				{%if page == "json" %} 
 					<p><A HREF="./dev?page=js" class="declink">次のページ(JavaScript API)</a></p>
 					<p><A HREF="./dev?page=intro" class="declink">前のページ(プラットフォームの概要)</a>
-				{%endifequal%}
-				{%ifequal page "js" %} 
+				{%endif%}
+				{%if page == "js" %} 
 					<p><A HREF="./dev?page=css" class="declink">次のページ(CSSリファレンス)</a></p>
 					<p><A HREF="./dev?page=json" class="declink">前のページ(JSON API)</a>
-				{%endifequal%}
-				{%ifequal page "css" %} 
+				{%endif%}
+				{%if page == "css" %} 
 					<p><A HREF="./dev?page=js" class="declink">前のページ(JavaScript API)</a></p>
-				{%endifequal%}
+				{%endif%}
 				<p><A HREF="./dev" class="declink">デベロッパーポータルへ戻る</a></p>
-			{%endifequal %}
+			{%endif %}
 		</div>
 	</div>
 	<div id="footer">

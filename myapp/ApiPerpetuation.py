@@ -12,7 +12,7 @@ import sys
 import re
 import datetime
 
-from google.appengine.ext.webapp import template
+import template_select
 from google.appengine.api import users
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
@@ -20,8 +20,6 @@ from google.appengine.ext import db
 from google.appengine.api import images
 from google.appengine.api import memcache
 from google.appengine.api.users import User
-
-from django.utils import simplejson
 
 from myapp.SetUtf8 import SetUtf8
 from myapp.Alert import Alert

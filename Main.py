@@ -14,14 +14,13 @@ import datetime
 
 from google.appengine.ext import webapp
 
-from google.appengine.ext.webapp import template
+import template_select
+
 from google.appengine.api import users
 from google.appengine.ext.webapp.util import run_wsgi_app
 from google.appengine.ext import db
 from google.appengine.api import images
 from google.appengine.api import memcache
-
-webapp.template.register_template_library('templatetags.django_filter')
 
 #-----------------------------------------------------------------
 #DB
@@ -60,8 +59,6 @@ from myapp.MoperGuide import MoperGuide
 from myapp.MoperLoad import MoperLoad
 from myapp.MoperPlayer import MoperPlayer
 from myapp.MoperDraw import MoperDraw
-from myapp.LocalToolDraw import LocalToolDraw
-from myapp.LocalTool import LocalTool
 from myapp.Embedded import Embedded
 from myapp.AnalyzeAccess import AnalyzeAccess
 from myapp.CssDesign import CssDesign
@@ -73,7 +70,6 @@ from myapp.ViolationTerms import ViolationTerms
 from myapp.MappingThreadId import MappingThreadId
 from myapp.DrawWindow import DrawWindow
 from myapp.AddTag import AddTag
-from myapp.SearchTag import SearchTag
 from myapp.Bookmark import Bookmark
 from myapp.AddBookmark import AddBookmark
 from myapp.NicoTracker import NicoTracker
@@ -113,6 +109,7 @@ from myapp.RedirectBbs import RedirectBbs
 from myapp.RedirectThread import RedirectThread
 from myapp.VisibilityChangeEntry import VisibilityChangeEntry
 from myapp.EditThreadList import EditThreadList
+from myapp.SearchTag import SearchTag
 
 #-----------------------------------------------------------------
 #ポータル
@@ -169,8 +166,8 @@ class MainPage(webapp.RequestHandler):
 			'mode': "index"
 		}
 
-		path = os.path.join(os.path.dirname(__file__), 'html/index.html')
-		self.response.out.write(template.render(path, template_values))
+		path = '/html/index.html'
+		self.response.out.write(template_select.render(path, template_values))
 
 class Portal(webapp.RequestHandler):
 	@staticmethod
@@ -186,8 +183,8 @@ class Portal(webapp.RequestHandler):
 			'header_enable': header_enable
 		}
 
-		path = os.path.join(os.path.dirname(__file__), 'html/portal.html')
-		req.response.out.write(template.render(path, template_values))
+		path = '/html/portal.html'
+		req.response.out.write(template_select.render(path, template_values))
 
 class RankingPortal(webapp.RequestHandler):
 	def get(self):
@@ -220,28 +217,12 @@ class RankingPortal(webapp.RequestHandler):
 			'page': page
 		}
 
-		path = os.path.join(os.path.dirname(__file__), 'html/portal.html')
-		self.response.out.write(template.render(path, template_values))
+		path = '/html/portal.html'
+		self.response.out.write(template_select.render(path, template_values))
 	
-class Questionnaire(webapp.RequestHandler):
-	def get(self):
-		Portal.get(self,"questionnaire",True)
-
-class Profile(webapp.RequestHandler):
-	def get(self):
-		Portal.get(self,"profile",True)
-
-class Support(webapp.RequestHandler):
-	def get(self):
-		Portal.get(self,"support",True)
-
 class Terms(webapp.RequestHandler):
 	def get(self):
 		Portal.get(self,"terms",False)
-
-class Community(webapp.RequestHandler):
-	def get(self):
-		Portal.get(self,"community",True)
 
 class GuidePage(webapp.RequestHandler):
 	def get(self):
@@ -251,10 +232,6 @@ class GuidePage(webapp.RequestHandler):
 				Pinterest.get_core(self,Pinterest.PAGE_MODE_GUIDE)
 				return
 		Portal.get(self,"guide",True)
-
-class LinkPage(webapp.RequestHandler):
-	def get(self):
-		Portal.get(self,"link",False)
 
 #-----------------------------------------------------------------
 #振り分け
@@ -316,18 +293,11 @@ application = webapp.WSGIApplication(
 	('/moper_player',MoperPlayer),
 	('/moper_import_raster',MoperImportRaster),
 	('/moper_guide',MoperGuide),
-	('/link',LinkPage),
 	('/spam_check',SpamCheck),
 	('/spam_delete',SpamDelete),
 	('/admin',Admin),
-	('/localtool',LocalTool),
-	('/localtool_draw',LocalToolDraw),
-	('/questionnaire',Questionnaire),
-	('/community',Community),
-	('/profile',Profile),
-	('/support',Support),
 	('/terms',Terms),
-	('/search_tag',Pinterest),#SearchTag),
+	('/search_tag',Pinterest),
 	('/move_account',MoveAccount),
 	('/violation',ViolationTerms),
 	('/nico_tracker',NicoTracker),

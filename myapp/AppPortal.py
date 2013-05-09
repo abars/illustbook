@@ -13,7 +13,8 @@ import re
 import datetime
 import urllib
 
-from google.appengine.ext.webapp import template
+import template_select
+
 from google.appengine.api import users
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
@@ -22,7 +23,7 @@ from google.appengine.api import images
 from google.appengine.api import memcache
 from google.appengine.api.users import User
 
-webapp.template.register_template_library('templatetags.django_filter')
+import template_select
 
 from myapp.SetUtf8 import SetUtf8
 from myapp.Alert import Alert
@@ -74,7 +75,7 @@ class AppPortal(webapp.RequestHandler):
 	
 	@staticmethod
 	def load_sample_app(filename):
-		code = open('./api/'+filename).read()
+		code = open('./html/api/'+filename).read()
 		return code
 	
 	@staticmethod
@@ -206,10 +207,10 @@ class AppPortal(webapp.RequestHandler):
 			'redirect_url': main.request.path
 		}
 		
-		url='../html/app.html'
+		url='/html/app.html'
 		if(is_run or is_plugin):
-			url='../html/app/app_run.html'
+			url='/html/app/app_run.html'
 		
-		path = os.path.join(os.path.dirname(__file__), url)
-		main.response.out.write(template.render(path, template_values))
+		path = url
+		main.response.out.write(template_select.render(path, template_values))
 			

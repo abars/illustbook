@@ -46,9 +46,9 @@
 {% if bbs %}
 <div class="entry">
 <div class="g-button-group">
-<A HREF="./usr/{{bbs.key}}/" class="g-button">{{page_name}}へ戻る</A>
+<A HREF="./usr/{{bbs.key()}}/" class="g-button">{{page_name}}へ戻る</A>
 {% if user %}
-　<A HREF="./analyze?bbs_key={{bbs.key}}&mode=delete" class="g-button">解析結果の初期化</A>
+　<A HREF="./analyze?bbs_key={{bbs.key()}}&mode=delete" class="g-button">解析結果の初期化</A>
 {% endif %}
 </div>
 </div>

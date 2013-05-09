@@ -3,7 +3,7 @@
 {%else%}
 	投稿者：
 {%endif%}
-{{thread|author_name_thread:host|safe}}　
+{{thread|author_name_thread(host)|safe}}　
 
 {% if thread.category %}
 	{% if is_iphone %}<br/>{% endif %}
@@ -22,5 +22,5 @@
 	{% else %}
 		投稿日：
 	{% endif%}
-	{{thread.create_date|time_JST_format:bbs.date_format}}
+	{{thread.create_date|time_JST_format(bbs.date_format)}}
 {% endif %}

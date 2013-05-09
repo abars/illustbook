@@ -3,51 +3,49 @@
 
 	<div class="g-button-group">
 	<a class="g-button mini dropdown-toggle" data-toggle="dropdown" href="#" style="color:#444">
-		{% ifequal order "new" %}新着順{% endifequal %}
-		{% ifequal order "update" %}更新順{% endifequal %}
-		{% ifequal order "comment" %}コメント数{% endifequal %}
-		{% ifequal order "applause" %}拍手順{% endifequal %}
-		{% ifequal order "thumbnail" %}サムネイル{% endifequal %}
-		{% ifequal order "illust" %}ラスター{% endifequal %}
+		{% if order == "new" %}新着順{% endif %}
+		{% if order == "update" %}更新順{% endif %}
+		{% if order == "comment" %}コメント数{% endif %}
+		{% if order == "applause" %}拍手順{% endif %}
+		{% if order == "thumbnail" %}サムネイル{% endif %}
+		{% if order == "illust" %}ラスター{% endif %}
 		<span class="caret"></span>
 	</a>
 	<ul class="dropdown-menu">
 		<li><a href="javascript:bbs_select_change('new','{{page_url_order_base}}');" style="border-bottom: 0px;color:#444;">新着順</a></li>
 		<li><a href="javascript:bbs_select_change('update','{{page_url_order_base}}');" style="border-bottom: 0px;color:#444">更新順</a></li>
 		<li><a href="javascript:bbs_select_change('comment','{{page_url_order_base}}');" style="border-bottom: 0px;color:#444">コメント数</a></li>
-	{% ifequal bbs.bbs_mode 3 %}
-	{% else %}
+	{% if bbs.bbs_mode != 3 %}
 		<li><a href="javascript:bbs_select_change('applause','{{page_url_order_base}}');" style="border-bottom: 0px;color:#444">拍手順</a></li>
 		<li><a href="javascript:bbs_select_change('thumbnail','{{page_url_order_base}}');" style="border-bottom: 0px;color:#444">サムネイル</a></li>
 		{% if bbs.show_only_movie %}
 			<li><a href="javascript:bbs_select_change('illust','{{page_url_order_base}}');" style="border-bottom: 0px;color:#444">ラスターを表示</a></li>
 		{% endif %}
-	{% endifequal %}
+	{% endif %}
 	</ul>
 	</div>
 
 <!-- モバイルの新規イラスト -->
 {% if is_iphone %}
 	<div class="g-button-group">
-	{% ifequal bbs.bbs_mode 3 %}
-	{% else %}
+	{% if bbs.bbs_mode != 3 %}
 		{% if can_create_new_image %}
 			{% if not bbs.disable_create_new_illust %}
 				<!--
 				<a class="g-button no-text" href="javascript:bbs_open_ipad_canvas_size();" style="color:#444;">イラストを描く</a>
 				-->
-				<a class="g-button no-text" href="javascript:bbs_open_draw('','{{bbs.key}}','{{host}}');" style="color:#444;">イラストを描く</a>
+				<a class="g-button no-text" href="javascript:bbs_open_draw('','{{bbs.key()}}','{{host}}');" style="color:#444;">イラストを描く</a>
 			{% endif %}
 		{% endif %}
-	{% endifequal %}
+	{% endif %}
 	{% if owner %}
-		<a class="g-button no-text" href="{{host}}edit_bbs?bbs_key={{bbs.key}}">デザインの編集</a>
+		<a class="g-button no-text" href="{{host}}edit_bbs?bbs_key={{bbs.key()}}">デザインの編集</a>
 	{% endif %}
 	</div>
 	<div style="display:none;margin:5px;float:right;" id="ipad_canvas_size">
 		<input id="canvas_width" value="{%if bbs.default_canvas_width%}{{bbs.default_canvas_width}}{%else%}400{%endif%}" maxlength=3 size=3/>x
 		<input id="canvas_height" value="{%if bbs.default_canvas_height%}{{bbs.default_canvas_height}}{%else%}400{%endif%}" maxlength=3 size=3/>
-		<a class="g-button no-text" href="javascript:bbs_open_draw('','{{bbs.key}}','{{host}}');" style="color:#444;">イラブペイントを開く</a>
+		<a class="g-button no-text" href="javascript:bbs_open_draw('','{{bbs.key()}}','{{host}}');" style="color:#444;">イラブペイントを開く</a>
 	</div>
 {% endif %}
 

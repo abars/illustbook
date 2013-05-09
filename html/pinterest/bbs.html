@@ -1,31 +1,6 @@
 {% if not contents_only %}
 
-<style type="text/css">
-  .bbs_thumbnail{
-    float:left;
-    margin:4px;
-  }
-
-  .bbs_button{
-    float:right;
-  }
-
-  .bbs_title{
-    float:left;
-    margin:4px;
-  }
-
-  .bbs_list{
-    width:308px;
-    padding:0px;
-  }
-
-  .bbs_hr{
-    margin:0px;
-  }
-
-</style>
-
+<!-- レンタル -->
 {% if rental_bbs_list %}
 <div class="message bbs_list">
   <div class="bbs_title">
@@ -46,13 +21,13 @@
   </a>
   {% if bbs.bookmark %}
     <br/>
-    <a href='show_bookmark?bbs_key={{bbs.key}}'>{{bbs.bookmark}}ブクマ</a>
+    <a href='show_bookmark?bbs_key={{bbs.key()}}'>{{bbs.bookmark}}ブクマ</a>
   {% endif %}
   </div>
 
   <div class="bbs_button">
   {% if edit_mode %}
-    <a href="javascript:confirm_action_bbs('del_bbs?bbs_key={{bbs.key}}','{{bbs.title}}');" class="g-button no-text"><i class="icon-remove"></i></a>
+    <a href="javascript:confirm_action_bbs('del_bbs?bbs_key={{bbs.key()}}','{{bbs.title}}');" class="g-button no-text"><i class="icon-remove"></i></a>
   {% endif %}
   </div>
 
@@ -61,6 +36,7 @@
 </div>
 {% endif %}
 
+<!-- ブックマーク -->
 {% if bookmark_bbs_list %}
 <div class="message bbs_list">
   <div class="bbs_title">
@@ -80,14 +56,14 @@
   {{bbs.title}}
   </a>
       {% if bbs.bookmark %}
-    <br/><a href='show_bookmark?bbs_key={{bbs.key}}'>{{bbs.bookmark}}ブクマ</a>
+    <br/><a href='show_bookmark?bbs_key={{bbs.key()}}'>{{bbs.bookmark}}ブクマ</a>
   {% endif %}
 
   </div>
 
   <div class="bbs_button">
   {% if edit_mode %}
-    <a href="javascript:confirm_delete('del_bbs&bbs_key={{bbs.key}}','ブックマーク','{{bbs.title}}');" class="g-button no-text"><i class="icon-remove"></i></a>
+    <a href="javascript:confirm_delete('del_bbs&bbs_key={{bbs.key()}}','ブックマーク','{{bbs.title}}');" class="g-button no-text"><i class="icon-remove"></i></a>
   {% endif %}
   </div>
 

@@ -8,7 +8,8 @@
 
 import os
 
-from google.appengine.ext.webapp import template
+import template_select
+
 from google.appengine.ext import webapp
 from google.appengine.ext import db
 
@@ -57,6 +58,6 @@ class Embedded(webapp.RequestHandler):
 			'img':img,
 			'moper':moper
 			}
-		path = os.path.join(os.path.dirname(__file__), '../html/embedded.html')
-		self.response.out.write(template.render(path, template_values))
+		path = '/html/embedded.html'
+		self.response.out.write(template_select.render(path, template_values))
 		

@@ -67,7 +67,7 @@
 				{% endif %}
 
 				<!--検索-->
-				{% ifequal bbs.bbs_mode 3 %}
+				{% if bbs.bbs_mode == 3 %}
 				<div class="entry">
 				コメント検索<hr/>
 				<div class="g-button-group toggle-buttons">
@@ -77,7 +77,7 @@
 					</form>
 				</div>
 				</div>
-				{% endifequal %}
+				{% endif %}
 				
 				<!-- スレッドメニュー -->
 				<div class="entry">

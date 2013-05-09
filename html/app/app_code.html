@@ -1,8 +1,8 @@
-{% ifequal app.mode 2 %}
+{% if app.mode == 2 %}
 <pre class="brush: css">{{app_code|safe}}</pre>
 {% else %}
 <pre class="brush: js">{{app_code|safe}}</pre>
-{% endifequal %}
+{% endif %}
 
 <p>&nbsp</p>
 

@@ -2,7 +2,7 @@
 	
 	{% if app.ranking_key %}
 	<script>
-		illustbook.request.get("api_perpetuation?method=getRanking&app_key={{app.key}}&data_key={{app.ranking_key}}&order={% if app.ranking_order %}ascending{%else%}descending{%endif%}",app_ranking_callback);
+		illustbook.request.get("api_perpetuation?method=getRanking&app_key={{app.key()}}&data_key={{app.ranking_key}}&order={% if app.ranking_order %}ascending{%else%}descending{%endif%}",app_ranking_callback);
 		
 		function app_ranking_callback(oj){
 			var text="";

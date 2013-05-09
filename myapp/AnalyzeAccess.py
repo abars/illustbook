@@ -9,7 +9,8 @@
 import os
 import re
 
-from google.appengine.ext.webapp import template
+import template_select
+
 from google.appengine.ext import webapp
 from google.appengine.ext import db
 from google.appengine.api import users
@@ -69,6 +70,6 @@ class AnalyzeAccess(webapp.RequestHandler):
 			'user': user,
 			'show_analyze': show_analyze
 			}
-		path = os.path.join(os.path.dirname(__file__), '../html/analyze.html')
-		self.response.out.write(template.render(path, template_values))
+		path = '/html/analyze.html'
+		self.response.out.write(template_select.render(path, template_values))
 

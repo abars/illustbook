@@ -1,16 +1,16 @@
 <!--新規スレッド作成-->
 
-{% ifequal bbs.bbs_mode 3 %}
+{% if  bbs.bbs_mode == 3 %}
 <div class="entry">
 	<h3>新しいスレッドの作成</h3>
 	{% if not bbs.disable_create_new_thread %}
 		この掲示板は誰でもスレッドが作成可能です。<br/>
 	{% else%}
-		{% ifequal bbs.disable_create_new_thread 1 %}
+		{% if bbs.disable_create_new_thread == 1 %}
 			この掲示板は管理人のみスレッドが作成可能です。<br/>
 		{% else %}
 			この掲示板はログインしていれば誰でもスレッドが作成可能です。<br/>
-		{% endifequal %}
+		{% endif %}
 	{% endif %}
 	<br/>
 
@@ -23,7 +23,7 @@
 	
 	<div class="comment_tab_new_thread_body comment_tab_new_thread_body_text" style="display:none;">
 	{% if can_create_thread %}
-		<form action='http://localhost/' enctype="multipart/form-data" method="post" onSubmit="this.action='{{host}}add_thread?bbs_key={{bbs.key}}';">
+		<form action='http://localhost/' enctype="multipart/form-data" method="post" onSubmit="this.action='{{host}}add_thread?bbs_key={{bbs.key()}}';">
 		<input type="hidden" name="illust_mode" value="0">
 		<table class="table_color"><tr><td>タイトル（必須）</td>
 		<td><textarea name="thread_title" rows="1" cols="40" style="width:90%;"></textarea></td></tr>
@@ -48,4 +48,4 @@
 	{% endif %}
 	</div>
 </div>
-{% endifequal %}
+{% endif %}

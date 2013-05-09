@@ -16,7 +16,7 @@ import logging
 import urllib
 import math
 
-from google.appengine.ext.webapp import template
+import template_select
 from google.appengine.api import users
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
@@ -92,7 +92,6 @@ class SearchTag(webapp.RequestHandler):
 	def get_thread(self,query,tag,thread_num,page):
 		query.filter('tag_list =', tag)
 		thread_key_list = query.fetch(limit=thread_num, offset=(page-1)*thread_num)
-		#thread_list = ApiObject.get_cached_object_list(thread_key_list)
 		thread_list = ApiObject.create_thread_object_list(self,thread_key_list,"search")
 		return thread_list
 
@@ -130,60 +129,3 @@ class SearchTag(webapp.RequestHandler):
 		#最近のタグリストの構築
 		tag_list=SearchTag.get_recent_tag_core(recent_tag,api)
 		return tag_list
-
-	#def get(self):
-	#	tag=self.request.get("tag")
-		
-	#	SetUtf8.set()
-
-		#リダイレクト
-	#	user=users.get_current_user()
-	#	if(BbsConst.PINTEREST_MODE):
-	#		if((user and OwnerCheck.is_admin(user)) or BbsConst.PINTEREST_MODE==2):
-	#			self.redirect(str("./pinterest?tag="+urllib.quote_plus(str(tag))))
-	#			return
-
-	#	page=1
-	#	thread_num=100
-
-		#タグに対応するクエリを作成
-	#	query = db.Query(MesThread,keys_only=True)
-	#	query.filter('illust_mode =', BbsConst.ILLUSTMODE_ILLUST)
-	#	query.order('-applause')
-	#	thread_list = self.get_thread(query,tag,thread_num,page)
-
-	#	query = db.Query(MesThread,keys_only=True)
-	#	query.filter('illust_mode =', BbsConst.ILLUSTMODE_MOPER)
-	#	query.order('-applause')
-	#	moper_list = self.get_thread(query,tag,thread_num,page)
-		
-	#	query = db.Query(MesThread,keys_only=True)
-	#	query.filter('illust_mode =', BbsConst.ILLUSTMODE_NONE)
-	#	query.order('-date')
-	#	text_list = self.get_thread(query,tag,thread_num,page)
-		
-	#	host_url="./";
-
-		#最近のタグ
-	#	cnt=len(thread_list)+len(moper_list)+len(text_list)
-	#	tag_list=SearchTag.update_recent_tag(tag,cnt,"search_tag")
-
-		#iPhoneかどうか
-	#	is_iphone=CssDesign.is_iphone(self)
-		
-		#レンダリング
-	#	template_values = {
-	#		'host': host_url,
-	#		'thread_list': thread_list,
-	#		'moper_list': moper_list,
-	#		'text_list': text_list,
-	#		'tag': tag,
-	#		'tag_list': tag_list,
-	#		'is_iphone': is_iphone,
-	#		'user': users.get_current_user(),
-	#		'redirect_url': self.request.path,
-	#		'mode': "bookmark"
-	#	}
-
-	#	path = os.path.join(os.path.dirname(__file__), "../html/portal.html")
-	#	self.response.out.write(template.render(path, template_values))

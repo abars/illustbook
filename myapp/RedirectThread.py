@@ -14,7 +14,7 @@ import datetime
 
 from google.appengine.ext import webapp
 
-from google.appengine.ext.webapp import template
+import template_select
 from google.appengine.api import users
 from google.appengine.ext.webapp.util import run_wsgi_app
 from google.appengine.ext import db
@@ -26,7 +26,7 @@ from myapp.Alert import Alert
 from myapp.MappingId import MappingId
 from myapp.MesThread import MesThread
 
-webapp.template.register_template_library('templatetags.django_filter')
+import template_select
 
 class RedirectThread(webapp.RequestHandler):
 	def get(self):

@@ -48,6 +48,6 @@
 
 <!-- ページ -->
 <div class="g-button-group">
-	<a id="feed_previous_page" href="{{host}}ranking?mode={{ranking_mode}}&page={{page|add:-1}}" class="g-button no-text {%ifequal page 1%}disabled2{%endifequal%}"><i class="icon-chevron-left"></i></a>
+	<a id="feed_previous_page" href="{{host}}ranking?mode={{ranking_mode}}&page={{page|add:-1}}" class="g-button no-text {%if page == 1%}disabled2{%endif%}"><i class="icon-chevron-left"></i></a>
 	<a id="feed_next_page" href="{{host}}ranking?mode={{ranking_mode}}&page={{page|add:1}}" class="g-button no-text"><i class="icon-chevron-right"></i></a>
 </div>

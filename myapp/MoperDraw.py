@@ -8,7 +8,8 @@
 
 import os
 
-from google.appengine.ext.webapp import template
+import template_select
+
 from google.appengine.ext import webapp
 from google.appengine.ext import db
 
@@ -85,6 +86,6 @@ class MoperDraw(webapp.RequestHandler):
 		'author': author,
 		'title': title
 		}
-		path = os.path.join(os.path.dirname(__file__), '../html/tools/draw_window_moper.htm')
-		self.response.out.write(template.render(path, template_values))
+		path = '/html/tools/draw_window_moper.htm'
+		self.response.out.write(template_select.render(path, template_values))
 

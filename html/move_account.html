@@ -14,7 +14,7 @@
 {%if exec_move %}
 
 <p>移行が完了しました。</p>
-<p><A HREF="./usr/{{bbs.key}}/" class="declink">掲示板に戻る</A></p>
+<p><A HREF="./usr/{{bbs.key()}}/" class="declink">掲示板に戻る</A></p>
 
 {%else%}
 
@@ -46,7 +46,7 @@
 {% endif %}
 {%if moveok %}
 <p>&nbsp</p>
-<p><A HREF="./move_account?bbs_key={{bbs.key}}&mode=exec" class="declink">移行を実行する</A></p>
+<p><A HREF="./move_account?bbs_key={{bbs.key()}}&mode=exec" class="declink">移行を実行する</A></p>
 {% endif%}
 
 {% endif %}

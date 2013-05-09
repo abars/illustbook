@@ -12,21 +12,20 @@ import sys
 import re
 import datetime
 
+import template_select
+
 from google.appengine.ext import webapp
 
-from google.appengine.ext.webapp import template
 from google.appengine.api import users
 from google.appengine.ext.webapp.util import run_wsgi_app
 from google.appengine.ext import db
 from google.appengine.api import images
 from google.appengine.api import memcache
 
-webapp.template.register_template_library('templatetags.django_filter')
-
 class DropBox(webapp.RequestHandler):
 	def get(self):
 		template_values = {
 			'host': "./"
 		}
-		path = os.path.join(os.path.dirname(__file__), '../html/dropbox.html')
-		self.response.out.write(template.render(path, template_values))
+		path = '/html/dropbox.html'
+		self.response.out.write(template_select.render(path, template_values))

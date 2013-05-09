@@ -17,7 +17,7 @@ import urllib
 
 from google.appengine.api.labs import taskqueue
 
-from google.appengine.ext.webapp import template
+import template_select
 from google.appengine.api import users
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
@@ -218,8 +218,8 @@ class ShowBbs(webapp.RequestHandler):
 			'can_edit_design': can_edit_design
 		}
 
-		path = os.path.join(os.path.dirname(__file__), "../html/"+design["base_name"])
-		self.response.out.write(template.render(path, template_values))
+		path = "/html/"+design["base_name"]
+		self.response.out.write(template_select.render(path, template_values))
 		
 		if(is_maintenance):
 			return

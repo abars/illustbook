@@ -93,10 +93,10 @@ color: #333;
 }
 
 .message {
-{% ifequal page_mode "index" %}
+{% if page_mode == "index" %}
 max-width:495px;
 {% else %}
-{% endifequal %}
+{% endif %}
 {% if is_iphone %}
 width:298px;
 {% endif %}
@@ -219,19 +219,19 @@ color: #333;
 }
 
 #follower{
-{% ifequal edit_mode 2 %}
+{% if edit_mode == 2 %}
   display:block;
 {% else %}
   display:none;
-{% endifequal %}
+{% endif %}
 }
 
 #follower_button{
-{% ifequal edit_mode 2 %}
+{% if edit_mode == 2 %}
   display:none;
 {% else %}
   display:block;
-{% endifequal %}
+{% endif %}
 }
 
 #profile{
@@ -317,4 +317,29 @@ color: #333;
     padding:4px;
     padding-bottom:40px;
   }
+
+/* bbs page */
+  .bbs_thumbnail{
+    float:left;
+    margin:4px;
+  }
+
+  .bbs_button{
+    float:right;
+  }
+
+  .bbs_title{
+    float:left;
+    margin:4px;
+  }
+
+  .bbs_list{
+    width:308px;
+    padding:0px;
+  }
+
+  .bbs_hr{
+    margin:0px;
+  }
+
 </style>

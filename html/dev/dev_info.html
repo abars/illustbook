@@ -20,18 +20,19 @@
 
 <H1><p>{{app.app_name}}のコンテンツ設定の編集</p></H1>
 
-{% include "app_icon.html" %}
-
 <form action="./dev" enctype="multipart/form-data" method="post" >
 <H3><p>コンテンツ共通設定</p></H3>
 <TABLE>
 <TR><TD>コンテンツ名</TD><TD><input name="app_name" style="width:400px;" value="{{app.app_name}}"></TD></TR>
 <TR><TD>コンテンツID(できる限り変更しないで下さい)</TD><TD><input name="app_id" style="width:400px;" value="{{app.app_id}}"></TD></TR>
-<TR><TD>コンテンツ種別</TD><TD><select name="mode"><option value="0">アプリ</option {% ifequal app.mode 0%}selected{% endifequal %}><option value="1" {% ifequal app.mode 1%}selected{%endifequal%}>プラグイン</option><option value="2" {% ifequal app.mode 2%}selected{%endifequal%}>CSSデザイン</option></select></TD></TR>
+<TR><TD>コンテンツ種別</TD><TD><select name="mode">
+<option value="0">アプリ</option {% if app.mode == 0%}selected{% endif %}>
+<option value="1" {% if app.mode == 1%}selected{%endif%}>プラグイン</option>
+<option value="2" {% if app.mode == 2%}selected{%endif%}>CSSデザイン</option></select></TD></TR>
 <TR><TD>コンテンツ解説</TD><TD><textarea name="app_guide" style="width:400px;" rows=4>{{app.app_guide}}</textarea></TD></TR>
 <TR><TD>開発者名</TD><TD><input name="author" style="width:400px;" value="{{app.author}}"></TD></TR>
 <TR><TD>公開設定</TD><TD><select name="is_public"><option value="0">非公開</option {% if not app.is_public %}selected{% endif %}><option value="1" {% if app.is_public%}selected{%endif%}>公開</option></select></TD></TR>
-<TR><TD>アイコン(100x100px)</TD><TD>{% if app.icon %}<img src="app?mode=icon&app_key={{app.key}}" width=100px height=100px class="app_icon">{%else%}<small>アイコン未設定</small>{%endif%}　<input type="file" name="icon"></TD></TR>
+<TR><TD>アイコン(100x100px)</TD><TD>{% if app.icon %}<img src="app?mode=icon&app_key={{app.key()}}" width=100px height=100px class="app_icon">{%else%}<small>アイコン未設定</small>{%endif%}　<input type="file" name="icon"></TD></TR>
 </TABLE>
 
 <p>&nbsp</p>
@@ -54,7 +55,7 @@
 	<TABLE BORDER=1>
 	<TR><TD>名前</TD><TD>画像</TD><TD>URL</TD><TD WIDTH=100px>操作</TD></TR>
 	{% for image_id in app.image_id_list %}
-		<TR><TD>{{image_id}}</TD><TD><center><img src="app/{{app.app_id}}/img/{{image_id}}" style="max-width:200px;max-height:200px;"></center></TD><TD><a href="{{host}}app/{{app.app_id}}/img/{{image_id}}" target="_BLANK">{{host}}app/{{app.app_id}}/img/{{image_id}}</a></TD><TD><input type="button" value="削除" onclick="javascript:if(confirm('画像リソースを削除してもよろしいですか？')){window.location.href='dev?page=del_image&app_key={{app.key}}&image_id={{image_id}}{% if bbs_key %}&bbs_key={{bbs_key}}{% endif %}'};return false;"></TD></TR>
+		<TR><TD>{{image_id}}</TD><TD><center><img src="app/{{app.app_id}}/img/{{image_id}}" style="max-width:200px;max-height:200px;"></center></TD><TD><a href="{{host}}app/{{app.app_id}}/img/{{image_id}}" target="_BLANK">{{host}}app/{{app.app_id}}/img/{{image_id}}</a></TD><TD><input type="button" value="削除" onclick="javascript:if(confirm('画像リソースを削除してもよろしいですか？')){window.location.href='dev?page=del_image&app_key={{app.key()}}&image_id={{image_id}}{% if bbs_key %}&bbs_key={{bbs_key}}{% endif %}'};return false;"></TD></TR>
 	{% endfor %}
 	</TABLE>
 {% else %}
@@ -69,10 +70,10 @@
 
 <p>&nbsp</p>
 
-<input type="hidden" name="app_key" value="{{app.key}}">
+<input type="hidden" name="app_key" value="{{app.key()}}">
 <input type="hidden" name="page" value="update">
 {% if bbs_key %}
-<input type="hidden" name="redirect" value="dev?page=info&app_key={{app.key}}&bbs_key={{bbs_key}}">
+<input type="hidden" name="redirect" value="dev?page=info&app_key={{app.key()}}&bbs_key={{bbs_key}}">
 {% endif %}
 <input type="submit" value="コンテンツ情報を更新する">
 </form>

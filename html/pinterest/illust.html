@@ -1,3 +1,4 @@
+{% if thread_list %}
 {% for thread in thread_list %}
 <div class="item">
   <!-- bbs -->
@@ -12,40 +13,40 @@
   {% if thread.image_url %}
         <div class="side-corner-tag">
           <a href="{{thread.thread_url}}" target="_BLANK">
-            <img src="{{thread.thumbnail2_url}}" width="{{thread|thumbnail2_width:is_iphone}}px" height="{{thread|thumbnail2_height:is_iphone}}px" alt="{{thread.title}}"/>
+            <img src="{{thread.thumbnail2_url}}" width="{{thread|thumbnail2_width(is_iphone)}}px" height="{{thread|thumbnail2_height(is_iphone)}}px" alt="{{thread.title}}"/>
           </a>
 
-            {% ifequal page_mode "index" %}
-             {% ifequal next_page 2 %}
-              {% if forloop.counter == 1 %}{% ifequal order "new" %}
+            {% if page_mode == "index" %}
+             {% if next_page == 2 %}
+              {% if loop.index == 1 %}{% if order == "new" %}
                 <p><span>Newest</span></p>
-              {% endifequal %}{% endif %}
-              {% if forloop.counter <= 3 %}{% ifequal order "hot" %}
-                <p><span>{{forloop.counter}}</span></p>
-              {% endifequal %}{% endif %}
-             {% endifequal %}
-            {% endifequal %}
+              {% endif %}{% endif %}
+              {% if loop.index <= 3 %}{% if order == "hot" %}
+                <p><span>{{loop.index}}</span></p>
+              {% endif %}{% endif %}
+             {% endif %}
+            {% endif %}
         </div>
   {% endif %}
 
         {% if edit_mode %}
-          {% ifequal tab "bookmark" %}
+          {% if tab == "bookmark" %}
             <a href="javascript:confirm_delete('del&thread_key={{thread.key}}','ブックマーク','{{thread.title}}');" class="g-button no-text delete_button">
               <i class="icon-remove"></i>
             </a>
-          {% endifequal %}
+          {% endif %}
         {% endif %}
   </div>
 
   <!--Summary-->
   <div class="illust_summary">
     {% if thread.title %}
-    {% ifnotequal thread.title "notitle" %}
+    {% if thread.title != "notitle" %}
       <a href="{{thread.thread_url}}" target="_BLANK">
        <b>{{thread.title}}</b>
       </a>
       <br/>
-    {% endifnotequal %}
+    {% endif %}
     {% endif %}
     {% if thread.tag %}
       {% for tag in thread.tag %}
@@ -100,3 +101,4 @@
     {% endif %}
 </div>
 {% endfor %}
+{% endif %}

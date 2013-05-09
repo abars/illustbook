@@ -68,9 +68,9 @@ object, embed {
 			"wmode":"direct"
 		};
 		var force_version10=false;
-		{% ifequal version "10" %}
+		{% if version == "10" %}
 			force_version10=true;
-		{% endifequal %}
+		{% endif %}
 		if(force_version10 || playerVersion.major<=10 || (playerVersion.major==11 && playerVersion.minor<2)){
 			swfobject.embedSWF("flash/IllustBook10.swf","fromJavaScript","100%","100%","10.0.0",null,flashvars,params);
 		}else{
@@ -90,17 +90,17 @@ object, embed {
 		loadCookie();
 
 		//上書き保存時のみ上書きモードを表示
-		{% ifequal canvas_url ""%}
+		{% if canvas_url == ""%}
 		{% else %}
-			{% ifequal reply "0"%}
+			{% if reply == "0"%}
 				document.getElementById("overwrite").style.visibility="visible";
-			{% endifequal %}
-		{% endifequal %}
+			{% endif %}
+		{% endif %}
 		
 		//絵でコメント時はpngにできない
-		{% ifequal reply "1" %}
+		{% if reply == "1" %}
 			document.getElementById("thread_option").style.display="none";
-		{% endifequal %}
+		{% endif %}
 	}
 	
 	//Size指定による
@@ -158,10 +158,10 @@ object, embed {
 
 					<H4>イラストの情報</H4><BR>
 					<table class="table_color" style="width:100%;">
-					{% ifequal reply "1" %}
+					{% if reply == "1" %}
 					{% else %}
 					<tr><td>タイトル</td><td><input id="title" style="width:100%;"/></td></tr>
-					{% endifequal %}
+					{% endif %}
 					<tr><td>投稿者名（必須）</td><td><input id="name" style="width:100%;"/></td></tr>
 					<tr><td>ホームページアドレス</td><td><input id="homepage_addr" value="http://" style="width:100%;"/></td></tr>
 					<tr><td>削除キー</td><td><input id="delete_key" style="width:100%;"/></td></tr>

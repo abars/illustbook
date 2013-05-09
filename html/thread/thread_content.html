@@ -3,7 +3,7 @@
 	<div class="entry-title">
 		<h3>{{ thread.title|escape }}</h3>
 		{% if not bbs.disable_applause %}
-			<div class="clap"><a href="javascript:applause('{{host}}','{{bbs.key}}','{{thread.key}}','thread');" rel="nofollow"><img src="{{template_path}}images/i_crap.gif" alt="拍手" width="53" height="20"/></a>{%if thread.applause %}{{thread.applause}}{%else%}0{%endif%}</div>
+			<div class="clap"><a href="javascript:applause('{{host}}','{{bbs.key()}}','{{thread.key()}}','thread');" rel="nofollow"><img src="{{template_path}}images/i_crap.gif" alt="拍手" width="53" height="20"/></a>{%if thread.applause %}{{thread.applause}}{%else%}0{%endif%}</div>
 		{% endif %}
 		<div class="clr"></div>
 	</div>
@@ -15,11 +15,11 @@
 
 	<div class="entry-illust" style="text-align:left;">
 {% if thread.cached_image_key %}
-		{% ifequal thread.illust_mode 2 %}
-			<script type="text/javascript" src="{{host}}moper_player?bbs_key={{bbs_key}}&amp;thread_key={{thread.key}}{% if is_iphone %}&amp;is_iphone=1{% endif %}"></script><br/>
+		{% if thread.illust_mode == 2 %}
+			<script type="text/javascript" src="{{host}}moper_player?bbs_key={{bbs_key}}&amp;thread_key={{thread.key()}}{% if is_iphone %}&amp;is_iphone=1{% endif %}"></script><br/>
 		{%else%}
 			{% include "bbs_thread/image.html" %}
-		{% endifequal %}
+		{% endif %}
 {% endif %}
 	</div>
 
@@ -30,7 +30,7 @@
 	{% if thread.cached_image_key %}
 	{% if not template_path %}
 	{% if not bbs.disable_applause %}
-		<input type="button" value="拍手{%if thread.applause %}{{thread.applause}}{%else%}0{%endif%}" class="g-button" onClick="javascript:applause('{{host}}','{{bbs.key}}','{{thread.key}}','thread');"/>
+		<input type="button" value="拍手{%if thread.applause %}{{thread.applause}}{%else%}0{%endif%}" class="g-button" onClick="javascript:applause('{{host}}','{{bbs.key()}}','{{thread.key()}}','thread');"/>
 	{% endif %}
 	{% endif %}
 	{% endif %}

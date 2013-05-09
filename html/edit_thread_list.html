@@ -47,45 +47,45 @@
 
 		<div class="g-button-group">
 			<a class="g-button dropdown-toggle" data-toggle="dropdown" href="#">
-			{%ifequal order "new"%}
+			{%if order == "new"%}
 			新しい順
 			{%else%}
 			古い順
-			{%endifequal%}
+			{%endif%}
 			<span class="caret"></span>
 			</a>
 			<ul class="dropdown-menu">
-			{%ifequal order "new"%}
-				<li><a href="{{host}}edit_thread_list?bbs_key={{bbs.key}}&order=old">古い順</a></li>
+			{%if order == "new"%}
+				<li><a href="{{host}}edit_thread_list?bbs_key={{bbs.key()}}&order=old">古い順</a></li>
 			{%else%}
-				<li><a href="{{host}}edit_thread_list?bbs_key={{bbs.key}}&order=new">新しい順</a></li>
-			{%endifequal%}
+				<li><a href="{{host}}edit_thread_list?bbs_key={{bbs.key()}}&order=new">新しい順</a></li>
+			{%endif%}
 			</ul>
 		</div>
 
 		<p>&nbsp;</p>
 
 		<form method="post" action="{{host}}edit_thread_list" id="del_thread_list">
-		<input type="hidden" name="bbs_key" value="{{bbs.key}}"/>
+		<input type="hidden" name="bbs_key" value="{{bbs.key()}}"/>
 		<input type="hidden" name="page" value="{{page}}"/>
 		<input type="hidden" name="order" value="{{order}}"/>
 		<table class="g-table">
 			<tr><th>タイトル</th><th>サムネイル</th><th>投稿者</th><th>投稿日</th><th>削除</th></tr>
 		{% for thread in thread_list %}
 		<tr><td>
-			<a href="{{host}}{{bbs.short}}/{{thread.key}}.html" target="_blank">
+			<a href="{{host}}{{bbs.short}}/{{thread.key()}}.html" target="_blank">
 				<p>{{thread.title}}</p>
 			</a>
 		</td><td>
 		{% if thread.image_key %}
-			<a href="{{host}}{{bbs.short}}/{{thread.key}}.html" target="_blank">
+			<a href="{{host}}{{bbs.short}}/{{thread.key()}}.html" target="_blank">
 			<img src="{{host}}thumbnail/{{thread|image_key_with_except}}.jpg" width="40px" height="40px"/>
 			</a>
 		{% endif %}
 		</td>
 		<td>{{thread.author}}</td>
 		<td>{{thread.create_date|time_JST_progress}}</td>
-		<td><input type="checkbox" name="thread_list" value="{{thread.key}}"/></td></tr>
+		<td><input type="checkbox" name="thread_list" value="{{thread.key()}}"/></td></tr>
 		{% endfor %}
 		</table>
 		<br/>
@@ -97,11 +97,11 @@
 		<hr>
 
 		<p>
-		{% ifnotequal page 1 %}
-			<a href="{{host}}edit_thread_list?bbs_key={{bbs.key}}&amp;page={{page|add:-1}}&amp;order={{order}}">前のページ</a>　
-		{% endifnotequal %}
+		{% if page != 1 %}
+			<a href="{{host}}edit_thread_list?bbs_key={{bbs.key()}}&amp;page={{page-1}}&amp;order={{order}}">前のページ</a>　
+		{% endif %}
 			ページ{{page}}　
-			<a href="{{host}}edit_thread_list?bbs_key={{bbs.key}}&amp;page={{page|add:1}}&amp;order={{order}}">次のページ</a>　
+			<a href="{{host}}edit_thread_list?bbs_key={{bbs.key()}}&amp;page={{page+1}}&amp;order={{order}}">次のページ</a>　
 			<a href="{{host}}{{bbs.short}}/">掲示板に戻る</a>
 		</p>
 		<hr>

@@ -16,24 +16,24 @@
 　
 <BR>
 
-{% ifequal page 4 %}
+{% if page == 4 %}
 <A HREF="{{host}}guide"><IMG src="{{host}}static_files/comic/00
 {{page}}.png"></A>
 {% else %}
 <A HREF="{{host}}comic?page={{page|add:"1"}}"><IMG src="{{host}}static_files/comic/00
 {{page}}.png"></A>
-{% endifequal %}
+{% endif %}
 <BR>
 
-{% ifequal page 1 %}
+{% if page == 1 %}
 {% else %}
 <A HREF="{{host}}comic?page={{page|add:"-1"}}">前のページ</A>　
-{% endifequal %}
+{% endif %}
 
-{% ifequal page 4 %}
+{% if page == 4 %}
 {% else %}
 <A HREF="{{host}}comic?page={{page|add:"1"}}">次のページ</A>
-{% endifequal %}
+{% endif %}
 
 <BR>
 <BR>

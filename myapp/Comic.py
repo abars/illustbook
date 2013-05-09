@@ -8,7 +8,8 @@
 
 import os
 
-from google.appengine.ext.webapp import template
+import template_select
+
 from google.appengine.ext import webapp
 from google.appengine.ext import db
 
@@ -25,6 +26,6 @@ class Comic(webapp.RequestHandler):
 		'host': host_url,
 		'page': page
 		}		  
-		path = os.path.join(os.path.dirname(__file__), '../html/comic.html')
-		self.response.out.write(template.render(path, template_values))
+		path = '/html/comic.html'
+		self.response.out.write(template_select.render(path, template_values))
 

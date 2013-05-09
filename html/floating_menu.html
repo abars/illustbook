@@ -2,7 +2,7 @@
 
 	{% if user %}
 	<div style="float:left;padding-left:2px;padding-top:2px;padding-right:2px;font-weight:600;">
-		<a href="{{host}}mypage"><img src="{{host}}show_icon?key={{user.user_id}}&size=mini" width="24px" height="24px" alt="icon"/></a>
+		<a href="{{host}}mypage"><img src="{{host}}show_icon?key={{user.user_id()}}&size=mini" width="24px" height="24px" alt="icon"/></a>
 	</div>
 	{% endif %}
 	
@@ -20,11 +20,11 @@
 				{% if thread.user_id %}
 					<a href="{{host}}mypage?user_id={{thread.user_id}}" class="g-button mini"><i class="icon-user"></i>ドロワー</a>
 				{% endif %}
-				{{thread|add_bookmark_thread:host|safe}}
+				{{thread|add_bookmark_thread(host)|safe}}
 			{% else %}
 				{% if bbs %}
 					<a href="{{host}}mypage?user_id={{bbs.user_id}}" class="g-button mini"><i class="icon-user"></i>オーナー</a>
-					{{bbs|add_bookmark_bbs:host|safe}}
+					{{bbs|add_bookmark_bbs(host)|safe}}
 				{% endif %}
 			{% endif %}
 		{% endif %}

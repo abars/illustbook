@@ -94,13 +94,13 @@
 {% endif %}
 
 {% if url and not rec %}
-	{% ifequal url "update_all" %}
+	{% if url == "update_all" %}
 		<H4>ステータス</H4>
 		定期更新が完了
 	{% else %}
 		<H4>エラー</H4>
 		{{url}}の取得に失敗
-	{% endifequal %}
+	{% endif %}
 {% endif %}
 
 <!----------------------------------------------------------------

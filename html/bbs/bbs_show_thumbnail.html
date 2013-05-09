@@ -2,13 +2,13 @@
 	イラスト
 	<hr/>
 		{% for thread in threads %}
-			<a href='{{usrhost}}{{thread.key}}.html' class='imagelink'>
+			<a href='{{usrhost}}{{thread.key()}}.html' class='imagelink'>
 			{% if thread.image_key %}
-				{%ifequal thread.illust_mode 2%}
-					<img src="{{host}}thumbnail/{{thread.image_key.key}}.gif" alt="{{thread.title}}"/>
+				{%if thread.illust_mode == 2%}
+					<img src="{{host}}thumbnail/{{thread.image_key.key()}}.gif" alt="{{thread.title}}"/>
 				{%else%}
-					<img src="{{host}}thumbnail/{{thread.image_key.key}}.jpg" alt="{{thread.title}}"/>
-				{%endifequal%}
+					<img src="{{host}}thumbnail/{{thread.image_key.key()}}.jpg" alt="{{thread.title}}"/>
+				{%endif%}
 			{% endif%}
 			</a>
 		{% endfor %}
@@ -19,7 +19,7 @@
 リプライ
 <hr/>
 {%for entry in all_entries %}
-	{{entry|reply_with_except:host|safe}}
+	{{entry|reply_with_except(host)|safe}}
 {%endfor%}
 </div>
 {%endif%}

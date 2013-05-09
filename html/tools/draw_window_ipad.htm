@@ -152,9 +152,9 @@
 			</div>
 		</div>
 		<BR clear="all">
-		{% ifequal viewmode "false" %}
+		{% if viewmode == "false" %}
 			<form action="javascript:return false;" onsubmit="javascript:g_chat.comment();return false;" style="margin-left:2px;margin-bottom:2px;"><input id="comment" type="text" style="width:50%;"></input><input type="submit" value="発言"></input></form>
-		{% endifequal %}
+		{% endif %}
 		{% else %}
 		{% endif %}
 	</div>
@@ -218,7 +218,7 @@
 				{% if chat %}
 				<tr><td>投稿先</td><td>
 					{% if bbs_list %}
-					<select id="bbs_list">{% for bbs in bbs_list %}<option value="{{bbs.key}}">{{bbs.bbs_name}}</option>{% endfor %}</select>
+					<select id="bbs_list">{% for bbs in bbs_list %}<option value="{{bbs.key()}}">{{bbs.bbs_name}}</option>{% endfor %}</select>
 					{% else %}
 					投稿先が見つかりません。マイページから掲示板を作成して下さい。
 					{% endif %}
@@ -235,7 +235,7 @@
 
 	<!-- Canvas外でもイベントを取るためにサイズを64拡張する -->
 	<div id="canvas_event" style="width:100%;height:10%;background-color:#d8d8d8;">
-		<div id="canvas_div" style="position:relative;width:{{canvas_width|add:64}}px;height:{{canvas_height|add:64}}px; top: 0; left: 0;">
+		<div id="canvas_div" style="position:relative;width:{{canvas_width+64}}px;height:{{canvas_height+64}}px; top: 0; left: 0;">
 			<canvas id="canvas_background" width="{{canvas_width}}px" height="{{canvas_height}}px" style="position: absolute; top: 32; left: 32;background-color:#ffffff;z-index: 0;"></canvas>
 		</div>
 	</div>

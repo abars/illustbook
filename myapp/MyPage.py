@@ -11,8 +11,9 @@ import os
 import sys
 import re
 import datetime
+import logging
 
-from google.appengine.ext.webapp import template
+import template_select
 from google.appengine.api import users
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
@@ -21,7 +22,7 @@ from google.appengine.api import images
 from google.appengine.api import memcache
 from google.appengine.api.users import User
 
-webapp.template.register_template_library('templatetags.django_filter')
+import template_select
 
 from myapp.Analyze import Analyze
 from myapp.Bbs import Bbs
@@ -56,8 +57,6 @@ from myapp.MoperGuide import MoperGuide
 from myapp.MoperLoad import MoperLoad
 from myapp.MoperPlayer import MoperPlayer
 from myapp.MoperDraw import MoperDraw
-from myapp.LocalToolDraw import LocalToolDraw
-from myapp.LocalTool import LocalTool
 from myapp.Embedded import Embedded
 from myapp.AnalyzeAccess import AnalyzeAccess
 from myapp.CssDesign import CssDesign
@@ -67,8 +66,6 @@ from myapp.EditThread import EditThread
 from myapp.ViolationTerms import ViolationTerms
 from myapp.MappingThreadId import MappingThreadId
 from myapp.DrawWindow import DrawWindow
-from myapp.AddTag import AddTag
-from myapp.SearchTag import SearchTag
 from myapp.Bookmark import Bookmark
 from myapp.AddBookmark import AddBookmark
 from myapp.NicoTracker import NicoTracker
@@ -147,7 +144,7 @@ class MyPage(webapp.RequestHandler):
 
 		#管理人かどうか
 		is_admin=0
-		if(OwnerCheck.is_admin(user) and self.request.get("is_admin")):
+		if(OwnerCheck.is_admin(user)):# and self.request.get("is_admin")):
 			is_admin=1
 
 		#自分だったらビューモードにしない
@@ -176,6 +173,11 @@ class MyPage(webapp.RequestHandler):
 		#プロフィールを編集
 		edit_profile=Pinterest.get_profile_for_edit(bookmark,view_mode)
 		
+		#アカウントの凍結
+		if(self.request.get("freez") and is_admin):
+			bookmark.frozen=int(self.request.get("freez"))
+			bookmark.put()
+		
 		#退会
 		if(self.request.get("withdraw") and self.request.get("withdraw")=="go"):
 			if(not bookmark):
@@ -193,77 +195,3 @@ class MyPage(webapp.RequestHandler):
 				else:
 					return Pinterest.get_core(self,Pinterest.PAGE_MODE_MYPAGE)
 		
-		#タブ
-		#tab=self.request.get("tab")
-		#new_feed_count=0
-		#if(not tab):
-		#	tab="illust"
-		#	new_feed_count=Pinterest.consume_feed(user,view_mode,bookmark)
-		#	if(new_feed_count):
-		#		tab="feed"
-
-		#ページ
-		#feed_page=1
-		#if(self.request.get("feed_page")):
-		#	feed_page=int(self.request.get("feed_page"))
-		
-		#feed_page_n=1
-		#feed_page_unit=10
-		#if(bookmark and bookmark.stack_feed_list):
-		#	feed_page_n=(len(bookmark.stack_feed_list)+(feed_page_unit-1))/feed_page_unit
-		
-		#iPhoneモードかどうか
-		#is_iphone=CssDesign.is_iphone(self)
-		
-		#フォロー中かどうか
-		#following=False
-		#if(bookmark):
-		#	following=Pinterest.is_following(user,bookmark.user_id,view_mode)
-
-		#年齢
-		#age=Pinterest.get_age(bookmark)
-
-		#フィードURL
-		#feed_previous_page=host+"mypage?"
-		#if(view_mode and bookmark):
-		#	feed_previous_page+="user_id="+bookmark.user_id+"&"
-		#feed_previous_page+="tab=feed&feed_page="
-		#feed_next_page=feed_previous_page+str(feed_page+1)
-		#feed_previous_page=feed_previous_page+str(feed_page-1)
-		#if(feed_page==feed_page_n):
-		#	feed_next_page=""
-		
-		#ランキング
-		#user_rank=0
-		#if(bookmark):
-		#	rank=Ranking.get_or_insert(BbsConst.THREAD_RANKING_KEY_NAME)
-		#	user_rank=rank.get_user_rank(bookmark.user_id)
-		
-		#template_values = {
-		#	'host': host,
-		#	'user':user,
-		#	'regist_finish':regist_finish,
-		#	'bookmark': bookmark,
-		#	'edit_profile': edit_profile,
-		#	'view_mode': view_mode,
-		#	'edit_mode': edit_mode,
-		#	'is_iphone': is_iphone,
-		#	'tab': tab,
-		#	'age': age,
-		#	'feed_page': feed_page,
-		#	'feed_previous_page': feed_previous_page,
-		#	'feed_next_page': feed_next_page,
-		#	'feed_page_n': feed_page_n,
-		#	'login_flag': login_flag,
-		#	'is_admin': is_admin,
-		#	'redirect_url': self.request.path,
-		#	'mypage': not view_mode,
-		#	'following': following,
-		#	'user_rank': user_rank,
-		#	'new_feed_count': new_feed_count
-		#}
-		
-		#path = os.path.join(os.path.dirname(__file__), '../html/mypage.html')
-		#self.response.out.write(template.render(path, template_values))
-		
-

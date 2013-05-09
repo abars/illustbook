@@ -12,7 +12,7 @@ import sys
 import re
 import datetime
 
-from google.appengine.ext.webapp import template
+import template_select
 from google.appengine.api import users
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
@@ -21,9 +21,7 @@ from google.appengine.api import images
 from google.appengine.api import memcache
 from google.appengine.api.users import User
 
-from django.utils import simplejson
-
-webapp.template.register_template_library('templatetags.django_filter')
+import template_select
 
 from myapp.SetUtf8 import SetUtf8
 from myapp.Alert import Alert
@@ -59,6 +57,6 @@ class ApiJs(webapp.RequestHandler):
 		}
 
 		self.response.content_type = 'text/javascript'
-		path = os.path.join(os.path.dirname(__file__), "../api/illustbook.js")
-		self.response.out.write(template.render(path, template_values))
+		path = "/html/api/illustbook.js"
+		self.response.out.write(template_select.render(path, template_values))
 

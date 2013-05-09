@@ -10,15 +10,15 @@
 {% if is_code %}
 	{% include "app/app_code.html" %}
 {% else %}
-	{% ifequal app.mode 0 %}
+	{% if app.mode == 0 %}
 		{% include "app/app_app.html" %}
-	{% endifequal %}
-	{% ifequal app.mode 1 %}
+	{% endif %}
+	{% if app.mode == 1 %}
 		{% include "app/app_plugin.html" %}
-	{% endifequal %}
-	{% ifequal app.mode 2 %}
+	{% endif %}
+	{% if app.mode == 2 %}
 		{% include "app/app_css.html" %}
-	{% endifequal %}
+	{% endif %}
 {% endif %}
 
 <p class="bar">メニュー</p>
@@ -26,13 +26,13 @@
 <div class="app_text">
 	<p><a href="app">アプリ一覧へ戻る</a></p>
 	{% if app.support_forum %}
-	<p><a href="app_support/{{app.support_forum.key}}.html">コメントを書く{% if app.support_forum.comment_cnt %}({{app.support_forum.comment_cnt}}comment){% endif %}</a></p>
+	<p><a href="app_support/{{app.support_forum.key()}}.html">コメントを書く{% if app.support_forum.comment_cnt %}({{app.support_forum.comment_cnt}}comment){% endif %}</a></p>
 	{% endif %}
-	<p><a href="add_bookmark?mode=add_app&app_key={{app.key}}">ブックマーク {% if app.bookmark_count %}(<a href="show_bookmark?app_key={{app.key}}"><small>{{app.bookmark_count}}{% ifequal app.bookmark_count 1 %}user{%else%}users{% endifequal %}</small></a>){% endif %}</a></p>
+	<p><a href="add_bookmark?mode=add_app&app_key={{app.key()}}">ブックマーク {% if app.bookmark_count %}(<a href="show_bookmark?app_key={{app.key()}}"><small>{{app.bookmark_count}}{% if app.bookmark_count == 1 %}user{%else%}users{% endif %}</small></a>){% endif %}</a></p>
 	{% if is_code %}
-		<p><a href="app?mode=play&app_key={{app.key}}">アプリへ戻る</a></p>
+		<p><a href="app?mode=play&app_key={{app.key()}}">アプリへ戻る</a></p>
 	{% else %}
-		<p><a href="app?mode=code&app_key={{app.key}}">コードを見る</a></p>
+		<p><a href="app?mode=code&app_key={{app.key()}}">コードを見る</a></p>
 	{% endif %}
 </div>
 

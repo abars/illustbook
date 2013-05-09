@@ -4,20 +4,20 @@
 <div id="side">
 
 {% for one in sidebar_list %}
-	{% ifequal forloop.counter 1 %}
+	{% if loop.index == 1 %}
 		<div id="free">
 	{% else %}
-		<div id="{% ifequal one 'thread' %}comment{%else%}{{one}}{% endifequal %}">
-	{% endifequal %}
+		<div id="{% if one == 'thread' %}comment{%else%}{{one}}{% endif %}">
+	{% endif %}
 
-	{%ifequal one "free" %}
+	{%if one == "free" %}
 		<h4>
 		{% if bbs.freearea_title %}{{bbs.freearea_title}}{% else %}フリーエリア{% endif %}
 		</h4>
 		<p>{{bbs.freearea|safe}}</p>
-	{%endifequal%}
+	{%endif%}
 
-	{%ifequal one "category" %}
+	{%if one == "category" %}
 		<h4>
 		カテゴリ
 		</h4>
@@ -26,36 +26,36 @@
 		<a href="{{page_url_category_base}}" class="decnone">全て</a><br/>
 		{% endif%}
 		{% for category in category_list %}
-			{% ifequal category.category "" %}
+			{% if category.category == "" %}
 			{% else %}
 			<a href="{{page_url_category_base}}{{category.category|iriencode}}" class="decnone">{{category.category}}({{category.count}})</a><br/>
-			{% endifequal %}
+			{% endif %}
 		{% endfor %}
 		</p>
-	{%endifequal%}
+	{%endif%}
 
-	{%ifequal one "affiliate" %}
+	{%if one == "affiliate" %}
 		<h4>
 		{%if bbs.amazon_title %}{{bbs.amazon_title}}{%else%}管理人のオススメ{%endif%}
 		</h4>
 		<p>{{bbs.amazon|safe}}</p>
-	{%endifequal%}
+	{%endif%}
 
-	{%ifequal one "thread" %}
+	{%if one == "thread" %}
 		<h4>
-		新着{% ifequal bbs.bbs_mode 3 %}スレッド{%else%}イラスト{%endifequal%}
+		新着{% if bbs.bbs_mode == 3 %}スレッド{%else%}イラスト{%endif%}
 		</h4>
 		<p>{% include 'bbs/bbs_recent_thread.html' %}</p>
-	{%endifequal%}
+	{%endif%}
 
-	{%ifequal one "comment" %}
+	{%if one == "comment" %}
 		<h4>
 		新着コメント
 		</h4>
 		<p>{% include 'bbs/bbs_recent_comment.html' %}</p>
-	{%endifequal%}
+	{%endif%}
 
-	{%ifequal one "counter" %}
+	{%if one == "counter" %}
 		<h4>
 		カウンター
 		</h4>
@@ -65,9 +65,9 @@
 		一昨日：{{bbs.counter.yesterday_yesterday_cnt}}<br/>
 		合計：{{bbs.counter.total_cnt}}<br/>
 		</p>
-	{%endifequal%}
+	{%endif%}
 	
-	{%ifequal one "menu" %}
+	{%if one == "menu" %}
 		{% if not bbs.disable_analyze and owner or bbs.my_homepage%}
 		<h4>
 		メニュー
@@ -77,13 +77,13 @@
 			<a href="{{bbs.my_homepage}}" class="decnone">ホームページ</a><br/>
 		{% endif %}
 		{% if not bbs.disable_analyze and owner %}
-			<a href="{{host}}analyze?bbs_key={{bbs.key}}" class="decnone">アクセス解析</a><br/>
+			<a href="{{host}}analyze?bbs_key={{bbs.key()}}" class="decnone">アクセス解析</a><br/>
 		{% endif %}
 		</p>
 		{% endif %}
-	{%endifequal%}
+	{%endif%}
 
-	{%ifequal one "twitter" %}
+	{%if one == "twitter" %}
 		<h4>
 		Twitter
 		</h4>
@@ -102,11 +102,11 @@ new TWTR.Widget({
 			background: {% if template_path %} 'none' {% else %}'#{{bbs.twitter_shell_color}}' {% endif %},
 			color: 
 			{% if template_path %}
-				{% ifequal bbs.design_template_no 4 %}
+				{% if bbs.design_template_no == 4 %}
 					'#536566'
 				{%else%}
 					'#ffffff'
-				{%endifequal%}
+				{%endif%}
 			{% else %}
 				'#{{bbs.twitter_font_color}}'
 			{% endif %}
@@ -129,7 +129,7 @@ new TWTR.Widget({
 }).render().setUser('{{bbs.twitter_id}}').start();
 			</script>
 		</div>
-	{%endifequal%}
+	{%endif%}
 
 	</div>
 {% endfor %}

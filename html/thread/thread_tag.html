@@ -11,19 +11,19 @@
 		{% endfor %}
 		</div>
 	
-		<div id="tag_form_button_{{ thread.key }}" style="float:right;">
-			<a href="javascript:show_tag_form('{{thread.key}}');" class="g-button" style="color:#444;"><i class="icon-pencil"></i>タグを編集</a>
+		<div id="tag_form_button_{{ thread.key() }}" style="float:right;">
+			<a href="javascript:show_tag_form('{{thread.key()}}');" class="g-button" style="color:#444;"><i class="icon-pencil"></i>タグを編集</a>
 		</div>
 		<div class="clr"></div>
 	</div>
 
-		<div id="tag_form_{{ thread.key }}" style="display:none;">
+		<div id="tag_form_{{ thread.key() }}" style="display:none;">
 			<p>&nbsp;</p>
 			追加もしくは削除するタグの名前を入力してボタンを押して下さい。<br/>
 			<input type="text" id="tag" maxlength="10"/><br/>
 			<div class="g-button-group">
-				<a href="javascript:AddTag('{{host}}','{{ bbs_key }}','{{ thread.key}}');" class="g-button" style="color:#444;"><i class="icon-tag"></i>タグの追加</a>
-				<a href="javascript:DelTag('{{host}}','{{ bbs_key }}','{{ thread.key}}');" class="g-button" style="color:#444;"><i class="icon-remove"></i>タグの削除</a>
+				<a href="javascript:AddTag('{{host}}','{{ bbs_key }}','{{ thread.key()}}');" class="g-button" style="color:#444;"><i class="icon-tag"></i>タグの追加</a>
+				<a href="javascript:DelTag('{{host}}','{{ bbs_key }}','{{ thread.key()}}');" class="g-button" style="color:#444;"><i class="icon-remove"></i>タグの削除</a>
 			</div>
 		</div>
 		

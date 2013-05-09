@@ -70,13 +70,15 @@
 <H1>新着イラスト一覧</H1>
 <blockquote>
 {% for thread in threads %}
-<a href='{% if thread.bbs_key.short %}./{{thread.bbs_key.short}}/{%else%}./usr/{{thread.bbs_key.key}}/{%endif%}{{thread.key}}.html' class="imagelink">
+{% if thread and thread.bbs_key %}
+<a href='{% if thread.bbs_key.short %}./{{thread.bbs_key.short}}/{%else%}./usr/{{thread.bbs_key.key()}}/{%endif%}{{thread.key()}}.html' class="imagelink">
 {% if thread.violate_terms %}
 非表示中
 {% else %}
-<IMG SRC="{{host}}thumbnail/{{thread.image_key.key}}.jpg" BORDER=0 ALT="{{thread.title}}">
+<IMG SRC="{{host}}thumbnail/{{thread.image_key.key()}}.jpg" BORDER=0 ALT="{{thread.title}}">
 {% endif %}
 </A>
+{% endif %}
 {% endfor %}
 </blockquote>
 
@@ -84,11 +86,11 @@
 
 <div style="clear:left;">
 {%for p in page_list%}
-{%ifequal p page%}
+{%if p==page%}
 <input type="button" value="{{p}}" onmouseover="this.className='pagebutton_active'" onmouseout="this.className='pagebutton_active'" class="pagebutton_active"/ >
 {%else%}
 <input type="button" value="{{p}}" onmouseover="this.className='pagebutton_active'" onmouseout="this.className='pagebutton'" class="pagebutton" onclick="window.location.href='{{page_url_base}}{{p}}'"/ >
-{%endifequal %}
+{%endif %}
 {%endfor%}
 </div>
 
@@ -100,9 +102,9 @@
 <blockquote>
 {% for entry in entries %}
 	{% if entry.violate_terms %}
-	<A HREF="{{host}}{{entry.thread_key.bbs_key.short}}/{{entry.thread_key.key}}.html">非表示中</A>
+	<A HREF="{{host}}{{entry.thread_key.bbs_key.short}}/{{entry.thread_key.key()}}.html">非表示中</A>
 	{% else %}
-	{{entry|reply_with_except:host|safe}}
+	{{entry|reply_with_except(host)|safe}}
 	{% endif %}
 {% endfor %}
 </blockquote>
@@ -117,7 +119,9 @@
 <H1>新着モッパー一覧</H1>
 <blockquote>
 {% for thread in moper_threads %}
-<a href='{% if thread.bbs_key.short %}./{{thread.bbs_key.short}}/{%else%}./usr/{{thread.bbs_key.key}}/{%endif%}{{thread.key}}.html' class="imagelink"><IMG SRC="{{host}}thumbnail/{{thread.image_key.key}}.gif" BORDER=0 ALT="{{thread.title}}"></A>
+{% if thread and thread.bbs_key %}
+<a href='{% if thread.bbs_key.short %}./{{thread.bbs_key.short}}/{%else%}./usr/{{thread.bbs_key.key()}}/{%endif%}{{thread.key()}}.html' class="imagelink"><IMG SRC="{{host}}thumbnail/{{thread.image_key.key()}}.gif" BORDER=0 ALT="{{thread.title}}"></A>
+{% endif %}
 {% endfor %}
 </blockquote>
 <p>&nbsp</p>
@@ -143,7 +147,7 @@
 </p>
 <HR>
 {% endfor%}
-<p><A HREF="./admin?comment_page={{comment_page|add:-1}}">前のページ　ページ{{comment_page}}　<A HREF="./admin?comment_page={{comment_page|add:1}}">次のページ</A>
+<p><A HREF="./admin?comment_page={{comment_page-1}}">前のページ　ページ{{comment_page}}　<A HREF="./admin?comment_page={{comment_page+1}}">次のページ</A>
 <p>&nbsp</p>
 </div>
 

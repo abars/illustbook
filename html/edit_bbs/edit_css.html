@@ -23,14 +23,14 @@
 					<TR><TH><p>{{app2.app_name}}({{app2.app_id}})</p></TH>
 					<TD>
 					<div class="g-button-group">
-					<a class="g-button" href="dev?page=edit&app_key={{app2.key}}&bbs_key={{bbs.key}}" target="_BLANK">CSS編集</a>
-					<a class="g-button" href="dev?page=info&app_key={{app2.key}}&bbs_key={{bbs.key}}" target="_BLANK">設定</a>
-					<a class="g-button" href="javascript:confirm_delete('dev?page=delete&app_key={{app2.key}}&redirect=edit_bbs?bbs_key={{bbs.key}}&tab=css_design');">削除</a>
+					<a class="g-button" href="dev?page=edit&app_key={{app2.key()}}&bbs_key={{bbs.key()}}" target="_BLANK">CSS編集</a>
+					<a class="g-button" href="dev?page=info&app_key={{app2.key()}}&bbs_key={{bbs.key()}}" target="_BLANK">設定</a>
+					<a class="g-button" href="javascript:confirm_delete('dev?page=delete&app_key={{app2.key()}}&redirect=edit_bbs?bbs_key={{bbs.key()}}&tab=css_design');">削除</a>
 					</div>
 					</TD>
 					<TD>
 					<div class="g-button-group">
-					<a href="app?mode=play&app_key={{app2.key}}" target="_BLANK" class="g-button">プレビュー</a>
+					<a href="app?mode=play&app_key={{app2.key()}}" target="_BLANK" class="g-button">プレビュー</a>
 					<a class="g-button" href="javascript:setCss('{{app2.app_id}}');">掲示板に適用</a>
 					</div>
 					</TD>
@@ -48,7 +48,7 @@
 				<form action="dev" method="POST">
 				<input name="mode" type="hidden" value="2"/>
 				<input type="hidden" name="page" value="submit"/>
-				<input type="hidden" name="redirect" value="edit_bbs?bbs_key={{bbs.key}}&tab=css_design"/>
+				<input type="hidden" name="redirect" value="edit_bbs?bbs_key={{bbs.key()}}&tab=css_design"/>
 
 				<TABLE class="g-table">
 				<TR><TH>CSSデザインの名称</TH><TD><input name="app_name" style="width:200px;"></TD></TR>

@@ -9,7 +9,8 @@
 import os
 import re
 
-from google.appengine.ext.webapp import template
+import template_select
+
 from google.appengine.ext import webapp
 from google.appengine.ext import db
 
@@ -18,7 +19,7 @@ from myapp.Bbs import Bbs
 from myapp.MappingId import MappingId
 from myapp.SetUtf8 import SetUtf8
 
-webapp.template.register_template_library('templatetags.django_filter')
+import template_select
 
 class CssDesign (webapp.RequestHandler):
 	@staticmethod
@@ -160,8 +161,8 @@ class CssDesign (webapp.RequestHandler):
 			'is_iphone':is_iphone
 		}
 
-		path = os.path.join(os.path.dirname(__file__), '../template_custom/style_main.htm')
-		res=template.render(path, template_values)
+		path = '/html/template_custom/style_main.htm'
+		res=template_select.render(path, template_values)
 		
 		self.response.headers['Content-Type']= 'text/css'
 		self.response.out.write(res)

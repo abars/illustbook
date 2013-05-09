@@ -23,10 +23,10 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 	</center>
 {% endif %}
 
-{% ifequal app.mode 0 %}
+{% if app.mode == 0 %}
 	<p>&nbsp</p>
 	{% include "app/app_ranking.html" %}
-{% endifequal %}
+{% endif %}
 </div>
 
 

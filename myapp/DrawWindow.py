@@ -8,7 +8,8 @@
 
 import os
 
-from google.appengine.ext.webapp import template
+import template_select
+
 from google.appengine.ext import webapp
 from google.appengine.ext import db
 from google.appengine.api import users
@@ -108,9 +109,9 @@ class DrawWindow(webapp.RequestHandler):
 		}
 		
 		if(ipad or iphone):
-			path = os.path.join(os.path.dirname(__file__), '../html/tools/draw_window_ipad.htm')
+			path = '/html/tools/draw_window_ipad.htm'
 		else:
-			path = os.path.join(os.path.dirname(__file__), '../html/draw_window_flash_lapper.html')
+			path = '/html/draw_window_flash_lapper.html'
 		
-		self.response.out.write(template.render(path, template_values))
+		self.response.out.write(template_select.render(path, template_values))
 

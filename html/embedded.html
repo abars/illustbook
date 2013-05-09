@@ -18,17 +18,17 @@
 
 <div class="entry">
 <H1>埋め込みタグ</H1>
-<textarea rows=8 cols=60>{% ifequal thread.illust_mode 2 %}{{moper}}{% else %}<A HREF='{{link}}'><IMG SRC='{{img}}' BORDER=0></A>{% endifequal %}</textarea>
+<textarea rows=8 cols=60>{% if thread.illust_mode == 2 %}{{moper}}{% else %}<A HREF='{{link}}'><IMG SRC='{{img}}' BORDER=0></A>{% endif %}</textarea>
 <p>&nbsp</p>
 </div>
 
 <div class="entry">
 <H1>タグの使用例</H1>
-{% ifequal thread.illust_mode 2 %}
+{% if thread.illust_mode == 2 %}
 {{moper|safe}}
 {% else %}
 <A HREF='{{link}}'><IMG SRC='{{img}}' BORDER=0></A>
-{% endifequal %}
+{% endif %}
 <p>&nbsp</p>
 </div>
 

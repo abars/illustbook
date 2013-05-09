@@ -16,13 +16,13 @@ import logging
 
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
-from google.appengine.ext.webapp import template
+import template_select
 from google.appengine.api import users
 from google.appengine.ext import db
 from google.appengine.api import urlfetch
 from google.appengine.api import memcache
 
-webapp.template.register_template_library('templatetags.django_filter')
+import template_select
 
 from myapp.SetUtf8 import SetUtf8
 from myapp.NicoTrackerRec import NicoTrackerRec
@@ -296,8 +296,8 @@ class NicoTracker(webapp.RequestHandler):
 			'book_cnt': book_cnt
 			}
 		
-		path = os.path.join(os.path.dirname(__file__), '../html/nico_tracker/nico_tracker.html')
-		render=template.render(path, template_values)
+		path = '/html/nico_tracker/nico_tracker.html'
+		render=template_select.render(path, template_values)
 		self.response.out.write(render)		
 
 

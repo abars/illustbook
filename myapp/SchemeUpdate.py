@@ -14,7 +14,7 @@ import sys
 import re
 import datetime
 
-from google.appengine.ext.webapp import template
+import template_select
 from google.appengine.api import users
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
@@ -22,7 +22,7 @@ from google.appengine.ext import db
 from google.appengine.api import images
 from google.appengine.api import memcache
 
-webapp.template.register_template_library('templatetags.django_filter')
+import template_select
 
 from myapp.MesThread import MesThread
 from myapp.ThreadImage import ThreadImage

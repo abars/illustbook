@@ -9,19 +9,19 @@
 {% if is_iphone %}
 	</p>
 	</center>
-	{% ifequal mode "index"%}
+	{% if mode== "index"%}
 	<div style="text-align:right;">
 		<p>イラスト：<A HREF="http://pochigoya0423.blog.shinobi.jp/"><FONT COLOR=#000000>飯田のぎ</FONT></A></p>
 	</div>
-	{% endifequal %}
+	{% endif %}
 {% else %}
-	{% ifequal mode "chat"%}
+	{% if mode== "chat"%}
 	　イラスト：<a href="http://www.geocities.jp/tarowy85/makol.html">まことじ</a>
-	{% endifequal %}
-	{% ifequal mode "index"%}
+	{% endif %}
+	{% if mode== "index"%}
 	　イラスト：<a href="http://himao.ame-zaiku.com/">ひまお</a>
-	{% endifequal %}
-	{% ifequal mode "community"%}
+	{% endif %}
+	{% if mode== "community"%}
 	　イラスト：<a href="http://himao.ame-zaiku.com/">ひまお</a>
-	{% endifequal %}
+	{% endif %}
 {% endif %}

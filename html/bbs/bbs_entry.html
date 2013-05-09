@@ -1,23 +1,23 @@
 <!--イラスト一つ-->
-{% ifequal bbs.bbs_mode 3 %}
+{% if bbs.bbs_mode == 3 %}
 	<div class="entry" style="padding:8px;">
 {% else %}
 	<div class="entry">
-{% endifequal %}
+{% endif %}
 
 {% if thread.illust_mode and not bbs.disable_content_image %}
 	<!--イラスト掲示板-->
 	<div class="entry-title">
 		<!-- タイトル -->
-		<h3><a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{%endif%}.html'>{{ thread.title|escape }}</a></h3>
+		<h3><a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key()}}{%endif%}.html'>{{ thread.title|escape }}</a></h3>
 
 		<!-- 拍手 -->
 		{% if not bbs.disable_applause %}
 			<div class="clap" align="right">
 			{% if template_path%}
-				<a href="javascript:applause('{{host}}','{{bbs.key}}','{{thread.key}}','bbs','{{order}}','{{page}}');" rel="nofollow"><img src="{{template_path}}images/i_crap.gif" alt="拍手" width="53" height="20"/></a>{%if thread.applause %}{{thread.applause}}{%else%}0{%endif%}
+				<a href="javascript:applause('{{host}}','{{bbs.key()}}','{{thread.key()}}','bbs','{{order}}','{{page}}');" rel="nofollow"><img src="{{template_path}}images/i_crap.gif" alt="拍手" width="53" height="20"/></a>{%if thread.applause %}{{thread.applause}}{%else%}0{%endif%}
 			{% else %}
-				<input type="button" value="拍手{%if thread.applause %}{{thread.applause}}{%else%}0{%endif%}"  class="g-button" onClick="javascript:applause('{{host}}','{{bbs.key}}','{{thread.key}}','bbs','{{order}}','{{page}}');"/>
+				<input type="button" value="拍手{%if thread.applause %}{{thread.applause}}{%else%}0{%endif%}"  class="g-button" onClick="javascript:applause('{{host}}','{{bbs.key()}}','{{thread.key()}}','bbs','{{order}}','{{page}}');"/>
 			{% endif %}
 			</div>
 		{% endif %}
@@ -27,11 +27,11 @@
 	<!--画像が存在する場合-->
 	{% if thread.cached_image_key %}
 	<div class="entry-illust">
-		<a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{%endif%}.html' class="imagelink">
+		<a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key()}}{%endif%}.html' class="imagelink">
 		{% include "bbs_thread/image.html" %}
-		{% ifequal thread.illust_mode 2 %}
+		{% if thread.illust_mode == 2 %}
 		<br/>[クリックで再生]
-		{%endifequal%}
+		{%endif%}
 		</a>
 	</div>
 	{% else %}
@@ -57,7 +57,7 @@
 	<div class="entry-comment" style="word-break:break-all;">
 	<p>{{thread.summary|auto_link|safe}}</p>
 	{% if thread.postscript %}
-	　<p><a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{%endif%}.html' class="g-button" style="color:#444;">続きを読む</a></p>
+	　<p><a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key()}}{%endif%}.html' class="g-button" style="color:#444;">続きを読む</a></p>
 	{% endif %}
 	</div>
 	
@@ -65,10 +65,10 @@
 		<div class="g-button-group toggle-buttons">
 		{%if not bbs.disable_comment %}
 			{%if thread.comment_cnt %}
-				<a href="{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{%endif%}.html" class="g-button no-text comment_tab_{{thread.key}} comment_tab_{{thread.key}}_text">コメントを読む({{thread.comment_cnt}})</a>
+				<a href="{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key()}}{%endif%}.html" class="g-button no-text comment_tab_{{thread.key()}} comment_tab_{{thread.key()}}_text">コメントを読む({{thread.comment_cnt}})</a>
 			{% endif %}
 			{% if show_comment_form %}
-				<a href="{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key}}{%endif%}.html" class="g-button no-text comment_tab_{{thread.key}} comment_tab_{{thread.key}}_text">コメントを書く</a>
+				<a href="{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key()}}{%endif%}.html" class="g-button no-text comment_tab_{{thread.key()}} comment_tab_{{thread.key()}}_text">コメントを書く</a>
 			{%endif%}
 		{%endif%}
 		</div>
@@ -78,7 +78,7 @@
 {%endif%}
 
 {% if bbs.enable_full_comment %}
-{% ifnotequal bbs.bbs_mode 3 %}
+{% if bbs.bbs_mode != 3 %}
 {% if not bbs.disable_comment %}
 	<!--コメント統合表示-->
 	{% if not thread.cached_render_comment %}
@@ -92,7 +92,7 @@
 	<!--コメントを書き込む-->
 	{% include "thread/thread_comment_form.html" %}
 {% endif %}
-{% endifnotequal %}
+{% endif %}
 {% endif %}
 
 </div>

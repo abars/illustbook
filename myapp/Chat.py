@@ -17,8 +17,9 @@ import logging
 import base64
 import urllib
 
+import template_select
+
 from google.appengine.api import channel
-from google.appengine.ext.webapp import template
 from google.appengine.api import users
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
@@ -314,8 +315,8 @@ class Chat(webapp.RequestHandler):
 			'is_admin':is_admin,
 			'user_name': user_name
 		}
-		path = os.path.join(os.path.dirname(__file__), '../html/portal.html')
-		self.response.out.write(template.render(path, template_values))
+		path = '/html/portal.html'
+		self.response.out.write(template_select.render(path, template_values))
 	
 	#経過時間取得
 	@staticmethod
@@ -481,8 +482,8 @@ class Chat(webapp.RequestHandler):
 		'client_id':client_id
 		}
 		
-		path = os.path.join(os.path.dirname(__file__), '../html/tools/draw_window_ipad.htm')
-		self.response.out.write(template.render(path, template_values))
+		path = '/html/tools/draw_window_ipad.htm'
+		self.response.out.write(template_select.render(path, template_values))
 	
 	#インタフェース
 	def post(self):

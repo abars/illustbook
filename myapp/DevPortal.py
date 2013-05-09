@@ -12,7 +12,8 @@ import sys
 import re
 import datetime
 
-from google.appengine.ext.webapp import template
+import template_select
+
 from google.appengine.api import users
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
@@ -21,7 +22,7 @@ from google.appengine.api import images
 from google.appengine.api import memcache
 from google.appengine.api.users import User
 
-webapp.template.register_template_library('templatetags.django_filter')
+import template_select
 
 from myapp.SetUtf8 import SetUtf8
 from myapp.Alert import Alert
@@ -38,8 +39,8 @@ class DevPortal(webapp.RequestHandler):
 		template_values = {
 			'bbs': bbs
 		}
-		path = os.path.join(os.path.dirname(__file__), '../template_custom/style_user.htm')
-		return template.render(path, template_values)
+		path = '/html/template_custom/style_user.htm'
+		return template_select.render(path, template_values)
 
 	@staticmethod
 	def check_id_available(main,app_id):
@@ -316,12 +317,12 @@ class DevPortal(webapp.RequestHandler):
 			'redirect_url': req.request.path
 		}
 		
-		url='../html/dev.html'
+		url='/html/dev.html'
 		if(page=="edit"):
-			url='../html/dev/dev_edit.html'
+			url='/html/dev/dev_edit.html'
 		if(page=="info"):
-			url='../html/dev/dev_info.html'
+			url='/html/dev/dev_info.html'
 		
-		path = os.path.join(os.path.dirname(__file__), url)
-		req.response.out.write(template.render(path, template_values))
+		path = url
+		req.response.out.write(template_select.render(path, template_values))
 			

@@ -68,18 +68,18 @@
 	{% for room in room_list %}
 		<div style="float:left;">
 			<div style="background-color:#aaaaaa;padding:1px;margin-right:4px;">
-		<a href="javascript:join_chat('{{room.key}}',false,{% if room.password %}true{%else%}false{%endif%});" class="declink">
+		<a href="javascript:join_chat('{{room.key()}}',false,{% if room.password %}true{%else%}false{%endif%});" class="declink">
 				{% if room.password %}
 					<div style="width:100px;height:100px;background-color:#ffffff;color:#333333;"></div>
 				{% else %}
-					<img src="./chat?mode=thumbnail&key={{room.key}}" width="100px" height="100px"/>
+					<img src="./chat?mode=thumbnail&key={{room.key()}}" width="100px" height="100px"/>
 				{% endif %}
 				</a>
 			</div>
 		</div><div>
 		<p><h2>{{room.name}}{% if room.is_always %}（常時稼動ルーム）{% endif %}
 		{% if room.password %}
-			（パスワードが必要）{% if user %}{% ifequal user.user_id room.user_id %}（{{room.password}}）{% endifequal %}{% endif %}　
+			（パスワードが必要）{% if user %}{% if user.user_id == room.user_id %}（{{room.password}}）{% endif %}{% endif %}　
 		{% else %}
 			（誰でも参加可能）
 		{% endif %}
@@ -89,9 +89,9 @@
 		</p>
 		<div class="actions g-button-container">
 		<div class="g-button-group">
-		<A HREF="javascript:join_chat('{{room.key}}',false,{% if room.password %}true{%else%}false{%endif%});" class="g-button green">{% if not is_iphone %}{% endif %}参加（{{room.user_count}}人）</A>
-		{% if user %}{% ifequal user.user_id room.user_id %}<A HREF="javascript:delete_room('./chat?mode=delete&key={{room.key}}');" class="g-button green">{% if not is_iphone %}{% endif %}削除</A>{% endifequal %}{% endif %}
-		<!--<A HREF="javascript:join_chat('{{room.key}}',true,{% if room.password %}true{%else%}false{%endif%});" class="g-button 
+		<A HREF="javascript:join_chat('{{room.key()}}',false,{% if room.password %}true{%else%}false{%endif%});" class="g-button green">{% if not is_iphone %}{% endif %}参加（{{room.user_count}}人）</A>
+		{% if user %}{% if user.user_id() == room.user_id %}<A HREF="javascript:delete_room('./chat?mode=delete&key={{room.key()}}');" class="g-button green">{% if not is_iphone %}{% endif %}削除</A>{% endif %}{% endif %}
+		<!--<A HREF="javascript:join_chat('{{room.key()}}',true,{% if room.password %}true{%else%}false{%endif%});" class="g-button 
 		green">{% if not is_iphone %}{% endif %}閲覧</A>-->
 		</div>
 		</div>

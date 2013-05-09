@@ -2,7 +2,7 @@
 #!/usr/bin/env python
 
 #---------------------------------------------------
-#ƒXƒŒƒbƒh‚É‚»‚ê‚Á‚Û‚¢–¼‘O‚ğ•t‚¯‚éA20121001.html‚İ‚½‚¢‚È
+#ã‚¹ãƒ¬ãƒƒãƒ‰ã«ãã‚Œã£ã½ã„åå‰ã‚’ä»˜ã‘ã‚‹ã€20121001.htmlã¿ãŸã„ãª
 #copyright 2010-2012 ABARS all rights reserved.
 #---------------------------------------------------
 
@@ -32,36 +32,37 @@ class MappingThreadId():
 
 	@staticmethod
 	def mapping(bbs,thread_key):
-		#’¼’l
+		#ç›´å€¤
 		if(len(thread_key)>20):
-			return ApiObject.get_cached_object(thread_key)#db.get(thread_key)
+			return ApiObject.get_cached_object(thread_key)
 		
-		#ƒLƒƒƒbƒVƒ…ƒqƒbƒg”»’è
+		#ã‚­ãƒ£ãƒƒã‚·ãƒ¥ãƒ’ãƒƒãƒˆåˆ¤å®š
 		bbs_key=str(bbs.key())
 		mapped_key=memcache.get(BbsConst.OBJECT_THREAD_ID_MAPPING_HEADER+"_"+bbs_key+"_"+thread_key)
 		if mapped_key is not None:
 			return ApiObject.get_cached_object(mapped_key)
 		
-		#’Tõ
-		query=MesThread.all()
+		#æ¢ç´¢
+		query=db.Query(MesThread,keys_only=True)
 		query.filter("bbs_key =",bbs)
 		query.filter("short =",thread_key)
 		thread=None
 		try:
 			thread=query[0]
+			thread=ApiObject.get_cached_object(thread)
 		except:
 			thread=None
-		
-		#ƒLƒƒƒbƒVƒ…‚É“o˜^
+
+		#ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã«ç™»éŒ²
 		if thread and thread.short:
 			new_key=str(thread.key())
 			memcache.set(BbsConst.OBJECT_THREAD_ID_MAPPING_HEADER+"_"+bbs_key+"_"+thread.short,new_key,BbsConst.OBJECT_MAPPING_CACHE_TIME)
 		
-		#image_key‚ğæ“¾‚µ‚Ä‚¨‚­
+		#image_keyã‚’å–å¾—ã—ã¦ãŠã
 		if thread and thread.image_key:
 			thread.cached_image_key=str(thread.image_key.key())
 
-		#ƒXƒŒƒbƒh‚ğ•Ô‚·
+		#ã‚¹ãƒ¬ãƒƒãƒ‰ã‚’è¿”ã™
 		return thread
 	
 	@staticmethod
@@ -76,25 +77,25 @@ class MappingThreadId():
 	
 	@staticmethod
 	def assign(bbs,thread,exec_put):
-		#Šù‚É’ZkURL‚ªŠ„‚è“–‚Ä‚ç‚ê‚Ä‚¢‚ê‚Î‚»‚Ì‚Ü‚Ü
+		#æ—¢ã«çŸ­ç¸®URLãŒå‰²ã‚Šå½“ã¦ã‚‰ã‚Œã¦ã„ã‚Œã°ãã®ã¾ã¾
 		if(thread.short):
 			return
 		
-		#ƒ†ƒj[ƒNID‚ğƒ‹[ƒv‚µ‚È‚ª‚ç’Tõ
+		#ãƒ¦ãƒ‹ãƒ¼ã‚¯IDã‚’ãƒ«ãƒ¼ãƒ—ã—ãªãŒã‚‰æ¢ç´¢
 		for id_value in range(1,9999):
-			#URL‚ğŠm’è‚·‚é
+			#URLã‚’ç¢ºå®šã™ã‚‹
 			new_url=MappingThreadId.make_url(id_value,thread.create_date)
 			
-			#”r‘¼§Œä‚İ‚ÅŠù‚ÉŠY“–URL‚ªì¬‚³‚ê‚Ä‚¢‚È‚¢‚©Šm”F‚·‚é
+			#æ’ä»–åˆ¶å¾¡è¾¼ã¿ã§æ—¢ã«è©²å½“URLãŒä½œæˆã•ã‚Œã¦ã„ãªã„ã‹ç¢ºèªã™ã‚‹
 			new_salt = str(time.time())+str(random.random())
 			new_key_name="thread_short_"+str(bbs.key())+"_"+new_url
 			unique_check=MappingThreadIdUniqueCheck.get_or_insert(key_name=new_key_name,salt=new_salt,bbs=bbs,thread=thread)
 			
-			#Šù‚É•Ê‚Ìƒ†[ƒU‚ªì¬‚µ‚½
+			#æ—¢ã«åˆ¥ã®ãƒ¦ãƒ¼ã‚¶ãŒä½œæˆã—ãŸ
 			if(unique_check.salt != new_salt):
 				continue
 
-			#ì‚ê‚½‚Ì‚ÅXV
+			#ä½œã‚ŒãŸã®ã§æ›´æ–°
 			thread.short=new_url
 			if(exec_put):
 				thread.put()

@@ -10,11 +10,10 @@ import datetime
 import sys
 import traceback
 import re
+import urllib
 
 from google.appengine.api import users
 from google.appengine.ext import db
-from google.appengine.ext import webapp
-register = webapp.template.create_template_register()
 
 from myapp.UTC import UTC
 from myapp.JST import JST
@@ -22,6 +21,13 @@ from myapp.Bookmark import Bookmark
 from myapp.ApiObject import ApiObject
 from myapp.BbsConst import BbsConst
 from myapp.TimeProgress import TimeProgress
+
+#-----------------------------------------------------------------
+#Escape
+#-----------------------------------------------------------------
+
+def iriencode(value):
+	return urllib.quote(value.encode("utf-8"))
 
 #-----------------------------------------------------------------
 # 時間取得
@@ -352,36 +358,3 @@ def thumbnail2_height(thread,is_iphone):
 		return thread["height"]*width/thread["width"]
 	except:
 		return width
-
-#-----------------------------------------------------------------
-#フィルタ登録
-#-----------------------------------------------------------------
-
-register.filter(time_JST)
-register.filter(time_JST_format)
-register.filter(time_JST_short)
-register.filter(time_JST_progress)
-register.filter(comment_with_except)
-register.filter(comment_with_except_no_hour)
-register.filter(reply_with_except)
-register.filter(image_key_with_except)
-register.filter(div)
-register.filter(admin_comment_with_except)
-register.filter(show_bookmark)
-register.filter(show_bookmark_bbs)
-register.filter(add_bookmark_bbs)
-register.filter(add_bookmark_thread)
-register.filter(show_app)
-register.filter(show_app_iphone)
-register.filter(show_app_mypage)
-register.filter(author_name_thread)
-register.filter(author_name_comment)
-register.filter(user_id_to_user_name)
-register.filter(separate_nico)
-register.filter(login_url)
-register.filter(logout_url)
-register.filter(new_feed_count)
-register.filter(set_seed)
-register.filter(auto_link)
-register.filter(thumbnail2_width)
-register.filter(thumbnail2_height)

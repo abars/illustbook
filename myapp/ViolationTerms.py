@@ -8,7 +8,7 @@
 
 import os
 
-from google.appengine.ext.webapp import template
+import template_select
 from google.appengine.ext import webapp
 from google.appengine.api import memcache
 from google.appengine.api import users

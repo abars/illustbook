@@ -177,9 +177,9 @@ function feed_parse(feed){
 			txt+='<a href="mypage?user_id='+feed.from_user.user_id+'&tab=feed" class="g-button mini">返信</a><BR>';
 		}
 	}
-	if(feed.from_user.user_id!=feed_state.user_id){
+	//if(feed.from_user.user_id!=feed_state.user_id){
 		//txt+='<a href="#" onclick="feed_retweet(\''+feed.key+'\',\''+feed_state.feed_page+'\');return false;" class="g-button mini">リツイート</a><BR>';
-	}
+	//}
 	txt+="</div>"
 	txt+="</div>"
 	txt+="<BR CLEAR='all'>"

@@ -16,7 +16,8 @@ import logging
 import urllib
 import math
 
-from google.appengine.ext.webapp import template
+import template_select
+
 from google.appengine.api import users
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
@@ -24,7 +25,7 @@ from google.appengine.ext import db
 from google.appengine.api import images
 from google.appengine.api import memcache
 
-from django.utils.html import strip_spaces_between_tags
+#from django.utils.html import strip_spaces_between_tags
 
 from myapp.Bbs import Bbs
 from myapp.Counter import Counter
@@ -443,6 +444,10 @@ class Pinterest(webapp.RequestHandler):
 			if(bookmark.homepage or bookmark.mail or bookmark.twitter_id):
 				detail_exist=True
 
+		#凍結
+		if(bookmark and bookmark.frozen):
+			thread_list=None
+
 		template_values = {
 			'user': user,
 			'thread_list': thread_list,
@@ -478,7 +483,8 @@ class Pinterest(webapp.RequestHandler):
 			'contents_only': contents_only,
 			'search': None,
 			'top_page': False,
-			'detail_exist': detail_exist
+			'detail_exist': detail_exist,
+			'is_admin': OwnerCheck.is_admin(user)
 		}
 		Pinterest._render_page(self,template_values)
 
@@ -493,9 +499,8 @@ class Pinterest(webapp.RequestHandler):
 			template_values['login_flag']=1
 		else:
 			template_values['login_flag']=0
-		path = os.path.join(os.path.dirname(__file__), '../html/pinterest.html')
-		render=template.render(path, template_values)
-		render=strip_spaces_between_tags(render)
+		render=template_select.render("/html/pinterest.html", template_values)
+		#render=strip_spaces_between_tags(render)
 		self.response.out.write(render)
 
 

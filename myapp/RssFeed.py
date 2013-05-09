@@ -10,7 +10,8 @@ from google.appengine.ext import webapp
 from google.appengine.ext import db
 from google.appengine.api import memcache
 
-from django.utils import feedgenerator
+#from django.utils import feedgenerator
+from google.appengine._internal.django.utils import feedgenerator
 
 from myapp.SetUtf8 import SetUtf8
 from myapp.MappingId import MappingId

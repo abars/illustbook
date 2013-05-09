@@ -7,7 +7,7 @@
 			<p>です。下記にIDを入力して、保存ボタンを押すことでURLを変更可能です。</p>
 			{% else %}
 			 <blockquote>
-			<A HREF="{{host}}usr/{{bbs.key}}/" TARGET=_BLANK><p>http://www.illustbook.net/usr/{{bbs.key}}/</p></A>
+			<A HREF="{{host}}usr/{{bbs.key()}}/" TARGET=_BLANK><p>http://www.illustbook.net/usr/{{bbs.key()}}/</p></A>
 			 </blockquote>
 			<p>です。この形式のURLは内部の仕様変更によって変化してしまう可能性があります。下記にIDを入力することでURLを固定化することを推奨させて頂いています。</p>
 			 {% endif %}

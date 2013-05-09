@@ -10,7 +10,8 @@ import re
 import os
 import datetime
 
-from google.appengine.ext.webapp import template
+import template_select
+
 from google.appengine.ext import webapp
 from google.appengine.api import memcache
 from google.appengine.api import users
@@ -26,8 +27,6 @@ from myapp.JST import JST
 from myapp.PageGenerate import PageGenerate
 from myapp.SiteAnalyzer import SiteAnalyzer
 from myapp.OwnerCheck import OwnerCheck
-
-webapp.template.register_template_library('templatetags.django_filter')
 
 class Admin(webapp.RequestHandler):
 	#remove
@@ -191,7 +190,7 @@ class Admin(webapp.RequestHandler):
 			'comment_page':comment_page,
 			'only_comment': only_comment
 			}
-		path = os.path.join(os.path.dirname(__file__), '../html/admin.html')
-		render=template.render(path, template_values)
+		path = '/html/admin.html'
+		render=template_select.render(path, template_values)
 		self.response.out.write(render)		
 

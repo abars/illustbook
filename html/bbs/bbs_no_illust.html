@@ -1,5 +1,5 @@
 	{% if not threads %}
-		{% ifequal bbs.bbs_mode 3 %}
+		{% if bbs.bbs_mode == 3 %}
 			<div class="entry">
 			スレッドはまだありません。
 			</div>
@@ -7,5 +7,5 @@
 			<div class="entry">
 			イラストはまだありません。
 			</div>
-		{% endifequal %}
+		{% endif %}
 	{% endif %}

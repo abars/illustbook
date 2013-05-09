@@ -10,7 +10,7 @@ from google.appengine.ext import webapp
 
 import os
 
-from google.appengine.ext.webapp import template
+import template_select
 from google.appengine.ext import webapp
 from google.appengine.ext import db
 

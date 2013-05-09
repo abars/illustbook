@@ -6,37 +6,37 @@
 			<TR><TH>掲示板の概要</TH><TD><textarea name="bbs_summary"	rows="8" style="width:95%;">{{bbs.summary}}</textarea></TD></TR>
 			<TR><TH>掲示板のモード</TH><TD>
 			<select name="mode">
-				{% ifequal bbs.bbs_mode 1 %}
+				{% if bbs.bbs_mode == 1 %}
 						<option value="1" selected="selected">お絵描き掲示板（誰でも投稿可能）</option>
 				{% else%}
 						<option value="1">お絵描き掲示板（誰でも投稿可能）</option>
-				{% endifequal %}
+				{% endif %}
 				
-				{% ifequal bbs.bbs_mode 2 %}
+				{% if bbs.bbs_mode == 2 %}
 						<option value="2" selected="selected">お絵かきブログ（管理人だけ投稿可能）</option>
 				{% else%}
 						<option value="2">お絵かきブログ（管理人だけ投稿可能）</option>
-				{% endifequal %}
+				{% endif %}
 				
-				{% ifequal bbs.bbs_mode 3 %}
+				{% if bbs.bbs_mode == 3 %}
 						<option value="3" selected="selected">スレッド式掲示板（イラストなし）</option>
 				{% else%}
 						<option value="3">スレッド式掲示板（イラストなし）</option>
-				{% endifequal %}
+				{% endif %}
 			</select></TD></TR>
 
 			<TR><TH>新規スレッドの作成（スレッド式掲示板の場合）</TH><TD>
 			<select name="disable_create_new_thread">	
-			{%ifequal bbs.disable_create_new_thread 1 %}
+			{%if bbs.disable_create_new_thread == 1 %}
 			<option value="1" selected="selected">管理人のみ作成可能</option>
 			{%else%}
 			<option value="1">管理人のみ作成可能</option>
-			{%endifequal%}
-			{%ifequal bbs.disable_create_new_thread 2 %}
+			{%endif%}
+			{%if bbs.disable_create_new_thread == 2 %}
 			<option value="2" selected="selected">ログインしていれば誰でも作成可能</option>
 			{%else%}
 			<option value="2">ログインしていれば誰でも作成可能</option>
-			{%endifequal%}
+			{%endif%}
 			{%if not bbs.disable_create_new_thread %}
 			<option value="0" selected="selected">誰でも作成可能</option>
 			{%else%}
@@ -47,32 +47,32 @@
 			
 			<TR><TH>イラストをポータルの新着とランキングに表示</TH><TD>
 			<select name="disable_news">
-				{% ifequal bbs.disable_news 1 %}
+				{% if bbs.disable_news == 1 %}
 						<option value="1" selected="selected">表示しない</option><option value="0">表示する</option>
 				{% else%}
 						<option value="1">表示しない</option><option value="0" selected="selected">表示する</option>
-				{% endifequal %}
+				{% endif %}
 			</select></TD></TR>
 <!--
 			<TR><TH>イラストブックアプリからのイラストの参照</TH><TD>
 			<select name="dont_permit_app">
-				{% ifequal bbs.dont_permit_app 1 %}
+				{% if bbs.dont_permit_app == 1 %}
 						<option value="1" selected="selected">許可しない</option><option value="0">許可する</option>
 				{% else%}
 						<option value="1">許可しない</option><option value="0" selected="selected">許可する</option>
-				{% endifequal %}
+				{% endif %}
 			</select></TD></TR>
 -->
 			<TR><TH>デザインテンプレート</TH><TD>
 				<select name="design_template_no" id="design_template_no" onchange="javascript:design_template_change(''+this.value);">
 					<option value="0" {% if not bbs.design_template_no %} selected="selected" {% endif%}>フォームデザイン</option>
-					<option value="32767" {% ifequal bbs.design_template_no 32767 %} selected="selected" {% endifequal%}>CSSデザイン</option>
-					<option value="1" {% ifequal bbs.design_template_no 1 %} selected="selected" {% endifequal%}>ブルー</option>
-					<option value="2" {% ifequal bbs.design_template_no 2 %} selected="selected" {% endifequal%}>グリーン</option>
-					<option value="3" {% ifequal bbs.design_template_no 3 %} selected="selected" {% endifequal%}>ピンク</option>
-					<option value="4" {% ifequal bbs.design_template_no 4 %} selected="selected" {% endifequal%}>ホワイト</option>
+					<option value="32767" {% if bbs.design_template_no == 32767 %} selected="selected" {% endif%}>CSSデザイン</option>
+					<option value="1" {% if bbs.design_template_no == 1 %} selected="selected" {% endif%}>ブルー</option>
+					<option value="2" {% if bbs.design_template_no == 2 %} selected="selected" {% endif%}>グリーン</option>
+					<option value="3" {% if bbs.design_template_no == 3 %} selected="selected" {% endif%}>ピンク</option>
+					<option value="4" {% if bbs.design_template_no == 4 %} selected="selected" {% endif%}>ホワイト</option>
 				</select>
-				<input type="button" value="プレビュー" class="g-button" onclick="window.open('{{host}}usr/{{bbs.key}}/?css='+document.getElementById('design_template_no').value);">
+				<input type="button" value="プレビュー" class="g-button" onclick="window.open('{{host}}usr/{{bbs.key()}}/?css='+document.getElementById('design_template_no').value);">
 			</TD></TR>
 			
 			<TR><TH>CSSデザインID</TH><TD>

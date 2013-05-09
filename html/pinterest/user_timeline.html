@@ -1,10 +1,10 @@
 <!-- 掲示板 -->
-{% ifequal tab "bbs" %}
+{% if tab == "bbs" %}
   {% include "pinterest/bbs.html" %}
-{% endifequal %}
+{% endif %}
 
 <!-- タイムライン -->
-{% ifequal page_mode "user" %}
+{% if page_mode == "user" %}
 {% if is_timeline_enable %}
   {% include "mypage/feed.html" %}
   <script type="text/javascript" src="api_js"></script>
@@ -14,5 +14,5 @@
     feed_initialize();
   </script>
 {% endif %}
-{% endifequal %}
+{% endif %}
 

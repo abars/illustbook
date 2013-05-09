@@ -73,11 +73,11 @@ body {
 <!-- エディタ                                                                              -->
 <!------------------------------------------------------>
 
-{% ifequal app.mode 2 %}
+{% if app.mode == 2 %}
 	<pre id="editor">{{css_code|safe}}</pre>
 {% else %}
 	<pre id="editor">{{app_code|safe}}</pre>
-{% endifequal %}
+{% endif %}
 
 <script src="js/ace/ace.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/ace/theme-textmate.js" type="text/javascript" charset="utf-8"></script>
@@ -88,13 +88,13 @@ body {
 	window.onload = function() {
 	editor = ace.edit("editor");
 	editor.setTheme("ace/theme/textmate");
-	{% ifequal app.mode 2 %}
+	{% if app.mode == 2 %}
 		var CssMode = require("ace/mode/css").Mode;
 		editor.getSession().setMode(new CssMode());
 	{% else %}
 		var JavaScriptMode = require("ace/mode/javascript").Mode;
 		editor.getSession().setMode(new JavaScriptMode());
-	{% endifequal %}
+	{% endif %}
 };
 </script>
 
@@ -142,7 +142,7 @@ body {
 		var obj=new Object();
 		obj.code=code;
 		obj.page="update"
-		obj.app_key="{{app.key}}"
+		obj.app_key="{{app.key()}}"
 		var url="dev"
 		write_status("保存しています。");
 		illustbook.request.post(url,obj,save_callback);
@@ -199,14 +199,14 @@ body {
 	
 	function exec_run(){
 		show_run_window(true);
-		url="app?mode=run&app_key={{app.key}}&{{app.plugin_args|safe}}";
-		{% ifequal app.mode 2%}
+		url="app?mode=run&app_key={{app.key()}}&{{app.plugin_args|safe}}";
+		{% if app.mode == 2%}
 			{% if bbs_key %}
-				url="./{{bbs_key}}/?css_key={{app.key}}";
+				url="./{{bbs_key}}/?css_key={{app.key()}}";
 			{% else %}
-				url="./sample/?css_key={{app.key}}";
+				url="./sample/?css_key={{app.key()}}";
 			{% endif %}
-		{% endifequal %}
+		{% endif %}
 		document.getElementById("run_window").src=url;
 	}
 --></script>
@@ -240,10 +240,10 @@ window.onbeforeunload = function (evt) {
 	<div style="float:left;">
 	<input type="button" value="保存" onclick="javascript:save(editor.getSession().getValue(),true);">
 	<input type="button" value="保存して実行" onclick="script:save(editor.getSession().getValue(),false);">
-	{% ifequal app.mode 2 %}
+	{% if app.mode == 2 %}
 	{% else %}
 		<input type="button" value="lintチェック" onclick="script:lint_check(editor.getSession().getValue());">
-	{% endifequal %}
+	{% endif %}
 	{% if bbs_key %}
 	<input type="button" value="CSSリファレンス" onclick="javascript:window.open('dev?page=css',null);">
 	<input type="button" value="掲示板の編集へ戻る" onclick="javascript:window.location.href='edit_bbs?bbs_key={{bbs_key}}';">

@@ -95,7 +95,7 @@
 <div class="app_text">
 {% if new_app_list %}
 	{% for app in new_app_list %}
-		<p><a href="app?mode=play&app_id={{app.app_id}}">{{app.public_date|time_JST_format:2}} {{app.app_name}}</a></p>
+		<p><a href="app?mode=play&app_id={{app.app_id}}">{{app.public_date|time_JST_format(2)}} {{app.app_name}}</a></p>
 	{% endfor %}
 {% else %}
 	<p>新着コンテンツはまだありません。</p>
