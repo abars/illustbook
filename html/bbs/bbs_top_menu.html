@@ -1,6 +1,12 @@
-{% if not is_iphone or template_path %}
-
 <div id="contents-header">
+
+{% if is_iphone %}
+	<div id="contents-header-edit" style="float:right;" align="right">
+		{%if not bbs.tweet_disable %}
+		　{% include "bbs_thread/tweet.html" %}
+		{%endif%}
+	</div>
+{% endif %}
 
 {% if not is_iphone %}
 	{% if bbs.bbs_mode and can_create_new_image %}
@@ -58,16 +64,6 @@
 		<div style="width:340px;float:left">　</div>
 	{% endif%}
 {% endif %}
-
-	{% if is_iphone %}
-		{%if template_path %}
-			<div id="contents-header-size">
-				{% include 'adsense/adsense_wide.html' %}
-			</div>
-		{% endif %}
-	{% endif %}
-
 	<div class="clr"></div>
 </div>
 
-{% endif %}

@@ -39,7 +39,7 @@
 		{% endif %}
 	{% endif %}
 	{% if owner %}
-		<a class="g-button no-text" href="{{host}}edit_bbs?bbs_key={{bbs.key()}}">デザインの編集</a>
+		<a class="g-button no-text" href="{{host}}edit_bbs?bbs_key={{bbs.key()}}" style="color:#444;">デザインの編集</a>
 	{% endif %}
 	</div>
 	<div style="display:none;margin:5px;float:right;" id="ipad_canvas_size">
@@ -48,6 +48,8 @@
 		<a class="g-button no-text" href="javascript:bbs_open_draw('','{{bbs.key()}}','{{host}}');" style="color:#444;">イラブペイントを開く</a>
 	</div>
 {% endif %}
+
+
 
 <!-- ページ番号 -->
 {% include "bbs/bbs_page_no.html" %}

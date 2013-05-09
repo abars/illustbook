@@ -34,3 +34,9 @@ function confirm_follow(user_key,name){
 		location.href="add_bookmark?mode=add_user&user_key="+user_key
 	}
 }
+
+function confirm_unfollow(user_key,name){
+	if(confirm(""+name+"のフォローを解除しますか？")){
+		location.href="add_bookmark?mode=del_user&user_key="+user_key
+	}
+}

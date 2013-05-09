@@ -39,9 +39,11 @@
 				<div style="float:left;"><!-- id="page-head">-->
 					{% include "bbs/bbs_order.html" %}
 				</div>
+				{% if not is_iphone %}
 				<div id="rss" style="margin-top:3px;">
 					{% include "bbs/bbs_rss.html" %}
 				</div>
+				{% endif %}
 				<div class="clr"></div>
 			</div>
 
@@ -71,14 +73,11 @@
 				{% for thread in threads %}
 					{% if loop.index == 2 %}
 						<!--広告を一つ目の記事の後に入れる-->
-						{% if bbs.bbs_mode == 3 %}
-						{% else %}
-							{% if not is_iphone or not template_path%}
-								{% if not bbs.disable_content_image %}
-									<div class="entry" {% if is_iphone %}style="padding-left:0px;padding-right:0px;"{% endif %}>
+						{% if bbs.bbs_mode != 3 %}
+							{% if not bbs.disable_content_image %}
+								<div class="entry mobile_ad">
 									{% include 'adsense/adsense_wide.html' %}
-									</div>
-								{% endif %}
+								</div>
 							{% endif %}
 						{% endif %}
 					{%endif%}
