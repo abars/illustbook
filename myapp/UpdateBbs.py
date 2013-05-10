@@ -37,6 +37,11 @@ from myapp.AppPortal import AppPortal
 from myapp.ApiFeed import ApiFeed
 
 class UpdateBbs(webapp.RequestHandler):
+	def format_color(self,value):
+		if(value=="None"):
+			return "None"
+		return value.replace("#","")
+
 	def post(self):
 		bbs_key=self.request.get("bbs_key")
 		short=self.request.get('short')
@@ -52,17 +57,18 @@ class UpdateBbs(webapp.RequestHandler):
 			Alert.alert_msg_with_write(self,"デザインの編集を行う権限がありません。")
 			return
 		summary = self.request.get('bbs_summary')
-		bg_color=self.request.get('bg_color')
-		font_color=self.request.get('font_color')
-		content_bg_color=self.request.get('content_bg_color')
-		content_font_color=self.request.get('content_font_color')
-		menu_bg_color=self.request.get('menu_bg_color')
-		menu_font_color=self.request.get('menu_font_color')
-		side_color=self.request.get('side_color')
-		side_font_color=self.request.get('side_font_color')
-		twitter_bg_color=self.request.get('twitter_bg_color')
-		twitter_font_color=self.request.get('twitter_font_color')
-		twitter_shell_color=self.request.get('twitter_shell_color')
+
+		bg_color=self.format_color(self.request.get('bg_color'))
+		font_color=self.format_color(self.request.get('font_color'))
+		content_bg_color=self.format_color(self.request.get('content_bg_color'))
+		content_font_color=self.format_color(self.request.get('content_font_color'))
+		menu_bg_color=self.format_color(self.request.get('menu_bg_color'))
+		menu_font_color=self.format_color(self.request.get('menu_font_color'))
+		side_color=self.format_color(self.request.get('side_color'))
+		side_font_color=self.format_color(self.request.get('side_font_color'))
+		twitter_bg_color=self.format_color(self.request.get('twitter_bg_color'))
+		twitter_font_color=self.format_color(self.request.get('twitter_font_color'))
+		twitter_shell_color=self.format_color(self.request.get('twitter_shell_color'))
 
 		if(menu_bg_color=="None"):
 			menu_bg_color="ffffff";		

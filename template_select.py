@@ -11,7 +11,10 @@ import logging
 import jinja2
 
 import custom_filter
+
 from myapp.SetUtf8 import SetUtf8
+
+#from google.appengine._internal.django.utils.html import strip_tags
 
 def set_jinja_filter(jinja_environment):
 	jinja_environment.filters.update({
@@ -52,9 +55,10 @@ set_jinja_filter(jinja_environment)
 def render(template_path, template_dict, debug=False):
 	SetUtf8.set()
 	path_list=template_path.split("/")
-	#set_jinja_filter(jinja_environment)
 	new_path=""
 	for i in range(2,len(path_list)):
 		new_path+="/"+path_list[i]
 	jinja_template = jinja_environment.get_template(new_path)
+	
 	return jinja_template.render(template_dict)
+	#return strip_tags(jinja_template.render(template_dict))	#gzipがかかるからいらないかも？

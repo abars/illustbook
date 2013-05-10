@@ -17,11 +17,18 @@
 {% endif %}
 <script language="javascript" src="api_js" type="text/javascript"></script>
 <script language="javascript" src="js/mypage.js" type="text/javascript"></script>
+<script language="javascript" src="js/excolor/jquery.modcoder.excolor.js" type="text/javascript"></script>
 {% if not is_iphone %}
 	{% include "portal_css/option_2col.html" %}
 {% endif %}
 {% include "portal_css/option_tab.html" %}
 {% include "floating_menu_css.html" %}
+<script type="text/javascript">
+	$('document').ready(function() {
+		// running ExColor
+		$('.color_select').modcoder_excolor();
+	});
+</script>
 </head>
 <body onload="init_tab();">
 
