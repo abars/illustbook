@@ -39,7 +39,7 @@ class DevPortal(webapp.RequestHandler):
 		template_values = {
 			'bbs': bbs
 		}
-		path = '/html/template_custom/style_user.htm'
+		path = '/tempform/style_user.htm'
 		return template_select.render(path, template_values)
 
 	@staticmethod

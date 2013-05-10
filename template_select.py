@@ -49,8 +49,10 @@ def set_jinja_filter(jinja_environment):
 			'iriencode': custom_filter.iriencode
 	})
 
-jinja_environment = jinja2.Environment(loader=jinja2.FileSystemLoader("html/"))
-set_jinja_filter(jinja_environment)
+jinja_environment_html = jinja2.Environment(loader=jinja2.FileSystemLoader("html/"))
+jinja_environment_temp = jinja2.Environment(loader=jinja2.FileSystemLoader("tempform/"))
+
+set_jinja_filter(jinja_environment_html)
 
 def render(template_path, template_dict, debug=False):
 	SetUtf8.set()
@@ -58,7 +60,10 @@ def render(template_path, template_dict, debug=False):
 	new_path=""
 	for i in range(2,len(path_list)):
 		new_path+="/"+path_list[i]
-	jinja_template = jinja_environment.get_template(new_path)
-	
+
+	if(path_list[1]=="tempform"):
+		jinja_template = jinja_environment_temp.get_template(new_path)	
+	else:
+		jinja_template = jinja_environment_html.get_template(new_path)	
 	return jinja_template.render(template_dict)
 	#return strip_tags(jinja_template.render(template_dict))	#gzipがかかるからいらないかも？

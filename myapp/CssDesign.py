@@ -161,7 +161,7 @@ class CssDesign (webapp.RequestHandler):
 			'is_iphone':is_iphone
 		}
 
-		path = '/html/template_custom/style_main.htm'
+		path = '/tempform/style_main.htm'
 		res=template_select.render(path, template_values)
 		
 		self.response.headers['Content-Type']= 'text/css'

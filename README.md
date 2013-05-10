@@ -35,3 +35,5 @@ js　クライアントサイドのJavaScript(staticdir)
 static_files　各種静的ファイル(staticdir)
 
 template　掲示板の標準デザインテンプレート(staticdir)
+
+tempform 掲示板のフォームデザインテンプレート
