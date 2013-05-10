@@ -10,7 +10,11 @@
 			{% if bbs.tweet_disable %}
 				{{bbs.bbs_name|truncate(16,true)}}
 			{% else %}
-				{{bbs.bbs_name|truncate(7,true)}}
+				{% if template_path %}
+					{{bbs.bbs_name|truncate(10,true)}}
+				{% else %}
+					{{bbs.bbs_name|truncate(7,true)}}
+				{% endif %}
 			{% endif %}
 		{% else %}
 			{{bbs.bbs_name}}

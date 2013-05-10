@@ -413,12 +413,10 @@ class Pinterest(webapp.RequestHandler):
 			#イラストが消去されている場合を考慮してスレッドが見つかるまでページを進める
 			max_page=(submit_illust_count+BbsConst.PINTEREST_MYPAGE_PAGE_UNIT-1)/BbsConst.PINTEREST_MYPAGE_PAGE_UNIT
 			thread_list=[]
-			while(page<max_page):
+			while(page<=max_page):
 				limit=BbsConst.PINTEREST_MYPAGE_PAGE_UNIT
 				offset=limit*(page-1)
 				thread_list=ApiUser.user_get_thread_list_core(self,user_id,offset,limit)
-				#if(page==1):	#debug
-				#	thread_list=[]
 				if(len(thread_list)>=1):
 					break
 				page=page+1
