@@ -1,14 +1,18 @@
-<div id="contents-header">
-
 {% if is_iphone %}
+{%if not bbs.tweet_disable or template_path%}
+<div id="contents-header">
+	{%if not bbs.tweet_disable %}
 	<div id="contents-header-edit" style="float:right;" align="right">
-		{%if not bbs.tweet_disable %}
 		　{% include "bbs_thread/tweet.html" %}
-		{%endif%}
 	</div>
+	{%endif%}
+	<div class="clr"></div>
+</div>
+{%endif%}
 {% endif %}
 
 {% if not is_iphone %}
+<div id="contents-header">
 	{% if bbs.bbs_mode and can_create_new_image %}
 		<div id="contents-header-size">
 		{% if template_path %}
@@ -63,7 +67,7 @@
 	{%else%}
 		<div style="width:340px;float:left">　</div>
 	{% endif%}
-{% endif %}
 	<div class="clr"></div>
 </div>
+{% endif %}
 
