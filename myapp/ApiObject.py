@@ -249,7 +249,7 @@ class ApiObject(webapp.RequestHandler):
 	@staticmethod
 	def is_frozen_thread(thread):
 		if(thread and thread.user_id):
-			logging.error(str(thread.user_id))
+			#logging.error(str(thread.user_id))
 			bookmark=ApiObject.get_bookmark_of_user_id(thread.user_id)
 			if(bookmark):
 				if(bookmark.frozen):

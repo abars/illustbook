@@ -109,14 +109,10 @@ class ApiUser(webapp.RequestHandler):
 		query=db.Query(MesThread)
 		query=query.filter("illust_mode IN",[BbsConst.ILLUSTMODE_ILLUST,BbsConst.ILLUSTMODE_MOPER])
 		query=query.filter("user_id =",user_id)
-		return query.count(limit=1)
+		return query.count(limit=1000)
 
 	@staticmethod
 	def user_get_thread_list(req,user_id):
-		query=db.Query(MesThread)	#keys onlyはINが使えない
-		query=query.filter("illust_mode IN",[BbsConst.ILLUSTMODE_ILLUST,BbsConst.ILLUSTMODE_MOPER])
-		query=query.filter("user_id =",user_id).order("-create_date")
-
 		offset=0
 		if(req.request.get("offset")):
 			try:
@@ -135,6 +131,14 @@ class ApiUser(webapp.RequestHandler):
 		if(req.request.get("page")):
 			page=int(req.request.get("page"))
 			offset=limit*(page-1)
+
+		return ApiUser.user_get_thread_list_core(req,user_id,offset,limit)
+
+	@staticmethod
+	def user_get_thread_list_core(req,user_id,offset,limit):
+		query=db.Query(MesThread)	#keys onlyはINが使えない
+		query=query.filter("illust_mode IN",[BbsConst.ILLUSTMODE_ILLUST,BbsConst.ILLUSTMODE_MOPER])
+		query=query.filter("user_id =",user_id).order("-create_date")
 
 		thread_key_list=[]
 		thread_list=query.fetch(limit=limit,offset=offset)

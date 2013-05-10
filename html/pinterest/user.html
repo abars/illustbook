@@ -57,7 +57,7 @@
       {% if detail_exist %}
         <a id="profile_button" href="javascript:show_profile();" class="g-button">詳細</a>
       {% endif %}
-      {% if not view_mode %}
+      {% if not view_mode or is_admin %}
          <A HREF="{{host}}{{redirect_api}}?tab={{tab}}&edit=2" class="g-button">編集</A>
 
     <a class="g-button dropdown-toggle" data-toggle="dropdown" href="#">
