@@ -198,7 +198,6 @@ body {
 	}
 	
 	function exec_run(){
-		show_run_window(true);
 		url="app?mode=run&app_key={{app.key()}}&{{app.plugin_args|safe}}";
 		{% if app.mode == 2%}
 			{% if bbs_key %}
@@ -207,7 +206,13 @@ body {
 				url="./sample/?css_key={{app.key()}}";
 			{% endif %}
 		{% endif %}
-		document.getElementById("run_window").src=url;
+
+		//ウィンドウ内プレビュー
+		//show_run_window(true);
+		//document.getElementById("run_window").src=url;
+
+		//新規ウィンドウプレビュー
+		window.open(url,null);
 	}
 --></script>
 

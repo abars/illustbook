@@ -26,7 +26,7 @@
 					<td><p>{{app2.app_id}}</p></td>
 					<TD>
 					<div class="g-button-group">
-					<a class="g-button" href="dev?page=edit&app_key={{app2.key()}}&bbs_key={{bbs.key()}}" target="_BLANK">編集</a>
+					<a class="g-button" href="dev?page=edit&app_key={{app2.key()}}&bbs_key={{bbs.key()}}" target="_blank">編集</a>
 					<a class="g-button" href="javascript:confirm_delete('dev?page=delete&app_key={{app2.key()}}&redirect=edit_bbs?bbs_key={{bbs.key()}}&tab=css_design');">削除</a>
 					</div>
 					</TD>
@@ -47,8 +47,8 @@
 				<input type="hidden" name="redirect" value="edit_bbs?bbs_key={{bbs.key()}}&tab=css_design"/>
 
 				<TABLE class="g-table">
-				<TR><td>デザインの名称</td><TD><input name="app_name" style="width:200px;"></TD></TR>
-				<TR><td>デザインID(半角英数)(数値以外)</td><TD><input name="app_id" style="width:200px;"></TD></TR>
+				<TR><th>デザインの名称</th><TD><input name="app_name" style="width:200px;"></TD></TR>
+				<TR><th>デザインID(半角英数)(数値以外)</th><TD><input name="app_id" style="width:200px;"></TD></TR>
 				</TABLE>
 				<br/>
 				<input type="submit" value="作成" class="g-button">

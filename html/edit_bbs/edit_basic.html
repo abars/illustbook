@@ -21,42 +21,17 @@
 			<TR><TH>掲示板の概要</TH><TD><textarea name="bbs_summary"	rows="8" style="width:95%;">{{bbs.summary}}</textarea></TD></TR>
 			<TR><TH>掲示板のモード</TH><TD>
 			<select name="mode">
-				{% if bbs.bbs_mode == 1 %}
-						<option value="1" selected="selected">お絵描き掲示板（誰でも投稿可能）</option>
-				{% else%}
-						<option value="1">お絵描き掲示板（誰でも投稿可能）</option>
-				{% endif %}
-				
-				{% if bbs.bbs_mode == 2 %}
-						<option value="2" selected="selected">お絵かきブログ（管理人だけ投稿可能）</option>
-				{% else%}
-						<option value="2">お絵かきブログ（管理人だけ投稿可能）</option>
-				{% endif %}
-				
-				{% if bbs.bbs_mode == 3 %}
-						<option value="3" selected="selected">スレッド式掲示板（イラストなし）</option>
-				{% else%}
-						<option value="3">スレッド式掲示板（イラストなし）</option>
-				{% endif %}
+				<option value="1" {% if bbs.bbs_mode == 1 %}selected="selected"{% endif %}>{% if is_iphone %}誰でも投稿可能{%else%}お絵描き掲示板（誰でも投稿可能）{% endif %}</option>
+				<option value="2" {% if bbs.bbs_mode == 2 %}selected="selected"{% endif %}>{% if is_iphone %}管理人だけ投稿可能{%else%}お絵かきブログ（管理人だけ投稿可能）{% endif %}</option>
+				<option value="3" {% if bbs.bbs_mode == 3 %}selected="selected"{% endif %}>{% if is_iphone %}スレッド式{%else%}スレッド式掲示板（イラストなし）{% endif %}</option>
 			</select></TD></TR>
 
 			<TR><TH>新規スレッドの作成（スレッド式掲示板の場合）</TH><TD>
 			<select name="disable_create_new_thread">	
-			{%if bbs.disable_create_new_thread == 1 %}
-			<option value="1" selected="selected">管理人のみ作成可能</option>
-			{%else%}
-			<option value="1">管理人のみ作成可能</option>
-			{%endif%}
-			{%if bbs.disable_create_new_thread == 2 %}
-			<option value="2" selected="selected">ログインしていれば誰でも作成可能</option>
-			{%else%}
-			<option value="2">ログインしていれば誰でも作成可能</option>
-			{%endif%}
-			{%if not bbs.disable_create_new_thread %}
-			<option value="0" selected="selected">誰でも作成可能</option>
-			{%else%}
-			<option value="0">誰でも作成可能</option>
-			{%endif%}
+			
+			<option value="1" {%if bbs.disable_create_new_thread == 1 %}selected="selected"{%endif%}>管理人のみ作成可能</option>
+			<option value="2" {%if bbs.disable_create_new_thread == 2 %}selected="selected"{%endif%}>ログインしていれば{% if not is_iphone %}誰でも{% endif %}作成可能</option>
+			<option value="0" {%if not bbs.disable_create_new_thread %}selected="selected"{%endif%}>誰でも作成可能</option>
 			</select>
 			</TD></TR>
 			

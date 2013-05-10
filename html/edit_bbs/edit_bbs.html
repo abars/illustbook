@@ -9,14 +9,17 @@
 		document.getElementById('detail').style.display="none";
 		document.getElementById('custom').style.display="none";
 		document.getElementById('css_design').style.display="none";
-		document.getElementById('account').style.display="none";
 		document.getElementById('submit_button').style.display="none";
 		
 		document.getElementById("top_tab_all").className="g-button";
 		document.getElementById("top_tab_detail").className="g-button";
 		document.getElementById("top_tab_custom").className="g-button";
 		document.getElementById("top_tab_css_design").className="g-button";
-		document.getElementById("top_tab_account").className="g-button";
+
+		{% if not is_iphone %}
+			document.getElementById('account').style.display="none";
+			document.getElementById("top_tab_account").className="g-button";
+		{% endif %}
 	}
 	
 	function click_top_tab(id){
@@ -30,11 +33,13 @@
 	
 	function init_tab(){
 		click_top_tab("{{tab}}");
-		design_template_change("{{bbs.design_template_no}}");
+		//design_template_change("{{bbs.design_template_no}}");
 	}
 	
+	/*
 	function design_template_change(no){
 	}
+	*/
 </script>
 </head>
 
@@ -57,18 +62,22 @@
 			<ul class="dropdown-menu">
 				<li><a href="{{host}}edit_thread_list?bbs_key={{bbs.key()}}" target="_blank">イラストの管理</a></li>
 				<li><a href="{{host}}analyze?bbs_key={{bbs.key()}}" target="_blank">アクセス解析の閲覧</a></li>
+				<li><a href="{{host}}{{bbs.short}}/">掲示板に戻る</a></li>
 			</ul>
 		</div>
+		<p>&nbsp</p>
 	</div>
 </div>
 
 <div class="left_box">
 	<div class="g-button-group toggle-buttons">
-	<a href="javascript:click_top_tab('all');" id="top_tab_all" class="g-button">基本設定</a>
-	<a href="javascript:click_top_tab('detail');" id="top_tab_detail" class="g-button">詳細設定</a>
-	<a href="javascript:click_top_tab('custom');" id="top_tab_custom" class="g-button">デザイン(フォーム)</a>
-	<a href="javascript:click_top_tab('css_design');" id="top_tab_css_design" class="g-button">デザイン(CSS)</a>
-	<a href="javascript:click_top_tab('account');" id="top_tab_account" class="g-button">アカウント</a>
+	<a href="javascript:click_top_tab('all');" id="top_tab_all" class="g-button">基本{% if not is_iphone %}設定{% endif %}</a>
+	<a href="javascript:click_top_tab('detail');" id="top_tab_detail" class="g-button">詳細{% if not is_iphone %}設定{% endif %}</a>
+	<a href="javascript:click_top_tab('custom');" id="top_tab_custom" class="g-button">{% if not is_iphone %}デザイン(フォーム){% else %}フォーム{% endif %}</a>
+	<a href="javascript:click_top_tab('css_design');" id="top_tab_css_design" class="g-button">{% if not is_iphone %}デザイン(CSS){% else %}CSS{% endif %}</a>
+	{% if not is_iphone %}
+		<a href="javascript:click_top_tab('account');" id="top_tab_account" class="g-button">アカウント</a>
+	{% endif %}
 	</div>
 
 	<p>&nbsp;</p>
