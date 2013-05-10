@@ -1,3 +1,5 @@
 <div id="contents-footer">
-	<p><a href="{{host}}">イラストブック</a> {% if is_iphone and not template_path %}<br>{% endif %}&copy; 2010-2013 <a href="http://www.abars.biz/">ABARS</a> all rights reserved.</p>
+	{% if template_path %}<p>{% endif %}
+	<a href="{{host}}">イラストブック</a>{% if is_iphone %}<br/>{% else %} {% endif %}&copy; 2010-2013 <a href="http://www.abars.biz/">ABARS</a> all rights reserved.
+	{% if template_path %}</p>{% endif %}
 </div>
