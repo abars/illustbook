@@ -35,10 +35,10 @@
 	<div style="float:right;padding-left:2px;padding-top:3px;padding-right:2px;font-weight:600;">
 		{% if user %}
 			{% if not is_iphone or mypage %}
-				<a href="{{redirect_url|logout_url}}" class="g-button mini"><i class="icon-off"></i>ログアウト</a>
+				<a href="{{redirect_url|logout_url|escape}}" class="g-button mini"><i class="icon-off"></i>ログアウト</a>
 			{% endif %}
 		{% else %}
-			<a href="{{redirect_url|login_url}}" class="g-button mini"><i class="icon-off"></i>ログイン</a>
+			<a href="{{redirect_url|login_url|escape}}" class="g-button mini"><i class="icon-off"></i>ログイン</a>
 		{% endif %}
 	</div>
 	
