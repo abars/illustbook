@@ -1,0 +1,12 @@
+<!-- 掲示板 -->
+{% if tab == "bbs" %}
+  {% include "mypage/bbs.html" %}
+{% endif %}
+
+<!-- タイムライン -->
+{% if page_mode == "user" %}
+{% if is_timeline_enable %}
+  {% include "mypage/feed.html" %}
+{% endif %}
+{% endif %}
+

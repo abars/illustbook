@@ -118,7 +118,7 @@
     {% endif %}
     </div>
   {% else %}
-    {% include "pinterest/user.html" %}
+    {% include "mypage/user.html" %}
   {% endif %}
 {% endif %}
 
@@ -127,12 +127,12 @@
   {% if bookmark and bookmark.frozen %}
   {% else %}
     <br clear="all">
-   {% include "pinterest/user_menu.html" %}
+   {% include "mypage/user_menu.html" %}
   {% endif %}
 {% endif %}
 
 <!-- ユーザタイムライン -->
-{% include "pinterest/user_timeline.html" %}
+{% include "mypage/user_timeline.html" %}
 
 <!-- ガイド -->
 {% if page_mode == "guide" %}

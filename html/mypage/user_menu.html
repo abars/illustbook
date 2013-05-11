@@ -8,7 +8,7 @@
       <a href="{{host}}{{redirect_api}}?{% if bookmark %}user_id={{user_id}}&{% endif %}tab=bookmark" class="g-button {%if tab == "bookmark"%}checked{%endif%}">{% if is_iphone %}ブクマ{%else%}ブックマーク{%endif%}</a>
     {% endif %}
     <a href="{{host}}{{redirect_api}}?{% if bookmark %}user_id={{user_id}}&{% endif %}tab=bbs" class="g-button {%if tab == "bbs"%}checked{%endif%}">掲示板</a>
-    <a href="{{host}}{{redirect_api}}?{% if bookmark %}user_id={{user_id}}&{% endif %}tab=feed" class="g-button {%if tab == "feed"%}checked{%endif%}">{% if is_iphone %}TL{%else%}タイムライン{% if not view_mode %}{% if new_feed_count %}({{new_feed_count}}){% endif %}{% endif %}{% endif %}</a>
+    <a href="{{host}}{{redirect_api}}?{% if bookmark %}user_id={{user_id}}&{% endif %}tab=feed" class="g-button {%if tab == "feed" or tab=="timeline" %}checked{%endif%}">{% if is_iphone %}TL{%else%}タイムライン{% if not view_mode %}{% if new_feed_count %}({{new_feed_count}}){% endif %}{% endif %}{% endif %}</a>
   </div>
   </div>
   {% if not is_iphone %}
