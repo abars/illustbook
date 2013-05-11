@@ -214,8 +214,6 @@ class Pinterest(webapp.RequestHandler):
 
 	@staticmethod
 	def _index(self,user,user_id,page,request_page_mode,redirect_api,contents_only):
-		template_values=Pinterest.initialize_template_value(self,user,user_id,page,request_page_mode,redirect_api,contents_only)
-
 		unit=BbsConst.PINTEREST_PAGE_UNIT
 
 		order="new"
@@ -224,7 +222,19 @@ class Pinterest(webapp.RequestHandler):
 
 		search_api="search_tag"
 
-		template_values['thread_list']=ApiFeed.feed_get_thread_list(self,order,(page-1)*unit,unit)
+		while(True):
+			thread_list=ApiFeed.feed_get_thread_list(self,order,(page-1)*unit,unit)
+			if(len(thread_list)):
+				break
+
+			max_page=1000/unit
+			if(order!="new" or page>=max_page):
+				break
+
+			page=page+1	#新着で1画面全部イラストなしの場合は次のページを読み込んでくる
+
+		template_values=Pinterest.initialize_template_value(self,user,user_id,page,request_page_mode,redirect_api,contents_only)
+		template_values['thread_list']=thread_list
 		template_values['next_query']="order="+order
 		template_values['tag_list']=SearchTag.get_recent_tag(search_api)
 		template_values['top_page']=True
