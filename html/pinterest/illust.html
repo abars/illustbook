@@ -1,3 +1,11 @@
+{% if not thread_list %}
+  {% if order == "new" %}
+    <!-- disable newsの1ページitemが存在しない対策 -->
+    <div class="item" style="display:none;">
+    </div>
+  {% endif %}
+{% endif %}
+
 {% if thread_list %}
 {% for thread in thread_list %}
 <div class="item">

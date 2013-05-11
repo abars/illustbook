@@ -50,6 +50,7 @@ h2,h3 {font-size:100%;color:#E47911;}
 	margin:5px;
 }
 
+{% if use_masonry %}
 #infinite-scroll-container {
   margin:auto;
   {% if is_iphone %}
@@ -61,6 +62,7 @@ h2,h3 {font-size:100%;color:#E47911;}
   display:none;
   {% endif %}
 }
+{% endif %}
 
 .guide{
   background-color:#fff;
