@@ -206,7 +206,9 @@ class Pinterest(webapp.RequestHandler):
 			'search_api': search_api,
 			'contents_only': contents_only,
 			'search': None,
-			'top_page': False
+			'top_page': False,
+			'use_masonry': True,
+			'infinite_scroll_selecter': ".item"
 		}
 		return template_values
 
@@ -400,11 +402,20 @@ class Pinterest(webapp.RequestHandler):
 			bookmark_bbs_list=ApiBookmark.bookmark_get_bbs_list(self,user_id)
 			rental_bbs_list=ApiUser.user_get_bbs_list(self,user_id)
 		
+		timeline=None
+		use_masonry=True
 		is_timeline_enable=0
+		infinite_scroll_selecter=".item"
 		if(tab=="feed" or tab=="timeline"):
 			thread_list=None
 			is_timeline_enable=1
 			illust_enable=False
+			if(tab=="feed"):
+				timeline=ApiUser.user_get_home_timeline(self,user_id)
+			else:
+				timeline=ApiUser.user_get_timeline(self,user_id)
+			use_masonry=False
+			infinite_scroll_selecter=".feed"
 	
 		if(tab=="bookmark"):
 			thread_list=ApiBookmark.bookmark_get_thread_list(self,user_id,bookmark)
@@ -494,7 +505,10 @@ class Pinterest(webapp.RequestHandler):
 			'search': None,
 			'top_page': False,
 			'detail_exist': detail_exist,
-			'is_admin': OwnerCheck.is_admin(user)
+			'is_admin': OwnerCheck.is_admin(user),
+			'use_masonry': use_masonry,
+			'timeline': timeline,
+			'infinite_scroll_selecter': infinite_scroll_selecter
 		}
 		Pinterest._render_page(self,template_values)
 

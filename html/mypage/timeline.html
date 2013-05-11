@@ -1,0 +1,171 @@
+{% if not timeline %}
+	<p>フィードはありません。</p><p>&nbsp</p>
+{% endif %}
+
+{% if timeline %}
+<div class="feed">
+	{% for feed in timeline %}
+	<div>
+		<!-- アイコン -->
+		<div style="float:left;width:58px;padding-right:6px;text-align:center;margin:auto;">
+		{% if feed.from_user and feed.mode != "deleted" %}
+			<a href="{{feed.from_user.profile_url}}"><img src="{{feed.from_user.icon_url}}&size=mini" width="50px" height="50px"/></a>
+		{% else %}
+			<img src="static_files/empty_user.png" width="50px" height="50px"/>
+		{% endif %}
+		</div>
+
+		<!-- メインブロック -->
+		<div style="float:left;">
+	
+		<!-- ユーザ名 -->
+		{% if feed.mode != "deleted" %}
+			<p><b>
+			{% if feed.from_user %}
+				<a href="{{feed.from_user.profile_url}}">
+					{{feed.from_user.name}}
+				</a>
+			{% else %}
+				匿名ユーザ
+			{% endif %}
+			{% if feed.to_user %}
+			　->　<a href="{{feed.to_user.profile_url}}">
+				{{feed.to_user.name}}
+			</A>
+			{% endif %}
+			</b></p>
+		{% endif %}
+	
+		{% set deleted_style_header = "<font color='#666'>" %}
+		{% set deleted_style_footer = "</font>" %}
+		{% set message = feed.message %}
+
+		<!-- メッセージ -->
+		<p>
+		{% if feed.mode == "bbs_new_illust" %}
+			{% if not feed.thread.thumbnail_url %}
+				{{deleted_style_header}}投稿したイラストは削除されました。{{deleted_style_footer}}
+			{% else %}
+				{% if feed.thread.thumbnail_url == "" %}
+					<a href="{{feed.thread.thread_url}}">
+						{{feed.bbs.title}}に記事を投稿しました。
+					</a>
+				{% else %}
+					<a href="{{feed.thread.thread_url}}">
+						{{feed.bbs.title}}にイラストを投稿しました。
+					</a>
+				{% endif %}
+			{% endif %}
+		{% endif %}
+
+		{% if feed.mode == "new_follow" %}
+			<a href="{{feed.follow_user.profile_url}}">
+				{{feed.follow_user.name}}をフォローしました。
+			</a>
+		{% endif %}
+
+		{% if feed.mode == "new_bookmark_thread" %}
+			<a href="{{feed.thread.thread_url}}">
+				{{feed.thread.title}}をブックマークしました。
+			</a>
+		{% endif %}
+
+		{% if feed.mode == "new_comment_thread" %}
+			{% if not feed.thread %}
+				{{deleted_style_header}}
+				コメントしたイラストは削除されました。
+				{{deleted_style_footer}}
+				{% set message = "" %}
+			{% else %}
+				<a href="{{feed.thread.thread_url}}">
+					{{feed.thread.title}}にコメントしました。
+				</a>
+			{% endif %}
+		{% endif %}
+
+		{% if feed.mode == "new_bookmark_bbs" %}
+			<a href="{{feed.bbs.bbs_url}}">
+				{{feed.bbs.title}}をブックマークしました。
+			</a>
+		{% endif %}
+
+		{% if feed.mode == "new_applause_thread" %}
+			<a href="{{feed.thread.thread_url}}">
+				{{feed.thread.title}}に拍手しました。
+			</a>
+		{% endif %}
+
+	</p>
+
+	<!-- 付加画像データ -->
+	{% if feed.mode == "bbs_new_illust" %}
+		{% if feed.thread.thumbnail_url %}
+			<a href="{{feed.thread.thread_url}}">
+				<img src="{{feed.thread.thumbnail_url}}" width="100px" height="100px"/>
+			</a>
+		{% endif %}
+	{% endif %}
+
+	{% if feed.mode == "new_follow" %}
+		<a href="{{feed.follow_user.profile_url}}'">
+			<img src="{{feed.follow_user.icon_url}}&size=mini" width="50px" height="50px" class="radius_image"/>
+		</a>
+	{% endif %}
+
+	{% if feed.mode == "new_applause_thread" or feed.mode == "new_bookmark_thread" %}
+		{% if feed.thread.thumbnail_url %}
+			<a href="{{feed.thread.thread_url}}">
+				<img src="{{feed.thread.thumbnail_url}}" width="100px" height="100px"/>
+			</a>
+		{% endif %}
+	{% endif %}
+
+	{% if message %}
+		{% if feed.mode == "new_comment_thread" %}
+			<blockquote><p>
+				<a href="{{feed.thread.thread_url}}">
+					{{message}}
+				</a>
+			</p></blockquote>
+		{% else %}
+			{% if feed.mode == "deleted" %}
+				<p>{{deleted_style_header}}{{message}}{{deleted_style_footer}}</p>
+			{% else %}
+				<p>{{message}}</p>
+			{% endif %}
+		{% endif %}
+	{% endif %}
+
+		<!-- メインブロック -->
+		</div>
+
+		<!-- オプション -->
+		<div style="float:right;text-align:right;">
+		{{feed.create_date}}<br/>
+
+		{% if not view_mode %}
+			{% if edit_mode %}
+				{% if feed.from_user.user_id == user_id %}
+				<a href="#" onclick="if(confirm('ツイートを削除してもよろしいですか？')){window.location.href=\'feed_tweet?mode=del_tweet&key={{feed.key}}&feed_page={{page}}&edit=1&tab='{{tab}}';}return false;" class="g-button mini">
+					削除
+				</a><br/>
+				{% else %}
+				<a href="#" onclick="if(confirm('フィードをタイムラインから除外してもよろしいですか？')){window.location.href='feed_tweet?mode=del_feed&key={{feed.key}}&feed_page={{page}}&edit=1&tab={{tab}}';}return false;" class="g-button mini">
+					除外
+				</a><br/>
+				{% endif %}
+			{% endif %}
+			{% if feed.to_user.user_id == user_id %}
+				<a href="mypage?user_id={{feed.from_user.user_id}}&tab=feed" class="g-button mini">
+				返信
+				</a><br/>
+			{% endif %}
+		{% endif %}
+		</div>
+	</div>
+	<br clear='all'/>
+	<hr/>
+	{% endfor %}
+</div>
+{% endif %}
+

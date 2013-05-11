@@ -8,8 +8,8 @@
     </div>
     <div style="float:left">
       {% if view_user.name %}
-     <p><b>{{view_user.name}}</b></p>
-     <p>{{view_user_profile.profile|safe}}</p>
+       <p><b>{{view_user.name}}</b></p>
+       <p>{% if view_user_profile.profile and view_user_profile.profile!="None" %}{{view_user_profile.profile|safe}}{% else %}&nbsp;{% endif %}</p>
      {% else %}
      <p>イラストブックへようこそ。<br/>
      編集ボタンを押すと、ユーザ情報を登録することができます。<br/>
@@ -116,4 +116,8 @@
       <br/><a href="javascript:show_follower();" class="g-button mini">閉じる</a>
    </div>
  </div>
+   {% endif %}
+
+   {% if timeline %}
+    {% include "mypage/tweet.html" %}
    {% endif %}

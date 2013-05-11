@@ -5,6 +5,9 @@
 {% include "./bbs_thread/meta.html" %}
 {% include "./bbs_thread/css.html" %}
 {% include "floating_menu_css.html" %}
+{% if infinite_scroll %}
+	{% include "pinterest/infinite_scroll.js" %}
+{% endif %}
 </head>
 <body>
 {% include "floating_menu.html" %}
@@ -70,6 +73,9 @@
 					{% include 'bbs/bbs_show_thumbnail.html' %}
 			{% else%}
 				<!-- エントリー -->
+				{% if infinite_scroll %}
+				<div id="infinite-scroll-container" class="transitions-enabled infinite-scroll clearfix">
+				{% endif %}
 				{% for thread in threads %}
 					{% if loop.index == 2 %}
 						<!--広告を一つ目の記事の後に入れる-->
@@ -85,6 +91,9 @@
 					<!--イラスト一つ-->
 					{% include "bbs/bbs_entry.html" %}
 				{% endfor %}
+				{% if infinite_scroll %}
+				</div>
+				{% endif %}
 			{% endif%}
 			
 			{% if bbs.bbs_mode == 3 %}
@@ -94,19 +103,17 @@
 			{% endif %}
 
 			<!-- ページ -->
+			{% if not infinite_scroll %}
 			<div id="entry-bottom">
-				<!--
-				<div id="page-bottom">
-				-->
+				<!-- <div id="page-bottom"> -->
 				{% if is_iphone %}
 					{% include "bbs/bbs_page_no.html" %}
 				{% else %}
 					{% include "bbs/bbs_order.html" %}
 				{% endif %}
-				<!--
-				</div>
-				-->
+				<!-- </div> -->
 			</div>
+			{% endif %}
 
 			<!-- サイドバー非表示時の要素 -->
 			{% include 'bbs/bbs_new_thread.html'%}　
@@ -121,6 +128,15 @@
 		{% include 'footer.html' %}
 	{% endif %}
 </div>
+
+{% if infinite_scroll %}
+<div id="page-nav">
+	<a href="{{page_url_base}}{{page+1}}"></a>
+</div>
+<div id="back-top">
+  <a href="#top">TOP</a>
+</div>
+{% endif %}
 
 {% if not template_path %}
 	{% include 'footer.html' %}

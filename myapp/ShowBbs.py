@@ -179,6 +179,11 @@ class ShowBbs(webapp.RequestHandler):
 		if(owner or (is_admin and bbs.bbs_mode==BbsConst.BBS_MODE_EVERYONE)):
 			can_edit_design=True
 
+		#infinite_scrollを使用するかどうか
+		infinite_scroll=False
+		if(bbs.bbs_mode!=BbsConst.BBS_MODE_NO_IMAGE and design["is_iphone"]):
+			infinite_scroll=True
+
 		#レンダリング
 		template_values = {
 			'host': host_url,
@@ -215,7 +220,9 @@ class ShowBbs(webapp.RequestHandler):
 			'show_comment_form': show_comment_form,
 			'user_name': user_name,
 			'is_admin': is_admin,
-			'can_edit_design': can_edit_design
+			'can_edit_design': can_edit_design,
+			'infinite_scroll': infinite_scroll,
+			'infinite_scroll_selecter': ".entry"
 		}
 
 		path = "/html/"+design["base_name"]

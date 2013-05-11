@@ -2,7 +2,7 @@
 				<input type="hidden" name="mode" value="profile">
 				
 				<table>
-				<tr><td>ユーザ名（必須）</td><td>　</td><td><input name="name" type="text" value="{{bookmark.name}}" style="width:90%;"></td></tr>
+				<tr><td>ユーザ名（必須）</td><td>　</td><td><input name="name" type="text" value="{% if bookmark.name %}{{bookmark.name}}{% endif %}" style="width:90%;"></td></tr>
 				<tr><td>性別</td><td>　</td><td>
 				<select name="sex" id="sex">
 					<option value="0" {% if bookmark.sex == 0 %} selected="selected" {% endif%}>非公開</option>
