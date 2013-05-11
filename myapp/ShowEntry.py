@@ -79,6 +79,9 @@ class ShowEntry(webapp.RequestHandler):
 	def render_comment(req,host_url,bbs,thread,com_list_,edit_flag,bbs_key,logined,show_comment_form,is_admin,user_name,user):
 		#レスを取得
 		com_list=ShowEntry._get_response(com_list_,thread)
+
+		#コメントの編集を行うか
+		comment_edit=req.request.get("comment_edit")
 		
 		#レンダリング
 		template_values = {
@@ -93,7 +96,8 @@ class ShowEntry(webapp.RequestHandler):
 			'is_admin':is_admin,
 			'user_name': user_name,
 			'user': user,
-			'redirect_url': req.request.path
+			'redirect_url': req.request.path,
+			'comment_edit': comment_edit
 			}
 
 		path = "/html/thread/thread_comment.html"

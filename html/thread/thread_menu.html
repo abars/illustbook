@@ -9,6 +9,8 @@
 	{% endif %}
 {% endif %}
 
+<a class="g-button" href="{{page_url_base}}{{page}}&amp;comment_edit=1" style="color:#333;" rel="nofollow">コメントの編集</a>
+
 {% if not my_illust %}
 	{% if not bbs.disable_applause %}
 		<a class="g-button" href="javascript:applause_with_comment('{{host}}','{{bbs.key()}}','{{thread.key()}}','thread');" style="color:#333;" rel="nofollow">コメントで拍手</a>

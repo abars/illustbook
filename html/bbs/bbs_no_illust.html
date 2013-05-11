@@ -1,11 +1,11 @@
+{% if not infinite_scroll %}
 	{% if not threads %}
+		<div class="entry">
 		{% if bbs.bbs_mode == 3 %}
-			<div class="entry">
 			スレッドはまだありません。
-			</div>
 		{% else%}
-			<div class="entry">
 			イラストはまだありません。
-			</div>
 		{% endif %}
+		</div>
 	{% endif %}
+{% endif %}
