@@ -50,7 +50,7 @@ h2,h3 {font-size:100%;color:#E47911;}
 	margin:5px;
 }
 
-#container {
+#infinite-scroll-container {
   margin:auto;
   {% if is_iphone %}
    min-width:320px;

@@ -410,7 +410,7 @@ class Pinterest(webapp.RequestHandler):
 			thread_list=None
 			is_timeline_enable=1
 			illust_enable=False
-			if(tab=="feed"):
+			if(tab=="feed" and not view_mode):
 				timeline=ApiUser.user_get_home_timeline(self,user_id)
 			else:
 				timeline=ApiUser.user_get_timeline(self,user_id)

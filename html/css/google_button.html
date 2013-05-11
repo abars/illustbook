@@ -8,80 +8,12 @@
     <link rel="stylesheet" type="text/css" media="screen,print" href="{{host}}js/jquery/jquery.alerts.css" />
 {% endif %}
 
-<!-- infinite scroll -->
-<style type="text/css">
-#back-top {
-  position: fixed;
-  bottom: 10px;
-  right: 5px;
-  margin-left: -100px;
-  background: #fff;
-  display:none;
-  text-align: center;
-  border: 1px solid #ccc;
-  background: #fff;
-}
-
-#back-top a {
-  width: 40px;
-  height: 20px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  text-decoration: none;
-  color: #666;
-  display: block;
-  font-size: 14px;
-}
-
-#back-top a:hover{
-  border-bottom: none;
-}
-
-.loading{
-  z-index:2;
-  background: #fff;
-}
-
-#infscr-loading {
-margin-left: -100px;
-width: 200px;
-position: fixed;
-left: 50%;
-bottom: 14px;
-text-align: center;
-font-size: 14px;
-}
-
-</style>
-
 <!-- gbutton -->
 <script language="javascript" src="{{host}}static_files/google_buttons/js/bootstrap-dropdown.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" media="screen,print" href="{{host}}static_files/google_buttons/css/google-buttons.css?version=120531" />
 
-<style type="text/css">
-.g-table {
-    border: 1px #E3E3E3 solid;
-    border-collapse: collapse;
-    border-spacing: 0;
-}
+<!-- gtable -->
+{% include "css/google_table.html" %}
 
-.g-table th {
-    padding: 5px;
-    border: #E3E3E3 solid;
-    border-width: 0 0 1px 1px;
-    background: #F5F5F5;
-    font-weight: bold;
-    line-height: 120%;
-}
-.g-table td {
-    padding: 5px;
-    border: 1px #E3E3E3 solid;
-    border-width: 0 0 1px 1px;
-}
-
-.g-button,
-.g-button:hover,
-.g-button:focus,
-.g-button:active,
-.g-button.active {z-index:auto;}
-</style>
+<!-- infinite scroll -->
+{% include "css/infinite_scroll.html" %}
