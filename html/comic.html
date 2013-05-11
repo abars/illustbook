@@ -20,19 +20,19 @@
 <A HREF="{{host}}guide"><IMG src="{{host}}static_files/comic/00
 {{page}}.png"></A>
 {% else %}
-<A HREF="{{host}}comic?page={{page|add:"1"}}"><IMG src="{{host}}static_files/comic/00
+<A HREF="{{host}}comic?page={{page+1}}"><IMG src="{{host}}static_files/comic/00
 {{page}}.png"></A>
 {% endif %}
 <BR>
 
 {% if page == 1 %}
 {% else %}
-<A HREF="{{host}}comic?page={{page|add:"-1"}}">前のページ</A>　
+<A HREF="{{host}}comic?page={{page-1}}">前のページ</A>　
 {% endif %}
 
 {% if page == 4 %}
 {% else %}
-<A HREF="{{host}}comic?page={{page|add:"1"}}">次のページ</A>
+<A HREF="{{host}}comic?page={{page+1}}">次のページ</A>
 {% endif %}
 
 <BR>
