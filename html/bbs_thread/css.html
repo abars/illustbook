@@ -1,4 +1,4 @@
-{% include "./portal_css/option_google_button.html" %}
+{% include "./css/google_button.html" %}
 {% if template_path%}
 	<link rel="stylesheet" type="text/css" media="screen,print" href="{{css_name}}" />
 	<link rel="stylesheet" type="text/css" media="screen,print" href="{{host}}template/common/style_common2.css" />
@@ -9,4 +9,4 @@
 		<link rel="stylesheet" type="text/css" href="{{host}}css/{{bbs.key()}}.css{% if is_iphone %}?is_iphone=1{% endif %}" media="screen,print" />
 	{% endif %}
 {% endif %}
-{% include "bbs_thread/css_override.html" %}
+{% include "css/bbs_css_override.html" %}

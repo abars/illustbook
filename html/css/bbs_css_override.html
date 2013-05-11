@@ -1,0 +1,56 @@
+<!-- デフォルトのtempformとtemplateを上書きする -->
+
+<style type="text/css">
+	/* レイアウトの微調整 */
+	.entry-name img{
+		margin-bottom:2px;
+		vertical-align:middle;
+	}
+
+	.twitter-share-button {
+		width: 100px !important;
+	}
+
+	p {
+		margin-top:2px;
+		margin-bottom:2px;
+	}
+
+	{% if is_iphone %}
+		#contents-header-edit{
+			text-align:left;
+			float:left;
+		}
+
+		#contents-header {
+			height:32px;
+			padding:4px;
+			padding-left:8px;
+		}
+
+		.mobile_ad {
+			margin-left:-6px;
+			width:320px;
+			padding-left:0px;
+			padding-right:0px;
+			background: none;
+		}
+	{% endif %}
+
+	/* フッターのデザインをfloating_menuと合わせる */
+	{% if not template_path %}
+		#contents-footer{
+			width:100%;
+			background:#ffffff;
+			color:#333;
+			bottom:0px;
+			margin:0px;
+			padding-top:4px;
+			padding-bottom:4px;
+		}
+
+		#contents-footer a{
+			color:#333;
+		}
+	{% endif %}
+</style>

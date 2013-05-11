@@ -33,13 +33,8 @@
 	
 	function init_tab(){
 		click_top_tab("{{tab}}");
-		//design_template_change("{{bbs.design_template_no}}");
 	}
 	
-	/*
-	function design_template_change(no){
-	}
-	*/
 </script>
 </head>
 
@@ -51,21 +46,7 @@
 
 <div class="profile_box">
 	<div class="entry">
-		{% if bbs.cached_thumbnail_key %}
-			<img src="/thumbnail/{{bbs.cached_thumbnail_key}}.jpg" width="160" height="160" class="radius_image"/>
-		{% endif %}
 		<H1><p>{{bbs.bbs_name}}の編集</p></H1>
-		<div class="g-button-group">
-			<a class="g-button dropdown-toggle" data-toggle="dropdown" href="#">
-			その他の操作 <span class="caret"></span>
-			</a>
-			<ul class="dropdown-menu">
-				<li><a href="{{host}}edit_thread_list?bbs_key={{bbs.key()}}" target="_blank">イラストの管理</a></li>
-				<li><a href="{{host}}analyze?bbs_key={{bbs.key()}}" target="_blank">アクセス解析の閲覧</a></li>
-				<li><a href="{{host}}{{bbs.short}}/">掲示板に戻る</a></li>
-			</ul>
-		</div>
-		<p>&nbsp</p>
 	</div>
 </div>
 
@@ -110,7 +91,18 @@
 	</div>
 
 	<div id="submit_button">
-		<input type="button" value="変更を保存する" class="g-button" onClick="document.getElementById('update_bbs_form').submit();"/>
+		<div class="g-button-group">
+			<input type="button" value="変更を保存する" class="g-button" onClick="document.getElementById('update_bbs_form').submit();"/>
+
+			<a class="g-button dropdown-toggle" data-toggle="dropdown" href="#">
+			その他の操作 <span class="caret"></span>
+			</a>
+			<ul class="dropdown-menu">
+				<li><a href="{{host}}edit_thread_list?bbs_key={{bbs.key()}}" target="_blank">イラストの管理</a></li>
+				<li><a href="{{host}}analyze?bbs_key={{bbs.key()}}" target="_blank">アクセス解析の閲覧</a></li>
+				<li><a href="{{host}}{{bbs.short}}/">掲示板に戻る</a></li>
+			</ul>
+		</div>
 	</div>
 </div>
 
