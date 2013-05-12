@@ -179,6 +179,7 @@ margin: 5px;
 background-color: #ffffff;
 padding: 5px;
 color:#333;
+word-break:break-all;
 }
 
 .example a{

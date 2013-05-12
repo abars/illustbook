@@ -109,7 +109,7 @@ def comment_with_except_core(entry,host,no_hour):
 		ret+=".html' class='decnone'>"
 		title=str(entry["thread_title"])
 		ret+=title
-		ret+=" ("+entry["editor"]+")"
+		ret+="("+entry["editor"]+")"
 		ret+="("
 		ret+=time_JST_progress(entry["date"])
 		ret+=")</a> "

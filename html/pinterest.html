@@ -101,7 +101,7 @@
 {% if page_mode == "user" %}
   {% if bookmark and bookmark.frozen %}
     <div class="message">
-    現在、このユーザは規約違反の疑いで凍結されています。<br/>
+    現在、このユーザは凍結されています。<br/>
     詳細および凍結の解除につきましては、abarsceo@gmail.comまでお問い合せ下さい。<br/>
     {% if is_admin %}
     <a href="{{host}}mypage?user_id={{bookmark.user_id}}&freez=0" class="g-button">凍結解除（＊管理モード）</a>
