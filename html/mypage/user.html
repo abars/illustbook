@@ -4,9 +4,9 @@
       {%include "mypage/edit_profile.html"%}
     {% else %}
     <div style="float:left;margin-right:4px;">
-      <img src="{{view_user.icon_url}}" {% if is_iphone %}width=100px height=100px{%else%}width=160px height=160px{% endif %}>
+      <img src="{{view_user.icon_url}}" {% if is_iphone %}width=80px height=80px{%else%}width=160px height=160px{% endif %}>
     </div>
-    <div style="float:left">
+    <div style="float:left;word-break:break-all;{% if is_iphone %}width:200px;{% endif %}">
       {% if view_user.name %}
        <p><b>{{view_user.name}}</b></p>
        <p>{% if view_user_profile.profile and view_user_profile.profile!="None" %}{{view_user_profile.profile|safe}}{% else %}&nbsp;{% endif %}</p>
@@ -46,8 +46,7 @@
 
 
      <div class="g-button-group">
-      {% if not view_mode %}
-      {% else %}
+      {% if view_mode %}
        {% if following %}
          <a href="javascript:confirm_unfollow('{{view_user.user_id}}','{{view_user.name}}');" class="g-button">フォロー中</a>
        {% else %}
@@ -57,9 +56,10 @@
       {% if detail_exist %}
         <a id="profile_button" href="javascript:show_profile();" class="g-button">詳細</a>
       {% endif %}
-      {% if not view_mode or is_admin %}
+      {% if not view_mode %}
          <A HREF="{{host}}{{redirect_api}}?tab={{tab}}&edit=2" class="g-button">編集</A>
-
+      {% endif %}
+      {% if not view_mode or is_admin %}
     <a class="g-button dropdown-toggle" data-toggle="dropdown" href="#">
       その他 <span class="caret"></span>
     </a>

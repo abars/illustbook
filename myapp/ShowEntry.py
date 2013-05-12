@@ -82,6 +82,9 @@ class ShowEntry(webapp.RequestHandler):
 
 		#コメントの編集を行うか
 		comment_edit=req.request.get("comment_edit")
+
+		#iPhoneかどうか
+		is_iphone=CssDesign.is_iphone(req)
 		
 		#レンダリング
 		template_values = {
@@ -97,7 +100,8 @@ class ShowEntry(webapp.RequestHandler):
 			'user_name': user_name,
 			'user': user,
 			'redirect_url': req.request.path,
-			'comment_edit': comment_edit
+			'comment_edit': comment_edit,
+			'is_iphone': is_iphone
 			}
 
 		path = "/html/thread/thread_comment.html"
