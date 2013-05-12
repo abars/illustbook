@@ -81,7 +81,9 @@
     <div style="float:left;margin:4px;">
       <div style="float:left;margin-top:4px;margin-bottom:4px;margin-right:4px;">
         {%if thread.user_id %}<a href="{{host}}mypage?user_id={{thread.user_id}}">{% endif %}
-        <img src="{{host}}show_icon?key={{thread.user_id}}&amp;size=mini" width="24px" height="24px" alt="{{thread.user_id}}"/>
+        {%if thread.user_id %}
+          <img src="{{host}}show_icon?key={{thread.user_id}}&amp;size=mini" width="24px" height="24px" alt="{{thread.user_id}}"/>
+        {%endif %}
         {%if thread.user_id %}</a>{% endif %}
       </div>
       <div style="float:left;">

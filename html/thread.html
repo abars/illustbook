@@ -4,7 +4,6 @@
 <title>{{thread.title}} - {{bbs.bbs_name}}</title>
 {% include "./bbs_thread/meta.html" %}
 {% include "./bbs_thread/css.html" %}
-{% include "floating_menu_css.html" %}
 </head>
 
 <body>
@@ -94,6 +93,8 @@
 		{%include "footer.html"%}
 	</div>
 
+	<!-- javascript -->
+	{% include "jquery.html" %}
 	<script language="javascript" src="{{host}}js/thread.js" type="text/javascript"></script>
 	<script language="javascript" src="{{host}}js/tag.js" type="text/javascript"></script>
 </body>
