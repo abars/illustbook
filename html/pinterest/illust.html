@@ -6,7 +6,7 @@
 
 {% if not thread_list %}
   {% if order == "new" %}
-    <!-- disable newsの1ページitemが存在しない対策 -->
+    {# disable newsの1ページitemが存在しない対策 #}
     <div class="item" style="display:none;">
     </div>
   {% endif %}
@@ -15,7 +15,7 @@
 {% if thread_list %}
 {% for thread in thread_list %}
 <div class="item">
-    <!-- bbs -->
+    {# bbs #}
   {% if thread.bbs_url %}
     <div style="margin:4px;text-align:center;">
       <a href="{{thread.bbs_url}}" {{target_page}} style="width:100%;display:block;"><small>{{thread.bbs_title}}</small></a>
@@ -23,7 +23,7 @@
     <hr style="margin:0px;clear:both;"/>  
   {% endif %}
 
-  <!--Image-->
+  {# Image #}
   <div class="deletable">
 
   {% if thread.image_url %}
@@ -54,7 +54,7 @@
         {% endif %}
   </div>
 
-  <!--Summary-->
+  {# Summary #}
   <div class="illust_summary">
     {% if thread.title %}
     {% if thread.title != "notitle" %}
@@ -75,7 +75,7 @@
       {{thread.summary|safe}}
   </div>
 
-  <!--author-->
+  {# author #}
 {% if thread.author %}
   <hr style="margin:0px;"/>
     <div style="float:left;margin:4px;">
@@ -109,7 +109,7 @@
     </div>
 {% endif %}
 
-    <!-- comment -->
+    {# comment #}
     {%if thread.comment %}
     <hr style="margin:0px;clear:both;"/>
     <div style="margin:4px;text-align:center;">

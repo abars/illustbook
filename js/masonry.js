@@ -1,6 +1,4 @@
-<script type="text/javascript">
-/* for w3c validater */
-/* <![CDATA[ */
+//use masonry
 
 function masonry_reload(){
   $("#infinite-scroll-container").masonry("reload");
@@ -57,7 +55,3 @@ $(document).ready(function(){
 $( window ).resize(function(){
   masonry_exec();
 });
-
-
-/* ]]> */
-</script>

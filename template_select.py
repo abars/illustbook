@@ -14,7 +14,7 @@ import custom_filter
 
 from myapp.SetUtf8 import SetUtf8
 
-#from google.appengine._internal.django.utils.html import strip_tags
+from google.appengine._internal.django.utils.html import strip_spaces_between_tags as short
 
 def set_jinja_filter(jinja_environment):
 	jinja_environment.filters.update({
@@ -65,5 +65,6 @@ def render(template_path, template_dict, debug=False):
 		jinja_template = jinja_environment_temp.get_template(new_path)	
 	else:
 		jinja_template = jinja_environment_html.get_template(new_path)	
-	return jinja_template.render(template_dict)
-	#return strip_tags(jinja_template.render(template_dict))	#gzipがかかるからいらないかも？
+	render_value=jinja_template.render(template_dict)
+	#return render_value
+	return short(render_value)

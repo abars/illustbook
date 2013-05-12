@@ -47,18 +47,14 @@
 <meta http-equiv="Content-Style-Type" content="text/css" />
 <meta name="Copyright" content="Copyright: ABARS" />
 
-{% include "floating_menu_css.html" %}
-{% include "css/google_button.html" %}
-
-<script language="javascript" src="js/mypage_common.js" type="text/javascript"></script>
-
-{% include "pinterest/pinterest.css" %}
-{% include "pinterest/ribbon.css" %}
-
 {% if not contents_only %}
+  {% include "floating_menu_css.html" %}
+  {% include "css/google_button.html" %}
+  <script language="javascript" src="js/mypage_common.js" type="text/javascript"></script>
+  {% include "pinterest/pinterest.css" %}
   {% include "pinterest/pinterest.js" %}
   {% if use_masonry %}
-    {% include "pinterest/masonry.js" %}
+    <script language="javascript" src="js/masonry.js" type="text/javascript"></script>
   {% endif %}
   {% include "pinterest/infinite_scroll.js" %}
 {% endif %}
