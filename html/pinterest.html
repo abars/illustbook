@@ -175,7 +175,8 @@
 
 {% if next_query %}
 <div id="page-nav">
-  <a href="{{redirect_api}}?{{next_query}}&amp;contents_only=1&amp;page={{next_page}}"></a>
+  <!-- page must be 2 for inf-scroll path detecter -->
+  <a href="{{redirect_api}}?{{next_query}}&amp;contents_only=1&amp;page=2"></a>
 </div>
 {% endif %}
 
@@ -203,7 +204,7 @@
   <script language="javascript" src="{{host}}js/infinite_scroll.js" type="text/javascript"></script>
   <script type="text/javascript">
   $(document).ready(function(){
-   infinite_scroll_initialize('{{infinite_scroll_selecter}}',"{{use_masonry}}"=="True","{{host}}");
+   infinite_scroll_initialize('{{infinite_scroll_selecter}}',"{{use_masonry}}"=="True","{{host}}",{{page}});
   });
   </script>
 {% endif %}

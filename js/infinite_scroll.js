@@ -19,7 +19,7 @@
     });    
   }
 
-  function infinite_scroll_initialize(itemSelector,use_masonry,host){
+  function infinite_scroll_initialize(itemSelector,use_masonry,host,page){
   set_return_to_top();
 	var $container = $('#infinite-scroll-container');
 	$container.infinitescroll({
@@ -27,6 +27,9 @@
       nextSelector : '#page-nav a',  // selector for the NEXT link (to page 2)
       itemSelector : itemSelector,     // selector for all items you'll retrieve
       bufferPx : 2000, // 最も下に行く前にロードをかける
+      state: {
+        currPage: page
+      },
       loading: {
           finishedMsg: '<div class="loading">ページの終端です。</div>',
           img: host+'static_files/loading.gif',
