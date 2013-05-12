@@ -15,12 +15,13 @@
 		{% endif %}
 		</div>
 
-		<!-- メインブロック -->
-		<div style="float:left;">
+		<!-- メイン -->
+		<div style="float:left;{% if is_iphone %}width:220px;{% else %}width:750px;{% endif %}">
 	
 		<!-- ユーザ名 -->
+		<div style="float:left;"> 
 		{% if feed.mode != "deleted" %}
-			<p><b>
+			<b>
 			{% if feed.from_user %}
 				<a href="{{feed.from_user.profile_url}}">
 					{{feed.from_user.name}}
@@ -33,9 +34,36 @@
 				{{feed.to_user.name}}
 			</A>
 			{% endif %}
-			</b></p>
+			</b>
 		{% endif %}
-	
+		</div>
+
+		<!-- オプション -->
+		<div style="float:right;text-align:right;">
+		{{feed.create_date}}<br/>
+
+		{% if not view_mode %}
+			{% if edit_mode %}
+				{% if feed.from_user.user_id == user_id %}
+				<a href="#" onclick="if(confirm('ツイートを削除してもよろしいですか？')){window.location.href='feed_tweet?mode=del_tweet&key={{feed.key}}&feed_page={{page}}&edit=1&tab={{tab}}';}return false;" class="g-button mini">
+					削除
+				</a><br/>
+				{% else %}
+				<a href="#" onclick="if(confirm('フィードをタイムラインから除外してもよろしいですか？')){window.location.href='feed_tweet?mode=del_feed&key={{feed.key}}&feed_page={{page}}&edit=1&tab={{tab}}';}return false;" class="g-button mini">
+					除外
+				</a><br/>
+				{% endif %}
+			{% endif %}
+			{% if feed.to_user.user_id == user_id %}
+				<a href="mypage?user_id={{feed.from_user.user_id}}&tab=feed" class="g-button mini">
+				返信
+				</a><br/>
+			{% endif %}
+		{% endif %}
+		</div>
+
+		<br clear="all"/>
+
 		{% set deleted_style_header = "<font color='#666'>" %}
 		{% set deleted_style_footer = "</font>" %}
 		{% set message = feed.message %}
@@ -151,29 +179,6 @@
 		<!-- メインブロック -->
 		</div>
 
-		<!-- オプション -->
-		<div style="float:right;text-align:right;">
-		{{feed.create_date}}<br/>
-
-		{% if not view_mode %}
-			{% if edit_mode %}
-				{% if feed.from_user.user_id == user_id %}
-				<a href="#" onclick="if(confirm('ツイートを削除してもよろしいですか？')){window.location.href='feed_tweet?mode=del_tweet&key={{feed.key}}&feed_page={{page}}&edit=1&tab={{tab}}';}return false;" class="g-button mini">
-					削除
-				</a><br/>
-				{% else %}
-				<a href="#" onclick="if(confirm('フィードをタイムラインから除外してもよろしいですか？')){window.location.href='feed_tweet?mode=del_feed&key={{feed.key}}&feed_page={{page}}&edit=1&tab={{tab}}';}return false;" class="g-button mini">
-					除外
-				</a><br/>
-				{% endif %}
-			{% endif %}
-			{% if feed.to_user.user_id == user_id %}
-				<a href="mypage?user_id={{feed.from_user.user_id}}&tab=feed" class="g-button mini">
-				返信
-				</a><br/>
-			{% endif %}
-		{% endif %}
-		</div>
 	</div>
 	<br clear='all'/>
 	<hr/>

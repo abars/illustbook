@@ -121,7 +121,12 @@
   {% endif %}
 {% endif %}
 
-<!-- ユーザタイムライン -->
+<!-- 掲示板 -->
+{% if tab == "bbs" %}
+  {% include "mypage/bbs.html" %}
+{% endif %}
+
+<!-- タイムライン -->
 {% include "mypage/user_timeline.html" %}
 
 <!-- ガイド -->
