@@ -366,7 +366,7 @@ class ApiObject(webapp.RequestHandler):
 	@staticmethod
 	def create_bbs_object(req,bbs):
 		if(not bbs):
-			return {}
+			return None
 	
 		bookmark_cnt=0
 		if(bbs.bookmark_count):
@@ -517,6 +517,8 @@ class ApiObject(webapp.RequestHandler):
 			bbs_object=bbs_hash[bbs_object_key]
 			if(bbs_object):
 				bbs=ApiObject.create_bbs_object(req,bbs_object)
+				if(not bbs):
+					bbs={"title":"","bbs_url":"","bookmark":0,"key":"","thumbnail_url":""}	#deleted bbs
 			
 		#イベント発生スレッド取得
 		thread_object_key=StackFeedData.thread_key.get_value_for_datastore(feed)

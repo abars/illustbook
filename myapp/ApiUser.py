@@ -101,6 +101,8 @@ class ApiUser(webapp.RequestHandler):
 			if(bbs.del_flag):
 				continue
 			one_dic=ApiObject.create_bbs_object(req,bbs)
+			if(not one_dic):
+				continue
 			dic.append(one_dic)
 		return dic;
 
