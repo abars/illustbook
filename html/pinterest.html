@@ -50,13 +50,7 @@
 {% if not contents_only %}
   {% include "floating_menu_css.html" %}
   {% include "css/google_button.html" %}
-  <script language="javascript" src="js/mypage_common.js" type="text/javascript"></script>
   {% include "pinterest/pinterest.css" %}
-  {% include "pinterest/pinterest.js" %}
-  {% if use_masonry %}
-    <script language="javascript" src="js/masonry.js" type="text/javascript"></script>
-  {% endif %}
-  {% include "pinterest/infinite_scroll.js" %}
 {% endif %}
 
 </head>
@@ -198,6 +192,20 @@
 <div id="pinterest_footer">
 <a href="{{host}}">イラストブック</a>{% if is_iphone %}<br>{%else%} {%endif%}&copy; 2010-2013 <a href="http://www.abars.biz">ABARS</a> all rights reserved.
 </div>
+
+<!-- load javascript -->
+{% if not contents_only %}
+  <script language="javascript" src="js/mypage_common.js" type="text/javascript"></script>
+  {% if use_masonry %}
+    <script language="javascript" src="js/masonry.js" type="text/javascript"></script>
+  {% endif %}
+  <script language="javascript" src="{{host}}js/infinite_scroll.js" type="text/javascript"></script>
+  <script type="text/javascript">
+  $(document).ready(function(){
+   infinite_scroll_initialize('{{infinite_scroll_selecter}}',"{{use_masonry}}"=="True","{{host}}");
+  });
+  </script>
+{% endif %}
 
 </body>
 </html>

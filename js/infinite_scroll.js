@@ -1,6 +1,4 @@
-<script type="text/javascript">
-/* for w3c validater */
-/* <![CDATA[ */
+//infinite scroll
 
   function set_return_to_top(){
     $(function () {
@@ -21,35 +19,28 @@
     });    
   }
 
-$(document).ready(function(){
+  function infinite_scroll_initialize(itemSelector,use_masonry,host){
   set_return_to_top();
-});
-
-$(function(){
 	var $container = $('#infinite-scroll-container');
-
 	$container.infinitescroll({
       navSelector  : '#page-nav',    // selector for the paged navigation 
       nextSelector : '#page-nav a',  // selector for the NEXT link (to page 2)
-      itemSelector : '{{infinite_scroll_selecter}}',     // selector for all items you'll retrieve
+      itemSelector : itemSelector,     // selector for all items you'll retrieve
       bufferPx : 2000, // 最も下に行く前にロードをかける
       loading: {
           finishedMsg: '<div class="loading">ページの終端です。</div>',
-          img: '{{host}}static_files/loading.gif',
+          img: host+'static_files/loading.gif',
           msgText: '<div class="loading">次のページを読込中</div>'
         }
       },
       // trigger Masonry as a callback
       function( newElements ) {
-        {% if use_masonry %}
+        if(use_masonry){
           var $newElems = $( newElements );
           $newElems.css({ opacity: 0 });
           $container.masonry( 'appended', $newElems, true ); 
           $newElems.animate({ opacity: 1 });
-        {% endif %}
+        }
       }
     );
-});
-
-/* ]]> */
-</script>
+}
