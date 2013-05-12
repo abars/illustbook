@@ -5,11 +5,13 @@
 		var no=document.getElementById('design_template_no').value
 		var url='{{host}}usr/{{bbs.key()}}/?css='+no
 
-		{% for app2 in my_app_list %}
-			if(no=="{{app2.app_id}}"){
-				url='{{host}}usr/{{bbs.key()}}/?css_key={{app2.key()}}'
-			}
-		{% endfor %}
+		{% if my_app_list %}
+			{% for app2 in my_app_list %}
+				if(no=="{{app2.app_id}}"){
+					url='{{host}}usr/{{bbs.key()}}/?css_key={{app2.key()}}'
+				}
+			{% endfor %}
+		{% endif %}
 
 		window.open(url);
 	}
@@ -63,9 +65,11 @@
 					<option value="2" {% if bbs.design_template_no == 2 %} selected="selected" {% endif%}>グリーン</option>
 					<option value="3" {% if bbs.design_template_no == 3 %} selected="selected" {% endif%}>ピンク</option>
 					<option value="4" {% if bbs.design_template_no == 4 %} selected="selected" {% endif%}>ホワイト</option>
-					{% for app2 in my_app_list %}
-						<option value="{{app2.app_id}}" {% if bbs.design_template_no == 32767 and bbs_css and bbs_css.app_id == app2.app_id %} selected="selected" {% endif%}>{{app2.app_name}}</option>
-					{% endfor %}
+					{% if my_app_list %}
+						{% for app2 in my_app_list %}
+							<option value="{{app2.app_id}}" {% if bbs.design_template_no == 32767 and bbs_css and bbs_css.app_id == app2.app_id %} selected="selected" {% endif%}>{{app2.app_name}}</option>
+						{% endfor %}
+					{% endif %}
 				</select>
 				<input type="button" value="プレビュー" class="g-button" onclick="css_preview();">
 			</TD></TR>

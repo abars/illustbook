@@ -69,28 +69,6 @@ function show_more_tag(){
   masonry_reload();
 }
 
-function show_follower(){
-  if($('#follower').is(':visible')){
-    $('#follower').hide();
-    $('#follower_button').show();  
-  }else{
-    $('#follower').show();
-    $('#follower_button').hide();  
-  }
-  masonry_reload();
-}
-
-function show_profile(){
-  if($('#profile').is(':visible')){
-    $('#profile').hide();
-    $('#profile_button').text("詳細")
-  }else{
-   $('#profile').show();  
-    $('#profile_button').text("閉じる")
-  }
-  masonry_reload();
-}
-
 function show_search(){
   if($('#search').is(':visible')){
     $('#search').hide();

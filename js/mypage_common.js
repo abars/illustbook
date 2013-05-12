@@ -40,3 +40,23 @@ function confirm_unfollow(user_key,name){
 		location.href="add_bookmark?mode=del_user&user_key="+user_key
 	}
 }
+
+function show_follower(){
+  if($('#follower').is(':visible')){
+    $('#follower').hide();
+    $('#follower_button').show();  
+  }else{
+    $('#follower').show();
+    $('#follower_button').hide();  
+  }
+}
+
+function show_profile(){
+  if($('#profile').is(':visible')){
+    $('#profile').hide();
+    $('#profile_button').text("詳細")
+  }else{
+   $('#profile').show();  
+    $('#profile_button').text("閉じる")
+  }
+}
