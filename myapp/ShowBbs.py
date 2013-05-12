@@ -184,6 +184,11 @@ class ShowBbs(webapp.RequestHandler):
 		if(bbs.bbs_mode!=BbsConst.BBS_MODE_NO_IMAGE):# and design["is_iphone"]):
 			infinite_scroll=True
 
+		#infinite_scrollの2ページ目以降
+		contents_only=0
+		if(self.request.get("contents_only")=="1"):
+			contents_only=1
+
 		#レンダリング
 		template_values = {
 			'host': host_url,
@@ -222,7 +227,8 @@ class ShowBbs(webapp.RequestHandler):
 			'is_admin': is_admin,
 			'can_edit_design': can_edit_design,
 			'infinite_scroll': infinite_scroll,
-			'infinite_scroll_selecter': ".entry"
+			'infinite_scroll_selecter': ".entry",
+			'contents_only': contents_only
 		}
 
 		path = "/html/"+design["base_name"]

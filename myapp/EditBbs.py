@@ -52,11 +52,10 @@ class EditBbs(webapp.RequestHandler):
 			tab=self.request.get("tab")
 
 		bbs_css=None
-		if(bbs.css):
-			try:
-				bbs_css=bbs.css
-			except:
-				bbs_css=None
+		try:
+			bbs_css=bbs.css
+		except:
+			bbs_css=None
 
 		template_values = {
 			'host': './',

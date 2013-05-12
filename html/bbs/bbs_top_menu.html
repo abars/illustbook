@@ -28,8 +28,7 @@
 
 	<div class="g-button-group">
 	<div id="contents-header-edit">
-		{% if bbs.bbs_mode == 3 %}
-		{% else %}
+		{% if bbs.bbs_mode != 3 %}
 			{% if can_create_new_image %}
 				{% if not bbs.disable_create_new_illust %}
 					{%if template_path %}
@@ -62,11 +61,12 @@
 		{% endif %}
 	</div>
 	</div>
-
+<!--
 	{% if bbs.bbs_mode and can_create_new_image %}
 	{%else%}
 		<div style="width:340px;float:left">　</div>
 	{% endif%}
+-->
 	<div class="clr"></div>
 </div>
 {% endif %}

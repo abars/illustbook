@@ -8,18 +8,20 @@
 <body>
 {% include "floating_menu.html" %}
 <div id="container">
-	<!-- メンテナンス中 -->
-	{% if is_maintenance %}
-		メンテナンスモードで稼動しています。現在、新規投稿はできません。<BR>
+	{% if not contents_only %}
+		<!-- メンテナンス中 -->
+		{% if is_maintenance %}
+			メンテナンスモードで稼動しています。現在、新規投稿はできません。<BR>
+		{% endif %}
+
+		<!-- ヘッダ -->
+		<div id="header">
+			{% include "bbs/bbs_header.html" %}
+		</div>
+
+		<!-- トップメニュー -->
+		{% include "bbs/bbs_top_menu.html" %}
 	{% endif %}
-
-	<!-- ヘッダ -->
-	<div id="header">
-		{% include "bbs/bbs_header.html" %}
-	</div>
-
-	<!-- トップメニュー -->
-	{% include "bbs/bbs_top_menu.html" %}
 
 	<!-- コンテンツ -->
 	<div id="contents" style="margin-bottom:0px;">
@@ -34,22 +36,23 @@
 		{% endif %}
 		{% endif %}
 			<!-- 並びかえ・ページ -->
-			<div id="entry-head">
-				<div style="float:left;"><!-- id="page-head">-->
-					{% include "bbs/bbs_order.html" %}
+			{% if not contents_only %}
+				<div id="entry-head">
+					<div style="float:left;">
+						{% include "bbs/bbs_order.html" %}
+					</div>
+					{% if not is_iphone %}
+					<div id="rss" style="margin-top:3px;">
+						{% include "bbs/bbs_rss.html" %}
+					</div>
+					{% endif %}
+					<div class="clr"></div>
 				</div>
-				{% if not is_iphone %}
-				<div id="rss" style="margin-top:3px;">
-					{% include "bbs/bbs_rss.html" %}
-				</div>
-				{% endif %}
-				<div class="clr"></div>
-			</div>
+			{% endif %}
 
 			{% if bbs.bbs_mode == 3 %}
-				<!--空白を入れる（昔は広告だった）-->
-				<div class="entry">
-				</div>
+				<!--空白を入れる-->
+				<p>&nbsp;</p>
 			{% endif %}
 
 			{% if bbs.disable_content_image  %}
@@ -73,7 +76,7 @@
 				<div id="infinite-scroll-container" class="transitions-enabled infinite-scroll clearfix">
 				{% endif %}
 				{% for thread in threads %}
-					{% if loop.index == 2 %}
+					{% if loop.index == 2 and not contents_only %}
 						<!--広告を一つ目の記事の後に入れる-->
 						{% if bbs.bbs_mode != 3 %}
 							{% if not bbs.disable_content_image %}
@@ -94,20 +97,17 @@
 			
 			{% if bbs.bbs_mode == 3 %}
 				<!--空白を入れる-->
-				<div class="entry">
-				</div>
+				<p>&nbsp;</p>
 			{% endif %}
 
 			<!-- ページ -->
 			{% if not infinite_scroll %}
 			<div id="entry-bottom">
-				<!-- <div id="page-bottom"> -->
 				{% if is_iphone %}
 					{% include "bbs/bbs_page_no.html" %}
 				{% else %}
 					{% include "bbs/bbs_order.html" %}
 				{% endif %}
-				<!-- </div> -->
 			</div>
 			{% endif %}
 
@@ -116,11 +116,13 @@
 		</div>
 
 		<!-- サイドバー -->
-		{% include "bbs/bbs_sidebar.html" %}
+		{% if not contents_only %}
+			{% include "bbs/bbs_sidebar.html" %}
+		{% endif %}
 		<div class="clr"></div>
 	</div>
 	<!-- フッタ -->
-	{% if template_path %}
+	{% if template_path and not contents_only %}
 		{% include 'footer.html' %}
 	{% endif %}
 </div>
@@ -128,28 +130,30 @@
 {% if infinite_scroll %}
 <div id="page-nav">
 	<!-- page must be 2 for inf-scroll path detecter -->
-	<a href="{{page_url_base}}2&amp;is_iphone={{is_iphone}}"></a>
+	<a href="{{page_url_base}}2&amp;is_iphone={{is_iphone}}&amp;contents_only=1"></a>
 </div>
 <div id="back-top">
   <a href="#top">TOP</a>
 </div>
 {% endif %}
 
-{% if not template_path %}
+{% if not template_path and not contents_only %}
 	{% include 'footer.html' %}
 {% endif %}
 
 <!-- java script -->
-{% include "jquery.html" %}
-<script language="javascript" src="{{host}}js/bbs.js" type="text/javascript"></script>
-<script language="javascript" src="{{host}}js/thread.js" type="text/javascript"></script>
-{% if infinite_scroll %}
-  <script language="javascript" src="{{host}}js/infinite_scroll.js" type="text/javascript"></script>
-  <script type="text/javascript">
-  $(document).ready(function(){
-   infinite_scroll_initialize('{{infinite_scroll_selecter}}',"{{use_masonry}}"=="True","{{host}}",{{page}});
-  });
-  </script>
+{% if not contents_only %}
+	{% include "jquery.html" %}
+	<script language="javascript" src="{{host}}js/bbs.js" type="text/javascript"></script>
+	<script language="javascript" src="{{host}}js/thread.js" type="text/javascript"></script>
+	{% if infinite_scroll %}
+		<script language="javascript" src="{{host}}js/infinite_scroll.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			$(document).ready(function(){
+			infinite_scroll_initialize('{{infinite_scroll_selecter}}',"{{use_masonry}}"=="True","{{host}}",{{page}});
+		});
+		</script>
+	{% endif %}
 {% endif %}
 
 </body>
