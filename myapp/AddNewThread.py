@@ -43,6 +43,7 @@ from myapp.SyncPut import SyncPut
 from myapp.ApiFeed import ApiFeed
 from myapp.CategoryList import CategoryList
 from myapp.EscapeComment import EscapeComment
+from myapp.RssFeed import RssFeed
 
 class AddNewThread(webapp.RequestHandler):
 	def write_status(self,is_flash,msg):
@@ -222,6 +223,9 @@ class AddNewThread(webapp.RequestHandler):
 		
 		#news
 		ApiFeed.invalidate_cache()
+
+		#Rss
+		RssFeed.invalidate_cache(str(bbs.key()))
 	
 	def get_thread_url(self,bbs,new_thread):
 		url="http://"+self.request.host+"/"

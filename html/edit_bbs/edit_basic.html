@@ -64,7 +64,7 @@
 					<option value="3" {% if bbs.design_template_no == 3 %} selected="selected" {% endif%}>ピンク</option>
 					<option value="4" {% if bbs.design_template_no == 4 %} selected="selected" {% endif%}>ホワイト</option>
 					{% for app2 in my_app_list %}
-						<option value="{{app2.app_id}}" {% if bbs.design_template_no == 32767 and bbs.css.app_id == app2.app_id %} selected="selected" {% endif%}>{{app2.app_name}}</option>
+						<option value="{{app2.app_id}}" {% if bbs.design_template_no == 32767 and bbs_css and bbs_css.app_id == app2.app_id %} selected="selected" {% endif%}>{{app2.app_name}}</option>
 					{% endfor %}
 				</select>
 				<input type="button" value="プレビュー" class="g-button" onclick="css_preview();">
@@ -72,7 +72,7 @@
 			
 			<!--
 			<TR><TH>CSSデザインID</TH><TD>
-				<input name="css" id="css" value="{% if bbs.css and bbs.css.app_id %}{{bbs.css.app_id}}{% endif %}"><BR>デザインテンプレートでCSSを選択した場合のみ有効<BR>
+				<input name="css" id="css" value="{% if bbs_css and bbs_css.app_id %}{{bbs_css.app_id}}{% endif %}"><BR>デザインテンプレートでCSSを選択した場合のみ有効<BR>
 			</TD></TR>
 			-->
 			

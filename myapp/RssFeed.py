@@ -63,6 +63,10 @@ class RssFeed(webapp.RequestHandler):
 		
 		return result
 
+	@staticmethod
+	def invalidate_cache(bbs_key):
+		memcache.delete("feed_"+bbs_key)
+
 	def get(self,bbs_key):
 		SetUtf8.set()
 		bbs_key_original=bbs_key

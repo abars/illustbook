@@ -51,6 +51,13 @@ class EditBbs(webapp.RequestHandler):
 		if(self.request.get("tab")):
 			tab=self.request.get("tab")
 
+		bbs_css=None
+		if(bbs.css):
+			try:
+				bbs_css=bbs.css
+			except:
+				bbs_css=None
+
 		template_values = {
 			'host': './',
 			'bbs': bbs,
@@ -61,7 +68,8 @@ class EditBbs(webapp.RequestHandler):
 			'my_app_list': my_app_list,
 			'user': user,
 			'tab': tab,
-			'redirect_url': self.request.path
+			'redirect_url': self.request.path,
+			'bbs_css': bbs_css
 		}
 
 		path = '/html/edit_bbs.html'
