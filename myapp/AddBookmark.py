@@ -220,6 +220,8 @@ class AddBookmark(webapp.RequestHandler):
 			url=url+"?tab=bookmark"
 		if(mode=="del_bbs" or mode=="add_bbs"):
 			url=url+"?tab=bbs"
+		if(mode=="add_user" or mode=="del_user"):
+			url=url+"?user_id="+add_user_key
 
 		self.redirect(str(url))
 		
