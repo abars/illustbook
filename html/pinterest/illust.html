@@ -1,3 +1,9 @@
+{% if page_mode != "user" %}
+  {% set target_page = "target='_BLANK'" %}
+{% else %}
+  {% set target_page = "" %}
+{% endif %}
+
 {% if not thread_list %}
   {% if order == "new" %}
     <!-- disable newsの1ページitemが存在しない対策 -->
@@ -12,7 +18,7 @@
     <!-- bbs -->
   {% if thread.bbs_url %}
     <div style="margin:4px;text-align:center;">
-      <a href="{{thread.bbs_url}}" target="_BLANK" style="width:100%;display:block;"><small>{{thread.bbs_title}}</small></a>
+      <a href="{{thread.bbs_url}}" {{target_page}} style="width:100%;display:block;"><small>{{thread.bbs_title}}</small></a>
     </div>
     <hr style="margin:0px;clear:both;"/>  
   {% endif %}
@@ -22,7 +28,7 @@
 
   {% if thread.image_url %}
         <div class="side-corner-tag">
-          <a href="{{thread.thread_url}}" target="_BLANK">
+          <a href="{{thread.thread_url}}" {{target_page}}>
             <img src="{{thread.thumbnail2_url}}" width="{{thread|thumbnail2_width(is_iphone)}}px" height="{{thread|thumbnail2_height(is_iphone)}}px" alt="{{thread.title}}"/>
           </a>
 
@@ -52,7 +58,7 @@
   <div class="illust_summary">
     {% if thread.title %}
     {% if thread.title != "notitle" %}
-      <a href="{{thread.thread_url}}" target="_BLANK">
+      <a href="{{thread.thread_url}}" {{target_page}}>
        <b>{{thread.title}}</b>
       </a>
       <br/>
@@ -107,7 +113,7 @@
     {%if thread.comment %}
     <hr style="margin:0px;clear:both;"/>
     <div style="margin:4px;text-align:center;">
-      <a href="{{thread.thread_url}}" target="_BLANK" style="width:100%;display:block;"><small>{{thread.comment}}件のコメント</small></a>
+      <a href="{{thread.thread_url}}" {{target_page}} style="width:100%;display:block;"><small>{{thread.comment}}件のコメント</small></a>
     </div>
     {% endif %}
 
