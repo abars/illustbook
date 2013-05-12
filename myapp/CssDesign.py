@@ -154,11 +154,13 @@ class CssDesign (webapp.RequestHandler):
 			return
 		
 		is_iphone=CssDesign.is_iphone(self)
+		is_tablet=CssDesign.is_tablet(self)
 		
 		template_values = {
 			'bbs':bbs,
 			'user_css': user_css,
-			'is_iphone':is_iphone
+			'is_iphone':is_iphone,
+			'is_tablet':is_tablet
 		}
 
 		path = '/tempform/style_main.htm'

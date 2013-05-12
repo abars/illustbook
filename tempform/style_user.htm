@@ -37,7 +37,7 @@ body {
 
 /* メインコンテナ */
 #container {
-{%if bbs.content_width %}
+{%if bbs.content_width and not is_tablet %}
 	width:{{bbs.content_width}}px;
 {%else%}
 	width:800px;
@@ -95,7 +95,7 @@ body {
 /* イラスト一覧 */
 #main_2col {
 	float:left;
-{%if bbs.content_width %}
+{%if bbs.content_width and not is_tablet %}
 	width:{{bbs.content_width-240}}px;
 {%else%}
 	width:560px;
