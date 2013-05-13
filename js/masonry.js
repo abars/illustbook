@@ -13,10 +13,14 @@ $.Mason.prototype.resize = function() {
 $.Mason.prototype._reLayout = function( callback ) {
   var freeCols = this.cols;
   if ( this.options.cornerStampSelector ) {
+    //add for treat centering
+    var containerWidth = this.cols * this.columnWidth - this.options.gutterWidth;
+    this.element.css({ width: containerWidth });
+
+    //default
     var $cornerStamp = this.element.find( this.options.cornerStampSelector ),
       cornerStampX = $cornerStamp.offset().left - 
       ( this.element.offset().left + this.offset.x + parseInt($cornerStamp.css('marginLeft')) );
-      //alert(""+cornerStampX+"/"+this.columnWidth);
     freeCols = Math.floor( cornerStampX / this.columnWidth );
   }
   // reset columns
@@ -48,7 +52,7 @@ function masonry_exec(){
 }
 
 $(document).ready(function(){
-  masonry_exec(); //windowの確定
+  //masonry_exec(); //windowの確定
   masonry_exec(); //corner stampに対応
 });
 
