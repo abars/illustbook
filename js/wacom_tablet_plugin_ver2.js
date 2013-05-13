@@ -16,7 +16,7 @@
 	//まずプラグインを読み込みに行く
 	function initWacom(){
 		//プラグインを有効化
-		var text="<!--[if IE]><object width='1px' height='1px' id='Wacom' classid='CLSID:092dfa86-5807-5a94-bf3b-5a53ba9e5308' codebase='fbWacomTabletPlugin.cab'></object><![endif]--><!--[if !IE]> <--><!-- This is the Firebreath wacomtabletplugin --><object width='1px' height='1px' id='Wacom' type='application/x-wacomtabletplugin'></object><!--><![endif]-->";
+		var text="<!--[if IE]><object width='1px' height='1px' id='Wacom' classid='CLSID:092dfa86-5807-5a94-bf3b-5a53ba9e5308'></object><![endif]--><!--[if !IE]> <--><!-- This is the Firebreath wacomtabletplugin --><object width='1px' height='1px' id='Wacom' type='application/x-wacomtabletplugin'></object><!--><![endif]-->";
 		document.getElementById("wacomPlugin").innerHTML=text;
 		checkWacom();
 	}

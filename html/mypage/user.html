@@ -4,9 +4,9 @@
       {%include "mypage/edit_profile.html"%}
     {% else %}
     <div style="float:left;margin-right:4px;">
-      <img src="{{view_user.icon_url}}" {% if is_iphone %}width=80px height=80px{%else%}width=160px height=160px{% endif %}>
+      <img src="{{view_user.icon_url}}" {% if is_iphone %}width=74px height=74px{%else%}width=160px height=160px{% endif %}>
     </div>
-    <div style="float:left;word-break:break-all;{% if is_iphone %}width:200px;{% endif %}">
+    <div style="float:left;word-break:break-all;{% if is_iphone %}width:220px;{% endif %}">
       {% if view_user.name %}
        <p><b>{{view_user.name}}</b></p>
        <p>{% if view_user_profile.profile and view_user_profile.profile!="None" %}{{view_user_profile.profile|safe}}{% else %}&nbsp;{% endif %}</p>
@@ -40,7 +40,7 @@
             {% if bookmark.homepage %}<tr><td>ホームページ</td><td>　</td><td><a href="{{bookmark.homepage}}" class="declink"><div class="linebreak">{{bookmark.homepage}}</div></a></td></tr>{% endif %}
             {% if bookmark.mail %}<tr><td>メール</td><td>　</td><td><a href="mailto:{{bookmark.mail}}" class="declink"><div class="linebreak">{{bookmark.mail|safe}}</div></a></td></tr>{% endif %}
             {% if bookmark.twitter_id %}<tr><td>Twitter</td><td>　</td><td>{% if bookmark.twitter_id %}<a href="https://twitter.com/#!/{{bookmark.twitter_id}}" class="declink"><div class="linebreak">{{bookmark.twitter_id}}</div></a>{% endif %}</td></tr>{% endif %}
-            {% if is_admin %}{% if bookmark.owner %}<tr><td>アカウント(＊管理モード)</td><td>　</td><td>{{bookmark.owner.email}}</td></tr>{% endif %}{% endif %}
+            {% if is_admin %}{% if bookmark.owner %}<tr><td>アカウント(＊管理モード)</td><td>　</td><td>{{bookmark.owner.email()}}</td></tr>{% endif %}{% endif %}
             </table>
       </div>
 

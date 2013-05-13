@@ -541,36 +541,49 @@ class ApiObject(webapp.RequestHandler):
 		#コメントを取得
 		message=feed.message
 		if(feed.feed_mode=="new_comment_thread"):
-			comment_deleted=False
-
-			entry_key=StackFeedData.entry_key.get_value_for_datastore(feed)
-			entry=ApiObject.get_cached_object(entry_key)
-			if(entry_key):
-				if(not entry or entry.del_flag==BbsConst.ENTRY_DELETED):
-					comment_deleted=True
-
-			#レス投稿フィードの場合のみres_keyを持つ
-			#コメント投稿フィードの場合はres_keyにはNoneが入っている
-			res_key=StackFeedData.response_key.get_value_for_datastore(feed)
-			res=ApiObject.get_cached_object(res_key)
-			if(res_key):
-				if(not res):	#レスが削除された
-					comment_deleted=True
-
-			message=""
-			if(comment_deleted):
-				message="コメントは削除されました。"
-			else:
-				if(entry):
-					message=entry.content
-				if(res):
-					message=res.content
-
-			message=ApiObject.truncate_html(message)
+			message=ApiObject._get_entry_comment(feed)
 
 		#オブジェクトを返す
 		one_dic={"mode":feed.feed_mode,"from_user":from_user,"to_user":to_user,"follow_user":follow_user,"bbs":bbs,"thread":thread,"message":message,"create_date":create_date,"key":str(feed.key())}
 		return one_dic
+
+	@staticmethod
+	def _get_entry_comment(feed):
+		comment_deleted=False
+
+		entry_key=StackFeedData.entry_key.get_value_for_datastore(feed)
+		entry=ApiObject.get_cached_object(entry_key)
+		if(entry_key):
+			if(not entry or entry.del_flag==BbsConst.ENTRY_DELETED):
+				comment_deleted=True
+
+		#レス投稿フィードの場合のみres_keyを持つ
+		#コメント投稿フィードの場合はres_keyにはNoneが入っている
+		res_key=StackFeedData.response_key.get_value_for_datastore(feed)
+		res=ApiObject.get_cached_object(res_key)
+		if(res_key):
+			if(not res):	#レスが削除された
+				comment_deleted=True
+
+		message=""
+		if(comment_deleted):
+			message="コメントは削除されました。"
+		else:
+			if(res):
+				message=res.content
+			else:
+				if(entry):
+					message=entry.content
+
+		message=ApiObject.truncate_html(message)
+		
+		if(not comment_deleted):
+			if(entry and not res):
+				if(entry.illust_reply):
+					image_key=Entry.illust_reply_image_key.get_value_for_datastore(entry)
+					message="<img src='/thumbnail/"+str(image_key)+".jpg'/><br/>"+message
+
+		return message
 
 #-------------------------------------------------------------------
 #Access over capacity

@@ -16,7 +16,7 @@
 		</div>
 
 		<!-- メイン -->
-		<div style="float:left;{% if is_iphone %}width:220px;{% else %}width:750px;{% endif %}">
+		<div style="float:left;{% if is_iphone %}width:222px;{% else %}width:750px;{% endif %}">
 	
 		<!-- ユーザ名 -->
 		<div style="float:left;"> 
@@ -148,7 +148,7 @@
 
 	{% if feed.mode == "new_follow" %}
 		<a href="{{feed.follow_user.profile_url}}'">
-			<img src="{{feed.follow_user.icon_url}}&size=mini" width="50px" height="50px" class="radius_image"/>
+			<img src="{{feed.follow_user.icon_url}}&size=mini" width="50px" height="50px"/>
 		</a>
 	{% endif %}
 
