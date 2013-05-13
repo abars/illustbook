@@ -8,8 +8,8 @@
 	
 	<div style="float:left;padding-left:2px;padding-top:3px;padding-right:2px;font-weight:600;">
 	<div class="g-button-group">
-		{% if top_page or bbs or thread %}<!--or view_mode %}-->
-			<a href="{{host}}mypage" class="g-button mini {% if bbs and is_iphone %}no-text{% endif %}" style="margin:0px;"><i class="icon-home"></i>{% if bbs and is_iphone %}{%else%}マイページ{% endif %}{{user|new_feed_count}}</a>
+		{% if top_page or bbs or thread %}
+			<a href="{{host}}mypage" class="g-button mini {% if bbs and is_iphone %}no-text{% endif %}" style="margin:0px;"><i class="icon-home"></i>{% if is_iphone and bbs %}{%else%}マイページ{% endif %}{{user|new_feed_count}}</a>
 		{% else %}
 			<a href="{{host}}" class="g-button mini" style="margin:0px;"><i class="icon-home"></i>トップ</a>
 		{% endif %}
@@ -20,11 +20,11 @@
 				{% if thread.user_id %}
 					<a href="{{host}}mypage?user_id={{thread.user_id}}" class="g-button mini"><i class="icon-user"></i>ドロワー</a>
 				{% endif %}
-				{{thread|add_bookmark_thread(host)|safe}}
+				{{thread|add_bookmark_thread(host,is_iphone)|safe}}
 			{% else %}
 				{% if bbs %}
 					<a href="{{host}}mypage?user_id={{bbs.user_id}}" class="g-button mini"><i class="icon-user"></i>オーナー</a>
-					{{bbs|add_bookmark_bbs(host)|safe}}
+					{{bbs|add_bookmark_bbs(host,is_iphone)|safe}}
 				{% endif %}
 			{% endif %}
 		{% endif %}

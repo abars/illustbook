@@ -189,7 +189,7 @@ def div(value):
 #ブックマーク
 #-----------------------------------------------------------------
 
-def add_bookmark_core(command,search,count):
+def add_bookmark_core(command,search,count,is_iphone):
 	txt=""
 
 	if(count):
@@ -199,22 +199,26 @@ def add_bookmark_core(command,search,count):
 		txt+='</a>'
 
 	txt+='<a href="javascript:'+command+'" class="g-button mini">'
-	txt+='<i class="icon-plus"></i>ブックマーク'
+	txt+='<i class="icon-plus"></i>'
+	if(is_iphone):
+		txt+='ブクマ'
+	else:
+		txt+='ブックマーク'
 	txt+='</a>'
 
 	return txt
 
-def add_bookmark_thread(thread,host):
+def add_bookmark_thread(thread,host,is_iphone):
 	command="AddBookmark('"+host+"','"+str(thread.key())+"')"
 	search=""+host+'show_bookmark?thread_key='+str(thread.key())
 	count=thread.bookmark_count
-	return add_bookmark_core(command,search,count)
+	return add_bookmark_core(command,search,count,is_iphone)
 
-def add_bookmark_bbs(bbs,host):
+def add_bookmark_bbs(bbs,host,is_iphone):
 	command="bbs_add_bookmark('"+bbs.bbs_name+"','"+str(bbs.key())+"','"+host+"')";
 	search=""+host+'show_bookmark?bbs_key='+str(bbs.key())
 	count=bbs.bookmark_count
-	return add_bookmark_core(command,search,count)
+	return add_bookmark_core(command,search,count,is_iphone)
 
 #-----------------------------------------------------------------
 #アプリ表示
