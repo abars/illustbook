@@ -132,10 +132,11 @@
 	<!-- page must be 2 for inf-scroll path detecter -->
 	<a href="{{page_url_base}}2&amp;is_iphone={{is_iphone}}&amp;contents_only=1"></a>
 </div>
+{% endif %}
+
 <div id="back-top">
   <a href="#top">TOP</a>
 </div>
-{% endif %}
 
 {% if not template_path and not contents_only %}
 	{% include 'footer.html' %}
@@ -146,10 +147,10 @@
 	{% include "jquery.html" %}
 	<script language="javascript" src="{{host}}js/bbs.js" type="text/javascript"></script>
 	<script language="javascript" src="{{host}}js/thread.js" type="text/javascript"></script>
+	<script language="javascript" src="{{host}}js/infinite_scroll.js" type="text/javascript"></script>
 	{% if infinite_scroll %}
-		<script language="javascript" src="{{host}}js/infinite_scroll.js" type="text/javascript"></script>
 		<script type="text/javascript">
-			$(document).ready(function(){
+		$(document).ready(function(){
 			infinite_scroll_initialize('{{infinite_scroll_selecter}}',"{{use_masonry}}"=="True","{{host}}",{{page}});
 		});
 		</script>

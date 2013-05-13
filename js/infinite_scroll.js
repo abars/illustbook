@@ -1,6 +1,4 @@
-//infinite scroll
-
-  function set_return_to_top(){
+//return to top
     $(function () {
         $(window).scroll(function () {
             if ($(this).scrollTop() > 100) {
@@ -17,10 +15,9 @@
             return false;
         });
     });    
-  }
 
+//infinite scroll
   function infinite_scroll_initialize(itemSelector,use_masonry,host,page){
-  set_return_to_top();
 	var $container = $('#infinite-scroll-container');
 	$container.infinitescroll({
       navSelector  : '#page-nav',    // selector for the paged navigation 
