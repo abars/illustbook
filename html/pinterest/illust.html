@@ -15,14 +15,6 @@
 {% if thread_list %}
 {% for thread in thread_list %}
 <div class="item">
-    {# bbs #}
-  {% if thread.bbs_url %}
-    <div style="margin:4px;text-align:center;">
-      <a href="{{thread.bbs_url}}" {{target_page}} style="width:100%;display:block;"><small>{{thread.bbs_title}}</small></a>
-    </div>
-    <hr style="margin:0px;clear:both;"/>  
-  {% endif %}
-
   {# Image #}
   <div class="deletable">
 
@@ -110,6 +102,14 @@
       </small>
     </div>
 {% endif %}
+
+    {# bbs #}
+  {% if thread.bbs_url %}
+    <hr style="margin:0px;clear:both;"/>  
+    <div style="margin:4px;text-align:center;">
+      <a href="{{thread.bbs_url}}" {{target_page}} style="width:100%;display:block;"><small>{{thread.bbs_title}}</small></a>
+    </div>
+  {% endif %}
 
     {# comment #}
     {%if thread.comment %}

@@ -18,14 +18,7 @@
    <img src="static_files/banner_360b.png" alt="ロゴ"/>
   {% endif %}
    <div id="logo_fotter">
-    {% if not user %}
-    {% if not is_iphone %}
-      {% include "pinterest/about.html" %}<br/>
-    {% endif %}
-    {% endif %}
-     <div style="float:right;">
-       イラスト：<a href="http://pochigoya0423.blog.shinobi.jp/">飯田のぎ</a>
-     </div>
+      {% include "pinterest/about.html" %}
     </div>
   </div>
 {% endif %}
@@ -33,36 +26,13 @@
 {% if page_mode == "index" %}
   {% include "pinterest/menulist.html" %}
   <br clear="all"/>
-  {% if is_iphone %}
-  {% if not user %}
-  <div class="message">
-    {% include "pinterest/about.html" %}
-  </div>
-  {% endif %}
-  {% endif %}
 {% endif %}
 
 <!-- タグ一覧 -->
-
+{% if not is_iphone %}
 {% if tag_list %}
-<div class="message" {% if not is_iphone %}style="width:350px;margin-left:0px;margin-right:0px;"{%else%}style="width:300px;"{% endif %}>
-{% for tag2 in tag_list %}
-    {% if loop.index <= tag_display_n %}
-      {{tag2|safe}}　
-    {% endif %}
-{% endfor %}
-    <div id="more_tag">
-{% for tag2 in tag_list %}
-    {% if loop.index > tag_display_n %}
-      {% if loop.index <= 100 %}
-        {{tag2|safe}}　
-      {% endif %}
-    {% endif %}
-{% endfor %}
-      <a href="javascript:show_more_tag();" class="g-button mini">閉じる</a>
-    </div>
-      <a id="show_more_tag_button" href="javascript:show_more_tag();" class="g-button mini">もっと見る</a>
-</div>
+  {% include "pinterest/recent_tag.html" %}
+{% endif %}
 {% endif %}
 
 <!-- 広告 -->

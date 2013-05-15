@@ -1,4 +1,5 @@
 <div id="order">
+  <div style="float:left;">
   <div class="g-button-group toggle-buttons">
     <a href="{{host}}{{redirect_api}}?order=new" class="g-button {%if order == "new"%}checked{%endif%}">新着</a>
     <a href="{{host}}{{redirect_api}}?order=hot" class="g-button {%if order == "hot"%}checked{%endif%}">人気</a>
@@ -10,20 +11,29 @@
       <a href="{{host}}{{redirect_api}}?order=moper" class="g-button {%if order == "moper"%}checked{%endif%}">動画</a>
     {% endif %}
   </div>
+  </div>
 
     {% if is_iphone %}
-  <div class="g-button-group toggle-buttons" style="float:right;">
-    <a href="javascript:show_search();" class="g-button" id="search_button">検索</a>
-  </div>
+  <div style="float:right;">
+    <div class="g-button-group toggle-buttons">
+      <a href="javascript:show_search();" class="g-button" id="search_button">検索</a>
+    </div>
     {% else %}
      <div style="float:right;">
       {% include "pinterest/search.html" %}
-    </div>
+     </div>
     {% endif %}
+  </div>
+  <br clear="all"/>
 </div>
 
 {% if is_iphone %}
   <div id="search">
-      {% include "pinterest/search.html" %}
+      <div style="float:right;">
+        {% include "pinterest/search.html" %}
+      </div>
+      <br clear="all"/>
+      {% include "pinterest/recent_tag.html" %}
+      <br clear="all"/>
   </div>
 {% endif %}
