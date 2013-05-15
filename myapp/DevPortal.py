@@ -137,7 +137,11 @@ class DevPortal(webapp.RequestHandler):
 			app.image_type_list.append(img.headers['content-type'])
 			app.image_id_list.append(main.request.get("image_id"))
 		
-		app.put()
+		try:
+			app.put()
+		except:
+			main.response.out.write(Alert.alert_msg("画像の容量が大きすぎます。",main.request.host))
+			return
 		
 		if(main.request.get("redirect")):
 			main.redirect(str(main.request.get("redirect")))
