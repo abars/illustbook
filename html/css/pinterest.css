@@ -140,12 +140,10 @@ height: 360px;
 #logo_fotter {
 position:absolute;
 right:0px;
-{% if is_iphone %}
+
 bottom:20px;
 text-align:center;
-{% else %}
-bottom:0px;
-{% endif %}
+
 background-color:#ffffff;
 font-size:13px;
 color:#333;
