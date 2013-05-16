@@ -306,17 +306,18 @@ def logout_url(redirect_url):
 	return users.create_logout_url(redirect_url)
 
 def new_feed_count(obj):
+	#return 1
 	if(not obj):
-		return ""
-	if(type(obj)==Bookmark):
-		bookmark=obj
-	else:
-		bookmark=ApiObject.get_bookmark_of_user_id(str(obj.user_id()))
-		if(not bookmark):
-			return ""
+		return 0
+	#if(type(obj)==Bookmark):
+	#	bookmark=obj
+	#else:
+	bookmark=ApiObject.get_bookmark_of_user_id(str(obj.user_id()))
+	if(not bookmark):
+		return 0
 	if(not bookmark.new_feed_count):
-		return ""
-	return "("+str(bookmark.new_feed_count)+")"
+		return 0
+	return bookmark.new_feed_count
 
 #-----------------------------------------------------------------
 #スパムフィルタ
