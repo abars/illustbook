@@ -17,13 +17,13 @@
 		{% endif %}
 
 		{% if top_page or (bookmark and bookmark.new_feed_count) %}
-			<a href="{{host}}mypage" class="g-button mini {% if bbs and is_iphone %}no-text{% endif %}" style="margin:0px;"><i class="icon-home"></i>
+			<a href="{{host}}mypage" class="g-button mini {% if not show_link_detail %}no-text{% endif %}" style="margin:0px;"><i class="icon-home"></i>
 				{% if show_link_detail %}
 					マイページ
 				{% endif %}
 				{{user|new_feed_count}}</a>
 		{% else %}
-			<a href="{{host}}" class="g-button mini" style="margin:0px;"><i class="icon-home"></i>
+			<a href="{{host}}" class="g-button mini {% if not show_link_detail %}no-text{% endif %}" style="margin:0px;"><i class="icon-home"></i>
 				{% if show_link_detail %}
 				トップ
 				{% endif %}
