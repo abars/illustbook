@@ -8,18 +8,26 @@
 	
 	<div style="float:left;padding-left:2px;padding-top:3px;padding-right:2px;font-weight:600;">
 	<div class="g-button-group">
-		{% if top_page or bbs or thread %}
+		{% set show_link_detail = 0 %}
+
+		{% if not(is_iphone and thread and thread.user_id and thread.bookmark_count) %}
+			{% if not(is_iphone and (not thread) and bbs and bbs.bookmark_count) %}
+				{% set show_link_detail = 1 %}
+			{% endif %}
+		{% endif %}
+
+		{% if top_page or (bookmark and bookmark.new_feed_count) %}
 			<a href="{{host}}mypage" class="g-button mini {% if bbs and is_iphone %}no-text{% endif %}" style="margin:0px;"><i class="icon-home"></i>
-				{% if is_iphone and thread and thread.user_id and thread.bookmark_count%}
-				{%else%}
-					{% if is_iphone and (not thread) and bbs and bbs.bookmark_count %}
-					{% else %}
-						マイページ
-					{% endif %}
+				{% if show_link_detail %}
+					マイページ
 				{% endif %}
 				{{user|new_feed_count}}</a>
 		{% else %}
-			<a href="{{host}}" class="g-button mini" style="margin:0px;"><i class="icon-home"></i>トップ</a>
+			<a href="{{host}}" class="g-button mini" style="margin:0px;"><i class="icon-home"></i>
+				{% if show_link_detail %}
+				トップ
+				{% endif %}
+			</a>
 		{% endif %}
 		
 	{% if user %}

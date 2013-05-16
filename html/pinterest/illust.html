@@ -1,4 +1,4 @@
-{% if page_mode != "user" %}
+{% if not is_iphone and page_mode != "user" %}
   {% set target_page = "target='_BLANK'" %}
 {% else %}
   {% set target_page = "" %}
