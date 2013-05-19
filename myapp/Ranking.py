@@ -17,19 +17,19 @@ from myapp.ApiObject import ApiObject
 from myapp.MesThread import MesThread
 
 class Ranking(db.Model):
-	thread_list = db.ListProperty(db.Key)
-	user_list = db.StringListProperty()
-	owner_list = db.StringListProperty()
+	thread_list = db.ListProperty(db.Key,indexed=False)
+	user_list = db.StringListProperty(indexed=False)
+	owner_list = db.StringListProperty(indexed=False)
 	
-	ranking_list = db.ListProperty(db.Key)
+	ranking_list = db.ListProperty(db.Key,indexed=False)
 
-	owner_ranking_list = db.StringListProperty()
-	owner_id_ranking_list = db.StringListProperty()
+	owner_ranking_list = db.StringListProperty(indexed=False)
+	owner_id_ranking_list = db.StringListProperty(indexed=False)
 
-	user_ranking_list = db.StringListProperty()
-	user_id_ranking_list = db.StringListProperty()
+	user_ranking_list = db.StringListProperty(indexed=False)
+	user_id_ranking_list = db.StringListProperty(indexed=False)
 
-	date = db.DateTimeProperty(auto_now=True)
+	date = db.DateTimeProperty(auto_now=True,indexed=False)
 	
 	def reset(self):
 		self.thread_list=[]
