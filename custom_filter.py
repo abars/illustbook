@@ -387,6 +387,8 @@ def regulation_check(thread,user):
 	bookmark=ApiObject.get_bookmark_of_user_id(user.user_id())
 	if(not bookmark):
 		return False
+	if(not bookmark.regulation):
+		return False
 	if(adult & bookmark.regulation):
 		return True	#表示
 	return False
@@ -394,5 +396,5 @@ def regulation_check(thread,user):
 def regulation_name(thread):
 	adult=_get_adult(thread)
 	if(adult):
-		return "[R18]"
+		return "[R15]"
 	return ""

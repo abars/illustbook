@@ -124,8 +124,8 @@ class UpdateProfile(webapp.RequestHandler):
 		bookmark.icon_mini=None	#サムネイルの再作成を要求
 
 		age=Pinterest.get_age(bookmark)
-		if(bookmark.regulation and age>=1 and age<=17):
-			Alert.alert_msg_with_write(self,"制限付きコンテンツを表示するには18歳以上である必要があります。");
+		if(bookmark.regulation and age>=1 and age<=14):
+			Alert.alert_msg_with_write(self,"制限付きコンテンツを表示するには15歳以上である必要があります。");
 			return
 
 
