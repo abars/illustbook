@@ -17,17 +17,22 @@ from myapp.ApiObject import ApiObject
 from myapp.MesThread import MesThread
 
 class Ranking(db.Model):
+	#カウンターの加算時と、拍手時、ブックマーク時にスレッドとユーザを追加する
 	thread_list = db.ListProperty(db.Key,indexed=False)
 	user_list = db.StringListProperty(indexed=False)
-	owner_list = db.StringListProperty(indexed=False)
 	
+	#イラストのランキング結果と、ユーザのランキング結果を格納
+	#ランキングの更新はBackendで行う
 	ranking_list = db.ListProperty(db.Key,indexed=False)
-
-	owner_ranking_list = db.StringListProperty(indexed=False)
-	owner_id_ranking_list = db.StringListProperty(indexed=False)
-
-	user_ranking_list = db.StringListProperty(indexed=False)
 	user_id_ranking_list = db.StringListProperty(indexed=False)
+
+	#掲示板のオーナーランクは廃止
+	#owner_list = db.StringListProperty(indexed=False)
+	#owner_ranking_list = db.StringListProperty(indexed=False)
+	#owner_id_ranking_list = db.StringListProperty(indexed=False)
+
+	#ユーザのランキングはユーザIDのみ
+	#user_ranking_list = db.StringListProperty(indexed=False)
 
 	date = db.DateTimeProperty(auto_now=True,indexed=False)
 	
@@ -54,8 +59,8 @@ class Ranking(db.Model):
 		if(thread.illust_mode==BbsConst.ILLUSTMODE_ILLUST):
 			for cnt in range(score):
 				self._add_rank_core(thread.key(),self.thread_list,BbsConst.THREAD_RANKING_RECENT)
-				self._add_rank_core(thread.bbs_key.user_id,self.owner_list,BbsConst.USER_RANKING_RECENT)
 				self._add_rank_core(thread.user_id,self.user_list,BbsConst.USER_RANKING_RECENT)
+				#self._add_rank_core(thread.bbs_key.user_id,self.owner_list,BbsConst.USER_RANKING_RECENT)
 			self.put()
 
 	def get_sec(self,now):
@@ -65,12 +70,12 @@ class Ranking(db.Model):
 		self.create_thread_rank()
 		
 		rank=self.create_user_rank(self.user_list)
-		self.user_ranking_list=rank["user"]
+		#self.user_ranking_list=rank["user"]
 		self.user_id_ranking_list=rank["user_id"]
 		
-		rank=self.create_user_rank(self.owner_list)
-		self.owner_ranking_list=rank["user"]
-		self.owner_id_ranking_list=rank["user_id"]
+		#rank=self.create_user_rank(self.owner_list)
+		#self.owner_ranking_list=rank["user"]
+		#self.owner_id_ranking_list=rank["user_id"]
 
 		self.put()
 	
@@ -177,5 +182,5 @@ class Ranking(db.Model):
 		return self.get_rank_core(user_id,self.user_id_ranking_list)
 
 	def get_owner_rank(self,user_id):
-		return self.get_rank_core(user_id,self.owner_id_ranking_list)
+		return 1#self.get_rank_core(user_id,self.owner_id_ranking_list)
 		
