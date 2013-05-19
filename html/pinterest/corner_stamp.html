@@ -39,11 +39,7 @@
 {% if not is_iphone %}
   {% if thread_list %}
     {% if not tag_list %}
-      {% if bookmark.regulation %}
-        [年齢制限付きコンテンツ向けの広告を表示予定]
-      {% else %}
-        {% include "adsense/adsense_top.html" %}
-      {% endif %}
+      {% include "adsense/adsense_top.html" %}
     {% endif %}
   {% endif %}
 {% endif %}

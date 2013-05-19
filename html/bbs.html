@@ -70,7 +70,7 @@
 				{% for thread in threads %}
 					{% if loop.index == 2 and not contents_only %}
 						<!--広告を一つ目の記事の後に入れる-->
-						{% if bbs.bbs_mode != 3 and not user%}	{#ログインしている場合はアダルトが表示される可能性がある#}
+						{% if bbs.bbs_mode != 3 %}
 							<div class="entry mobile_ad">
 								{% include 'adsense/adsense_wide.html' %}
 							</div>
