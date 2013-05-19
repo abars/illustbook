@@ -55,14 +55,6 @@
 				<p>&nbsp;</p>
 			{% endif %}
 
-			{% if bbs.disable_content_image  %}
-				{% if not is_iphone %}
-					<div class="entry">
-						{% include 'adsense/adsense_wide.html' %}
-					</div>
-				{% endif %}
-			{% endif %}
-	
 			<!--イラストが存在しない場合-->
 			{% include "bbs/bbs_no_illust.html" %}
 	
@@ -78,12 +70,10 @@
 				{% for thread in threads %}
 					{% if loop.index == 2 and not contents_only %}
 						<!--広告を一つ目の記事の後に入れる-->
-						{% if bbs.bbs_mode != 3 %}
-							{% if not bbs.disable_content_image %}
-								<div class="entry mobile_ad">
-									{% include 'adsense/adsense_wide.html' %}
-								</div>
-							{% endif %}
+						{% if bbs.bbs_mode != 3 and not user%}	{#ログインしている場合はアダルトが表示される可能性がある#}
+							<div class="entry mobile_ad">
+								{% include 'adsense/adsense_wide.html' %}
+							</div>
 						{% endif %}
 					{%endif%}
 			

@@ -37,4 +37,5 @@ class Entry(CachedDbModel):
 	remote_addr = db.StringProperty()
 	comment_no = db.IntegerProperty()
 	search_index_version= db.IntegerProperty()
+	adult = db.IntegerProperty()
 	sand = db.StringProperty()

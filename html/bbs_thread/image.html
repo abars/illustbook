@@ -1,10 +1,15 @@
 {% if frozen　%}
 	＊このイラストを投稿したユーザのアカウントは凍結されているためイラストが非表示になっています。
 {% else %}
-{% if thread.adult or thread.violate_terms %}
-	＊ご利用規約の制約からイラストが非表示になっています。<br/>
-	＊ご利用規約は <a href="http://www.illustbook.net/terms">http://www.illustbook.net/terms</a> からご確認頂けます。<br/>
+{% if not(thread|regulation_check(user)) %}
+	[年齢制限付きイラスト]<br/>
+	[表示するにはマイページの閲覧設定を変更して下さい]
 {% else %}
-	<img src="{{host}}img/{{thread.cached_image_key}}{% if thread.is_png %}.png{%else%}.jpg{%endif%}" border="0" alt="{{thread.title}}" {% if is_iphone%} style="max-width:100%;"{%endif%}/>
-{% endif %}
+	{% if thread.violate_terms %}
+		＊ご利用規約の制約からイラストが非表示になっています。<br/>
+		＊ご利用規約は <a href="http://www.illustbook.net/terms">http://www.illustbook.net/terms</a> からご確認頂けます。<br/>
+	{% else %}
+		<img src="{{host}}img/{{thread.cached_image_key}}{% if thread.is_png %}.png{%else%}.jpg{%endif%}" border="0" alt="{{thread.title}}" {% if is_iphone%} style="max-width:100%;"{%endif%}/>
+	{% endif %}
+	{% endif %}
 {% endif %}

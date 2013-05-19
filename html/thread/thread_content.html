@@ -1,7 +1,7 @@
 <div class="entry">
 	{% if template_path %}
 	<div class="entry-title">
-		<h3>{{ thread.title|escape }}</h3>
+		<h3>{{thread|regulation_name}}{{ thread.title|escape }}</h3>
 		{% if not bbs.disable_applause %}
 			<div class="clap"><a href="javascript:applause('{{host}}','{{bbs.key()}}','{{thread.key()}}','thread');" rel="nofollow"><img src="{{template_path}}images/i_crap.gif" alt="拍手" width="53" height="20"/></a>{%if thread.applause %}{{thread.applause}}{%else%}0{%endif%}</div>
 		{% endif %}

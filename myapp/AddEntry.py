@@ -142,6 +142,9 @@ class AddEntry(webapp.RequestHandler):
 		entry.del_flag = 1
 		entry.res_list=[]
 
+		if(self.request.get("regulation")):
+			entry.adult=int(self.request.get("regulation"))
+
 		entry.create_date=datetime.datetime.today()
 		entry.date=datetime.datetime.today()
 

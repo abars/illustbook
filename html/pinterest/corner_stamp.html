@@ -36,18 +36,14 @@
 {% endif %}
 
 <!-- 広告 -->
-{% if is_iphone %}
-  {% if 0 %}
-  {% if not bookmark %}
-    {% if page_mode != "login_require" %}
-      {% include "adsense/adsense_wide.html" %}
-    {% endif %}
-  {% endif %}
-  {% endif %}
-{% else %}
+{% if not is_iphone %}
   {% if thread_list %}
     {% if not tag_list %}
-      {% include "adsense/adsense_top.html" %}
+      {% if bookmark.regulation %}
+        [年齢制限付きコンテンツ向けの広告を表示予定]
+      {% else %}
+        {% include "adsense/adsense_top.html" %}
+      {% endif %}
     {% endif %}
   {% endif %}
 {% endif %}

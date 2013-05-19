@@ -134,7 +134,10 @@ class AddNewThread(webapp.RequestHandler):
 		if(self.request.get("category")):
 			new_thread.category=self.request.get("category")
 			CategoryList.add_new_category(bbs,new_thread.category)
-		
+
+		if(self.request.get("regulation")):
+			new_thread.adult=int(self.request.get("regulation"))
+
 		if(self.request.get("is_png")):
 			new_thread.is_png=1
 		else:
@@ -199,8 +202,9 @@ class AddNewThread(webapp.RequestHandler):
 		
 		#サムネイル更新
 		if(timage):
-			bbs.cached_thumbnail_key=str(timage.key())
-			bbs.put()
+			if(new_thread.adult==0):
+				bbs.cached_thumbnail_key=str(timage.key())
+				bbs.put()
 
 		#新着イラストのキャッシュ無効化
 		RecentCommentCache.invalidate(bbs)

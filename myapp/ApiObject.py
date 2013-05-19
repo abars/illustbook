@@ -269,9 +269,13 @@ class ApiObject(webapp.RequestHandler):
 		violate_terms=0
 		if(bbs.disable_news):
 			disable_news=1
-		if(thread.adult or thread.violate_terms or thread.violate_photo):
+		if(thread.violate_terms or thread.violate_photo):
 			disable_news=1
 			violate_terms=1
+
+		adult=0
+		if(thread.adult):
+			adult=thread.adult
 
 		if(bbs.short and bbs.short=="mopersample" and thread.illust_mode!=BbsConst.ILLUSTMODE_MOPER):
 			disable_news=1;
@@ -346,7 +350,7 @@ class ApiObject(webapp.RequestHandler):
 		"applause":app,"bookmark":bookmark_cnt,"comment":comment_cnt,"key":str(thread.key()),
 		"disable_news":disable_news,"tag":tag_list,"width":thread.width,"height":thread.height,
 		"version":thread.thumbnail2_version,"violate_terms":violate_terms,"create_date_original":thread.create_date,
-		"bbs_title":bbs_title,"bbs_url":bbs_url}
+		"bbs_title":bbs_title,"bbs_url":bbs_url,"adult":adult}
 		
 		return one_dic
 

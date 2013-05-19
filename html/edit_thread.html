@@ -56,6 +56,9 @@
 		<TR><TD>カテゴリ</TD><TD>
 		{% include "category_list.html" %}
 		</TD></TR>
+		<TR><TD>年齢制限</TD><TD>
+		{% include "regulation_list.html" %}
+		</TD></TR>
 		<TR><TD>コメント数</TD><TD><input type="text" name="comment_cnt" value="{{thread.comment_cnt}}"></TD></TR>
 		</TABLE>
 		<textarea id="thread_summary" name="thread_summary" cols=60 rows=16 style="display:none;"></textarea>

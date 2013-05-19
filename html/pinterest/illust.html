@@ -14,10 +14,10 @@
 
 {% if thread_list %}
 {% for thread in thread_list %}
+{% if (thread|regulation_check(user))%}
 <div class="item">
   {# Image #}
   <div class="deletable">
-
   {% if thread.image_url %}
         <div class="side-corner-tag">
           <a href="{{thread.thread_url}}" {{target_page}}>
@@ -51,7 +51,7 @@
     {% if thread.title %}
     {% if thread.title != "notitle" %}
       <a href="{{thread.thread_url}}" {{target_page}}>
-       <b>{{thread.title}}</b>
+       <b>{{thread|regulation_name}}{{thread.title}}</b>
       </a>
       <br/>
     {% endif %}
@@ -118,7 +118,7 @@
       <a href="{{thread.thread_url}}" {{target_page}} style="width:100%;display:block;"><small>{{thread.comment}}件のコメント</small></a>
     </div>
     {% endif %}
-
 </div>
+{%endif%}
 {% endfor %}
 {% endif %}

@@ -363,3 +363,36 @@ def thumbnail2_height(thread,is_iphone):
 		return thread["height"]*width/thread["width"]
 	except:
 		return width
+
+#-----------------------------------------------------------------
+#レギュレーションの確認
+#-----------------------------------------------------------------
+
+def _get_adult(thread):
+	if(type(thread)==dict):
+		if(thread.has_key("adult")):
+			adult=thread["adult"]
+		else:
+			adult=0
+	else:
+		adult=thread.adult
+	return adult
+
+def regulation_check(thread,user):
+	adult=_get_adult(thread)
+	if(not adult):
+		return True
+	if(not user):
+		return False
+	bookmark=ApiObject.get_bookmark_of_user_id(user.user_id())
+	if(not bookmark):
+		return False
+	if(adult & bookmark.regulation):
+		return True	#表示
+	return False
+
+def regulation_name(thread):
+	adult=_get_adult(thread)
+	if(adult):
+		return "[R18]"
+	return ""

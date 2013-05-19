@@ -24,7 +24,18 @@
 					<option value="0" {% if not bookmark.disable_rankwatch %} selected="selected" {% endif %}>参加する</option>
 					<option value="1" {% if bookmark.disable_rankwatch %} selected="selected" {% endif%}>参加しない</option>
 				</select><br/>
-				ランキング設定は次回のランキング更新から反映されます
+				{#ランキング設定は次回のランキング更新から反映されます#}
+				</td></tr>
+				<tr><td>年齢制限付きコンテンツ</td><td>　</td><td>
+				<select name="regulation" id="regulation">
+					<option value="0" {% if bookmark.regulation==0 %} selected="selected" {% endif %}>制限なしのみ表示</option>
+					<option value="1" {% if bookmark.regulation==1 %} selected="selected" {% endif%}>
+						18歳未満禁止(男性向け)を表示</option>
+					<option value="2" {% if bookmark.regulation==2 %} selected="selected" {% endif%}>
+						18歳未満禁止(BL)を表示</option>
+					<option value="3" {% if bookmark.regulation==3 %} selected="selected" {% endif%}>
+						18歳未満禁止を全て表示</option>
+				</select><br/>
 				</td></tr>
 				<tr><td>コメント</td><td>　</td><td><textarea name="profile" rows="8" cols="40" style="width:90%;">{% if edit_profile %}{{edit_profile}}{% endif %}</textarea></td></tr>
 				<tr><td>ホームページ</td><td>　</td><td><input name="homepage" type="text" value="{% if bookmark.homepage %}{{bookmark.homepage}}{% endif %}" style="width:90%;"></td></tr>

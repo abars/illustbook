@@ -9,7 +9,7 @@
 	<!--イラスト掲示板-->
 	<div class="entry-title">
 		<!-- タイトル -->
-		<h3><a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key()}}{%endif%}.html'>{{ thread.title|escape }}</a></h3>
+		<h3><a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key()}}{%endif%}.html'>{{thread|regulation_name}}{{ thread.title|escape }}</a></h3>
 
 		<!-- 拍手 -->
 		{% if not bbs.disable_applause %}

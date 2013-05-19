@@ -30,6 +30,7 @@ from myapp.SetUtf8 import SetUtf8
 from myapp.RecentTag import RecentTag
 from myapp.Bookmark import Bookmark
 from myapp.ApiObject import ApiObject
+from myapp.Pinterest import Pinterest
 
 from myapp.SyncPut import SyncPut
 
@@ -47,6 +48,7 @@ class UpdateProfile(webapp.RequestHandler):
 		birthday_month = self.request.get("birthday_month")
 		birthday_day = self.request.get("birthday_day")
 		disable_rankwatch =int(self.request.get("disable_rankwatch"))
+		regulation=int(self.request.get("regulation"))
 
 		if(name==""):
 			Alert.alert_msg_with_write(self,"名前がありません。");
@@ -84,6 +86,7 @@ class UpdateProfile(webapp.RequestHandler):
 		bookmark.homepage=homepage
 		bookmark.owner=user
 		bookmark.disable_rankwatch=disable_rankwatch
+		bookmark.regulation=regulation
 		
 		bookmark.sex=int(self.request.get("sex"))
 
@@ -119,6 +122,12 @@ class UpdateProfile(webapp.RequestHandler):
 		bookmark.birthday_day=birthday_day
 		
 		bookmark.icon_mini=None	#サムネイルの再作成を要求
+
+		age=Pinterest.get_age(bookmark)
+		if(bookmark.regulation and age>=1 and age<=17):
+			Alert.alert_msg_with_write(self,"制限付きコンテンツを表示するには18歳以上である必要があります。");
+			return
+
 
 		if(self.request.get("icon")):
 			bookmark.icon=db.Blob(self.request.get("icon"))

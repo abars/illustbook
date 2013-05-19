@@ -28,6 +28,7 @@ class Bookmark(db.Model):
 	user_list = db.StringListProperty()	#follow user list
 	name = db.StringProperty()
 	profile = db.TextProperty()
+	regulation = db.IntegerProperty()	#閲覧モード(1:男性向けマスク、2:女性向けマスク)
 	
 	#アイコン登録直後はここに値が入る
 	icon = db.BlobProperty()	#180px

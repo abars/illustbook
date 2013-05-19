@@ -138,11 +138,15 @@
 	</p>
 
 	<!-- 付加画像データ -->
-	{% if feed.mode == "bbs_new_illust" %}
+	{% if feed.mode == "bbs_new_illust" or feed.mode == "new_applause_thread" or feed.mode == "new_bookmark_thread" %}
 		{% if feed.thread.thumbnail_url %}
-			<a href="{{feed.thread.thread_url}}">
-				<img src="{{feed.thread.thumbnail_url}}" width="100px" height="100px"/>
-			</a>
+			{% if feed.thread|regulation_check(user)%}
+				<a href="{{feed.thread.thread_url}}">
+					<img src="{{feed.thread.thumbnail_url}}" width="100px" height="100px"/>
+				</a>
+			{% else %}
+				[年齢制限付きイラスト]
+			{% endif %}
 		{% endif %}
 	{% endif %}
 
@@ -150,14 +154,6 @@
 		<a href="{{feed.follow_user.profile_url}}'">
 			<img src="{{feed.follow_user.icon_url}}&size=mini" width="50px" height="50px"/>
 		</a>
-	{% endif %}
-
-	{% if feed.mode == "new_applause_thread" or feed.mode == "new_bookmark_thread" %}
-		{% if feed.thread.thumbnail_url %}
-			<a href="{{feed.thread.thread_url}}">
-				<img src="{{feed.thread.thumbnail_url}}" width="100px" height="100px"/>
-			</a>
-		{% endif %}
 	{% endif %}
 
 	{% if message %}

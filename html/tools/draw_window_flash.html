@@ -152,7 +152,7 @@ object, embed {
 {% endif %}
 				<div class="entry">
 					<H4>イラストを投稿する</H4><BR>
-					<p>イラストを掲示板に投稿します。以下のフォームにイラストの情報を入力して、投稿ボタンを押して下さい。投稿の際、非表示レイヤーは非表示の状態で、反転は反転された状態で投稿されます。また、投稿後はレイヤー情報が失われます。再編集をする必要がある場合は、イラスト作成画面のファイルメニューから、ファイルに保存して下さい。イラスト作成画面のツールの使い方は<A HREF="{{host}}guide" TARGET="_BLANK" class="declink">イラストブックの使い方</A>を参照して下さい。尚、実写画像とアダルトイラストの投稿はできません。詳細は<A HREF="{{host}}terms" TARGET="_BLANK" class="declink">ご利用規約</A>を参照して下さい。</p>
+					<p>イラストを掲示板に投稿します。以下のフォームにイラストの情報を入力して、投稿ボタンを押して下さい。投稿の際、非表示レイヤーは非表示の状態で、反転は反転された状態で投稿されます。また、投稿後はレイヤー情報が失われます。再編集をする必要がある場合は、イラスト作成画面のファイルメニューから、ファイルに保存して下さい。イラスト作成画面のツールの使い方は<A HREF="{{host}}guide" TARGET="_BLANK" class="declink">イラストブックの使い方</A>を参照して下さい。尚、実写画像の投稿はできません。詳細は<A HREF="{{host}}terms" TARGET="_BLANK" class="declink">ご利用規約</A>を参照して下さい。</p>
 					<p>&nbsp</p>
 					<p>&nbsp</p>
 
@@ -167,6 +167,9 @@ object, embed {
 					<tr><td>削除キー</td><td><input id="delete_key" style="width:100%;"/></td></tr>
 					<tr><td>カテゴリ</td><td>
 					{% include "category_list.html" %}
+					</td></tr>
+					<tr><td>年齢制限</td><td>
+					{% include "regulation_list.html" %}
 					</td></tr>
 					<tr><td>オプション</td><td>
 						<div id="thread_option" style="float:left;">

@@ -78,6 +78,8 @@ class UpdateThread(webapp.RequestHandler):
 		else:
 			thread.user_id=None
 
+		thread.adult=int(self.request.get("regulation"))
+
 		#thread.hidden_in_list = int(self.request.get('hidden_in_list'))
 		
 		try:

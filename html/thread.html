@@ -40,9 +40,15 @@
 				{% include "thread/thread_content.html" %}
 
 				<!-- 広告 -->
+				{% if not thread.adult %}
 				<div class="entry mobile_ad">
 					{% include 'adsense/adsense_wide.html' %}
 				</div>
+				{% else %}
+				<div class="entry mobile_ad">
+					[年齢制限付きイラスト向けの広告を表示予定]
+				</div>
+				{% endif %}
 
 				<!-- タグ -->
 				{% include "thread/thread_tag.html" %}
