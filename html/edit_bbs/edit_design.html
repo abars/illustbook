@@ -15,15 +15,8 @@
 	<TABLE BORDER=0 class="g-table">
 		<TR><TH>背景色（デフォルトffffff)</TH><TD><input type="text" class="color_select" name="bg_color" value="{{bbs.bg_color}}" maxlength="6"></TD></TR>
 		<TR><TH>フォント色（デフォルト333333)</TH><TD><input type="text" class="color_select" name="font_color" value="{{bbs.font_color}}" maxlength="6"></TD></TR>
-<!--
-		<TR><TH>ボタン色（デフォルト999999）</TH><TD><input type="text" name="button_color" value="{{bbs.button_color}}" maxlength="6"></TD></TR>
-		<TR><TH>ボタンアクティブ色（デフォルト777777）</TH><TD><input type="text" name="button_active_color" value="{{bbs.button_active_color}}" maxlength="6"></TD></TR>
--->
 	</TABLE>
 </div>
-
-<input type="hidden" name="button_color" value="{{bbs.button_color}}">
-<input type="hidden" name="button_active_color" value="{{bbs.button_active_color}}">
 
 <div class="example">
 <p>記事</p>
@@ -59,3 +52,17 @@
 	</TABLE>
 </div>
 
+<div class="example">
+<p>ボタン</p>
+	<TABLE BORDER=0 class="g-table">
+		<TR><TH>ボタンの色を変更するかどうか</TH><TD>
+			<select name="button_color_enable">
+				<option value="0" {% if not bbs.button_color_enable %}selected="selected"{% endif %}>変更しない</option>
+				<option value="1" {% if bbs.button_color_enable  %}selected="selected"{% endif %}>変更する</option>
+			</select>
+		</TD></TR>		
+		<TR><TH>背景色</TH><TD><input type="text" class="color_select" name="button_color" value="{{bbs.button_color}}" maxlength="6"></TD></TR>
+		<TR><TH>アクティブ色</TH><TD><input type="text" class="color_select" name="button_active_color" value="{{bbs.button_active_color}}" maxlength="6"></TD></TR>
+		<TR><TH>ボーダー色</TH><TD><input type="text" class="color_select" name="button_border_color" value="{{bbs.button_border_color}}" maxlength="6"></TD></TR>
+	</TABLE>
+</div>

@@ -34,7 +34,9 @@
 		{%if bbs.disable_normal_reply == 1 %}
 		{%else%}
 			{%if show_comment_form %}
-				<input type="button" value="返信" class="g-button" onclick="show('{{ entry.com.key() }}');"/>
+				{% if not entry.res_list %}
+					<input type="button" value="返信" class="g-button" onclick="show('{{ entry.com.key() }}');"/>
+				{% endif %}
 			{% endif %}
 		{%endif%}
 		</div>

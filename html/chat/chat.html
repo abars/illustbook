@@ -40,15 +40,11 @@
 </div>
 
 <div style="float:left;">
-{% if not is_iphone %}
-	<p>&nbsp</p>
-{% endif %}
-<p>&nbsp</p>
 <H1>イラブチャットとは</H1>
-<p>イラブチャット（β）はPCとiPadで楽しめるお絵かきチャットです。</p>
-<p>複数人同時にお絵かきとチャットを楽しむことができます。</p>
-<p>作成したイラストはイラストブックのお絵描き掲示板に投稿することができます。</p>
-<p>ご利用にはHTML5をサポートしたブラウザが必要です。IEは9以降にのみ対応しています。</p>
+<p>イラブチャット（β）はPCとiPadで楽しめるお絵かきチャットです。</br>
+複数人同時にお絵かきとチャットを楽しむことができます。</br>
+作成したイラストはイラストブックのお絵描き掲示板に投稿することができます。</br>
+ご利用にはHTML5をサポートしたブラウザが必要です。IEは9以降にのみ対応しています。</p>
 <a href="chat?mode=tool&key=always&viewmode=false&pass=false" class="g-button green">まずはお試し</a>
 <a href="https://twitter.com/share" class="twitter-share-button" data-lang="ja" data-hashtags="ilbchat">ツイート</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
@@ -67,16 +63,15 @@
 {% if room_list %}
 	{% for room in room_list %}
 		<div style="float:left;">
-			<div style="background-color:#aaaaaa;padding:1px;margin-right:4px;">
-		<a href="javascript:join_chat('{{room.key()}}',false,{% if room.password %}true{%else%}false{%endif%});" class="declink">
-				{% if room.password %}
-					<div style="width:100px;height:100px;background-color:#ffffff;color:#333333;"></div>
+			<a href="javascript:join_chat('{{room.key()}}',false,{% if room.password %}true{%else%}false{%endif%});" class="declink">
+				{% if not room.password %}
+					<div style="width:160px;height:160px;"></div>
 				{% else %}
-					<img src="./chat?mode=thumbnail&key={{room.key()}}" width="100px" height="100px"/>
+					<img src="./chat?mode=thumbnail&key={{room.key()}}" width="160px" height="160px"/>
 				{% endif %}
-				</a>
-			</div>
-		</div><div>
+			</a>
+		</div>
+		<div style="margin:4px;">
 		<p><h2>{{room.name}}{% if room.is_always %}（常時稼動ルーム）{% endif %}
 		{% if room.password %}
 			（パスワードが必要）{% if user %}{% if user.user_id == room.user_id %}（{{room.password}}）{% endif %}{% endif %}　
@@ -91,17 +86,15 @@
 		<div class="g-button-group">
 		<A HREF="javascript:join_chat('{{room.key()}}',false,{% if room.password %}true{%else%}false{%endif%});" class="g-button green">{% if not is_iphone %}{% endif %}参加（{{room.user_count}}人）</A>
 		{% if user %}{% if user.user_id() == room.user_id %}<A HREF="javascript:delete_room('./chat?mode=delete&key={{room.key()}}');" class="g-button green">{% if not is_iphone %}{% endif %}削除</A>{% endif %}{% endif %}
-		<!--<A HREF="javascript:join_chat('{{room.key()}}',true,{% if room.password %}true{%else%}false{%endif%});" class="g-button 
-		green">{% if not is_iphone %}{% endif %}閲覧</A>-->
 		</div>
 		</div>
 		</div>
-		<br clear="all">
+		<br clear="all"/>
 	{% endfor %}
 {% else %}
 	<p>稼働中のルームはありません。</p>
 {% endif %}
-	<p>&nbsp</p>
+	<br clear="all">
 </div>
 
 <script>
@@ -111,8 +104,6 @@
 		document.new_room_form.submit();
 	}
 </script>
-
-<p>&nbsp</p>
 
 <div>
 
@@ -133,7 +124,8 @@
 <input type="hidden" name="mode" value="create">
 <TABLE class="g-table">
 <TR><TH>ルーム名（必須）</TH><TD><input type="text" name="name" style="width:200px"></TD></TR>
-<TR><TH>パスワード</TH><TD><input type="text" name="pass" style="width:200px">　パスワードを設定しない場合は誰でも参加可能</TD></TR>
+<TR><TH>パスワード</TH><TD><input type="text" name="pass" style="width:200px">
+	<br/>パスワードを設定しない場合は誰でも参加可能</TD></TR>
 <TR><TH>キャンバスサイズ</TH><TD><select name="canvas_size">
 <option value="600x600">600x600px</option>
 <option value="800x600">800x600px</option>
@@ -147,12 +139,12 @@
 </div>
 
 <p>&nbsp</p>
-<p>&nbsp</p>
 <H1>利用ガイド</H1>
-<p>制限時間はありません。ルームは最終更新から10分が経過すると自動的に削除されます。</p>
-<p>バグ報告や要望は<A HREF="./support/" class="declink">サポート掲示板</A>までどうぞ。</p>
-<p>ログインしなくてもチャットに参加できるようになりました。</p>
-{% if is_admin %}<p>管理者向け：パスワードにalwaysと入れると常時稼動ルームになります</p>{% endif %}
-<p>&nbsp</p>
+<p>制限時間はありません。ルームは最終更新から10分が経過すると自動的に削除されます。</br>
+バグ報告や要望は<A HREF="./support/" class="declink">サポート掲示板</A>までどうぞ。</br>
+ログインしなくてもチャットに参加できるようになりました。</br>
+{% if is_admin %}管理者向け：パスワードにalwaysと入れると常時稼動ルームになります</br>{% endif %}
+</p>
+<br/>
 
 </div>

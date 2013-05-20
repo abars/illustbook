@@ -90,12 +90,19 @@
 		</div>
 
 		<!-- フッタ -->
-		{%include "footer.html"%}
+		{% if template_path %}
+			{%include "footer.html"%}
+		{% endif %}
 	</div>
 
 <div id="back-top">
   <a href="#top">TOP</a>
 </div>
+
+<!-- フッタ -->
+{% if not template_path %}
+	{%include "footer.html"%}
+{% endif %}
 
 <!-- javascript -->
 {% include "jquery.html" %}

@@ -22,11 +22,9 @@
 <meta http-equiv="Content-Script-Type" content="text/javascript" />
 <meta http-equiv="Content-Style-Type" content="text/css" />
 <meta name="Copyright" content="Copyright: ABARS" />
-{% if is_iphone %}
-	{% include "portal_css/css_iphone.html" %}
-{% else %}
-	{% include "portal_css/css_pc.html" %}
-{% endif %}
+{% include "jquery.html" %}
+{% include "css/pinterest.css" %}
+{% include "css/google_button.html" %}
 {% include "css/floating_menu_css.html" %}
 </head>
 
@@ -35,25 +33,7 @@
 {% include "floating_menu.html" %}
 
 <div id="container">
-	{% if not is_iphone and header_enable %}
-	<div id="header">
-		<h1><a href="{{host}}"><img src="static_files/general/images/top/head3.jpg" alt="あなたのイラストから始まるコミュニティ　イラストブック" width="950" height="195" /></a></h1>
-	</div>
-	<div id="g-menu">
-		<ul>
-			<li><a href="{{host}}"><img src="static_files/general/images/top/m_home.gif" alt="ホーム" width="132" height="45" class="swap" /></a></li>
-			<li><a href="{{host}}guide"><img src="static_files/general/images/top/m_howto{% if mode == "guide" %}_on{% endif %}.gif" alt="イラストブックの使い方" width="195" height="45" class="swap" /></a></li>
-			<li><a href="{{host}}community"><img src="static_files/general/images/top/m_community{% if mode == "community" %}_on{% endif %}.gif" alt="コミュニティ" width="152" height="45" class="swap" /></a></li>
-			<li><a href="{{host}}questionnaire"><img src="static_files/general/images/top/m_enq{% if mode == "questionnaire" %}_on{% endif %}.gif" alt="アンケート" width="124" height="45" class="swap" /></a></li>
-			<li><a href="{{host}}support"><img src="static_files/general/images/top/m_support{% if mode == "support" %}_on{% endif %}.gif" alt="よくある質問・サポート" width="209" height="45" class="swap" /></a></li>
-			<li><a href="{{host}}profile"><img src="static_files/general/images/top/m_profile{% if mode == "profile" %}_on{% endif %}.gif" alt="会社概要" width="138" height="45" class="swap" /></a></li>
-		</ul>
-		<div class="clr"></div>
-	</div>
-	{% else %}
-		<p>&nbsp</p>
-	{% endif %}
-	<div id="contents">
+	<div id="contents" style="background-color:#ffffff;{% if not is_iphone %}width:880px;{% endif %}">
 		{% if mode == "questionnaire" %}
 			<h1><img src="static_files/general/images/enq/title_enq.gif" alt="アンケート" width="880" height="46" /></h1>
 			<iframe src="https://spreadsheets.google.com/embeddedform?formkey=dGxzRGw0TnRYQmhPVC1JOTJfS1NhcEE6MQ" width="100%" height="1503" frameborder="0" marginheight="0" marginwidth="0">読み込み中...</iframe>
@@ -76,8 +56,7 @@
 		
 		{% if mode == "link" %}
 			{% if is_iphone %}
-				{% include "portal_css/option_tab.html" %}
-				<p class="bar">リンク</p>
+				<p>リンク</p>
 			{% else %}
 				<h1><img src="static_files/general/images/top/title_link.gif" alt="リンク" width="880" height="40" /></h1>
 			{% endif %}
@@ -85,7 +64,6 @@
 		{% endif %}
 
 		{% if mode == "guide" %}
-<!--			<h1><img src="static_files/general/images/howto/title_howto.gif" alt="イラストブックの使い方" width="880" height="40" /></h1>			-->
 			{%include "portal/guide.html"%}
 		{% endif %}
 
@@ -95,54 +73,24 @@
 		{% endif %}
 
 		{% if mode == "terms" %}
-			{% if is_iphone %}
-				{% include "portal_css/option_tab.html" %}
-				<p class="bar">ご利用規約</p>
-			{% else %}
-				<h1><img src="static_files/general/images/top/title_guide.gif" alt="ご利用規約" width="880" height="40" /></h1>
-			{% endif %}
+			<div style="padding:4px;">
+			<h1>ご利用規約</h1>
 			{% include "portal/terms.html" %}
 			<p>&nbsp;</p>
-			{% if is_iphone %}
-				<p class="bar">プライバシーポリシー</p>
-			{% else %}
-				<h1><img src="static_files/general/images/top/title_privacy.gif" alt="プライバシーポリシー" width="880" height="36" /></h1>	
-			{% endif %}
+			<h1>プライバシーポリシー</h1>
 			{% include "portal/privacy.html" %}
+			</div>
 		{% endif %}
 		
 		{% if mode == "chat" %}
 			{% include "chat/chat.html" %}
 		{% endif %}
-		
-		{% if not is_iphone and header_enable %}
-		<p>&nbsp;</p>
-		<p>&nbsp;</p>
-		<div id="pan"> 
-			<p><a href="{{host}}">イラストブック ホーム</a> &gt; 
-				{% if mode == "support" %}よくある質問・サポート{% endif %}
-				{% if mode == "terms" %}ご利用規約{% endif %}
-				{% if mode == "guide" %}イラストブックの使い方{% endif %}
-				{% if mode == "questionnaire" %}アンケート{% endif %}
-				{% if mode == "community" %}コミュニティ{% endif %}
-				{% if mode == "profile" %}会社概要{% endif %}
-				{% if mode == "link" %}リンク{% endif %}
-				{% if mode == "chat" %}イラブチャット{% endif %}
-			</p>
-		</div>
-		{% endif %}
-	</div>
-	<div id="footer">
-		{% if not is_iphone %}
-		<ul>
-			{% include "portal/footer_sitemap.html" %}
-		</ul>
-		{% else %}
-			<br clear="all"/>
-		{% endif %}
-		<p>{% include "portal/footer_link.html" %}</p>
 	</div>
 </div>
+
+	<div id="pinterest_footer" style="display:block;">
+		{% include "portal/footer_link.html" %}
+	</div>
 
 </body>
 </html>

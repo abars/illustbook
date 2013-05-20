@@ -676,7 +676,10 @@ class ApiObject(webapp.RequestHandler):
 						if(type(one_key)==str):
 							one_key=db.Key(encoded=one_key)
 						require_key_list.append(one_key)
-		object_list=db.get(require_key_list)
+
+		object_list=[]
+		if(len(require_key_list)):
+			object_list=db.get(require_key_list)
 
 		#キャッシュヒットしたものはキャッシュから、
 		#ヒットしなかったものはdbから取ってくる

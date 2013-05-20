@@ -71,24 +71,25 @@ class UpdateBbs(webapp.RequestHandler):
 		twitter_shell_color=self.format_color(self.request.get('twitter_shell_color'))
 
 		if(menu_bg_color=="None"):
-			menu_bg_color="ffffff";		
+			menu_bg_color="ffffff";
 		if(menu_font_color=="None"):
-			menu_font_color="333333";		
+			menu_font_color="333333";
 		if(content_bg_color=="None"):
-			content_bg_color="ffffff";		
+			content_bg_color="ffffff";
 		if(content_font_color=="None"):
-			content_font_color="333333";		
+			content_font_color="333333";
 
 		if(side_color=="None"):
-			side_color="ffffff";		
+			side_color="ffffff";
 		if(side_font_color=="None"):
-			side_font_color="333333";		
+			side_font_color="333333";
 		if(twitter_bg_color=="None"):
-			twitter_bg_color="ffffff";		
+			twitter_bg_color="ffffff";
 		if(twitter_font_color=="None"):
-			twitter_font_color="333333";		
+			twitter_font_color="333333";
 		if(twitter_shell_color=="None"):
-			twitter_shell_color="ffffff";		
+			twitter_shell_color="ffffff";
+
 		if re.match('[0-9a-fA-F]{1,6}', bg_color) == None:
 			error_str="bg_color is invalid"
 			self.redirect(str('./edit_bbs?bbs_key='+self.request.get("bbs_key")+'&error_str='+error_str))
@@ -222,12 +223,18 @@ class UpdateBbs(webapp.RequestHandler):
 
 		bbs.in_frame_mode=int(self.request.get('in_frame_mode'))
 		
-		bbs.button_color=self.request.get('button_color')
-		bbs.button_active_color=self.request.get('button_active_color')
+		bbs.button_color=self.format_color(self.request.get('button_color'))
+		bbs.button_border_color=self.format_color(self.request.get('button_border_color'))
+		bbs.button_active_color=self.format_color(self.request.get('button_active_color'))
+
 		if(bbs.button_color=="None"):
 			bbs.button_color=""
 		if(bbs.button_active_color=="None"):
 			bbs.button_active_color=""
+		if(bbs.button_border_color=="None"):
+			bbs.button_border_color=""
+
+		bbs.button_color_enable=int(self.request.get("button_color_enable"))
 
 		amazon=self.request.get('amazon')
 		amazon_title=self.request.get('amazon_title')

@@ -36,8 +36,12 @@ class Bbs(CachedDbModel):
 	del_flag = db.IntegerProperty()
 	background_image = db.StringProperty()
 	bottom_image = db.StringProperty()
+	
 	button_color = db.StringProperty()
 	button_active_color = db.StringProperty()
+	button_border_color = db.StringProperty()
+	button_color_enable = db.IntegerProperty()
+
 	enable_continue_draw = db.IntegerProperty()
 	default_canvas_size = db.IntegerProperty()
 	amazon = db.TextProperty()

@@ -228,17 +228,25 @@ body {
 	border-bottom: 0px dashed;
 }
 
-/* ボタン */
-.menubutton,.menubutton_active{
-	color: #fff;
-	border:0px;
-	text-align: center;
+/*ボタン*/
+{% if bbs.button_color_enable %}
+.g-button{
+background-color: #{{bbs.button_color}};
+background-image: none;
+border: 1px solid #{{bbs.button_border_color}};
+text-shadow: none;
 }
 
-.menubutton{
-	background-color: {% if bbs.button_color %}#{{bbs.button_color}};{% else %}#999999;{% endif %}
+.g-button:hover,
+.g-button:focus,
+.g-button:active,
+.g-button.active,
+.g-button.checked,
+.g-button.disabled2{
+background-color: #{{bbs.button_active_color}};
+background-image: none;
+border: 1px solid #{{bbs.button_border_color}};
 }
+{% endif %}
 
-.menubutton_active{
-	background-color: {% if bbs.button_active_color %}#{{bbs.button_active_color}};{% else %}#333333;{% endif %}
-}
+
