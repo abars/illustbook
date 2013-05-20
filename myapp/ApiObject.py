@@ -442,11 +442,31 @@ class ApiObject(webapp.RequestHandler):
 		return thread_list
 
 	@staticmethod
+	def _get_feed_entry_list(feed_list):
+		entry_list=[]
+		for feed in feed_list:
+			if(feed==None):
+				continue
+			if(feed.feed_mode!="new_comment_thread"):
+				continue
+			try:
+				entry_key=StackFeedData.entry_key.get_value_for_datastore(feed)
+				if(entry_list.count(entry_key)==0):
+					entry_list.append(entry_key)
+				response_key=StackFeedData.response_key.get_value_for_datastore(feed)
+				if(entry_list.count(response_key)==0):
+					entry_list.append(response_key)
+			except:
+				None
+		return entry_list
+
+	@staticmethod
 	def create_feed_object_list(req,feed_list,feed_key_list):
 		#出現するユーザと掲示板を全てリストアップ
 		user_list=ApiObject._get_feed_user_list(feed_list)
 		bbs_list=ApiObject._get_feed_bbs_list(feed_list)
 		thread_list=ApiObject._get_feed_thread_list(feed_list)
+		entry_list=ApiObject._get_feed_entry_list(feed_list)
 		
 		#ユーザ情報をまとめて取得
 		bookmark_hash=ApiObject.get_bookmark_list(user_list)
@@ -459,19 +479,16 @@ class ApiObject(webapp.RequestHandler):
 				to_user=None
 			user_hash[user_list[i]]=to_user
 		
-		#掲示板情報をまとめて取得
-		bbs_hash=ApiObject.get_cached_object_hash(bbs_list)
+		#掲示板情報とスレッド情報をまとめて取得
+		object_hash=ApiObject.get_cached_object_hash(bbs_list+thread_list+entry_list)
 
-		#スレッド情報をまとめて取得
-		thread_hash=ApiObject.get_cached_object_hash(thread_list)
-		
 		#オブジェクト作成
 		dic=[]
 		feed_n=len(feed_list)
 		for i in range(feed_n):
 			feed=feed_list[i]
 			feed_key=feed_key_list[i]
-			one_dic=ApiObject.create_feed_object(req,feed,user_hash,bbs_hash,thread_hash,feed_key)
+			one_dic=ApiObject.create_feed_object(req,feed,user_hash,object_hash,feed_key)
 			if(one_dic==None):
 				continue
 			dic.append(one_dic)
@@ -492,7 +509,7 @@ class ApiObject(webapp.RequestHandler):
 		return message
 
 	@staticmethod
-	def create_feed_object(req,feed,user_hash,bbs_hash,thread_hash,feed_key):
+	def create_feed_object(req,feed,user_hash,object_hash,feed_key):
 		#フィードが削除された
 		if(feed==None):
 			deleted_feed={"mode":"deleted","from_user":"","to_user":"","follow_user":"","bbs":"","thread":"","message":"ツイートは削除されました。","create_date":"","key":str(feed_key)}
@@ -518,7 +535,7 @@ class ApiObject(webapp.RequestHandler):
 		bbs=""
 		bbs_object=None
 		if(bbs_object_key):
-			bbs_object=bbs_hash[bbs_object_key]
+			bbs_object=object_hash[bbs_object_key]
 			if(bbs_object):
 				bbs=ApiObject.create_bbs_object(req,bbs_object)
 			else:
@@ -530,7 +547,7 @@ class ApiObject(webapp.RequestHandler):
 		thread_object_key=StackFeedData.thread_key.get_value_for_datastore(feed)
 		thread=""
 		if(thread_object_key):
-			thread_object=thread_hash[thread_object_key]
+			thread_object=object_hash[thread_object_key]
 			if(thread_object):
 				only_image=False
 				thread=ApiObject._create_thread_object_core(req,thread_object,bbs_object,only_image)
@@ -545,18 +562,19 @@ class ApiObject(webapp.RequestHandler):
 		#コメントを取得
 		message=feed.message
 		if(feed.feed_mode=="new_comment_thread"):
-			message=ApiObject._get_entry_comment(feed)
+			message=ApiObject._get_entry_comment(feed,object_hash)
 
 		#オブジェクトを返す
 		one_dic={"mode":feed.feed_mode,"from_user":from_user,"to_user":to_user,"follow_user":follow_user,"bbs":bbs,"thread":thread,"message":message,"create_date":create_date,"key":str(feed.key())}
 		return one_dic
 
 	@staticmethod
-	def _get_entry_comment(feed):
+	def _get_entry_comment(feed,object_hash):
 		comment_deleted=False
 
 		entry_key=StackFeedData.entry_key.get_value_for_datastore(feed)
-		entry=ApiObject.get_cached_object(entry_key)
+		entry=object_hash[entry_key]
+		#entry=ApiObject.get_cached_object(entry_key)
 		if(entry_key):
 			if(not entry or entry.del_flag==BbsConst.ENTRY_DELETED):
 				comment_deleted=True
@@ -564,7 +582,8 @@ class ApiObject(webapp.RequestHandler):
 		#レス投稿フィードの場合のみres_keyを持つ
 		#コメント投稿フィードの場合はres_keyにはNoneが入っている
 		res_key=StackFeedData.response_key.get_value_for_datastore(feed)
-		res=ApiObject.get_cached_object(res_key)
+		#res=ApiObject.get_cached_object(res_key)
+		res=object_hash[res_key]
 		if(res_key):
 			if(not res):	#レスが削除された
 				comment_deleted=True
