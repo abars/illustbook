@@ -144,7 +144,7 @@
 {% endif %}
 
 <!-- ポータルタブ -->
-{% if page_mode == "index" %}
+{% if page_mode == "index" and not is_iphone %}
   {% include "pinterest/order_menu.html" %}
 {% endif %}
 
@@ -173,6 +173,9 @@
   <div class="corner-stamp">
   {% if not contents_only %}
    {% include "pinterest/corner_stamp.html" %}
+  {% endif %}
+  {% if page_mode == "index" and is_iphone %}
+    {% include "pinterest/order_menu.html" %}
   {% endif %}
   </div>
   {% include "pinterest/illust.html" %}

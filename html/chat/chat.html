@@ -64,7 +64,7 @@
 	{% for room in room_list %}
 		<div style="float:left;">
 			<a href="javascript:join_chat('{{room.key()}}',false,{% if room.password %}true{%else%}false{%endif%});" class="declink">
-				{% if not room.password %}
+				{% if room.password %}
 					<div style="width:160px;height:160px;"></div>
 				{% else %}
 					<img src="./chat?mode=thumbnail&key={{room.key()}}" width="160px" height="160px"/>
