@@ -62,6 +62,7 @@
 	</div>
 	
 	{% if not bbs.enable_full_comment %}
+		<p>&nbsp;</p>
 		<div class="g-button-group toggle-buttons">
 		{%if not bbs.disable_comment %}
 			{%if thread.comment_cnt %}
