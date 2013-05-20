@@ -275,6 +275,10 @@ color: #333;
     float:left;
   }
 
+  .menu:hover{
+    opacity:0.5;
+  }
+
   .color1{background:rgb(191,47,47);color:#fff;}
   .color2{background:rgb(191,155,47);color:#fff;}
   .color3{background:rgb(119,191,47);color:#fff;}
