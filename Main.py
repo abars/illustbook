@@ -197,12 +197,14 @@ class RankingPortal(webapp.RequestHandler):
 		
 		rank=Ranking.get_or_insert(BbsConst.THREAD_RANKING_KEY_NAME)
 		ranking_mode=self.request.get("mode")
-		if(ranking_mode=="owner"):
-			ranking_list=rank.owner_ranking_list[(page-1)*page_unit:page*page_unit]
-			ranking_name="オーナーランキング"
-		else:
-			ranking_list=rank.user_ranking_list[(page-1)*page_unit:page*page_unit]
-			ranking_name="人気のユーザ"
+		
+		#if(ranking_mode=="owner"):
+		#	ranking_list=rank.owner_ranking_list[(page-1)*page_unit:page*page_unit]
+		#	ranking_name="オーナーランキング"
+		#else:
+		
+		ranking_list=rank.user_ranking_list[(page-1)*page_unit:page*page_unit]
+		ranking_name="人気のユーザ"
 
 		template_values = {
 			'host': "./",

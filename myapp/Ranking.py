@@ -25,14 +25,12 @@ class Ranking(db.Model):
 	#ランキングの更新はBackendで行う
 	ranking_list = db.ListProperty(db.Key,indexed=False)
 	user_id_ranking_list = db.StringListProperty(indexed=False)
+	user_ranking_list = db.StringListProperty(indexed=False)
 
 	#掲示板のオーナーランクは廃止
 	#owner_list = db.StringListProperty(indexed=False)
 	#owner_ranking_list = db.StringListProperty(indexed=False)
 	#owner_id_ranking_list = db.StringListProperty(indexed=False)
-
-	#ユーザのランキングはユーザIDのみ
-	#user_ranking_list = db.StringListProperty(indexed=False)
 
 	date = db.DateTimeProperty(auto_now=True,indexed=False)
 	
@@ -70,7 +68,7 @@ class Ranking(db.Model):
 		self.create_thread_rank()
 		
 		rank=self.create_user_rank(self.user_list)
-		#self.user_ranking_list=rank["user"]
+		self.user_ranking_list=rank["user"]
 		self.user_id_ranking_list=rank["user_id"]
 		
 		#rank=self.create_user_rank(self.owner_list)
