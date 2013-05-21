@@ -114,7 +114,7 @@
 		<div class="clr"></div>
 	</div>
 	<!-- フッタ -->
-	{% if template_path and not contents_only %}
+	{% if not contents_only %}
 		{% include 'footer.html' %}
 	{% endif %}
 </div>
@@ -129,10 +129,6 @@
 <div id="back-top">
   <a href="#top">TOP</a>
 </div>
-
-{% if not template_path and not contents_only %}
-	{% include 'footer.html' %}
-{% endif %}
 
 <!-- java script -->
 {% if not contents_only %}

@@ -32,6 +32,7 @@ from myapp.OwnerCheck import OwnerCheck
 from myapp.RecentCommentCache import RecentCommentCache
 from myapp.ImageFile import ImageFile
 from myapp.ChunkManager import ChunkManager
+from myapp.ApiUser import ApiUser
 
 class MoperUpload(webapp.RequestHandler):
 	def post(self):
@@ -83,4 +84,9 @@ class MoperUpload(webapp.RequestHandler):
 			if(old_chunk_list_key):
 				ChunkManager.delete(old_chunk_list_key)
 		except:
-			self.response.out.write("[error]")	
+			self.response.out.write("[error]")
+			return
+
+		#投稿数の更新
+		if(user):
+			ApiUser.invalidate_thread_count(user.user_id())

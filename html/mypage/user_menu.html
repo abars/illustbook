@@ -4,6 +4,9 @@
     {% if submit_illust_exist %}
       <a href="{{host}}{{redirect_api}}?{% if bookmark %}user_id={{user_id}}&{% endif %}tab=submit" class="g-button {%if tab=="submit"%}checked{%endif%}">{% if is_iphone %}投稿{%else%}投稿したイラスト{% endif %}</a>
     {% endif %}
+    {% if submit_moper_exist and not is_iphone %}
+      <a href="{{host}}{{redirect_api}}?{% if bookmark %}user_id={{user_id}}&{% endif %}tab=moper" class="g-button {%if tab=="moper"%}checked{%endif%}">{% if is_iphone %}動画{%else%}投稿した動画{% endif %}</a>
+    {% endif %}
     {% if bookmark_illust_exist %}
       <a href="{{host}}{{redirect_api}}?{% if bookmark %}user_id={{user_id}}&{% endif %}tab=bookmark" class="g-button {%if tab == "bookmark"%}checked{%endif%}">{% if is_iphone %}ブクマ{%else%}ブックマーク{%endif%}</a>
     {% endif %}

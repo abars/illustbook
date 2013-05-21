@@ -107,11 +107,36 @@ class ApiUser(webapp.RequestHandler):
 		return dic;
 
 	@staticmethod
-	def user_get_is_submit_thread_exist(req,user_id):
+	def _get_submit_illust_count(req,user_id,bookmark,illust_mode):
 		query=db.Query(MesThread)
-		query=query.filter("illust_mode IN",[BbsConst.ILLUSTMODE_ILLUST,BbsConst.ILLUSTMODE_MOPER])
+		query=query.filter("illust_mode =",illust_mode)#IN",[BbsConst.ILLUSTMODE_ILLUST,BbsConst.ILLUSTMODE_MOPER])
 		query=query.filter("user_id =",user_id)
-		return query.count(limit=1000)
+		cnt=query.count(limit=1000)
+		return cnt
+
+	@staticmethod
+	def user_get_is_submit_thread_exist(req,user_id,bookmark=None):
+		if(not bookmark):
+			bookmark=ApiObject.get_bookmark_of_user_id(user_id)
+		if(bookmark.submit_thread_count):
+			return bookmark.submit_thread_count
+		cnt=ApiUser._get_submit_illust_count(req,user_id,bookmark,BbsConst.ILLUSTMODE_ILLUST)
+		if(cnt):
+			bookmark.submit_thread_count=cnt
+			bookmark.put()
+		return cnt
+
+	@staticmethod
+	def user_get_is_submit_moper_exist(req,user_id,bookmark=None):
+		if(not bookmark):
+			bookmark=ApiObject.get_bookmark_of_user_id(user_id)
+		if(bookmark.submit_moper_count):
+			return bookmark.submit_moper_count
+		cnt=ApiUser._get_submit_illust_count(req,user_id,bookmark,BbsConst.ILLUSTMODE_MOPER)
+		if(cnt):
+			bookmark.submit_moper_count=cnt
+			bookmark.put()
+		return cnt
 
 	@staticmethod
 	def user_get_thread_list(req,user_id):
@@ -134,18 +159,22 @@ class ApiUser(webapp.RequestHandler):
 			page=int(req.request.get("page"))
 			offset=limit*(page-1)
 
-		return ApiUser.user_get_thread_list_core(req,user_id,offset,limit)
+		return ApiUser.user_get_thread_list_core(req,user_id,offset,limit,BbsConst.ILLUSTMODE_ILLUST)
 
 	@staticmethod
-	def user_get_thread_list_core(req,user_id,offset,limit):
-		query=db.Query(MesThread)	#keys onlyはINが使えない
-		query=query.filter("illust_mode IN",[BbsConst.ILLUSTMODE_ILLUST,BbsConst.ILLUSTMODE_MOPER])
+	def user_get_thread_list_core(req,user_id,offset,limit,illust_mode):
+		#query=db.Query(MesThread)	#keys onlyはINが使えない
+		#query=query.filter("illust_mode IN",[BbsConst.ILLUSTMODE_ILLUST,BbsConst.ILLUSTMODE_MOPER])
+		#query=query.filter("user_id =",user_id).order("-create_date")
+		#thread_key_list=[]
+		#thread_list=query.fetch(limit=limit,offset=offset)
+		#for thread in thread_list:
+		#	thread_key_list.append(str(thread.key()))
+		
+		query=db.Query(MesThread,keys_only=True)
+		query=query.filter("illust_mode =",illust_mode)
 		query=query.filter("user_id =",user_id).order("-create_date")
-
-		thread_key_list=[]
-		thread_list=query.fetch(limit=limit,offset=offset)
-		for thread in thread_list:
-			thread_key_list.append(str(thread.key()))
+		thread_key_list=query.fetch(limit=limit,offset=offset)
 		
 		return ApiObject.create_thread_object_list(req,thread_key_list,"user")
 
@@ -172,7 +201,22 @@ class ApiUser(webapp.RequestHandler):
 		feed_list=ApiObject.get_cached_object_list(feed_key_list)
 		dic=ApiObject.create_feed_object_list(req,feed_list,feed_key_list)
 		return dic
-		
+
+#-------------------------------------------------------------------
+#キャッシュコントロール
+#-------------------------------------------------------------------
+	
+	@staticmethod
+	def invalidate_thread_count(user_id):
+		if(not user_id):
+			return
+		bookmark=ApiObject.get_bookmark_of_user_id_for_write(user_id)
+		if(not bookmark):
+			return
+		bookmark.submit_thread_count=None
+		bookmark.submit_moper_count=None
+		bookmark.put()
+
 #-------------------------------------------------------------------
 #main
 #-------------------------------------------------------------------

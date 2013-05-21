@@ -34,6 +34,7 @@ from myapp.OwnerCheck import OwnerCheck
 from myapp.MappingId import MappingId
 from myapp.MappingThreadId import MappingThreadId
 from myapp.CategoryList import CategoryList
+from myapp.ApiUser import ApiUser
 
 class UpdateThread(webapp.RequestHandler):
 	def post(self):
@@ -91,6 +92,10 @@ class UpdateThread(webapp.RequestHandler):
 		thread.search_index_version=0	#インデックス更新
 
 		thread.put()
+
+		if(thread.user_id):
+			ApiUser.invalidate_thread_count(thread.user_id)
+
 		url=MappingThreadId.get_thread_url("./",bbs,thread)
 		self.redirect(str(url))
 

@@ -35,21 +35,19 @@
 			</a>
 		{% endif %}
 		
-	{% if user %}
 		{% if not edit_thread %}
 			{% if thread %}
 				{% if thread.user_id %}
 					<a href="{{host}}mypage?user_id={{thread.user_id}}" class="g-button mini"><i class="icon-user"></i>ドロワー</a>
 				{% endif %}
-				{{thread|add_bookmark_thread(host,is_iphone)|safe}}
+				{{thread|add_bookmark_thread(host,is_iphone,user)|safe}}
 			{% else %}
 				{% if bbs %}
 					<a href="{{host}}mypage?user_id={{bbs.user_id}}" class="g-button mini"><i class="icon-user"></i>オーナー</a>
-					{{bbs|add_bookmark_bbs(host,is_iphone)|safe}}
+					{{bbs|add_bookmark_bbs(host,is_iphone,user)|safe}}
 				{% endif %}
 			{% endif %}
 		{% endif %}
-	{% endif %}
 	</div>
 	</div>
 

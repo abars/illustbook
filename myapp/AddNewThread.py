@@ -44,6 +44,7 @@ from myapp.ApiFeed import ApiFeed
 from myapp.CategoryList import CategoryList
 from myapp.EscapeComment import EscapeComment
 from myapp.RssFeed import RssFeed
+from myapp.ApiUser import ApiUser
 
 class AddNewThread(webapp.RequestHandler):
 	def write_status(self,is_flash,msg):
@@ -224,6 +225,10 @@ class AddNewThread(webapp.RequestHandler):
 			StackFeed.feed_new_thread(user,bbs,new_thread)
 		except:
 			logging.error("new thread stack feed add error")
+
+		#submit thread count
+		if(user):
+			ApiUser.invalidate_thread_count(user.user_id())
 		
 		#news
 		ApiFeed.invalidate_cache()

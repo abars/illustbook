@@ -330,7 +330,7 @@ class Pinterest(webapp.RequestHandler):
 		Pinterest._render_page(self,template_values)
 
 	@staticmethod
-	def _decide_default_tab(self,bookmark_illust_exist,submit_illust_exist,view_mode,bookmark,user,request_page_mode):
+	def _decide_default_tab(self,bookmark_illust_exist,submit_illust_exist,submit_moper_exist,view_mode,bookmark,user,request_page_mode):
 		#掲示板作成完了時はbbsに飛ばす
 		if(request_page_mode==Pinterest.PAGE_MODE_REGIST):
 			return "bbs"
@@ -347,7 +347,7 @@ class Pinterest(webapp.RequestHandler):
 			return "feed"
 
 		#投稿したイラストもブックマークしたイラストも存在しない場合
-		if((not submit_illust_exist) and (not bookmark_illust_exist)):
+		if((not submit_illust_exist) and (not submit_moper_exist) and (not bookmark_illust_exist)):
 			#自分の場合は掲示板、他人の場合はフィードを表示
 			if(view_mode):
 				return "feed"
@@ -356,6 +356,8 @@ class Pinterest(webapp.RequestHandler):
 		#投稿したイラストかブックマークしたイラストが存在する場合はそれを表示
 		if(submit_illust_exist):
 			return "submit"
+		if(submit_moper_exist):
+			return "moper"
 		if(bookmark_illust_exist):
 			return "bookmark"
 
@@ -365,6 +367,7 @@ class Pinterest(webapp.RequestHandler):
 	def _user_page(self,user,user_id,page,request_page_mode,redirect_api,contents_only):
 		illust_enable=False
 		submit_illust_exist=True
+		submit_moper_exist=True
 		bookmark_illust_exist=True
 		thread_list=None
 
@@ -374,12 +377,15 @@ class Pinterest(webapp.RequestHandler):
 			bookmark=ApiObject.get_bookmark_of_user_id(user_id)
 
 		#イラストの存在を検出
-		submit_illust_count=ApiUser.user_get_is_submit_thread_exist(self,user_id)
+		submit_illust_count=ApiUser.user_get_is_submit_thread_exist(self,user_id,bookmark)
+		submit_moper_count=ApiUser.user_get_is_submit_moper_exist(self,user_id,bookmark)
 		bookmark_illust_count=ApiBookmark.bookmark_get_is_bookmark_thread_exist(self,user_id,bookmark)
 		if(bookmark_illust_count==0):
 			bookmark_illust_exist=False
 		if(submit_illust_count==0):
 			submit_illust_exist=False
+		if(submit_moper_count==0):
+			submit_moper_exist=False
 
 		#マイユーザか
 		view_mode=1
@@ -388,7 +394,7 @@ class Pinterest(webapp.RequestHandler):
 				view_mode=0
 
 		#タブ
-		tab=Pinterest._decide_default_tab(self,bookmark_illust_exist,submit_illust_exist,view_mode,bookmark,user,request_page_mode)
+		tab=Pinterest._decide_default_tab(self,bookmark_illust_exist,submit_illust_exist,submit_moper_exist,view_mode,bookmark,user,request_page_mode)
 
 		#フィード数の消化
 		new_feed_count=Pinterest._get_new_feed_count(user,view_mode,bookmark)
@@ -429,14 +435,21 @@ class Pinterest(webapp.RequestHandler):
 		if(tab=="bookmark"):
 			thread_list=ApiBookmark.bookmark_get_thread_list(self,user_id,bookmark)
 	
-		if(tab=="submit"):
+		if(tab=="submit" or tab=="moper"):
 			#イラストが消去されている場合を考慮してスレッドが見つかるまでページを進める
-			max_page=(submit_illust_count+BbsConst.PINTEREST_MYPAGE_PAGE_UNIT-1)/BbsConst.PINTEREST_MYPAGE_PAGE_UNIT
+			if(tab=="submit"):
+				max_page_src=submit_illust_count
+			else:
+				max_page_src=submit_moper_count
+			max_page=(max_page_src+BbsConst.PINTEREST_MYPAGE_PAGE_UNIT-1)/BbsConst.PINTEREST_MYPAGE_PAGE_UNIT
 			thread_list=[]
 			while(page<=max_page):
 				limit=BbsConst.PINTEREST_MYPAGE_PAGE_UNIT
 				offset=limit*(page-1)
-				thread_list=ApiUser.user_get_thread_list_core(self,user_id,offset,limit)
+				illust_mode=BbsConst.ILLUSTMODE_ILLUST
+				if(tab=="moper"):
+					illust_mode=BbsConst.ILLUSTMODE_MOPER
+				thread_list=ApiUser.user_get_thread_list_core(self,user_id,offset,limit,illust_mode)
 				if(len(thread_list)>=1):
 					break
 				page=page+1
@@ -505,6 +518,7 @@ class Pinterest(webapp.RequestHandler):
 			'redirect_url': self.request.path,
 			'new_feed_count': new_feed_count,
 			'submit_illust_exist': submit_illust_exist,
+			'submit_moper_exist': submit_moper_exist,
 			'bookmark_illust_exist': bookmark_illust_exist,
 			'regist_finish': (request_page_mode==Pinterest.PAGE_MODE_REGIST),
 			'redirect_api': redirect_api,

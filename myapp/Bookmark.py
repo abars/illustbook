@@ -29,6 +29,10 @@ class Bookmark(db.Model):
 	name = db.StringProperty()
 	profile = db.TextProperty()
 	regulation = db.IntegerProperty()	#閲覧モード(1:男性向けマスク、2:女性向けマスク)
+
+	#投稿したイラスト数、投稿時に0クリア
+	submit_thread_count = db.IntegerProperty()
+	submit_moper_count  = db.IntegerProperty()
 	
 	#アイコン登録直後はここに値が入る
 	icon = db.BlobProperty()	#180px

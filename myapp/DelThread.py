@@ -86,24 +86,32 @@ from myapp.ChatConnected import ChatConnected
 from myapp.ChatDisconnected import ChatDisconnected
 from myapp.Ranking import Ranking
 from myapp.ApiPacked import ApiPacked
+from myapp.ApiUser import ApiUser
 
 import template_select
 
 class DelThread(webapp.RequestHandler):
 	@staticmethod
 	def delete_thread_core(thread):
-		thread.bbs_key.cached_threads_num=None	#イラストの総数の更新リクエスト
+		#イラストの総数の更新リクエスト
+		thread.bbs_key.cached_threads_num=None
 		thread.bbs_key.put()
+		if(thread.user_id):
+			ApiUser.invalidate_thread_count(thread.user_id)
 
+		#レスの削除
 		entry_query=Entry.all().filter("thread_key =",thread)
 		for entry in entry_query:
 			if(entry.illust_reply_image_key):
 				entry.illust_reply_image_key.delete()
+
+		#画像の削除
 		if(thread.image_key):
 			if(thread.image_key.chunk_list_key):
 				for key in thread.image_key.chunk_list_key:
 					db.get(key).delete()
 			thread.image_key.delete()
+
 		thread.delete()
 
 	def get(self):
