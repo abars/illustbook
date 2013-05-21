@@ -120,13 +120,11 @@ class ApiUser(webapp.RequestHandler):
 			bookmark=ApiObject.get_bookmark_of_user_id(user_id)
 		if(not bookmark):
 			return 0
-		if(bookmark.submit_thread_count):
-			return bookmark.submit_thread_count
-		cnt=ApiUser._get_submit_illust_count(req,user_id,bookmark,BbsConst.ILLUSTMODE_ILLUST)
-		if(cnt):
+		if(bookmark.submit_thread_count is None):
+			cnt=ApiUser._get_submit_illust_count(req,user_id,bookmark,BbsConst.ILLUSTMODE_ILLUST)
 			bookmark.submit_thread_count=cnt
 			bookmark.put()
-		return cnt
+		return bookmark.submit_thread_count
 
 	@staticmethod
 	def user_get_is_submit_moper_exist(req,user_id,bookmark=None):
@@ -134,13 +132,11 @@ class ApiUser(webapp.RequestHandler):
 			bookmark=ApiObject.get_bookmark_of_user_id(user_id)
 		if(not bookmark):
 			return 0
-		if(bookmark.submit_moper_count):
-			return bookmark.submit_moper_count
-		cnt=ApiUser._get_submit_illust_count(req,user_id,bookmark,BbsConst.ILLUSTMODE_MOPER)
-		if(cnt):
+		if(bookmark.submit_moper_count is None):
+			cnt=ApiUser._get_submit_illust_count(req,user_id,bookmark,BbsConst.ILLUSTMODE_MOPER)
 			bookmark.submit_moper_count=cnt
 			bookmark.put()
-		return cnt
+		return bookmark.submit_moper_count
 
 	@staticmethod
 	def user_get_thread_list(req,user_id):
