@@ -53,6 +53,14 @@
   {% include "css/pinterest.css" %}
 {% endif %}
 
+<!-- masonryは画像を読み込む前に優先して読込 -->
+{% if not contents_only %}
+  {% include "jquery.html" %}
+  {% if use_masonry %}
+    <script language="javascript" src="js/masonry.js" type="text/javascript"></script>
+  {% endif %}
+{% endif %}
+
 </head>
 <body>
 
@@ -203,11 +211,7 @@
 
 <!-- load javascript -->
 {% if not contents_only %}
-  {% include "jquery.html" %}
   <script language="javascript" src="js/mypage_common.js" type="text/javascript"></script>
-  {% if use_masonry %}
-    <script language="javascript" src="js/masonry.js" type="text/javascript"></script>
-  {% endif %}
   <script language="javascript" src="{{host}}js/infinite_scroll.js" type="text/javascript"></script>
   <script type="text/javascript">
   $(document).ready(function(){

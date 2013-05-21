@@ -171,7 +171,7 @@ class ShowBbs(webapp.RequestHandler):
 		user_name=ShowEntry.get_user_name(user)
 		if(bbs.enable_full_comment):
 			admin_user=OwnerCheck.is_admin(user)
-			self.get_all_comment(all_threads_cached,host_url,bbs,show_comment_form,logined,admin_user,user_name,user)
+			ShowEntry.render_comment_list(self,all_threads_cached,host_url,bbs,show_comment_form,logined,admin_user,user_name,user)
 
 		#デザインの編集ができるか
 		can_edit_design=False
@@ -239,27 +239,6 @@ class ShowBbs(webapp.RequestHandler):
 		
 		CounterWorker.update_counter(self,bbs,None,owner)
 
-	def get_all_comment(self,all_threads_cached,host_url,bbs,show_comment_form,logined,is_admin,user_name,user):
-		edit_flag=False
-		bbs_key=bbs.key()
-
-		entry_key_list=[]
-		for thread in all_threads_cached:
-			if not thread:
-				continue
-			for entry in thread.cached_entry_key:
-				entry_key_list.append(entry)
-		entry_hash=ApiObject.get_cached_object_hash(entry_key_list)
-
-		for thread in all_threads_cached:
-			if not thread:
-				continue
-			entry_list=[]
-			for entry in thread.cached_entry_key:
-				one_entry=entry_hash[entry]
-				entry_list.append(one_entry)
-			thread.cached_render_comment=ShowEntry.render_comment(self,host_url,bbs,thread,entry_list,edit_flag,bbs_key,logined,show_comment_form,is_admin,user_name,user)
-			
 	@staticmethod
 	def get_sidebar(bbs,category_list,side_comment,side_thread):
 		sidebar_list=[]

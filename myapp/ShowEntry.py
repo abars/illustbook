@@ -38,18 +38,11 @@ from myapp.ApiObject import ApiObject
 
 class ShowEntry(webapp.RequestHandler):
 	@staticmethod
-	def _get_response(com_list_,thread):
+	def _get_response(com_list_,res_hash,thread):
 		#コメントソート
 		if(thread.illust_mode):
 			com_list_.reverse()
 		
-		#レスのkeyを全て取得
-		res_id_list=[]
-		for com in com_list_:
-			for res in com.res_list:
-				res_id_list.append(res)
-		res_hash=ApiObject.get_cached_object_hash(res_id_list)
-
 		#レスを取得
 		com_list=[]
 		for com in com_list_:
@@ -74,11 +67,26 @@ class ShowEntry(webapp.RequestHandler):
 			return ""
 		return bookmark.name
 
-	#コメントのレンダリング
+	#レスの取得
 	@staticmethod
-	def render_comment(req,host_url,bbs,thread,com_list_,edit_flag,bbs_key,logined,show_comment_form,is_admin,user_name,user):
+	def _get_entry_res(entry_list):
+		res_id_list=[]
+
+		if(type(entry_list)==dict):
+			for com in entry_list:
+				for res in entry_list[com].res_list:
+					res_id_list.append(res)
+		else:
+			for com in entry_list:
+				for res in com.res_list:
+					res_id_list.append(res)
+
+		return ApiObject.get_cached_object_hash(res_id_list)
+
+	@staticmethod
+	def _render_comment_core(req,host_url,bbs,thread,com_list_,edit_flag,bbs_key,logined,show_comment_form,is_admin,user_name,user,res_hash):
 		#レスを取得
-		com_list=ShowEntry._get_response(com_list_,thread)
+		com_list=ShowEntry._get_response(com_list_,res_hash,thread)
 
 		#コメントの編集を行うか
 		comment_edit=req.request.get("comment_edit")
@@ -106,5 +114,37 @@ class ShowEntry(webapp.RequestHandler):
 
 		path = "/html/thread/thread_comment.html"
 		return template_select.render(path, template_values)
+
+	#コメントを一つレンダリング
+	@staticmethod
+	def render_comment(req,host_url,bbs,thread,com_list_,edit_flag,bbs_key,logined,show_comment_form,is_admin,user_name,user):
+		res_hash=ShowEntry._get_entry_res(com_list_)
+		return ShowEntry._render_comment_core(req,host_url,bbs,thread,com_list_,edit_flag,bbs_key,logined,show_comment_form,is_admin,user_name,user,res_hash)
+
+	#コメントをまとめてレンダリング
+	@staticmethod
+	def render_comment_list(req,all_threads_cached,host_url,bbs,show_comment_form,logined,is_admin,user_name,user):
+		edit_flag=False
+		bbs_key=bbs.key()
+
+		#コメントとレスを先行して全て取得
+		entry_key_list=[]
+		for thread in all_threads_cached:
+			if not thread:
+				continue
+			for entry in thread.cached_entry_key:
+				entry_key_list.append(entry)
+		entry_hash=ApiObject.get_cached_object_hash(entry_key_list)
+		res_hash=ShowEntry._get_entry_res(entry_hash)
+
+		#コメントをレンダリング
+		for thread in all_threads_cached:
+			if not thread:
+				continue
+			entry_list=[]
+			for entry in thread.cached_entry_key:
+				one_entry=entry_hash[entry]
+				entry_list.append(one_entry)
+			thread.cached_render_comment=ShowEntry._render_comment_core(req,host_url,bbs,thread,entry_list,edit_flag,bbs_key,logined,show_comment_form,is_admin,user_name,user,res_hash)
 		
 
