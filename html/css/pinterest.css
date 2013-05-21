@@ -57,9 +57,7 @@ h2,h3 {font-size:100%;color:#E47911;}
   {% else %}
    min-width:848px;
   {% endif %}
-  {% if not is_iphone %}
   display:none;
-  {% endif %}
 }
 {% endif %}
 
