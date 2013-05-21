@@ -52,7 +52,6 @@ function masonry_exec(){
 }
 
 $(document).ready(function(){
-  //masonry_exec(); //windowの確定
   masonry_exec(); //corner stampに対応
 });
 

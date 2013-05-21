@@ -53,14 +53,6 @@
   {% include "css/pinterest.css" %}
 {% endif %}
 
-<!-- masonryは画像を読み込む前に優先して読込 -->
-{% if not contents_only %}
-  {% include "jquery.html" %}
-  {% if use_masonry %}
-    <script language="javascript" src="js/masonry.js" type="text/javascript"></script>
-  {% endif %}
-{% endif %}
-
 </head>
 <body>
 
@@ -208,6 +200,14 @@
 <div id="pinterest_footer">
 <a href="{{host}}">イラストブック</a>{% if is_iphone %}<br>{%else%} {%endif%}&copy; 2010-2013 <a href="http://www.abars.biz">ABARS</a> all rights reserved.{% if is_iphone %}<br>{%else%} {%endif%}カバーイラスト：<a href="http://pochigoya0423.blog.shinobi.jp/">飯田のぎ</a>
 </div>
+
+<!-- masonry script -->
+{% if not contents_only %}
+  {% include "jquery.html" %}
+  {% if use_masonry %}
+    <script language="javascript" src="js/masonry.js" type="text/javascript"></script>
+  {% endif %}
+{% endif %}
 
 <!-- load javascript -->
 {% if not contents_only %}
