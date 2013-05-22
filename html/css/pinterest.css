@@ -57,7 +57,9 @@ h2,h3 {font-size:100%;color:#E47911;}
   {% else %}
    min-width:848px;
   {% endif %}
-  display:none;
+  {% if not is_iphone %}
+    display:none;
+  {% endif %}
 }
 {% endif %}
 
@@ -158,7 +160,7 @@ color: #333;
   font-size:12px;
   background-color:#ffffff;
   {% if not is_iphone %}
-  display:none;
+    display:none;
   {% endif %}
 }
 
