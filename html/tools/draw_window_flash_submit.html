@@ -1,0 +1,93 @@
+{% if not template_path %}
+	<style type="text/css">
+	.g-table td{
+		padding:0px;
+	}
+	</style>
+{% endif %}
+
+	<div id="container">
+{% if template_path %}
+		<div id="header"></div>
+{% endif%}
+		<div id="contents-header">
+			<div style="padding-top:6px;">
+				<input class="g-button" type="button" onclick="close_submit_window();" value="お絵かきツールに戻る"/>
+				<a href="{{host}}guide" target="_blank" class="g-button" style="color:#333;">イラストブックの使い方</a>
+			</div>
+		</div>
+		<div id="contents">
+{% if template_path %}
+			<div id="main">
+				<div id="entry-head"></div>
+{% else %}
+			<div id="main_1col">
+{% endif %}
+				<div class="entry">
+					<p>イラストを掲示板に投稿します。イラストの情報を入力して、投稿ボタンを押して下さい。</p>
+
+					<p>&nbsp</p>
+
+					<table class="g-table" style="width:100%;">
+					{% if reply == "1" %}
+					{% else %}
+					<tr><td><p>タイトル</p></td><td><input id="title" style="width:100%;"/></td></tr>
+					{% endif %}
+					<tr><td><p>投稿者名（必須）</p></td><td><input id="name" style="width:100%;"/></td></tr>
+					<tr><td><p>ホームページアドレス</p></td><td><input id="homepage_addr" value="http://" style="width:100%;"/></td></tr>
+					<tr><td><p>削除キー</p></td><td><input id="delete_key" style="width:100%;"/></td></tr>
+					<tr><td><p>カテゴリ</p></td><td>
+					{% include "category_list.html" %}
+					</td></tr>
+					<tr><td><p>年齢制限</p></td><td>
+					{% include "regulation_list.html" %}
+					</td></tr>
+					<tr><td><p>オプション</p></td><td>
+						<div id="thread_option" style="float:left;">
+							<input type="checkbox" id="no_illust" onClick="SetToOnlyTextMode();">文字だけで投稿　
+							<input type="checkbox" id="alpha_png_mode" onClick="SetToAlphaPngMode();">透過PNGで投稿　
+							<input type="checkbox" id="resize_width" checked>700px以上の画像を縮小　
+						</div>
+						<div>
+						{% if logined %}
+							<input  type="checkbox" id="link_to_profile"checked>マイページにリンク
+						{% else %}
+							マイページにリンクするにはログインして下さい
+						{% endif %}
+						</div>
+					</td></tr>
+					</table>
+					
+					<p>&nbsp</p>
+
+					<p>コメント</p>{% if template_path %}<br/>{% endif %}
+
+					<div id="rediter_comment" style="float:left"></div>
+					<div id="rediter_fontsize" style="float:left"></div>  
+					<div id="rediter_palette" style="float:left"></div>
+					<div id="rediter_button" style="float:left"></div><BR clear="both">
+					<iframe id="rediter_iframe" width=100% height=300px></iframe><BR>
+
+					<p>&nbsp</p>
+
+					<p>投稿時の注意</p>{% if template_path %}<br/>{% endif %}
+					<p>同じイラストを複数の掲示板に投稿する行為（マルチポスト）は避けて下さい。</p>
+					<p>投稿の際、非表示レイヤーは非表示の状態で、反転は反転された状態で投稿されます。<p>
+					<p>投稿後はレイヤー情報が失われます。再編集をする必要がある場合はファイルに保存して下さい。</p>
+					<p>実写画像の投稿は禁止されています。</p>
+					<div id="no_illust_alert" style="display:none;background-color:#ffcccc;">
+						<p>文字だけで投稿をした場合は描画したイラストは投稿されませんのでご注意下さい。</p>
+					</div>
+
+					<p>&nbsp</p>
+
+					<input class="g-button" type="button" onclick="close_submit_window();uploadImage(0);" value="イラストを投稿する"
+>
+					<input id="overwrite" class="g-button" type="button" onclick="close_submit_window();uploadImage(1);" value="イラストを上書き投稿する" style="visibility:hidden;">
+
+				</div>
+			</div>
+		</div>
+		<div id="contents-footer">
+		</div>
+	</div>

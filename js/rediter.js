@@ -7,11 +7,11 @@
 //public API
 //--------------------------------------------------------
 
-function rediter_init(id,initial_text,fontsize,enable_tag_edit){
+function rediter_init(id,initial_text,fontsize,color,enable_tag_edit){
 	if(!initial_text){ initial_text=""; }
 	if(!id){ id='rediter'; }
 
-	rediter_set(id,initial_text,fontsize);
+	rediter_set(id,initial_text,fontsize,color);
 	rediter_create_palette(id);
 	rediter_create_fontsize(id);
 	rediter_create_button(id,enable_tag_edit);
@@ -50,11 +50,11 @@ function rediter_get_iframe(id){
 	return doc;
 }
 
-function rediter_set(id,initial_text,fontsize){
+function rediter_set(id,initial_text,fontsize,color){
 	var doc=rediter_get_iframe(id);
 	doc.designMode = 'on';
 	doc.open();
-	doc.write('<html><head><style>body{font-size:'+fontsize+';}p{margin:0px;}</style></head><body></body></html>');
+	doc.write('<html><head><style>body{font-size:'+fontsize+';color:'+color+';}p{margin:0px;}</style></head><body></body></html>');
 	//marginはIEのダブル改行対策
 	doc.close();
 	

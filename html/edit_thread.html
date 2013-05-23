@@ -5,10 +5,11 @@
 {% include "./bbs_thread/css.html" %}
 	<title>スレッドの編集</title>
 	<script language="JavaScript" src="./js/rediter.js"></script>
-	<script><!--
+	<script type="text/javascript">
 		function init(){
-			rediter_init('rediter_summary','{{summary|safe}}','14px',true);
-			rediter_init('rediter_postscript','{{postscript|safe}}','14px',true);
+			var color="{%if bbs.font_color and not template_path %}#{{bbs.font_color}}{% else %}#333333{% endif %}";
+			rediter_init('rediter_summary','{{summary|safe}}','14px',color,true);
+			rediter_init('rediter_postscript','{{postscript|safe}}','14px',color,true);
 		}		
 
 		function submit_info(){
@@ -21,7 +22,7 @@
 			document.getElementById("thread_category").value=category;
 			document.getElementById("submit_form").submit();
 		}
-	--></script>
+	</script>
 
 	{% include "css/floating_menu_css.html" %}
 </head>

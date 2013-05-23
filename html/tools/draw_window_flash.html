@@ -78,7 +78,8 @@ object, embed {
 		}
 		
 		//リッチエディタを準備
-		rediter_init('rediter','{{summary|safe}}','10pt',false);
+		var color="{%if bbs.font_color and not template_path %}#{{bbs.font_color}}{% else %}#333333{% endif %}";
+		rediter_init('rediter','{{summary|safe}}','10pt',color,false);
 		if(document.getElementById("title")){
 			document.getElementById("title").value='{{title|safe}}';
 		}
@@ -138,82 +139,7 @@ object, embed {
 </div>
 
 <div id="submit_window" style="position:absolute;left:0px;top:0px;margin:0px;padding:0px;z-index:1;display:none;width:100%;height:100%;overflow: auto;">
-	<div id="container">
-{% if template_path %}
-		<div id="header"></div>
-{% endif%}
-		<div id="contents-header"><input class="g-button" type="button" onclick="close_submit_window();" value="イラスト作成画面に戻る" style="margin-top:6px;"></div>
-		<div id="contents">
-{% if template_path %}
-			<div id="main">
-				<div id="entry-head"></div>
-{% else %}
-			<div id="main_1col">
-{% endif %}
-				<div class="entry">
-					<H4>イラストを投稿する</H4><BR>
-					<p>イラストを掲示板に投稿します。以下のフォームにイラストの情報を入力して、投稿ボタンを押して下さい。投稿の際、非表示レイヤーは非表示の状態で、反転は反転された状態で投稿されます。また、投稿後はレイヤー情報が失われます。再編集をする必要がある場合は、イラスト作成画面のファイルメニューから、ファイルに保存して下さい。イラスト作成画面のツールの使い方は<A HREF="{{host}}guide" TARGET="_BLANK" class="declink">イラストブックの使い方</A>を参照して下さい。尚、実写画像の投稿はできません。詳細は<A HREF="{{host}}terms" TARGET="_BLANK" class="declink">ご利用規約</A>を参照して下さい。</p>
-					<p>&nbsp</p>
-					<p>&nbsp</p>
-
-					<H4>イラストの情報</H4><BR>
-					<table class="table_color" style="width:100%;">
-					{% if reply == "1" %}
-					{% else %}
-					<tr><td>タイトル</td><td><input id="title" style="width:100%;"/></td></tr>
-					{% endif %}
-					<tr><td>投稿者名（必須）</td><td><input id="name" style="width:100%;"/></td></tr>
-					<tr><td>ホームページアドレス</td><td><input id="homepage_addr" value="http://" style="width:100%;"/></td></tr>
-					<tr><td>削除キー</td><td><input id="delete_key" style="width:100%;"/></td></tr>
-					<tr><td>カテゴリ</td><td>
-					{% include "category_list.html" %}
-					</td></tr>
-					<tr><td>年齢制限</td><td>
-					{% include "regulation_list.html" %}
-					</td></tr>
-					<tr><td>オプション</td><td>
-						<div id="thread_option" style="float:left;">
-							<input type="checkbox" id="no_illust" onClick="SetToOnlyTextMode();">文字だけで投稿　
-							<input type="checkbox" id="alpha_png_mode" onClick="SetToAlphaPngMode();">透過PNGで投稿　
-							<input type="checkbox" id="resize_width" checked>700px以上の画像を縮小　
-						</div>
-						<div>
-						{% if logined %}
-							<input  type="checkbox" id="link_to_profile"checked>マイページにリンク
-						{% else %}
-							マイページにリンクするにはログインして下さい
-						{% endif %}
-						</div>
-					</td></tr>
-					</table>
-					
-					<div id="no_illust_alert" style="display:none;background-color:#ffcccc;">
-						文字だけで投稿をした場合は描画したイラストは投稿されませんのでご注意下さい。
-					</div>
-
-					<p>&nbsp</p>
-					<p>&nbsp</p>
-
-					<H4>イラストのコメント</H4><BR>
-
-					<div id="rediter_comment" style="float:left"></div>
-					<div id="rediter_fontsize" style="float:left"></div>  
-					<div id="rediter_palette" style="float:left"></div>
-					<div id="rediter_button" style="float:left"></div><BR clear="both">
-					<iframe id="rediter_iframe" width=100% height=300px></iframe><BR>
-
-					<p>&nbsp</p>
-
-					<input class="g-button" type="button" onclick="close_submit_window();uploadImage(0);" value="イラストを投稿する"
->
-					<input id="overwrite" class="g-button" type="button" onclick="close_submit_window();uploadImage(1);" value="イラストを上書き投稿する" style="visibility:hidden;">
-
-				</div>
-			</div>
-		</div>
-		<div id="contents-footer">
-		</div>
-	</div>
+	{% include "tools/draw_window_flash_submit.html" %}
 </div>
 
 <div id="wacomPlugin">
