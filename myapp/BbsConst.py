@@ -94,6 +94,7 @@ class BbsConst:
 
 	#keyname
 	KEY_NAME_TOP_PAGE_CACHE="top_page_cache"
+	KEY_NAME_BOOKMARK="bookmark_"
 
 	#thread search
 	SEARCH_THREAD_INDEX_NAME="search_thread_index"

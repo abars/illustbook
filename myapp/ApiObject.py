@@ -115,13 +115,18 @@ class ApiObject(webapp.RequestHandler):
 		
 		count=bookmark.count(limit=2)
 		if(count>=2):
+			#keynameの設定でduplicateは起きなくなったはず
 			logging.error("bookmark duplicate error user_id="+str(user_id))
-			duplicate_bookmark=bookmark.fetch(2)
-			db.get(duplicate_bookmark[1]).delete()
-			logging.error("deleted duplicated one")
+
+			#もし起きる場合は古いデータなので以下で削除のこと
+			#duplicate_bookmark=bookmark.fetch(2)
+			#db.get(duplicate_bookmark[1]).delete()
+			#logging.error("deleted duplicated one")
 
 		if(count==0):
-			bookmark=Bookmark()
+			#同じuser_idでduplicateが起きないようにするためにkey_nameを設定
+			#昔のbookmarkにはkey_nameは設定していないので注意
+			bookmark=Bookmark(key_name=BbsConst.KEY_NAME_BOOKMARK+user_id)
 			bookmark.user_id=user_id
 			bookmark.put()
 		else:
