@@ -175,6 +175,7 @@ class MyPage(webapp.RequestHandler):
 		
 		#アカウントの凍結
 		if(self.request.get("freez") and is_admin):
+			bookmark=ApiObject.get_bookmark_of_user_id_for_write(self.request.get("user_id"))
 			bookmark.frozen=int(self.request.get("freez"))
 			bookmark.put()
 		
