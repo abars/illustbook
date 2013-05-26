@@ -14,12 +14,10 @@ from google.appengine.api import memcache
 
 from myapp.StackFeedData import StackFeedData
 from myapp.BbsConst import BbsConst
-from myapp.UserIcon import UserIcon
 
 class Bookmark(db.Model):
 	owner = db.UserProperty()
 	user_id = db.StringProperty()
-	feed_list = db.StringListProperty()
 	stack_feed_list = db.ListProperty(db.Key)	#自分と他人の投稿情報=home_timeline
 	my_timeline = db.ListProperty(db.Key)		#自分の投稿情報=my_timeline
 	thread_key_list = db.ListProperty(db.Key)
@@ -42,11 +40,12 @@ class Bookmark(db.Model):
 	thumbnail_created = db.IntegerProperty()
 	
 	#互換性用
-	user_icon = db.ReferenceProperty(UserIcon)
+	#user_icon = db.ReferenceProperty(UserIcon)
 
 	#削除予定
-	thread_list = db.StringListProperty()	#deleted
-	bbs_list = db.StringListProperty()	#deleted
+	#feed_list = db.StringListProperty() #削除予定
+	#thread_list = db.StringListProperty()	#deleted
+	#bbs_list = db.StringListProperty()	#deleted
 	
 	#プロフィール情報
 	mail = db.StringProperty()

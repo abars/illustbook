@@ -33,7 +33,6 @@ from myapp.StackFeedData import StackFeedData
 from myapp.UTC import UTC
 from myapp.JST import JST
 from myapp.Entry import Entry
-from myapp.UserIcon import UserIcon
 from myapp.TimeProgress import TimeProgress
 from myapp.ImageFile import ImageFile
 from myapp.SearchThread import SearchThread
@@ -117,6 +116,9 @@ class ApiObject(webapp.RequestHandler):
 		count=bookmark.count(limit=2)
 		if(count>=2):
 			logging.error("bookmark duplicate error user_id="+str(user_id))
+			duplicate_bookmark=bookmark.fetch(2)
+			db.get(duplicate_bookmark[1]).delete()
+			logging.error("deleted duplicated one")
 
 		if(count==0):
 			bookmark=Bookmark()
@@ -161,18 +163,18 @@ class ApiObject(webapp.RequestHandler):
 	@staticmethod
 	def create_user_thumbnail(bookmark):
 		#UserIconクラスに退避していた画像をBookmarkクラスに復元
-		user_icon_exist=False
-		try:
-			if(bookmark and bookmark.user_icon):
-				user_icon_exist=True
-		except:
-			user_icon_exist=False
-		if(user_icon_exist):
-			if(not bookmark.icon):
-				bookmark.icon=bookmark.user_icon.icon
-				bookmark.put()
-			bookmark.user_icon.delete()
-			bookmark.user_icon=None
+		#user_icon_exist=False
+		#try:
+		#	if(bookmark and bookmark.user_icon):
+		#		user_icon_exist=True
+		#except:
+		#	user_icon_exist=False
+		#if(user_icon_exist):
+		#	if(not bookmark.icon):
+		#		bookmark.icon=bookmark.user_icon.icon
+		#		bookmark.put()
+		#	bookmark.user_icon.delete()
+		#	bookmark.user_icon=None
 		
 		#180pxサムネイル作成
 		if(bookmark and bookmark.icon and (not bookmark.thumbnail_created)):
