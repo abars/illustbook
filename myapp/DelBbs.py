@@ -96,13 +96,21 @@ class DelBbs(webapp.RequestHandler):
 			bbs = db.get(self.request.get("bbs_key"))
 		except:
 			bbs=None
+		
 		if(bbs==None):
 			self.response.out.write(Alert.alert_msg("削除対象が見つかりません。",self.request.host))
 			return
+		
 		user = users.get_current_user()
-		if(OwnerCheck.check(bbs,user)):
+		if(not user):
+			self.response.out.write(Alert.alert_msg("ログインする必要があります。",self.request.host))
+			return
+		
+		is_admin=OwnerCheck.is_admin(user)
+		if(OwnerCheck.check(bbs,user) and (not is_admin)):
 			self.response.out.write(Alert.alert_msg("削除する権限がありません。",self.request.host))
 			return
+		
 		bbs.del_flag=1
 		bbs.put()
 
