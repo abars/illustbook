@@ -23,7 +23,7 @@
 	}
 
 	function start_chat(key,viewmode,pass,name){
-		window.location.href="./chat?mode=tool&key="+key+"&viewmode="+viewmode+"&name="+name+"&pass="+pass
+		window.location.href="./chat?mode=tool&amp;key="+key+"&amp;viewmode="+viewmode+"&amp;name="+name+"&amp;pass="+pass
 	}
 
 	function join_chat(key,viewmode,pass){
@@ -51,14 +51,14 @@
 <div style="margin-left:4px;margin-right:4px;">
 
 <div style="float:left;margin-right:10px;">
-	<img src="./static_files/chat/logo.png">
+	<img src="./static_files/chat/logo.png" alt="logo"/>
 </div>
 <div style="float:left;">
 	<h1>イラブチャットとは</h1>
-	<p>イラブチャット（β）はPCとiPadで楽しめるお絵かきチャットです。</br>
-作成したイラストはイラストブックに投稿することができます。</br>
+	<p>イラブチャット（β）はPCとiPadで楽しめるお絵かきチャットです。<br/>
+作成したイラストはイラストブックに投稿することができます。<br/>
 ご利用にはHTML5に対応したブラウザが必要です。</p>
-	<a href="chat?mode=tool&key=always&viewmode=false&pass=false" class="g-button green">まずはお試し</a>
+	<a href="chat?mode=tool&amp;key=always&amp;viewmode=false&amp;pass=false" class="g-button green">まずはお試し</a>
 	<a href="https://twitter.com/share" class="twitter-share-button" data-lang="ja" data-hashtags="ilbchat">ツイート</a>
 	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 </div>
@@ -66,8 +66,8 @@
 <br clear="all"/>
 <br clear="all"/>
 
-<img src="./static_files/chat/ipad.png">
-<img src="./static_files/chat/bbs.png">
+<img src="./static_files/chat/ipad.png" alt="ipad"/>
+<img src="./static_files/chat/bbs.png" alt="submitable"/>
 
 <p>&nbsp;</p>
 
@@ -80,18 +80,18 @@
 				{% if room.password %}
 					<div style="width:160px;height:160px;"></div>
 				{% else %}
-					<img src="./chat?mode=thumbnail&key={{room.key()}}" width="160px" height="160px"/>
+					<img src="./chat?mode=thumbnail&amp;key={{room.key()}}" width="160px" height="160px" alt="room thumbnail"/>
 				{% endif %}
 			</a>
 		</div>
 		<div style="float:left;margin:4px;">
-			<p><h2>{{room.name}}{% if room.is_always %}（常時稼動ルーム）{% endif %}
+			<h2>{{room.name}}{% if room.is_always %}（常時稼動ルーム）{% endif %}
 			{% if room.password %}
 				（パスワードが必要）{% if user %}{% if user.user_id == room.user_id %}（{{room.password}}）{% endif %}{% endif %}　
 			{% else %}
 				（誰でも参加可能）
 			{% endif %}
-			</h2></p>
+			</h2>
 			<p>
 				from <a href="./mypage?user_id={{room.user_id}}">{{room.user_name}}</a><br/>
 				最終更新から{{room.from_last_update}}分経過<br/>
@@ -99,7 +99,7 @@
 			<div class="actions g-button-container">
 				<div class="g-button-group">
 					<a href="javascript:join_chat('{{room.key()}}',false,{% if room.password %}true{%else%}false{%endif%});" class="g-button green">{% if not is_iphone %}{% endif %}参加（{{room.user_count}}人）</a>
-					{% if user %}{% if user.user_id() == room.user_id %}<a href="javascript:delete_room('./chat?mode=delete&key={{room.key()}}');" class="g-button green">{% if not is_iphone %}{% endif %}削除</a>{% endif %}{% endif %}
+					{% if user %}{% if user.user_id() == room.user_id %}<a href="javascript:delete_room('./chat?mode=delete&amp;key={{room.key()}}');" class="g-button green">{% if not is_iphone %}{% endif %}削除</a>{% endif %}{% endif %}
 				</div>
 			</div>
 		</div>
@@ -111,10 +111,10 @@
 
 <br clear="all"/>
 
-<H1>ルームの作成</H1>
+<h1>ルームの作成</h1>
 
 <div id="new_room_exec" style="display:none;">
-	<img src="./static_files/loading.gif">
+	<img src="./static_files/loading.gif" alt="loading"/>
 	<br/>
 	<p>ルームを作成しています。<br/>
 	しばらくお待ち下さい。</p>
@@ -122,7 +122,7 @@
 
 <div id="new_room">
 	{% if not user %}
-		<p>ルームの作成には<A HREF="{{redirect_url|login_url}}" class="declink">ログイン</A>が必要です。</p>
+		<p>ルームの作成には<a href="{{redirect_url|login_url}}" class="declink">ログイン</a>が必要です。</p>
 	{% else %}
 	<form action="./chat" enctype="multipart/form-data" method="GET" name="new_room_form">
 		<input type="hidden" name="mode" value="create">
@@ -145,9 +145,9 @@
 
 <p>&nbsp;</p>
 <h1>利用ガイド</h1>
-<p>ルームは最終更新から10分が経過すると自動的に削除されます。</br>
-バグ報告や要望は<a href="./support/" class="declink">サポート掲示板</a>までどうぞ。</br>
-{% if is_admin %}管理者向け：パスワードにalwaysと入れると常時稼動ルームになります</br>{% endif %}
+<p>ルームは最終更新から10分が経過すると自動的に削除されます。<br/>
+バグ報告や要望は<a href="./support/" class="declink">サポート掲示板</a>までどうぞ。<br/>
+{% if is_admin %}管理者向け：パスワードにalwaysと入れると常時稼動ルームになります<br/>{% endif %}
 </p>
 
 <br/>
