@@ -1,7 +1,7 @@
 <script language="javascript" src="{{host}}js/jquery/jquery.alerts.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" media="screen,print" href="{{host}}js/jquery/jquery.alerts.css" />
 
-<script>
+<script type="text/javascript">
 	function require_password(key,viewmode,pass){
 		jPrompt("ルームのパスワードを入力して下さい","","パスワードの入力",function(pass){
 			if(pass){
@@ -11,11 +11,19 @@
 	}
 
 	function require_username(key,viewmode,pass){
-		jPrompt("チャットで使用する名前を入力して下さい","{{user_name}}","名前の入力",function(name){
-			if(name){
-				window.location.href="./chat?mode=tool&key="+key+"&viewmode="+viewmode+"&name="+name+"&pass="+pass
-			}
-		});
+		{% if not user %}
+			jPrompt("チャットで使用する名前を入力して下さい","{{user_name}}","名前の入力",function(name){
+				if(name){
+					start_chat(key,viewmode,pass,name);
+				}
+			});
+		{% else %}
+			start_chat(key,viewmode,pass,"{{user_name}}");
+		{% endif %}
+	}
+
+	function start_chat(key,viewmode,pass,name){
+		window.location.href="./chat?mode=tool&key="+key+"&viewmode="+viewmode+"&name="+name+"&pass="+pass
 	}
 
 	function join_chat(key,viewmode,pass){
@@ -31,31 +39,37 @@
 			window.location.href=url;
 		}
 	}
+
+	function create_new_room(){
+		$("#new_room").hide();
+		$("#new_room_exec").show();
+		document.new_room_form.submit();
+	}
 </script>
 
+<!-- container -->
 <div style="margin-left:4px;margin-right:4px;">
 
 <div style="float:left;margin-right:10px;">
-<img src="./static_files/chat/logo.png">
+	<img src="./static_files/chat/logo.png">
 </div>
-
 <div style="float:left;">
-<H1>イラブチャットとは</H1>
-<p>イラブチャット（β）はPCとiPadで楽しめるお絵かきチャットです。</br>
+	<h1>イラブチャットとは</h1>
+	<p>イラブチャット（β）はPCとiPadで楽しめるお絵かきチャットです。</br>
 作成したイラストはイラストブックに投稿することができます。</br>
 ご利用にはHTML5に対応したブラウザが必要です。</p>
-<a href="chat?mode=tool&key=always&viewmode=false&pass=false" class="g-button green">まずはお試し</a>
-<a href="https://twitter.com/share" class="twitter-share-button" data-lang="ja" data-hashtags="ilbchat">ツイート</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	<a href="chat?mode=tool&key=always&viewmode=false&pass=false" class="g-button green">まずはお試し</a>
+	<a href="https://twitter.com/share" class="twitter-share-button" data-lang="ja" data-hashtags="ilbchat">ツイート</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 </div>
 
-<br clear="all">
-<br clear="all">
-<img src="./static_files/chat/ipad.png"><img src="./static_files/chat/bbs.png">
+<br clear="all"/>
+<br clear="all"/>
 
-<div>
+<img src="./static_files/chat/ipad.png">
+<img src="./static_files/chat/bbs.png">
 
-<p>&nbsp</p>
+<p>&nbsp;</p>
 
 <h1>稼働中のルーム</h1>
 
@@ -70,80 +84,73 @@
 				{% endif %}
 			</a>
 		</div>
-		<div style="margin:4px;">
-		<p><h2>{{room.name}}{% if room.is_always %}（常時稼動ルーム）{% endif %}
-		{% if room.password %}
-			（パスワードが必要）{% if user %}{% if user.user_id == room.user_id %}（{{room.password}}）{% endif %}{% endif %}　
-		{% else %}
-			（誰でも参加可能）
-		{% endif %}
-		</h2></p>
-		<p>from <a href="./mypage?user_id={{room.user_id}}">{{room.user_name}}</a><br/>
-		最終更新から{{room.from_last_update}}分経過<br/>
-		</p>
-		<div class="actions g-button-container">
-		<div class="g-button-group">
-		<A HREF="javascript:join_chat('{{room.key()}}',false,{% if room.password %}true{%else%}false{%endif%});" class="g-button green">{% if not is_iphone %}{% endif %}参加（{{room.user_count}}人）</A>
-		{% if user %}{% if user.user_id() == room.user_id %}<A HREF="javascript:delete_room('./chat?mode=delete&key={{room.key()}}');" class="g-button green">{% if not is_iphone %}{% endif %}削除</A>{% endif %}{% endif %}
-		</div>
-		</div>
+		<div style="float:left;margin:4px;">
+			<p><h2>{{room.name}}{% if room.is_always %}（常時稼動ルーム）{% endif %}
+			{% if room.password %}
+				（パスワードが必要）{% if user %}{% if user.user_id == room.user_id %}（{{room.password}}）{% endif %}{% endif %}　
+			{% else %}
+				（誰でも参加可能）
+			{% endif %}
+			</h2></p>
+			<p>
+				from <a href="./mypage?user_id={{room.user_id}}">{{room.user_name}}</a><br/>
+				最終更新から{{room.from_last_update}}分経過<br/>
+			</p>
+			<div class="actions g-button-container">
+				<div class="g-button-group">
+					<a href="javascript:join_chat('{{room.key()}}',false,{% if room.password %}true{%else%}false{%endif%});" class="g-button green">{% if not is_iphone %}{% endif %}参加（{{room.user_count}}人）</a>
+					{% if user %}{% if user.user_id() == room.user_id %}<a href="javascript:delete_room('./chat?mode=delete&key={{room.key()}}');" class="g-button green">{% if not is_iphone %}{% endif %}削除</a>{% endif %}{% endif %}
+				</div>
+			</div>
 		</div>
 		<br clear="all"/>
 	{% endfor %}
 {% else %}
 	<p>稼働中のルームはありません。</p>
 {% endif %}
-	<br clear="all">
-</div>
 
-<script>
-	function create_new_room(){
-		$("#new_room").hide();
-		$("#new_room_exec").show();
-		document.new_room_form.submit();
-	}
-</script>
-
-<div>
+<br clear="all"/>
 
 <H1>ルームの作成</H1>
 
 <div id="new_room_exec" style="display:none;">
-	<img src="./static_files/loading.gif"><BR>
-	<p>ルームを作成しています。<BR>
+	<img src="./static_files/loading.gif">
+	<br/>
+	<p>ルームを作成しています。<br/>
 	しばらくお待ち下さい。</p>
 </div>
 
 <div id="new_room">
-
-{% if not user %}
-<p>ルームの作成には<A HREF="{{redirect_url|login_url}}" class="declink">ログイン</A>が必要です。</p>
-{% else %}
-<form action="./chat" enctype="multipart/form-data" method="GET" name="new_room_form">
-<input type="hidden" name="mode" value="create">
-<TABLE class="g-table">
-<TR><TH>ルーム名（必須）</TH><TD><input type="text" name="name" style="width:200px"></TD></TR>
-<TR><TH>パスワード</TH><TD><input type="text" name="pass" style="width:200px">
-	<br/>パスワードを設定しない場合は誰でも参加可能</TD></TR>
-<TR><TH>キャンバスサイズ</TH><TD><select name="canvas_size">
-<option value="600x600">600x600px</option>
-<option value="800x600">800x600px</option>
-</select>
-</TABLE>
-<BR>
-<a href="javascript:create_new_room();" class="g-button green">ルームを作成</a>
-</form>
-{% endif %}
+	{% if not user %}
+		<p>ルームの作成には<A HREF="{{redirect_url|login_url}}" class="declink">ログイン</A>が必要です。</p>
+	{% else %}
+	<form action="./chat" enctype="multipart/form-data" method="GET" name="new_room_form">
+		<input type="hidden" name="mode" value="create">
+		<table class="g-table">
+		<tr><th>ルーム名（必須）</th><td><input type="text" name="name" style="width:200px"></td></tr>
+		<tr><th>パスワード</th><td><input type="text" name="pass" style="width:200px">
+		<br/>パスワードを設定しない場合は誰でも参加可能</td></tr>
+		<tr><th>キャンバスサイズ</th><td>
+			<select name="canvas_size">
+			<option value="600x600">600x600px</option>
+			<option value="800x600">800x600px</option>
+			</select>
+		</td></tr>
+		</table>
+		<br/>
+		<a href="javascript:create_new_room();" class="g-button green">ルームを作成</a>
+	</form>
+	{% endif %}
 </div>
-</div>
 
-<p>&nbsp</p>
-<H1>利用ガイド</H1>
+<p>&nbsp;</p>
+<h1>利用ガイド</h1>
 <p>ルームは最終更新から10分が経過すると自動的に削除されます。</br>
-バグ報告や要望は<A HREF="./support/" class="declink">サポート掲示板</A>までどうぞ。</br>
+バグ報告や要望は<a href="./support/" class="declink">サポート掲示板</a>までどうぞ。</br>
 {% if is_admin %}管理者向け：パスワードにalwaysと入れると常時稼動ルームになります</br>{% endif %}
 </p>
 
 <br/>
 
+<!-- container -->
 </div>
