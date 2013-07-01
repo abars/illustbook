@@ -66,6 +66,14 @@ class CounterWorker(webapp.RequestHandler):
 
 		#カウンターを進める
 		headers={'X-AppEngine-FailFast' : 'true'} #新規インスタンスの作成の抑制
+
+		#add_async
+		#まだ使えない？
+		#que=taskqueue.Queue("counter")
+		#task=taskqueue.Task(url="/counter_worker",params={"bbs":str(bbs.key()),"thread":thread_key,"dont_count":str(dont_count),"referer":referer,"url":url,"remote_addr":remote_addr},headers=headers)
+		#que.add_async(task)
+
+		#add sync
 		try:
 			taskqueue.add(url="/counter_worker",params={"bbs":str(bbs.key()),"thread":thread_key,"dont_count":str(dont_count),"referer":referer,"url":url,"remote_addr":remote_addr},queue_name="counter",headers=headers)
 		except:
