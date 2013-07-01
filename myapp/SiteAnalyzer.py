@@ -57,7 +57,7 @@ class SiteAnalyzer(webapp.RequestHandler):
 
 		#ランキング更新
 		rank=Ranking.get_or_insert(BbsConst.THREAD_RANKING_KEY_NAME)
-		rank.create_rank()
+		rank.create_rank(self)
 		ApiFeed.invalidate_cache();
 
 		#キャッシュ取得

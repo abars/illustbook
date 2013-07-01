@@ -64,10 +64,10 @@ class Ranking(db.Model):
 	def get_sec(self,now):
 		return int(time.mktime(now.timetuple()))
 
-	def create_rank(self):
+	def create_rank(self,req):
 		self.create_thread_rank()
 		
-		rank=self.create_user_rank(self.user_list)
+		rank=self.create_user_rank(self.user_list,req)
 		self.user_ranking_list=rank["user"]
 		self.user_id_ranking_list=rank["user_id"]
 		
@@ -77,7 +77,7 @@ class Ranking(db.Model):
 
 		self.put()
 	
-	def create_user_rank(self,user_list):
+	def create_user_rank(self,user_list,req):
 		rank_user={}
 		
 		for user_id in user_list:
@@ -101,11 +101,11 @@ class Ranking(db.Model):
 			profile=bookmark.profile
 			
 			query=db.Query(MesThread)
-			query=query.filter("illust_mode IN",[BbsConst.ILLUSTMODE_ILLUST,BbsConst.ILLUSTMODE_MOPER])
+			query=query.filter("illust_mode =",BbsConst.ILLUSTMODE_ILLUST)
 			query=query.filter("user_id =",k).order("-create_date")
 			try:
 				thread_list=query.fetch(offset=0,limit=1)
-				thread=ApiObject.create_thread_object(None,thread_list[0])
+				thread=ApiObject.create_thread_object(req,thread_list[0])
 				thumbnail_url=thread["thumbnail_url"]
 				thread_url=thread["thread_url"]
 			except:

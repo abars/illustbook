@@ -6,42 +6,27 @@
 		//タグ作成
 		var obj=eval(code);
 		var txt="";
-		txt+="<div style='float:left;width:220px;'>"
-		txt+="<div style='float:left;width:80px;'>"
-		txt+="<h2>"+obj["no"]+"位</h2>　";
 		txt+='<a href="./mypage?user_id='+obj['user_id']+'">'
-		txt+="<p><b>"+obj["name"]+"</b></p>";
-		txt+='<img src="./show_icon?key='+obj['user_id']+'&size=mini" class="radius_image" width=50px height=50px />　';
+		txt+="<h2>"+obj["no"]+"位&nbsp;"+obj["name"]+"</h2>";
+		txt+='<img src="./show_icon?key='+obj['user_id']+'&size=mini" width=50px height=50px />　';
 		txt+='</a>';
-
-		txt+="</div><div style='float:left;'>"
-		txt+='';
 
 		txt+='<a href="'+obj['thread_url']+'">'
 		txt+='<img src="'+obj["thumbnail_url"]+'"/>　';
 		txt+='</a>';
 
-		txt+='</div>'
-		txt+='</div>'
-
-		//改行
-		var no=obj["no"]-1;
-		var unit=4;
-		{% if is_iphone %}unit=1;{% endif %}
-		if(no%unit==unit-1){
-			txt+="<BR CLEAR='ALL'>"
-		}
-		
 		//ライト
 		document.write(txt);
 	}
 --></script>
 
 <!-- ユーザ一覧 -->
-<div class="example">
-	<p><h2>{{ranking_name}}</h2></p>
+<div>
+	<h2>{{ranking_name}}</h2>
 	{% for user in ranking_list %}
+	<div class="item">
 		<script>show_one_user('{{user|safe}}');</script>
+	</div>
 	{% endfor %}
 	<br clear="all">
 </div>
