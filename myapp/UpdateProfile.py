@@ -48,7 +48,14 @@ class UpdateProfile(webapp.RequestHandler):
 		birthday_month = self.request.get("birthday_month")
 		birthday_day = self.request.get("birthday_day")
 		disable_rankwatch =int(self.request.get("disable_rankwatch"))
-		regulation=int(self.request.get("regulation"))
+		
+		regulation=0
+		if(self.request.get("regulation_r15_nl")):
+			regulation+=1
+		if(self.request.get("regulation_r15_bl")):
+			regulation+=2
+		if(self.request.get("regulation_r15_gl")):
+			regulation+=4
 
 		if(name==""):
 			Alert.alert_msg_with_write(self,"名前がありません。");
