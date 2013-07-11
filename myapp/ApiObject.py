@@ -367,7 +367,10 @@ class ApiObject(webapp.RequestHandler):
 	
 	@staticmethod
 	def _get_bbs_url(req,bbs):
-		bbs_url="http://"+req.request.host+"/"
+		if(req):
+			bbs_url="http://"+req.request.host+"/"
+		else:
+			bbs_url="."
 		if(bbs.short):
 			bbs_url+=bbs.short+"/"
 		else:

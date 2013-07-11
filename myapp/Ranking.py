@@ -105,7 +105,8 @@ class Ranking(db.Model):
 			query=query.filter("user_id =",k).order("-create_date")
 			try:
 				thread_list=query.fetch(offset=0,limit=1)
-				thread=ApiObject.create_thread_object(req,thread_list[0])
+				req_for_host=None
+				thread=ApiObject.create_thread_object(req_for_host,thread_list[0])
 				thumbnail_url=thread["thumbnail_url"]
 				thread_url=thread["thread_url"]
 			except:
