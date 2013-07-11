@@ -27,9 +27,9 @@
 				{#ランキング設定は次回のランキング更新から反映されます#}
 				</td></tr>
 				<tr><td>年齢制限付きコンテンツ</td><td>　</td><td>
-					<input type="checkbox" name="regulation_r15_nl" value="regulation_r15_nl" {% if bookmark.regulation%2 == 1 %} checked{% endif %} />R15(NL)&nbsp;
-					<input type="checkbox" name="regulation_r15_bl" value="regulation_r15_bl" {% if (bookmark.regulation//2)%2 == 1 %} checked{% endif %} />R15(BL)&nbsp;
-					<input type="checkbox" name="regulation_r15_gl" value="regulation_r15_gl" {% if (bookmark.regulation//4)%2 == 1 %} checked{% endif %} />R15(GL)<br/>
+					<input type="checkbox" name="regulation_r15_nl" value="regulation_r15_nl" {% if bookmark.regulation and bookmark.regulation%2 == 1 %} checked{% endif %} />R15(NL)&nbsp;
+					<input type="checkbox" name="regulation_r15_bl" value="regulation_r15_bl" {% if bookmark.regulation and (bookmark.regulation//2)%2 == 1 %} checked{% endif %} />R15(BL)&nbsp;
+					<input type="checkbox" name="regulation_r15_gl" value="regulation_r15_gl" {% if bookmark.regulation and (bookmark.regulation//4)%2 == 1 %} checked{% endif %} />R15(GL)<br/>
 					{#
 				<select name="regulation" id="regulation">
 					<option value="0" {% if bookmark.regulation==0 %} selected="selected" {% endif %}>制限なしのみ表示</option>

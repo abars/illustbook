@@ -36,5 +36,5 @@ class SyncPut():
 			try_count=try_count+1
 
 		#試行回数をロギング
-		if(try_count>=8):
-			logging.error("put_sync_retry:"+str(try_count))
+		#if(try_count>=8):
+		#	logging.error("put_sync_retry:"+str(try_count))
