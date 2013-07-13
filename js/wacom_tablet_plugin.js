@@ -162,7 +162,7 @@
 	
 	function getPressure(){
 		if(!isPen())
-			return 0.5;
+			return 1.0;//0.5;
 		return m_wacom_plugin.pressure;
 	}
 	
