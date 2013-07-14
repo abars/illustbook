@@ -1,3 +1,13 @@
+{% if is_iphone %}
+
+{% for tag2 in tag_list %}
+    {% if loop.index <= 100 %}
+      {{tag2|safe}}　
+    {% endif %}
+{% endfor %}
+
+{% else %}
+
 <div class="message" {% if not is_iphone %}style="width:350px;margin-left:0px;margin-right:0px;"{%else%}style="width:288px;"{% endif %}>
 {% for tag2 in tag_list %}
     {% if loop.index <= tag_display_n %}
@@ -16,3 +26,5 @@
     </div>
       <a id="show_more_tag_button" href="javascript:show_more_tag();" class="g-button mini">もっと見る</a>
 </div>
+
+{% endif %}

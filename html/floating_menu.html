@@ -59,24 +59,15 @@
 	</div>
 	</div>
 
-	<div style="float:right;padding-left:2px;padding-top:3px;padding-right:2px;font-weight:600;">
-		{% if is_iphone and top_page %}
+	{% if is_iphone and top_page %}
+		<div style="float:right;padding-left:2px;padding-top:1px;padding-right:2px;font-weight:600;">
 	     	<div class="g-button-group">
-	    	<a class="g-button dropdown-toggle" style="padding:4px;height:13px;" data-toggle="dropdown" href="#">メニュー
+	    	<a class="g-button dropdown-toggle" style="padding:6px;" data-toggle="dropdown" href="#">メニュー
 	    		<span class="caret"></span>
 	    	</a>
 			<ul class="dropdown-menu" style="right:0;left:auto;">
-				{% if user %}
-					<li><a href="{{host}}mypage">マイページ
-					{% if my_new_feed_count %}
-						({{my_new_feed_count}})
-					{% endif %}
-					</a></li>
-				{% endif %}
 				<li><a href="{{host}}sample/">試し描き</a></li>
-				{% if not user %}
-					<li><a href="{{host}}mypage">レンタル</a></li>
-				{% endif %}
+				<li><a href="{{host}}mypage">レンタル</a></li>
 				<li><a href="{{host}}commu/">コミュニティ</a></li>
 				<li><a href="{{host}}anything/">何でも投稿</a></li>
 				<li><a href="{{host}}chat">チャット</a></li>
@@ -89,7 +80,9 @@
 				{% endif %}
 	      	</ul>
 	    	</div>
-	    {% else %}
+		</div>
+	{% else %}
+		<div style="float:right;padding-left:2px;padding-top:3px;padding-right:2px;font-weight:600;">
 			{% if user %}
 				{% if not is_iphone or mypage %}
 					<a href="{{redirect_url|logout_url|escape}}" class="g-button mini"><i class="icon-off"></i>ログアウト</a>
@@ -97,8 +90,8 @@
 			{% else %}
 				<a href="{{redirect_url|login_url|escape}}" class="g-button mini"><i class="icon-off"></i>ログイン</a>
 			{% endif %}
-      	{% endif %}
-	</div>
+		</div>
+      {% endif %}
 	
 <br clear="all"/>
 </div>

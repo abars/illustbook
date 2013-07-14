@@ -77,7 +77,7 @@ function show_search(){
     $('#search').hide();
     $('#search_button').text("検索")
   }else{
-   $('#search').show();  
+    $('#search').show();  
     $('#search_button').text("閉じる")
   }
   masonry_reload();
