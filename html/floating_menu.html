@@ -20,7 +20,6 @@
 
 		{% if top_page and not user%}
 			<div style="float:left;margin-top:2px;color:#333;">イラストブック</div>
-			<div style="float:left;width:120px;"><small>無料のお絵かき掲示板</small></div>
 		{% else %}
 			{% if top_page or my_new_feed_count %}
 				<a href="{{host}}mypage" class="g-button mini {% if not show_link_detail %}no-text{% endif %}" style="margin:0px;">

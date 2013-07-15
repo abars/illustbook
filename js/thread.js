@@ -46,7 +46,7 @@ var isFlashInstalled=function(){if(navigator.plugins["Shockwave Flash"]){return 
 			});
 		} 
 
-		function open_draw(url,reply_mode,host,thread_key,bbs_key,illust_mode){
+		function open_draw(url,reply_mode,host,entry_key,thread_key,bbs_key,illust_mode){
 			var width=400;
 			var height=400;
 			if(reply_mode){
@@ -57,7 +57,7 @@ var isFlashInstalled=function(){if(navigator.plugins["Shockwave Flash"]){return 
 			if(!isFlashInstalled){
 				is_ipad="ipad=1&";
 			}
-			if(reply_mode){
+			if(reply_mode && entry_key==""){
 				if(!document.getElementById("continue_reply_"+thread_key)){
 					url="";
 				}else{
@@ -69,7 +69,7 @@ var isFlashInstalled=function(){if(navigator.plugins["Shockwave Flash"]){return 
 			if(illust_mode==2 && !reply_mode){
 				window.location.href=''+host+'draw_moper?thread_key='+thread_key+'&bbs_key='+bbs_key+'&canvas_url='+url;
 			}else{
-				window.location.href=''+host+'draw?'+is_ipad+'thread_key='+thread_key+'&bbs_key='+bbs_key+'&canvas_width='+width+"&canvas_height="+height+"&canvas_url="+url+"&reply="+reply_mode;
+				window.location.href=''+host+'draw?'+is_ipad+'entry_key='+entry_key+'&thread_key='+thread_key+'&bbs_key='+bbs_key+'&canvas_width='+width+"&canvas_height="+height+"&canvas_url="+url+"&reply="+reply_mode;
 			}
 		}
 		

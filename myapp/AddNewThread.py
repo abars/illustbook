@@ -92,9 +92,10 @@ class AddNewThread(webapp.RequestHandler):
 			#上書きの場合
 			new_thread=db.get(self.request.get("thread_key"))
 			if(OwnerCheck.check(bbs,user)):
-				if(self.request.get("delete_key")!=new_thread.delete_key or new_thread.delete_key==""):
-					self.write_status(is_flash,"上書きをする権限がありません。");
-					return;
+				if((not user) or (not new_thread.user_id) or new_thread.user_id!=user.user_id()):
+					if(self.request.get("delete_key")!=new_thread.delete_key or new_thread.delete_key==""):
+						self.write_status(is_flash,"上書きをする権限がありません。");
+						return;
 		else:
 			#新規作成の場合
 			new_thread = MesThread()

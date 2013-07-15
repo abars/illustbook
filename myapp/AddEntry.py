@@ -48,12 +48,47 @@ class AddEntry(webapp.RequestHandler):
 		else:
 			Alert.alert_msg_with_write(self,msg);
 
+	def set_basic_info(self,entry,thread):
+		#新規作成時の基本情報を設定
+		entry.res_list=[]
+		entry.date=datetime.datetime.today()
+		entry.create_date=datetime.datetime.today()
+
+		#コメント番号を設定
+		entry.comment_no=thread.comment_cnt+1
+		entry.remote_addr=self.request.remote_addr
+
+	def update_thread_and_bbs_information(self,thread,bbs):
+		#スレッドのコメント数を更新
+		thread.comment_cnt = thread.comment_cnt+1
+		thread.date=datetime.datetime.today()
+		thread.cached_entry_key=[]
+		thread.cached_entry_key_enable=None
+		thread.put()
+
+		#掲示板のコメント数を追加
+		if(bbs.comment_n) :
+			bbs.comment_n=bbs.comment_n+1
+		else:
+			bbs.comment_n=1
+		bbs.put()
+		RecentCommentCache.invalidate(bbs)
+
 	def post(self):
+		#エラーコードはFlash向けかどうか
 		is_flash=False
 		if(self.request.get('image')):
 			is_flash=True
 
-		entry = Entry()
+		#書き込み対象のコメントを取得
+		if(self.request.get("entry_key")):	#上書きモード
+			entry = db.get(self.request.get("entry_key"))
+			overwrite = True
+		else:
+			entry = Entry()
+			overwrite = False
+	
+		#設定
 		if(self.request.get('comment')):
 			entry.content = self.request.get('comment')
 		else:
@@ -102,13 +137,24 @@ class AddEntry(webapp.RequestHandler):
 		
 		#書き込み権限確認
 		user = users.get_current_user()
-
 		if(bbs.comment_login_require):
 			if(not(user)):
 				self.write_status(is_flash,"この掲示板ではコメントする際にログインが必須です。");
 				return
+
+		#上書き権限確認
+		if(overwrite):
+			bbs=db.get(self.request.get("bbs_key"))
+			if(OwnerCheck.check(bbs,user)):
+				if(user and entry.user_id!=user.user_id()):
+					self.write_status(is_flash,"上書き投稿する権限がありません。");
+					return
 		
+		#イラストの設定
+		delete_thread_image=None
 		if(self.request.get('image')):
+			if(overwrite):
+				delete_thread_image=entry.illust_reply_image_key
 			timage=ThreadImage()
 			timage.bbs_key=bbs
 
@@ -140,13 +186,8 @@ class AddEntry(webapp.RequestHandler):
 		entry.thread_key = thread
 		entry.bbs_key = bbs
 		entry.del_flag = 1
-		entry.res_list=[]
-
 		if(self.request.get("regulation")):
 			entry.adult=int(self.request.get("regulation"))
-
-		entry.create_date=datetime.datetime.today()
-		entry.date=datetime.datetime.today()
 
 		#プロフィールにリンクするか
 		link_to_profile=StackFeed.is_link_to_profile(self)
@@ -156,29 +197,21 @@ class AddEntry(webapp.RequestHandler):
 		#スレッドを取得
 		thread = db.get(self.request.get("thread_key"))
 
-		#コメント番号を設定
-		entry.comment_no=thread.comment_cnt+1
-		entry.remote_addr=self.request.remote_addr
+		#基本情報を設定
+		if(not overwrite):
+			self.set_basic_info(entry,thread)
 
 		#保存
 		SyncPut.put_sync(entry)
-		#entry.put()
 
-		#スレッドのコメント数を更新
-		thread.comment_cnt = thread.comment_cnt+1
-		thread.date=datetime.datetime.today()
-		thread.cached_entry_key=[]
-		thread.cached_entry_key_enable=None
-		thread.put()
+		#スレッドと掲示板の情報を更新
+		if(not overwrite):
+			self.update_thread_and_bbs_information(thread,bbs)
 
-		#掲示板のコメント数を追加
-		if(bbs.comment_n) :
-			bbs.comment_n=bbs.comment_n+1
-		else:
-			bbs.comment_n=1
-		bbs.put()
-		RecentCommentCache.invalidate(bbs)
-		
+		#上書き投稿時の昔のイラストの削除
+		if(delete_thread_image):
+			delete_thread_image.delete()
+
 		#ステータスコードを出力
 		if(self.request.get('image')):
 			self.response.headers ['Content-type'] = "text/html;charset=utf-8"  

@@ -53,6 +53,7 @@ object, embed {
 			"height":"{{canvas_height}}",
 			"bbs_key":"{{bbs_key}}",
 			"thread_key":"{{thread_key}}",
+			"entry_key":"{{entry_key}}",
 			"canvas_url":"{{canvas_url}}",
 			"host":"{{host}}",
 			"reply":"{{reply}}",
@@ -96,11 +97,14 @@ object, embed {
 		loadCookie();
 
 		//上書き保存時のみ上書きモードを表示
-		{% if canvas_url == ""%}
-		{% else %}
-			{% if reply == "0"%}
-				document.getElementById("overwrite").style.visibility="visible";
-			{% endif %}
+		{% if canvas_url != "" and reply == "0"%}
+			document.getElementById("overwrite").style.visibility="visible";
+		{% endif %}
+		
+		//コメントの編集時は上書きのみ
+		{% if entry_key != "" %}
+			document.getElementById("overwrite").style.visibility="visible";
+			document.getElementById("normalsubmit").style.display="none";
 		{% endif %}
 		
 		//絵でコメント時はpngにできない

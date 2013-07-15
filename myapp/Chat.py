@@ -461,6 +461,7 @@ class Chat(webapp.RequestHandler):
 		'bbs': bbs,
 		'bbs_key': bbs_key,
 		'thread_key': thread_key,
+		'entry_key': "",
 		'draw_time': "",
 		'canvas_width': canvas_width,
 		'canvas_height': canvas_height,

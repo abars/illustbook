@@ -23,6 +23,37 @@ from myapp.CssDesign import CssDesign
 from myapp.CategoryList import CategoryList
 
 class DrawWindow(webapp.RequestHandler):
+	def get_thread_comment(self,template_values,thread_key,entry_key,is_reply):
+		if(thread_key=="" or entry_key!="" or is_reply=="1"):
+			return True
+		try:
+			thread=db.get(thread_key)
+		except:
+			thread=None
+		if(thread==None):
+			Alert.alert_msg_notfound(self)
+			return False
+		template_values["draw_time"]=thread.draw_time
+		template_values["is_png"]=thread.is_png
+		template_values["summary"]=ReeditEscape.escape(thread.summary)
+		template_values["author"]=ReeditEscape.escape(thread.author)
+		template_values["title"]=ReeditEscape.escape(thread.title)
+		return True
+
+	def get_entry_comment(self,template_values,entry_key):
+		if(entry_key==""):
+			return True
+		try:
+			entry=db.get(entry_key)
+		except:
+			entry=None
+		if(entry==None):
+			Alert.alert_msg_notfound(self)
+			return False
+		template_values["summary"]=ReeditEscape.escape(entry.content)
+		template_values["author"]=ReeditEscape.escape(entry.editor)
+		return True
+
 	def get(self):
 		celsys=0
 		host_url="http://"+MappingId.mapping_host(self.request.host)+"/"
@@ -43,25 +74,7 @@ class DrawWindow(webapp.RequestHandler):
 				ipad=1
 		
 		thread_key=self.request.get("thread_key")
-		draw_time=0
-		is_png=0
-		summary=""
-		author=""
-		title=""
-		if(thread_key!=""):
-			try:
-				thread=db.get(thread_key)
-			except:
-				thread=None
-			if(thread==None):
-				Alert.alert_msg_notfound(self)
-				return
-			draw_time=thread.draw_time
-			is_png=thread.is_png
-
-			summary=ReeditEscape.escape(thread.summary)
-			author=ReeditEscape.escape(thread.author)
-			title=ReeditEscape.escape(thread.title)
+		entry_key=self.request.get("entry_key")
 
 		category_list=CategoryList.get_category_list(bbs)
 
@@ -71,32 +84,31 @@ class DrawWindow(webapp.RequestHandler):
 			logined=1
 
 		is_reply=self.request.get("reply")
-		if(is_reply):
-			summary=""
-			author=""
 
-		wacom2=self.request.get("wacom2")
 		wacom2=True
+		#ipad=1
 
 		#掲示板のデザインを取得
 		design=CssDesign.get_design_object(self,bbs,host_url,1)
 		
+		#基本情報設定
 		template_values = {
 		'host': host_url,
 		'bbs': bbs,
 		'bbs_key': self.request.get("bbs_key"),
 		'thread_key': thread_key,
-		'draw_time': draw_time,
+		'entry_key': entry_key,
+		'draw_time': 0,
 		'canvas_width': int(self.request.get("canvas_width")),
 		'canvas_height': int(self.request.get("canvas_height")),
 		'canvas_url': self.request.get("canvas_url"),
 		'reply': is_reply,
 		'celsys': celsys,
 		'category_list': category_list,
-		'is_png': is_png,
-		'summary': summary,
-		'author': author,
-		'title': title,
+		'is_png': 0,
+		'summary': "",
+		'author': "",
+		'title': "",
 		'ipad': ipad,
 		'logined': logined,
 		'template_path':design["template_path"],
@@ -107,6 +119,12 @@ class DrawWindow(webapp.RequestHandler):
 		'wacom2': wacom2,
 		'selecting_category': None
 		}
+
+		#上書き時のコメントの初期値を設定
+		if(not self.get_thread_comment(template_values,thread_key,entry_key,is_reply)):
+			return
+		if(not self.get_entry_comment(template_values,entry_key)):
+			return
 		
 		if(ipad or iphone):
 			path = '/html/tools/draw_window_ipad.htm'
