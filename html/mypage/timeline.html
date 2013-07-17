@@ -64,23 +64,30 @@
 
 		<br clear="all"/>
 
-		{% set deleted_style_header = "<font color='#666'>" %}
+		{% set deleted_style_header = "<font color='#888'>" %}
 		{% set deleted_style_footer = "</font>" %}
+		{% set enh_style_header = "<font color='#E47911'>" %}
+		{% set enh_style_footer = "</font>" %}
 		{% set message = feed.message %}
 
 		<!-- メッセージ -->
 		<p>
 		{% if feed.mode == "bbs_new_illust" %}
-			{% if not feed.thread.thumbnail_url %}
+			{% if not feed.thread.title %}
 				{{deleted_style_header}}投稿したイラストは削除されました。{{deleted_style_footer}}
 			{% else %}
 				{% if feed.thread.thumbnail_url == "" %}
 					<a href="{{feed.thread.thread_url}}">
-						{{feed.bbs.title}}に記事を投稿しました。
+						{{feed.bbs.title}}に{{feed.thread.title}}を投稿しました。
 					</a>
+					<blockquote>
+						<a href="{{feed.thread.thread_url}}">
+							{{feed.thread.summary}}
+						</a>
+					</blockquote>
 				{% else %}
 					<a href="{{feed.thread.thread_url}}">
-						{{feed.bbs.title}}にイラストを投稿しました。
+						{{feed.bbs.title}}に{{feed.thread.title}}を投稿しました。
 					</a>
 				{% endif %}
 			{% endif %}
