@@ -6,7 +6,8 @@
 {% if ipad %}
 	<meta name="viewport" content="width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0">
 {% else %}
-	<meta name="viewport" content="width=480,user-scalable=no,minimum-scale=0.667,maximum-scale=0.667">
+	{# user-scalable=noを使うとAndroid2.3で動作しない #}
+	<meta name="viewport" content="width=480,minimum-scale=0.667,maximum-scale=0.667,initial-scale=0.667">
 {% endif %}
 
 {% if chat %}
@@ -19,6 +20,7 @@
 
 <script language="JavaScript" src="./api_js"></script>
 <script language="JavaScript" src="./js/ipad/megapix-image.js"></script>
+<script language="JavaScript" src="./js/ipad/android_premulta.js"></script>
 <script language="JavaScript" src="./js/ipad/ilbpaint_ipad_const.js"></script>
 <script language="JavaScript" src="./js/ipad/ilbpaint_ipad_rendering.js"></script>
 <script language="JavaScript" src="./js/ipad/ilbpaint_ipad_draw_primitive.js"></script>

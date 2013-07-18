@@ -186,10 +186,6 @@ class Pinterest(webapp.RequestHandler):
 	def initialize_template_value(self,user,user_id,page,request_page_mode,redirect_api,contents_only):
 		search_api="search_tag"
 
-		flat_ui=False
-		if(self.request.get("flat")):
-			flat_ui=True
-
 		template_values = {
 			'user': user,
 			'order': None,
@@ -213,7 +209,7 @@ class Pinterest(webapp.RequestHandler):
 			'top_page': False,
 			'use_masonry': True,
 			'infinite_scroll_selecter': ".item",
-			'flat_ui': flat_ui
+			'flat_ui': True
 		}
 		return template_values
 
@@ -536,7 +532,8 @@ class Pinterest(webapp.RequestHandler):
 			'is_admin': OwnerCheck.is_admin(user),
 			'use_masonry': use_masonry,
 			'timeline': timeline,
-			'infinite_scroll_selecter': infinite_scroll_selecter
+			'infinite_scroll_selecter': infinite_scroll_selecter,
+			'flat_ui': True
 		}
 		Pinterest._render_page(self,template_values)
 
