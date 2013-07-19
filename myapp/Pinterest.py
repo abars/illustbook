@@ -209,7 +209,7 @@ class Pinterest(webapp.RequestHandler):
 			'top_page': False,
 			'use_masonry': True,
 			'infinite_scroll_selecter': ".item",
-			'flat_ui': True
+			'flat_ui': False
 		}
 		return template_values
 
@@ -533,7 +533,7 @@ class Pinterest(webapp.RequestHandler):
 			'use_masonry': use_masonry,
 			'timeline': timeline,
 			'infinite_scroll_selecter': infinite_scroll_selecter,
-			'flat_ui': True
+			'flat_ui': False
 		}
 		Pinterest._render_page(self,template_values)
 

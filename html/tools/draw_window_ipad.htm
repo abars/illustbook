@@ -90,6 +90,24 @@
 	}
 	
 	.upload_form{
+		position:absolute;
+		padding-bottom:10px;
+		display:none;
+		left:0px;
+		top:0px;
+		width:100%;
+		z-index:100;
+		background-color:#F4F7FC;
+		margin:0px;
+		padding:0px;
+		padding-bottom:8px;
+	}
+
+	.upload_innner{
+		padding:4px;
+	}
+
+	.storage_form{
 		position:fixed;
 		padding-bottom:10px;
 		display:none;
@@ -169,44 +187,33 @@
 			<div id="palette_tool_layer" style="display:none;">
 				<div id="palette_tool_layer_list" style="float:left;">
 				</div>
-				<div style="float:left;">
-					{% if chat %}
-					{% else %}
-					<div class="layer_button" onmousedown="g_layer.add_layer();" ontouchstart="g_layer.add_layer();">
-					レイヤーの追加
-					</div>
-					<div class="layer_button" onmousedown="g_layer.clear_layer();" ontouchstart="g_layer.clear_layer();">
-					レイヤーのクリア
-					</div>
-					<div class="layer_button" onmousedown="g_layer.up_layer();" ontouchstart="g_layer.up_layer();">
-					一つ上に移動
-					</div>
-					<div class="layer_button" onmousedown="g_layer.down_layer();" ontouchstart="g_layer.down_layer();">
-					一つ下に移動
-					</div>
-					{% endif %}
+				<div style="float:left;" id="layer_button_list">
 				</div>
 			</div>
 	</div>
 
-	<div id="storage_form" class="upload_form">
+	<div id="storage_form" class="storage_form">
 		ブラウザのローカルストレージに現在のイラストを保存し、後で読込を行うことができます。<br/>
 		<input class="g-button blue" type="button" value="保存" onclick="javascript:g_storage.save();"/>
 		<input class="g-button blue" type="button" value="読込" onclick="javascript:g_storage.load();"/>
 	</div>
 
 		<div id="uploading" class="upload_form">
-			アップロード中です。しばらくお待ち下さい。
-			<input class="g-button blue" type="button" value="キャンセル" onclick="javascript:g_upload.upload_cansel();">
+			<div class="upload_innner">
+				アップロード中です。しばらくお待ち下さい。
+				<input class="g-button blue" type="button" value="キャンセル" onclick="javascript:g_upload.upload_cansel();">
+			</div>
 		</div>
 
 		<div id="upload_finish" class="upload_form">
-			アップロードが完了しました。
-			尚、同じイラストを複数の掲示板に投稿する行為は避けて下さい。
-			<input class="g-button blue" type="button" value="完了" onclick="javascript:g_upload.upload_cansel();">
+			<div class="upload_innner">
+				アップロードが完了しました。
+				尚、同じイラストを複数の掲示板に投稿する行為は避けて下さい。
+			</div>
 		</div>
 	
 		<div id="upload_form" class="upload_form">
+			<div class="upload_innner">
 			<table>
 			{% if reply=="1" %}
 			{% else %}
@@ -243,6 +250,7 @@
 				<input id="overwrite_illust" class="g-button blue" type="button" value="上書き投稿する" onclick="javascript:g_upload.upload('{{bbs_key}}','{{thread_key}}','{{entry_key}}','{{reply}}',false,true);" style="float:left;"/>
 			{% endif %}
 			<br clear="all"/>
+			</div>
 		</div>
 
 	<!-- Canvas外でもイベントを取るためにサイズを64拡張する -->

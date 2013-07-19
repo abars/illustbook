@@ -21,6 +21,15 @@
 	}
 
 	{% if is_iphone %}
+		{# 高解像度 Android 対応 #}
+		#container {
+			width:100%;
+		}
+
+		#contents-header {
+			background-size:cover;
+		}
+
 		#contents-header-edit{
 			text-align:left;
 			float:left;

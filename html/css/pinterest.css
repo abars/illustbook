@@ -13,7 +13,7 @@ h2,h3 {font-size:100%;color:#E47911;}
 
 #contents {
     {% if is_iphone %}
-      width:320px;
+      width:100%;
     {% else %}
       {% if not thread_list %}
         width:848px;
@@ -25,7 +25,7 @@ h2,h3 {font-size:100%;color:#E47911;}
 .corner-stamp{
    float:right;
    {% if is_iphone %}
-   width: 320px;
+   width: 100%;
    {% else %}
    {% if not bookmark %}
    width: 362px;
