@@ -294,6 +294,7 @@ class Pinterest(webapp.RequestHandler):
 		template_values["bbs_n"]=cache["bbs_n"]
 		template_values["illust_n"]=cache["illust_n"]
 		template_values['page_mode']="guide"
+		template_values['contents']=self.request.get("contents")
 
 		Pinterest._render_page(self,template_values)
 
