@@ -343,7 +343,7 @@ def auto_link(summary):
 	#自動リンク
 	#PlaneText以外に適用すると変な挙動になるので、
 	#aタグが含まれていない場合のみに適用する
-	if(not(re.match(r'<a',summary))):
+	if(not(re.search(r'<a',summary))):
 		compiled_line = re.compile("(http://[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)")
 		summary = compiled_line.sub(r'<a href=\1 target="_BLANK">\1</a>', summary)
 
