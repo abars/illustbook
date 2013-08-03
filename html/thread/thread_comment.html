@@ -14,9 +14,11 @@
 		{%if comment_edit %}
 
 			{# コメントの削除　#}
-			{%if (is_admin or edit_flag) or (user and user.user_id == entry.com.user_id) %}
+			{%if (is_admin or edit_flag) or (user and user.user_id() == entry.com.user_id) %}
 				{% if entry.com.illust_reply %}
 					<input type="button" value="編集"  class="g-button" onclick="open_draw('{{entry.image_key}}',1,'{{host}}','{{entry.com.key()}}','{{thread.key()}}','{{bbs.key()}}',{{thread.illust_mode}})"/>
+				{% else %}
+					<input type="button" value="編集"  class="g-button" onclick="window.location.href='{{host}}edit_thread?bbs_key={{bbs.key()}}&entry_key={{entry.com.key()}}'"/>
 				{% endif %}
 				<input type="button" value="削除"  class="g-button" onclick="confirm_action_comment('{{host}}del_ent?entry_key={{entry.com.key()}}&amp;bbs_key={{bbs_key}}&amp;thread_key={{thread.key()}}');"/>
 			{% endif %}
@@ -80,7 +82,8 @@
 			{% endif %}
 			
 			{% if comment_edit %}
-				{%if (is_admin or edit_flag) or (user and user.user_id == res.user_id ) %}
+				{%if (is_admin or edit_flag) or (user and user.user_id() == res.user_id ) %}
+					<input type="button" value="編集"  class="g-button" onclick="window.location.href='{{host}}edit_thread?bbs_key={{bbs.key()}}&res_key={{res.key()}}&res_entry_key={{entry.com.key()}}'"/>
 					<input type="button" value="削除" class="g-button" onclick="confirm_action_comment('{{host}}del_res?entry_key={{entry.com.key()}}&amp;res_key={{res.key()}}');"/>
 				{% endif %}
 			{% endif %}

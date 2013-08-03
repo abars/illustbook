@@ -42,38 +42,62 @@ class EditThread(webapp.RequestHandler):
 		except:
 			thread = None
 
-		if(not thread):
-			Alert.alert_msg_with_write(self,"編集するスレッドが見つかりません。")
+		try:
+			entry = db.get(self.request.get("entry_key"))
+		except:
+			entry = None
+
+		try:
+			res = db.get(self.request.get("res_key"))
+		except:
+			res = None
+
+		if(not thread and not entry and not res):
+			Alert.alert_msg_with_write(self,"編集する対象が見つかりません。")
 			return
 
 		user = users.get_current_user()
 		
 		bbs_owner=not OwnerCheck.check(bbs,user)
+
 		thread_owner=False
-		if(user and user.user_id()==thread.user_id):
-			thread_owner=True
+		if(user):
+			if(thread):
+				if(user.user_id()==thread.user_id):
+					thread_owner=True
+			if(entry):
+				if(user.user_id()==entry.user_id):
+					thread_owner=True
+			if(res):
+				if(user.user_id()==res.user_id):
+					thread_owner=True
 		
 		if(not bbs_owner and not thread_owner):
 			Alert.alert_msg_with_write(self,"編集する権限がありません。")
 			return
 		
-		summary=thread.summary
+		summary=""
 		postscript=""
-		if(thread.postscript):
-			postscript=thread.postscript
-		
-		summary=ReeditEscape.escape(summary);
-		postscript=ReeditEscape.escape(postscript);
-		
+		category=""
+
+		if(thread):
+			summary=thread.summary
+			if(thread.postscript):
+				postscript=thread.postscript
+			summary=ReeditEscape.escape(summary);
+			postscript=ReeditEscape.escape(postscript);
+			category=thread.category
+
 		host_url="./"
 		design=CssDesign.get_design_object(self,bbs,host_url,1)
-
 		category_list=CategoryList.get_category_list(bbs)
 		
 		template_values = {
 			'host': './',
 			'bbs': bbs,
 			'thread': thread,
+			'entry': entry,
+			'res': res,
 			'summary': summary,
 			'postscript': postscript,
 			'template_path':design["template_path"],
@@ -84,7 +108,8 @@ class EditThread(webapp.RequestHandler):
 			'redirect_url': self.request.path,
 			'edit_thread': True,
 			'category_list': category_list,
-			'selecting_category': thread.category
+			'selecting_category': category,
+			'res_entry_key': self.request.get("res_entry_key")
 		}
 
 		path = '/html/edit_thread.html'

@@ -1,18 +1,20 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
 <html>
-
 <head>
-{% include "./bbs_thread/css.html" %}
-	<title>スレッドの編集</title>
+	{% include "./bbs_thread/css.html" %}
+	
+	<title>投稿の編集</title>
 	<script language="JavaScript" src="./js/rediter.js"></script>
 	<script type="text/javascript">
 		function init(){
-			var color="{%if bbs.font_color and not template_path %}#{{bbs.font_color}}{% else %}#333333{% endif %}";
-			rediter_init('rediter_summary','{{summary|safe}}','14px',color,true);
-			rediter_init('rediter_postscript','{{postscript|safe}}','14px',color,true);
+			{% if thread %}
+				var color="{%if bbs.font_color and not template_path %}#{{bbs.font_color}}{% else %}#333333{% endif %}";
+				rediter_init('rediter_summary','{{summary|safe}}','14px',color,true);
+				rediter_init('rediter_postscript','{{postscript|safe}}','14px',color,true);
+			{% endif %}
 		}		
 
-		function submit_info(){
+		function submit_thread(){
 			document.getElementById("thread_summary").value=rediter_get_text("rediter_summary");
 			document.getElementById("thread_postscript").value=rediter_get_text("rediter_postscript");
 			var category=document.getElementById("category").value;
@@ -39,64 +41,94 @@
 {% endif%}
 
 	<div id="contents">
-{% if template_path %}
-	<div id="main">
-	<div id="entry-head"></div>
-{% else %}
-	<div id="main_1col">
-{% endif %}
+	{% if template_path %}
+		<div id="main">
+		<div id="entry-head"></div>
+	{% else %}
+		<div id="main_1col">
+	{% endif %}
 
-		<div class="entry">
-		投稿の編集<HR><br/>
-		投稿を編集するには下記項目を編集してから”投稿を更新する”ボタンを押して下さい。<br/>
-		<br/>
-		<form id="submit_form" action="./update_thread?bbs_key={{bbs.key()}}&thread_key={{thread.key()}}" enctype="multipart/form-data" method="post">
-		<TABLE>
-		<TR><TD>タイトル</TD><TD><input type="text" name="thread_title" value="{{thread.title}}" size=60></TD></TR>
-		<TR><TD>投稿者名</TD><TD><input type="text" name="thread_author" value="{{thread.author}}"><input type="checkbox" name="link_profile" value="link_profile" {% if thread.user_id %}checked{% endif %}>マイページにリンク</TD></TR>
-		<TR><TD>カテゴリ</TD><TD>
-		{% include "category_list.html" %}
-		</TD></TR>
-		<TR><TD>年齢制限</TD><TD>
-		{% include "regulation_list.html" %}
-		</TD></TR>
-		<TR><TD>コメント数</TD><TD><input type="text" name="comment_cnt" value="{{thread.comment_cnt}}"></TD></TR>
-		</TABLE>
-		<textarea id="thread_summary" name="thread_summary" cols=60 rows=16 style="display:none;"></textarea>
-		<textarea id="thread_postscript" name="thread_postscript" cols=60 rows=16 style="display:none;"></textarea>
-		<input id="thread_category" name="thread_category" style="display:none;"/>
-		</form>
-		<br/>
+			<div class="entry">
+			投稿の編集<HR><br/>
+			投稿を編集するには下記項目を編集してから”投稿を更新する”ボタンを押して下さい。<br/>
+			<br/>
 
-		<TABLE>
-		<TR><TD>記事</TD><TD>
-			<div id="rediter_summary_fontsize" style="float:left;"></div>  
-			<div id="rediter_summary_palette" style="float:left;"></div>
-			<div id="rediter_summary_button" style="float:left;"></div><BR clear="both">
-			<iframe id="rediter_summary_iframe" style="display:block;width:500px;height:200px;"></iframe>
-			<textarea id="rediter_summary_tag" style="display:none;width:500px;height:200px;"></textarea>
-		</TD></TR>
-		</TABLE>
-		
-		<br/><br/>
-		
-		<TABLE>
-		<TR><TD>追記</TD><TD>
-			<div id="rediter_postscript_fontsize" style="float:left;"></div>  
-			<div id="rediter_postscript_palette" style="float:left;"></div>
-			<div id="rediter_postscript_button" style="float:left;"></div><BR clear="both">
-			<iframe id="rediter_postscript_iframe" style="display:block;width:500px;height:200px;"></iframe>
-			<textarea id="rediter_postscript_tag" style="display:none;width:500px;height:200px;"></textarea>
-		</TD></TR>
-		</TABLE>
-		
-		<br/><br/>
-		
-		<input type="button" value="投稿を更新する" class="g-button" onclick="submit_info();">
-		<br/>
+			{% if thread %}
+				<form id="submit_form" action="./update_thread?bbs_key={{bbs.key()}}&thread_key={{thread.key()}}" enctype="multipart/form-data" method="post">
+				<table>
+					<tr><td>タイトル</td><td><input type="text" name="thread_title" value="{{thread.title}}" size=60></td></tr>
+					<tr><td>投稿者名</td><td><input type="text" name="thread_author" value="{{thread.author}}"><input type="checkbox" name="link_profile" value="link_profile" {% if thread.user_id %}checked{% endif %}>マイページにリンク</td></tr>
+					<tr><td>カテゴリ</td><td>
+					{% include "category_list.html" %}
+					</td></tr>
+					<tr><td>年齢制限</td><td>
+					{% include "regulation_list.html" %}
+					</td></tr>
+					<tr><td>コメント数</td><td><input type="text" name="comment_cnt" value="{{thread.comment_cnt}}"></td></tr>
+				</table>
+
+				<textarea id="thread_summary" name="thread_summary" cols=60 rows=16 style="display:none;"></textarea>
+				<textarea id="thread_postscript" name="thread_postscript" cols=60 rows=16 style="display:none;"></textarea>
+				<input id="thread_category" name="thread_category" style="display:none;"/>
+				</form>
+				<br/>
+
+				<table>
+				<tr><td>記事</td><td>
+					<div id="rediter_summary_fontsize" style="float:left;"></div>  
+					<div id="rediter_summary_palette" style="float:left;"></div>
+					<div id="rediter_summary_button" style="float:left;"></div><BR clear="both">
+					<iframe id="rediter_summary_iframe" style="display:block;width:500px;height:200px;"></iframe>
+					<textarea id="rediter_summary_tag" style="display:none;width:500px;height:200px;"></textarea>
+				</td></tr>
+				</table>
+
+				<br/><br/>
+
+				<table>
+				<tr><td>追記</td><td>
+					<div id="rediter_postscript_fontsize" style="float:left;"></div>  
+					<div id="rediter_postscript_palette" style="float:left;"></div>
+					<div id="rediter_postscript_button" style="float:left;"></div><BR clear="both">
+					<iframe id="rediter_postscript_iframe" style="display:block;width:500px;height:200px;"></iframe>
+					<textarea id="rediter_postscript_tag" style="display:none;width:500px;height:200px;"></textarea>
+				</td></tr>
+				</table>
+
+				<br/><br/>
+				<input type="button" value="投稿を更新する" class="g-button" onclick="submit_thread();">
+				<br/>
+				</form>
+			{% endif %}
+
+			{% if entry %}
+				<form id="submit_form" action="./update_thread?bbs_key={{bbs.key()}}&entry_key={{entry.key()}}" enctype="multipart/form-data" method="post">
+				<table>
+					<tr><td>投稿者名</td><td><input type="text" name="editor" value="{{entry.editor}}"><input type="checkbox" name="link_profile" value="link_profile" {% if entry.user_id %}checked{% endif %}>マイページにリンク</td></tr>
+					<tr><td>コメント</td><td>
+						<textarea name="content" style="width:500px;height:200px;">{{entry.content}}</textarea>
+					</td></tr>
+				</table>
+				<br/><br/>
+				<input type="submit" value="投稿を更新する" class="g-button">
+				</form>
+			{% endif %}
+
+			{% if res %}
+				<form id="submit_form" action="./update_thread?bbs_key={{bbs.key()}}&res_key={{res.key()}}&res_entry_key={{res_entry_key}}" enctype="multipart/form-data" method="post">
+				<table>
+					<tr><td>投稿者名</td><td><input type="text" name="editor" value="{{res.editor}}"><input type="checkbox" name="link_profile" value="link_profile" {% if res.user_id %}checked{% endif %}>マイページにリンク</td></tr>
+					<tr><td>コメント</td><td>
+						<textarea name="content" style="width:500px;height:200px;">{{res.content}}</textarea>
+					</td></tr>
+				</table>
+				<br/><br/>
+				<input type="submit" value="投稿を更新する" class="g-button">
+				</form>
+			{% endif %}
+
+			</div>
 		</div>
-		</div>
-
 	</div>
 	<div id="contents-footer">
 	</div>
