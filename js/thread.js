@@ -66,16 +66,16 @@ var isFlashInstalled=function(){if(navigator.plugins["Shockwave Flash"]){return 
 					}
 				}
 			}
-			var url="";
+			var url2="";
 			if(illust_mode==2 && !reply_mode){
-				url=''+host+'draw_moper?thread_key='+thread_key+'&bbs_key='+bbs_key+'&canvas_url='+url;
+				url2=''+host+'draw_moper?thread_key='+thread_key+'&bbs_key='+bbs_key+'&canvas_url='+url;
 			}else{
-				url=''+host+'draw?'+is_ipad+'entry_key='+entry_key+'&thread_key='+thread_key+'&bbs_key='+bbs_key+'&canvas_width='+width+"&canvas_height="+height+"&canvas_url="+url+"&reply="+reply_mode;
+				url2=''+host+'draw?'+is_ipad+'entry_key='+entry_key+'&thread_key='+thread_key+'&bbs_key='+bbs_key+'&canvas_width='+width+"&canvas_height="+height+"&canvas_url="+url+"&reply="+reply_mode;
 			}
 			if(is_ipad!=""){
-				window.open(url,false);
+				window.open(url2,false);
 			}else{
-				window.location.href=url;
+				window.location.href=url2;
 			}
 		}
 		

@@ -12,11 +12,11 @@ function bbs_open_draw(url,bbs_key,host){
 	if(!isFlashInstalled){
 		is_ipad="ipad=1&";
 	}
-	var url=''+host+'draw?'+is_ipad+'thread_key=&bbs_key='+bbs_key+'&canvas_width='+width+"&canvas_height="+height+"&canvas_url="+url
+	var url2=''+host+'draw?'+is_ipad+'thread_key=&bbs_key='+bbs_key+'&canvas_width='+width+"&canvas_height="+height+"&canvas_url="+url
 	if(is_ipad!=""){
-		window.open(url,false);
+		window.open(url2,false);
 	}else{
-		window.location.href=url;
+		window.location.href=url2;
 	}
 }
 
