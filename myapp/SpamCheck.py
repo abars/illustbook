@@ -106,6 +106,10 @@ class SpamCheck(webapp.RequestHandler):
 			return True;
 		if(re.search(u"精力剤",content)):
 			return True;
+		if(re.search(u"死ね",content)):
+			return True
+		if(re.search(u"キモい",content)):
+			return True
 		return False;
 	
 	@staticmethod
