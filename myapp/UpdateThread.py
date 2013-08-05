@@ -46,11 +46,17 @@ class UpdateThread(webapp.RequestHandler):
 		else:
 			thread.user_id=None
 
-	def update_thread(self,bbs,thread,user):
-		title = self.request.get('thread_title')
+	def escape_comment(self,title):
 		title = cgi.escape(title)
 		compiled_line = re.compile("\r\n|\r|\n")
-		title = compiled_line.sub(r'<br>', title)
+		title = compiled_line.sub(r'<br/>', title)
+		return title
+
+	def update_thread(self,bbs,thread,user):
+		compiled_line = re.compile("\r\n|\r|\n")
+
+		title = self.request.get('thread_title')
+		title=self.escape_comment(title)
 		thread.title = title
 		
 		thread.author=self.request.get('thread_author')
@@ -88,7 +94,7 @@ class UpdateThread(webapp.RequestHandler):
 		return False
 
 	def update_entry(self,entry,user):
-		entry.content=cgi.escape(self.request.get("content"))
+		entry.content=self.escape_comment(self.request.get("content"))
 		entry.editor=self.request.get("editor")
 		entry.search_index_version=0	#インデックス更新
 		self.link_to_profile(entry,user)
@@ -96,7 +102,7 @@ class UpdateThread(webapp.RequestHandler):
 		return False
 
 	def update_res(self,res,entry,user):
-		res.content=cgi.escape(self.request.get("content"))
+		res.content=self.escape_comment(self.request.get("content"))
 		res.editor=self.request.get("editor")
 		self.link_to_profile(res,user)
 		res.put()

@@ -106,7 +106,7 @@
 				<table>
 					<tr><td>投稿者名</td><td><input type="text" name="editor" value="{{entry.editor}}"><input type="checkbox" name="link_profile" value="link_profile" {% if entry.user_id %}checked{% endif %}>マイページにリンク</td></tr>
 					<tr><td>コメント</td><td>
-						<textarea name="content" style="width:500px;height:200px;">{{entry.content}}</textarea>
+						<textarea name="content" style="width:500px;height:200px;">{{entry.content.replace("<br/>","\n")}}</textarea>
 					</td></tr>
 				</table>
 				<br/><br/>
@@ -119,7 +119,7 @@
 				<table>
 					<tr><td>投稿者名</td><td><input type="text" name="editor" value="{{res.editor}}"><input type="checkbox" name="link_profile" value="link_profile" {% if res.user_id %}checked{% endif %}>マイページにリンク</td></tr>
 					<tr><td>コメント</td><td>
-						<textarea name="content" style="width:500px;height:200px;">{{res.content}}</textarea>
+						<textarea name="content" style="width:500px;height:200px;">{{res.content.replace("<br/>","\n")}}</textarea>
 					</td></tr>
 				</table>
 				<br/><br/>
