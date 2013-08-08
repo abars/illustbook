@@ -11,6 +11,7 @@ import time;
 import json;
 
 from google.appengine.ext import db
+from google.appengine.api.labs import taskqueue
 
 from myapp.BbsConst import BbsConst
 from myapp.ApiObject import ApiObject
@@ -47,12 +48,13 @@ class Ranking(db.Model):
 		key_list.append(key)
 	
 	@staticmethod
-	def add_rank_global(thread,score):
-		rank=Ranking.get_by_key_name(BbsConst.THREAD_RANKING_KEY_NAME)
-		if(rank==None):
-			rank=Ranking.get_or_insert(BbsConst.THREAD_RANKING_KEY_NAME)
-		rank.add_rank(thread,score)
-	
+	def add_rank_global(thread,score):	
+		headers={'X-AppEngine-FailFast' : 'true'} #新規インスタンスの作成の抑制
+		try:
+			taskqueue.add(url="/add_ranking_score",params={"thread":str(thread.key()),"score":score},queue_name="score",headers=headers)
+		except:
+			logging.warning("ranking score taskqueue add failed")
+
 	def add_rank(self,thread,score):
 		if(thread.illust_mode==BbsConst.ILLUSTMODE_ILLUST):
 			for cnt in range(score):

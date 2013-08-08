@@ -110,6 +110,7 @@ from myapp.RedirectThread import RedirectThread
 from myapp.VisibilityChangeEntry import VisibilityChangeEntry
 from myapp.EditThreadList import EditThreadList
 from myapp.SearchTag import SearchTag
+from myapp.AddRankingScore import AddRankingScore
 
 #-----------------------------------------------------------------
 #ポータル
@@ -321,6 +322,7 @@ application = webapp.WSGIApplication(
 	('/counter_worker',CounterWorker),
 	('/feed_tweet',StackFeedTweet),
 	('/ranking',RankingPortal),
+	('/add_ranking_score',AddRankingScore),
 	('/dropbox',DropBox),
 	('/dropbox_blog',DropBox),
 	],debug=False)

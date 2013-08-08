@@ -75,6 +75,7 @@ class Applause(webapp.RequestHandler):
 				comment=self.request.get("comment")
 
 			StackFeed.feed_new_applause_thread(user,thread,comment)
+
 			Ranking.add_rank_global(thread,BbsConst.SCORE_APPLAUSE)
 
 		if(self.request.get("mode")=="bbs"):
@@ -86,4 +87,5 @@ class Applause(webapp.RequestHandler):
 			if(thread.short):
 				thread_url=thread.short
 			self.redirect(str(MappingId.get_usr_url("./",bbs)+thread_url+".html"))
+
 		
