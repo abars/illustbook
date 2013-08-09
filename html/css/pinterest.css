@@ -84,6 +84,7 @@ background: #fff;
 {% endif %}
 word-break:break-all;
 color: #333;
+font-size:11px;
 }
 
 .item b{

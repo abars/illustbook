@@ -68,11 +68,12 @@
       {{thread.summary|safe}}
   </div>
 
+<div style="background:#F2F0F0;">
   {# author #}
 {% if thread.author %}
   <hr style="margin:0px;"/>
     <div style="float:left;margin:4px;">
-      <div style="float:left;margin-top:4px;margin-bottom:4px;margin-right:4px;">
+      <div style="float:left;margin-top:0px;margin-bottom:0px;margin-right:4px;">
         {%if thread.user_id %}<a href="{{host}}mypage?user_id={{thread.user_id}}">{% endif %}
         {%if thread.user_id %}
           <img src="{{host}}show_icon?key={{thread.user_id}}&amp;size=mini" width="24px" height="24px" alt="{{thread.user_id}}"/>
@@ -119,6 +120,8 @@
       <a href="{{thread.thread_url}}" {{target_page}} style="width:100%;display:block;"><small>{{thread.comment}}件のコメント</small></a>
     </div>
     {% endif %}
+    <hr style="margin:0px;clear:both;"/>
+</div>
 </div>
 {%endif%}
 {% endfor %}
