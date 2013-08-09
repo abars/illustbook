@@ -29,7 +29,7 @@
       },
       loading: {
           finishedMsg: '<div class="loading">ページの終端です。</div>',
-          img: host+'static_files/loading.gif',
+          img: host+'static_files/loading2.gif',
           msgText: '<div class="loading">次のページを読込中</div>'
         }
       },
