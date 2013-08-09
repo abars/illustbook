@@ -122,6 +122,7 @@ class Bbs(CachedDbModel):
 	css = db.ReferenceProperty(AppCode)							#CSSデザイン
 	delete_when_upload_success=db.IntegerProperty()				#アップロードに成功した場合にデータを削除するか
 	comment_hidden_button = db.IntegerProperty()				#コメント非表示ボタンを表示するか
+	disable_author=db.IntegerProperty()							#投稿者を非表示にするか
 	
 	cached_thumbnail_key = db.StringProperty()					#サムネイルへのKey
 	cached_threads_num = db.IntegerProperty()					#スレッド数

@@ -68,6 +68,14 @@
 			<option value="0" {% if not bbs.date_format  %}selected="selected"{% endif %}>年月日時分</option>
 			<option value="1" {% if bbs.date_format == 1 %}selected="selected"{% endif %}>年月日時</option>
 			<option value="2" {% if bbs.date_format == 2 %}selected="selected"{% endif %}>年月日</option>
+			<option value="-1" {% if bbs.date_format == -1 %}selected="selected"{% endif %}>表示しない</option>
+			</select>
+			</TD></TR>
+
+			<TR><TH>投稿者名の表示</TH><TD>
+			<select name="disable_author">				
+			<option value="0" {%if not bbs.disable_author %}selected="selected"{% endif %}>表示する</option>
+			<option value="1" {%if bbs.disable_author %}selected="selected"{% endif %}>表示しない</option>
 			</select>
 			</TD></TR>
 

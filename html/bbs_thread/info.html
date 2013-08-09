@@ -1,9 +1,11 @@
-{%if template_path %}
-	<img src="{{template_path}}images/i_name.gif" alt="投稿者" width="64" height="20"/>
-{%else%}
-	投稿者：
-{%endif%}
-{{thread|author_name_thread(host)|safe}}　
+{% if not bbs.disable_author %}
+	{%if template_path %}
+		<img src="{{template_path}}images/i_name.gif" alt="投稿者" width="64" height="20"/>
+	{%else%}
+		投稿者：
+	{%endif%}
+	{{thread|author_name_thread(host)|safe}}　
+{% endif %}
 
 {% if thread.category %}
 	{% if is_iphone %}<br/>{% endif %}
@@ -15,12 +17,14 @@
 	<a href="{{usrhost}}?category={{thread.category|iriencode}}" class="g-button mini" style="color:#444;margin-left:0px;margin-bottom:2px;">{{thread.category}}</a>　
 {%endif%}
 
-{% if thread.create_date %}
-	{% if is_iphone %}<br/>{% endif %}
-	{%if template_path %}
-		<img src="{{template_path}}images/i_day.gif" alt="投稿日" width="64" height="20"/>
-	{% else %}
-		投稿日：
-	{% endif%}
-	{{thread.create_date|time_JST_format(bbs.date_format)}}
+{% if bbs.date_format!=-1 %}
+	{% if thread.create_date %}
+		{% if is_iphone %}<br/>{% endif %}
+		{%if template_path %}
+			<img src="{{template_path}}images/i_day.gif" alt="投稿日" width="64" height="20"/>
+		{% else %}
+			投稿日：
+		{% endif%}
+		{{thread.create_date|time_JST_format(bbs.date_format)}}
+	{% endif %}
 {% endif %}

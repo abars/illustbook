@@ -23,20 +23,13 @@ from myapp.AppCode import AppCode
 from myapp.CssDesign import CssDesign
 from myapp.DelThread import DelThread
 from myapp.ApiFeed import ApiFeed
+from myapp.CategoryList import CategoryList
+from myapp.ApiObject import ApiObject
+
+import logging
 
 class EditThreadList(webapp.RequestHandler):
-	def post(self):
-		try:
-			bbs = db.get(self.request.get("bbs_key"))
-		except:
-			Alert.alert_msg_with_write(self,"掲示板の取得に失敗しました。")
-			return
-
-		user = users.get_current_user()
-		if(OwnerCheck.check(bbs,user)):
-			Alert.alert_msg_with_write(self,"削除する権限がありません。")
-			return
-
+	def delete_thread(self,bbs):
 		thread_list=self.request.get_all("thread_list")
 
 		count=0
@@ -53,13 +46,46 @@ class EditThreadList(webapp.RequestHandler):
 				DelThread.delete_thread_core(thread)
 				count=count+1
 
-		bbs.cached_thumbnail_key=None
-		bbs.put()
-		ApiFeed.invalidate_cache()
+		if(count):
+			bbs.cached_thumbnail_key=None
+			bbs.put()
+			ApiFeed.invalidate_cache()
+		return count
+
+	def update_category(self):
+		count=0
+		category_update=self.request.get("category_update")
+		category_list=category_update.split("/")
+		for category_pair in category_list:
+			logging.error(category_pair)
+			thread_and_category=category_pair.split(":")
+			try:
+				thread=db.get(thread_and_category[0])
+				thread.category=thread_and_category[1]
+				thread.put()
+				count=count+1
+			except:
+				continue
+		return count
+
+	def post(self):
+		try:
+			bbs = db.get(self.request.get("bbs_key"))
+		except:
+			Alert.alert_msg_with_write(self,"掲示板の取得に失敗しました。")
+			return
+
+		user = users.get_current_user()
+		if(OwnerCheck.check(bbs,user)):
+			Alert.alert_msg_with_write(self,"削除する権限がありません。")
+			return
+
+		category_count=self.update_category()
+		deleted_count=self.delete_thread(bbs)
 
 		page=self.request.get("page")
 		order=self.request.get("order")
-		url="./edit_thread_list?bbs_key="+str(bbs.key())+"&page="+str(page)+"&order="+order+"&deleted_count="+str(count)
+		url="./edit_thread_list?bbs_key="+str(bbs.key())+"&page="+str(page)+"&order="+order+"&deleted_count="+str(deleted_count)+"&category_count="+str(category_count)
 		self.redirect(str(url))
 
 	def get(self):
@@ -87,14 +113,30 @@ class EditThreadList(webapp.RequestHandler):
 		limit=20
 		offset=(page-1)*limit
 
-		query=MesThread.all().filter("bbs_key =",bbs)
+		query=db.Query(MesThread,keys_only=True)
+		query.filter("bbs_key =",bbs)
 		if(order=="new"):
-			query=query.order("-create_date")
+			query.order("-create_date")
 		else:
-			query=query.order("create_date")
-		thread_list=query.fetch(offset=offset,limit=limit)
+			query.order("create_date")
+
+		thread_key_list=query.fetch(offset=offset,limit=limit)
+		thread_list=[]
+		for thread_key in thread_key_list:
+			try:
+				thread_list.append(db.get(thread_key))
+			except:
+				continue
 
 		deleted_count=self.request.get("deleted_count")
+		category_count=self.request.get("category_count")
+
+		if(deleted_count):
+			deleted_count=int(deleted_count)
+		if(category_count):
+			category_count=int(category_count)
+
+		category_list=CategoryList.get_category_list(bbs)
 
 		template_values = {
 			'host': './',
@@ -104,7 +146,10 @@ class EditThreadList(webapp.RequestHandler):
 			'redirect_url': self.request.path,
 			'page': page,
 			'order': order,
-			'deleted_count': deleted_count
+			'deleted_count': deleted_count,
+			'category_count': category_count,
+			'is_iphone': CssDesign.is_iphone(self),
+			'category_list': category_list
 		}
 
 		path = '/html/edit_thread_list.html'
