@@ -87,7 +87,7 @@ color: #333;
 font-size:11px;
 }
 
-.item_info {
+.item_info,.item_deleted {
   background:#F2F0F0;
 }
 

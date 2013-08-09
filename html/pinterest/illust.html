@@ -16,7 +16,7 @@
 {% if thread_list %}
 {% for thread in thread_list %}
 {% if (thread|regulation_check(user))%}
-<div class="item">
+<div class="item {% if not thread.thread_url %}item_deleted{% endif %}">
   {# Image #}
   <div class="deletable">
   {% if thread.image_url %}
