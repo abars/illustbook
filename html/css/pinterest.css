@@ -87,6 +87,10 @@ color: #333;
 font-size:11px;
 }
 
+.item_info {
+  background:#F2F0F0;
+}
+
 .item b{
   color:#333;
 }
@@ -251,7 +255,7 @@ color: #333;
 }
 
 .tag{
-  background:#f0f0f0;
+  background:#F2F0F0;
   padding:4px;
   margin:2px;
   float:left;
