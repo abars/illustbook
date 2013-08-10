@@ -111,6 +111,7 @@ from myapp.VisibilityChangeEntry import VisibilityChangeEntry
 from myapp.EditThreadList import EditThreadList
 from myapp.SearchTag import SearchTag
 from myapp.AddRankingScore import AddRankingScore
+from myapp.Tolot import Tolot
 
 #-----------------------------------------------------------------
 #ポータル
@@ -325,6 +326,7 @@ application = webapp.WSGIApplication(
 	('/add_ranking_score',AddRankingScore),
 	('/dropbox',DropBox),
 	('/dropbox_blog',DropBox),
+	('/tolot',Tolot),
 	],debug=False)
 
 if __name__ == "__main__":
