@@ -246,6 +246,7 @@ application = webapp.WSGIApplication(
 	('/pinterest', Pinterest),
 	('/_ah/channel/connected/',ChatConnected),
 	('/_ah/channel/disconnected/',ChatDisconnected),
+	('/tolot/(.*)\.(.*)',Tolot),
 	(r'/usr/(.*)/(.*)\.html',ShowThread),
 	(r'/usr/(.*)/',ShowBbs),
 	(r'/usr/(.*)/index.xml',RssFeed),
@@ -326,7 +327,6 @@ application = webapp.WSGIApplication(
 	('/add_ranking_score',AddRankingScore),
 	('/dropbox',DropBox),
 	('/dropbox_blog',DropBox),
-	('/tolot',Tolot),
 	],debug=False)
 
 if __name__ == "__main__":

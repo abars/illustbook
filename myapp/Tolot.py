@@ -34,29 +34,33 @@ from myapp.UTC import UTC
 from myapp.JST import JST
 
 class Tolot(webapp.RequestHandler):
-	def get(self):
+	def get(self,user_id,mode):
 		SetUtf8.set()
-		mode=self.request.get("mode")
-		user_id=self.request.get("user_id")
+
+		bookmark=ApiObject.get_bookmark_of_user_id(user_id)
 
 		if(mode=="xml"):
-			self.get_xml(user_id)
-		else:
-			self.get_guide(user_id)
+			self.get_xml(user_id,bookmark)
+		if(mode=="html"):
+			self.get_guide(user_id,bookmark)
 
-	def get_guide(self,user_id):
-		host_url="http://"+MappingId.mapping_host(self.request.host)+"/";
+	def get_guide(self,user_id,bookmark):
+		host=MappingId.mapping_host(self.request.host)
+		host_url="http://"+host+"/";
+		url=host_url+"tolot/"+str(user_id)+".xml"
+		url=cgi.escape(url)
+
 		template_values = {
 			'user_id': user_id,
-			'host_url': host_url
+			'url': url,
+			'host': host_url,
+			'bookmark': bookmark
 		}
 		render=template_select.render("/html/tolot_guide.html", template_values)
 		self.response.out.write(render)
 
-	def get_xml(self,user_id):
-		bookmark=ApiObject.get_bookmark_of_user_id(user_id)
-
-		offset=0
+	def get_xml(self,user_id,bookmark):
+		offset=64
 		limit=1
 		illust_mode=BbsConst.ILLUSTMODE_ILLUST
 		thread_list=ApiUser.user_get_thread_list_core(self,user_id,offset,limit,illust_mode)

@@ -47,6 +47,8 @@ class MappingId():
 			return 0
 		if(check_id=="template"):
 			return 0
+		if(check_id=="tolot"):
+			return 0
 		query=Bbs.all()
 		query.filter("short =",check_id)
 		cnt=query.count()
