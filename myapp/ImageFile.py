@@ -187,8 +187,9 @@ class ImageFile (webapp.RequestHandler):
 				ref=p_self.request.headers['Referer']
 		if(not re.search(r"illustbook",ref)):
 			if(not re.search(r"localhost",ref)):
-				logging.error("image direct link failed path:"+p_self.request.path+" referer:"+ref)
-				return True
+				if(not re.search(r"10.0.1",ref)):
+					logging.warning("image direct link failed path:"+p_self.request.path+" referer:"+ref)
+					return True
 		return False
 
 	#イメージとサムネイルを供給

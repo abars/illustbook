@@ -29,7 +29,7 @@
 		{% if template_path %}
 			<div id="main">
 		{% else %}
-			{% if bbs.in_frame_mode %}
+			{% if bbs.in_frame_mode or is_iphone %}
 			<div id="main_1col">
 			{% else %}
 			<div id="main_2col">
