@@ -179,9 +179,26 @@ class ImageFile (webapp.RequestHandler):
 			return (content.thumbnail2)
 		return (content.image)
 
+	@staticmethod
+	def is_direct_access(p_self):
+		ref=""
+		if("Referer" in p_self.request.headers):
+			if p_self.request.headers['Referer']:
+				ref=p_self.request.headers['Referer']
+		if(not re.search(r"illustbook",ref)):
+			if(not re.search(r"localhost",ref)):
+				logging.error("image direct link failed path:"+p_self.request.path+" referer:"+ref)
+				return True
+		return False
+
 	#イメージとサムネイルを供給
 	@staticmethod
 	def serve_file(p_self,path,type_name,tag):
+		#直リンクの禁止
+		if(ImageFile.is_direct_access(p_self)):
+			p_self.error(403)
+			return
+
 		#キャッシュヒット判定
 
 		#とりあえずmemcacheからヒット判定に必要な要素を取得

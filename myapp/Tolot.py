@@ -29,6 +29,7 @@ from myapp.ApiObject import ApiObject
 from myapp.ApiUser import ApiUser
 from myapp.BbsConst import BbsConst
 from myapp.MappingId import MappingId
+from myapp.CssDesign import CssDesign
 
 from myapp.UTC import UTC
 from myapp.JST import JST
@@ -49,19 +50,23 @@ class Tolot(webapp.RequestHandler):
 		host_url="http://"+host+"/";
 		url=host_url+"tolot/"+str(user_id)+".xml"
 		url=cgi.escape(url)
+		user = users.get_current_user()
 
 		template_values = {
 			'user_id': user_id,
 			'url': url,
 			'host': host_url,
-			'bookmark': bookmark
+			'bookmark': bookmark,
+			'is_iphone': CssDesign.is_iphone(self),
+			'user': user,
+			'redirect_url': self.request.path,
 		}
 		render=template_select.render("/html/tolot_guide.html", template_values)
 		self.response.out.write(render)
 
 	def get_xml(self,user_id,bookmark):
-		offset=64
-		limit=1
+		offset=0
+		limit=64
 		illust_mode=BbsConst.ILLUSTMODE_ILLUST
 		thread_list=ApiUser.user_get_thread_list_core(self,user_id,offset,limit,illust_mode)
 

@@ -25,6 +25,9 @@ class AddRankingScore(webapp.RequestHandler):
 		try:
 			thread=db.get(self.request.get("thread"))
 		except:
+			thread=None
+
+		if(not thread):
 			return
 
 		score=int(self.request.get("score"))
