@@ -195,9 +195,10 @@ class ImageFile (webapp.RequestHandler):
 	@staticmethod
 	def serve_file(p_self,path,type_name,tag):
 		#直リンクの禁止
-		if(ImageFile.is_direct_access(p_self)):
-			p_self.error(403)
-			return
+		if(not p_self.request.get("force")):
+			if(ImageFile.is_direct_access(p_self)):
+				p_self.error(403)
+				return
 
 		#キャッシュヒット判定
 
