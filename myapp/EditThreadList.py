@@ -25,6 +25,7 @@ from myapp.DelThread import DelThread
 from myapp.ApiFeed import ApiFeed
 from myapp.CategoryList import CategoryList
 from myapp.ApiObject import ApiObject
+from myapp.SetUtf8 import SetUtf8
 
 import logging
 
@@ -69,6 +70,8 @@ class EditThreadList(webapp.RequestHandler):
 		return count
 
 	def post(self):
+		SetUtf8.set()
+
 		try:
 			bbs = db.get(self.request.get("bbs_key"))
 		except:
@@ -89,6 +92,8 @@ class EditThreadList(webapp.RequestHandler):
 		self.redirect(str(url))
 
 	def get(self):
+		SetUtf8.set()
+
 		try:
 			bbs = db.get(self.request.get("bbs_key"))
 		except:

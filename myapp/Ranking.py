@@ -77,6 +77,10 @@ class Ranking(db.Model):
 		#self.owner_ranking_list=rank["user"]
 		#self.owner_id_ranking_list=rank["user_id"]
 
+		self.owner_list = []
+		self.owner_ranking_list = []
+		self.owner_id_ranking_list = []
+		
 		self.put()
 	
 	def create_user_rank(self,user_list,req):
