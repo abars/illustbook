@@ -9,6 +9,7 @@
 import datetime;
 import time;
 import json;
+import logging;
 
 from google.appengine.ext import db
 from google.appengine.api.labs import taskqueue
@@ -29,9 +30,9 @@ class Ranking(db.Model):
 	user_ranking_list = db.StringListProperty(indexed=False)
 
 	#掲示板のオーナーランクは廃止
-	#owner_list = db.StringListProperty(indexed=False)
-	#owner_ranking_list = db.StringListProperty(indexed=False)
-	#owner_id_ranking_list = db.StringListProperty(indexed=False)
+	owner_list = db.StringListProperty(indexed=False)
+	owner_ranking_list = db.StringListProperty(indexed=False)
+	owner_id_ranking_list = db.StringListProperty(indexed=False)
 
 	date = db.DateTimeProperty(auto_now=True,indexed=False)
 	
@@ -49,41 +50,36 @@ class Ranking(db.Model):
 	
 	@staticmethod
 	def add_rank_global(thread,score):	
-		headers={'X-AppEngine-FailFast' : 'true'} #新規インスタンスの作成の抑制
-		try:
-			taskqueue.add(url="/add_ranking_score",params={"thread":str(thread.key()),"score":score},queue_name="score",headers=headers)
-		except:
-			logging.warning("ranking score taskqueue add failed")
-
-	def add_rank(self,thread,score):
 		if(thread.illust_mode==BbsConst.ILLUSTMODE_ILLUST):
-			for cnt in range(score):
-				self._add_rank_core(thread.key(),self.thread_list,BbsConst.THREAD_RANKING_RECENT)
-				self._add_rank_core(thread.user_id,self.user_list,BbsConst.USER_RANKING_RECENT)
-				#self._add_rank_core(thread.bbs_key.user_id,self.owner_list,BbsConst.USER_RANKING_RECENT)
-			self.put()
+			headers={'X-AppEngine-FailFast' : 'true'} #新規インスタンスの作成の抑制
+			try:
+				taskqueue.add(url="/add_ranking_score",params={"thread":str(thread.key()),"user_id":str(thread.user_id),"score":score},queue_name="score",headers=headers)
+			except:
+				logging.warning("ranking score taskqueue add failed")
+
+	def add_rank_from_taskqueue(self,thread_key,user_id,score):
+		for cnt in range(score):
+			self._add_rank_core(thread_key,self.thread_list,BbsConst.THREAD_RANKING_RECENT)
+			self._add_rank_core(user_id,self.user_list,BbsConst.USER_RANKING_RECENT)
+		self.put()
 
 	def get_sec(self,now):
 		return int(time.mktime(now.timetuple()))
 
 	def create_rank(self,req):
-		self.create_thread_rank()
+		self._create_thread_rank()
 		
-		rank=self.create_user_rank(self.user_list,req)
+		rank=self._create_user_rank(self.user_list,req)
 		self.user_ranking_list=rank["user"]
 		self.user_id_ranking_list=rank["user_id"]
 		
-		#rank=self.create_user_rank(self.owner_list)
-		#self.owner_ranking_list=rank["user"]
-		#self.owner_id_ranking_list=rank["user_id"]
-
-		self.owner_list = []
-		self.owner_ranking_list = []
-		self.owner_id_ranking_list = []
+		self.owner_list = ["empty"]
+		self.owner_ranking_list = ["empty"]
+		self.owner_id_ranking_list = ["empty"]
 		
 		self.put()
 	
-	def create_user_rank(self,user_list,req):
+	def _create_user_rank(self,user_list,req):
 		rank_user={}
 		
 		for user_id in user_list:
@@ -134,7 +130,7 @@ class Ranking(db.Model):
 
 		return {"user":ranking_list,"user_id":user_id_list}
 	
-	def create_thread_rank(self):
+	def _create_thread_rank(self):
 		#ハッシュにthread_keyを入れていく
 		rank={}
 		for thread in self.thread_list:
@@ -177,15 +173,11 @@ class Ranking(db.Model):
 			return []
 		return self.ranking_list[offset:offset+limit]
 	
-	def get_rank_core(self,user_id,list):
+	def _get_rank_core(self,user_id,list):
 		try:
 			return list.index(user_id)+1
 		except:
 			return 0
 	
 	def get_user_rank(self,user_id):
-		return self.get_rank_core(user_id,self.user_id_ranking_list)
-
-	def get_owner_rank(self,user_id):
-		return 1#self.get_rank_core(user_id,self.owner_id_ranking_list)
-		
+		return self._get_rank_core(user_id,self.user_id_ranking_list)
