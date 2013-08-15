@@ -97,7 +97,7 @@
        {% endif %}
       </div>
     </div>
-    <div style="text-align:right;margin:4px;">
+    <div style="float:right;margin:4px;">
       <small>
       {%if thread.bookmark %}<a href="{{host}}show_bookmark?thread_key={{thread.key}}">{{thread.bookmark}}ブクマ</a><br/>{% endif %}
       {%if thread.applause %}{{thread.applause}}拍手<br/>{% endif %}
@@ -108,20 +108,18 @@
     {# bbs #}
   {% if thread.bbs_url %}
     <hr style="margin:0px;clear:both;"/>  
-    <div style="margin:4px;text-align:center;">
-      <a href="{{thread.bbs_url}}" {{target_page}} style="width:100%;display:block;"><small>{{thread.bbs_title}}</small></a>
+    <div style="text-align:center;padding:4px;">
+      <a href="{{thread.bbs_url}}" {{target_page}} style="display:block;"><small>{{thread.bbs_title}}</small></a>
     </div>
   {% endif %}
 
     {# comment #}
     {%if thread.comment %}
     <hr style="margin:0px;clear:both;"/>
-    <div style="margin:4px;text-align:center;">
-      <a href="{{thread.thread_url}}" {{target_page}} style="width:100%;display:block;"><small>{{thread.comment}}件のコメント</small></a>
+    <div style="text-align:center;padding:4px;">
+      <a href="{{thread.thread_url}}" {{target_page}} style="display:block;"><small>{{thread.comment}}件のコメント</small></a>
     </div>
     {% endif %}
-
-    <div style="height:1px;"></div>
   </div>
 </div>
 {%endif%}
