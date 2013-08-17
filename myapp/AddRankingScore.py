@@ -29,6 +29,10 @@ class AddRankingScore(webapp.RequestHandler):
 		if(not user_id):
 			return
 		score=int(self.request.get("score"))
+		AddRankingScore.add_rank_direct(thread_key,user_id,score)
+
+	@staticmethod
+	def add_rank_direct(thread_key,user_id,score):
 		rank=Ranking.get_by_key_name(BbsConst.THREAD_RANKING_KEY_NAME)
 		if(rank==None):
 			rank=Ranking.get_or_insert(BbsConst.THREAD_RANKING_KEY_NAME)

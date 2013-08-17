@@ -58,7 +58,6 @@ class EditThreadList(webapp.RequestHandler):
 		category_update=self.request.get("category_update")
 		category_list=category_update.split("/")
 		for category_pair in category_list:
-			logging.error(category_pair)
 			thread_and_category=category_pair.split(":")
 			try:
 				thread=db.get(thread_and_category[0])

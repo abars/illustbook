@@ -188,7 +188,7 @@ class ImageFile (webapp.RequestHandler):
 		if(not re.search(r"illustbook",ref)):
 			if(not re.search(r"localhost",ref)):
 				if(not re.search(r"10.0.1",ref)):
-					logging.warning("image direct link failed path:"+p_self.request.path+" referer:"+ref)
+					#logging.warning("image direct link failed path:"+p_self.request.path+" referer:"+ref)
 					return True
 		return False
 
