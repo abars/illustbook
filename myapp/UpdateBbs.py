@@ -213,6 +213,7 @@ class UpdateBbs(webapp.RequestHandler):
 		bbs.default_comment_order=int(self.request.get('comment_order'))
 		bbs.comment_hidden_button=int(self.request.get('comment_hidden_button'))
 		bbs.disable_author=int(self.request.get('disable_author'))
+		bbs.show_remote_addr_id=int(self.request.get('show_remote_addr_id'))
 
 		bbs.tweet_disable=int(self.request.get('tweet_disable'))
 		bbs.twitter_enable=int(self.request.get('twitter_enable'))

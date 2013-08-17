@@ -124,6 +124,12 @@
 				{% endif %}
 			</select></TD></TR>
 
+			<TR><TH>投稿者のIDの表示</TH><TD>
+			<select name="show_remote_addr_id">
+				<option value="1" {% if bbs.show_remote_addr_id == 1 %}selected="selected"{% endif %}>表示する</option>
+				<option value="0" {% if not bbs.show_remote_addr_id %}selected="selected"{% endif %}>表示しない</option>
+			</select></TD></TR>
+
 			<TR><TH>文字でコメント</TH><TD>
 			<select name="disable_normal_reply">
 				{% if bbs.disable_normal_reply == 1 %}

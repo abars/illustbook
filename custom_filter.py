@@ -11,6 +11,7 @@ import sys
 import traceback
 import re
 import urllib
+import hashlib
 
 from google.appengine.api import users
 from google.appengine.ext import db
@@ -399,3 +400,11 @@ def regulation_name(thread):
 	if(adult):
 		return "[R15]"
 	return ""
+
+#-----------------------------------------------------------------
+#IPハッシュ
+#-----------------------------------------------------------------
+
+def ip_hash(text):
+	return hashlib.sha1(text).hexdigest()[0:8]
+

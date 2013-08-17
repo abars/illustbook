@@ -9,6 +9,7 @@
 		{{entry.com|author_name_comment(host)|safe}}
 		　投稿日：{% if entry.com.create_date %}{{entry.com.create_date|time_JST_progress}}{%else%}{{entry.com.date|time_JST_progress}}{%endif%}
 		{% if entry.com.comment_no %}　投稿番号：{{entry.com.comment_no}}{%endif%}
+		{% if bbs.show_remote_addr_id %}　ID：{{entry.com.remote_addr|ip_hash}}{% endif %}
 		
 		<div class="g-button-group" style="float:right;">
 		{%if comment_edit %}
@@ -76,6 +77,7 @@
 		<div class="actions g-button-container">
 		投稿者：{{res|author_name_comment(host)|safe}}　投稿日：{{res.date|time_JST_progress}}
 		{% if res.comment_no %}　投稿番号：{{res.comment_no}}{%endif%}
+		{% if bbs.show_remote_addr_id %}　ID：{{res.remote_addr|ip_hash}}{% endif %}
 			<div class="g-button-group" style="float:right;">
 			{% if loop.first and is_admin and comment_edit%}
 				<input type="button" value="一括" class="g-button" onclick="confirm_action_comment('{{host}}del_res?entry_key={{entry.com.key()}}&amp;res_key=all');"/>

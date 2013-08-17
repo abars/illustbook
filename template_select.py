@@ -48,7 +48,8 @@ def set_jinja_filter(jinja_environment):
 			"thumbnail2_height":custom_filter.thumbnail2_height,
 			'iriencode': custom_filter.iriencode,
 			'regulation_check': custom_filter.regulation_check,
-			'regulation_name': custom_filter.regulation_name
+			'regulation_name': custom_filter.regulation_name,
+			'ip_hash': custom_filter.ip_hash,
 	})
 
 jinja_environment_html = jinja2.Environment(loader=jinja2.FileSystemLoader("html/"))
