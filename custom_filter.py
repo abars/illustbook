@@ -406,5 +406,7 @@ def regulation_name(thread):
 #-----------------------------------------------------------------
 
 def ip_hash(text):
+	if(not text):
+		return "-"
 	return hashlib.sha1(text).hexdigest()[0:8]
 
