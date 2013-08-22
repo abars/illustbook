@@ -39,6 +39,7 @@ from myapp.StackFeed import StackFeed
 from myapp.Ranking import Ranking
 from myapp.EscapeComment import EscapeComment
 from myapp.SyncPut import SyncPut
+from myapp.SetUtf8 import SetUtf8
 
 class AddEntry(webapp.RequestHandler):
 	def write_status(self,is_flash,msg):
@@ -75,6 +76,8 @@ class AddEntry(webapp.RequestHandler):
 		RecentCommentCache.invalidate(bbs)
 
 	def post(self):
+		SetUtf8.set()
+
 		#エラーコードはFlash向けかどうか
 		is_flash=False
 		if(self.request.get('image')):
@@ -114,8 +117,11 @@ class AddEntry(webapp.RequestHandler):
 			entry.homepage_addr=""
 
 		checkcode=SpamCheck.get_check_code()
-		if(SpamCheck.check(entry.content,checkcode)):			
-			self.write_status(is_flash,BbsConst.SPAM_CHECKED);
+		if(SpamCheck.check(entry.content,checkcode)):		
+			if(is_flash):
+				self.write_status(is_flash,BbsConst.SPAM_CHECKED);
+			else:
+				Alert.alert_spam(self,entry.content,BbsConst.SPAM_CHECKED);
 			return
 
 		thread=db.Key(self.request.get("thread_key"))

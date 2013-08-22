@@ -30,6 +30,11 @@ class Alert(webapp.RequestHandler):
 		req.response.out.write(Alert.alert_msg_core(msg,host,is_iphone))
 
 	@staticmethod
+	def alert_spam(req,content,msg):
+		content="<br/><br/><textarea style='width:100%' rows=10>"+content+"</textarea>"
+		Alert.alert_msg_with_write(req,msg+content)
+
+	@staticmethod
 	def alert_msg_core(msg,host,is_iphone):
 		host_url="http://"+MappingId.mapping_host(host)+"/";
 		template_values = {

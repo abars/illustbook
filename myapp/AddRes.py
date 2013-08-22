@@ -38,9 +38,12 @@ from myapp.SpamCheck import SpamCheck
 from myapp.StackFeed import StackFeed
 from myapp.Ranking import Ranking
 from myapp.EscapeComment import EscapeComment
+from myapp.SetUtf8 import SetUtf8
 
 class AddRes(webapp.RequestHandler):
 	def post(self):
+		SetUtf8.set()
+
 		entry=None
 		try:
 			entry = db.get(self.request.get("entry_key"))	
@@ -85,7 +88,7 @@ class AddRes(webapp.RequestHandler):
 
 		checkcode=SpamCheck.get_check_code()
 		if(SpamCheck.check(response.content,checkcode)):
-			Alert.alert_msg_with_write(self,BbsConst.SPAM_CHECKED);
+			Alert.alert_spam(self,response.content,BbsConst.SPAM_CHECKED)
 			return
 		
 		response.content=EscapeComment.escape_br(response.content)

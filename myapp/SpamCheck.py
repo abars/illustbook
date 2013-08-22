@@ -94,7 +94,7 @@ class SpamCheck(webapp.RequestHandler):
 		list=p.split(content)
 		http_link_count=len(list)
 
-		p = re.compile(r'www.')
+		p = re.compile(r'www\.')
 		list=p.split(content)
 		www_link_count=len(list)
 
