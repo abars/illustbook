@@ -128,7 +128,7 @@ class DelRes(webapp.RequestHandler):
 
 		entry.put()
 
-		url=MappingThreadId.get_thread_url("./",bbs_key,thread_key)
+		url=MappingThreadId.get_thread_url("./",bbs_key,thread_key)+"?comment_edit=1"
 		self.redirect(str(url))
 		
 		thread = db.get(str(thread_key.key()))

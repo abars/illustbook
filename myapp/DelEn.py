@@ -113,7 +113,7 @@ class DelEn(webapp.RequestHandler):
 		thread.cached_entry_key_enable=None
 		thread.put()
 
-		url=MappingThreadId.get_thread_url("./",bbs,thread)
+		url=MappingThreadId.get_thread_url("./",bbs,thread)+"?comment_edit=1"
 		self.redirect(str(url))
 
 		RecentCommentCache.invalidate(bbs)
