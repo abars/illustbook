@@ -89,12 +89,23 @@ class SpamCheck(webapp.RequestHandler):
 		return True
 
 	@staticmethod
-	def check(content,checkcode):
+	def _get_link_count(content):
 		p = re.compile(r'http')
 		list=p.split(content)
-		if(len(list)>=5):
+		http_link_count=len(list)
+
+		p = re.compile(r'www.')
+		list=p.split(content)
+		www_link_count=len(list)
+
+		return max(http_link_count,www_link_count)
+
+	@staticmethod
+	def check(content,checkcode):
+		link_count=SpamCheck._get_link_count(content)
+		if(link_count>=5):
 			return True;
-		if(len(list)>=2 and SpamCheck.is_ascii(content)):
+		if(link_count>=2 and SpamCheck.is_ascii(content)):
 			return True
 		if(re.search(checkcode,content)):
 			return True;
