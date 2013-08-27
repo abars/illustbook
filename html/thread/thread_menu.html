@@ -31,7 +31,7 @@
 			<li><a href="#" onclick='location.href="{{host}}edit_thread?bbs_key={{bbs.key()}}&amp;thread_key={{thread.key()}}"' style="color:#333;">スレッドの編集</a></li>
 		{% endif %}
 
-		{% if owner or my_illust　%}
+		{% if owner or my_illust or admin_user %}
 			<li><a href="#" onclick='confirm_action_thread("{{thread.key()}}", "{{bbs.key()}}", "{{host}}")' style="color:#333;">スレッドの削除</a></li>
 		{% else %}
 			{% if thread.delete_key %}

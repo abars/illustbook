@@ -145,7 +145,7 @@ class DelThread(webapp.RequestHandler):
 			thread_owner=True
 		
 		if(del_ok==0):
-			if(not bbs_owner and not thread_owner):
+			if(not bbs_owner and not thread_owner and not OwnerCheck.is_admin(user)):
 				self.response.out.write(Alert.alert_msg("削除権限がありません。",self.request.host))
 				return
 
