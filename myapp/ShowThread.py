@@ -151,6 +151,9 @@ class ShowThread(webapp.RequestHandler):
 		#凍結されているか
 		frozen=ApiObject.is_frozen_thread(thread)
 
+		#拍手が有効かどうか
+		applause_enable=not (user and thread.user_id and thread.user_id==user.user_id())
+
 		#描画
 		template_values = {
 			'host': host_url,
@@ -182,7 +185,8 @@ class ShowThread(webapp.RequestHandler):
 			'user_name':user_name,
 			'search': search,
 			'limit': col_num,
-			'frozen': frozen
+			'frozen': frozen,
+			'applause_enable': applause_enable
 			}
 
 		path = "/html/"+design["base_name"]
