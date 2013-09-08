@@ -9,13 +9,8 @@
 		<ul class="dropdown-menu">
 		{% if thread.cached_image_key %}
 			{% if bbs.enable_continue_draw %}
-				{% if bbs.bbs_mode == 1 %}
+				{% if bbs.bbs_mode == 1 or (bbs.bbs_mode == 2 and owner) or (bbs.bbs_mode == 3 and owner) %}
 					<li><a href="#" onclick="open_draw('{{thread.cached_image_key}}',0,'{{host}}','','{{thread.key()}}','{{bbs.key()}}',{{thread.illust_mode}})" style="color:#333;">続きから描く</a></li>
-				{% endif %}
-				{% if bbs.bbs_mode == 2 %}
-					{% if owner %}
-						<li><a href="#" onclick="open_draw('{{thread.cached_image_key}}',0,'{{host}}','','{{thread.key()}}','{{bbs.key()}}',{{thread.illust_mode}})" style="color:#333;">続きから描く</a></li>
-					{% endif %}
 				{% endif %}
 			{% endif %}
 		{% endif %}

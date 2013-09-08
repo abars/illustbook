@@ -58,7 +58,7 @@
 			var url=list[0];
 			if(list.length>=2)
 				url=list[1];			
-			access_txt+="<p>"+cnt_hash[key_list[i]]+"　<A HREF='"+url+"' TARGET=_BLANK class='decnone'>"+txt.substr(0,64)+"</A></p>";
+			access_txt+="<p>"+cnt_hash[key_list[i]]+"　<a href='"+url+"' target='_blank' class='decnone'>"+txt.substr(0,64)+"</a></p>";
 		}
 		
 		return access_txt;
@@ -70,8 +70,9 @@
 			var list=search.split("@")
 			var txt=decodeURI(list[0]);
 			var url=list[1];
-			var size=Math.floor ((Math.log(search_list[search])/Math.log(10))*20)+15;
-			ret+="<span style='font-size:"+size+" px'><A HREF='"+url+"' TARGET=_BLANK class='decnone'>"+txt+"</span></A>　"
+			var cnt=search_list[search];
+			var size=Math.floor((Math.log(cnt)/Math.log(10))*20)+15;
+			ret+="<a href='"+url+"' target='_blank' class='decnone' style='font-size:"+size+"px'>"+txt+"</font></a>　"
 		}
 		if(ret==""){
 			return "<p>検索エンジンからのアクセスは見つかりませんでした。</p>";

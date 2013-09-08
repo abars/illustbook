@@ -5,7 +5,7 @@
 {% if timeline %}
 <div class="feed">
 	{% for feed in timeline %}
-	<div>
+	<div style="padding:4px;">
 		<!-- アイコン -->
 		<div style="float:left;width:58px;padding-right:6px;text-align:center;margin:auto;">
 		{% if feed.from_user and feed.mode != "deleted" %}
@@ -16,7 +16,7 @@
 		</div>
 
 		<!-- メイン -->
-		<div style="float:left;{% if is_iphone %}width:222px;{% else %}width:750px;{% endif %}">
+		<div style="float:left;{% if is_iphone %}width:232px;{% else %}width:760px;{% endif %}">
 	
 		<!-- ユーザ名 -->
 		<div style="float:left;"> 
@@ -184,7 +184,14 @@
 
 	</div>
 	<br clear='all'/>
-	<hr/>
+
+	<!-- 既読バー -->
+	{% if loop.index+timeline_unit*(page-1)-1 == new_feed_count-1 %}
+		<hr style="border-top: 4px solid #cccccc;"/>
+	{% else %}
+		<hr/>
+	{% endif %}
+
 	{% endfor %}
 </div>
 {% endif %}

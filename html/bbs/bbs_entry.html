@@ -5,50 +5,55 @@
 	<div class="entry">
 {% endif %}
 
-{% if thread.illust_mode and not bbs.disable_content_image %}
-	<!--イラスト掲示板-->
-	<div class="entry-title">
-		<!-- タイトル -->
-		<h3><a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key()}}{%endif%}.html'>{{thread|regulation_name}}{{ thread.title|escape }}</a></h3>
-
-		<!-- 拍手 -->
-		{% if not bbs.disable_applause %}
-			<div class="clap" align="right">
-			{% if template_path%}
-				<a href="javascript:applause('{{host}}','{{bbs.key()}}','{{thread.key()}}','bbs','{{order}}','{{page}}');" rel="nofollow"><img src="{{template_path}}images/i_crap.gif" alt="拍手" width="53" height="20"/></a>{%if thread.applause %}{{thread.applause}}{%else%}0{%endif%}
-			{% else %}
-				<input type="button" value="拍手{%if thread.applause %}{{thread.applause}}{%else%}0{%endif%}"  class="g-button" onClick="javascript:applause('{{host}}','{{bbs.key()}}','{{thread.key()}}','bbs','{{order}}','{{page}}');"/>
-			{% endif %}
-			</div>
-		{% endif %}
-		<div class="clr"></div>
-	</div>
-
-	<!--画像が存在する場合-->
-	{% if thread.cached_image_key %}
-	<div class="entry-illust">
-		<a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key()}}{%endif%}.html' class="imagelink">
-		{% include "bbs_thread/image.html" %}
-		{% if thread.illust_mode == 2 %}
-		<br/>[クリックで再生]
-		{%endif%}
-		</a>
-	</div>
-	{% else %}
-		{% if template_path %}
-			<br/>
-		{% endif %}
-	{% endif %}
-	
-	<!--画像情報-->
-	<div class="entry-name">
-		<p>
-			{%include "bbs_thread/info.html" %}
-		</p>
-	</div>
-{% else%}
+{% if bbs.bbs_mode == 3 %}
 	<!--スレッド式掲示板-->
 	{% include "bbs/bbs_thread_list.html" %}
+{% else %}
+	{% if thread.illust_mode and not bbs.disable_content_image %}
+		<!--イラスト掲示板-->
+		<div class="entry-title">
+			<!-- タイトル -->
+			<h3><a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key()}}{%endif%}.html'>{{thread|regulation_name}}{{ thread.title|escape }}</a></h3>
+
+			<!-- 拍手 -->
+			{% if not bbs.disable_applause %}
+				<div class="clap" align="right">
+				{% if template_path%}
+					<a href="javascript:applause('{{host}}','{{bbs.key()}}','{{thread.key()}}','bbs','{{order}}','{{page}}');" rel="nofollow"><img src="{{template_path}}images/i_crap.gif" alt="拍手" width="53" height="20"/></a>{%if thread.applause %}{{thread.applause}}{%else%}0{%endif%}
+				{% else %}
+					<input type="button" value="拍手{%if thread.applause %}{{thread.applause}}{%else%}0{%endif%}"  class="g-button" onClick="javascript:applause('{{host}}','{{bbs.key()}}','{{thread.key()}}','bbs','{{order}}','{{page}}');"/>
+				{% endif %}
+				</div>
+			{% endif %}
+			<div class="clr"></div>
+		</div>
+
+		<!--画像が存在する場合-->
+		{% if thread.cached_image_key %}
+		<div class="entry-illust">
+			<a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key()}}{%endif%}.html' class="imagelink">
+			{% include "bbs_thread/image.html" %}
+			{% if thread.illust_mode == 2 %}
+			<br/>[クリックで再生]
+			{%endif%}
+			</a>
+		</div>
+		{% else %}
+			{% if template_path %}
+				<br/>
+			{% endif %}
+		{% endif %}
+		
+		<!--画像情報-->
+		<div class="entry-name">
+			<p>
+				{%include "bbs_thread/info.html" %}
+			</p>
+		</div>
+	{% else%}
+		<!-- イラスト非表示モード -->
+		{%include "bbs/bbs_no_illust_list.html"%}
+	{% endif %}
 {% endif %}
 
 <!--記事-->

@@ -420,6 +420,7 @@ class Pinterest(webapp.RequestHandler):
 			rental_bbs_list=ApiUser.user_get_bbs_list(self,user_id)
 		
 		timeline=None
+		timeline_unit=0
 		use_masonry=True
 		is_timeline_enable=0
 		infinite_scroll_selecter=".item"
@@ -431,6 +432,7 @@ class Pinterest(webapp.RequestHandler):
 				timeline=ApiUser.user_get_home_timeline(self,user_id)
 			else:
 				timeline=ApiUser.user_get_timeline(self,user_id)
+			timeline_unit=len(timeline)
 			use_masonry=False
 			infinite_scroll_selecter=".feed"
 	
@@ -533,6 +535,7 @@ class Pinterest(webapp.RequestHandler):
 			'is_admin': OwnerCheck.is_admin(user),
 			'use_masonry': use_masonry,
 			'timeline': timeline,
+			'timeline_unit': timeline_unit,
 			'infinite_scroll_selecter': infinite_scroll_selecter,
 			'flat_ui': False
 		}

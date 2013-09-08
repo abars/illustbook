@@ -38,9 +38,10 @@ from myapp.ApiObject import ApiObject
 
 class ShowEntry(webapp.RequestHandler):
 	@staticmethod
-	def _get_response(com_list_,res_hash,thread):
+	def _get_response(com_list_,res_hash,thread,bbs):
 		#コメントソート
-		if(thread.illust_mode):
+		if(bbs.bbs_mode != BbsConst.BBS_MODE_NO_IMAGE):
+		#if(thread.illust_mode):
 			com_list_.reverse()
 		
 		#レスを取得
@@ -86,7 +87,7 @@ class ShowEntry(webapp.RequestHandler):
 	@staticmethod
 	def _render_comment_core(req,host_url,bbs,thread,com_list_,edit_flag,bbs_key,logined,show_comment_form,is_admin,user_name,user,res_hash):
 		#レスを取得
-		com_list=ShowEntry._get_response(com_list_,res_hash,thread)
+		com_list=ShowEntry._get_response(com_list_,res_hash,thread,bbs)
 
 		#コメントの編集を行うか
 		comment_edit=req.request.get("comment_edit")

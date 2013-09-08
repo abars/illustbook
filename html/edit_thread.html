@@ -96,7 +96,24 @@
 				</table>
 
 				<br/><br/>
-				<input type="button" value="投稿を更新する" class="g-button" onclick="submit_thread();">
+
+				<div class="g-button-group">
+					<input type="button" value="投稿を更新する" class="g-button" onclick="submit_thread();">
+
+					<div class="g-button-group toggle-buttons">
+						<a class="g-button dropdown-toggle" data-toggle="dropdown" href="#">
+						その他の操作<span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+						{% if not thread.cached_image_key %}
+							<li><a href="#" onclick="open_draw('add_new_illust',0,'{{host}}','','{{thread.key()}}','{{bbs.key()}}',{{thread.illust_mode}})" style="color:#333;">イラストの追加</a></li>
+						{% else %}
+							<li><a href="#" onclick="open_draw('{{thread.cached_image_key}}',0,'{{host}}','','{{thread.key()}}','{{bbs.key()}}',{{thread.illust_mode}})" style="color:#333;">イラストの編集</a></li>
+						{% endif %}
+						</ul>
+					</div>
+				</div>
+
 				<br/>
 				</form>
 			{% endif %}
@@ -133,6 +150,10 @@
 	<div id="contents-footer">
 	</div>
 </div>
+
+<!-- javascript -->
+{% include "jquery.html" %}
+<script language="javascript" src="{{host}}js/thread.js" type="text/javascript"></script>
 
 </body>
 </html>
