@@ -73,6 +73,9 @@
 			var size=Math.floor ((Math.log(search_list[search])/Math.log(10))*20)+15;
 			ret+="<span style='font-size:"+size+" px'><A HREF='"+url+"' TARGET=_BLANK class='decnone'>"+txt+"</span></A>　"
 		}
+		if(ret==""){
+			return "<p>検索エンジンからのアクセスは見つかりませんでした。</p>";
+		}
 		return ret;
 	}
 	

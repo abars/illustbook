@@ -13,7 +13,7 @@
 <div id="container">
 <div id="contents">
 
-<p>&nbsp</p>
+<p>&nbsp;</p>
 
 {% if not show_analyze %}
 
@@ -28,27 +28,34 @@
 <div class="entry">
 <H1>アクセス元</H1>
 <div id="access"></div>
-<p>&nbsp</p>
+<p>&nbsp;</p>
 </div>
 
 <div class="entry">
 <H1>人気コンテンツ</H1>
 <div id="content"></div>
-<p>&nbsp</p>
+<p>&nbsp;</p>
 </div>
 
 <div class="entry">
 <H1>検索語</H1>
 <div id="search"></div>
-<p>&nbsp</p>
+<p>&nbsp;</p>
+</div>
+
+<div class="entry">
+<H1>アクセス数</H1>
+<p>本日のアクセス数は{{bbs.counter.today_cnt}}、
+昨日のアクセス数は{{bbs.counter.yesterday_cnt}}でした。</p>
+<p>&nbsp;</p>
 </div>
 
 {% if bbs %}
 <div class="entry">
 <div class="g-button-group">
-<A HREF="./usr/{{bbs.key()}}/" class="g-button">{{page_name}}へ戻る</A>
+<a href="./usr/{{bbs.key()}}/" class="g-button">{{page_name}}へ戻る</a>
 {% if user %}
-　<A HREF="./analyze?bbs_key={{bbs.key()}}&mode=delete" class="g-button">解析結果の初期化</A>
+　<a href="./analyze?bbs_key={{bbs.key()}}&mode=delete" class="g-button">解析結果の初期化</a>
 {% endif %}
 </div>
 </div>
