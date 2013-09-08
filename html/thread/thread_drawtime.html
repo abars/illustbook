@@ -12,4 +12,7 @@
 			{%if thread.is_ipad %}
 			（iPhone/iPadから投稿）
 			{% endif %}
+			{% if bbs.show_remote_addr_id %}
+			（ID：{{thread.remote_addr|ip_hash}}）
+			{% endif %}
 		{%endif%}
