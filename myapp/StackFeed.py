@@ -429,5 +429,7 @@ class StackFeed(webapp.RequestHandler):
 			StackFeed._feed_new_follow_core(user_id,add_user_key)
 		if(mode=="new_message"):
 			data=db.get(self.request.get("data"))
+			if(not data):
+				return
 			StackFeed._feed_new_message_core(user_id,data)
 
