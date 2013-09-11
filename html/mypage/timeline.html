@@ -186,7 +186,7 @@
 	<br clear='all'/>
 
 	<!-- 既読バー -->
-	{% if loop.index+timeline_unit*(page-1)-1 == new_feed_count-1 %}
+	{% if loop.index+timeline_unit*(page-1)-1 == new_feed_count+new_my_feed_count-1 %}
 		<hr style="border-top: 4px solid #cccccc;"/>
 	{% else %}
 		<hr/>

@@ -55,7 +55,8 @@ class Bookmark(db.Model):
 	birthday_year=db.IntegerProperty()
 	birthday_month=db.IntegerProperty()
 	birthday_day=db.IntegerProperty()
-	new_feed_count=db.IntegerProperty()
+	new_feed_count=db.IntegerProperty()	#他のユーザの更新情報の新着数
+	new_my_feed_count=db.IntegerProperty()	#自分の更新情報の新着数
 	disable_rankwatch=db.IntegerProperty()
 	
 	#アカウントの凍結

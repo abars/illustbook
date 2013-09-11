@@ -179,6 +179,11 @@ class StackFeed(webapp.RequestHandler):
 						bookmark.new_feed_count=1
 					else:
 						bookmark.new_feed_count=bookmark.new_feed_count+1
+				else:
+					if(not bookmark.new_my_feed_count):
+						bookmark.new_my_feed_count=1
+					else:
+						bookmark.new_my_feed_count=bookmark.new_my_feed_count+1
 
 			#自分の投稿の場合はセルフタイムラインにも追加する
 			if(bookmark.user_id==data.from_user_id):

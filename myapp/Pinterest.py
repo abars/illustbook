@@ -97,11 +97,21 @@ class Pinterest(webapp.RequestHandler):
 		return new_feed_count
 
 	@staticmethod
+	def _get_new_my_feed_count(user,view_mode,bookmark):
+		new_my_feed_count=0
+		if(not view_mode and bookmark and bookmark.new_my_feed_count):
+			new_my_feed_count=bookmark.new_my_feed_count
+			if(not bookmark.new_feed_count):
+				new_my_feed_count=0
+		return new_my_feed_count
+
+	@staticmethod
 	def _consume_feed(user,view_mode,bookmark):
 		if(user and bookmark):
 			if(not view_mode):
-				if(bookmark.new_feed_count):
+				if(bookmark.new_feed_count or bookmark.new_my_feed_count):
 					bookmark.new_feed_count=0
+					bookmark.new_my_feed_count=0
 					bookmark.put()
 
 	@staticmethod
@@ -400,6 +410,7 @@ class Pinterest(webapp.RequestHandler):
 
 		#フィード数の消化
 		new_feed_count=Pinterest._get_new_feed_count(user,view_mode,bookmark)
+		new_my_feed_count=Pinterest._get_new_my_feed_count(user,view_mode,bookmark)
 		if(tab=="feed"):
 			Pinterest._consume_feed(user,view_mode,bookmark)
 
@@ -521,6 +532,7 @@ class Pinterest(webapp.RequestHandler):
 			'edit_profile': edit_profile,
 			'redirect_url': self.request.path,
 			'new_feed_count': new_feed_count,
+			'new_my_feed_count': new_my_feed_count,
 			'submit_illust_exist': submit_illust_exist,
 			'submit_moper_exist': submit_moper_exist,
 			'bookmark_illust_exist': bookmark_illust_exist,
