@@ -228,10 +228,10 @@ class ApiObject(webapp.RequestHandler):
 			bbs=bbs_list[cnt]
 			cnt=cnt+1
 			one_dic=ApiObject._create_thread_object_core(req,thread,bbs,only_image_thread)	#文字だけのスレッドは含まない
-			if(not bbs_id):
+			if(not bbs_id or (bbs_id=="search")):
 				if(one_dic and one_dic["disable_news"]):
 					continue
-			if(bbs_id and (bbs_id=="search" or "pinterest")):
+			if(bbs_id and (bbs_id=="search" or bbs_id=="pinterest")):
 				if(one_dic and one_dic["violate_terms"]):
 					continue
 			if(one_dic):
