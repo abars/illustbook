@@ -366,7 +366,8 @@ class Chat(webapp.RequestHandler):
 		room=db.get(room_key)
 
 		#対象者を削除
-		room.channel_client_list.remove(client_id)
+		if(room.channel_client_list.count(client_id)):
+			room.channel_client_list.remove(client_id)
 
 		#2時間経過したユーザも削除（トークンの有効期限が2時間なので）
 		server_time=Chat.get_sec(datetime.datetime.now())
