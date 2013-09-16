@@ -152,7 +152,7 @@ var isFlashInstalled=function(){if(navigator.plugins["Shockwave Flash"]){return 
 			var count_div=$("#applause_value_"+thread_key);
 			var count=Number(count_div.html());
 			count++;
-			count_div.html(count);
+			count_div.hide().html(count).fadeIn(500);
 			applause_finish[thread_key]=true;
 
 			//リクエストを送る

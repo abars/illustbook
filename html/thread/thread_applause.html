@@ -1,14 +1,13 @@
 {% if not bbs.disable_applause %}
 	{% if template_path %}
-		<div id="applause_value_{{thread.key()}}" style="float:right;margin-top:2px;">
-			{%if thread.applause %}
-				{{thread.applause}}
-			{%else%}
-				0
-			{%endif%}
-		</div>
-
 		<div class="clap">
+			<div id="applause_value_{{thread.key()}}" style="float:right;margin-top:2px;">
+				{%if thread.applause %}
+					{{thread.applause}}
+				{%else%}
+					0
+				{%endif%}
+			</div>
 			<div style="float:right;">
 				{% if applause_enable %}
 					<a href="javascript:applause('{{host}}','{{bbs.key()}}','{{thread.key()}}','thread');" rel="nofollow">
@@ -20,15 +19,14 @@
 			</div>
 		</div>
 	{% else %}
-		<div id="applause_value_{{thread.key()}}" style="float:right;margin-top:2px;">
-			{%if thread.applause %}
-				{{thread.applause}}
-			{%else%}
-				0
-			{%endif%}
-		</div>
-
 		<div class="clap" align="right;">
+			<div id="applause_value_{{thread.key()}}" style="float:right;margin-top:2px;">
+				{%if thread.applause %}
+					{{thread.applause}}
+				{%else%}
+					0
+				{%endif%}
+			</div>
 			<div style="float:right;margin-right:4px;">
 				<input type="button" value="拍手" class="g-button" {% if applause_enable %}onClick="javascript:applause('{{host}}','{{bbs.key()}}','{{thread.key()}}','thread');"{% endif %}/>
 			</div>
