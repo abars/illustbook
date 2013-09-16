@@ -17,22 +17,8 @@
 
 			<!-- 拍手 -->
 			{% if not bbs.disable_applause %}
-				<div class="clap" align="right">
 				{% set applause_enable=not (user and thread.user_id and thread.user_id==user.user_id()) %}
-
-				{% if template_path%}
-					{% if applause_enable %}
-						<a href="javascript:applause('{{host}}','{{bbs.key()}}','{{thread.key()}}','bbs','{{order}}','{{page}}');" rel="nofollow">
-					{% endif %}
-					<img src="{{template_path}}images/i_crap.gif" alt="拍手" width="53" height="20"/>
-					{% if applause_enable %}
-						</a>
-					{% endif %}
-					{%if thread.applause %}{{thread.applause}}{%else%}0{%endif%}
-				{% else %}
-					<input type="button" value="拍手{%if thread.applause %}{{thread.applause}}{%else%}0{%endif%}"  class="g-button" {% if applause_enable %}onClick="javascript:applause('{{host}}','{{bbs.key()}}','{{thread.key()}}','bbs','{{order}}','{{page}}');"{% endif %}/>
-				{% endif %}
-				</div>
+				{% include "thread/thread_applause.html" %}
 			{% endif %}
 			<div class="clr"></div>
 		</div>

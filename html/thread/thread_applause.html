@@ -1,0 +1,31 @@
+{% if not bbs.disable_applause %}
+	{% if template_path %}
+		<div class="clap">
+			<div style="float:left;margin-right:4px;">
+				{% if applause_enable %}
+					<a href="javascript:applause('{{host}}','{{bbs.key()}}','{{thread.key()}}','thread');" rel="nofollow">
+				{% endif %}
+				<img src="{{template_path}}images/i_crap.gif" alt="拍手" width="53" height="20"/>
+				{% if applause_enable %}
+					</a>
+				{% endif %}
+			</div>
+			<div id="applause_value_{{thread.key()}}" style="float:left;margin-top:2px;">
+				{%if thread.applause %}
+					{{thread.applause}}
+				{%else%}
+					0
+				{%endif%}
+			</div>
+		</div>
+	{% else %}
+		<div class="clap" align="right">
+			<div style="float:left;margin-right:4px;">
+				<input type="button" value="拍手" class="g-button" {% if applause_enable %}onClick="javascript:applause('{{host}}','{{bbs.key()}}','{{thread.key()}}','thread');"{% endif %}/>
+			</div>
+			<div id="applause_value_{{thread.key()}}" style="float:left;margin-top:2px;">
+				{%if thread.applause %}{{thread.applause}}{%else%}0{%endif%}
+			</div>
+		</div>
+	{% endif %}
+{% endif %}

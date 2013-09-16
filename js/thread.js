@@ -141,7 +141,21 @@ var isFlashInstalled=function(){if(navigator.plugins["Shockwave Flash"]){return 
 			);
 		}
 
+		var applause_finish=new Object();
+
 		function applause_core(host,bbs_key,thread_key,mode,order,page,comment){
+			if(applause_finish[thread_key]){
+				return;
+			}
+
+			//カウントアップ
+			var count_div=$("#applause_value_"+thread_key);
+			var count=Number(count_div.html());
+			count++;
+			count_div.html(count);
+			applause_finish[thread_key]=true;
+
+			//リクエストを送る
 			var url=host+'applause?bbs_key='+bbs_key+'&amp;thread_key='+thread_key+'&amp;mode='+mode;
 			if(mode=="bbs"){
 				url+="&amp;order="+order+"&amp;page="+page
@@ -149,5 +163,13 @@ var isFlashInstalled=function(){if(navigator.plugins["Shockwave Flash"]){return 
 			if(comment!=""){
 				url+="&amp;comment="+comment
 			}
-			window.location.href=url
+
+			//コメント付き拍手はページ遷移、そうでなければ非同期
+			if(comment!=""){
+				window.location.href=url
+			}else{
+				$.get(url, function(data){
+					//alert("Applause Success: " + data);
+				});
+			}
 		}
