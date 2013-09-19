@@ -23,7 +23,7 @@ function infinite_scroll_initialize(itemSelector,use_masonry,host,page){
       navSelector  : '#page-nav',    // selector for the paged navigation 
       nextSelector : '#page-nav a',  // selector for the NEXT link (to page 2)
       itemSelector : itemSelector,     // selector for all items you'll retrieve
-      bufferPx : 800, // 最も下に行く前にロードをかける
+      bufferPx : 1600, // 最も下に行く前にロードをかける
       state: {
         currPage: page
       },
