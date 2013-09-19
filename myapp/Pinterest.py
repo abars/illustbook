@@ -447,8 +447,11 @@ class Pinterest(webapp.RequestHandler):
 			use_masonry=False
 			infinite_scroll_selecter=".feed"
 	
+		only_one_page=False
 		if(tab=="bookmark"):
 			thread_list=ApiBookmark.bookmark_get_thread_list(self,user_id,bookmark)
+			if(bookmark_illust_count<=BbsConst.PINTEREST_MYPAGE_PAGE_UNIT):
+				only_one_page=True
 	
 		if(tab=="submit" or tab=="moper"):
 			#イラストが消去されている場合を考慮してスレッドが見つかるまでページを進める
@@ -469,13 +472,19 @@ class Pinterest(webapp.RequestHandler):
 					break
 				page=page+1
 
+			if(max_page<=1):
+				only_one_page=True
+
 			submit_illust_list=thread_list
 			
 		page_mode="user"
 		view_user=ApiUser.user_get_user(self,user_id,bookmark)
 		view_user_profile=ApiUser.user_get_profile(self,user_id,bookmark)
 		tag_list=None
+
 		next_query="user_id="+user_id+"&tab="+tab+"&edit="+str(edit_mode)
+		if(only_one_page):
+			next_query=None
 		
 		only_icon=True
 		if(edit_mode):

@@ -17,13 +17,13 @@
     });    
 
 //infinite scroll
-  function infinite_scroll_initialize(itemSelector,use_masonry,host,page){
+function infinite_scroll_initialize(itemSelector,use_masonry,host,page){
 	var $container = $('#infinite-scroll-container');
 	$container.infinitescroll({
       navSelector  : '#page-nav',    // selector for the paged navigation 
       nextSelector : '#page-nav a',  // selector for the NEXT link (to page 2)
       itemSelector : itemSelector,     // selector for all items you'll retrieve
-      bufferPx : 2000, // 最も下に行く前にロードをかける
+      bufferPx : 800, // 最も下に行く前にロードをかける
       state: {
         currPage: page
       },
@@ -40,7 +40,9 @@
           $newElems.css({ opacity: 0 });
           $container.masonry( 'appended', $newElems, true ); 
           $newElems.animate({ opacity: 1 });
+          $(window).scroll(); //データが足りない場合をケア
         }
       }
     );
+  $(window).scroll(); //解像度が高くてスクロールバーが発生しない場合をケア
 }
