@@ -48,6 +48,7 @@
   </div>
 
   {# Summary #}
+  {% if thread.title != "notitle" or thread.summary or thread.tag %}
   <div class="illust_summary">
     {% if thread.title %}
     {% if thread.title != "notitle" %}
@@ -67,6 +68,7 @@
     {% endif %}
       {{thread.summary|safe}}
   </div>
+  {% endif %}
 
 <div class="item_info">
   {# author #}
