@@ -600,7 +600,7 @@ class ApiObject(webapp.RequestHandler):
 
 		message=""
 		if(comment_deleted):
-			message="コメントは削除されました。"
+			message="deleted"
 		else:
 			if(res):
 				message=res.content

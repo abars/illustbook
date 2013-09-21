@@ -158,7 +158,7 @@
 	{% endif %}
 
 	{% if feed.mode == "new_follow" %}
-		<a href="{{feed.follow_user.profile_url}}'">
+		<a href="{{feed.follow_user.profile_url}}">
 			<img src="{{feed.follow_user.icon_url}}&size=mini" width="50px" height="50px"/>
 		</a>
 	{% endif %}
@@ -167,7 +167,11 @@
 		{% if feed.mode == "new_comment_thread" %}
 			<blockquote><p>
 				<a href="{{feed.thread.thread_url}}">
-					{{message}}
+					{% if message == "deleted" %}
+						{{deleted_style_header}}コメントは削除されました。{{deleted_style_footer}}
+					{% else %}
+						{{message}}
+					{% endif %}
 				</a>
 			</p></blockquote>
 		{% else %}
