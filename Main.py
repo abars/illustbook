@@ -246,6 +246,8 @@ application = webapp.WSGIApplication(
 	('/pinterest', Pinterest),
 	('/_ah/channel/connected/',ChatConnected),
 	('/_ah/channel/disconnected/',ChatDisconnected),
+	(r'/(tolot)/(.*)\.(jpg)',ImageFile), 
+	(r'/(tolot)/(.*)\.(png)',ImageFile), 
 	('/tolot/(.*)\.(.*)',Tolot),
 	(r'/usr/(.*)/(.*)\.html',ShowThread),
 	(r'/usr/(.*)/',ShowBbs),

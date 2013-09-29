@@ -70,6 +70,9 @@ class Tolot(webapp.RequestHandler):
 		illust_mode=BbsConst.ILLUSTMODE_ILLUST
 		thread_list=ApiUser.user_get_thread_list_core(self,user_id,offset,limit,illust_mode)
 
+		for thread in thread_list:
+			thread["image_url"]=thread["image_url"].replace("/img/","/tolot/")
+
 		value=datetime.datetime.today()
 		tmp=value.replace(tzinfo=UTC()).astimezone(JST())
 
