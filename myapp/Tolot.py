@@ -66,7 +66,7 @@ class Tolot(webapp.RequestHandler):
 
 	def get_xml(self,user_id,bookmark):
 		offset=0
-		limit=64
+		limit=60
 		illust_mode=BbsConst.ILLUSTMODE_ILLUST
 		thread_list=ApiUser.user_get_thread_list_core(self,user_id,offset,limit,illust_mode)
 
