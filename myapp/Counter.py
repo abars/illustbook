@@ -49,19 +49,21 @@ class Counter(db.Model):
 		memcache.delete(cache_id)
 		
 	def update_counter(self,remote_addr,dont_count_owner):
-		#カウンターを更新
-		if(not dont_count_owner):
-			self.total_cnt=self.total_cnt+1
-			self.today_cnt=self.today_cnt+1
-			self.put()
-		
 		#1日を超えていた場合
 		now = datetime.datetime.today()+datetime.timedelta(hours=9)
 		now_date=now.day+now.month*12+now.year*365
 		if(now_date!=self.today_date):
 			self.yesterday_yesterday_cnt=self.yesterday_cnt
-			self.yesterday_cnt=self.today_cnt-1
+			self.yesterday_cnt=self.today_cnt
 			self.today_cnt=1
 			self.today_date=now_date
+			self.total_cnt=self.total_cnt+1
+			self.put()
+			return
+
+		#カウンターを更新
+		if(not dont_count_owner):
+			self.total_cnt=self.total_cnt+1
+			self.today_cnt=self.today_cnt+1
 			self.put()
 
