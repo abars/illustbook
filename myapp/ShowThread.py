@@ -154,6 +154,9 @@ class ShowThread(webapp.RequestHandler):
 		#拍手が有効かどうか
 		applause_enable=not (user and thread.user_id and thread.user_id==user.user_id())
 
+		#メッセージ
+		message=memcache.get(BbsConst.OBJECT_THREAD_MESSAGE_HEADER+str(thread.key()))
+
 		#描画
 		template_values = {
 			'host': host_url,
@@ -186,7 +189,8 @@ class ShowThread(webapp.RequestHandler):
 			'search': search,
 			'limit': col_num,
 			'frozen': frozen,
-			'applause_enable': applause_enable
+			'applause_enable': applause_enable,
+			'message': message
 			}
 
 		path = "/html/"+design["base_name"]

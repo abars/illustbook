@@ -208,7 +208,10 @@ class AddEntry(webapp.RequestHandler):
 			self.set_basic_info(entry,thread)
 
 		#保存
-		SyncPut.put_sync(entry)
+		if(not SyncPut.put_sync(entry)):
+			message="コメントの投稿は成功しましたが表示が遅延しています。反映まで数分お待ちください。"
+			memcache.set(BbsConst.OBJECT_THREAD_MESSAGE_HEADER+str(thread.key()),message,BbsConst.OBJECT_THREAD_MESSAGE_CACHE_TIME)
+			memcache.set(BbsConst.OBJECT_BBS_MESSAGE_HEADER+str(bbs.key()),message,BbsConst.OBJECT_BBS_MESSAGE_CACHE_TIME)
 
 		#スレッドと掲示板の情報を更新
 		if(not overwrite):

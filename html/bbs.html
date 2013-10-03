@@ -9,11 +9,6 @@
 {% include "floating_menu.html" %}
 <div id="container">
 	{% if not contents_only %}
-		<!-- メンテナンス中 -->
-		{% if is_maintenance %}
-			メンテナンスモードで稼動しています。現在、新規投稿はできません。<BR>
-		{% endif %}
-
 		<!-- ヘッダ -->
 		<div id="header">
 			{% include "bbs/bbs_header.html" %}
@@ -35,6 +30,15 @@
 			<div id="main_2col">
 		{% endif %}
 		{% endif %}
+
+			<!-- メンテナンス中 -->
+			{% if is_maintenance %}
+				<h2>メンテナンスモードで稼動しています。現在、新規投稿はできません。</h2><br/>
+			{% endif %}
+			{% if message %}
+				<h2>{{message}}</h2><br/>
+			{% endif %}
+
 			<!-- 並びかえ・ページ -->
 			{% if not contents_only %}
 				<div id="entry-head">

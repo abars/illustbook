@@ -200,8 +200,10 @@ class AddNewThread(webapp.RequestHandler):
 		new_thread.search_index_version=0
 
 		#put
-		SyncPut.put_sync(new_thread)
-		
+		if(not SyncPut.put_sync(new_thread)):
+			message="イラストの投稿は成功しましたが表示が遅延しています。反映まで数分お待ちください。"
+			memcache.set(BbsConst.OBJECT_BBS_MESSAGE_HEADER+str(bbs.key()),message,BbsConst.OBJECT_BBS_MESSAGE_CACHE_TIME)
+
 		#サムネイル更新
 		if(timage):
 			if(new_thread.adult==0):

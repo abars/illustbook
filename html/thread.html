@@ -9,11 +9,6 @@
 <body>
 {% include "floating_menu.html" %}
 	<div id="container">
-	<!-- メンテナンス中 -->
-		{% if is_maintenance %}
-			メンテナンスモードで稼動しています。現在、新規投稿はできません。<br/>
-		{% endif %}
-
 		<!-- ヘッダ -->
 		{% if template_path %}
 			<div id="header">
@@ -31,6 +26,14 @@
 			{% else %}
 			<div id="main_1col">
 			{% endif %}
+				<!-- メンテナンス中 -->
+				{% if is_maintenance %}
+					<h2>メンテナンスモードで稼動しています。現在、新規投稿はできません。</h2><br/>
+				{% endif %}
+				{% if message %}
+					<h2>{{message}}</h2><br/>
+				{% endif %}
+
 				{% if template_path %}
 				<div id="entry-head">
 				</div>

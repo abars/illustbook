@@ -189,6 +189,9 @@ class ShowBbs(webapp.RequestHandler):
 		if(self.request.get("contents_only")=="1"):
 			contents_only=1
 
+		#メッセージ
+		message=memcache.get(BbsConst.OBJECT_BBS_MESSAGE_HEADER+str(bbs.key()))
+
 		#レンダリング
 		template_values = {
 			'host': host_url,
@@ -228,7 +231,8 @@ class ShowBbs(webapp.RequestHandler):
 			'can_edit_design': can_edit_design,
 			'infinite_scroll': infinite_scroll,
 			'infinite_scroll_selecter': ".entry",
-			'contents_only': contents_only
+			'contents_only': contents_only,
+			'message': message
 		}
 
 		path = "/html/"+design["base_name"]

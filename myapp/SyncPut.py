@@ -25,7 +25,8 @@ class SyncPut():
 	
 		#インデックスに反映されるまで待機
 		try_count=1
-		for i in range(10):
+		try_max=10
+		for i in range(try_max):
 			#objのオブジェクト全体からsandを持つオブジェクトの数を取得
 			cnt=obj.all().filter("sand =",sand).count()
 			if(cnt>=1):
@@ -35,6 +36,10 @@ class SyncPut():
 			time.sleep(1)
 			try_count=try_count+1
 
-		#試行回数をロギング
-		#if(try_count>=8):
-		#	logging.error("put_sync_retry:"+str(try_count))
+		#反映されなかった場合は警告
+		if(try_count>=try_max):
+			#logging.error("put_sync_retry:"+str(try_count))
+			return False
+
+		#正常終了
+		return True
