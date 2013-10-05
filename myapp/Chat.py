@@ -385,7 +385,10 @@ class Chat(webapp.RequestHandler):
 	@staticmethod
 	def user_update_notify(room):
 		for client in room.channel_client_list:
-			channel.send_message( client , "update_user" )
+			try:
+				channel.send_message( client , "update_user" )
+			except:
+				client=None
 
 	#チャットツール
 	def tool(self,user):
