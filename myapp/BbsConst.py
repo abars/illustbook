@@ -27,7 +27,7 @@ class BbsConst:
 	APP_SUPPORT_BBS_ID="app_support"
 	
 	#スパム時のメッセージ
-	SPAM_CHECKED ="スパムと判定されました。通常投稿で表示された場合はabarsceo@gmail.comもしくはサポート掲示板までお問い合わせ下さい。"
+	SPAM_CHECKED ="スパムと判定されました。コメントを修正して再投稿して下さい。コマントにURLや禁止ワードを含む場合にスパム判定されやすくなります。"
 	
 	#memcacheコントロール
 	OBJECT_CACHE_HEADER="ocache68_"	#この値を変更することで全てのキャッシュが無効になる
@@ -109,6 +109,10 @@ class BbsConst:
 
 	#css custom template
 	CSS_CUSTOM=32767
+
+	#アイコン
+	USER_ICON_THUMBNAIL_CREATED=1
+	USER_ICON_THUMBNAIL_VIOLATE=2
 
 
 

@@ -23,8 +23,69 @@ from myapp.MappingId import MappingId
 from myapp.ApiFeed import ApiFeed
 from myapp.OwnerCheck import OwnerCheck
 from myapp.Alert import Alert
+from myapp.ApiObject import ApiObject
 
 class ViolationTerms(webapp.RequestHandler):
+	def violate_icon(self):
+		bookmark=ApiObject.get_bookmark_of_user_id_for_write(self.request.get("user_id"))
+		if(bookmark==None):
+			Alert.alert_msg_with_write(self,"ブックマークの取得に失敗しました。");
+			return
+		bookmark.thumbnail_created=BbsConst.USER_ICON_THUMBNAIL_VIOLATE
+		bookmark.icon = None
+		bookmark.icon_content_type = None
+		bookmark.icon_mini = None
+		bookmark.icon_mini_content_type = None
+		bookmark.put()
+		self.redirect("./mypage?user_id="+self.request.get("user_id"))
+
+	def violate_thread(self):
+		#スレッド
+		thread = db.get(self.request.get("thread_key"))
+		
+		if(self.request.get("mode")=="adult"):
+			if(thread.adult):
+				thread.adult=0
+			else:
+				thread.adult=1
+
+		if(self.request.get("mode")=="terms"):
+			if(thread.violate_terms):
+				thread.violate_terms=0
+			else:
+				thread.violate_terms=1
+		
+		if(self.request.get("mode")=="photo"):
+			if(thread.violate_photo):
+				thread.violate_photo=0
+			else:
+				thread.violate_photo=1
+			
+		if(self.request.get("mode")=="comment"):
+			if(thread.prohibit_comment):
+				thread.prohibit_comment=0
+			else:
+				thread.prohibit_comment=1
+
+		thread.put()
+		
+		ApiFeed.invalidate_cache()
+
+		bbs = db.get(self.request.get("bbs_key"))
+		self.redirect(str(MappingId.get_usr_url("./",bbs)+self.request.get("thread_key")+".html"))
+
+	def violate_entry(self):
+		#エントリー
+		entry=db.get(self.request.get("entry_key"))
+		if(entry.violate_terms):
+			entry.violate_terms=0
+		else:
+			entry.violate_terms=1
+		entry.put()
+
+		bbs = db.get(self.request.get("bbs_key"))
+		self.redirect(str(MappingId.get_usr_url("./",bbs)+self.request.get("thread_key")+".html"))
+
 	def get(self):
 		SetUtf8.set()
 
@@ -34,46 +95,14 @@ class ViolationTerms(webapp.RequestHandler):
 				Alert.alert_msg_with_write(self,"権限がありません。")
 				return
 
+		if(self.request.get("user_id")):
+			self.violate_icon()
+			return
+
 		if(self.request.get("entry_key")):
-			#エントリー
-			entry=db.get(self.request.get("entry_key"))
-			if(entry.violate_terms):
-				entry.violate_terms=0
-			else:
-				entry.violate_terms=1
-			entry.put()
-		else:
-			#スレッド
-			thread = db.get(self.request.get("thread_key"))
-		
-			if(self.request.get("mode")=="adult"):
-				if(thread.adult):
-					thread.adult=0
-				else:
-					thread.adult=1
+			self.violate_entry()
+			return
 
-			if(self.request.get("mode")=="terms"):
-				if(thread.violate_terms):
-					thread.violate_terms=0
-				else:
-					thread.violate_terms=1
-		
-			if(self.request.get("mode")=="photo"):
-				if(thread.violate_photo):
-					thread.violate_photo=0
-				else:
-					thread.violate_photo=1
-			
-			if(self.request.get("mode")=="comment"):
-				if(thread.prohibit_comment):
-					thread.prohibit_comment=0
-				else:
-					thread.prohibit_comment=1
+		self.violate_thread()
 
-			thread.put()
-		
-			ApiFeed.invalidate_cache()
-
-		bbs = db.get(self.request.get("bbs_key"))
-		self.redirect(str(MappingId.get_usr_url("./",bbs)+self.request.get("thread_key")+".html"))
 

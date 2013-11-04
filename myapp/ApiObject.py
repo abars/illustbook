@@ -187,7 +187,7 @@ class ApiObject(webapp.RequestHandler):
 			if(thumb):
 				bookmark.icon=thumb["code"]
 				bookmark.icon_content_type = thumb["content_type"]
-				bookmark.thumbnail_created=1
+				bookmark.thumbnail_created=BbsConst.USER_ICON_THUMBNAIL_CREATED
 				bookmark.put()
 		
 		#50pxサムネイル作成

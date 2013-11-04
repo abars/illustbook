@@ -10,7 +10,7 @@
 		return cnt_hash[right]-cnt_hash[left];
 	}
 	
-	function get_ranking(txt){
+	function get_ranking(txt,is_content_mode){
 		var access_list=txt.split("#")
 		
 		cnt_hash=new Array()
@@ -24,6 +24,9 @@
 				continue;
 			if(str.match(/analyze/))
 				continue;
+			if(is_content_mode){
+				str=str.split("?")[0]
+			}
 			var search_str=""
 			if(str.match(/.*google.co.jp\/search?.*q=(.*?)&/)){
 				search_str=RegExp.$1+"@"+str;
@@ -82,8 +85,8 @@
 	
 	function update(analyze_data){
 		var access_or_content=analyze_data.split("<>")
-		write("access",get_ranking(access_or_content[0]))
-		write("content",get_ranking(access_or_content[1]))
+		write("access",get_ranking(access_or_content[0],false))
+		write("content",get_ranking(access_or_content[1],true))
 		write("search",get_search_str())
 	}
 	

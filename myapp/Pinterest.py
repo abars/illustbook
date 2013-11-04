@@ -515,6 +515,11 @@ class Pinterest(webapp.RequestHandler):
 		if(bookmark and bookmark.frozen):
 			thread_list=None
 
+		#アイコンの規約違反
+		violate_icon=False
+		if(bookmark.thumbnail_created==2):
+			violate_icon=True
+
 		template_values = {
 			'user': user,
 			'thread_list': thread_list,
@@ -558,7 +563,8 @@ class Pinterest(webapp.RequestHandler):
 			'timeline': timeline,
 			'timeline_unit': timeline_unit,
 			'infinite_scroll_selecter': infinite_scroll_selecter,
-			'flat_ui': False
+			'flat_ui': False,
+			'violate_icon': violate_icon
 		}
 		Pinterest._render_page(self,template_values)
 

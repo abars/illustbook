@@ -10,12 +10,11 @@
       {% if view_user.name %}
        <p><b>{{view_user.name}}</b></p>
        <p>{% if view_user_profile.profile and view_user_profile.profile!="None" %}{{view_user_profile.profile|safe}}{% else %}&nbsp;{% endif %}</p>
-     {% else %}
-     <p>イラストブックへようこそ。<br/>
-     編集ボタンを押すと、ユーザ情報を登録することができます。<br/>
-     掲示板タブでは、掲示板をレンタルすることができます。</p>
-     {% endif %}
-
+      {% else %}
+        <p>イラストブックへようこそ。<br/>
+        編集ボタンを押すと、ユーザ情報を登録することができます。<br/>
+        掲示板タブでは、掲示板をレンタルすることができます。</p>
+      {% endif %}
       <div id="profile">
             <table>
             {% if bookmark.sex %}<tr><td>性別</td><td>　</td><td>
@@ -35,6 +34,11 @@
             </table>
       </div>
 
+     {% if violate_icon %}
+         <p><b>申し立てによりアイコンが無効化されました。<br/>
+         イラスト投稿サイトに投稿されたイラストには著作権がありますので、<br/>
+         アイコンには権利的に問題のない画像をご利用下さい。</b></p>
+     {% endif %}
 
      <div class="g-button-group">
       {% if view_mode %}
@@ -69,6 +73,7 @@
           {% endif %}
           <li><a href="{{redirect_url|logout_url}}">ログアウト</a></li>
           {% if is_admin %}
+          <li><a href="javascript:if(confirm('アイコンを凍結しますか？')){ window.location.href='{{host}}violation?user_id={{bookmark.user_id}}' }">アイコン凍結（＊管理モード）</a></li>
           <li><a href="javascript:if(confirm('アカウントを凍結しますか？')){ window.location.href='{{host}}mypage?freez=1&user_id={{bookmark.user_id}}' }">アカウント凍結（＊管理モード）</a></li>
           {% endif %}
           {% if not view_mode %}

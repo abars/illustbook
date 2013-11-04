@@ -129,6 +129,7 @@ class UpdateProfile(webapp.RequestHandler):
 		bookmark.birthday_day=birthday_day
 		
 		bookmark.icon_mini=None	#サムネイルの再作成を要求
+		bookmark.thumbnail_created=0
 
 		age=Pinterest.get_age(bookmark)
 		if(bookmark.regulation and age>=1 and age<=14):
