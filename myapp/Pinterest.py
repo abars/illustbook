@@ -517,8 +517,9 @@ class Pinterest(webapp.RequestHandler):
 
 		#アイコンの規約違反
 		violate_icon=False
-		if(bookmark.thumbnail_created==2):
-			violate_icon=True
+		if(bookmark):
+			if(bookmark.thumbnail_created==2):
+				violate_icon=True
 
 		template_values = {
 			'user': user,
