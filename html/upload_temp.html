@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+{% if is_iphone %}
+<meta name="viewport" content="width=device-width">
+{% endif %}
+<title>イラストの投稿｜イラストブック</title>
+{%include "meta.html" %}
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="Copyright" content="Copyright: ABARS" />
+{% if is_iphone %}
+	{% include "portal_css/css_iphone.html" %}
+{% else %}
+	{% include "portal_css/css_pc.html" %}
+{% endif %}
+{% include "portal_css/option_tab.html" %}
+{% include "css/floating_menu_css.html" %}
+</head>
+<body>
+
+{% include "floating_menu.html" %}
+
+<div id="container">
+	<p>&nbsp</p>
+	<div id="contents">
+		{% if not temp_key %}
+			<p>投稿画像が見つかりません。</p>
+			<p>アプリから再度、投稿して下さい。</p>
+		{% else %}
+		{% if not user %}
+			<h1>ログインが必要です</h1>
+			<p>イラストを投稿するには<a href="{{host}}" target="_BLANK" class="declink">イラストブック</a>にログインする必要があります。</p>
+			<p>右上のログインボタンからGoogleアカウントでログインして下さい。</p>
+		{% else %}
+			<h1>イラストの投稿</h1>
+			<p>イラストは、レンタルしている掲示板か、ブックマークしている掲示板に投稿することができます。</p>
+			<p>次のフォームに必要な情報を入力し、投稿ボタンを押して下さい。</p>
+
+			<form action='http://localhost/' enctype="multipart/form-data" method="post" onSubmit="this.action='{{host}}add_thread';">
+			<input type="hidden" name="illust_mode" value="1"/>
+			<input type="hidden" name="mode" value="illust_temp"/>
+			<input type="hidden" name="temp_illust_key" value="{{temp_key}}"/>
+
+			<table class="g-table">
+				<tr>
+					<td>投稿先</td>
+					<td>
+						<select name="bbs_key">
+						{% for bbs in bbs_list %}
+							<option value="{{bbs.key}}">{{bbs.title}}</option>
+						{% endfor %}
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>タイトル</td>
+					<td><input name="thread_title"/></td>
+				</tr>
+				<tr>
+					<td>投稿者(必須)</td>
+					<td><input name="author" value="{{user_name}}"/><input name="link_to_profile" type="checkbox" checked/>マイページにリンク</td>
+				</tr>
+				<tr>
+					<td>コメント</td>
+					<td><textarea name="comment" rows="4" cols="40" style="width:90%;"></textarea></td>
+				</tr>
+				<tr>
+					<td>イラスト</td>
+					<td>
+						<img src="./img/{{temp_key}}.jpg?force=1" width="200px"/>
+					</td>
+				</tr>
+			</table>
+			<br/>
+			<input type="submit" value="イラストを投稿する" class="g-button"/>
+
+		</form>
+		{% endif %}
+		{% endif %}
+	</div>
+</div>
+</body>
+</html>

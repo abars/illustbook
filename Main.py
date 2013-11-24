@@ -112,6 +112,7 @@ from myapp.EditThreadList import EditThreadList
 from myapp.SearchTag import SearchTag
 from myapp.AddRankingScore import AddRankingScore
 from myapp.Tolot import Tolot
+from myapp.UploadTemp import UploadTemp
 
 #-----------------------------------------------------------------
 #ポータル
@@ -275,6 +276,7 @@ application = webapp.WSGIApplication(
 	('/vis_ent', VisibilityChangeEntry),
 	('/del_bbs', DelBbs),
 	('/upl_all', AddNewThread),
+	('/upl_temp', UploadTemp),
 	('/draw', DrawWindow),
 	('/draw_beta', DrawWindow),
 	('/del_thread', DelThread),

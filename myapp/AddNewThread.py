@@ -163,17 +163,28 @@ class AddNewThread(webapp.RequestHandler):
 
 		#一括投稿モード（新エディタ）
 		timage=None
-		if(self.request.get('mode')=="illust_all" and new_thread.illust_mode!=BbsConst.ILLUSTMODE_TEXT):
+		if((self.request.get('mode')=="illust_all" or self.request.get('mode')=="illust_temp") and new_thread.illust_mode!=BbsConst.ILLUSTMODE_TEXT):
 			timage=ThreadImage()
 			timage.bbs_key=db.get(self.request.get("bbs_key"))
 			
-			if(self.request.get("base64") and self.request.get("base64")=="1"):
-				timage.image=db.Blob(base64.b64decode(self.request.get("image")))
-				timage.thumbnail=db.Blob(base64.b64decode(self.request.get("thumbnail")))
-				new_thread.is_ipad=1
+			if(self.request.get('mode')=="illust_temp"):
+				try:
+					temp_image=db.get(self.request.get("temp_illust_key"))
+				except:
+					temp_image=None
+				if(not temp_image):
+					self.write_status(is_flash,"画像データが見つかりません。")
+					return
+				timage.image=temp_image.image
+				timage.thumbnail=temp_image.thumbnail
 			else:
-				timage.image=db.Blob(self.request.get("image"))
-				timage.thumbnail=db.Blob(self.request.get("thumbnail"))
+				if(self.request.get("base64") and self.request.get("base64")=="1"):
+					timage.image=db.Blob(base64.b64decode(self.request.get("image")))
+					timage.thumbnail=db.Blob(base64.b64decode(self.request.get("thumbnail")))
+					new_thread.is_ipad=1
+				else:
+					timage.image=db.Blob(self.request.get("image"))
+					timage.thumbnail=db.Blob(self.request.get("thumbnail"))
 			
 			if(len(timage.image)<=0 or len(timage.thumbnail)<=0):
 				self.write_status(is_flash,"画像データが不正です。");
