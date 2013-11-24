@@ -159,6 +159,8 @@ class ApiBookmark(webapp.RequestHandler):
 		#comment
 		comment={}
 		thread=ApiObject.get_cached_object(db.Key(thread_key))
+		if(not thread):
+			return []
 		if(thread.bookmark_comment):
 			comment=pickle.loads(thread.bookmark_comment)
 
