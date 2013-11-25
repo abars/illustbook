@@ -53,9 +53,20 @@ from myapp.TempImage import TempImage
 from myapp.CssDesign import CssDesign
 from myapp.ApiBookmark import ApiBookmark
 from myapp.ShowEntry import ShowEntry
+from myapp.MappingId import MappingId
+from myapp.Chat import Chat
 
 class UploadTemp(webapp.RequestHandler):
+	def delete_old_temp_image(self):
+		temp_image_list=TempImage.all().order("-date").fetch(limit=10)		
+		for temp_image in temp_image_list:
+			from_last_update=(Chat.get_sec(datetime.datetime.now())-Chat.get_sec(temp_image.date))/60
+			if(from_last_update>=60):
+				temp_image.delete()
+
 	def post(self):
+		self.delete_old_temp_image()
+
 		timage = TempImage()		
 		timage.image=db.Blob(self.request.get("image"))
 		timage.thumbnail=db.Blob(self.request.get("thumbnail"))
@@ -84,6 +95,12 @@ class UploadTemp(webapp.RequestHandler):
 				bbs_list.extend(bookmark_bbs_list)
 			if(rental_bbs_list):
 				bbs_list.extend(rental_bbs_list)
+
+			sample_bbs={
+			"title":"サンプルお絵描き掲示板",
+			"key":MappingId.mapping("sample")
+			}
+			bbs_list.append(sample_bbs)
 
 		temp_key=self.request.get("temp_key")
 
