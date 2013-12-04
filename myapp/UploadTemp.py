@@ -91,10 +91,10 @@ class UploadTemp(webapp.RequestHandler):
 			bookmark_bbs_list=ApiBookmark.bookmark_get_bbs_list(self,user_id)
 			rental_bbs_list=ApiUser.user_get_bbs_list(self,user_id)
 			
-			if(bookmark_bbs_list):
-				bbs_list.extend(bookmark_bbs_list)
 			if(rental_bbs_list):
 				bbs_list.extend(rental_bbs_list)
+			if(bookmark_bbs_list):
+				bbs_list.extend(bookmark_bbs_list)
 
 			sample_bbs={
 			"title":"サンプルお絵描き掲示板",
