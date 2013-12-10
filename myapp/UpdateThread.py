@@ -46,11 +46,14 @@ class UpdateThread(webapp.RequestHandler):
 		else:
 			thread.user_id=None
 
-	def escape_comment(self,title):
-		title = cgi.escape(title)
+	def br_conversion(self,title):
 		compiled_line = re.compile("\r\n|\r|\n")
 		title = compiled_line.sub(r'<br/>', title)
 		return title
+
+	def escape_comment(self,title):
+		title = cgi.escape(title)
+		return self.br_conversion(title)
 
 	def update_thread(self,bbs,thread,user):
 		compiled_line = re.compile("\r\n|\r|\n")
@@ -94,7 +97,7 @@ class UpdateThread(webapp.RequestHandler):
 		return False
 
 	def update_entry(self,entry,user):
-		entry.content=self.escape_comment(self.request.get("content"))
+		entry.content=self.br_conversion(self.request.get("content"))
 		entry.editor=self.request.get("editor")
 		entry.search_index_version=0	#インデックス更新
 		self.link_to_profile(entry,user)
@@ -102,7 +105,7 @@ class UpdateThread(webapp.RequestHandler):
 		return False
 
 	def update_res(self,res,entry,user):
-		res.content=self.escape_comment(self.request.get("content"))
+		res.content=self.br_conversion(self.request.get("content"))
 		res.editor=self.request.get("editor")
 		self.link_to_profile(res,user)
 		res.put()
@@ -160,5 +163,7 @@ class UpdateThread(webapp.RequestHandler):
 			thread=entry.thread_key
 
 		url=MappingThreadId.get_thread_url("./",bbs,thread)
+		if(entry or res):
+			url=url+"?comment_edit=1"
 		self.redirect(str(url))
 
