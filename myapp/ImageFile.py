@@ -186,15 +186,38 @@ class ImageFile (webapp.RequestHandler):
 			if p_self.request.headers['Referer']:
 				ref=p_self.request.headers['Referer']
 		if(not re.search(r"illustbook",ref)):
-			if(not re.search(r"localhost",ref)):
-				if(not re.search(r"10.0.1",ref)):
-					#logging.warning("image direct link failed path:"+p_self.request.path+" referer:"+ref)
-					return True
+			if(not re.search(r"local",ref)):
+				#logging.warning("image direct link failed path:"+p_self.request.path+" referer:"+ref)
+				return True
 		return False
+
+	@staticmethod
+	def serve_tile_image(p_self,path,type_name,tag):
+		try:
+			content=db.get(path)
+		except:
+			content=None
+		if(content==None):
+			p_self.error(404)
+			return				
+		content_blob=ImageFile.create_thumbail(144,144,content.image,"png")
+		if(content_blob==None):
+			p_self.error(404)
+			return
+		content_blob=content_blob["code"]
+		content_header=ImageFile.get_content_type("png")
+		content_key=str(content.key())
+		content_date=content.date
+		ImageFile.output_content(p_self,content_date,content_key,content_header,content_blob, True, tag)
 
 	#イメージとサムネイルを供給
 	@staticmethod
 	def serve_file(p_self,path,type_name,tag):
+		#タイル
+		if(tag=="tile"):
+			ImageFile.serve_tile_image(p_self,path,type_name,tag)
+			return
+
 		#直リンクの禁止
 		if(not p_self.request.get("force")):
 			if(not tag=="tolot"):

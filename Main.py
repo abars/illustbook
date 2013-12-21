@@ -268,6 +268,7 @@ application = webapp.WSGIApplication(
 	('/(thumbnail)/([^\.]*)\.(gif)', ImageFile),
 	('/(thumbnail)/([^\.]*)\.(png)', ImageFile),
 	('/(thumbnail2)/([^\.]*)\.(jpg)', ImageFile),
+	(r'/(tile)/(.*)\.(png)',ImageFile), 
 	('/add_thread', AddNewThread),
 	('/add_bbs', AddNewBbs),
 	('/show_thread', RedirectThread),
