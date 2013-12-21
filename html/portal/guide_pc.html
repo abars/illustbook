@@ -16,8 +16,10 @@
 	<div style="position: absolute; top: 380px; left: 200px; background:#ffffff;">ナビゲーション</div>
 	<div style="position: absolute; top: 15px; left: 440px; background:#ffffff;">ツールパレット</div>
 	<div style="position: absolute; top: 15px; left: 600px; background:#ffffff;">レイヤー</div>
+<!--
 	<div style="position: absolute; top: 110px; left: 480px; background:#ffffff;">全消去</div>
 	<div style="position: absolute; top: 135px; left: 440px; background:#ffffff;">筆圧・アンドゥ</div>
+-->
 	<div style="position: absolute; top: 150px; left: 600px; background:#ffffff;">ペン設定</div>
 	<div style="position: absolute; top: 190px; left: 580px; background:#ffffff;">ズーム・回転</div>
 	<div style="position: absolute; top: 210px; left: 440px; background:#ffffff;">カラーサークル</div>
@@ -106,6 +108,7 @@
 アルファ値の変更はスライダーをドラッグします。<br/>
 </p>
 
+<!--
 <p>&nbsp;</p>
 <h2>ボタン</h2>
 
@@ -130,6 +133,7 @@
 </tr>
 
 </table>
+-->
 
 <p>&nbsp;</p>
 <h2>ナビゲーション</h2>
@@ -176,6 +180,10 @@
 	キャンバスのサイズを変更します。
 	現在のキャンバスよりも小さなサイズを指定した場合は縮小されます。
 	大きなサイズを指定した場合は余白が追加されます。</td></tr>
+<tr><th>全体を選択</th><td>
+	選択ツールでキャンバス全体を選択します。
+<tr><th>選択を解除</th><td>
+	選択ツールで選択している範囲を解除します。
 <tr><th>選択範囲を切り取り</th><td>
 	選択ツールで選択している範囲を新たなキャンバスにします。
 </td></tr>
@@ -187,13 +195,13 @@
 <p>編集メニュー</p>
 
 <table class="g-table">
+<tr><th>レイヤーを追加</th><td>新しいレイヤーを上に追加します。</td></tr>
 <tr><th>レイヤーをクリア</th><td>選択しているレイヤーをクリアします。</td></tr>
 <tr><th>レイヤーを上に複製</th><td>選択しているレイヤーを複製して新しいレイヤーを作成します。</td></tr>
 <tr><th>レイヤーを下に転写</th><td>選択しているレイヤーと下のレイヤーを統合します。</td></tr>
 <tr><th>レイヤーの透明色保護</th><td>透明色を保護して描画するモードに切り替えます。線の色だけを変えたい場合などに使用します。</td></tr>
 <tr><th>レイヤーを左右反転</th><td>レイヤーの画像を左右反転します。</td></tr>
 <tr><th>レイヤーを上下反転</th><td>レイヤーの画像を上下反転します。</td></tr>
-<tr><th>レイヤーを追加</th><td>新しいレイヤーを上に追加します。</td></tr>
 </table>
 
 <p>&nbsp;</p>
@@ -202,6 +210,7 @@
 
 <table class="g-table">
 <tr><th>スポイト</th><td>スポイトがレイヤーの色を取得するか、キャンバスの色を取得するかを選択します。</td></tr>
+<tr><th>筆圧</th><td>ツールごとに筆圧を使用するかどうかを選択します。</td></tr>
 <tr><th>入抜き</th><td>描画した線の始点と終点を細くするかを選択します。</td></tr>
 <tr><th>手ぶれ補正</th><td>手ぶれ補正を使用するかを選択します。</td></tr>
 <tr><th>トーン</th><td>1/2と1/4のトーンで塗るかどうかを選択します。</td></tr>

@@ -1,9 +1,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 {% if thread and thread.cached_image_key%}
-  <meta name="msapplication-TileImage" content="/tile/{{thread.cached_image_key}}.png"/>
+  <meta name="msapplication-TileImage" content="{{host}}tile/{{thread.cached_image_key}}.png"/>
 {% else %}
 {% if bbs and bbs.cached_thumbnail_key%}
-  <meta name="msapplication-TileImage" content="/tile/{{bbs.cached_thumbnail_key}}.png"/>
+  <meta name="msapplication-TileImage" content="{{host}}tile/{{bbs.cached_thumbnail_key}}.png"/>
 {% endif %}
 {% endif %}
 {% if is_tablet %}

@@ -77,7 +77,7 @@ class UploadTemp(webapp.RequestHandler):
 		return_code="success&"+str(timage.key())
 		self.response.out.write(return_code);
 
-		logging.error(return_code)
+		#logging.error(return_code)
 	
 	def get(self):
 		user = users.get_current_user()
