@@ -86,7 +86,7 @@ class ImageFile (webapp.RequestHandler):
 		ImageFile.output_content(p_self,content_date,content_key,content_header,content_blob, serve, tag)
 
 	@staticmethod
-	def create_thumbail(w,h,image,format):
+	def _create_thumbail(w,h,image,format,square):
 		if(image==None):
 			return None
 
@@ -97,6 +97,12 @@ class ImageFile (webapp.RequestHandler):
 
 		src_w=img.width
 		src_h=img.height
+
+		if(square):
+			if(src_w<src_h):
+				img.crop(0.0,0.0,1.0,1.0*src_w/src_h)
+			else:
+				img.crop(0.0,0.0,1.0*src_h/src_w,1.0)
 
 		if(h==0):
 			img.resize(width=w)
@@ -130,7 +136,7 @@ class ImageFile (webapp.RequestHandler):
 	@staticmethod
 	def _create_thumbnail2_core(content):
 		#新規サムネイル作成
-		thumb=ImageFile.create_thumbail(200,0,content.image,"jpeg")
+		thumb=ImageFile._create_thumbail(200,0,content.image,"jpeg",False)
 		if(thumb==None):
 			return False
 		content.thumbnail2=thumb["code"]
@@ -200,7 +206,7 @@ class ImageFile (webapp.RequestHandler):
 		if(content==None):
 			p_self.error(404)
 			return				
-		content_blob=ImageFile.create_thumbail(144,144,content.image,"png")
+		content_blob=ImageFile._create_thumbail(144,144,content.image,"png",True)
 		if(content_blob==None):
 			p_self.error(404)
 			return
