@@ -86,7 +86,7 @@ class ImageFile (webapp.RequestHandler):
 		ImageFile.output_content(p_self,content_date,content_key,content_header,content_blob, serve, tag)
 
 	@staticmethod
-	def _create_thumbail(w,h,image,format,square):
+	def create_thumbail(w,h,image,format):
 		if(image==None):
 			return None
 
@@ -98,7 +98,7 @@ class ImageFile (webapp.RequestHandler):
 		src_w=img.width
 		src_h=img.height
 
-		if(square):
+		if(format=="tile"):
 			if(src_w<src_h):
 				img.crop(0.0,0.0,1.0,1.0*src_w/src_h)
 			else:
@@ -119,7 +119,7 @@ class ImageFile (webapp.RequestHandler):
 				return None
 			content_type='image/jpeg'
 		else:
-			if(format=="png"):
+			if(format=="png" or format=="tile"):
 				try:
 					code=img.execute_transforms(output_encoding=images.PNG)
 				except:
@@ -136,7 +136,7 @@ class ImageFile (webapp.RequestHandler):
 	@staticmethod
 	def _create_thumbnail2_core(content):
 		#新規サムネイル作成
-		thumb=ImageFile._create_thumbail(200,0,content.image,"jpeg",False)
+		thumb=ImageFile.create_thumbail(200,0,content.image,"jpeg")
 		if(thumb==None):
 			return False
 		content.thumbnail2=thumb["code"]
@@ -206,7 +206,7 @@ class ImageFile (webapp.RequestHandler):
 		if(content==None):
 			p_self.error(404)
 			return				
-		content_blob=ImageFile._create_thumbail(144,144,content.image,"png",True)
+		content_blob=ImageFile.create_thumbail(144,144,content.image,"tile")
 		if(content_blob==None):
 			p_self.error(404)
 			return
