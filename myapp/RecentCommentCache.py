@@ -6,6 +6,8 @@
 #copyright 2010-2012 ABARS all rights reserved.
 #---------------------------------------------------
 
+import logging
+
 from google.appengine.ext import db
 from google.appengine.api import memcache
 
@@ -66,63 +68,77 @@ class RecentCommentCache():
 	
 	@staticmethod
 	def _get_entry_core(bbs,display_n,key):
+		#コメントを取得
 		entry_query = db.Query(Entry,keys_only=True)
 		entry_query.order("-date");
 		entry_query.filter("del_flag =",BbsConst.ENTRY_EXIST)
 		entry_query.filter('bbs_key =', bbs)
-
 		entry_key_list=entry_query.fetch(display_n)
 		entry_list=ApiObject.get_cached_object_list(entry_key_list)
 
+		#コメントに紐付いたスレッドを取得
 		thread_key_list=[]
-		res_key_list=[]
-		entry_to_res={}
 		for entry in entry_list:
-			entry_key=entry.key()
 			thread_key=Entry.thread_key.get_value_for_datastore(entry)
 			thread_key_list.append(thread_key)
-			res_n=len(entry.res_list)
-			if(res_n>=1):
-				res_key=entry.res_list[res_n-1]
-				res_key_list.append(res_key)
-				entry_to_res[entry_key]=res_key
-			else:
-				entry_to_res[entry_key]=None
 		thread_list=ApiObject.get_cached_object_hash(thread_key_list)
-		res_list=ApiObject.get_cached_object_hash(res_key_list)
 
-		entry_array=[]
+		#コメントに紐付いたレスを取得
+		res_key_list=[]
+		res_to_entry={}
 		for entry in entry_list:
-			#if(True):
+			entry_key=entry.key()
+			res_n=len(entry.res_list)
+			for i in range(0,display_n):
+				no=res_n-1-i
+				if(no>=0):
+					res_key=entry.res_list[no]
+					res_to_entry[res_key]=entry
+					res_key_list.append(res_key)
+		res_list=ApiObject.get_cached_object_list(res_key_list)
+
+		#EntryとResでソートをかける
+		sort_list=[]
+		for entry in entry_list:
+			obj=(entry,entry.create_date,entry.editor)
+			sort_list.append(obj)
+		for res in res_list:
+			obj=(res_to_entry[res.key()],res.date,res.editor)
+			sort_list.append(obj)
+		sort_list=sorted(sort_list, key=lambda temp: temp[1], reverse=True)
+		sort_list=sort_list[:display_n]
+
+		#出力する
+		entry_array=[]
+		for tp in sort_list:
+			#ソートした値を取得
+			entry=tp[0];
+			editor=tp[2];
+
+			#コメントのURLを計算するためにスレッドを取得
 			try:
-				entry_key=entry.key()
 				thread_key=Entry.thread_key.get_value_for_datastore(entry)
-				thread=thread_list[thread_key]
-				if(not thread):
-					continue
-				thread_title=thread.title
-
-				#URLに使用するキーを決定
-				if(thread.short):
-					thread_short=thread.short
-				else:
-					thread_short=thread_key
-
-				#レスが付いている場合は一番新しいレスの投稿者名を表示
-				if(entry_to_res[entry_key]):
-					editor=res_list[entry_to_res[entry_key]].editor
-				else:
-					editor=entry.editor
-				
-				mee={'short': str(bbs.short),
-						'bbs_key' : str(bbs.key()),
-						'thread_key':thread_short,
-						'thread_title':thread_title,
-						'editor':editor,
-						'date':entry.date}
-				entry_array.append(mee)
 			except:
 				continue
+			thread=thread_list[thread_key]
+			if(not thread):
+				continue
+			thread_title=thread.title
+
+			#URLに使用するキーを決定
+			if(thread.short):
+				thread_short=thread.short
+			else:
+				thread_short=thread_key
+
+			#表示
+			mee={'short': str(bbs.short),
+					'bbs_key' : str(bbs.key()),
+					'thread_key':thread_short,
+					'thread_title':thread_title,
+					'editor':editor,
+					'date':entry.date}
+			entry_array.append(mee)
 		
 		memcache.add(key, entry_array, BbsConst.SIDEBAR_RECENT_ENTRY_CACHE_TIME)
 		return entry_array
