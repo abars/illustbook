@@ -100,11 +100,13 @@ class RecentCommentCache():
 		#EntryとResでソートをかける
 		sort_list=[]
 		for entry in entry_list:
-			obj=(entry,entry.create_date,entry.editor)
-			sort_list.append(obj)
+			if(entry.create_date):
+				obj=(entry,entry.create_date,entry.editor)
+				sort_list.append(obj)
 		for res in res_list:
-			obj=(res_to_entry[res.key()],res.date,res.editor)
-			sort_list.append(obj)
+			if(res.date):
+				obj=(res_to_entry[res.key()],res.date,res.editor)
+				sort_list.append(obj)
 		sort_list=sorted(sort_list, key=lambda temp: temp[1], reverse=True)
 		sort_list=sort_list[:display_n]
 
