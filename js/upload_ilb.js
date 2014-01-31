@@ -19,6 +19,7 @@
 		ret.regulation=document.getElementById("regulation").value;
 		ret.delete_key=document.getElementById("delete_key").value;
 		ret.no_illust=document.getElementById("no_illust").checked;
+		ret.dont_show_in_portal=document.getElementById("dont_show_in_portal").checked;
 
 		var link_to_profile=document.getElementById("link_to_profile");
 		if(link_to_profile && link_to_profile.checked){

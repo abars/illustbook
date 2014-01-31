@@ -140,6 +140,9 @@ class AddNewThread(webapp.RequestHandler):
 		if(self.request.get("regulation")):
 			new_thread.adult=int(self.request.get("regulation"))
 
+		if(self.request.get("dont_show_in_portal")):
+			new_thread.violate_photo=1
+
 		if(self.request.get("is_png")):
 			new_thread.is_png=1
 		else:

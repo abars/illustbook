@@ -40,10 +40,10 @@ class MesThread(CachedDbModel):
 	category = db.StringProperty()
 	postscript = db.TextProperty()
 
-	adult = db.IntegerProperty()
-	violate_terms = db.IntegerProperty()
-	violate_photo = db.IntegerProperty()
-	prohibit_comment = db.IntegerProperty()
+	adult = db.IntegerProperty()			#レギュレーション
+	violate_terms = db.IntegerProperty()	#規約違反でトップでも個別ページでもイラストを非表示
+	violate_photo = db.IntegerProperty()	#トップページに表示しないフラグ、個別ページでは表示する
+	prohibit_comment = db.IntegerProperty()	#コメントを禁止
 
 	short = db.StringProperty()
 	is_png = db.IntegerProperty()

@@ -34,7 +34,13 @@
 					{% else %}
 					<tr><td><p>タイトル</p></td><td><input id="title" style="width:100%;"/></td></tr>
 					{% endif %}
-					<tr><td><p>投稿者名（必須）</p></td><td><input id="name" style="width:100%;"/></td></tr>
+					<tr><td><p>投稿者名（必須）</p></td><td><input id="name" style="width:30%;"/>&nbsp;
+						{% if logined %}
+							<input  type="checkbox" id="link_to_profile"checked>マイページにリンク
+						{% else %}
+							マイページにリンクするにはログインして下さい
+						{% endif %}
+					</td></tr>
 					<tr><td><p>ホームページアドレス</p></td><td><input id="homepage_addr" value="http://" style="width:100%;"/></td></tr>
 					<tr><td><p>削除キー</p></td><td><input id="delete_key" style="width:100%;"/></td></tr>
 					<tr><td><p>カテゴリ</p></td><td>
@@ -48,13 +54,7 @@
 							<input type="checkbox" id="no_illust" onClick="SetToOnlyTextMode();">文字だけで投稿　
 							<input type="checkbox" id="alpha_png_mode" onClick="SetToAlphaPngMode();">透過PNGで投稿　
 							<input type="checkbox" id="resize_width" checked>700px以上の画像を縮小　
-						</div>
-						<div>
-						{% if logined %}
-							<input  type="checkbox" id="link_to_profile"checked>マイページにリンク
-						{% else %}
-							マイページにリンクするにはログインして下さい
-						{% endif %}
+							<input type="checkbox" id="dont_show_in_portal">トップに非表示
 						</div>
 					</td></tr>
 					</table>
