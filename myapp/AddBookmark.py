@@ -62,7 +62,7 @@ class AddBookmark(webapp.RequestHandler):
 			dict={}
 		dict[user_id]=comment
 		thread.bookmark_comment=db.Blob(pickle.dumps(dict))
-		thread.put()
+		#thread.put()	#add_oneでputする
 
 	@staticmethod
 	def add_one(thread_key_list,add_thread_key,thread):
@@ -176,8 +176,8 @@ class AddBookmark(webapp.RequestHandler):
 		#add bookmark
 		feed_enable=False
 		if(mode=="add"):
-			feed_enable=AddBookmark.add_one(bookmark.thread_key_list,add_thread_key,thread)
 			AddBookmark.add_comment(thread,user.user_id(),comment)
+			feed_enable=AddBookmark.add_one(bookmark.thread_key_list,add_thread_key,thread)
 		if(mode=="add_bbs"):
 			feed_enable=AddBookmark.add_one(bookmark.bbs_key_list,add_bbs_key,bbs)
 		if(mode=="add_app"):
