@@ -5,6 +5,7 @@ body{
   background:#f2f2f2;
   margin: 0px;
   font-size: 13px;
+  overflow-y:scroll;
 }
 
 hr {border:0; border-top:1px solid {% if flat_ui %}#eeeeee;{%else%}#cccccc;{% endif %}}
