@@ -67,7 +67,11 @@ class ShowBbs(webapp.RequestHandler):
 		#ページ取得
 		page = 1
 		if self.request.get("page"):
-			page = int(self.request.get("page"))
+			try:
+				page = int(self.request.get("page"))
+			except:
+				Alert.alert_msg_with_write(self,"ページ番号が異常です。")
+				return
 			if page<1 :
 				page=1
 

@@ -276,9 +276,16 @@ class ApiObject(webapp.RequestHandler):
 		violate_terms=0
 		if(bbs.disable_news):
 			disable_news=1
-		if(thread.violate_terms or thread.violate_photo):
+		if(thread.violate_terms):
 			disable_news=1
 			violate_terms=1
+		if(thread.violate_photo):
+			disable_news=1
+
+		#2分未満の画像でアップロードでもない場合は新着に非表示
+		#アップロード時は-1、iPhone時は0が入る
+		if(thread.draw_time and thread.draw_time!=-1 and thread.draw_time<120):
+			disable_news=1
 
 		adult=0
 		if(thread.adult):
