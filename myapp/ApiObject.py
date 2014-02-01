@@ -282,9 +282,9 @@ class ApiObject(webapp.RequestHandler):
 		if(thread.violate_photo):
 			disable_news=1
 
-		#2分未満の画像でアップロードでもない場合は新着に非表示
+		#4分未満の画像でアップロードでもない場合は新着に非表示
 		#アップロード時は-1、iPhone時は0が入る
-		if(thread.draw_time and thread.draw_time!=-1 and thread.draw_time<120):
+		if(thread.draw_time and thread.draw_time!=-1 and thread.draw_time<240):
 			disable_news=1
 
 		adult=0

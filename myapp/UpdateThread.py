@@ -35,6 +35,7 @@ from myapp.MappingId import MappingId
 from myapp.MappingThreadId import MappingThreadId
 from myapp.CategoryList import CategoryList
 from myapp.ApiUser import ApiUser
+from myapp.ApiFeed import ApiFeed
 
 class UpdateThread(webapp.RequestHandler):
 	def link_to_profile(self,thread,user):
@@ -75,6 +76,11 @@ class UpdateThread(webapp.RequestHandler):
 		postscript = self.request.get('thread_postscript')
 		postscript = compiled_line.sub(r'', postscript)
 		thread.postscript = postscript
+
+		new_show_in_portal = int(self.request.get('dont_show_in_portal'))
+		if((thread.violate_photo and not new_show_in_portal) or (not thread.violate_photo and new_show_in_portal)):
+			ApiFeed.invalidate_cache()
+			thread.violate_photo = new_show_in_portal
 		
 		self.link_to_profile(thread,user)
 

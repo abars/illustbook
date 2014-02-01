@@ -64,6 +64,14 @@
 					<tr><td>年齢制限</td><td>
 					{% include "regulation_list.html" %}
 					</td></tr>
+					<tr><td>表示設定</td><td>
+						<div style="float:left">
+							<select id="dont_show_in_portal" name="dont_show_in_portal" style="margin-bottom:0px;">
+							<option value="0" {% if thread and not thread.violate_photo %}selected="selected"{% endif %}>イラストブックの新着に表示する</option>
+							<option value="1" {% if thread and thread.violate_photo %}selected="selected"{% endif %}>イラストブックの新着に表示しない</option>
+							</select>
+						</div>
+					</td></tr>
 					<tr><td>コメント数</td><td><input type="text" name="comment_cnt" value="{{thread.comment_cnt}}"></td></tr>
 				</table>
 
