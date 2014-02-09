@@ -86,10 +86,23 @@ background: #fff;
 word-break:break-all;
 color: #333;
 font-size:11px;
+{% if flat_ui %}
+  border-radius: 4px;
+{% endif %}
 }
+
+{% if flat_ui %}
+.item img{
+  border-radius: 4px 4px 0px 0px;
+}
+{% endif %}
 
 .item_info,.item_deleted {
   background:#F2F0F0;
+{% if flat_ui %}
+  background:#FFFFFF;
+  border-radius: 0px 0px 4px 4px;
+{% endif %}
 }
 
 .item b{

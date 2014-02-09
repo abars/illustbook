@@ -196,6 +196,10 @@ class Pinterest(webapp.RequestHandler):
 	def initialize_template_value(self,user,user_id,page,request_page_mode,redirect_api,contents_only):
 		search_api="search_tag"
 
+		#is_flat=False
+		#if(self.request.get("is_flat")):
+		is_flat=True
+
 		template_values = {
 			'user': user,
 			'order': None,
@@ -219,7 +223,7 @@ class Pinterest(webapp.RequestHandler):
 			'top_page': False,
 			'use_masonry': True,
 			'infinite_scroll_selecter': ".item",
-			'flat_ui': False
+			'flat_ui': is_flat
 		}
 		return template_values
 
@@ -521,6 +525,10 @@ class Pinterest(webapp.RequestHandler):
 			if(bookmark.thumbnail_created==2):
 				violate_icon=True
 
+		#is_flat=False
+		#if(self.request.get("is_flat")):
+		is_flat=True
+
 		template_values = {
 			'user': user,
 			'thread_list': thread_list,
@@ -564,7 +572,7 @@ class Pinterest(webapp.RequestHandler):
 			'timeline': timeline,
 			'timeline_unit': timeline_unit,
 			'infinite_scroll_selecter': infinite_scroll_selecter,
-			'flat_ui': False,
+			'flat_ui': is_flat,
 			'violate_icon': violate_icon
 		}
 		Pinterest._render_page(self,template_values)
