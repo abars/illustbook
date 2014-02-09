@@ -98,12 +98,19 @@ class ImageFile (webapp.RequestHandler):
 		src_w=img.width
 		src_h=img.height
 
+		#奇数サイズの画像を縮小すると縦線が乗るので一度偶数化する
+		src_w=(src_w+1)/2*2
+		src_h=(src_h+1)/2*2
+		img.resize(width=src_w,height=src_h)
+
+		#Windows8のタイル用
 		if(format=="tile"):
 			if(src_w<src_h):
 				img.crop(0.0,0.0,1.0,1.0*src_w/src_h)
 			else:
 				img.crop(0.0,0.0,1.0*src_h/src_w,1.0)
 
+		#メインリサイズ
 		if(h==0):
 			img.resize(width=w)
 		else:
@@ -114,6 +121,8 @@ class ImageFile (webapp.RequestHandler):
 		if(format=="jpeg"):
 			try:
 				img.execute_transforms()	#exec resize
+
+				#アルファ付きPNGの背景色が黒になってしまう問題の対策
 				code=images.composite([(img, 0, 0, 1.0, images.TOP_LEFT)], img.width, img.height, 0xffffffff, images.JPEG, 90)
 			except:
 				return None
