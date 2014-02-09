@@ -98,23 +98,19 @@ class ImageFile (webapp.RequestHandler):
 		src_w=img.width
 		src_h=img.height
 
-		#奇数サイズの画像を縮小すると縦線が乗るので一度偶数化する
-		src_w=(src_w+1)/2*2
-		src_h=(src_h+1)/2*2
-		img.resize(width=src_w,height=src_h)
-
-		#Windows8のタイル用
+		#Windows8のタイル用にアスペクト比を整数にする
 		if(format=="tile"):
 			if(src_w<src_h):
 				img.crop(0.0,0.0,1.0,1.0*src_w/src_h)
 			else:
 				img.crop(0.0,0.0,1.0*src_h/src_w,1.0)
 
-		#メインリサイズ
+		#奇数サイズの画像を縮小すると画面外参照が発生して縦線が乗るので1画素大きめにリサイズして端を切り取る
 		if(h==0):
-			img.resize(width=w)
-		else:
-			img.resize(width=w,height=h)
+			h=w*src_h/src_w
+		margin=1
+		img.resize(width=w+margin,height=h+margin)
+		img.crop(0.0,0.0,1.0*w/(w+margin),1.0*h/(h+margin))
 
 		code=None
 
