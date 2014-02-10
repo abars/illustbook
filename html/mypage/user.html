@@ -8,7 +8,7 @@
     </div>
     <div style="float:left;word-break:break-all;{% if is_iphone %}width:220px;{% endif %}">
       {% if view_user.name %}
-       <p><b>{{view_user.name}}</b></p>
+       {% if not is_iphone %}<p>{% endif %}<b>{{view_user.name}}</b>{% if not is_iphone %}</p>{% endif %}
        <p>{% if view_user_profile.profile and view_user_profile.profile!="None" %}{{view_user_profile.profile|safe}}{% else %}&nbsp;{% endif %}</p>
       {% else %}
         <p>イラストブックへようこそ。<br/>
