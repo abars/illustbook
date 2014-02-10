@@ -4,7 +4,7 @@
 {% if rental_bbs_list %}
 <div class="message bbs_list">
   <div class="bbs_title">
-  レンタルしている
+  {% if is_english %}My BBS{% else %}レンタルしている{% endif %}
   </div>
   <br clear="all"/>
   {% for bbs in rental_bbs_list %}
@@ -21,7 +21,7 @@
   </a>
   {% if bbs.bookmark %}
     <br/>
-    <a href='show_bookmark?bbs_key={{bbs.key}}'>{{bbs.bookmark}}ブクマ</a>
+    <a href='show_bookmark?bbs_key={{bbs.key}}'>{{bbs.bookmark}}{% if is_english %}Bookmark{% else %}ブクマ{% endif %}</a>
   {% endif %}
   </div>
 
@@ -40,7 +40,7 @@
 {% if bookmark_bbs_list %}
 <div class="message bbs_list">
   <div class="bbs_title">
-  ブックマークしている
+  {% if is_english %}Bookmark BBS{% else %}ブックマークしている{% endif %}
   </div>
   <br clear="all"/>
   {% for bbs in bookmark_bbs_list %}
@@ -56,7 +56,7 @@
   {{bbs.title}}
   </a>
       {% if bbs.bookmark %}
-    <br/><a href='show_bookmark?bbs_key={{bbs.key}}'>{{bbs.bookmark}}ブクマ</a>
+    <br/><a href='show_bookmark?bbs_key={{bbs.key}}'>{{bbs.bookmark}}{% if is_english %}Bookmark{% else %}ブクマ{% endif %}</a>
   {% endif %}
 
   </div>

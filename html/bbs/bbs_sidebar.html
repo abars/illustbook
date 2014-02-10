@@ -72,10 +72,10 @@
 		{% endif %}
 		</h4>
 		<p>
-		今日：{{bbs.counter.today_cnt}}<br/>
-		昨日：{{bbs.counter.yesterday_cnt}}<br/>
-		一昨日：{{bbs.counter.yesterday_yesterday_cnt}}<br/>
-		合計：{{bbs.counter.total_cnt}}<br/>
+		{% if is_english %}TODAY{% else %}今日{% endif %}：{{bbs.counter.today_cnt}}<br/>
+		{% if is_english %}YESTERDAY{% else %}昨日{% endif %}：{{bbs.counter.yesterday_cnt}}<br/>
+		{% if not is_english %}一昨日：{{bbs.counter.yesterday_yesterday_cnt}}<br/>{% endif %}
+		{% if is_english %}TOTAL{% else %}合計{% endif %}：{{bbs.counter.total_cnt}}<br/>
 		</p>
 	{%endif%}
 	
@@ -90,10 +90,10 @@
 		</h4>
 		<p>
 		{% if bbs.my_homepage %}
-			<a href="{{bbs.my_homepage}}" class="decnone">ホームページ</a><br/>
+			<a href="{{bbs.my_homepage}}" class="decnone">{% if is_english %}Homepage{% else %}ホームページ{% endif %}</a><br/>
 		{% endif %}
 		{% if not bbs.disable_analyze and owner %}
-			<a href="{{host}}analyze?bbs_key={{bbs.key()}}" class="decnone">アクセス解析</a><br/>
+			<a href="{{host}}analyze?bbs_key={{bbs.key()}}" class="decnone">{% if is_english %}Analyze{% else %}アクセス解析{% endif %}</a><br/>
 		{% endif %}
 		</p>
 		{% endif %}

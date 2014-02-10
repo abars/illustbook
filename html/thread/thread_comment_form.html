@@ -39,8 +39,6 @@
 				{% if is_iphone %}<br/>{% endif %}
 				{% if logined %}
 					<input name="link_to_profile" type="checkbox" checked/>{% if is_english %}Link to mypage{% else %}マイページにリンク{% endif %}
-				{% else %}
-					{% if is_english %}{%else%}マイページにリンクするにはログインして下さい{% endif %}
 				{% endif %}
 			</td></tr>
 			{% if logined %}

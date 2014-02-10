@@ -51,12 +51,18 @@ function show_follower(){
   }
 }
 
-function show_profile(){
+function show_profile(is_english){
+  var detail="詳細";
+  var close="閉じる";
+  if(is_english){
+  	detail="Detail";
+  	close="Close";
+  }
   if($('#profile').is(':visible')){
     $('#profile').hide();
-    $('#profile_button').text("詳細")
+    $('#profile_button').text(detail);
   }else{
    $('#profile').show();  
-    $('#profile_button').text("閉じる")
+    $('#profile_button').text(close);
   }
 }

@@ -23,18 +23,18 @@
       {% endif %}
       <div id="profile">
             <table>
-            {% if bookmark.sex %}<tr><td>性別</td><td>　</td><td>
+            {% if bookmark.sex %}<tr><td>{% if is_english %}Sex{%else%}性別{% endif %}</td><td>　</td><td>
               {% if bookmark.sex == 1 %}
-                男
+                {% if is_english %}Male{%else%}男{% endif %}
               {%else%}
-                女
+                {% if is_english %}Female{%else%}女{% endif %}
               {%endif%}
             </td></tr>
             {% endif %}
-            {% if age %}<tr><td>年齢</td><td>　</td><td>{{age}}才</td></tr>{%endif%}
-            {% if bookmark.birthday_month %}<tr><td>誕生日</td><td>　</td><td>{{bookmark.birthday_month}}月{{bookmark.birthday_day}}日</td></tr>{%endif %}
-            {% if bookmark.homepage %}<tr><td>ホームページ</td><td>　</td><td><a href="{{bookmark.homepage}}" class="declink"><div class="linebreak">{{bookmark.homepage}}</div></a></td></tr>{% endif %}
-            {% if bookmark.mail %}<tr><td>メール</td><td>　</td><td><a href="mailto:{{bookmark.mail}}" class="declink"><div class="linebreak">{{bookmark.mail|safe}}</div></a></td></tr>{% endif %}
+            {% if age %}<tr><td>{% if is_english %}Age{%else%}年齢{% endif %}</td><td>　</td><td>{{age}}{% if not is_english %}才{% endif %}</td></tr>{%endif%}
+            {% if bookmark.birthday_month %}<tr><td>{% if is_english %}Birthday{%else%}誕生日{% endif %}</td><td>　</td><td>{{bookmark.birthday_month}}{% if is_english %}/{% else %}月{% endif %}{{bookmark.birthday_day}}{% if not is_english %}日{% endif %}</td></tr>{%endif %}
+            {% if bookmark.homepage %}<tr><td>{% if is_english %}Homepage{%else%}ホームページ{% endif %}</td><td>　</td><td><a href="{{bookmark.homepage}}" class="declink"><div class="linebreak">{{bookmark.homepage}}</div></a></td></tr>{% endif %}
+            {% if bookmark.mail %}<tr><td>{% if is_english %}Mail{%else%}メール{% endif %}</td><td>　</td><td><a href="mailto:{{bookmark.mail}}" class="declink"><div class="linebreak">{{bookmark.mail|safe}}</div></a></td></tr>{% endif %}
             {% if bookmark.twitter_id %}<tr><td>Twitter</td><td>　</td><td>{% if bookmark.twitter_id %}<a href="https://twitter.com/#!/{{bookmark.twitter_id}}" class="declink"><div class="linebreak">{{bookmark.twitter_id}}</div></a>{% endif %}</td></tr>{% endif %}
             {% if is_admin %}{% if bookmark.owner %}<tr><td>アカウント(＊管理モード)</td><td>　</td><td>{{bookmark.owner.email()}}</td></tr>{% endif %}{% endif %}
             </table>
@@ -49,13 +49,13 @@
      <div class="g-button-group">
       {% if view_mode %}
        {% if following %}
-         <a href="javascript:confirm_unfollow('{{view_user.user_id}}','{{view_user.name}}');" class="g-button">フォロー中</a>
+         <a href="javascript:confirm_unfollow('{{view_user.user_id}}','{{view_user.name}}');" class="g-button">{% if is_english %}Following{%else%}フォロー中{% endif %}</a>
        {% else %}
-         <a href="javascript:confirm_follow('{{view_user.user_id}}','{{view_user.name}}');" class="g-button"><i class="icon-plus"></i>フォロー</a>
+         <a href="javascript:confirm_follow('{{view_user.user_id}}','{{view_user.name}}');" class="g-button"><i class="icon-plus"></i>{% if is_english %}Follow{%else%}フォロー{% endif %}</a>
        {% endif %}
       {% endif %}
       {% if detail_exist %}
-        <a id="profile_button" href="javascript:show_profile();" class="g-button">{% if is_english %}Detail{%else%}詳細{% endif %}</a>
+        <a id="profile_button" href="javascript:show_profile({% if is_english %}true{% else %}false{% endif %});" class="g-button">{% if is_english %}Detail{%else%}詳細{% endif %}</a>
       {% endif %}
       {% if not view_mode %}
          <A HREF="{{host}}{{redirect_api}}?tab={{tab}}&edit=2" class="g-button">{% if is_english %}Edit{%else%}編集{% endif %}</A>

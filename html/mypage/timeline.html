@@ -46,17 +46,17 @@
 			{% if edit_mode %}
 				{% if feed.from_user.user_id == user_id %}
 				<a href="#" onclick="if(confirm('ツイートを削除してもよろしいですか？')){window.location.href='feed_tweet?mode=del_tweet&key={{feed.key}}&feed_page={{page}}&edit=1&tab={{tab}}';}return false;" class="g-button mini">
-					削除
+					{% if is_english %}Remove{% else %}削除{% endif %}
 				</a><br/>
 				{% else %}
 				<a href="#" onclick="if(confirm('フィードをタイムラインから除外してもよろしいですか？')){window.location.href='feed_tweet?mode=del_feed&key={{feed.key}}&feed_page={{page}}&edit=1&tab={{tab}}';}return false;" class="g-button mini">
-					除外
+					{% if is_english %}Hide{% else %}除外{% endif %}
 				</a><br/>
 				{% endif %}
 			{% endif %}
 			{% if feed.to_user.user_id == user_id %}
 				<a href="mypage?user_id={{feed.from_user.user_id}}&tab=feed" class="g-button mini">
-				返信
+				{% if is_english %}Reply{% else %}返信{% endif %}
 				</a><br/>
 			{% endif %}
 		{% endif %}
@@ -78,7 +78,11 @@
 			{% else %}
 				{% if feed.thread.thumbnail_url == "" %}
 					<a href="{{feed.thread.thread_url}}">
-						{{feed.bbs.title}}に{{feed.thread.title}}を投稿しました。
+						{% if is_english %}
+							Submit {{feed.thread.title}}
+						{% else %}
+							{{feed.bbs.title}}に{{feed.thread.title}}を投稿しました。
+						{% endif %}
 					</a>
 					<blockquote>
 						<a href="{{feed.thread.thread_url}}">
@@ -87,7 +91,11 @@
 					</blockquote>
 				{% else %}
 					<a href="{{feed.thread.thread_url}}">
-						{{feed.bbs.title}}に{{feed.thread.title}}を投稿しました。
+						{% if is_english %}
+							Submit {{feed.thread.title}}
+						{% else %}
+							{{feed.bbs.title}}に{{feed.thread.title}}を投稿しました。
+						{% endif %}
 					</a>
 				{% endif %}
 			{% endif %}
@@ -95,7 +103,7 @@
 
 		{% if feed.mode == "new_follow" %}
 			<a href="{{feed.follow_user.profile_url}}">
-				{{feed.follow_user.name}}をフォローしました。
+				{% if is_english %}Follow {% endif %}{{feed.follow_user.name}}{% if not is_english %}をフォローしました。{% endif %}
 			</a>
 		{% endif %}
 
@@ -104,7 +112,7 @@
 				{% if not feed.thread.title %}
 					{{deleted_style_header}}ブックマークしたイラストは削除されました。{{deleted_style_footer}}
 				{% else %}
-					{{feed.thread.title}}をブックマークしました。
+					{% if is_english %}Bookmark {% endif %}{{feed.thread.title}}{% if not is_english %}をブックマークしました。{% endif %}
 				{% endif %}
 			</a>
 		{% endif %}
@@ -117,7 +125,7 @@
 				{% set message = "" %}
 			{% else %}
 				<a href="{{feed.thread.thread_url}}">
-					{{feed.thread.title}}にコメントしました。
+					{% if is_english %}Comment to {% endif %}{{feed.thread.title}}{% if not is_english %}にコメントしました。{% endif %}
 				</a>
 			{% endif %}
 		{% endif %}
@@ -127,7 +135,7 @@
 				{% if not feed.bbs.title %}
 					{{deleted_style_header}}ブックマークした掲示板は削除されました。{{deleted_style_footer}}
 				{% else %}
-					{{feed.bbs.title}}をブックマークしました。
+					{% if is_english %}Bookmark {% endif %}{{feed.bbs.title}}{% if not is_english %}をブックマークしました。{% endif %}
 				{% endif %}
 			</a>
 		{% endif %}
@@ -137,7 +145,7 @@
 				{% if not feed.thread.title %}
 					{{deleted_style_header}}拍手したイラストは削除されました。{{deleted_style_footer}}
 				{% else %}
-					{{feed.thread.title}}に拍手しました。
+					{% if is_english %}Linke to {% endif %}{{feed.thread.title}}{% if not is_english %}に拍手しました。{% endif %}
 				{% endif %}
 			</a>
 		{% endif %}

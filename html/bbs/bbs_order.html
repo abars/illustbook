@@ -4,21 +4,29 @@
 	<div class="g-button-group">
 	<a class="g-button mini dropdown-toggle" data-toggle="dropdown" href="#" style="color:#444">
 		{% if order == "new" %}{% if is_english %}New{% else %}新着順{% endif %}{% endif %}
-		{% if order == "update" %}更新順{% endif %}
-		{% if order == "comment" %}コメント数{% endif %}
-		{% if order == "applause" %}拍手順{% endif %}
-		{% if order == "thumbnail" %}サムネイル{% endif %}
-		{% if order == "illust" %}ラスター{% endif %}
+		{% if order == "update" %}{% if is_english %}Update{% else %}更新順{% endif %}{% endif %}
+		{% if order == "comment" %}{% if is_english %}Comment{% else %}コメント数{% endif %}{% endif %}
+		{% if order == "applause" %}{% if is_english %}Like{% else %}拍手順{% endif %}{% endif %}
+		{% if not is_iphone and not is_english %}
+			{% if order == "illust" %}ラスター{% endif %}
+		{% endif %}
 		<span class="caret"></span>
 	</a>
 	<ul class="dropdown-menu">
-		<li><a href="javascript:bbs_select_change('new','{{page_url_order_base}}');" style="border-bottom: 0px;color:#444;">新着順</a></li>
-		<li><a href="javascript:bbs_select_change('update','{{page_url_order_base}}');" style="border-bottom: 0px;color:#444">更新順</a></li>
-		<li><a href="javascript:bbs_select_change('comment','{{page_url_order_base}}');" style="border-bottom: 0px;color:#444">コメント数</a></li>
+		<li><a href="javascript:bbs_select_change('new','{{page_url_order_base}}');" style="border-bottom: 0px;color:#444;">
+			{% if is_english %}New{% else %}新着順{% endif %}
+		</a></li>
+		<li><a href="javascript:bbs_select_change('update','{{page_url_order_base}}');" style="border-bottom: 0px;color:#444">
+			{% if is_english %}Update{% else %}更新順{% endif %}
+		</a></li>
+		<li><a href="javascript:bbs_select_change('comment','{{page_url_order_base}}');" style="border-bottom: 0px;color:#444">
+			{% if is_english %}Comment{% else %}コメント数{% endif %}
+		</a></li>
 	{% if bbs.bbs_mode != 3 %}
-		<li><a href="javascript:bbs_select_change('applause','{{page_url_order_base}}');" style="border-bottom: 0px;color:#444">拍手順</a></li>
-		<li><a href="javascript:bbs_select_change('thumbnail','{{page_url_order_base}}');" style="border-bottom: 0px;color:#444">サムネイル</a></li>
-		{% if bbs.show_only_movie %}
+		<li><a href="javascript:bbs_select_change('applause','{{page_url_order_base}}');" style="border-bottom: 0px;color:#444">
+			{% if is_english %}Like{% else %}拍手順{% endif %}
+		</a></li>
+		{% if bbs.show_only_movie and not is_english %}
 			<li><a href="javascript:bbs_select_change('illust','{{page_url_order_base}}');" style="border-bottom: 0px;color:#444">ラスターを表示</a></li>
 		{% endif %}
 	{% endif %}

@@ -67,17 +67,17 @@
 	    		<span class="caret"></span>
 	    	</a>
 			<ul class="dropdown-menu" style="right:0;left:auto;">
-				<li><a href="{{host}}sample/">試し描き</a></li>
-				<li><a href="{{host}}mypage">レンタル</a></li>
-				<li><a href="{{host}}commu/">コミュニティ</a></li>
-				<li><a href="{{host}}anything/">何でも投稿</a></li>
-				<li><a href="{{host}}chat">チャット</a></li>
-				<li><a href="{{host}}support/">サポート</a></li>
-				<li><a href="{{host}}guide">使い方</a></li>
+				<li><a href="{{host}}sample/">{% if is_english %}Trial{% else %}試し描き{% endif %}</a></li>
+				<li><a href="{{host}}mypage">{% if is_english %}Regist{% else %}レンタル{% endif %}</a></li>
+				<li><a href="{{host}}commu/">{% if is_english %}Community{% else %}コミュニティ{% endif %}</a></li>
+				<li><a href="{{host}}anything/">{% if is_english %}Anything{% else %}何でも投稿{% endif %}</a></li>
+				<li><a href="{{host}}chat">{% if is_english %}Chat{% else %}チャット{% endif %}</a></li>
+				<li><a href="{{host}}support/">{% if is_english %}Support{% else %}サポート{% endif %}</a></li>
+				<li><a href="{{host}}guide">{% if is_english %}HowTo{% else %}使い方{% endif %}</a></li>
 				{% if not user %}
-					<li><a href="{{redirect_url|login_url|escape}}">ログイン</a></li>
+					<li><a href="{{redirect_url|login_url|escape}}">{% if is_english %}Login{%else%}ログイン{% endif %}</a></li>
 				{% else %}
-					<li><a href="{{redirect_url|logout_url|escape}}">ログアウト</a></li>
+					<li><a href="{{redirect_url|logout_url|escape}}">{% if is_english %}Logout{%else%}ログアウト{% endif %}</a></li>
 				{% endif %}
 	      	</ul>
 	    	</div>
