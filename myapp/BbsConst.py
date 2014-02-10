@@ -30,7 +30,7 @@ class BbsConst:
 	SPAM_CHECKED ="スパムと判定されました。コメントを修正して再投稿して下さい。コマントにURLや禁止ワードを含む場合にスパム判定されやすくなります。"
 	
 	#memcacheコントロール
-	OBJECT_CACHE_HEADER="ocache71_"	#この値を変更することで全てのキャッシュが無効になる
+	OBJECT_CACHE_HEADER="ocache72_"	#この値を変更することで全てのキャッシュが無効になる
 	OBJECT_BOOKMARK_CACHE_HEADER="bookmark_"
 	OBJECT_ENTRY_CACHE_HEADER="entry_"
 	OBJECT_THREAD_CACHE_HEADER="thread_"
@@ -89,7 +89,7 @@ class BbsConst:
 	SUBMIT_SEED="1212"
 
 	#サムネイル2のバージョン番号、これを変えると新しいサムネイルを生成
-	THUMBNAIL2_VERSION=7
+	THUMBNAIL2_VERSION=8
 
 	#ピンタレストモードを強制設定するか
 	PINTEREST_MODE=2 #1だと管理者だけ、2だと全員

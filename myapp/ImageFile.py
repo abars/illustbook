@@ -144,7 +144,17 @@ class ImageFile (webapp.RequestHandler):
 		thumb=ImageFile.create_thumbail(200,0,content.image,"jpeg")
 		if(thumb==None):
 			return False
+
+		#新規タイル作成
+		tile=ImageFile.create_thumbail(144,144,content.image,"tile")
+		if(tile==None):
+			return False
+
+		#画像を格納
 		content.thumbnail2=thumb["code"]
+		content.tile=tile["code"]
+
+		#動画サイズを格納して保存
 		if((not content.width) and (not content.height)):	#動画の場合をケア、なくてもいいかも
 			content.width=thumb["width"]	#画像サイズを設定
 			content.height=thumb["height"]
@@ -179,7 +189,7 @@ class ImageFile (webapp.RequestHandler):
 		if(not content):
 			return None
 		if tag=="icon":
-			return (content.icon)
+			return content.icon
 		if tag=="thumbnail":
 			if content.gif_thumbnail:
 				return (content.gif_thumbnail)
@@ -188,6 +198,8 @@ class ImageFile (webapp.RequestHandler):
 			if content.gif_thumbnail:
 				return (content.gif_thumbnail)
 			return (content.thumbnail2)
+		if tag=="tile":
+			return content.tile
 		return (content.image)
 
 	@staticmethod
@@ -202,36 +214,12 @@ class ImageFile (webapp.RequestHandler):
 				return True
 		return False
 
-	@staticmethod
-	def serve_tile_image(p_self,path,type_name,tag):
-		try:
-			content=db.get(path)
-		except:
-			content=None
-		if(content==None):
-			p_self.error(404)
-			return				
-		content_blob=ImageFile.create_thumbail(144,144,content.image,"tile")
-		if(content_blob==None):
-			p_self.error(404)
-			return
-		content_blob=content_blob["code"]
-		content_header=ImageFile.get_content_type("png")
-		content_key=str(content.key())
-		content_date=content.date
-		ImageFile.output_content(p_self,content_date,content_key,content_header,content_blob, True, tag)
-
 	#イメージとサムネイルを供給
 	@staticmethod
 	def serve_file(p_self,path,type_name,tag):
-		#タイル
-		if(tag=="tile"):
-			ImageFile.serve_tile_image(p_self,path,type_name,tag)
-			return
-
 		#直リンクの禁止
 		if(not p_self.request.get("force")):
-			if(not tag=="tolot"):
+			if(not tag=="tolot" and not tag=="tile"):
 				if(ImageFile.is_direct_access(p_self)):
 					p_self.error(403)
 					return
@@ -265,6 +253,8 @@ class ImageFile (webapp.RequestHandler):
 
 		#サーブするかを決定する
 		serve=ImageFile.is_serve(p_self,content_key,content_date,tag)
+
+		#forceオプションが設定されている場合はサムネイルを強制的に再作成する
 		if(p_self.request.get("force")):
 			serve=True
 			if(tag=="thumbnail2"):
