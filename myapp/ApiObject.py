@@ -36,6 +36,7 @@ from myapp.Entry import Entry
 from myapp.TimeProgress import TimeProgress
 from myapp.ImageFile import ImageFile
 from myapp.SearchThread import SearchThread
+from myapp.CssDesign import CssDesign
 
 class ApiObject(webapp.RequestHandler):
 
@@ -574,7 +575,8 @@ class ApiObject(webapp.RequestHandler):
 				thread={"title":"","thread_url":""}	#deleted thread
 
 		#発生日取得
-		create_date=TimeProgress.get_date_diff_str(feed.create_date,"")
+		is_english=CssDesign.is_english(req)
+		create_date=TimeProgress.get_date_diff_str(feed.create_date,"",is_english)
 		
 		#コメントを取得
 		message=feed.message
