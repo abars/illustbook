@@ -4,7 +4,9 @@
 
 {% if not contents %}
 
-<h1>イラストブックの使い方</h1>
+{% if is_english %}<h1>This article are Japanese version only.</h1>{% endif %}
+
+<h1>{% if is_english %}How to user ILLUSTBOOK{% else %}イラストブックの使い方{% endif %}</h1>
 
 <a href="{{host}}guide?contents=about">イラストブックの特徴</a><br/>
 <a href="{{host}}guide?contents=pc">イラブペイント(PC版/アプリ版)の使い方</a><br/>
@@ -13,7 +15,7 @@
 
 <p>&nbsp;</p>
 
-<h1>アプリ版のダウンロード</h1>
+<h1>{% if is_english %}Download iPad application{% else %}アプリ版のダウンロード{% endif %}</h1>
 
 iPadでもPC版と同等のツールが使用できるアプリ版をリリースしました！<br/>
 
@@ -21,7 +23,7 @@ iPadでもPC版と同等のツールが使用できるアプリ版をリリー�
 
 <p>&nbsp;</p>
 
-<h1>イラストブック紹介漫画</h1>
+<h1>{% if is_english %}Manga for Introduction{% else %}イラストブック紹介漫画{% endif %}</h1>
 
 <a href="./comic">
 <img src="./static_files/comic/banar.png" alt="コミック"/>
@@ -29,7 +31,7 @@ iPadでもPC版と同等のツールが使用できるアプリ版をリリー�
 
 <p>&nbsp;</p>
 
-<h1>リンク</h1>
+<h1>{% if is_english %}Link{% else %}リンク{% endif %}</h1>
 
 <p>
 <a href="./dev" class="declink">開発者向けサイト</a><br/>

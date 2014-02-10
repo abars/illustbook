@@ -1,5 +1,5 @@
 {% if not timeline %}
-	<p>フィードはありません。</p><p>&nbsp</p>
+	<p>{% if is_english %}no feed exist{% else %}フィードはありません。{% endif %}</p><p>&nbsp</p>
 {% endif %}
 
 {% if timeline %}
@@ -44,12 +44,12 @@
 
 		{% if not view_mode %}
 			{% if edit_mode %}
-				{% if feed.from_user.user_id == user_id %}
-				<a href="#" onclick="if(confirm('ツイートを削除してもよろしいですか？')){window.location.href='feed_tweet?mode=del_tweet&key={{feed.key}}&feed_page={{page}}&edit=1&tab={{tab}}';}return false;" class="g-button mini">
+				{% if feed.from_user.user_id == user_id %}				
+				<a href="#" onclick="confirm_delete_tweet('{{feed.key}}','{{page}}','{{tab}}',{% if is_english %}true{%else%}false{% endif %});" class="g-button mini">
 					{% if is_english %}Remove{% else %}削除{% endif %}
 				</a><br/>
 				{% else %}
-				<a href="#" onclick="if(confirm('フィードをタイムラインから除外してもよろしいですか？')){window.location.href='feed_tweet?mode=del_feed&key={{feed.key}}&feed_page={{page}}&edit=1&tab={{tab}}';}return false;" class="g-button mini">
+				<a href="#" onclick="confirm_remove_tweet('{{feed.key}}','{{page}}','{{tab}}',{% if is_english %}true{%else%}false{% endif %});" class="g-button mini">
 					{% if is_english %}Hide{% else %}除外{% endif %}
 				</a><br/>
 				{% endif %}

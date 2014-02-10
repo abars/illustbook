@@ -127,6 +127,8 @@ class DelThread(webapp.RequestHandler):
 		if(not bbs or not thread):
 			self.response.out.write(Alert.alert_msg("削除対象が見つかりません。",self.request.host))
 			return
+
+		is_english=CssDesign.is_english(self)
 		
 		del_ok=0		
 		if(self.request.get("del_key")):
@@ -134,7 +136,10 @@ class DelThread(webapp.RequestHandler):
 				if(thread.delete_key==self.request.get("del_key")):
 					del_ok=1
 				else:
-					self.response.out.write(Alert.alert_msg("削除キーが一致しません。",self.request.host))
+					msg="削除キーが一致しません。"
+					if(is_english):
+						msg="invalid key"
+					self.response.out.write(Alert.alert_msg(msg,self.request.host))
 					return;
 		
 		user = users.get_current_user()

@@ -23,20 +23,20 @@
 			{# コメントの削除　#}
 			{%if (is_admin or edit_flag) or (user and user.user_id() == entry.com.user_id) %}
 				{% if entry.com.illust_reply %}
-					<input type="button" value="編集"  class="g-button" onclick="open_draw('{{entry.image_key}}',1,'{{host}}','{{entry.com.key()}}','{{thread.key()}}','{{bbs.key()}}',{{thread.illust_mode}})"/>
+					<input type="button" value="{% if is_english %}Edit{% else %}編集{% endif %}"  class="g-button" onclick="open_draw('{{entry.image_key}}',1,'{{host}}','{{entry.com.key()}}','{{thread.key()}}','{{bbs.key()}}',{{thread.illust_mode}})"/>
 				{% else %}
-					<input type="button" value="編集"  class="g-button" onclick="window.location.href='{{host}}edit_thread?bbs_key={{bbs.key()}}&entry_key={{entry.com.key()}}'"/>
+					<input type="button" value="{% if is_english %}Edit{% else %}編集{% endif %}"  class="g-button" onclick="window.location.href='{{host}}edit_thread?bbs_key={{bbs.key()}}&entry_key={{entry.com.key()}}'"/>
 				{% endif %}
-				<input type="button" value="削除"  class="g-button" onclick="confirm_action_comment('{{host}}del_ent?entry_key={{entry.com.key()}}&amp;bbs_key={{bbs_key}}&amp;thread_key={{thread.key()}}');"/>
+				<input type="button" value="{% if is_english %}Delete{% else %}削除{% endif %}"  class="g-button" onclick="confirm_action_comment('{{host}}del_ent?entry_key={{entry.com.key()}}&amp;bbs_key={{bbs_key}}&amp;thread_key={{thread.key()}}',{% if is_english %}true{% else %}false{% endif %});"/>
 			{% endif %}
 
 			{# 管理　#}
 			{%if is_admin or edit_flag %}			
 				{% if is_admin and entry.com.illust_reply %}
-					<input type="button" value="規約"  class="g-button" onclick="confirm_action_term('{{host}}violation?entry_key={{entry.com.key()}}&amp;bbs_key={{bbs_key}}&amp;thread_key={{thread.key()}}');"/>
+					<input type="button" value="{% if is_english %}Terms{% else %}規約{% endif %}"  class="g-button" onclick="confirm_action_term('{{host}}violation?entry_key={{entry.com.key()}}&amp;bbs_key={{bbs_key}}&amp;thread_key={{thread.key()}}',{% if is_english %}true{% else %}false{% endif %});"/>
 				{% endif %}
 				{% if bbs.comment_hidden_button %}
-					<input type="button" value="{% if entry.com.hidden_flag %}表示{%else%}非表示{% endif %}"  class="g-button" onclick="window.location.href='{{host}}vis_ent?entry_key={{entry.com.key()}}&amp;bbs_key={{bbs_key}}&amp;thread_key={{thread.key()}}';"/>
+					<input type="button" value="{% if entry.com.hidden_flag %}{% if is_english %}Visible{% else %}表示{% endif %}{%else%}{% if is_english %}Hidden{% else %}非表示{% endif %}{% endif %}"  class="g-button" onclick="window.location.href='{{host}}vis_ent?entry_key={{entry.com.key()}}&amp;bbs_key={{bbs_key}}&amp;thread_key={{thread.key()}}';"/>
 				{% endif %}
 			{%endif%}
 		{%endif%}
@@ -87,13 +87,13 @@
 		{% if bbs.show_remote_addr_id %}　ID：{{res.remote_addr|ip_hash}}{% endif %}
 			<div class="g-button-group" style="float:right;">
 			{% if loop.first and is_admin and comment_edit%}
-				<input type="button" value="一括" class="g-button" onclick="confirm_action_comment('{{host}}del_res?entry_key={{entry.com.key()}}&amp;res_key=all');"/>
+				<input type="button" value="一括" class="g-button" onclick="confirm_action_comment('{{host}}del_res?entry_key={{entry.com.key()}}&amp;res_key=all',{% if is_english %}true{% else %}false{% endif %});"/>
 			{% endif %}
 			
 			{% if comment_edit %}
 				{%if (is_admin or edit_flag) or (user and user.user_id() == res.user_id ) %}
-					<input type="button" value="編集"  class="g-button" onclick="window.location.href='{{host}}edit_thread?bbs_key={{bbs.key()}}&res_key={{res.key()}}&res_entry_key={{entry.com.key()}}'"/>
-					<input type="button" value="削除" class="g-button" onclick="confirm_action_comment('{{host}}del_res?entry_key={{entry.com.key()}}&amp;res_key={{res.key()}}');"/>
+					<input type="button" value="{% if is_english %}Edit{% else %}編集{% endif %}"  class="g-button" onclick="window.location.href='{{host}}edit_thread?bbs_key={{bbs.key()}}&res_key={{res.key()}}&res_entry_key={{entry.com.key()}}'"/>
+					<input type="button" value="{% if is_english %}Delete{% else %}削除{% endif %}" class="g-button" onclick="confirm_action_comment('{{host}}del_res?entry_key={{entry.com.key()}}&amp;res_key={{res.key()}}',{% if is_english %}true{% else %}false{% endif %});"/>
 				{% endif %}
 			{% endif %}
 

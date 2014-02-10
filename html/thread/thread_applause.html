@@ -1,5 +1,5 @@
 {% if not bbs.disable_applause %}
-	{% if template_path %}
+	{% if template_path and not is_english %}
 		<div class="clap">
 			<div id="applause_value_{{thread.key()}}" style="float:right;margin-top:2px;">
 				{%if thread.applause %}

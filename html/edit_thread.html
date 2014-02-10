@@ -3,7 +3,7 @@
 <head>
 	{% include "./bbs_thread/css.html" %}
 	
-	<title>投稿の編集</title>
+	<title>{% if is_english %}Edit article{% else %}投稿の編集{% endif %}</title>
 	<script language="JavaScript" src="./js/rediter.js"></script>
 	<script type="text/javascript">
 		function init(){
@@ -49,30 +49,30 @@
 	{% endif %}
 
 			<div class="entry">
-			投稿の編集<HR><br/>
-			投稿を編集するには下記項目を編集してから”投稿を更新する”ボタンを押して下さい。<br/>
+			{% if is_english %}Edit article{% else %}投稿の編集{% endif %}<HR><br/>
+			{% if not is_english %}投稿を編集するには下記項目を編集してから”投稿を更新する”ボタンを押して下さい。<br/>{% endif %}
 			<br/>
 
 			{% if thread %}
 				<form id="submit_form" action="./update_thread?bbs_key={{bbs.key()}}&thread_key={{thread.key()}}" enctype="multipart/form-data" method="post">
 				<table>
-					<tr><td>タイトル</td><td><input type="text" name="thread_title" value="{{thread.title}}" size=60></td></tr>
-					<tr><td>投稿者名</td><td><input type="text" name="thread_author" value="{{thread.author}}"><input type="checkbox" name="link_profile" value="link_profile" {% if thread.user_id %}checked{% endif %}>マイページにリンク</td></tr>
-					<tr><td>カテゴリ</td><td>
+					<tr><td>{% if is_english %}Title{% else %}タイトル{% endif %}</td><td><input type="text" name="thread_title" value="{{thread.title}}" size=60></td></tr>
+					<tr><td>{% if is_english %}Name{% else %}投稿者名{% endif %}</td><td><input type="text" name="thread_author" value="{{thread.author}}"><input type="checkbox" name="link_profile" value="link_profile" {% if thread.user_id %}checked{% endif %}>{% if is_english %}Link to Mypage{% else %}マイページにリンク{% endif %}</td></tr>
+					<tr><td>{% if is_english %}Category{% else %}カテゴリ{% endif %}</td><td>
 					{% include "category_list.html" %}
 					</td></tr>
-					<tr><td>年齢制限</td><td>
+					<tr><td>{% if is_english %}Regulation{% else %}年齢制限{% endif %}</td><td>
 					{% include "regulation_list.html" %}
 					</td></tr>
-					<tr><td>表示設定</td><td>
+					<tr><td>{% if is_english %}Scope{% else %}表示設定{% endif %}</td><td>
 						<div style="float:left">
 							<select id="dont_show_in_portal" name="dont_show_in_portal" style="margin-bottom:0px;">
-							<option value="0" {% if thread and not thread.violate_photo %}selected="selected"{% endif %}>イラストブックの新着に表示する</option>
-							<option value="1" {% if thread and thread.violate_photo %}selected="selected"{% endif %}>イラストブックの新着に表示しない</option>
+							<option value="0" {% if thread and not thread.violate_photo %}selected="selected"{% endif %}>{% if is_english %}Public{% else %}イラストブックの新着に表示する{% endif %}</option>
+							<option value="1" {% if thread and thread.violate_photo %}selected="selected"{% endif %}>{% if is_english %}Private{% else %}イラストブックの新着に表示しない{% endif %}</option>
 							</select>
 						</div>
 					</td></tr>
-					<tr><td>コメント数</td><td><input type="text" name="comment_cnt" value="{{thread.comment_cnt}}"></td></tr>
+					<tr><td>{% if is_english %}Number of Comment{% else %}コメント数{% endif %}</td><td><input type="text" name="comment_cnt" value="{{thread.comment_cnt}}"></td></tr>
 				</table>
 
 				<textarea id="thread_summary" name="thread_summary" cols=60 rows=16 style="display:none;"></textarea>
@@ -82,7 +82,7 @@
 				<br/>
 
 				<table>
-				<tr><td>記事</td><td>
+				<tr><td>{% if is_english %}Article{% else %}記事{% endif %}</td><td>
 					<div id="rediter_summary_fontsize" style="float:left;"></div>  
 					<div id="rediter_summary_palette" style="float:left;"></div>
 					<div id="rediter_summary_button" style="float:left;"></div><BR clear="both">
@@ -94,7 +94,7 @@
 				<br/><br/>
 
 				<table>
-				<tr><td>追記</td><td>
+				<tr><td>{% if is_english %}Postscript{% else %}追記{% endif %}</td><td>
 					<div id="rediter_postscript_fontsize" style="float:left;"></div>  
 					<div id="rediter_postscript_palette" style="float:left;"></div>
 					<div id="rediter_postscript_button" style="float:left;"></div><BR clear="both">
@@ -106,17 +106,17 @@
 				<br/><br/>
 
 				<div class="g-button-group">
-					<input type="button" value="投稿を更新する" class="g-button" onclick="submit_thread();">
+					<input type="button" value="{% if is_english %}Update{% else %}投稿を更新する{% endif %}" class="g-button" onclick="submit_thread();">
 
 					<div class="g-button-group toggle-buttons">
 						<a class="g-button dropdown-toggle" data-toggle="dropdown" href="#">
-						その他の操作<span class="caret"></span>
+						{% if is_english %}Others{% else %}その他の操作{% endif %}<span class="caret"></span>
 						</a>
 						<ul class="dropdown-menu">
 						{% if not thread.cached_image_key %}
-							<li><a href="#" onclick="open_draw('add_new_illust',0,'{{host}}','','{{thread.key()}}','{{bbs.key()}}',{{thread.illust_mode}})" style="color:#333;">イラストの追加</a></li>
+							<li><a href="#" onclick="open_draw('add_new_illust',0,'{{host}}','','{{thread.key()}}','{{bbs.key()}}',{{thread.illust_mode}})" style="color:#333;">{% if is_english %}Add illust{% else %}イラストの追加{% endif %}</a></li>
 						{% else %}
-							<li><a href="#" onclick="open_draw('{{thread.cached_image_key}}',0,'{{host}}','','{{thread.key()}}','{{bbs.key()}}',{{thread.illust_mode}})" style="color:#333;">イラストの編集</a></li>
+							<li><a href="#" onclick="open_draw('{{thread.cached_image_key}}',0,'{{host}}','','{{thread.key()}}','{{bbs.key()}}',{{thread.illust_mode}})" style="color:#333;">{% if is_english %}Edit illust{% else %}イラストの編集{% endif %}</a></li>
 						{% endif %}
 						</ul>
 					</div>
@@ -129,26 +129,26 @@
 			{% if entry %}
 				<form id="submit_form" action="./update_thread?bbs_key={{bbs.key()}}&entry_key={{entry.key()}}" enctype="multipart/form-data" method="post">
 				<table>
-					<tr><td>投稿者名</td><td><input type="text" name="editor" value="{{entry.editor}}"><input type="checkbox" name="link_profile" value="link_profile" {% if entry.user_id %}checked{% endif %}>マイページにリンク</td></tr>
-					<tr><td>コメント</td><td>
+					<tr><td>{% if is_english %}Name{% else %}投稿者名{% endif %}</td><td><input type="text" name="editor" value="{{entry.editor}}"><input type="checkbox" name="link_profile" value="link_profile" {% if entry.user_id %}checked{% endif %}>{% if is_english %}Link to Mypage{% else %}マイページにリンク{% endif %}</td></tr>
+					<tr><td>{% if is_english %}Comment{% else %}コメント{% endif %}</td><td>
 						<textarea name="content" style="width:500px;height:200px;">{{entry.content.replace("<br/>","\n")}}</textarea>
 					</td></tr>
 				</table>
 				<br/><br/>
-				<input type="submit" value="投稿を更新する" class="g-button">
+				<input type="submit" value="{% if is_english %}Update{% else %}投稿を更新する{% endif %}" class="g-button">
 				</form>
 			{% endif %}
 
 			{% if res %}
 				<form id="submit_form" action="./update_thread?bbs_key={{bbs.key()}}&res_key={{res.key()}}&res_entry_key={{res_entry_key}}" enctype="multipart/form-data" method="post">
 				<table>
-					<tr><td>投稿者名</td><td><input type="text" name="editor" value="{{res.editor}}"><input type="checkbox" name="link_profile" value="link_profile" {% if res.user_id %}checked{% endif %}>マイページにリンク</td></tr>
-					<tr><td>コメント</td><td>
+					<tr><td>{% if is_english %}Name{% else %}投稿者名{% endif %}</td><td><input type="text" name="editor" value="{{res.editor}}"><input type="checkbox" name="link_profile" value="link_profile" {% if res.user_id %}checked{% endif %}>{% if is_english %}Link to Mypage{% else %}マイページにリンク{% endif %}</td></tr>
+					<tr><td>{% if is_english %}Comment{% else %}コメント{% endif %}</td><td>
 						<textarea name="content" style="width:500px;height:200px;">{{res.content.replace("<br/>","\n")}}</textarea>
 					</td></tr>
 				</table>
 				<br/><br/>
-				<input type="submit" value="投稿を更新する" class="g-button">
+				<input type="submit" value="{% if is_english %}Update{% else %}投稿を更新する{% endif %}" class="g-button">
 				</form>
 			{% endif %}
 

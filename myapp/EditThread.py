@@ -109,7 +109,8 @@ class EditThread(webapp.RequestHandler):
 			'edit_thread': True,
 			'category_list': category_list,
 			'selecting_category': category,
-			'res_entry_key': self.request.get("res_entry_key")
+			'res_entry_key': self.request.get("res_entry_key"),
+			'is_english': CssDesign.is_english(self)
 		}
 
 		path = '/html/edit_thread.html'

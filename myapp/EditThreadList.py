@@ -153,7 +153,8 @@ class EditThreadList(webapp.RequestHandler):
 			'deleted_count': deleted_count,
 			'category_count': category_count,
 			'is_iphone': CssDesign.is_iphone(self),
-			'category_list': category_list
+			'category_list': category_list,
+			'is_english': CssDesign.is_english(self)
 		}
 
 		path = '/html/edit_thread_list.html'

@@ -16,8 +16,8 @@
 		{% endif %}
 
 		{% if not my_illust %}
-			{% if not bbs.disable_applause and not is_english %}
-				<li><a href="javascript:applause_with_comment('{{host}}','{{bbs.key()}}','{{thread.key()}}','thread');" style="color:#333;" rel="nofollow">コメントで拍手</a></li>
+			{% if not bbs.disable_applause %}
+				<li><a href="javascript:applause_with_comment('{{host}}','{{bbs.key()}}','{{thread.key()}}','thread',{% if is_english %}true{% else %}false{% endif %});" style="color:#333;" rel="nofollow">{% if is_english %}Like with comment{% else %}コメントで拍手{% endif %}</a></li>
 			{% endif %}
 		{% endif %}
 		<li><a href="{{page_url_base}}{{page}}&amp;comment_edit=1" style="color:#333;" rel="nofollow">{% if is_english %}Edit comment{% else %}コメントの編集{% endif %}</a></li>
@@ -27,10 +27,10 @@
 		{% endif %}
 
 		{% if owner or my_illust or admin_user %}
-			<li><a href="#" onclick='confirm_action_thread("{{thread.key()}}", "{{bbs.key()}}", "{{host}}")' style="color:#333;">{% if is_english %}Delete thread{% else %}スレッドの削除{% endif %}</a></li>
+			<li><a href="#" onclick='confirm_action_thread("{{thread.key()}}", "{{bbs.key()}}", "{{host}}",{% if is_english %}true{% else %}false{% endif %})' style="color:#333;">{% if is_english %}Delete thread{% else %}スレッドの削除{% endif %}</a></li>
 		{% else %}
 			{% if thread.delete_key %}
-				<li><a href="#" onclick='prompt_action_thread("{{thread.key()}}", "{{bbs.key()}}", "{{host}}")' style="color:#333;">{% if is_english %}Delete thread with key{% else %}スレッドの削除（削除キー）{% endif %}</a></li>
+				<li><a href="#" onclick='prompt_action_thread("{{thread.key()}}", "{{bbs.key()}}", "{{host}}",{% if is_english %}true{% else %}false{% endif %})' style="color:#333;">{% if is_english %}Delete thread with key{% else %}スレッドの削除（削除キー）{% endif %}</a></li>
 			{% endif %}
 		{% endif %}
 		</ul>

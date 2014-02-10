@@ -102,12 +102,20 @@ class MyPage(webapp.RequestHandler):
 			Alert.alert_msg_with_write(self,"退会する権限がありません。")
 			return True
 
+		is_english=CssDesign.is_english(self)
+
 		if(your_bbs_count==0):
 			#delete_user_thread(user.user_id())	#他人の掲示板に描いたイラストは慎重に削除する必要がある気がする
 			bookmark.delete()
-			Alert.alert_msg_with_write(self,"退会が完了しました。");
+			msg="退会が完了しました。"
+			if(is_english):
+				msg="Complete"
+			Alert.alert_msg_with_write(self,msg);
 		else:
-			Alert.alert_msg_with_write(self,"退会する前にレンタルしている掲示板を削除する必要があります。<BR>掲示板の削除はマイページのイラストタブで編集を押すことで行うことができます。<BR>残りの掲示板数："+str(your_bbs_count))
+			msg="退会する前にレンタルしている掲示板を削除する必要があります。<BR>掲示板の削除はマイページのイラストタブで編集を押すことで行うことができます。<BR>残りの掲示板数："+str(your_bbs_count)
+			if(is_english):
+				msg="You must delete your BBS before withdraw.<br/>You have "+str(your_bbs_count)+" BBS yet."
+			Alert.alert_msg_with_write(self,msg)
 			return True
 
 		return True

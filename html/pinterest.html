@@ -15,27 +15,31 @@
 
 {% if page_mode == "bookmark" %}
   <title>
+  {% if is_english %}
+  Bookmark User
+  {% else %}
   {% if search_app %}{{search_app.app_name}}{%endif %}
   {% if search_thread %}{{search_thread.title}}{% endif%}
   {% if search_bbs %}{{search_bbs.bbs_name}}{% endif %}
   をブックマークしているユーザ
+  {% endif %}
   </title>
 {%else%}
 {% if search %}
-<title>{{search}} - イラストブック</title>
+<title>{{search}} - {% if is_english %}ILLUSTBOOK{% else %}イラストブック{% endif %}</title>
 {% else %}
 {% if tag %}
-<title>{{tag}} - イラストブック</title>
+<title>{{tag}} - {% if is_english %}ILLUSTBOOK{% else %}イラストブック{% endif %}</title>
 {% else %}
 {% if page_mode == "user" %}
 {% if not view_user.name %}
-<title>未登録ユーザ - イラストブック</title>
+<title>{% if is_english %}Unknown User - ILLUSTBOOK{% else %}未登録ユーザ - イラストブック{% endif %}</title>
 {% else %}
-<title>{{view_user.name}} - イラストブック</title>
+<title>{{view_user.name}} - {% if is_english %}ILLUSTBOOK{% else %}イラストブック{% endif %}</title>
 {% endif %}
 {% else %}
 {% if page_mode == "guide" %}
-<title>イラストブックの使い方 - イラストブック</title>
+<title>{% if is_english %}How to use ILLUSTBOOK - ILLUSTBOOK{% else %}イラストブックの使い方 - イラストブック{% endif %}</title>
 {% else %}
 <title>{% if is_english %}ILLUSTBOOK - the BBS network of Manga{% else %}イラストブック - 無料レンタルお絵かき掲示板{% endif %}</title>
 {% endif %}
@@ -93,7 +97,7 @@
   <script type="text/javascript" src="api_js"></script>
   <script type="text/javascript" src="js/bookmark.js"></script>
   <div class="message">
-    ブックマークしているユーザ<br/>
+    {% if is_english %}Bookmark User{% else %}ブックマークしているユーザ{% endif %}<br/>
     <div id="user_list">Loading...</div>
   </div>
   <script type="text/javascript">

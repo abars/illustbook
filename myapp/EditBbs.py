@@ -68,7 +68,8 @@ class EditBbs(webapp.RequestHandler):
 			'user': user,
 			'tab': tab,
 			'redirect_url': self.request.path,
-			'bbs_css': bbs_css
+			'bbs_css': bbs_css,
+			'is_english': CssDesign.is_english(self)
 		}
 
 		path = '/html/edit_bbs.html'

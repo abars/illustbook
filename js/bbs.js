@@ -31,8 +31,12 @@ function bbs_select_change(order_value,url_base){
 	window.location.href=''+url_base+order;
 }
 
-function bbs_add_bookmark(bbs_name,bbs_key,host){
-	if(confirm('「'+bbs_name+'」をブックマークしますか？')){
+function bbs_add_bookmark(bbs_name,bbs_key,host,is_english){
+	var msg='「'+bbs_name+'」をブックマークしますか？';
+	if(is_english){
+		msg="Are you bookmark this BBS?"
+	}
+	if(confirm(msg)){
 		window.location.href=host+"add_bookmark?mode=add_bbs&bbs_key="+bbs_key;
 	}
 }

@@ -134,7 +134,8 @@ class CssDesign (webapp.RequestHandler):
 	@staticmethod
 	def is_english(main):
 		#強制英語化
-		#return True
+		if os.environ["SERVER_SOFTWARE"].find("Development")!=-1:
+			return True
 		if(main.request.get("is_english")):
 			return True
 

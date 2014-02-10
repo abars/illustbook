@@ -50,9 +50,9 @@
      <div class="g-button-group">
       {% if view_mode %}
        {% if following %}
-         <a href="javascript:confirm_unfollow('{{view_user.user_id}}','{{view_user.name}}');" class="g-button">{% if is_english %}Following{%else%}フォロー中{% endif %}</a>
+         <a href="javascript:confirm_unfollow('{{view_user.user_id}}','{{view_user.name}}',{% if is_english %}true{%else%}false{% endif %});" class="g-button">{% if is_english %}Following{%else%}フォロー中{% endif %}</a>
        {% else %}
-         <a href="javascript:confirm_follow('{{view_user.user_id}}','{{view_user.name}}');" class="g-button"><i class="icon-plus"></i>{% if is_english %}Follow{%else%}フォロー{% endif %}</a>
+         <a href="javascript:confirm_follow('{{view_user.user_id}}','{{view_user.name}}',{% if is_english %}true{%else%}false{% endif %});" class="g-button"><i class="icon-plus"></i>{% if is_english %}Follow{%else%}フォロー{% endif %}</a>
        {% endif %}
       {% endif %}
       {% if detail_exist %}
@@ -84,7 +84,7 @@
           <li><a href="javascript:if(confirm('アカウントを凍結しますか？')){ window.location.href='{{host}}mypage?freez=1&user_id={{bookmark.user_id}}' }">アカウント凍結（＊管理モード）</a></li>
           {% endif %}
           {% if not view_mode %}
-          <li><a href="javascript:confirm_withdraw('mypage?withdraw=go&user_id={{bookmark.user_id}}')">{% if is_english %}Withdraw{% else %}退会する{% endif %}{% if is_admin %}（＊管理モード）{% endif %}</a></li>
+          <li><a href="javascript:confirm_withdraw('mypage?withdraw=go&user_id={{bookmark.user_id}}',{% if is_english %}true{%else%}false{% endif %})">{% if is_english %}Withdraw{% else %}退会する{% endif %}{% if is_admin %}（＊管理モード）{% endif %}</a></li>
           {% endif %}
           {% if is_admin %}
           <li><a href="{{host}}tolot/{{bookmark.user_id}}.html">アルバムを作成(β)</a></li>
@@ -117,7 +117,7 @@
      <div class="deletable" style="float:left;">
        <a href="{{redirect_api}}?user_id={{user.user_id}}"><img src="{{user.icon_url}}&size=mini" width="50px" height="50px" alt='{{user.name}}'/></a>
        {% if edit_mode %}
-       <a href="javascript:confirm_delete('del_user&user_key={{user.user_id}}','フォロー','{{user.name}}');" class="g-button no-text delete_button"><i class="icon-remove"></i></a>
+       <a href="javascript:confirm_delete('del_user&user_key={{user.user_id}}','フォロー','{{user.name}}',{% if is_english %}true{%else%}false{% endif %});" class="g-button no-text delete_button"><i class="icon-remove"></i></a>
        {% endif %}
      </div>
      {% endfor %}
@@ -136,6 +136,6 @@
  </div>
    {% endif %}
 
-   {% if timeline %}
+   {% if page_mode == "user" and is_timeline_enable %}
     {% include "mypage/tweet.html" %}
    {% endif %}

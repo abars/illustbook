@@ -10,36 +10,64 @@ var isFlashInstalled=function(){if(navigator.plugins["Shockwave Flash"]){return 
 			window.location.href=''+url_base+page+"&order="+order+"&limit="+limit;
 		}
 
-		function confirm_action_comment(url) {
-			if (confirm("本当にコメントを削除しますか?")){
+		function confirm_action_comment(url,is_english) {
+			var msg="本当にコメントを削除しますか?";
+			if(is_english){
+				msg="Are you sure you want to delete this comment?"			
+			}
+			if (confirm(msg)){
 				location.href = url; 
 			}
 		}
 
-		function confirm_action_term(url) {
-			if (confirm("本当に規約設定を変更しますか?")){
+		function confirm_action_term(url,is_english) {
+			var msg="本当に規約設定を変更しますか?";
+			if(is_english){
+				msg="Are you sure you want to set violate terms?"			
+			}
+			if (confirm(msg)){
 				location.href = url; 
 			}
 		}
 
-		function confirm_action_thread(th, bbs, host) {
-			if (confirm("本当に削除しますか?")){
-				if (confirm("削除したデータは復元できません。本当に削除しますか?")){
+		function confirm_action_thread(th, bbs, host ,is_english) {
+			var msg="本当に削除しますか?";
+			if(is_english){
+				msg="Are you sure you want to delete this illust?"			
+			}
+			if (confirm(msg)){
+				msg="削除したデータは復元できません。本当に削除しますか?";
+				if(is_english){
+					msg="This operation cannot be undone.Are you sure you want to delete this illust?"
+				}
+				if (confirm(msg)){
 					location.href = ""+host+"del_thread?thread_key="+th+"&bbs_key="+bbs; 
 				}
 			}
 		} 
 
-		function prompt_action_thread(th, bbs, host) {
-			jPrompt("イラスト投稿時に入力した削除キーを入力して下さい","","削除のための削除キーの入力",function(key){
+		function prompt_action_thread(th, bbs, host, is_english) {
+			var msg="削除するためにイラスト投稿時に入力した削除キーを入力して下さい";
+			var title="削除のための削除キーの入力";
+			if(is_english){
+				msg="Please set delete key of illust"			
+				title="Input delete key for Delete"
+			}
+			jPrompt(msg,"",title,function(key){
 				if (key){
 					location.href = ""+host+"del_thread?thread_key="+th+"&bbs_key="+bbs+"&del_key="+key;
 				}
 			});
 		} 
 
-		function prompt_action_thread_edit(th, bbs) {
-			jPrompt("イラスト投稿時に入力した削除キーを入力して下さい","","編集のための削除キーの入力",function(key){
+		function prompt_action_thread_edit(th, bbs, is_english) {
+			var msg="編集するためにイラスト投稿時に入力した削除キーを入力して下さい";
+			var title="編集のための削除キーの入力";
+			if(is_english){
+				msg="Please set delete key of illust"			
+				title="Input delete key for Edit"
+			}
+			jPrompt(msg,"",title,function(key){
 				if (key){
 					location.href = ""+host+"draw_moper?thread_key="+th+"&bbs_key="+bbs+"&del_key="+key;
 				}
@@ -92,7 +120,9 @@ var isFlashInstalled=function(){if(navigator.plugins["Shockwave Flash"]){return 
 		}
 		
 		function AddBookmark(host,thread_key,is_english){
-			jPrompt(is_english ? "Are you bookmark this illust? You can also add comment from this form.":"このイラストをブックマークしますか？<BR>以下のフォームからブックマークにコメントを付加することもできます。","",is_english ? "Bookmark":"ブックマーク",
+			var msg=is_english ? "Add this illust to your bookmark? You can also add comment from this form.":"このイラストをブックマークしますか？<BR>以下のフォームからブックマークにコメントを付加することもできます。";
+			var title=is_english ? "Bookmark":"ブックマーク";
+			jPrompt(msg,"",title,
 				function(comment){
 					if(comment==null){
 						return;
@@ -130,8 +160,14 @@ var isFlashInstalled=function(){if(navigator.plugins["Shockwave Flash"]){return 
 			applause_core(host,bbs_key,thread_key,mode,order,page,"");
 		}
 
-		function applause_with_comment(host,bbs_key,thread_key,mode,order,page){
-			jPrompt("このイラストに拍手しますか？<BR>以下のフォームからコメントを付加することもできます。","","拍手",
+		function applause_with_comment(host,bbs_key,thread_key,mode,order,page,is_english){
+			var msg="このイラストに拍手しますか？<BR>以下のフォームからコメントを付加することもできます。";
+			var title="拍手";
+			if(is_english){
+				msg="Does you like this illust? You can also add comment from this form.";
+				title="Like with comment";
+			}
+			jPrompt(msg,"",title,
 				function(comment){
 					if(comment==null){
 						return;
