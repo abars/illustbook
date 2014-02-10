@@ -133,12 +133,19 @@ class CssDesign (webapp.RequestHandler):
 
 	@staticmethod
 	def is_english(main):
+		#強制英語化
 		if(main.request.get("is_english")):
 			return True
-		for lang in main.request.headers["Accept-Language"].split(","):
-			if(lang.startswith("ja")):
-				return False
-		return True
+
+		#UserAgentで判別
+		if "Accept-Language" in main.request.headers:
+			for lang in main.request.headers["Accept-Language"].split(","):
+				if(lang.startswith("ja")):
+					return False
+			return True
+
+		#UserAgentが定義されていなければ日本語
+		return False
 
 	def get(self,bbs_or_css_key,mode):
 		bbs=None
