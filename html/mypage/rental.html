@@ -17,7 +17,7 @@
 </div>
 
 <div id="rental">
-    {% if is_english %}Regist new BBS{% else %}新しい掲示板をレンタルする{% endif %}
+    {% if is_english %}Create new BBS{% else %}新しい掲示板をレンタルする{% endif %}
 			<form action="./add_bbs" enctype="multipart/form-data" method="post" name="rental_frm">
 			<input type="hidden" name="official" value="0">
 			<input type="hidden" name="redirect" value="./regist">
@@ -58,7 +58,7 @@
 					</div>
 					<div style="float:left;">
 							<div class="g-button-group">
-			<a href="javascript:create_new_bbs();" class="g-button"><i class="icon-plus"></i>{% if is_english %}Regist{% else %}レンタルを実行{% endif %}</a>
+			<a href="javascript:create_new_bbs();" class="g-button"><i class="icon-plus"></i>{% if is_english %}Create{% else %}レンタルを実行{% endif %}</a>
 		</div>
 		</div>
 					</td>

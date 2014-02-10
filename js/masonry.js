@@ -72,13 +72,19 @@ function show_more_tag(){
   masonry_reload();
 }
 
-function show_search(){
+function show_search(is_english){
+  var search="検索";
+  var close="閉じる";
+  if(is_english){
+    search="Search";
+    close="Close";
+  }
   if($('#search').is(':visible')){
     $('#search').hide();
-    $('#search_button').text("検索")
+    $('#search_button').text(search)
   }else{
     $('#search').show();  
-    $('#search_button').text("閉じる")
+    $('#search_button').text(close)
   }
   masonry_reload();
 }

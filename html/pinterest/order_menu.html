@@ -10,7 +10,7 @@
   <div style="float:right;">
     {% if is_iphone %}
      <div class="g-button-group toggle-buttons">
-        <a href="javascript:show_search();" class="g-button" id="search_button">
+        <a href="javascript:show_search({% if is_english %}true{% else %}false{% endif %});" class="g-button" id="search_button">
           {% if is_english %}Search{% else %}検索{% endif %}
         </a>
       </div>

@@ -70,15 +70,20 @@
 <!-- アラート -->
 {% if regist_finish %}
   <div class="message">
-    お絵かき掲示板の新規作成が完了しました。<br/>
-    掲示板の名前をクリックして掲示板にアクセスして下さい。
+    {% if is_english %}
+      Success!<br/>
+      Please access from BBS list.
+    {% else %}
+      お絵かき掲示板の新規作成が完了しました。<br/>
+      掲示板の名前をクリックして掲示板にアクセスして下さい。
+    {% endif %}
   </div>
   <br clear="all"/>
 {% endif %}
 
 {% if is_maintenance %}
   <div class="message">
-    現在、サーバメンテナンス中です。ご迷惑をおかけします。数時間後に、再度、アクセスをお願い致します。
+    {% if is_english %}Emergency Maintenance{% else %}現在、サーバメンテナンス中です。ご迷惑をおかけします。数時間後に、再度、アクセスをお願い致します。{% endif %}
   </div>
   <br clear="all"/>
 {% endif %}
@@ -163,7 +168,7 @@
 {% if page_mode != "guide" %}
 {% if page_mode != "login_require" %}
 <div class="message">
-イラストは見つかりませんでした。
+{% if is_english %}Illust not found{% else %}イラストは見つかりませんでした。{% endif %}
 </div>
 {% endif %}
 {% endif %}

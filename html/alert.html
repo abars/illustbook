@@ -5,7 +5,7 @@
 {% if is_iphone %}
 <meta name="viewport" content="width=device-width">
 {% endif %}
-	<title>イラストブック　-　アラート</title>
+	<title>{% if is_english %}Alert - ILLUSTBOOK{% else %}アラート　-　イラストブック{% endif %}</title>
 	<link rel="stylesheet" type="text/css" media="screen,print" href="{{host}}static_files/general/css/top.css" />
 {% if is_iphone %}
 	{% include "portal_css/css_iphone.html" %}

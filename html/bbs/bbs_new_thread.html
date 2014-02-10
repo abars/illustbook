@@ -28,9 +28,9 @@
 	{% if can_create_thread %}
 		<form action='http://localhost/' enctype="multipart/form-data" method="post" onSubmit="this.action='{{host}}add_thread?bbs_key={{bbs.key()}}';">
 		<input type="hidden" name="illust_mode" value="0">
-		<table class="table_color"><tr><td>{% if is_english %}Title(MUST){% else %}タイトル（必須）{% endif %}</td>
+		<table class="table_color"><tr><td>{% if is_english %}Title (MUST){% else %}タイトル（必須）{% endif %}</td>
 		<td><textarea name="thread_title" rows="1" cols="40" style="width:90%;"></textarea></td></tr>
-		<tr><td>{% if is_english %}Name(MUST){% else %}作成者（必須）{% endif %}</td>
+		<tr><td>{% if is_english %}Name (MUST){% else %}作成者（必須）{% endif %}</td>
 		<td>
 			<input type="text" name="author" maxlength="50" value="{{user_name}}"/>
 			{% if is_iphone %}

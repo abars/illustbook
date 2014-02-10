@@ -106,7 +106,7 @@
 <br/>
 <form action='http://localhost/' enctype="multipart/form-data" method="post" onsubmit="this.action='{{host}}add_res?entry_key={{ entry.com.key() }}&amp;seed={{0|set_seed}}';">
 <table class="table_color">
-<tr><td>{% if is_english %}Name(MUST){% else %}名前（必須）{% endif %}</td>
+<tr><td>{% if is_english %}Name (MUST){% else %}名前（必須）{% endif %}</td>
 <td><input type="text" name="author" maxlength="50" value="{{user_name}}"/>
 {% if is_iphone %}<br/>{% endif %}
 {% if logined %}
@@ -114,7 +114,7 @@
 {% endif %}
 </td>
 </tr>
-<tr><td>{% if is_english %}Comment(MUST){% else %}コメント（必須）{% endif %}</td>
+<tr><td>{% if is_english %}Comment (MUST){% else %}コメント（必須）{% endif %}</td>
 <td><textarea name="comment" rows="10" cols="40" style="width:100%;"></textarea></td></tr>
 <tr><td></td><td>
 	<input type="hidden" name="redirect_url" value="{{redirect_url}}"/>
