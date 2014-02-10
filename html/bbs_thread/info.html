@@ -2,7 +2,7 @@
 	{%if template_path %}
 		<img src="{{template_path}}images/i_name.gif" alt="投稿者" width="64" height="20"/>
 	{%else%}
-		投稿者：
+		{% if is_english %}Name{% else %}投稿者{% endif %}：
 	{%endif%}
 	{{thread|author_name_thread(host)|safe}}　
 {% endif %}
@@ -12,7 +12,7 @@
 	{%if template_path %}
 		<img src="{{template_path}}images/i_category.gif" alt="カテゴリ" width="64" height="20"/>
 	{% else %}
-		カテゴリ：
+		{% if is_english %}Category{% else %}カテゴリ{% endif %}：
 	{% endif%}
 	<a href="{{usrhost}}?category={{thread.category|iriencode}}" class="g-button mini" style="color:#444;margin-left:0px;margin-bottom:2px;">{{thread.category}}</a>　
 {%endif%}
@@ -23,7 +23,7 @@
 		{%if template_path %}
 			<img src="{{template_path}}images/i_day.gif" alt="投稿日" width="64" height="20"/>
 		{% else %}
-			投稿日：
+			{% if is_english %}Date{% else %}投稿日{% endif %}：
 		{% endif%}
 		{{thread.create_date|time_JST_format(bbs.date_format)}}
 	{% endif %}

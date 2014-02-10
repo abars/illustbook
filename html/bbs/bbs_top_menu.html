@@ -47,7 +47,7 @@
 				{%endif%}
 			{% else %}
 				{%if template_path %}<p>{%endif%}
-				管理人のみ投稿可能
+				{% if is_english %}Only allowing owner to edit{% else %}管理人のみ投稿可能{% endif %}
 				{%if template_path %}</p>{%endif%}
 			{% endif %}
 		{% endif %}
