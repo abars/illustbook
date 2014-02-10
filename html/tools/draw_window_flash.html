@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 {% include "./bbs_thread/css.html" %}
-<title>{{bbs.bbs_name}}へのイラストの新規投稿</title>
+<title>{% if is_english %}New Illust{% else %}{{bbs.bbs_name}}へのイラストの新規投稿{% endif %}</title>
 
 <style type="text/css">
 
@@ -60,6 +60,9 @@ object, embed {
 			{% if bbs.tool_bg_color %}
 			"bg_color":"{{bbs.tool_bg_color}}",
 			{%endif%}
+			{% if is_english %}
+			"is_english":"1",
+			{% endif %}
 			"delete_when_upload_success":"{{bbs.delete_when_upload_success}}"
 		};
 		var params={
@@ -85,7 +88,7 @@ object, embed {
 		
 		//リッチエディタを準備
 		var color="{%if bbs.font_color and not template_path %}#{{bbs.font_color}}{% else %}#333333{% endif %}";
-		rediter_init('rediter','{{summary|safe}}','10pt',color,false);
+		rediter_init('rediter','{{summary|safe}}','10pt',color,false,{% if is_english %}true{% else %}false{% endif %});
 		if(document.getElementById("title")){
 			document.getElementById("title").value='{{title|safe}}';
 		}
@@ -144,7 +147,7 @@ object, embed {
 </div>
 
 <div id="loading_window" style="position:absolute;left:8px;top:8px;z-index:-1;">
-	<p>イラブペイントを読込中</p>
+	<p>{% if is_english %}Loading{% else %}イラブペイントを読込中{% endif %}</p>
 </div>
 
 <div id="submit_window" style="position:absolute;left:0px;top:0px;margin:0px;padding:0px;z-index:1;display:none;width:100%;height:100%;overflow: auto;">

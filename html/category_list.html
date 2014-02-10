@@ -1,14 +1,14 @@
 <div style="float:left">
 	<select id="category" style="margin-bottom:0px;" onchange="if(this.value=='add'){next_state='block';}else{next_state='none';}document.getElementById('category_new_div').style.display=next_state;">
-	<option value="" {% if not selecting_category %}selected="selected"{% endif %}>設定しない</option>
+	<option value="" {% if not selecting_category %}selected="selected"{% endif %}>{% if is_english %}-{% else %}設定しない{% endif %}</option>
 	{% for category in category_list %}
 		{% if category.category == "" %}{% else %}
 			<option value="{{category.category}}" {% if selecting_category == category.category %}selected="selected"{% endif %}>{{category.category}}</option>
 		{% endif %}{% endfor %}
-	<option value="add" onselcted="">カテゴリの追加</option>
+	<option value="add" onselcted="">{% if is_english %}Add Category{% else %}カテゴリの追加{% endif %}</option>
 	</select>
 </div>
 <div style="float:left;display:none;" id="category_new_div">
-	　追加するカテゴリ名<input id="category_new"/>
+	　{% if is_english %}Category Name{% else %}追加するカテゴリ名{%endif%}<input id="category_new"/>
 </div>
 <br clear="all"/>

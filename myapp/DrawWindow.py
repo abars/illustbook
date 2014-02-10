@@ -90,6 +90,9 @@ class DrawWindow(webapp.RequestHandler):
 
 		#掲示板のデザインを取得
 		design=CssDesign.get_design_object(self,bbs,host_url,1)
+
+		#英語版かどうか
+		is_english=CssDesign.is_english(self)
 		
 		#基本情報設定
 		template_values = {
@@ -117,7 +120,8 @@ class DrawWindow(webapp.RequestHandler):
 		'template_base_color':design["template_base_color"],
 		'version': self.request.get("version"),
 		'wacom2': wacom2,
-		'selecting_category': None
+		'selecting_category': None,
+		'is_english': is_english
 		}
 
 		#上書き時のコメントの初期値を設定

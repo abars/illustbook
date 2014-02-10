@@ -7,14 +7,14 @@
 //public API
 //--------------------------------------------------------
 
-function rediter_init(id,initial_text,fontsize,color,enable_tag_edit){
+function rediter_init(id,initial_text,fontsize,color,enable_tag_edit,is_english){
 	if(!initial_text){ initial_text=""; }
 	if(!id){ id='rediter'; }
 
 	rediter_set(id,initial_text,fontsize,color);
 	rediter_create_palette(id);
-	rediter_create_fontsize(id);
-	rediter_create_button(id,enable_tag_edit);
+	rediter_create_fontsize(id,is_english);
+	rediter_create_button(id,enable_tag_edit,is_english);
 }
 
 function rediter_get_text(id){
@@ -86,11 +86,15 @@ function rediter_create_palette(id){
 	palette.innerHTML=text;
 }
 
-function rediter_create_fontsize(id){
+function rediter_create_fontsize(id,is_english){
 	var fontsize=document.getElementById(id+"_fontsize");
+	var caption="文字サイズ";
+	if(is_english){
+		caption="Font Size"
+	}
 	var text="";
 	text+='<select onChange="rediter_change_fontsize(this,\''+id+'\');">';
-	text+='<option value="3">文字サイズ</option>';
+	text+='<option value="3">'+caption+'</option>';
 	text+='<option value="1">1</option>';
 	text+='<option value="2">2</option>';
 	text+='<option value="3">3</option>';
@@ -100,14 +104,24 @@ function rediter_create_fontsize(id){
 	fontsize.innerHTML=text;
 }
 
-function rediter_create_button(id,enable_tag_edit){
+function rediter_create_button(id,enable_tag_edit,is_english){
 	var button=document.getElementById(id+"_button");
+	var bold="強調";
+	var link="リンク";
+	var clear="クリア";
+	var tag_edit="タグ編集";
+	if(is_english){
+		bold="BOLD";
+		link="LINK";
+		clear="CLEAR";
+		tag_edit="TAG";
+	}
 	var text="<div class='g-button-group'>";
-	text+='<button class="g-button" onClick="rediter_bold(\''+id+'\');">強調</button>';
-    text+='<button class="g-button" onClick="rediter_link(\''+id+'\');">リンク</button>';
-	text+='<button class="g-button" onClick="rediter_remove_format(\''+id+'\');">クリア</button>';
+	text+='<button class="g-button" onClick="rediter_bold(\''+id+'\');">'+bold+'</button>';
+    text+='<button class="g-button" onClick="rediter_link(\''+id+'\');">'+link+'</button>';
+	text+='<button class="g-button" onClick="rediter_remove_format(\''+id+'\');">'+clear+'</button>';
 	if(enable_tag_edit){
-		text+='<button class="g-button" onClick="rediter_switch_edit_mode(\''+id+'\');">タグ編集</button>';
+		text+='<button class="g-button" onClick="rediter_switch_edit_mode(\''+id+'\');">'+tag_edit+'</button>';
 	}
 	text+="</div>";
 	button.innerHTML=text;

@@ -11,9 +11,9 @@
 {% endif %}
 
 {% if chat %}
-<title>{{room_name}}｜イラブチャット</title>
+<title>{{room_name}}｜{% if is_english %}Chat{% else %}イラブチャット{% endif %}</title>
 {% else %}
-<title>{{bbs.bbs_name}}へのイラストの新規投稿</title>
+<title>{% if is_english %}New Illust{% else %}{{bbs.bbs_name}}へのイラストの新規投稿{% endif %}</title>
 {% endif %}
 
 <link rel="stylesheet" type="text/css" media="screen,print" href="{{host}}static_files/google_buttons/css/google-buttons.css?version=120531" />
@@ -147,7 +147,7 @@
 {% endif %}
 </head>
 
-<body style="color:#2f2fbf;background-color:#d8d8d8;margin:0px;" onload="loadCookie();{% if chat %}chat_init('{{chat}}','{{user_id}}','{{user_name}}',{{server_time}},{{viewmode}},'{{token}}','{{client_id}}');{% else %}chat_init('local','','',0);{% endif %}ipad_init({{canvas_width}},{{canvas_height}},'{{canvas_url}}');" style="overflow:hidden;margin:0px;padding:0px;-webkit-user-select: none;" onselectstart="return false;">
+<body style="color:#2f2fbf;background-color:#d8d8d8;margin:0px;" onload="loadCookie();{% if chat %}chat_init('{{chat}}','{{user_id}}','{{user_name}}',{{server_time}},{{viewmode}},'{{token}}','{{client_id}}');{% else %}chat_init('local','','',0);{% endif %}ipad_init({{canvas_width}},{{canvas_height}},'{{canvas_url}}',{% if is_english %}true{% else %}false{% endif %});" style="overflow:hidden;margin:0px;padding:0px;-webkit-user-select: none;" onselectstart="return false;">
 
 <div style="width:100%;height:100%;">
 	<div id="bottom_tool">
@@ -194,22 +194,22 @@
 	</div>
 
 	<div id="storage_form" class="storage_form">
-		ブラウザのローカルストレージに現在のイラストを保存し、後で読込を行うことができます。<br/>
-		<input class="g-button blue" type="button" value="保存" onclick="javascript:g_storage.save();"/>
-		<input class="g-button blue" type="button" value="読込" onclick="javascript:g_storage.load();"/>
+		{% if is_english %}Local storage{% else %}ブラウザのローカルストレージに現在のイラストを保存し、後で読込を行うことができます。{% endif %}<br/>
+		<input class="g-button blue" type="button" value="{% if is_english %}Save{% else %}保存{% endif %}" onclick="javascript:g_storage.save();"/>
+		<input class="g-button blue" type="button" value="{% if is_english %}Load{% else %}読込{% endif %}" onclick="javascript:g_storage.load();"/>
 	</div>
 
 		<div id="uploading" class="upload_form">
 			<div class="upload_innner">
-				アップロード中です。しばらくお待ち下さい。
+				{% if is_english %}Now uploading{% else %}アップロード中です。しばらくお待ち下さい。{% endif %}
 				<input class="g-button blue" type="button" value="キャンセル" onclick="javascript:g_upload.upload_cansel();">
 			</div>
 		</div>
 
 		<div id="upload_finish" class="upload_form">
 			<div class="upload_innner">
-				アップロードが完了しました。
-				尚、同じイラストを複数の掲示板に投稿する行為は避けて下さい。
+				{% if is_english %}Upload success{% else %}アップロードが完了しました。
+				尚、同じイラストを複数の掲示板に投稿する行為は避けて下さい。{% endif %}
 			</div>
 		</div>
 	
@@ -218,40 +218,40 @@
 			<table>
 			{% if reply=="1" %}
 			{% else %}
-				<tr><td>タイトル</td><td><input id="title" value="{{title}}"/></td></tr>
+				<tr><td>{% if is_english %}Title{% else %}タイトル{% endif %}</td><td><input id="title" value="{{title}}"/></td></tr>
 			{% endif %}
-				<tr><td>投稿者名（必須）</td><td><input id="name" value="{{author}}"/></td></tr>
-				<tr><td>マイページ</td><td>
+				<tr><td>{% if is_english %}Name (MUST){% else %}投稿者名（必須）{% endif %}</td><td><input id="name" value="{{author}}"/></td></tr>
+				<tr><td>{% if is_english %}Mypage{% else %}マイページ{%endif%}</td><td>
 			{% if logined %}
-				<input id="link_to_profile" name="link_to_profile" type="checkbox" checked>リンクする
+				<input id="link_to_profile" name="link_to_profile" type="checkbox" checked>{% if is_english %}Link{%else%}リンクする{% endif %}
 			{% else %}
-				リンクするにはログインが必要です
+				{% if is_english %}login require{% else %}リンクするにはログインが必要です{% endif %}
 			{% endif %}
 				</td></tr>
-				<tr><td>カテゴリ</td><td>
+				<tr><td>{% if is_english %}Category{% else %}カテゴリ{% endif %}</td><td>
 				{% include "category_list.html" %}
 				</td></tr>
-				<tr><td>削除キー</td><td><input id="delete_key"></td></tr>
+				<tr><td>{% if is_english %}Delete key{% else %}削除キー{% endif %}</td><td><input id="delete_key"></td></tr>
 				{% if chat %}
-				<tr><td>投稿先</td><td>
+				<tr><td>{% if is_english %}Submit destination{% else %}投稿先{% endif %}</td><td>
 					{% if bbs_list %}
 					<select id="bbs_list">{% for bbs in bbs_list %}<option value="{{bbs.key()}}">{{bbs.bbs_name}}</option>{% endfor %}</select>
 					{% else %}
-					投稿先が見つかりません。マイページから掲示板を作成して下さい。
+						{% if is_english %}BBS not found{% else %}投稿先が見つかりません。マイページから掲示板を作成して下さい。{% endif %}
 					{% endif %}
 				</td></tr>
 				{% endif %}
 				{% if not chat %}
-				<tr><td>画像を読込</td><td><input type="file" id="import" onchange="ipad_import();"/></td></tr>
+				<tr><td>{% if is_english %}Import{% else %}画像を読込{% endif %}</td><td><input type="file" id="import" onchange="ipad_import();"/></td></tr>
 				{% endif %}
 			</table>
-			コメント<br/><textarea id="comment" rows=6 style="width:90%;">{{summary}}</textarea><br/><br/>
+			{% if is_english %}Comment{% else %}コメント{% endif %}<br/><textarea id="comment" rows=6 style="width:90%;">{{summary}}</textarea><br/><br/>
 			{% if entry_key == "" %}
-				<input id="submit_illust" class="g-button blue" type="button" value="{% if chat %}スナップショットを投稿する{% else %}イラストを投稿する{% endif %}" onclick="javascript:g_upload.upload('{{bbs_key}}','{{thread_key}}','{{entry_key}}','{{reply}}',false,false);" style="float:left;"/>
-				<input id="submit_text" class="g-button blue" type="button" value="文字だけで投稿する" onclick="javascript:g_upload.upload('{{bbs_key}}','{{thread_key}}','{{entry_key}}','{{reply}}',true,false);" style="display:none;margin-left:0px;float:left;"/>
+				<input id="submit_illust" class="g-button blue" type="button" value="{% if is_english %}Submit{% else %}{% if chat %}スナップショットを投稿する{% else %}イラストを投稿する{% endif %}{% endif %}" onclick="javascript:g_upload.upload('{{bbs_key}}','{{thread_key}}','{{entry_key}}','{{reply}}',false,false);" style="float:left;"/>
+				<input id="submit_text" class="g-button blue" type="button" value="{% if is_english %}Text only{% else %}文字だけで投稿する{% endif %}" onclick="javascript:g_upload.upload('{{bbs_key}}','{{thread_key}}','{{entry_key}}','{{reply}}',true,false);" style="display:none;margin-left:0px;float:left;"/>
 			{% endif %}
 			{% if (canvas_url != "" and reply == "0") or entry_key!="" %}
-				<input id="overwrite_illust" class="g-button blue" type="button" value="上書き投稿する" onclick="javascript:g_upload.upload('{{bbs_key}}','{{thread_key}}','{{entry_key}}','{{reply}}',false,true);" style="float:left;"/>
+				<input id="overwrite_illust" class="g-button blue" type="button" value="{% if is_english %}Overwrite{% else %}上書き投稿する{% endif %}" onclick="javascript:g_upload.upload('{{bbs_key}}','{{thread_key}}','{{entry_key}}','{{reply}}',false,true);" style="float:left;"/>
 			{% endif %}
 			<br clear="all"/>
 			</div>
