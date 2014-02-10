@@ -94,6 +94,9 @@ class ShowEntry(webapp.RequestHandler):
 
 		#iPhoneかどうか
 		is_iphone=CssDesign.is_iphone(req)
+
+		#英語版かどうか
+		is_english=CssDesign.is_english(req)
 		
 		#レンダリング
 		template_values = {
@@ -110,7 +113,8 @@ class ShowEntry(webapp.RequestHandler):
 			'user': user,
 			'redirect_url': req.request.path,
 			'comment_edit': comment_edit,
-			'is_iphone': is_iphone
+			'is_iphone': is_iphone,
+			'is_english': is_english
 			}
 
 		path = "/html/thread/thread_comment.html"

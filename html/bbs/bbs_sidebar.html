@@ -19,7 +19,7 @@
 
 	{%if one == "category" %}
 		<h4>
-		カテゴリ
+		{% if is_english %}Category{% else %}カテゴリ{% endif %}
 		</h4>
 		<p>
 		{% if now_category %}
@@ -43,21 +43,33 @@
 
 	{%if one == "thread" %}
 		<h4>
+		{% if is_english %}
+		New Illust
+		{% else %}
 		新着{% if bbs.bbs_mode == 3 %}スレッド{%else%}イラスト{%endif%}
+		{% endif %}
 		</h4>
 		<p>{% include 'bbs/bbs_recent_thread.html' %}</p>
 	{%endif%}
 
 	{%if one == "comment" %}
 		<h4>
+		{% if is_english %}
+		New Comment
+		{% else %}
 		新着コメント
+		{% endif %}
 		</h4>
 		<p>{% include 'bbs/bbs_recent_comment.html' %}</p>
 	{%endif%}
 
 	{%if one == "counter" %}
 		<h4>
+		{% if is_english %}
+		Access Counter
+		{% else %}
 		カウンター
+		{% endif %}
 		</h4>
 		<p>
 		今日：{{bbs.counter.today_cnt}}<br/>
@@ -70,7 +82,11 @@
 	{%if one == "menu" %}
 		{% if not bbs.disable_analyze and owner or bbs.my_homepage%}
 		<h4>
+		{% if is_english %}
+		Menu
+		{% else %}
 		メニュー
+		{% endif %}
 		</h4>
 		<p>
 		{% if bbs.my_homepage %}

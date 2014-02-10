@@ -157,6 +157,9 @@ class ShowThread(webapp.RequestHandler):
 		#メッセージ
 		message=memcache.get(BbsConst.OBJECT_THREAD_MESSAGE_HEADER+str(thread.key()))
 
+		#英語版かどうか
+		is_english=CssDesign.is_english(self)
+
 		#描画
 		template_values = {
 			'host': host_url,
@@ -190,7 +193,8 @@ class ShowThread(webapp.RequestHandler):
 			'limit': col_num,
 			'frozen': frozen,
 			'applause_enable': applause_enable,
-			'message': message
+			'message': message,
+			'is_english': is_english
 			}
 
 		path = "/html/"+design["base_name"]

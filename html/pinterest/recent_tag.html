@@ -22,9 +22,9 @@
       {% endif %}
     {% endif %}
 {% endfor %}
-      <a href="javascript:show_more_tag();" class="g-button mini">閉じる</a>
+      <a href="javascript:show_more_tag();" class="g-button mini">{% if is_english %}Close{% else %}閉じる{% endif %}</a>
     </div>
-      <a id="show_more_tag_button" href="javascript:show_more_tag();" class="g-button mini">もっと見る</a>
+      <a id="show_more_tag_button" href="javascript:show_more_tag();" class="g-button mini">{% if is_english %}More{%else%}もっと見る{% endif %}</a>
 </div>
 
 {% endif %}

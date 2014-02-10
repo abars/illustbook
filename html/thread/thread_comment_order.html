@@ -5,20 +5,20 @@
 <!-- 表示順 -->
 	<div class="g-button-group">
 		<a class="g-button mini dropdown-toggle" data-toggle="dropdown" href="#" style="color:#444">
-			{% if order == "new" %}新着順{% endif %}
-			{% if order == "update" %}更新順{% endif %}
+			{% if order == "new" %}{% if is_english %}New{% else %}新着順{% endif %}{% endif %}
+			{% if order == "update" %}{% if is_english %}Update{% else %}更新順{% endif %}{% endif %}
 			<span class="caret"></span>
 		</a>
 		<ul class="dropdown-menu">
-			<li><a href="javascript:select_change('new','{{page_url_base}}',{{page}},{{limit}});" style="border-bottom: 0px;color:#444;">新着順</a></li>
-			<li><a href="javascript:select_change('update','{{page_url_base}}',{{page}},{{limit}});" style="border-bottom: 0px;color:#444">更新順</a></li>
+			<li><a href="javascript:select_change('new','{{page_url_base}}',{{page}},{{limit}});" style="border-bottom: 0px;color:#444;">{% if is_english %}New{% else %}新着順{% endif %}</a></li>
+			<li><a href="javascript:select_change('update','{{page_url_base}}',{{page}},{{limit}});" style="border-bottom: 0px;color:#444">{% if is_english %}Update{% else %}更新順{% endif %}</a></li>
 		</ul>
 	</div>
 
 <!-- ページあたりの表示数 -->
 	<div class="g-button-group">
 		<a class="g-button mini dropdown-toggle" data-toggle="dropdown" href="#" style="color:#444">
-			{{limit}}件
+			{{limit}}{% if is_english %}{% else %}件{% endif %}
 			<span class="caret"></span>
 		</a>
 		<ul class="dropdown-menu">

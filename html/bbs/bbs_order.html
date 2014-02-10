@@ -3,7 +3,7 @@
 
 	<div class="g-button-group">
 	<a class="g-button mini dropdown-toggle" data-toggle="dropdown" href="#" style="color:#444">
-		{% if order == "new" %}新着順{% endif %}
+		{% if order == "new" %}{% if is_english %}New{% else %}新着順{% endif %}{% endif %}
 		{% if order == "update" %}更新順{% endif %}
 		{% if order == "comment" %}コメント数{% endif %}
 		{% if order == "applause" %}拍手順{% endif %}
@@ -34,18 +34,18 @@
 				<!--
 				<a class="g-button no-text" href="javascript:bbs_open_ipad_canvas_size();" style="color:#444;">イラストを描く</a>
 				-->
-				<a class="g-button no-text" href="javascript:bbs_open_draw('','{{bbs.key()}}','{{host}}');" style="color:#444;">イラストを描く</a>
+				<a class="g-button no-text" href="javascript:bbs_open_draw('','{{bbs.key()}}','{{host}}');" style="color:#444;">{% if is_english %}Open Draw Tool{% else %}イラストを描く{% endif %}</a>
 			{% endif %}
 		{% endif %}
 	{% endif %}
 	{% if owner %}
-		<a class="g-button no-text" href="{{host}}edit_bbs?bbs_key={{bbs.key()}}" style="color:#444;">デザインの編集</a>
+		<a class="g-button no-text" href="{{host}}edit_bbs?bbs_key={{bbs.key()}}" style="color:#444;">{% if is_english %}Edit BBS{% else %}デザインの編集{% endif %}</a>
 	{% endif %}
 	</div>
 	<div style="display:none;margin:5px;float:right;" id="ipad_canvas_size">
 		<input id="canvas_width" value="{%if bbs.default_canvas_width%}{{bbs.default_canvas_width}}{%else%}400{%endif%}" maxlength=3 size=3/>x
 		<input id="canvas_height" value="{%if bbs.default_canvas_height%}{{bbs.default_canvas_height}}{%else%}400{%endif%}" maxlength=3 size=3/>
-		<a class="g-button no-text" href="javascript:bbs_open_draw('','{{bbs.key()}}','{{host}}');" style="color:#444;">イラブペイントを開く</a>
+		<a class="g-button no-text" href="javascript:bbs_open_draw('','{{bbs.key()}}','{{host}}');" style="color:#444;">{% if is_english %}Open Draw Tool{% else %}イラブペイントを開く{% endif %}</a>
 	</div>
 {% endif %}
 

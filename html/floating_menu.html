@@ -27,7 +27,7 @@
 				<a href="{{host}}mypage" class="g-button mini {% if not show_link_detail %}no-text{% endif %}" style="margin:0px;">
 					<i class="icon-home"></i>
 					{% if show_link_detail %}
-						マイページ
+						{% if is_english %}MyPage{%else%}マイページ{% endif %}
 					{% endif %}
 					{% if my_new_feed_count %}
 						({{my_new_feed_count}})
@@ -37,7 +37,7 @@
 				<a href="{{host}}" class="g-button mini {% if not show_link_detail %}no-text{% endif %}" style="margin:0px;">
 					<i class="icon-home"></i>
 					{% if show_link_detail %}
-					トップ
+						{% if is_english %}Top{%else%}トップ{% endif %}
 					{% endif %}
 				</a>
 			{% endif %}
@@ -46,13 +46,13 @@
 		{% if not edit_thread %}
 			{% if thread %}
 				{% if thread.user_id %}
-					<a href="{{host}}mypage?user_id={{thread.user_id}}" class="g-button mini"><i class="icon-user"></i>ドロワー</a>
+					<a href="{{host}}mypage?user_id={{thread.user_id}}" class="g-button mini"><i class="icon-user"></i>{% if is_english %}Drawer{% else %}ドロワー{% endif %}</a>
 				{% endif %}
-				{{thread|add_bookmark_thread(host,is_iphone,user)|safe}}
+				{{thread|add_bookmark_thread(host,is_iphone,is_english,user)|safe}}
 			{% else %}
 				{% if bbs %}
-					<a href="{{host}}mypage?user_id={{bbs.user_id}}" class="g-button mini"><i class="icon-user"></i>オーナー</a>
-					{{bbs|add_bookmark_bbs(host,is_iphone,user)|safe}}
+					<a href="{{host}}mypage?user_id={{bbs.user_id}}" class="g-button mini"><i class="icon-user"></i>{% if is_english %}Owner{% else %}オーナー{% endif %}</a>
+					{{bbs|add_bookmark_bbs(host,is_iphone,is_english,user)|safe}}
 				{% endif %}
 			{% endif %}
 		{% endif %}
@@ -62,7 +62,8 @@
 	{% if is_iphone and top_page %}
 		<div style="float:right;padding-left:2px;padding-top:1px;padding-right:2px;font-weight:600;">
 	     	<div class="g-button-group">
-	    	<a class="g-button dropdown-toggle" style="padding:6px;" data-toggle="dropdown" href="#">メニュー
+	    	<a class="g-button dropdown-toggle" style="padding:6px;" data-toggle="dropdown" href="#">
+	    		{% if is_english %}Menu{%else%}メニュー{% endif %}
 	    		<span class="caret"></span>
 	    	</a>
 			<ul class="dropdown-menu" style="right:0;left:auto;">
@@ -85,10 +86,10 @@
 		<div style="float:right;padding-left:2px;padding-top:3px;padding-right:2px;font-weight:600;">
 			{% if user %}
 				{% if not is_iphone or mypage %}
-					<a href="{{redirect_url|logout_url|escape}}" class="g-button mini"><i class="icon-off"></i>ログアウト</a>
+					<a href="{{redirect_url|logout_url|escape}}" class="g-button mini"><i class="icon-off"></i>{% if is_english %}Logout{%else%}ログアウト{% endif %}</a>
 				{% endif %}
 			{% else %}
-				<a href="{{redirect_url|login_url|escape}}" class="g-button mini"><i class="icon-off"></i>ログイン</a>
+				<a href="{{redirect_url|login_url|escape}}" class="g-button mini"><i class="icon-off"></i>{% if is_english %}Login{% else %}ログイン{% endif %}</a>
 			{% endif %}
 		</div>
       {% endif %}

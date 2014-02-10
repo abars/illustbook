@@ -190,7 +190,7 @@ def div(value):
 #ブックマーク
 #-----------------------------------------------------------------
 
-def add_bookmark_core(command,search,count,is_iphone,user):
+def add_bookmark_core(command,search,count,is_iphone,is_english,user):
 	txt=""
 
 	if(count):
@@ -202,25 +202,28 @@ def add_bookmark_core(command,search,count,is_iphone,user):
 	if(user):
 		txt+='<a href="javascript:'+command+'" class="g-button mini">'
 		txt+='<i class="icon-plus"></i>'
-		if(is_iphone):
-			txt+='ブクマ'
+		if(is_english):
+			txt+='Bookmark'
 		else:
-			txt+='ブックマーク'
+			if(is_iphone):
+				txt+='ブクマ'
+			else:
+				txt+='ブックマーク'
 		txt+='</a>'
 
 	return txt
 
-def add_bookmark_thread(thread,host,is_iphone,user):
+def add_bookmark_thread(thread,host,is_iphone,is_english,user):
 	command="AddBookmark('"+host+"','"+str(thread.key())+"')"
 	search=""+host+'show_bookmark?thread_key='+str(thread.key())
 	count=thread.bookmark_count
-	return add_bookmark_core(command,search,count,is_iphone,user)
+	return add_bookmark_core(command,search,count,is_iphone,is_english,user)
 
-def add_bookmark_bbs(bbs,host,is_iphone,user):
+def add_bookmark_bbs(bbs,host,is_iphone,is_english,user):
 	command="bbs_add_bookmark('"+bbs.bbs_name+"','"+str(bbs.key())+"','"+host+"')";
 	search=""+host+'show_bookmark?bbs_key='+str(bbs.key())
 	count=bbs.bookmark_count
-	return add_bookmark_core(command,search,count,is_iphone,user)
+	return add_bookmark_core(command,search,count,is_iphone,is_english,user)
 
 #-----------------------------------------------------------------
 #アプリ表示

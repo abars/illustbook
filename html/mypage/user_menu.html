@@ -2,16 +2,16 @@
   <div style="float:left">
   <div class="g-button-group toggle-buttons">
     {% if submit_illust_exist %}
-      <a href="{{host}}{{redirect_api}}?{% if bookmark %}user_id={{user_id}}&{% endif %}tab=submit" class="g-button {%if tab=="submit"%}checked{%endif%}">{% if is_iphone %}投稿{%else%}投稿したイラスト{% endif %}</a>
+      <a href="{{host}}{{redirect_api}}?{% if bookmark %}user_id={{user_id}}&{% endif %}tab=submit" class="g-button {%if tab=="submit"%}checked{%endif%}">{% if is_english %}Submit{% else %}{% if is_iphone %}投稿{%else%}投稿したイラスト{% endif %}{% endif %}</a>
     {% endif %}
-    {% if submit_moper_exist and not is_iphone %}
+    {% if submit_moper_exist and not is_iphone and not is_english%}
       <a href="{{host}}{{redirect_api}}?{% if bookmark %}user_id={{user_id}}&{% endif %}tab=moper" class="g-button {%if tab=="moper"%}checked{%endif%}">{% if is_iphone %}動画{%else%}投稿した動画{% endif %}</a>
     {% endif %}
     {% if bookmark_illust_exist %}
-      <a href="{{host}}{{redirect_api}}?{% if bookmark %}user_id={{user_id}}&{% endif %}tab=bookmark" class="g-button {%if tab == "bookmark"%}checked{%endif%}">{% if is_iphone %}ブクマ{%else%}ブックマーク{%endif%}</a>
+      <a href="{{host}}{{redirect_api}}?{% if bookmark %}user_id={{user_id}}&{% endif %}tab=bookmark" class="g-button {%if tab == "bookmark"%}checked{%endif%}">{% if is_english %}Bookmark{% else %}{% if is_iphone %}ブクマ{%else%}ブックマーク{%endif%}{% endif %}</a>
     {% endif %}
-    <a href="{{host}}{{redirect_api}}?{% if bookmark %}user_id={{user_id}}&{% endif %}tab=bbs" class="g-button {%if tab == "bbs"%}checked{%endif%}">掲示板</a>
-    <a href="{{host}}{{redirect_api}}?{% if bookmark %}user_id={{user_id}}&{% endif %}tab=feed" class="g-button {%if tab == "feed" or tab=="timeline" %}checked{%endif%}">{% if is_iphone %}TL{%else%}タイムライン{% if not view_mode %}{% if new_feed_count %}({{new_feed_count}}){% endif %}{% endif %}{% endif %}</a>
+    <a href="{{host}}{{redirect_api}}?{% if bookmark %}user_id={{user_id}}&{% endif %}tab=bbs" class="g-button {%if tab == "bbs"%}checked{%endif%}">{% if is_english %}BBS{% else %}掲示板{% endif %}</a>
+    <a href="{{host}}{{redirect_api}}?{% if bookmark %}user_id={{user_id}}&{% endif %}tab=feed" class="g-button {%if tab == "feed" or tab=="timeline" %}checked{%endif%}">{% if is_iphone or is_english %}TL{%else%}タイムライン{% if not view_mode %}{% if new_feed_count %}({{new_feed_count}}){% endif %}{% endif %}{% endif %}</a>
   </div>
   </div>
   {% if not is_iphone %}
@@ -20,9 +20,9 @@
   {% else %}
     {% if not view_mode %}
       {% if edit_mode %}
-     　<a href="{{host}}{{redirect_api}}?user_id={{user_id}}&tab={{tab}}" class="g-button">戻る</a>
+     　<a href="{{host}}{{redirect_api}}?user_id={{user_id}}&tab={{tab}}" class="g-button">{% if is_english %}Back{% else %}戻る{% endif %}</a>
       {% else %}
-     　<a href="{{host}}{{redirect_api}}?user_id={{user_id}}&tab={{tab}}&edit=1" class="g-button">編集</a>
+     　<a href="{{host}}{{redirect_api}}?user_id={{user_id}}&tab={{tab}}&edit=1" class="g-button">{% if is_english %}Edit{% else %}編集{% endif %}</a>
      {% endif %}
      {% endif %}
   {% endif %}

@@ -101,8 +101,8 @@
     </div>
     <div style="float:right;margin:4px;">
       <small>
-      {%if thread.bookmark %}<a href="{{host}}show_bookmark?thread_key={{thread.key}}">{{thread.bookmark}}ブクマ</a><br/>{% endif %}
-      {%if thread.applause %}{{thread.applause}}拍手<br/>{% endif %}
+      {%if thread.bookmark %}<a href="{{host}}show_bookmark?thread_key={{thread.key}}">{{thread.bookmark}}{% if is_english %}Bookmark{%else%}ブクマ{% endif %}</a><br/>{% endif %}
+      {%if thread.applause %}{{thread.applause}}{% if is_english %}Like{% else %}拍手{% endif %}<br/>{% endif %}
       </small>
     </div>
 {% endif %}
@@ -119,7 +119,7 @@
     {%if thread.comment %}
     <hr style="margin:0px;clear:both;"/>
     <div style="text-align:center;padding:4px;">
-      <a href="{{thread.thread_url}}" {{target_page}} style="display:block;"><small>{{thread.comment}}件のコメント</small></a>
+      <a href="{{thread.thread_url}}" {{target_page}} style="display:block;"><small>{{thread.comment}}{% if is_english %} Comment{% else %}件のコメント{% endif %}</small></a>
     </div>
     {% endif %}
   </div>

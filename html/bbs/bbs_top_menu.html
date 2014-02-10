@@ -21,7 +21,7 @@
 			<input type="text" name="text" id="canvas_height" value="{%if bbs.default_canvas_height%}{{bbs.default_canvas_height}}{%else%}400{%endif%}"/>
 			<img src="{{template_path}}images/header_px.gif" alt="px" width="17" height="17" />
 		{% else%}
-			<div class="g-button">キャンバスサイズ　<input type="text" id="canvas_width" value="{%if bbs.default_canvas_width%}{{bbs.default_canvas_width}}{%else%}400{%endif%}" maxlength="3" size="3"/><i class="icon-remove"></i><input type="text" id="canvas_height" value="{%if bbs.default_canvas_height%}{{bbs.default_canvas_height}}{%else%}400{%endif%}" maxlength="3" size="3"/>px</div>
+			<div class="g-button">{% if is_english %}Canvas Size{% else %}キャンバスサイズ{% endif %}　<input type="text" id="canvas_width" value="{%if bbs.default_canvas_width%}{{bbs.default_canvas_width}}{%else%}400{%endif%}" maxlength="3" size="3"/><i class="icon-remove"></i><input type="text" id="canvas_height" value="{%if bbs.default_canvas_height%}{{bbs.default_canvas_height}}{%else%}400{%endif%}" maxlength="3" size="3"/>px</div>
 		{% endif%}
 		</div>
 	{% endif%}
@@ -34,11 +34,11 @@
 					{%if template_path %}
 						<a href="javascript:bbs_open_draw('','{{bbs.key()}}','{{host}}');"><img src="{{template_path}}images/header_edit1.jpg" alt="イラストを描く" width="103" height="28"/></a>
 					{% else %}
-						<input type="button" value="イラストを描く"  class="g-button" onclick="bbs_open_draw('','{{bbs.key()}}','{{host}}');"/>
+						<input type="button" value="{% if is_english %}Open Draw Tool{% else %}イラストを描く{% endif %}"  class="g-button" onclick="bbs_open_draw('','{{bbs.key()}}','{{host}}');"/>
 					{% endif %}
 				{%endif%}
 		
-				{% if bbs.enable_moper %}
+				{% if bbs.enable_moper and not is_english%}
 					{%if template_path %}
 						<a href="javascript:bbs_open_moper('','{{bbs.key()}}','{{host}}');"><img src="{{template_path}}images/header_edit2.jpg" alt="動画を描く" width="103" height="28"/></a>
 					{% else %}
@@ -56,7 +56,7 @@
 			{%if template_path %}
 				<a href="{{host}}edit_bbs?bbs_key={{bbs.key()}}"><img src="{{template_path}}images/header_edit3.jpg" alt="デザインの編集" width="103" height="28"/></a>
 			{% else %}
-				<input type="button" value="デザインの編集"  class="g-button" onclick="window.location.href='{{host}}edit_bbs?bbs_key={{bbs.key()}}'"/>
+				<input type="button" value="{% if is_english %}Edit BBS{% else %}デザインの編集{% endif %}"  class="g-button" onclick="window.location.href='{{host}}edit_bbs?bbs_key={{bbs.key()}}'"/>
 			{%endif%}
 		{% endif %}
 	</div>

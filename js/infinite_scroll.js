@@ -17,8 +17,14 @@
     });    
 
 //infinite scroll
-function infinite_scroll_initialize(itemSelector,use_masonry,host,page){
+function infinite_scroll_initialize(itemSelector,use_masonry,host,page,is_english){
 	var $container = $('#infinite-scroll-container');
+  var final_page="ページの終端です。";
+  var loading_page="次のページを読込中"
+  if(is_english){
+    final_page="finish"
+    loading_page="loading next page"
+  }
 	$container.infinitescroll({
       navSelector  : '#page-nav',    // selector for the paged navigation 
       nextSelector : '#page-nav a',  // selector for the NEXT link (to page 2)
@@ -28,9 +34,9 @@ function infinite_scroll_initialize(itemSelector,use_masonry,host,page){
         currPage: page
       },
       loading: {
-          finishedMsg: '<div class="loading">ページの終端です。</div>',
+          finishedMsg: '<div class="loading">'+final_page+'</div>',
           img: host+'static_files/loading2.gif',
-          msgText: '<div class="loading">次のページを読込中</div>'
+          msgText: '<div class="loading">'+loading_page+'</div>'
         }
       },
       // trigger Masonry as a callback

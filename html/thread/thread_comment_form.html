@@ -7,10 +7,10 @@
 	
 	<div class="g-button-group toggle-buttons">
 	{%if not bbs.disable_normal_reply %}
-		<a href="javascript:display_comment_tab('text','{{thread.key()}}');" class="g-button no-text comment_tab_{{thread.key()}} comment_tab_{{thread.key()}}_text"><i class="icon-pencil"></i>コメントを書く</a>
+		<a href="javascript:display_comment_tab('text','{{thread.key()}}');" class="g-button no-text comment_tab_{{thread.key()}} comment_tab_{{thread.key()}}_text"><i class="icon-pencil"></i>{% if is_english %}Write Comment{%else%}コメントを書く{% endif %}</a>
 	{%endif%}
 	{%if bbs.enable_illust_reply %}
-		<a href="javascript:display_comment_tab('illust','{{thread.key()}}');" class="g-button no-text comment_tab_{{thread.key()}} comment_tab_{{thread.key()}}_illust"><i class="icon-picture"></i>絵でコメントを描く</a>
+		<a href="javascript:display_comment_tab('illust','{{thread.key()}}');" class="g-button no-text comment_tab_{{thread.key()}} comment_tab_{{thread.key()}}_illust"><i class="icon-picture"></i>{% if is_english %}Draw Comment{%else%}絵でコメントを描く{% endif %}</a>
 	{%endif%}
 	</div>
 	<br/>
@@ -33,30 +33,30 @@
 
 		<form action='http://localhost/' enctype="multipart/form-data" method="post" onsubmit="this.action='{{host}}add_entry?bbs_key={{ bbs.key() }}&amp;thread_key={{ thread.key() }}&amp;seed={{0|set_seed}}';">
 			<table class="table_color">
-			<tr><td>名前（必須）</td>
+			<tr><td>{% if is_english %}Name(MUST){% else %}名前（必須）{% endif %}</td>
 			<td>
 				<input type="text" name="author" maxlength="50" value="{{user_name}}"/>
 				{% if is_iphone %}<br/>{% endif %}
 				{% if logined %}
-					<input name="link_to_profile" type="checkbox" checked/>マイページにリンク
+					<input name="link_to_profile" type="checkbox" checked/>{% if is_english %}Link to mypage{% else %}マイページにリンク{% endif %}
 				{% else %}
-					マイページにリンクするにはログインして下さい
+					{% if is_english %}{%else%}マイページにリンクするにはログインして下さい{% endif %}
 				{% endif %}
 			</td></tr>
 			{% if logined %}
 			{% else %}
-			<tr><td>ホームページアドレス</td>
+			<tr><td>{% if is_english %}Homepage URL{%else%}ホームページアドレス{% endif %}</td>
 			<td>
 				<input type="text" name="homepage_addr" maxlength="50" value="http://"/>
 			</td></tr>
 			{% endif %}
-			<tr><td>コメント（必須）</td>
+			<tr><td>{% if is_english %}Comment(MUST){% else %}コメント（必須）{% endif %}</td>
 			<td>
 				<textarea name="comment" rows="10" cols="60" style="width:100%;"></textarea>
 			</td></tr>
 			<tr><td></td><td>
 			<input type="hidden" name="redirect_url" value="{{redirect_url}}"/>
-			<input type="submit" value="コメントを書き込む" class="g-button"/>
+			<input type="submit" value="{% if is_english %}Submit{% else %}コメントを書き込む{% endif %}" class="g-button"/>
 			</td></tr>
 		</table>
 		</form>
@@ -64,12 +64,12 @@
 
 	<div class="comment_tab_{{thread.key()}}_body comment_tab_{{thread.key()}}_body_illust" style="display:none;margin:4px;">
 		<div style="margin:4px;">
-		<p>イラストの横幅　<input type="text" id="canvas_width_{{thread.key()}}" value="{{bbs.illust_reply_width}}" maxlength="3" size="3"/>px</p>
-		<p>イラストの高さ　<input type="text" id="canvas_height_{{thread.key()}}" value="{{bbs.illust_reply_height}}" maxlength="3" size="3"/>px</p>
+		<p>{% if is_english %}Width{%else%}イラストの横幅{% endif %}　<input type="text" id="canvas_width_{{thread.key()}}" value="{{bbs.illust_reply_width}}" maxlength="3" size="3"/>px</p>
+		<p>{% if is_english %}Height{%else%}イラストの高さ{% endif %}　<input type="text" id="canvas_height_{{thread.key()}}" value="{{bbs.illust_reply_height}}" maxlength="3" size="3"/>px</p>
 		{%if bbs.enable_illust_reply_continue %}
-		<p>絵で続きからコメント <input type="checkbox" id="continue_reply_{{thread.key()}}"/></p>
+		<p>{% if is_english %}Continue{%else%}絵で続きからコメント{% endif %} <input type="checkbox" id="continue_reply_{{thread.key()}}"/></p>
 		{% endif %}
 		</div>
-		<input type="button" value="イラブペイントを開く" class="g-button" onclick="open_draw('{{thread.cached_image_key}}',1,'{{host}}','','{{thread.key()}}','{{bbs.key()}}',{{thread.illust_mode}});"/>
+		<input type="button" value="{% if is_english %}Open Draw Tool{% else %}イラブペイントを開く{% endif %}" class="g-button" onclick="open_draw('{{thread.cached_image_key}}',1,'{{host}}','','{{thread.key()}}','{{bbs.key()}}',{{thread.illust_mode}});"/>
 	</div>
 {% endif %}

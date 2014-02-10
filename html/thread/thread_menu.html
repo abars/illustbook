@@ -4,7 +4,7 @@
 
 	<div class="g-button-group toggle-buttons">
 		<a class="g-button dropdown-toggle" data-toggle="dropdown" href="#">
-		その他の操作<span class="caret"></span>
+		{% if is_english %}Others{% else %}その他の操作{% endif %}<span class="caret"></span>
 		</a>
 		<ul class="dropdown-menu">
 		{% if thread.cached_image_key %}

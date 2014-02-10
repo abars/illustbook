@@ -196,9 +196,8 @@ class Pinterest(webapp.RequestHandler):
 	def initialize_template_value(self,user,user_id,page,request_page_mode,redirect_api,contents_only):
 		search_api="search_tag"
 
-		#is_flat=False
-		#if(self.request.get("is_flat")):
 		is_flat=True
+		is_english=CssDesign.is_english(self)
 
 		template_values = {
 			'user': user,
@@ -223,7 +222,8 @@ class Pinterest(webapp.RequestHandler):
 			'top_page': False,
 			'use_masonry': True,
 			'infinite_scroll_selecter': ".item",
-			'flat_ui': is_flat
+			'flat_ui': is_flat,
+			'is_english': is_english
 		}
 		return template_values
 
@@ -525,9 +525,8 @@ class Pinterest(webapp.RequestHandler):
 			if(bookmark.thumbnail_created==2):
 				violate_icon=True
 
-		#is_flat=False
-		#if(self.request.get("is_flat")):
 		is_flat=True
+		is_english=CssDesign.is_english(self)
 
 		template_values = {
 			'user': user,
@@ -573,7 +572,8 @@ class Pinterest(webapp.RequestHandler):
 			'timeline_unit': timeline_unit,
 			'infinite_scroll_selecter': infinite_scroll_selecter,
 			'flat_ui': is_flat,
-			'violate_icon': violate_icon
+			'violate_icon': violate_icon,
+			'is_english': is_english
 		}
 		Pinterest._render_page(self,template_values)
 

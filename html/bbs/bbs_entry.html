@@ -57,7 +57,7 @@
 	<div class="entry-comment" style="word-break:break-all;">
 	<p>{{thread.summary|auto_link|safe}}</p>
 	{% if thread.postscript %}
-	　<p><a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key()}}{%endif%}.html' class="g-button" style="color:#444;">続きを読む</a></p>
+	　<p><a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key()}}{%endif%}.html' class="g-button" style="color:#444;">{% if is_english %}Continue{% else %}続きを読む{% endif %}</a></p>
 	{% endif %}
 	</div>
 	
@@ -66,10 +66,10 @@
 		<div class="g-button-group toggle-buttons">
 		{%if not bbs.disable_comment %}
 			{%if thread.comment_cnt %}
-				<a href="{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key()}}{%endif%}.html" class="g-button no-text comment_tab_{{thread.key()}} comment_tab_{{thread.key()}}_text">コメントを読む({{thread.comment_cnt}})</a>
+				<a href="{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key()}}{%endif%}.html" class="g-button no-text comment_tab_{{thread.key()}} comment_tab_{{thread.key()}}_text">{% if is_english %}Read Comment{% else %}コメントを読む{% endif %}({{thread.comment_cnt}})</a>
 			{% endif %}
 			{% if show_comment_form %}
-				<a href="{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key()}}{%endif%}.html" class="g-button no-text comment_tab_{{thread.key()}} comment_tab_{{thread.key()}}_text">コメントを書く</a>
+				<a href="{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key()}}{%endif%}.html" class="g-button no-text comment_tab_{{thread.key()}} comment_tab_{{thread.key()}}_text">{% if is_english %}Write Comment{% else %}コメントを書く{% endif %}</a>
 			{%endif%}
 		{%endif%}
 		</div>

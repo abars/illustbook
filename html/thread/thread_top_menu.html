@@ -6,20 +6,24 @@
 			<a href='{{usrhost}}' class="g-button" style="color:#333;"><i class="icon-chevron-left"></i>
 		{% endif %}
 
-		{% if is_iphone %}
-			{% if bbs.tweet_disable %}
-				{{bbs.bbs_name|truncate(16,true)}}
-			{% else %}
-				{% if template_path %}
-					{{bbs.bbs_name|truncate(10,true)}}
-				{% else %}
-					{{bbs.bbs_name|truncate(7,true)}}
-				{% endif %}
-			{% endif %}
+		{% if is_english %}
+			Back to BBS
 		{% else %}
-			{{bbs.bbs_name}}
+			{% if is_iphone %}
+				{% if bbs.tweet_disable %}
+					{{bbs.bbs_name|truncate(16,true)}}
+				{% else %}
+					{% if template_path %}
+						{{bbs.bbs_name|truncate(10,true)}}
+					{% else %}
+						{{bbs.bbs_name|truncate(7,true)}}
+					{% endif %}
+				{% endif %}
+			{% else %}
+				{{bbs.bbs_name}}
+			{% endif %}
+			へ戻る
 		{% endif %}
-		へ戻る
 	
 		{% if template_path %}
 			</a></p>

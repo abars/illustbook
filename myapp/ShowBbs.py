@@ -196,6 +196,9 @@ class ShowBbs(webapp.RequestHandler):
 		#メッセージ
 		message=memcache.get(BbsConst.OBJECT_BBS_MESSAGE_HEADER+str(bbs.key()))
 
+		#英語版かどうか
+		is_english=CssDesign.is_english(self)
+
 		#レンダリング
 		template_values = {
 			'host': host_url,
@@ -236,7 +239,8 @@ class ShowBbs(webapp.RequestHandler):
 			'infinite_scroll': infinite_scroll,
 			'infinite_scroll_selecter': ".entry",
 			'contents_only': contents_only,
-			'message': message
+			'message': message,
+			'is_english': is_english
 		}
 
 		path = "/html/"+design["base_name"]

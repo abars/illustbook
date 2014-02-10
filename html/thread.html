@@ -28,7 +28,7 @@
 			{% endif %}
 				<!-- メンテナンス中 -->
 				{% if is_maintenance %}
-					<h2>メンテナンスモードで稼動しています。現在、新規投稿はできません。</h2><br/>
+					<h2>{% if is_english %}Emergency Maintenance.{% else %}メンテナンスモードで稼動しています。現在、新規投稿はできません。{% endif %}</h2><br/>
 				{% endif %}
 				{% if message %}
 					<h2>{{message}}</h2><br/>
@@ -54,9 +54,15 @@
 				{% if not bbs.disable_comment %}
 					<div class="entry">
 					{% if search %}{{search}}を含む{% endif %}
-					コメント
+					{% if is_english %}Comment{% else %}コメント{% endif %}
 					{% if not comment %}
-						<hr/>{% if search %}コメントは見つかりませんでした。{%else%}コメントはまだありません。{% endif %}<br/>
+						<hr/>
+						{% if is_english %}
+							no comments
+						{% else %}
+							{% if search %}コメントは見つかりませんでした。{%else%}コメントはまだありません。{% endif %}
+						{% endif %}
+						<br/>
 					{% else %}
 						{{comment}}
 					{% endif %}
@@ -71,11 +77,11 @@
 				<!--検索-->
 				{% if bbs.bbs_mode == 3 %}
 				<div class="entry">
-				コメント検索<hr/>
+				{% if is_english %}Search Comment{% else %}コメント検索{% endif %}<hr/>
 				<div class="g-button-group toggle-buttons">
 					<form method="get" action="{{usrhost}}{{thread.short}}.html">
 					<input name="search" style="float:left;width:200px;margin-top:2px;margin-right:2px;" value="{% if search	 %}{{search}}{% endif %}"/>
-					<input type="submit" value="検索" class="g-button"/>
+					<input type="submit" value="{% if is_english %}Search{%else%}検索{% endif %}" class="g-button"/>
 					</form>
 				</div>
 				</div>
@@ -83,7 +89,7 @@
 				
 				<!-- スレッドメニュー -->
 				<div class="entry">
-				メニュー
+				{% if is_english %}Menu{% else %}メニュー{% endif %}
 				<HR>
 				{% include "thread/thread_menu.html" %}
 				</div>

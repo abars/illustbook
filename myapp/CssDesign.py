@@ -131,6 +131,15 @@ class CssDesign (webapp.RequestHandler):
 
 		return dict
 
+	@staticmethod
+	def is_english(main):
+		if(main.request.get("is_english")):
+			return True
+		for lang in main.request.headers["Accept-Language"].split(","):
+			if(lang.startswith("ja")):
+				return False
+		return True
+
 	def get(self,bbs_or_css_key,mode):
 		bbs=None
 		user_css=None
