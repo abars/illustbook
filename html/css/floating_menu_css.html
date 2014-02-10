@@ -4,7 +4,7 @@ padding: 1px 0;
 padding-left:2px;
 min-height:28px;
 text-align: left;
-{% if not flat_ui %}
+{% if not flat_ui or not is_iphone %}
 border-bottom: 1px solid #ccc;
 {% endif %}
 background-color:#ffffff;
