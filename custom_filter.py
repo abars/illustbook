@@ -214,13 +214,19 @@ def add_bookmark_core(command,search,count,is_iphone,is_english,user):
 	return txt
 
 def add_bookmark_thread(thread,host,is_iphone,is_english,user):
-	command="AddBookmark('"+host+"','"+str(thread.key())+"')"
+	is_english_flag="false"
+	if(is_english):
+		is_english_flag="true"
+	command="AddBookmark('"+host+"','"+str(thread.key())+"',"+is_english_flag+")"
 	search=""+host+'show_bookmark?thread_key='+str(thread.key())
 	count=thread.bookmark_count
 	return add_bookmark_core(command,search,count,is_iphone,is_english,user)
 
 def add_bookmark_bbs(bbs,host,is_iphone,is_english,user):
-	command="bbs_add_bookmark('"+bbs.bbs_name+"','"+str(bbs.key())+"','"+host+"')";
+	is_english_flag="false"
+	if(is_english):
+		is_english_flag="true"
+	command="bbs_add_bookmark('"+bbs.bbs_name+"','"+str(bbs.key())+"','"+host+"',"+is_english_flag+")";
 	search=""+host+'show_bookmark?bbs_key='+str(bbs.key())
 	count=bbs.bookmark_count
 	return add_bookmark_core(command,search,count,is_iphone,is_english,user)

@@ -140,10 +140,13 @@ class CssDesign (webapp.RequestHandler):
 
 		#UserAgentで判別
 		if "Accept-Language" in main.request.headers:
+			#優先度順に列挙
 			for lang in main.request.headers["Accept-Language"].split(","):
+				if(lang.startswith("en")):
+					return True
 				if(lang.startswith("ja")):
 					return False
-			return True
+			return True	#jaが指定されていなければ英語
 
 		#UserAgentが定義されていなければ日本語
 		return False

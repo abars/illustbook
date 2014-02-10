@@ -3,14 +3,14 @@
 			{%else%}
 				{%if thread.draw_time %}
 					{%if thread.draw_time == -1 %}
-					（アップロード）
+					（{% if is_english %}Upload{% else %}アップロード{% endif %}）
 					{% else %}
-					（描画時間{{thread.draw_time|div}}分）
+					（{% if is_english %}Draw Time{% else %}描画時間{% endif %}{{thread.draw_time|div}}{% if not is_english %}分{% endif %}）
 					{% endif %}
 				{% endif %}
 			{%endif%}
 			{%if thread.is_ipad %}
-			（iPhone/iPadから投稿）
+			（{% if is_english %}from HTML5 version{% else %}HTML5版から投稿{% endif %}）
 			{% endif %}
 			{% if bbs.show_remote_addr_id %}
 			（ID：{{thread.remote_addr|ip_hash}}）

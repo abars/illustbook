@@ -13,7 +13,8 @@
       {% else %}
         <p>
         {% if is_english %}
-        Welcome to ILLUSTBOOK
+        Welcome to ILLUSTBOOK<br/>
+        You can create BBS in BBS tab.
         {% else %}
         イラストブックへようこそ。<br/>
         編集ボタンを押すと、ユーザ情報を登録することができます。<br/>
@@ -36,7 +37,7 @@
             {% if bookmark.homepage %}<tr><td>{% if is_english %}Homepage{%else%}ホームページ{% endif %}</td><td>　</td><td><a href="{{bookmark.homepage}}" class="declink"><div class="linebreak">{{bookmark.homepage}}</div></a></td></tr>{% endif %}
             {% if bookmark.mail %}<tr><td>{% if is_english %}Mail{%else%}メール{% endif %}</td><td>　</td><td><a href="mailto:{{bookmark.mail}}" class="declink"><div class="linebreak">{{bookmark.mail|safe}}</div></a></td></tr>{% endif %}
             {% if bookmark.twitter_id %}<tr><td>Twitter</td><td>　</td><td>{% if bookmark.twitter_id %}<a href="https://twitter.com/#!/{{bookmark.twitter_id}}" class="declink"><div class="linebreak">{{bookmark.twitter_id}}</div></a>{% endif %}</td></tr>{% endif %}
-            {% if is_admin %}{% if bookmark.owner %}<tr><td>アカウント(＊管理モード)</td><td>　</td><td>{{bookmark.owner.email()}}</td></tr>{% endif %}{% endif %}
+            {% if is_admin %}{% if bookmark.owner %}<tr><td>{% if is_english %}Account(*ADMIN){% else %}アカウント(＊管理モード){% endif %}</td><td>　</td><td>{{bookmark.owner.email()}}</td></tr>{% endif %}{% endif %}
             </table>
       </div>
 

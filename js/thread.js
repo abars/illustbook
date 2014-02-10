@@ -91,8 +91,8 @@ var isFlashInstalled=function(){if(navigator.plugins["Shockwave Flash"]){return 
 			}
 		}
 		
-		function AddBookmark(host,thread_key){
-			jPrompt("このイラストをブックマークしますか？<BR>以下のフォームからブックマークにコメントを付加することもできます。","","ブックマーク",
+		function AddBookmark(host,thread_key,is_english){
+			jPrompt(is_english ? "Are you bookmark this illust? You can also add comment from this form.":"このイラストをブックマークしますか？<BR>以下のフォームからブックマークにコメントを付加することもできます。","",is_english ? "Bookmark":"ブックマーク",
 				function(comment){
 					if(comment==null){
 						return;
