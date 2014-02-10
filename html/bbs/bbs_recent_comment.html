@@ -1,9 +1,9 @@
 {% if side_comment %}
 	{% for entry in side_comment %}
 		{% if bbs.date_format == 2 %}
-			{{entry|comment_with_except_no_hour(host)|safe}}
+			{{entry|comment_with_except_no_hour(host,is_english)|safe}}
 		{% else %}
-			{{entry|comment_with_except(host)|safe}}
+			{{entry|comment_with_except(host,is_english)|safe}}
 		{% endif %}
 		<br/>
 	{%endfor%}

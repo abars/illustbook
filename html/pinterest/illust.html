@@ -93,7 +93,11 @@
        <br/>
        {% if thread.create_date_original %}
           <small>
+           {% if is_english %}
+           {{thread.create_date_original|time_UTC_progress}}
+           {% else %}
            {{thread.create_date_original|time_JST_progress}}
+           {% endif %}
           </small>
           <br/> 
        {% endif %}

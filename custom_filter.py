@@ -56,7 +56,10 @@ def time_JST_short(value):
 	return time_JST_format(value,10)
 
 def time_JST_progress(value):
-	return TimeProgress.get_date_diff_str(value,"前")
+	return TimeProgress.get_date_diff_str(value,"前",False)
+
+def time_UTC_progress(value):
+	return TimeProgress.get_date_diff_str(value," ago",True)
 	
 #-----------------------------------------------------------------
 #絵で返信
@@ -92,13 +95,13 @@ def image_key_with_except(thread):
 #新着コメント表記
 #-----------------------------------------------------------------
 
-def comment_with_except(entry,host):
-	return comment_with_except_core(entry,host,0)
+def comment_with_except(entry,host,is_english):
+	return comment_with_except_core(entry,host,0,is_english)
 
-def comment_with_except_no_hour(entry,host):
-	return comment_with_except_core(entry,host,1)
+def comment_with_except_no_hour(entry,host,is_english):
+	return comment_with_except_core(entry,host,1,is_english)
 
-def comment_with_except_core(entry,host,no_hour):
+def comment_with_except_core(entry,host,no_hour,is_english):
 	try:
 		ret="<a href='"+host;
 		if(entry["short"] and entry["short"]!="None") :
@@ -112,7 +115,10 @@ def comment_with_except_core(entry,host,no_hour):
 		ret+=title
 		ret+="("+entry["editor"]+")"
 		ret+="("
-		ret+=time_JST_progress(entry["date"])
+		if(is_english):
+			ret+=time_UTC_progress(entry["date"])
+		else:
+			ret+=time_JST_progress(entry["date"])
 		ret+=")</a> "
 	except:
 		return "title get error"+traceback.format_exc()

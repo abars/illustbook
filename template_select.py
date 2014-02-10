@@ -22,6 +22,7 @@ def set_jinja_filter(jinja_environment):
 			"time_JST_format":custom_filter.time_JST_format,
 			"time_JST_short":custom_filter.time_JST_short,
 			"time_JST_progress":custom_filter.time_JST_progress,
+			"time_UTC_progress":custom_filter.time_UTC_progress,
 			"comment_with_except":custom_filter.comment_with_except,
 			"comment_with_except_no_hour":custom_filter.comment_with_except_no_hour,
 			"reply_with_except":custom_filter.reply_with_except,

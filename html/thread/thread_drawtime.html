@@ -5,7 +5,7 @@
 					{%if thread.draw_time == -1 %}
 					（{% if is_english %}Upload{% else %}アップロード{% endif %}）
 					{% else %}
-					（{% if is_english %}Draw Time{% else %}描画時間{% endif %}{{thread.draw_time|div}}{% if not is_english %}分{% endif %}）
+					（{% if is_english %}Draw Time {% else %}描画時間{% endif %}{{thread.draw_time|div}}{% if is_english %}min{% else %}分{% endif %}）
 					{% endif %}
 				{% endif %}
 			{%endif%}

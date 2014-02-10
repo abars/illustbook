@@ -25,6 +25,10 @@
 		{% else %}
 			{% if is_english %}Date{% else %}投稿日{% endif %}：
 		{% endif%}
+		{% if is_english %}
+		{{thread.create_date|time_UTC_progress()}}
+		{% else %}
 		{{thread.create_date|time_JST_format(bbs.date_format)}}
+		{% endif %}
 	{% endif %}
 {% endif %}
