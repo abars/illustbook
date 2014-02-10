@@ -11,7 +11,7 @@
 		<div style="margin-top:8px;">
 		<a href="javascript:document.frm.submit();" class="g-button mini"><i class="icon-comment"></i>
 		{% if view_mode %}
-			{% if is_english %}Tweet for {% endif %}{{bookmark.name}}{% if not is_english %}さんに向けてツイート{% endif %}
+			{% if is_english %}Tweet to {% endif %}{{bookmark.name}}{% if not is_english %}さんに向けてツイート{% endif %}
 		{% else %}
 			{% if is_english %}Tweet{% else %}ツイート{% endif %}
 		{% endif %}

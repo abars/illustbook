@@ -62,12 +62,12 @@
       {% endif %}
       {% if not view_mode or is_admin %}
     <a class="g-button dropdown-toggle" data-toggle="dropdown" href="#">
-      {% if is_english %}Other{%else%}その他{% endif %} <span class="caret"></span>
+      {% if is_english %}Others{%else%}その他{% endif %} <span class="caret"></span>
     </a>
 
     <ul class="dropdown-menu">
-          <li><a href="{{host}}{{redirect_api}}">トップへ戻る</a></li>
-          {%if not bookmark.disable_rankwatch %}
+          <li><a href="{{host}}{{redirect_api}}">{% if is_english %}Top{% else %}トップへ戻る{% endif %}</a></li>
+          {%if not bookmark.disable_rankwatch and not is_english%}
           <li>
             <a href="ranking?mode=user">ランキング
               {% if user_rank %}{{user_rank}}位{% else %}-{% endif %}
@@ -75,15 +75,15 @@
           </li>
           {%endif%}
           {% if not view_mode %}
-            <li><a href="./mypage?tab=timeline">マイタイムライン</a></li>
+            <li><a href="./mypage?tab=timeline">{% if is_english %}My Timeline{% else %}マイタイムライン{% endif %}</a></li>
           {% endif %}
-          <li><a href="{{redirect_url|logout_url}}">ログアウト</a></li>
+          <li><a href="{{redirect_url|logout_url}}">{% if is_english %}Logout{% else %}ログアウト{% endif %}</a></li>
           {% if is_admin %}
           <li><a href="javascript:if(confirm('アイコンを凍結しますか？')){ window.location.href='{{host}}violation?user_id={{bookmark.user_id}}' }">アイコン凍結（＊管理モード）</a></li>
           <li><a href="javascript:if(confirm('アカウントを凍結しますか？')){ window.location.href='{{host}}mypage?freez=1&user_id={{bookmark.user_id}}' }">アカウント凍結（＊管理モード）</a></li>
           {% endif %}
           {% if not view_mode %}
-          <li><a href="javascript:confirm_withdraw('mypage?withdraw=go&user_id={{bookmark.user_id}}')">退会する{% if is_admin %}（＊管理モード）{% endif %}</a></li>
+          <li><a href="javascript:confirm_withdraw('mypage?withdraw=go&user_id={{bookmark.user_id}}')">{% if is_english %}Withdraw{% else %}退会する{% endif %}{% if is_admin %}（＊管理モード）{% endif %}</a></li>
           {% endif %}
           {% if is_admin %}
           <li><a href="{{host}}tolot/{{bookmark.user_id}}.html">アルバムを作成(β)</a></li>

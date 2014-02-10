@@ -3,21 +3,23 @@
 {% if  bbs.bbs_mode == 3 %}
 <p>&nbsp;</p>
 <div class="entry">
-	<h3>新しいスレッドの作成</h3>
-	{% if not bbs.disable_create_new_thread %}
-		この掲示板は誰でもスレッドが作成可能です。<br/>
-	{% else%}
-		{% if bbs.disable_create_new_thread == 1 %}
-			この掲示板は管理人のみスレッドが作成可能です。<br/>
-		{% else %}
-			この掲示板はログインしていれば誰でもスレッドが作成可能です。<br/>
+	<h3>{% if is_english %}Create new thread{% else %}新しいスレッドの作成{% endif %}</h3>
+	{% if not is_english %}
+		{% if not bbs.disable_create_new_thread %}
+			この掲示板は誰でもスレッドが作成可能です。<br/>
+		{% else%}
+			{% if bbs.disable_create_new_thread == 1 %}
+				この掲示板は管理人のみスレッドが作成可能です。<br/>
+			{% else %}
+				この掲示板はログインしていれば誰でもスレッドが作成可能です。<br/>
+			{% endif %}
 		{% endif %}
 	{% endif %}
 	<br/>
 
 	{% if can_create_thread %}
 	<div class="g-button-group toggle-buttons">
-		<a href="javascript:display_comment_tab('text','new_thread');" class="g-button no-text comment_tab_new_thread comment_tab_new_thread_text"><i class="icon-pencil"></i>新しいスレッドを作成する</a>
+		<a href="javascript:display_comment_tab('text','new_thread');" class="g-button no-text comment_tab_new_thread comment_tab_new_thread_text"><i class="icon-pencil"></i>{% if is_english %}Create{% else %}新しいスレッドを作成する{% endif %}</a>
 	</div>
 	<br>
 	{% endif %}
@@ -26,28 +28,25 @@
 	{% if can_create_thread %}
 		<form action='http://localhost/' enctype="multipart/form-data" method="post" onSubmit="this.action='{{host}}add_thread?bbs_key={{bbs.key()}}';">
 		<input type="hidden" name="illust_mode" value="0">
-		<table class="table_color"><tr><td>タイトル（必須）</td>
+		<table class="table_color"><tr><td>{% if is_english %}Title(MUST){% else %}タイトル（必須）{% endif %}</td>
 		<td><textarea name="thread_title" rows="1" cols="40" style="width:90%;"></textarea></td></tr>
-		<tr><td>作成者（必須）</td>
+		<tr><td>{% if is_english %}Name(MUST){% else %}作成者（必須）{% endif %}</td>
 		<td>
 			<input type="text" name="author" maxlength="50" value="{{user_name}}"/>
 			{% if is_iphone %}
 				<br/>
 			{% endif %}
 			{% if logined %}
-				<input name="link_to_profile" type="checkbox" checked/>マイページにリンク
-			{% else %}
-				マイページにリンクするにはログインして下さい
+				<input name="link_to_profile" type="checkbox" checked/>{% if is_english %}Link to mypage(MUST){% else %}マイページにリンク{% endif %}
 			{% endif %}
 		</td></tr>
-		{% if logined %}
-		{% else %}
-		<tr><td>ホームページアドレス</td><td><input name="homepage_addr" maxlength="40" value="http://"></td></tr>
-		<tr><td>削除キー</td><td><input name="delete_key" maxlength="40" value=""></td></tr>
+		{% if not logined %}
+		<tr><td>{% if is_english %}Homepage URL{% else %}ホームページアドレス{% endif %}</td><td><input name="homepage_addr" maxlength="40" value="http://"></td></tr>
+		<tr><td>{% if is_english %}Delete key{% else %}削除キー{% endif %}</td><td><input name="delete_key" maxlength="40" value=""></td></tr>
 		{% endif %}
-		<tr><td>スレッド概要</td><td><textarea name="comment" rows="4" cols="40" style="width:90%;"></textarea></td></tr>
+		<tr><td>{% if is_english %}Summary{% else %}スレッド概要{% endif %}</td><td><textarea name="comment" rows="4" cols="40" style="width:90%;"></textarea></td></tr>
 		<tr><td></td><td>
-		<input type="submit" value="スレッドを作成する" class="g-button">
+		<input type="submit" value="{% if is_english %}Create{% else %}スレッドを作成する{% endif %}" class="g-button">
 		</td></tr></table></form>
 	{% endif %}
 	</div>
