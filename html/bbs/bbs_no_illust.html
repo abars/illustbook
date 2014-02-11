@@ -2,9 +2,9 @@
 	{% if not threads %}
 		<div class="entry">
 		{% if bbs.bbs_mode == 3 %}
-			スレッドはまだありません。
+			{% if is_english %}no thread yet{% else %}スレッドはまだありません。{% endif %}
 		{% else%}
-			イラストはまだありません。
+			{% if is_english %}no illust yet{% else %}イラストはまだありません。{% endif %}
 		{% endif %}
 		</div>
 	{% endif %}

@@ -1,4 +1,4 @@
-	<p>掲示板の基本情報を設定します。</p>
+	<p>{% if is_english %}Basic information{% else %}掲示板の基本情報を設定します。{% endif %}</p>
 
 <script type="text/javascript">
 	function css_preview(){
@@ -19,59 +19,43 @@
 
 <div class="example">
 			<TABLE BORDER=0 class="g-table">
-			<TR><TH>掲示板のタイトル</TH><TD><input type="text" name="title" value="{{bbs.bbs_name}}" style="width:95%;"></TD></TR>
-			<TR><TH>掲示板の概要</TH><TD><textarea name="bbs_summary"	rows="8" style="width:95%;">{{bbs.summary}}</textarea></TD></TR>
-			<TR><TH>掲示板のモード</TH><TD>
+			<TR><TH>{% if is_english %}Title{% else %}掲示板のタイトル{% endif %}</TH><TD><input type="text" name="title" value="{{bbs.bbs_name}}" style="width:95%;"></TD></TR>
+			<TR><TH>{% if is_english %}Summary{% else %}掲示板の概要{% endif %}</TH><TD><textarea name="bbs_summary"	rows="8" style="width:95%;">{{bbs.summary}}</textarea></TD></TR>
+			<TR><TH>{% if is_english %}Mode{% else %}掲示板のモード{% endif %}</TH><TD>
 			<select name="mode">
-				<option value="1" {% if bbs.bbs_mode == 1 %}selected="selected"{% endif %}>{% if is_iphone %}誰でも投稿可能{%else%}お絵描き掲示板（誰でも投稿可能）{% endif %}</option>
-				<option value="2" {% if bbs.bbs_mode == 2 %}selected="selected"{% endif %}>{% if is_iphone %}管理人だけ投稿可能{%else%}お絵かきブログ（管理人だけ投稿可能）{% endif %}</option>
-				<option value="3" {% if bbs.bbs_mode == 3 %}selected="selected"{% endif %}>{% if is_iphone %}スレッド式{%else%}スレッド式掲示板（イラストなし）{% endif %}</option>
+				<option value="1" {% if bbs.bbs_mode == 1 %}selected="selected"{% endif %}>{% if is_english %}BBS{% else %}{% if is_iphone %}誰でも投稿可能{%else%}お絵描き掲示板（誰でも投稿可能）{% endif %}{% endif %}</option>
+				<option value="2" {% if bbs.bbs_mode == 2 %}selected="selected"{% endif %}>{% if is_english %}BLOG{% else %}{% if is_iphone %}管理人だけ投稿可能{%else%}お絵かきブログ（管理人だけ投稿可能）{% endif %}{% endif %}</option>
+				<option value="3" {% if bbs.bbs_mode == 3 %}selected="selected"{% endif %}>{% if is_english %}FORUM{% else %}{% if is_iphone %}スレッド式{%else%}スレッド式掲示板（イラストなし）{% endif %}{% endif %}</option>
 			</select></TD></TR>
 
-			<TR><TH>新規スレッドの作成（スレッド式掲示板の場合）</TH><TD>
+			<TR><TH>{% if is_english %}Create new thread{% else %}新規スレッドの作成（スレッド式掲示板の場合）{% endif %}</TH><TD>
 			<select name="disable_create_new_thread">	
 			
-			<option value="1" {%if bbs.disable_create_new_thread == 1 %}selected="selected"{%endif%}>管理人のみ作成可能</option>
-			<option value="2" {%if bbs.disable_create_new_thread == 2 %}selected="selected"{%endif%}>ログインしていれば{% if not is_iphone %}誰でも{% endif %}作成可能</option>
-			<option value="0" {%if not bbs.disable_create_new_thread %}selected="selected"{%endif%}>誰でも作成可能</option>
+			<option value="1" {%if bbs.disable_create_new_thread == 1 %}selected="selected"{%endif%}>{% if is_english %}Owner{% else %}管理人のみ作成可能{% endif %}</option>
+			<option value="2" {%if bbs.disable_create_new_thread == 2 %}selected="selected"{%endif%}>{% if is_english %}Everybody who login{% else %}ログインしていれば{% if not is_iphone %}誰でも{% endif %}作成可能{% endif %}</option>
+			<option value="0" {%if not bbs.disable_create_new_thread %}selected="selected"{%endif%}>{% if is_english %}Everybody{% else %}誰でも作成可能{% endif %}</option>
 			</select>
 			</TD></TR>
 			
-			<TR><TH>イラストをポータルの新着とランキングに表示</TH><TD>
+			<TR><TH>{% if is_english %}Scope{% else %}イラストをポータルの新着とランキングに表示{% endif %}</TH><TD>
 			<select name="disable_news">
-				{% if bbs.disable_news == 1 %}
-						<option value="1" selected="selected">表示しない</option><option value="0">表示する</option>
-				{% else%}
-						<option value="1">表示しない</option><option value="0" selected="selected">表示する</option>
-				{% endif %}
+				<option value="1" {% if bbs.disable_news == 1 %}selected="selected"{% endif %}>{% if is_english %}Private{% else %}表示しない{% endif %}</option>
+				<option value="0" {% if not bbs.disable_news %}selected="selected"{% endif %}>{% if is_english %}Public{% else %}表示する{% endif %}</option>
 			</select></TD></TR>
-<!--
-			<TR><TH>イラストブックアプリからのイラストの参照</TH><TD>
-			<select name="dont_permit_app">
-				{% if bbs.dont_permit_app == 1 %}
-						<option value="1" selected="selected">許可しない</option><option value="0">許可する</option>
-				{% else%}
-						<option value="1">許可しない</option><option value="0" selected="selected">許可する</option>
-				{% endif %}
-			</select></TD></TR>
--->
-			<TR><TH>デザインテンプレート</TH><TD>
+			<TR><TH>{% if is_english %}Design{% else %}デザインテンプレート{% endif %}</TH><TD>
 				<select name="design_template_no" id="design_template_no" onchange="javascript:design_template_change(''+this.value);">
-					<option value="0" {% if not bbs.design_template_no %} selected="selected" {% endif%}>フォームデザイン</option>
-					<!--
-					<option value="32767" {% if bbs.design_template_no == 32767 %} selected="selected" {% endif%}>CSSデザイン</option>
-				-->
-					<option value="1" {% if bbs.design_template_no == 1 %} selected="selected" {% endif%}>ブルー</option>
-					<option value="2" {% if bbs.design_template_no == 2 %} selected="selected" {% endif%}>グリーン</option>
-					<option value="3" {% if bbs.design_template_no == 3 %} selected="selected" {% endif%}>ピンク</option>
-					<option value="4" {% if bbs.design_template_no == 4 %} selected="selected" {% endif%}>ホワイト</option>
+					<option value="0" {% if not bbs.design_template_no %} selected="selected" {% endif%}>{% if is_english %}Custom{% else %}フォームデザイン{% endif %}</option>
+					<option value="1" {% if bbs.design_template_no == 1 %} selected="selected" {% endif%}>{% if is_english %}Blue{% else %}ブルー{% endif %}</option>
+					<option value="2" {% if bbs.design_template_no == 2 %} selected="selected" {% endif%}>{% if is_english %}Green{% else %}グリーン{% endif %}</option>
+					<option value="3" {% if bbs.design_template_no == 3 %} selected="selected" {% endif%}>{% if is_english %}Pink{% else %}ピンク{% endif %}</option>
+					<option value="4" {% if bbs.design_template_no == 4 %} selected="selected" {% endif%}>{% if is_english %}White{% else %}ホワイト{% endif %}</option>
 					{% if my_app_list %}
 						{% for app2 in my_app_list %}
 							<option value="{{app2.app_id}}" {% if bbs.design_template_no == 32767 and bbs_css and bbs_css.app_id == app2.app_id %} selected="selected" {% endif%}>{{app2.app_name}}</option>
 						{% endfor %}
 					{% endif %}
 				</select>
-				<input type="button" value="プレビュー" class="g-button" onclick="css_preview();">
+				<input type="button" value="{% if is_english %}Preview{% else %}プレビュー{% endif %}" class="g-button" onclick="css_preview();">
 			</TD></TR>
 			
 			<!--

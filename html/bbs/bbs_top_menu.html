@@ -34,7 +34,7 @@
 					{%if template_path and not is_english%}
 						<a href="javascript:bbs_open_draw('','{{bbs.key()}}','{{host}}');"><img src="{{template_path}}images/header_edit1.jpg" alt="イラストを描く" width="103" height="28"/></a>
 					{% else %}
-						<input type="button" value="{% if is_english %}Draw new Illust{% else %}イラストを描く{% endif %}"  class="g-button" onclick="bbs_open_draw('','{{bbs.key()}}','{{host}}');"/>
+						<input type="button" value="{% if is_english %}Draw new{% else %}イラストを描く{% endif %}"  class="g-button" onclick="bbs_open_draw('','{{bbs.key()}}','{{host}}');"/>
 					{% endif %}
 				{%endif%}
 		

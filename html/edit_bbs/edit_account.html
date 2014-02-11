@@ -1,10 +1,10 @@
 	<div class="example">
-			<p>この掲示板のURLは</p>
+			<p>{% if is_english %}BBS URL is {% else %}この掲示板のURLは{% endif %}</p>
 			{% if bbs.short %}
 			<blockquote>
 			<A HREF="{{host}}{{bbs.short}}/" TARGET=_BLANK><p>http://www.illustbook.net/{{bbs.short}}/</p></A>
 			</blockquote>
-			<p>です。下記にIDを入力して、保存ボタンを押すことでURLを変更可能です。</p>
+			<p>{% if is_english %}You can also change BBS ID.{% else %}です。下記にIDを入力して、保存ボタンを押すことでURLを変更可能です。{% endif %}</p>
 			{% else %}
 			 <blockquote>
 			<A HREF="{{host}}usr/{{bbs.key()}}/" TARGET=_BLANK><p>http://www.illustbook.net/usr/{{bbs.key()}}/</p></A>
@@ -14,14 +14,18 @@
 			<BR><BR>
 			
 			<TABLE BORDER=0 class="g-table">
-			<TR><TH>ID(16文字以下)</TH><TD><input type="text" id="check_short" name="short" value="{% if bbs.short %}{{bbs.short}}{% endif %}" maxlength="16"></TD>
-			<TD><input type="button" value="IDを利用可能か確認" class="g-button" onclick="check_id();" style="font-size:85%"></TD></TR>
+			<TR><TH>{% if is_english %}ID (16 characters or less){% else %}ID(16文字以下){% endif %}</TH><TD><input type="text" id="check_short" name="short" value="{% if bbs.short %}{{bbs.short}}{% endif %}" maxlength="16"></TD>
+			<TD><input type="button" value="{% if is_english %}Check availability{% else %}IDを利用可能か確認{% endif %}" class="g-button" onclick="check_id();" style="font-size:85%"></TD></TR>
 			</TABLE>
 			
+			{% if is_english %}
+			<input type="hidden" name="move_account" value=""/>
+			{% else %}
 			<BR><BR>
 			<p>管理人を変更する場合は、次のフォームに変更先のアカウントのメールアドレスを入力して保存ボタンを押して下さい。</p>
 			<TABLE BORDER=0 class="g-table">
 			<TR><TH>Gmailメールアドレス</TH><TD><input type="text" name="move_account" value="{% if bbs.move_account %}{{bbs.move_account}}{% endif %}" maxlength="32"></TD>
 			</TABLE>
+			{% endif %}
 	</div>
 

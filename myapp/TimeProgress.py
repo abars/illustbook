@@ -25,10 +25,10 @@ class TimeProgress():
 		minutes="分"
 		sec="秒"
 		if(is_english):
-			day=" day"
-			hour=" hour"
-			minutes=" min"
-			sec=" sec"
+			day=" days"
+			hour=" hours"
+			minutes=" mins"
+			sec=" secs"
 		if isinstance(value,str):
 			return value
 		delta_time=datetime.datetime.today()-value

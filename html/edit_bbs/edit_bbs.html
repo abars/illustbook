@@ -8,13 +8,16 @@
 		document.getElementById('all').style.display="none";
 		document.getElementById('detail').style.display="none";
 		document.getElementById('custom').style.display="none";
-		document.getElementById('css_design').style.display="none";
 		document.getElementById('submit_button').style.display="none";
 		
 		document.getElementById("top_tab_all").className="g-button";
 		document.getElementById("top_tab_detail").className="g-button";
 		document.getElementById("top_tab_custom").className="g-button";
-		document.getElementById("top_tab_css_design").className="g-button";
+
+		{% if not is_english %}
+			document.getElementById("top_tab_css_design").className="g-button";
+			document.getElementById('css_design').style.display="none";
+		{% endif %}
 
 		{% if not is_iphone %}
 			document.getElementById('account').style.display="none";
@@ -32,7 +35,7 @@
 	}
 	
 	function init_tab(){
-		click_top_tab("{{tab}}");
+		//click_top_tab("{{tab}}");
 	}
 	
 </script>
@@ -40,24 +43,26 @@
 
 {% if error_str %}
 	<div class="example">
-		<p>フォームの内容にエラーがあります。：{{error_str}}</p>
+		<p>{% if is_english %}Invalid string{% else %}フォームの内容にエラーがあります。{% endif %}：{{error_str}}</p>
 	</div>
 {% endif %}
 
 <div class="profile_box">
 	<div class="entry">
-		<H1><p>{{bbs.bbs_name}}の編集</p></H1>
+		<H1><p>{% if is_english %}Edit {% endif %}{{bbs.bbs_name}}{% if not is_english %}の編集{% endif %}</p></H1>
 	</div>
 </div>
 
 <div class="left_box">
 	<div class="g-button-group toggle-buttons">
-	<a href="javascript:click_top_tab('all');" id="top_tab_all" class="g-button">基本{% if not is_iphone %}設定{% endif %}</a>
-	<a href="javascript:click_top_tab('detail');" id="top_tab_detail" class="g-button">詳細{% if not is_iphone %}設定{% endif %}</a>
-	<a href="javascript:click_top_tab('custom');" id="top_tab_custom" class="g-button">{% if not is_iphone %}デザイン(フォーム){% else %}フォーム{% endif %}</a>
-	<a href="javascript:click_top_tab('css_design');" id="top_tab_css_design" class="g-button">{% if not is_iphone %}デザイン(CSS){% else %}CSS{% endif %}</a>
+	<a href="javascript:click_top_tab('all');" id="top_tab_all" class="g-button">{% if is_english %}Basic{% else %}基本{% if not is_iphone %}設定{% endif %}{% endif %}</a>
+	<a href="javascript:click_top_tab('detail');" id="top_tab_detail" class="g-button">{% if is_english %}Detail{% else %}詳細{% if not is_iphone %}設定{% endif %}{% endif %}</a>
+	<a href="javascript:click_top_tab('custom');" id="top_tab_custom" class="g-button">{% if is_english %}Design (Custom){% else %}{% if not is_iphone %}デザイン(フォーム){% else %}フォーム{% endif %}{% endif %}</a>
+	{% if not is_english %}
+		<a href="javascript:click_top_tab('css_design');" id="top_tab_css_design" class="g-button">{% if is_english %}Design (CSS){% else %}{% if not is_iphone %}デザイン(CSS){% else %}CSS{% endif %}{% endif %}</a>
+	{% endif %}
 	{% if not is_iphone %}
-		<a href="javascript:click_top_tab('account');" id="top_tab_account" class="g-button">アカウント</a>
+		<a href="javascript:click_top_tab('account');" id="top_tab_account" class="g-button">{% if is_english %}Account{% else %}アカウント{% endif %}</a>
 	{% endif %}
 	</div>
 
@@ -65,7 +70,7 @@
 	
 	<form action="./update_bbs?bbs_key={{bbs.key()}}" enctype="multipart/form-data" method="post" id="update_bbs_form">
 			<!-- 基本設定 -->
-			<div class="entry" id="all" style="display:none;">
+			<div class="entry" id="all">{# style="display:none;"> #}
 				{% include "edit_bbs/edit_basic.html" %}
 			</div>
 
@@ -92,15 +97,15 @@
 
 	<div id="submit_button">
 		<div class="g-button-group">
-			<input type="button" value="変更を保存する" class="g-button" onClick="document.getElementById('update_bbs_form').submit();"/>
+			<input type="button" value="{% if is_english %}Update{% else %}変更を保存する{% endif %}" class="g-button" onClick="document.getElementById('update_bbs_form').submit();"/>
 
 			<a class="g-button dropdown-toggle" data-toggle="dropdown" href="#">
-			その他の操作 <span class="caret"></span>
+			{% if is_english %}Others{% else %}その他の操作{% endif %} <span class="caret"></span>
 			</a>
 			<ul class="dropdown-menu">
-				<li><a href="{{host}}edit_thread_list?bbs_key={{bbs.key()}}" target="_blank">イラストの管理</a></li>
-				<li><a href="{{host}}analyze?bbs_key={{bbs.key()}}" target="_blank">アクセス解析の閲覧</a></li>
-				<li><a href="{{host}}{{bbs.short}}/">掲示板に戻る</a></li>
+				<li><a href="{{host}}edit_thread_list?bbs_key={{bbs.key()}}" target="_blank">{% if is_english %}Admin illust{% else %}イラストの管理{% endif %}</a></li>
+				<li><a href="{{host}}analyze?bbs_key={{bbs.key()}}" target="_blank">{% if is_english %}Analyze{% else %}アクセス解析の閲覧{% endif %}</a></li>
+				<li><a href="{{host}}{{bbs.short}}/">{% if is_english %}Back to BBS{% else %}掲示板に戻る{% endif %}</a></li>
 			</ul>
 		</div>
 	</div>

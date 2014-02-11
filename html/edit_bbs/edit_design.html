@@ -1,68 +1,68 @@
-<p>基本設定のデザインテンプレートでフォームデザインを選択した場合のデザインを設定します。</p>
+<p>{% if is_english %}Please select Custom design in Basic tab{% else %}基本設定のデザインテンプレートでフォームデザインを選択した場合のデザインを設定します。{% endif %}</p>
 
 <div class="example">
-	<p>基本</p>
+	<p>{% if is_english %}Basic{% else %}基本{% endif %}</p>
 	<TABLE BORDER=0 class="g-table">
-		<TR><TH>画面幅（800〜1280）（デフォルト800)</TH><TD><input type="text" name="content_width" value="{{bbs.content_width}}"></TD></TR>
-		<TR><TH>フォントサイズ（0もしくは8〜20)（デフォルト0)</TH><TD><input type="text" name="font_size" value="{{bbs.font_size}}"></TD></TR>
-		<TR><TH>背景画像のURL</TH><TD><input type="text" name="background_image" value="{{bbs.background_image}}" maxlength="512"></TD></TR>
-		<TR><TH>ロゴに表示する画像のURL(800*200px推奨)</TH><TD><input type="text" name="bottom_image" value="{{bbs.bottom_image}}" maxlength="512"></TD></TR>
+		<TR><TH>{% if is_english %}Contents width{% else %}画面幅（800〜1280）（デフォルト800){% endif %}</TH><TD><input type="text" name="content_width" value="{{bbs.content_width}}"></TD></TR>
+		<TR><TH>{% if is_english %}Font size{% else %}フォントサイズ（0もしくは8〜20)（デフォルト0){% endif %}</TH><TD><input type="text" name="font_size" value="{{bbs.font_size}}"></TD></TR>
+		<TR><TH>{% if is_english %}Background image URL{% else %}背景画像のURL{% endif %}</TH><TD><input type="text" name="background_image" value="{{bbs.background_image}}" maxlength="512"></TD></TR>
+		<TR><TH>{% if is_english %}Logo image URL (recommend 800 x 200 px){% else %}ロゴに表示する画像のURL(800*200px推奨){% endif %}</TH><TD><input type="text" name="bottom_image" value="{{bbs.bottom_image}}" maxlength="512"></TD></TR>
 	</TABLE>
 </div>
 
 <div class="example">
-	<p>全体</p>
+	<p>{% if is_english %}Site{% else %}全体{% endif %}</p>
 	<TABLE BORDER=0 class="g-table">
-		<TR><TH>背景色（デフォルトffffff)</TH><TD><input type="text" class="color_select" name="bg_color" value="{{bbs.bg_color}}" maxlength="6"></TD></TR>
-		<TR><TH>フォント色（デフォルト333333)</TH><TD><input type="text" class="color_select" name="font_color" value="{{bbs.font_color}}" maxlength="6"></TD></TR>
+		<TR><TH>{% if is_english %}Background color{% else %}背景色（デフォルトffffff){% endif %}</TH><TD><input type="text" class="color_select" name="bg_color" value="{{bbs.bg_color}}" maxlength="6"></TD></TR>
+		<TR><TH>{% if is_english %}Font color{% else %}フォント色（デフォルト333333){% endif %}</TH><TD><input type="text" class="color_select" name="font_color" value="{{bbs.font_color}}" maxlength="6"></TD></TR>
 	</TABLE>
 </div>
 
 <div class="example">
-<p>記事</p>
+<p>{% if is_english %}Article{% else %}記事{% endif %}</p>
 	<TABLE BORDER=0 class="g-table">
-		<TR><TH>背景色（デフォルトffffff)</TH><TD><input type="text" class="color_select" name="content_bg_color" value="{{bbs.content_bg_color}}" maxlength="6"></TD></TR>
-		<TR><TH>フォント色（デフォルト333333)</TH><TD><input type="text" class="color_select" name="content_font_color" value="{{bbs.content_font_color}}" maxlength="6"></TD></TR>
+		<TR><TH>{% if is_english %}Background color{% else %}背景色（デフォルトffffff){% endif %}</TH><TD><input type="text" class="color_select" name="content_bg_color" value="{{bbs.content_bg_color}}" maxlength="6"></TD></TR>
+		<TR><TH>{% if is_english %}Font color{% else %}フォント色（デフォルト333333){% endif %}</TH><TD><input type="text" class="color_select" name="content_font_color" value="{{bbs.content_font_color}}" maxlength="6"></TD></TR>
 	</TABLE>
 </div>
 
 <div class="example">
-<p>メニューバー</p>
+<p>{% if is_english %}Menu{% else %}メニューバー{% endif %}</p>
 	<TABLE BORDER=0 class="g-table">
-		<TR><TH>背景色（デフォルトffffff)</TH><TD><input type="text" class="color_select" name="menu_bg_color" value="{{bbs.menu_bg_color}}" maxlength="6"></TD></TR>
-		<TR><TH>フォント色（デフォルト333333)</TH><TD><input type="text" class="color_select" name="menu_font_color" value="{{bbs.menu_font_color}}" maxlength="6"></TD></TR>
+		<TR><TH>{% if is_english %}Background color{% else %}背景色（デフォルトffffff){% endif %}</TH><TD><input type="text" class="color_select" name="menu_bg_color" value="{{bbs.menu_bg_color}}" maxlength="6"></TD></TR>
+		<TR><TH>{% if is_english %}Font color{% else %}フォント色（デフォルト333333){% endif %}</TH><TD><input type="text" class="color_select" name="menu_font_color" value="{{bbs.menu_font_color}}" maxlength="6"></TD></TR>
 	</TABLE>
 </div>
 
 <div class="example">
-<p>サイドバー</p>
+<p>{% if is_english %}Sidebar{% else %}サイドバー{% endif %}</p>
 	<TABLE BORDER=0 class="g-table">
-		<TR><TH>背景色（デフォルトffffff)</TH><TD><input type="text" class="color_select" name="side_color" value="{{bbs.side_color}}" maxlength="6"></TD></TR>
-		<TR><TH>フォント色（デフォルト333333)</TH><TD><input type="text" class="color_select" name="side_font_color" value="{{bbs.side_font_color}}" maxlength="6"></TD></TR>
-		<TR><TH>背景画像のURL</TH><TD><input type="text" name="side_background_image" value="{{bbs.side_background_image}}" maxlength="512"></TD></TR>
+		<TR><TH>{% if is_english %}Background color{% else %}背景色（デフォルトffffff){% endif %}</TH><TD><input type="text" class="color_select" name="side_color" value="{{bbs.side_color}}" maxlength="6"></TD></TR>
+		<TR><TH>{% if is_english %}Font color{% else %}フォント色（デフォルト333333){% endif %}</TH><TD><input type="text" class="color_select" name="side_font_color" value="{{bbs.side_font_color}}" maxlength="6"></TD></TR>
+		<TR><TH>{% if is_english %}Background image URL{% else %}背景画像のURL{% endif %}</TH><TD><input type="text" name="side_background_image" value="{{bbs.side_background_image}}" maxlength="512"></TD></TR>
 	</TABLE>
 </div>
 
 <div class="example">
 <p>Twitter</p>
 	<TABLE BORDER=0 class="g-table">
-		<TR><TH>背景色（デフォルトffffff)</TH><TD><input type="text" class="color_select" name="twitter_bg_color" value="{{bbs.twitter_bg_color}}" maxlength="6"></TD></TR>
-		<TR><TH>枠色（デフォルトffffff)</TH><TD><input type="text" class="color_select" name="twitter_shell_color" value="{{bbs.twitter_shell_color}}" maxlength="6"></TD></TR>
-		<TR><TH>フォント色（デフォルト333333)</TH><TD><input type="text" class="color_select" name="twitter_font_color" value="{{bbs.twitter_font_color}}" maxlength="6"></TD></TR>
+		<TR><TH>{% if is_english %}Background color{% else %}背景色（デフォルトffffff){% endif %}</TH><TD><input type="text" class="color_select" name="twitter_bg_color" value="{{bbs.twitter_bg_color}}" maxlength="6"></TD></TR>
+		<TR><TH>{% if is_english %}Border color{% else %}枠色（デフォルトffffff){% endif %}</TH><TD><input type="text" class="color_select" name="twitter_shell_color" value="{{bbs.twitter_shell_color}}" maxlength="6"></TD></TR>
+		<TR><TH>{% if is_english %}Font color{% else %}フォント色（デフォルト333333){% endif %}</TH><TD><input type="text" class="color_select" name="twitter_font_color" value="{{bbs.twitter_font_color}}" maxlength="6"></TD></TR>
 	</TABLE>
 </div>
 
 <div class="example">
-<p>ボタン</p>
+<p>{% if is_english %}Button{% else %}ボタン{% endif %}</p>
 	<TABLE BORDER=0 class="g-table">
-		<TR><TH>ボタンの色を変更するかどうか</TH><TD>
+		<TR><TH>{% if is_english %}Change button color{% else %}ボタンの色を変更するかどうか{% endif %}</TH><TD>
 			<select name="button_color_enable">
-				<option value="0" {% if not bbs.button_color_enable %}selected="selected"{% endif %}>変更しない</option>
-				<option value="1" {% if bbs.button_color_enable  %}selected="selected"{% endif %}>変更する</option>
+				<option value="0" {% if not bbs.button_color_enable %}selected="selected"{% endif %}>{% if is_english %}Disable{% else %}変更しない{% endif %}</option>
+				<option value="1" {% if bbs.button_color_enable  %}selected="selected"{% endif %}>{% if is_english %}Enable{% else %}変更する{% endif %}</option>
 			</select>
 		</TD></TR>		
-		<TR><TH>背景色</TH><TD><input type="text" class="color_select" name="button_color" value="{{bbs.button_color}}" maxlength="6"></TD></TR>
-		<TR><TH>アクティブ色</TH><TD><input type="text" class="color_select" name="button_active_color" value="{{bbs.button_active_color}}" maxlength="6"></TD></TR>
-		<TR><TH>ボーダー色</TH><TD><input type="text" class="color_select" name="button_border_color" value="{{bbs.button_border_color}}" maxlength="6"></TD></TR>
+		<TR><TH>{% if is_english %}Background color{% else %}背景色{% endif %}</TH><TD><input type="text" class="color_select" name="button_color" value="{{bbs.button_color}}" maxlength="6"></TD></TR>
+		<TR><TH>{% if is_english %}Active color{% else %}アクティブ色{% endif %}</TH><TD><input type="text" class="color_select" name="button_active_color" value="{{bbs.button_active_color}}" maxlength="6"></TD></TR>
+		<TR><TH>{% if is_english %}Border color{% else %}ボーダー色{% endif %}</TH><TD><input type="text" class="color_select" name="button_border_color" value="{{bbs.button_border_color}}" maxlength="6"></TD></TR>
 	</TABLE>
 </div>

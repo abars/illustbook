@@ -1,7 +1,7 @@
 function confirm_delete(url,prefix,title,is_english){
 	var msg=""+prefix+"から「"+title+"」を削除してもいいですか？";
 	if(is_english){
-		msg="Are you sure you want to delete "+title+"?"
+		msg="Are you sure you want to remove "+title+"?"
 	}
 	if(confirm(msg)){
 		window.location.href="./add_bookmark?mode="+url;
@@ -16,7 +16,7 @@ function check_id(host){
 function confirm_action_bbs(url,title,is_english) {
 	var msg="お絵かき掲示板「"+title+"」を削除してもよろしいですか?";
 	if(is_english){
-		msg="Are you sure you want to delete "+title+"?"
+		msg="Are you sure you want to remove "+title+"?"
 	}
 	if (confirm(msg)){
 		confirm_action_bbs2(url,is_english);

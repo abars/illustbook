@@ -40,7 +40,7 @@
 
         {% if edit_mode %}
           {% if tab == "bookmark" %}
-            <a href="javascript:confirm_delete('del&thread_key={{thread.key}}','ブックマーク','{{thread.title}}');" class="g-button no-text delete_button">
+            <a href="javascript:confirm_delete('del&thread_key={{thread.key}}','ブックマーク','{{thread.title}}',{% if is_english %}true{%else%}false{% endif %});" class="g-button no-text delete_button">
               <i class="icon-remove"></i>
             </a>
           {% endif %}
