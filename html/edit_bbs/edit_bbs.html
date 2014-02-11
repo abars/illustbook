@@ -24,9 +24,18 @@
 			document.getElementById("top_tab_account").className="g-button";
 		{% endif %}
 	}
+
+	var excolor_initialize=false;
 	
 	function click_top_tab(id){
 		clear_top_tab();
+		if(id=="custom"){
+			if(!excolor_initialize){
+				//これを呼び出すと改行が使えなくなるため実行を遅延する
+				$('.color_select').modcoder_excolor();
+				excolor_initialize=true;
+			}
+		}
 		document.getElementById(id).style.display="block";
 		if(id!="css_design"){
 			document.getElementById('submit_button').style.display="block";

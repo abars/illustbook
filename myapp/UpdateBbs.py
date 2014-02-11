@@ -256,10 +256,10 @@ class UpdateBbs(webapp.RequestHandler):
 
 		#summary = cgi.escape(summary)
 		compiled_line = re.compile("\r\n|\r|\n")
-		summary = compiled_line.sub(r'<br>', summary)
-		freearea = compiled_line.sub(r'<br>', freearea)
-		amazon = compiled_line.sub(r'<br>', amazon)
-		comment_rule = compiled_line.sub(r'<br>', comment_rule)
+		summary = compiled_line.sub(r'<br/>', summary)
+		freearea = compiled_line.sub(r'<br/>', freearea)
+		amazon = compiled_line.sub(r'<br/>', amazon)
+		comment_rule = compiled_line.sub(r'<br/>', comment_rule)
 		
 		bbs.summary = summary
 		bbs.amazon = amazon
