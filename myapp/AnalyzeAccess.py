@@ -21,6 +21,7 @@ from myapp.MappingId import MappingId
 from myapp.SetUtf8 import SetUtf8
 from myapp.Alert import Alert
 from myapp.Counter import Counter
+from myapp.CssDesign import CssDesign
 
 class AnalyzeAccess(webapp.RequestHandler):
 	def get(self):
@@ -68,7 +69,8 @@ class AnalyzeAccess(webapp.RequestHandler):
 			'page_name': page_name,
 			'analyze_data':analyze,
 			'user': user,
-			'show_analyze': show_analyze
+			'show_analyze': show_analyze,
+			'is_english': CssDesign.is_english(self)
 			}
 		path = '/html/analyze.html'
 		self.response.out.write(template_select.render(path, template_values))

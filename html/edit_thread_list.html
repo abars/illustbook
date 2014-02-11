@@ -24,14 +24,22 @@
 <script type="text/javascript">
 	var delete_exec=false;
 
-	function confirm_delete(){
+	function confirm_delete(is_english){
 		if(!delete_exec){
 			$("#del_thread_list").submit();
 			return;
 		}
 
-		if(confirm("本当にイラストを削除してもよろしいですか？")){
-			if(confirm("削除したイラストは復旧できません。本当によろしいですか？")){
+		var mes="本当にイラストを削除してもよろしいですか？";
+		if(is_english){
+			mes="Are you sure you want to delete?";
+		}
+		if(confirm(mes)){
+			mes="削除したイラストは復旧できません。本当によろしいですか？";
+			if(is_english){
+				mes="This operation cannot be undone.Are you sure you want to delete?";
+			}
+			if(confirm(mes)){
 				$("#del_thread_list").submit();
 			}
 		}
@@ -50,34 +58,34 @@
 	<p>&nbsp</p>
 	<div id="contents">
 		{% if deleted_count %}
-			<p>{{deleted_count}}件のイラストを削除しました。</p>
+			<p>{% if is_english %}Complete.{%else%}{{deleted_count}}件のイラストを削除しました。{% endif %}</p>
 		{% endif %}
 		{% if category_count %}
 			<p>{{category_count}}件のカテゴリを変更しました。</p>
 		{% endif %}
-		<p>イラストの管理では、イラストの削除とカテゴリの変更が行えます。</p>
+		<p>{% if is_english %}You can delete multiple illust.{% else %}イラストの管理では、イラストの削除とカテゴリの変更が行えます。{% endif %}</p>
 
 		<div class="g-button-group">
 			<a class="g-button dropdown-toggle" data-toggle="dropdown" href="#">
 			{%if order == "new"%}
-			新しい順
+			{% if is_english %}New{% else %}新しい順{% endif %}
 			{%else%}
-			古い順
+			{% if is_english %}Old{% else %}古い順{% endif %}
 			{%endif%}
 			<span class="caret"></span>
 			</a>
 			<ul class="dropdown-menu">
 			{%if order == "new"%}
-				<li><a href="{{host}}edit_thread_list?bbs_key={{bbs.key()}}&order=old">古い順</a></li>
+				<li><a href="{{host}}edit_thread_list?bbs_key={{bbs.key()}}&order=old">{% if is_english %}Old{% else %}古い順{% endif %}</a></li>
 			{%else%}
-				<li><a href="{{host}}edit_thread_list?bbs_key={{bbs.key()}}&order=new">新しい順</a></li>
+				<li><a href="{{host}}edit_thread_list?bbs_key={{bbs.key()}}&order=new">{% if is_english %}New{% else %}新しい順{% endif %}</a></li>
 			{%endif%}
 			</ul>
 
-			<a href="{{host}}edit_thread_list?bbs_key={{bbs.key()}}&amp;page={{page-1}}&amp;order={{order}}" class="g-button no-text {%if page == 1%}disabled2{%endif%}">前のページ</a>
-			<a href="{{host}}edit_thread_list?bbs_key={{bbs.key()}}&amp;page={{page+1}}&amp;order={{order}}" class="g-button no-text">次のページ</a>
+			<a href="{{host}}edit_thread_list?bbs_key={{bbs.key()}}&amp;page={{page-1}}&amp;order={{order}}" class="g-button no-text {%if page == 1%}disabled2{%endif%}">{% if is_english %}Previous{% else %}前のページ{% endif %}</a>
+			<a href="{{host}}edit_thread_list?bbs_key={{bbs.key()}}&amp;page={{page+1}}&amp;order={{order}}" class="g-button no-text">{% if is_english %}Next{% else %}次のページ{% endif %}</a>
 
-			<a href="{{host}}{{bbs.short}}/" class="g-button">掲示板に戻る</a>
+			<a href="{{host}}{{bbs.short}}/" class="g-button">{% if is_english %}Back to BBS{% else %}掲示板に戻る{% endif %}</a>
 		</div>
 
 		<p>&nbsp;</p>
@@ -87,7 +95,7 @@
 		<input type="hidden" name="page" value="{{page}}"/>
 		<input type="hidden" name="order" value="{{order}}"/>
 		<table class="g-table">
-			<tr><th>タイトル</th><th>サムネイル</th><th>投稿者</th><th>投稿日</th><th>カテゴリ</th><th>削除</th></tr>
+			<tr><th>{% if is_english %}Title{% else %}タイトル{% endif %}</th><th>{% if is_english %}Thumbnail{% else %}サムネイル{% endif %}</th><th>{% if is_english %}Name{%else %}投稿者{% endif %}</th><th>{% if is_english %}Date{% else %}投稿日{% endif %}</th><th>{% if is_english %}Category{% else %}カテゴリ{% endif %}</th><th>{% if is_english %}Delete{% else %}削除{% endif %}</th></tr>
 		{% for thread in thread_list %}
 		<tr><td>
 			<a href="{{host}}{{bbs.short}}/{{thread.key()}}.html" target="_blank">
@@ -101,10 +109,10 @@
 		{% endif %}
 		</td>
 		<td>{{thread.author}}</td>
-		<td>{{thread.create_date|time_JST_progress}}</td>
+		<td>{% if is_english %}{{thread.create_date|time_UTC_progress}}{% else %}{{thread.create_date|time_JST_progress}}{% endif %}</td>
 		<td>
 			<select style="margin-bottom:0px;" onchange="category_change('{{thread.key()}}',this.value);">
-				<option value="" {% if not thread.category %}selected="selected"{% endif %}>設定しない</option>
+				<option value="" {% if not thread.category %}selected="selected"{% endif %}>{% if is_english %}-{% else %}設定しない{% endif %}</option>
 				{% for category in category_list %}
 					{% if category.category == "" %}{% else %}
 						<option value="{{category.category}}" {% if thread.category == category.category %}selected="selected"{% endif %}>{{category.category}}</option>
@@ -119,7 +127,7 @@
 
 			<input name="category_update" id="category_update" value="" type="hidden"/>
 
-			<a href="javascript:confirm_delete();" class="g-button">変更の反映</a>　
+			<a href="javascript:confirm_delete({% if is_english %}true{% else %}false{% endif %});" class="g-button">{% if is_english %}Update{% else %}変更の反映{% endif %}</a>　
 		</form>
 	</div>
 </div>
