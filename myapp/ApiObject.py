@@ -312,6 +312,10 @@ class ApiObject(webapp.RequestHandler):
 				thumbnail_url+=".jpg"
 				thumbnail2_url+=".jpg"
 
+			#サムネイルの作成に失敗している場合は再作成を促す
+			if(thread.thumbnail2_version!=BbsConst.THUMBNAIL2_VERSION):
+				memcache.delete(BbsConst.OBJECT_CACHE_HEADER+str(thread.key()))
+
 		if(bbs.del_flag):
 			thumbnail_url=""
 			thumbnail2_url=""
