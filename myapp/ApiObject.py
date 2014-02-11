@@ -311,6 +311,7 @@ class ApiObject(webapp.RequestHandler):
 			else:
 				thumbnail_url+=".jpg"
 				thumbnail2_url+=".jpg"
+
 		if(bbs.del_flag):
 			thumbnail_url=""
 			thumbnail2_url=""

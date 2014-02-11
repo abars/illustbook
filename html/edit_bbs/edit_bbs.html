@@ -64,7 +64,7 @@
 
 <div class="left_box">
 	<div class="g-button-group toggle-buttons">
-	<a href="javascript:click_top_tab('all');" id="top_tab_all" class="g-button">{% if is_english %}Basic{% else %}基本{% if not is_iphone %}設定{% endif %}{% endif %}</a>
+	<a href="javascript:click_top_tab('all');" id="top_tab_all" class="g-button checked">{% if is_english %}Basic{% else %}基本{% if not is_iphone %}設定{% endif %}{% endif %}</a>
 	<a href="javascript:click_top_tab('detail');" id="top_tab_detail" class="g-button">{% if is_english %}Detail{% else %}詳細{% if not is_iphone %}設定{% endif %}{% endif %}</a>
 	<a href="javascript:click_top_tab('custom');" id="top_tab_custom" class="g-button">{% if is_english %}Design (Custom){% else %}{% if not is_iphone %}デザイン(フォーム){% else %}フォーム{% endif %}{% endif %}</a>
 	{% if not is_english %}
