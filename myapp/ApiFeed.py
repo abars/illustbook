@@ -71,7 +71,7 @@ class ApiFeed(webapp.RequestHandler):
 			query.order("-applause")
 			query.filter("illust_mode =",BbsConst.ILLUSTMODE_ILLUST)
 		if(order=="moper"):
-			query.order("-applause")
+			query.order("-create_date")
 			query.filter("illust_mode =",BbsConst.ILLUSTMODE_MOPER)
 		if(order=="2010" or order=="2011" or order=="2012" or order=="2013"):
 			date=datetime.date(int(order)+1,1,1)
