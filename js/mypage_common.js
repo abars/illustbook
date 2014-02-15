@@ -69,26 +69,30 @@ function confirm_unfollow(user_key,name,is_english){
 	}
 }
 
-function confirm_delete_tweet(feed_key,page,tab,is_english){
-	var msg='ツイートを削除してもよろしいですか？';
+function confirm_remove_tweet_list(is_english){
+	var msg='選択したツイートもしくはフィードを削除してもよろしいですか？';
 	if(is_english){
-		msg="Are you sure you want to remove this tweet?";
+		msg="Are you sure you want to remove tweet or feed selected?";
 	}
 	if(confirm(msg)){
-		window.location.href='feed_tweet?mode=del_tweet&key='+feed_key+'&feed_page='+page+'&edit=1&tab='+tab;
+		$("#del_tweet_list").submit();
 	}
-	return false;
 }
 
-function confirm_remove_tweet(feed_key,page,tab,is_english){
-	var msg='フィードをタイムラインから除外してもよろしいですか？';
+function confirm_remove_tweet_all(user_id,is_english){
+	var msg="全てのツイートとフィードを削除しますか？";
 	if(is_english){
-		msg="Are you sure you want to hide this feed?";
+		msg="Are you sure you want to withdraw from illustbook?"
 	}
-	if(confirm(msg)){
-		window.location.href='feed_tweet?mode=del_feed&key='+feed_key+'&feed_page='+page+'&edit=1&tab='+tab;
+	if (confirm(msg)){
+		msg="ツイートとフィードは全て削除され復帰できません。本当に削除してもよろしいですか？";
+		if(is_english){
+			msg="Are you sure you want to clear everything tweet and feed (this operation cannot be undone)?"
+		}
+		if (confirm(msg)){
+			location.href = 'feed_tweet?mode=del_tweet_all&user_id='+user_id; 
+		}
 	}
-	return false;
 }
 
 function show_follower(){

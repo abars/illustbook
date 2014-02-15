@@ -14,20 +14,19 @@
     <a href="{{host}}{{redirect_api}}?{% if bookmark %}user_id={{user_id}}&{% endif %}tab=feed" class="g-button {%if tab == "feed" or tab=="timeline" %}checked{%endif%}">{% if is_iphone or is_english %}TL{%else%}タイムライン{% if not view_mode %}{% if new_feed_count %}({{new_feed_count}}){% endif %}{% endif %}{% endif %}</a>
   </div>
   </div>
-  {% if not is_iphone %}
-  <div style="float:left">
-  {% if tab == "submit" %}
-  {% else %}
-    {% if not view_mode %}
-      {% if edit_mode %}
-     　<a href="{{host}}{{redirect_api}}?user_id={{user_id}}&tab={{tab}}" class="g-button">{% if is_english %}Back{% else %}戻る{% endif %}</a>
+  <div style="float:right">
+  {% if not tab == "submit" and not tab=="moper" and not view_mode %}
+      {% if edit_mode == 1 %}
+        {% if tab == "timeline" or tab == "feed" %}
+         <a href="#" onclick="confirm_remove_tweet_list({% if is_english %}true{%else%}false{% endif %});" class="g-button {% if is_iphone %}no-text{% endif %}">
+           {% if is_iphone %}<i class="icon-trash"></i>{% else %}{% if is_english %}Remove{% else %}削除{% endif %}{% endif %}
+         </a>
+        {% endif %}
       {% else %}
-     　<a href="{{host}}{{redirect_api}}?user_id={{user_id}}&tab={{tab}}&edit=1" class="g-button">{% if is_english %}Edit{% else %}編集{% endif %}</a>
-     {% endif %}
-     {% endif %}
+       <a href="{{host}}{{redirect_api}}?user_id={{user_id}}&tab={{tab}}&edit=1" class="g-button {% if is_iphone %}no-text{% endif %}">{% if is_iphone %}<i class="icon-list"></i>{% else %}{% if is_english %}Edit{% else %}編集{% endif %}{% endif %}</a>
+      {% endif %}
   {% endif %}
   </div>
-  {% endif %}
 
   <br clear="all"/>
 </div>

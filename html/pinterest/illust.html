@@ -38,7 +38,7 @@
         </div>
   {% endif %}
 
-        {% if edit_mode %}
+        {% if edit_mode == 1 %}
           {% if tab == "bookmark" %}
             <a href="javascript:confirm_delete('del&thread_key={{thread.key}}','ブックマーク','{{thread.title}}',{% if is_english %}true{%else%}false{% endif %});" class="g-button no-text delete_button">
               <i class="icon-remove"></i>

@@ -46,56 +46,118 @@ from myapp.UTC import UTC
 from myapp.JST import JST
 
 class StackFeedTweet(webapp.RequestHandler):
-	def del_message(self,user):
-		data=db.get(self.request.get("key"))
-		if(data==None):
-			self.response.out.write(Alert.alert_msg("ツイートが見つかりません。",self.request.host));
-			return False
-		if(data.from_user_id==user.user_id()):
-			data.delete()
-		else:
+	#def del_message(self,user):
+	#	data=db.get(self.request.get("key"))
+	#	if(data==None):
+	#		self.response.out.write(Alert.alert_msg("ツイートが見つかりません。",self.request.host));
+	#		return False
+	#	if(data.from_user_id==user.user_id()):
+	#		data.delete()
+	#	else:
+	#		self.response.out.write(Alert.alert_msg("認証に失敗しました。",self.request.host));
+	#		return False
+	#	return True
+
+	def del_from_bookmark(self,bookmark,tweet):
+		if(db.Key(tweet) in bookmark.stack_feed_list):
+			bookmark.stack_feed_list.remove(db.Key(tweet))
+		if(db.Key(tweet) in bookmark.my_timeline):
+			bookmark.my_timeline.remove(db.Key(tweet))
+		
+	def del_message_list(self,user):
+		if(self.request.get("user_id")!=user.user_id()):
 			self.response.out.write(Alert.alert_msg("認証に失敗しました。",self.request.host));
 			return False
-		return True
-	
-	def del_feed(self,user):
+
 		bookmark=ApiObject.get_bookmark_of_user_id_for_write(user.user_id())
 		if(bookmark==None):
-			self.response.out.write(Alert.alert_msg("フィードリストが見つかりません。",self.request.host));
+			self.response.out.write(Alert.alert_msg("ユーザデータが見つかりません。",self.request.host));
 			return False
 
-		failed_cnt=0
+		tweet_list=self.request.get_all("tweet_list")
 
-		try:
-			bookmark.stack_feed_list.remove(db.Key(self.request.get("key")))
-		except:
-			failed_cnt=failed_cnt+1
+		if(not tweet_list or len(tweet_list)==0):
+			self.response.out.write(Alert.alert_msg("削除するツイートが選択されていません。",self.request.host));
+			return False			
 
-		try:
-			bookmark.my_timeline.remove(db.Key(self.request.get("key")))
-		except:
-			failed_cnt=failed_cnt+1
+		for tweet in tweet_list:
+			self.del_from_bookmark(bookmark,tweet)
 
-		if(failed_cnt==2):
-			self.response.out.write(Alert.alert_msg("既に削除されています。",self.request.host));
-			return False
+			try:
+				data=db.get(tweet)
+			except:
+				data=None
+			if(data):
+				if(data.from_user_id==user.user_id()):
+					data.delete()
 
 		bookmark.put()
 		return True
+
+	def del_message_all(self,user):
+		if(self.request.get("user_id")!=user.user_id()):
+			self.response.out.write(Alert.alert_msg("認証に失敗しました。",self.request.host));
+			return False
+
+		bookmark=ApiObject.get_bookmark_of_user_id_for_write(user.user_id())
+		if(bookmark==None):
+			self.response.out.write(Alert.alert_msg("ユーザデータが見つかりません。",self.request.host));
+			return False
+
+		tweeet_list=StackFeedData.all().filter("from_user_id =",user.user_id()).fetch(limit=1000)
+		for tweet in tweeet_list:
+			if(tweet.from_user_id==user.user_id()):
+				self.del_from_bookmark(bookmark,str(tweet.key()))
+				tweet.delete()
+
+		if(len(bookmark.my_timeline)>=1):
+			self.response.out.write(Alert.alert_msg("ツイートを削除しきることができませんでした。",self.request.host));
+			return False
+
+		bookmark.stack_feed_list=[]
+		bookmark.my_timeline=[]
+
+		bookmark.put()
+		return True
+
+	#def del_feed(self,user):
+	#	bookmark=ApiObject.get_bookmark_of_user_id_for_write(user.user_id())
+	#	if(bookmark==None):
+	#		self.response.out.write(Alert.alert_msg("フィードリストが見つかりません。",self.request.host));
+	#		return False
+
+	#	failed_cnt=0
+
+	#	try:
+	#		bookmark.stack_feed_list.remove(db.Key(self.request.get("key")))
+	#	except:
+	#		failed_cnt=failed_cnt+1
+
+	#	try:
+	#		bookmark.my_timeline.remove(db.Key(self.request.get("key")))
+	#	except:
+	#		failed_cnt=failed_cnt+1
+
+	#	if(failed_cnt==2):
+	#		self.response.out.write(Alert.alert_msg("既に削除されています。",self.request.host));
+	#		return False
+
+	#	bookmark.put()
+	#	return True
 	
-	def retweet(self,user):
-		data=db.get(self.request.get("key"))
+	#def retweet(self,user):
+	#	data=db.get(self.request.get("key"))
 		#comment=self.request.get("comment")
 		
 		#自分と相手にフィード
-		StackFeed._append_one(data,user.user_id())
-		if(data.to_user_id):
-			StackFeed._append_one(data,data.to_user_id)
+	#	StackFeed._append_one(data,user.user_id())
+	#	if(data.to_user_id):
+	#		StackFeed._append_one(data,data.to_user_id)
 		
 		#フォロワーにフィード
-		StackFeed.feed_new_message(user,data)
+	#	StackFeed.feed_new_message(user,data)
 
-		return True
+	#	return True
 
 	def add_new_message(self,user):
 		#メッセージ作成
@@ -160,18 +222,25 @@ class StackFeedTweet(webapp.RequestHandler):
 		if(not user):
 			self.response.out.write(Alert.alert_msg("ログインが必要です。",self.request.host));
 			return
-		if(self.request.get("mode")=="del_tweet"):
-			if(self.del_message(user)):
+		if(self.request.get("mode")=="del_tweet_all"):
+			if(self.del_message_all(user)):
 				self.redirect_main()
-		if(self.request.get("mode")=="del_feed"):
-			if(self.del_feed(user)):
-				self.redirect_main()
-		if(self.request.get("mode")=="retweet"):
-			if(self.retweet(user)):
-				self.redirect_main()
+		#if(self.request.get("mode")=="del_tweet"):
+		#	if(self.del_message(user)):
+		#		self.redirect_main()
+		#if(self.request.get("mode")=="del_feed"):
+		#	if(self.del_feed(user)):
+		#		self.redirect_main()
+		#if(self.request.get("mode")=="retweet"):
+		#	if(self.retweet(user)):
+		#		self.redirect_main()
 		
 	def post(self):
 		user = users.get_current_user()
-		if(self.add_new_message(user)):
-			self.redirect_main()
+		if(self.request.get("mode")=="add"):
+			if(self.add_new_message(user)):
+				self.redirect_main()
+		if(self.request.get("mode")=="del_tweet_list"):
+			if(self.del_message_list(user)):
+				self.redirect_main()
 		

@@ -84,7 +84,8 @@
           <li><a href="javascript:if(confirm('アカウントを凍結しますか？')){ window.location.href='{{host}}mypage?freez=1&user_id={{bookmark.user_id}}' }">アカウント凍結（＊管理モード）</a></li>
           {% endif %}
           {% if not view_mode %}
-          <li><a href="javascript:confirm_withdraw('mypage?withdraw=go&user_id={{bookmark.user_id}}',{% if is_english %}true{%else%}false{% endif %})">{% if is_english %}Withdraw{% else %}退会する{% endif %}{% if is_admin %}（＊管理モード）{% endif %}</a></li>
+          <li><a href="javascript:confirm_remove_tweet_all('{{bookmark.user_id}}',{% if is_english %}true{%else%}false{% endif %});"/>{% if is_english %}Delete all Tweet{% else %}ツイートを全て削除{% endif %}</a></li>
+          <li><a href="javascript:confirm_withdraw('mypage?withdraw=go&user_id={{bookmark.user_id}}',{% if is_english %}true{%else%}false{% endif %})">{% if is_english %}Withdraw{% else %}退会する{% endif %}</a></li>
           {% endif %}
           {% if is_admin %}
           <li><a href="{{host}}tolot/{{bookmark.user_id}}.html">アルバムを作成(β)</a></li>

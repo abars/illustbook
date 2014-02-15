@@ -43,7 +43,9 @@
 		{{feed.create_date}}<br/>
 
 		{% if not view_mode %}
-			{% if edit_mode %}
+			{% if edit_mode == 1 %}
+				<input type="checkbox" name="tweet_list" value="{{feed.key}}"/>
+				{#
 				{% if feed.from_user.user_id == user_id %}				
 				<a href="#" onclick="confirm_delete_tweet('{{feed.key}}','{{page}}','{{tab}}',{% if is_english %}true{%else%}false{% endif %});" class="g-button mini">
 					{% if is_english %}Remove{% else %}削除{% endif %}
@@ -53,6 +55,7 @@
 					{% if is_english %}Hide{% else %}除外{% endif %}
 				</a><br/>
 				{% endif %}
+				#}
 			{% endif %}
 			{% if feed.to_user.user_id == user_id %}
 				<a href="mypage?user_id={{feed.from_user.user_id}}&tab=feed" class="g-button mini">

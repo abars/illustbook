@@ -26,7 +26,7 @@
   </div>
 
   <div class="bbs_button">
-  {% if edit_mode %}
+  {% if edit_mode == 1 %}
     <a href="javascript:confirm_action_bbs('del_bbs?bbs_key={{bbs.key}}','{{bbs.title}}',{% if is_english %}true{%else%}false{% endif %});" class="g-button no-text"><i class="icon-remove"></i></a>
   {% endif %}
   </div>
@@ -62,7 +62,7 @@
   </div>
 
   <div class="bbs_button">
-  {% if edit_mode %}
+  {% if edit_mode == 2 %}
     <a href="javascript:confirm_delete('del_bbs&bbs_key={{bbs.key}}','ブックマーク','{{bbs.title}}',{% if is_english %}true{%else%}false{% endif %});" class="g-button no-text"><i class="icon-remove"></i></a>
   {% endif %}
   </div>

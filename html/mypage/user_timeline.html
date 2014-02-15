@@ -1,5 +1,12 @@
 <!-- タイムライン -->
 {% if page_mode == "user" and is_timeline_enable %}
+
+{% if not view_mode and edit_mode %}
+	<form method="post" action="{{host}}feed_tweet" id="del_tweet_list">
+	<input type="hidden" value="{{user_id}}" name="user_id" id="user_id"/>
+	<input type="hidden" value="del_tweet_list" name="mode" id="mode"/>
+{% endif %}
+
 <div class="example" style="padding:0px;">
 	<div id="infinite-scroll-container" class="transitions-enabled infinite-scroll clearfix">
 		{% include "mypage/timeline.html" %}
@@ -8,5 +15,9 @@
 		<a href="{{host}}mypage?tab={{tab}}&amp;page={{page+1}}&amp;user_id={{user_id}}&amp;edit={{edit_mode}}&amp;is_iphone={{is_iphone}}"></a>
 	</div>
 </div>
+
+{% if not view_mode and edit_mode %}
+	</form>
 {% endif %}
 
+{% endif %}

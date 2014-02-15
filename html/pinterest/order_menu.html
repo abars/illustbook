@@ -5,7 +5,7 @@
     <a href="{{host}}{{redirect_api}}?order=hot" class="g-button {%if order == "hot"%}checked{%endif%}">{% if is_english %}Hot{%else%}人気{% endif %}</a>
     <a href="{{host}}{{redirect_api}}?order=bookmark" class="g-button {%if order == "bookmark"%}checked{%endif%}">{% if is_english %}Bookmark{%else %}{% if is_iphone %}ブクマ{%else%}ブックマーク{% endif %}{% endif %}</a>
     {% if not is_iphone %}
-      <a href="{{host}}{{redirect_api}}?order=moper" class="g-button {%if order == "bookmark"%}checked{%endif%}">{% if is_english %}Mopper{%else %}モッパー{% endif %}</a>
+      <a href="{{host}}{{redirect_api}}?order=moper" class="g-button {%if order == "moper"%}checked{%endif%}">{% if is_english %}Mopper{%else %}モッパー{% endif %}</a>
     {% endif %}
     </div>
   </div>
