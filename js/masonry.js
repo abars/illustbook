@@ -81,10 +81,10 @@ function show_search(is_english){
   }
   if($('#search').is(':visible')){
     $('#search').hide();
-    $('#search_button').text(search)
+    //$('#search_button').text(search)
   }else{
     $('#search').show();  
-    $('#search_button').text(close)
+    //$('#search_button').text(close)
   }
   masonry_reload();
 }
