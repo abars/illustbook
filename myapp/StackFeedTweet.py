@@ -114,8 +114,8 @@ class StackFeedTweet(webapp.RequestHandler):
 			self.response.out.write(Alert.alert_msg("ツイートを削除しきることができませんでした。",self.request.host));
 			return False
 
-		bookmark.stack_feed_list=[]
-		bookmark.my_timeline=[]
+		#bookmark.stack_feed_list=[]
+		#bookmark.my_timeline=[]
 
 		bookmark.put()
 		return True
