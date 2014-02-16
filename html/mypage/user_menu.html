@@ -14,7 +14,7 @@
     <a href="{{host}}{{redirect_api}}?{% if bookmark %}user_id={{user_id}}&{% endif %}tab=feed" class="g-button {%if tab == "feed" or tab=="timeline" %}checked{%endif%}">{% if is_iphone or is_english %}TL{%else%}タイムライン{% if not view_mode %}{% if new_feed_count %}({{new_feed_count}}){% endif %}{% endif %}{% endif %}</a>
   </div>
   </div>
-  <div style="float:right">
+  <div style="float:right;">
   {% if not tab == "submit" and not tab=="moper" and not view_mode %}
       {% if edit_mode == 1 %}
         {% if tab == "timeline" or tab == "feed" %}

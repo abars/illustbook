@@ -120,7 +120,7 @@ max-width:495px;
 {% else %}
 {% endif %}
 {% if is_iphone %}
-width:298px;
+width:300px;
 {% endif %}
 margin: 5px;
 padding: 5px;
