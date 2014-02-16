@@ -193,7 +193,8 @@ class AddBookmark(webapp.RequestHandler):
 		if(mode=="del_app"):
 			AddBookmark.del_one(bookmark.app_key_list,add_app_key,app)
 		if(mode=="del_user"):
-			bookmark.user_list.remove(add_user_key)
+			if(add_user_key in bookmark.user_list):
+				bookmark.user_list.remove(add_user_key)
 
 		#フォロー先のユーザのフォロワーを更新するようにリクエスト
 		if(mode=="add_user" or mode=="del_user"):
