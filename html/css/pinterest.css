@@ -293,7 +293,7 @@ color: #333;
       height:56px;
     {% else %}
       width:86px;
-      height:53px;
+      height:86px;
       font-size:14px;
     {% endif %}
     float:left;

@@ -32,9 +32,13 @@
 <!-- 広告 -->
 {% if not is_iphone %}
   {% if page_mode == "index" %}
-      <div style="margin-top:5px;margin-left:auto;margin-right:auto;width:336px;">
+      <div style="margin-top:5px;margin-left:auto;margin-right:auto;width:336px;height:280px;">
         {% include "adsense/adsense_top.html" %}
       </div>
+  {% else %}
+    {% if thread_list and not tag_list%}
+      {% include "adsense/adsense_top.html" %}
+    {% endif %}
   {% endif %}
 {% endif %}
 
