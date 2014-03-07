@@ -59,7 +59,7 @@
 	</div>
 	</div>
 
-	{% if is_iphone and top_page %}
+	{% if false %}{#is_iphone and top_page %}#}
 		<div style="float:right;padding-left:2px;padding-top:1px;padding-right:2px;font-weight:600;">
 	     	<div class="g-button-group">
 	    	<a class="g-button dropdown-toggle" style="padding:6px;" data-toggle="dropdown" href="#">
@@ -85,7 +85,7 @@
 	{% else %}
 		<div style="float:right;padding-left:2px;padding-top:3px;padding-right:2px;font-weight:600;">
 			{% if user %}
-				{% if not is_iphone or mypage %}
+				{% if not is_iphone or mypage or top_page %}
 					<a href="{{redirect_url|logout_url|escape}}" class="g-button mini"><i class="icon-off"></i>{% if is_english %}Logout{%else%}ログアウト{% endif %}</a>
 				{% endif %}
 			{% else %}

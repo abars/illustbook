@@ -13,7 +13,7 @@
 {% if page_mode == "index" %}
   <div class="logo">
   {% if is_iphone %}
-   <img src="static_files/banner_360.png" width="180px" height="180px" alt="ロゴ"/>
+   <img src="static_files/banner_360b.png" width="180px" height="180px" alt="ロゴ"/>
   {% else %}
    <img src="static_files/banner_360b.png" alt="ロゴ"/>
   {% endif %}
@@ -32,7 +32,7 @@
 <!-- 広告 -->
 {% if not is_iphone %}
   {% if page_mode == "index" %}
-      <div style="margin-top:5px;margin-left:auto;margin-right:auto;width:336px;height:280px;">
+      <div style="margin-top:5px;margin-left:auto;margin-right:auto;width:336px;">
         {% include "adsense/adsense_top.html" %}
       </div>
   {% else %}

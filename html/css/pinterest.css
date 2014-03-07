@@ -70,13 +70,20 @@ h2,h3 {font-size:100%;color:#E47911;}
   color:#333;
 }
 
+{% if is_iphone %}
+  {% set radius_r=2 %}
+{% else %}
+  {% set radius_r=4 %}
+{% endif %}
+
 .item {
 {% if is_iphone %}
-  width:148px;
+  width:152px;
+  margin: 5px 0px 5px 5px;
 {% else %}
   width:200px;
+  margin: 5px;
 {% endif %}
-margin: 5px;
 float: left;
 background: #fff;
 {% if not flat_ui %}
@@ -87,13 +94,13 @@ word-break:break-all;
 color: #333;
 font-size:11px;
 {% if flat_ui %}
-  border-radius: 4px;
+  border-radius: {{radius_r}}px;
 {% endif %}
 }
 
 {% if flat_ui %}
 .item img{
-  border-radius: 4px 4px 0px 0px;
+  border-radius: {{radius_r}}px {{radius_r}}px 0px 0px;
 }
 {% endif %}
 
@@ -101,7 +108,7 @@ font-size:11px;
   background:#F2F0F0;
 {% if flat_ui %}
   background:#FFFFFF;
-  border-radius: 0px 0px 4px 4px;
+  border-radius: 0px 0px {{radius_r}}px {{radius_r}}px;
 {% endif %}
 }
 

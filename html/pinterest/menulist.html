@@ -5,10 +5,12 @@
 	<a class="color2 menu" href="{{host}}mypage">{% if is_english %}Regist{%else%}レンタル{% endif %}</a>
 	<a class="color3 menu" href="{{host}}commu/">{% if is_english %}Community{%else%}コミュニティ{% endif %}</a>
 	<a class="color4 menu" href="{{host}}anything/">{% if is_english %}Anything{%else%}何でも投稿{% endif %}</a>
-	<a class="color5 menu" href="{{host}}chat">{% if is_english %}Chat{%else%}チャット{% endif %}</a>
-	<a class="color6 menu" href="{{host}}support/">{% if is_english %}Support{%else%}サポート{% endif %}</a>
 {% if not is_iphone %}
+	<a class="color5 menu" href="{{host}}chat">{% if is_english %}Chat{%else%}チャット{% endif %}</a>
+{% endif %}
+	<a class="color6 menu" href="{{host}}support/">{% if is_english %}Support{%else%}サポート{% endif %}</a>
 	<a class="color7 menu" href="{{host}}guide">{% if is_english %}HowTo{%else%}使い方{% endif %}</a>
+{% if not is_iphone %}
 	<a class="color8 menu" href="{{host}}terms">{% if is_english %}Terms{%else%}利用規約{% endif %}</a>
 {% endif %}
 </div>

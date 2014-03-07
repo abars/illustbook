@@ -180,6 +180,12 @@
 {% endif %}
 {% endif %}
 
+{% if is_iphone and top_page %}
+  {% if not contents_only %}
+     {% include "pinterest/corner_stamp.html" %}
+  {% endif %}
+{% endif %}
+
 <div id="infinite-scroll-container" class="transitions-enabled infinite-scroll clearfix">
   <div class="corner-stamp">
   {% if not(is_iphone and top_page) %}
