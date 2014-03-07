@@ -2,9 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-{% if is_iphone %}
-<meta name="viewport" content="width=device-width">
-{% endif %}
+{% include "viewport.html" %}
 	<title>{% if is_english %}Alert - ILLUSTBOOK{% else %}アラート　-　イラストブック{% endif %}</title>
 	<link rel="stylesheet" type="text/css" media="screen,print" href="{{host}}static_files/general/css/top.css" />
 {% if is_iphone %}

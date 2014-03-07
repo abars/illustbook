@@ -7,9 +7,7 @@
 {% if is_tablet %}
 <meta name="viewport" content="width=860">
 {% endif %}
-{% if is_iphone %}
-<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable:no;">
-{% endif %}
+{% include "viewport.html" %}
 <meta name="Keywords" content="お絵かき掲示板,お絵かきブログ,無料,お絵かき,レンタル" />
 <meta name="Description" content="イラストブックはお絵かきツールがなくてもすぐに描ける完全無料のレンタルお絵かき掲示板サービスです。" />
 

@@ -2,9 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-{% if is_iphone %}
-<meta name="viewport" content="width=device-width">
-{% endif %}
+{% include "viewport.html" %}
 <title>{% if is_english %}Edit {{bbs.bbs_name}}{% else %}「{{bbs.bbs_name}}」の編集｜イラストブック{% endif %}</title>
 {%include "meta.html" %}
 <meta http-equiv="Content-Script-Type" content="text/javascript" />
