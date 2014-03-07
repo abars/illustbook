@@ -8,7 +8,7 @@
   </div>
 {% endif %}
 
-<!-- ポータル -->
+<!-- ロゴ -->
 
 {% if page_mode == "index" %}
   <div class="logo">
@@ -23,9 +23,19 @@
   </div>
 {% endif %}
 
+<!-- メニュー -->
 {% if page_mode == "index" %}
   {% include "pinterest/menulist.html" %}
   <br clear="all"/>
+{% endif %}
+
+<!-- 広告 -->
+{% if not is_iphone %}
+  {% if page_mode == "index" %}
+      <div style="margin-top:5px;margin-left:auto;margin-right:auto;width:336px;">
+        {% include "adsense/adsense_top.html" %}
+      </div>
+  {% endif %}
 {% endif %}
 
 <!-- タグ一覧 -->
@@ -33,13 +43,4 @@
 {% if tag_list %}
   {% include "pinterest/recent_tag.html" %}
 {% endif %}
-{% endif %}
-
-<!-- 広告 -->
-{% if not is_iphone %}
-  {% if thread_list %}
-    {% if not tag_list %}
-      {% include "adsense/adsense_top.html" %}
-    {% endif %}
-  {% endif %}
 {% endif %}
