@@ -230,15 +230,6 @@ font-weight: bold;
 color: #333;
 }
 
-{#
-.radius_image{
-  margin:1px;
-  border-radius: 4px;
-  -moz-border-radius: 4px;
-  -webkit-border-radius: 4px;
-}
-#}
-
 .deletable {
   position:relative;
 }
@@ -310,6 +301,15 @@ color: #333;
     opacity:0.5;
   }
 
+{% if is_iphone %}
+  .menu{
+    background:rgb(255,255,255);
+    color:#333;
+    width:54px;
+    height:54px;
+    margin:1px;
+  }
+{% else %}
   .color1{background:rgb(191,47,47);color:#fff;}
   .color2{background:rgb(191,155,47);color:#fff;}
   .color3{background:rgb(119,191,47);color:#fff;}
@@ -318,6 +318,7 @@ color: #333;
   .color6{background:rgb(47,83,191);color:#fff;}
   .color7{background:rgb(119,47,191);color:#fff;}
   .color8{background:rgb(191,47,155);color:#fff;}
+{% endif %}
 
 /* guide page */
   .result{
