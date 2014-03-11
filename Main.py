@@ -101,6 +101,7 @@ from myapp.Ranking import Ranking
 from myapp.ApiPacked import ApiPacked
 from myapp.Pinterest import Pinterest
 from myapp.DropBox import DropBox
+from myapp.AdGoto import AdGoto
 from myapp.DelThread import DelThread
 from myapp.DelBbs import DelBbs
 from myapp.DelEn import DelEn
@@ -330,6 +331,7 @@ application = webapp.WSGIApplication(
 	('/feed_tweet',StackFeedTweet),
 	('/ranking',RankingPortal),
 	('/add_ranking_score',AddRankingScore),
+	('/ad_goto',AdGoto),
 	('/dropbox',DropBox),
 	('/dropbox_blog',DropBox),
 	],debug=False)

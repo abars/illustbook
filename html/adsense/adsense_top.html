@@ -1,5 +1,17 @@
 {# PC版のトップページとマイページの広告 #}
 
+{% if True %}
+
+{# Illustbook Ad #}
+<div style="width:336px;height:280px;">
+<a href="{{host}}ad_goto">
+<img src="{{host}}static_files/ad/imgtalk_banner_336-280.png"/>
+</a>
+</div>
+
+{% else %}
+
+{# Adsense #}
 <script type="text/javascript"><!--
 google_ad_client = "ca-pub-8699119390634135";
 /* illustbook_top */
@@ -11,3 +23,5 @@ google_ad_height = 280;
 <script type="text/javascript"
 src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 </script>
+
+{% endif %}
