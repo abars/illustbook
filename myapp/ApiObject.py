@@ -190,6 +190,8 @@ class ApiObject(webapp.RequestHandler):
 				bookmark.icon_content_type = thumb["content_type"]
 				bookmark.thumbnail_created=BbsConst.USER_ICON_THUMBNAIL_CREATED
 				bookmark.put()
+			else:
+				return False
 		
 		#50pxサムネイル作成
 		if(bookmark and bookmark.icon and (not bookmark.icon_mini)):
@@ -198,6 +200,10 @@ class ApiObject(webapp.RequestHandler):
 				bookmark.icon_mini=thumb["code"]
 				bookmark.icon_mini_content_type = thumb["content_type"]
 				bookmark.put()
+			else:
+				return False
+
+		return True
 
 #-------------------------------------------------------------------
 #thread object

@@ -141,7 +141,9 @@ class UpdateProfile(webapp.RequestHandler):
 			bookmark.icon=db.Blob(self.request.get("icon"))
 			img = self.request.body_file.vars['icon']
 			bookmark.icon_content_type=img.headers['content-type']
-			ApiObject.create_user_thumbnail(bookmark)
+			if(not ApiObject.create_user_thumbnail(bookmark)):
+				Alert.alert_msg_with_write(self,"アイコン画像が大きすぎます。");
+				return
 
 		try:
 			SyncPut.put_sync(bookmark)
