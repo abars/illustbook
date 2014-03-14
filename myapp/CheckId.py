@@ -27,7 +27,7 @@ class CheckId(webapp.RequestHandler):
 			txt="IDは半角英数である必要があります。"
 			if(is_english):
 				txt="ID must be 16 characters or less"
-			Alert.alert_msg_with_write(self,)
+			Alert.alert_msg_with_write(self,txt)
 			return
 		if(MappingId.check_capability(short,"")==0):
 			txt="ID:"+short+"は既に登録されていて利用できません。"
