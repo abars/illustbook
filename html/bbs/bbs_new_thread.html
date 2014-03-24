@@ -19,7 +19,7 @@
 
 	{% if can_create_thread %}
 	<div class="g-button-group toggle-buttons">
-		<a href="javascript:display_comment_tab('text','new_thread');" class="g-button no-text comment_tab_new_thread comment_tab_new_thread_text"><i class="icon-pencil"></i>{% if is_english %}Create{% else %}新しいスレッドを作成する{% endif %}</a>
+		<a href="javascript:display_comment_tab('text','new_thread');" class="g-button no-text comment_tab_new_thread comment_tab_new_thread_text">{% if is_english %}Create new thread{% else %}新しいスレッドを作成する{% endif %}</a>
 	</div>
 	<br>
 	{% endif %}

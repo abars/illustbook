@@ -25,16 +25,22 @@ from myapp.ImageFile import ImageFile
 from myapp.AppPortal import AppPortal
 
 class AppImage (webapp.RequestHandler):
-	def get(self, app_id, image_id,):
+	def get(self, app_id, image_id):
 		if(app_id is None):
 			self.error(404)
 			return
+
 		app=AppPortal.get_app(app_id)
 		if(app is None):
 			self.error(404)
 			return
 		
-		index_no=app.image_id_list.index(image_id)
+		try:
+			index_no=app.image_id_list.index(image_id)
+		except:
+			self.error(404)
+			return
+
 		blob=app.image_blob_list[index_no];
 		content_type=app.image_type_list[index_no];
 		
