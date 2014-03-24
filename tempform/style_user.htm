@@ -15,7 +15,7 @@ a:hover,a.declink:hover {
 /* 区切り */
 hr {
 	border:0;
-	border-top:1px dashed #b5ae9d;
+	border-top:1px dashed {% if bbs.hr_color %}#{{ bbs.hr_color}};{% else %}#b5ae9d;{% endif %}
 }
 
 /* body要素 */
@@ -125,7 +125,7 @@ body {
 	font-weight: normal;
 	margin-top:0px;
 	padding-bottom:4px;
-	border-bottom:1px dashed #b5ae9d;
+	border-bottom:1px dashed {% if bbs.hr_color %}#{{ bbs.hr_color}};{% else %}#b5ae9d;{% endif %}
 }
 
 #free,#category,#affiliate,#comment,#counter,#menu {
@@ -165,7 +165,7 @@ body {
 /* イラスト情報要素 */
 .entry-title {
 	padding: 5px;
-	border-bottom: dotted 1px #999999;
+	border-bottom: dotted 1px {% if bbs.hr_color %}#{{ bbs.hr_color}};{% else %}#b5ae9d;{% endif %}
 }
 
 .entry-title h3 {
@@ -236,6 +236,7 @@ background-color: #{{bbs.button_color}};
 background-image: none;
 border: 1px solid #{{bbs.button_border_color}};
 text-shadow: none;
+{% if bbs.button_font_color %}color: #{{bbs.button_font_color}};{% endif %}
 }
 
 .g-button:hover,
@@ -246,6 +247,7 @@ text-shadow: none;
 background-color: #{{bbs.button_active_color}};
 background-image: none;
 border: 1px solid #{{bbs.button_border_color}};
+{% if bbs.button_font_color %}color: #{{bbs.button_font_color}};{% endif %}
 }
 {% endif %}
 

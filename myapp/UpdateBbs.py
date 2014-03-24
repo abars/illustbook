@@ -60,6 +60,7 @@ class UpdateBbs(webapp.RequestHandler):
 
 		bg_color=self.format_color(self.request.get('bg_color'))
 		font_color=self.format_color(self.request.get('font_color'))
+		hr_color=self.format_color(self.request.get('hr_color'))
 		content_bg_color=self.format_color(self.request.get('content_bg_color'))
 		content_font_color=self.format_color(self.request.get('content_font_color'))
 		menu_bg_color=self.format_color(self.request.get('menu_bg_color'))
@@ -78,6 +79,8 @@ class UpdateBbs(webapp.RequestHandler):
 			content_bg_color="ffffff";
 		if(content_font_color=="None"):
 			content_font_color="333333";
+		if(hr_color=="None"):
+			hr_color="b5ae9d";
 
 		if(side_color=="None"):
 			side_color="ffffff";
@@ -96,6 +99,10 @@ class UpdateBbs(webapp.RequestHandler):
 			return
 		if re.match('[0-9a-fA-F]{1,6}', font_color) == None:
 			error_str="font_color is invalid"
+			self.redirect(str('./edit_bbs?bbs_key='+self.request.get("bbs_key")+'&error_str='+error_str))
+			return
+		if re.match('[0-9a-fA-F]{1,6}', hr_color) == None:
+			error_str="hr_color is invalid"
 			self.redirect(str('./edit_bbs?bbs_key='+self.request.get("bbs_key")+'&error_str='+error_str))
 			return
 		if re.match('[0-9a-fA-F]{1,6}', twitter_bg_color) == None:
@@ -226,6 +233,7 @@ class UpdateBbs(webapp.RequestHandler):
 		bbs.in_frame_mode=int(self.request.get('in_frame_mode'))
 		
 		bbs.button_color=self.format_color(self.request.get('button_color'))
+		bbs.button_font_color=self.format_color(self.request.get('button_font_color'))
 		bbs.button_border_color=self.format_color(self.request.get('button_border_color'))
 		bbs.button_active_color=self.format_color(self.request.get('button_active_color'))
 
@@ -235,6 +243,8 @@ class UpdateBbs(webapp.RequestHandler):
 			bbs.button_active_color=""
 		if(bbs.button_border_color=="None"):
 			bbs.button_border_color=""
+		if(bbs.button_font_color=="None"):
+			bbs.button_font_color=""
 
 		bbs.button_color_enable=int(self.request.get("button_color_enable"))
 
@@ -270,6 +280,7 @@ class UpdateBbs(webapp.RequestHandler):
 		
 		bbs.bg_color=bg_color
 		bbs.font_color=font_color
+		bbs.hr_color=hr_color
 		bbs.content_bg_color=content_bg_color
 		bbs.content_font_color=content_font_color
 		bbs.menu_bg_color=menu_bg_color

@@ -7,12 +7,12 @@
 			{% if is_english %}no tags{% else %}設定されたタグはありません。{% endif %}
 		{% endif %}
 		{% for tag in thread.tag_list %}
-			<a href="{{host}}search_tag?tag={{tag|iriencode}}" class="g-button" style="color:#444;">{{tag}}</a>
+			<a href="{{host}}search_tag?tag={{tag|iriencode}}" class="g-button">{{tag}}</a>
 		{% endfor %}
 		</div>
 	
 		<div id="tag_form_button_{{ thread.key() }}" style="float:right;">
-			<a href="javascript:show_tag_form('{{thread.key()}}');" class="g-button" style="color:#444;"><i class="icon-pencil"></i>{% if is_english %}Edit{% else %}タグを編集{% endif %}</a>
+			<a href="javascript:show_tag_form('{{thread.key()}}');" class="g-button">{% if is_english %}Edit{% else %}タグを編集{% endif %}</a>
 		</div>
 		<div class="clr"></div>
 	</div>
@@ -20,11 +20,14 @@
 		<div id="tag_form_{{ thread.key() }}" style="display:none;">
 			<p>&nbsp;</p>
 			{% if is_english %}{% else %}追加もしくは削除するタグの名前を入力してボタンを押して下さい。{% endif %}<br/>
-			<input type="text" id="tag" maxlength="10"/><br/>
-			<div class="g-button-group">
-				<a href="javascript:AddTag('{{host}}','{{ bbs_key }}','{{ thread.key()}}');" class="g-button" style="color:#444;"><i class="icon-tag"></i>{% if is_english %}Add{% else %}タグの追加{% endif %}</a>
-				<a href="javascript:DelTag('{{host}}','{{ bbs_key }}','{{ thread.key()}}');" class="g-button" style="color:#444;"><i class="icon-remove"></i>{% if is_english %}Remove{% else %}タグの削除{% endif %}</a>
+			<div style="float:left;margin:4px;">
+				<input type="text" id="tag" maxlength="10"/>
 			</div>
+			<div class="g-button-group">
+				<a href="javascript:AddTag('{{host}}','{{ bbs_key }}','{{ thread.key()}}');" class="g-button">{% if is_english %}Add{% else %}タグの追加{% endif %}</a>
+				<a href="javascript:DelTag('{{host}}','{{ bbs_key }}','{{ thread.key()}}');" class="g-button">{% if is_english %}Remove{% else %}タグの削除{% endif %}</a>
+			</div>
+			<br clear="all"/>
 		</div>
 		
 </div>

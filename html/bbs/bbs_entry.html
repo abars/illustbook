@@ -57,7 +57,7 @@
 	<div class="entry-comment" style="word-break:break-all;">
 	<p>{{thread.summary|auto_link|safe}}</p>
 	{% if thread.postscript %}
-	　<p><a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key()}}{%endif%}.html' class="g-button" style="color:#444;">{% if is_english %}Continue{% else %}続きを読む{% endif %}</a></p>
+	　<p><a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key()}}{%endif%}.html' class="g-button">{% if is_english %}Continue{% else %}続きを読む{% endif %}</a></p>
 	{% endif %}
 	</div>
 	

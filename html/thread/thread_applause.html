@@ -28,7 +28,7 @@
 				{%endif%}
 			</div>
 			<div style="float:right;margin-right:4px;">
-				<input type="button" value="{% if is_english %}Like{% else %}拍手{% endif %}" class="g-button" {% if applause_enable %}onClick="javascript:applause('{{host}}','{{bbs.key()}}','{{thread.key()}}','thread');"{% endif %}/>
+				<input type="button" value="{% if is_english %}Like{% else %}拍手{% endif %}" class="g-button mini" style="height:23px;" {% if applause_enable %}onClick="javascript:applause('{{host}}','{{bbs.key()}}','{{thread.key()}}','thread');"{% endif %}/>
 			</div>
 		</div>
 	{% endif %}

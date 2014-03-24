@@ -15,6 +15,7 @@
 	<TABLE BORDER=0 class="g-table">
 		<TR><TH>{% if is_english %}Background color{% else %}背景色（デフォルトffffff){% endif %}</TH><TD><input type="text" class="color_select" name="bg_color" value="{{bbs.bg_color}}" maxlength="6"></TD></TR>
 		<TR><TH>{% if is_english %}Font color{% else %}フォント色（デフォルト333333){% endif %}</TH><TD><input type="text" class="color_select" name="font_color" value="{{bbs.font_color}}" maxlength="6"></TD></TR>
+		<TR><TH>{% if is_english %}HR color{% else %}水平ルーラー色（デフォルトb5ae9d){% endif %}</TH><TD><input type="text" class="color_select" name="hr_color" value="{{bbs.hr_color}}" maxlength="6"></TD></TR>
 	</TABLE>
 </div>
 
@@ -62,6 +63,7 @@
 			</select>
 		</TD></TR>		
 		<TR><TH>{% if is_english %}Background color{% else %}背景色{% endif %}</TH><TD><input type="text" class="color_select" name="button_color" value="{{bbs.button_color}}" maxlength="6"></TD></TR>
+		<TR><TH>{% if is_english %}Font color{% else %}フォント色{% endif %}</TH><TD><input type="text" class="color_select" name="button_font_color" value="{{bbs.button_font_color}}" maxlength="6"></TD></TR>
 		<TR><TH>{% if is_english %}Active color{% else %}アクティブ色{% endif %}</TH><TD><input type="text" class="color_select" name="button_active_color" value="{{bbs.button_active_color}}" maxlength="6"></TD></TR>
 		<TR><TH>{% if is_english %}Border color{% else %}ボーダー色{% endif %}</TH><TD><input type="text" class="color_select" name="button_border_color" value="{{bbs.button_border_color}}" maxlength="6"></TD></TR>
 	</TABLE>

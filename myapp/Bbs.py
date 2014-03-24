@@ -26,6 +26,7 @@ class Bbs(CachedDbModel):
 	side_font_color=db.StringProperty()
 	side_background_image=db.StringProperty()
 	font_color=db.StringProperty()
+	hr_color=db.StringProperty()
 	counter = db.ReferenceProperty(Counter)
 	bbs_mode =  db.IntegerProperty()
 	my_homepage = db.StringProperty()
@@ -40,6 +41,7 @@ class Bbs(CachedDbModel):
 	button_color = db.StringProperty()
 	button_active_color = db.StringProperty()
 	button_border_color = db.StringProperty()
+	button_font_color = db.StringProperty()
 	button_color_enable = db.IntegerProperty()
 
 	enable_continue_draw = db.IntegerProperty()

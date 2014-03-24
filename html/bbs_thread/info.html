@@ -14,7 +14,7 @@
 	{% else %}
 		{% if is_english %}Category{% else %}カテゴリ{% endif %}：
 	{% endif%}
-	<a href="{{usrhost}}?category={{thread.category|iriencode}}" class="g-button mini" style="color:#444;margin-left:0px;margin-bottom:2px;">{{thread.category}}</a>　
+	<a href="{{usrhost}}?category={{thread.category|iriencode}}" class="g-button mini" style="margin-left:0px;margin-bottom:2px;">{{thread.category}}</a>　
 {%endif%}
 
 {% if bbs.date_format!=-1 %}

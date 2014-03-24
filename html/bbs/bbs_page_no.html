@@ -1,4 +1,4 @@
-	<div class="g-button-group" style="margin:5px;">
+	<div class="g-button-group" style="margin-left:5px;margin-top:3px;">
 		{% if page == 1 %}
 			<a href="#" class="g-button no-text mini disabled2"><i class="icon-chevron-left"></i></a>
 		{% else %}
@@ -6,9 +6,9 @@
 		{% endif %}
 		{%for p in page_list%}
 			{%if p == page%}
-					<div class="g-button checked no-text mini" style="color:#444">{{p}}</div>
+					<div class="g-button checked no-text mini">{{p}}</div>
 			{%else%}
-				<a href="{{page_url_base}}{{p}}" class="g-button no-text mini" style="color:#444">{{p}}</a>
+				<a href="{{page_url_base}}{{p}}" class="g-button no-text mini">{{p}}</a>
 			{%endif %}
 		{%endfor%}
 		<a href="{{page_url_base}}{{page+1}}" class="g-button no-text mini"><i class="icon-chevron-right"></i></a>
