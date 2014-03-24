@@ -9,7 +9,7 @@ a.declink {
 }
 
 a:hover,a.declink:hover {
-	border-bottom: 1px solid #333;
+	border-bottom: 1px solid;
 }
 
 /* 区切り */
@@ -204,28 +204,6 @@ body {
 
 #page-bottom {
 	float: left;
-}
-
-.page-current {
-	display: inline-block;
-	color: #ffffff;
-	background-color: {% if bbs.button_active_color %}#{{bbs.button_active_color}};{% else %}#333333;{% endif %}
-	width:20px;
-	text-align:center;
-}
-
-#page-head a, #page-bottom a {
-	display: inline-block;
-	color: #ffffff;
-	background-color: {% if bbs.button_color %}#{{bbs.button_color}};{% else %}#999999;{% endif %}
-	width:20px;
-	text-align:center;
-}
-
-#page-head a:hover, #page-bottom a:hover {
-	background-color: {% if bbs.button_active_color %}#{{bbs.button_active_color}};{% else %}#333333;{% endif %}
-	text-decoration: none;
-	border-bottom: 0px dashed;
 }
 
 /*ボタン*/
