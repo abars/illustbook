@@ -54,14 +54,12 @@
 <!--記事-->
 {% if thread.illust_mode and bbs.enable_full_flat %}
 	<!--本文-->
-	{% if thread.summary or thread.postscript %}
-		<div class="entry-comment" style="word-break:break-all;">
+	<div class="entry-comment" style="word-break:break-all;">
 		<p>{{thread.summary|auto_link|safe}}</p>
 		{% if thread.postscript %}
 		　<p><a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key()}}{%endif%}.html' class="g-button">{% if is_english %}Continue{% else %}続きを読む{% endif %}</a></p>
 		{% endif %}
-		</div>
-	{% endif %}
+	</div>
 
 	{% if (not bbs.enable_full_comment) and (not bbs.disable_comment) %}
 		{%if thread.comment_cnt or show_comment_form %}
