@@ -240,17 +240,17 @@
 		</select>
 		</TD></TR>
 
-		<TR><TH>{% if is_english %}Show timeline{% else %}Twitterタイムライン{% endif %}</TH><TD>
+		<TR><TH>{% if is_english %}Show timeline{% else %}Twitterへのリンク{% endif %}</TH><TD>
 		<select name="twitter_enable">
 			<option value="0" {% if not bbs.twitter_enable %}selected="selected"{% endif %}>{% if is_english %}Disable{% else %}非表示{% endif %}</option>
-			<option value="1" {% if bbs.twitter_enable == 1 %}selected="selected"{% endif %}>{% if is_english %}Enable{% else %}有効{% endif %}</option>
+			<option value="1" {% if bbs.twitter_enable == 1 %}selected="selected"{% endif %}>{% if is_english %}Enable{% else %}表示{% endif %}</option>
 		</select>
 		</TD></TR>			
 	
 		<TR><TH>TwitterID</TH><TD><input type="text" name="twitter_id" value="{{bbs.twitter_id}}" maxlength="128"></TD></TR>
 
-		<TR><TH>{% if is_english %}Timeline height{% else %}高さ（デフォルト300){% endif %}</TH><TD><input type="text" name="twitter_height" value="{{bbs.twitter_height}}" maxlength="6"></TD></TR>
 	</TABLE>
+	<input type="hidden" name="twitter_height" value="{{bbs.twitter_height}}" maxlength="6"/>
 </div>
 
 <div class="example">
