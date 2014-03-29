@@ -1,19 +1,21 @@
 {%if show_comment_form %}
-	{% if template_path %}
-		<p>&nbsp;</p>
-	{% else %}
-		<br clear="all"/>
+	{% if (not bbs.disable_normal_reply) or bbs.enable_illust_reply %}
+		{% if template_path %}
+			<p>&nbsp;</p>
+		{% else %}
+			<br clear="all"/>
+		{% endif %}
+		
+		<div class="g-button-group toggle-buttons">
+		{%if not bbs.disable_normal_reply %}
+			<a href="javascript:display_comment_tab('text','{{thread.key()}}');" class="g-button no-text comment_tab_{{thread.key()}} comment_tab_{{thread.key()}}_text">{% if is_english %}Write Comment{%else%}コメントを書く{% endif %}</a>
+		{%endif%}
+		{%if bbs.enable_illust_reply %}
+			<a href="javascript:display_comment_tab('illust','{{thread.key()}}');" class="g-button no-text comment_tab_{{thread.key()}} comment_tab_{{thread.key()}}_illust">{% if is_english %}Draw Comment{%else%}絵でコメントを描く{% endif %}</a>
+		{%endif%}
+		</div>
+		<br/>
 	{% endif %}
-	
-	<div class="g-button-group toggle-buttons">
-	{%if not bbs.disable_normal_reply %}
-		<a href="javascript:display_comment_tab('text','{{thread.key()}}');" class="g-button no-text comment_tab_{{thread.key()}} comment_tab_{{thread.key()}}_text">{% if is_english %}Write Comment{%else%}コメントを書く{% endif %}</a>
-	{%endif%}
-	{%if bbs.enable_illust_reply %}
-		<a href="javascript:display_comment_tab('illust','{{thread.key()}}');" class="g-button no-text comment_tab_{{thread.key()}} comment_tab_{{thread.key()}}_illust">{% if is_english %}Draw Comment{%else%}絵でコメントを描く{% endif %}</a>
-	{%endif%}
-	</div>
-	<br/>
 {% endif %}
 
 {%if show_comment_form %}

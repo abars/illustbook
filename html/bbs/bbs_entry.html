@@ -61,19 +61,19 @@
 	{% endif %}
 	</div>
 	
-	{% if not bbs.enable_full_comment %}
-		<p>&nbsp;</p>
-		<div class="g-button-group toggle-buttons">
-		{%if not bbs.disable_comment %}
+	{% if (not bbs.enable_full_comment) and (not bbs.disable_comment) %}
+		{%if thread.comment_cnt or show_comment_form %}
+			<p>&nbsp;</p>
+			<div class="g-button-group toggle-buttons">
 			{%if thread.comment_cnt %}
 				<a href="{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key()}}{%endif%}.html" class="g-button no-text comment_tab_{{thread.key()}} comment_tab_{{thread.key()}}_text">{% if is_english %}Read Comment{% else %}コメントを読む{% endif %}({{thread.comment_cnt}})</a>
 			{% endif %}
 			{% if show_comment_form %}
 				<a href="{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key()}}{%endif%}.html" class="g-button no-text comment_tab_{{thread.key()}} comment_tab_{{thread.key()}}_text">{% if is_english %}Write Comment{% else %}コメントを書く{% endif %}</a>
 			{%endif%}
-		{%endif%}
-		</div>
-		<br/>
+			</div>
+			<br/>
+		{% endif %}
 	{%endif%}
 
 {%endif%}
