@@ -33,6 +33,7 @@ body {
 	font-size:10pt;
 {%endif%}
 	font-family:Georgia, Geneva;
+	color:{% if bbs.font_color %}#{{ bbs.font_color }};{% else %}#333333;{% endif %}
 }
 
 /* メインコンテナ */
@@ -47,7 +48,6 @@ body {
 
 /* 掲示板タイトルとロゴ */
 #header {
-	color:{% if bbs.font_color %}#{{ bbs.font_color }};{% else %}#333333;{% endif %}
 {% if not bbs.bottom_image %}
 	margin-top:10px;
 	padding-top:0px;
@@ -89,7 +89,6 @@ body {
 /* コンテンツフッタ（コピーライト） */
 #contents-footer {
 	text-align:center;
-	color:{% if bbs.font_color %}#{{ bbs.font_color }};{% else %}#333333;{% endif %}
 }
 
 /* イラスト一覧 */
@@ -226,6 +225,9 @@ background-color: #{{bbs.button_active_color}};
 background-image: none;
 border: 1px solid #{{bbs.button_border_color}};
 {% if bbs.button_font_color %}color: #{{bbs.button_font_color}};{% endif %}
+-webkit-box-shadow: none;
+-moz-box-shadow: none;
+box-shadow: none;
 }
 {% endif %}
 
