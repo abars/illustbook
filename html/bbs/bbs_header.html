@@ -5,7 +5,9 @@
 	<h2>{{bbs.summary|safe}}</h2>
 {% else %}
 		{% if bbs.bottom_image %}
-			<h3><a href="{{page_url}}" class="decnone_top_logo"><img src="{{bbs.bottom_image}}"/></a></h3>
+			<div id="bbs_logo">
+				<a href="{{page_url}}" class="imagelink"><img src="{{bbs.bottom_image}}"/></a><br/>
+			</div>
 		{% else %}
 			<h3><a href="{{page_url}}" class="decnone">{{bbs.bbs_name}}</a></h3>
 		{% endif %}
