@@ -24,6 +24,23 @@
 		line-height:normal;
 	}
 
+	{% if is_iphone and template_path %}
+	.entry-title {
+		border-bottom: dotted 1px #999999;
+	}
+
+	.entry-title h3 {
+		float: left;
+		width: 210px;
+		border-bottom: none;
+		margin-bottom: 0px;
+	}
+
+	.clap {
+		padding-top:3px;
+	}
+	{% endif %}
+
 	{% if is_iphone %}
 		{# 高解像度 Android 対応 #}
 		#container {
