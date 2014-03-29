@@ -69,11 +69,13 @@
 {% endif %}
 
 <!-- 通常コメント -->
+<div class="entry-res">
 {% if entry.com.hidden_flag %}
 	このコメントは非表示に設定されています。
 {% else %}
 	{{entry.com.content|safe}}
 {% endif %}
+</div>
 
 <!-- レス -->
 {% if not entry.com.hidden_flag %}
@@ -104,7 +106,10 @@
 			{% endif %}
 			</div>
 		</div>
-	<br/>{{res.content|safe}}<br/><br/>
+		
+		<div class="entry-res">
+		{{res.content|safe}}
+		</div>
 	</div>
 {% endfor %}
 {% endif %}

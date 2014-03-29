@@ -33,6 +33,7 @@
 	</ul>
 	</div>
 
+{#
 <!-- モバイルの新規イラスト -->
 {% if is_iphone %}
 	<div class="g-button-group">
@@ -56,8 +57,7 @@
 		<a class="g-button no-text" href="javascript:bbs_open_draw('','{{bbs.key()}}','{{host}}');" style="color:#444;">{% if is_english %}Open Draw Tool{% else %}イラブペイントを開く{% endif %}</a>
 	</div>
 {% endif %}
-
-
+#}
 
 <!-- ページ番号 -->
 {% include "bbs/bbs_page_no.html" %}

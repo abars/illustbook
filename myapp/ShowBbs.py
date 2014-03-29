@@ -256,14 +256,14 @@ class ShowBbs(webapp.RequestHandler):
 		sidebar_list=[]
 		if(bbs.freearea):
 			sidebar_list.append("free")
-		if(category_list):
-			sidebar_list.append("category")
 		if(bbs.amazon):
 			sidebar_list.append("affiliate")
 		if(side_thread):
 			sidebar_list.append("thread")
 		if(side_comment):
 			sidebar_list.append("comment")
+		if(category_list):
+			sidebar_list.append("category")
 		if(not bbs.disable_counter):
 			sidebar_list.append("counter")
 		sidebar_list.append("menu")
