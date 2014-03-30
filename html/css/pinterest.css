@@ -66,9 +66,9 @@ h2,h3 {font-size:100%;color:#E47911;}
 }
 
 {% if is_iphone %}
-  {% set radius_r=0 %}
-{% else %}
   {% set radius_r=2 %}
+{% else %}
+  {% set radius_r=3 %}
 {% endif %}
 
 .item {
@@ -268,10 +268,18 @@ color: #333;
 }
 
 .tag{
-  background:#F2F0F0;
   padding:4px;
   margin:2px;
+  margin-left:0px;
   float:left;
+  border: 1px solid #eee;
+  font-weight: bold;
+  color:#555;
+  border-radius: 2px;
+}
+
+.tag:hover{
+  background:#F2F0F0;
 }
 
 /* portal modern menu */
