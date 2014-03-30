@@ -1,8 +1,22 @@
 	<!--スレッド式掲示板-->
-	<a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key()}}{%endif%}.html' class="g-button" style="width:90%;text-align:left;overflow:hidden;">
-	{% if template_path %}<h3>{% endif %}
+	<div class="square_thread_list" onclick="location.href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key()}}{%endif%}.html'">
+
 	{{ thread.title|escape }}<br/>
-	{{thread.author}}　{{thread.comment_cnt}}{% if is_english %}comment{% else %}コメ{% endif %}　
+
 	{% if is_english %}{{thread.date|time_UTC_progress}}{% else %}{{thread.date|time_JST_progress}}{% endif %}
-	{% if template_path %}</h3>{% endif %}
+	&nbsp;({{thread.comment_cnt}})
+
+	<br/>
+
+	<center>
+	{% if thread.cached_entry_image_key %}
+		<img src="{{host}}thumbnail/{{thread.cached_entry_image_key}}.jpg"/>
+	{% else %}
+		{% if thread.cached_image_key %}
+			<img src="{{host}}thumbnail/{{thread.cached_image_key}}.jpg"/>
+		{% endif %}
+	{% endif %}
+	</center>
+
 	</a>
+	</div>

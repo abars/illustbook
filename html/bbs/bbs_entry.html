@@ -1,6 +1,5 @@
 <!--イラスト一つ-->
 {% if bbs.bbs_mode == 3 %}
-	<div class="entry" style="padding:8px;">
 {% else %}
 	<div class="entry">
 {% endif %}
@@ -96,7 +95,10 @@
 {% endif %}
 {% endif %}
 
+{% if bbs.bbs_mode == 3 %}
+{% else %}
 </div>
+{% endif %}
 
 {% if bbs.enable_full_comment %}
 	<!--コメント統合表示-->

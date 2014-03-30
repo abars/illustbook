@@ -185,8 +185,8 @@ class ShowBbs(webapp.RequestHandler):
 
 		#infinite_scrollを使用するかどうか
 		infinite_scroll=False
-		if(bbs.bbs_mode!=BbsConst.BBS_MODE_NO_IMAGE):# and design["is_iphone"]):
-			infinite_scroll=True
+		#if(bbs.bbs_mode!=BbsConst.BBS_MODE_NO_IMAGE):# and design["is_iphone"]):
+		infinite_scroll=True
 
 		#infinite_scrollの2ページ目以降
 		contents_only=0

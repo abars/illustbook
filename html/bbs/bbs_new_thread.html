@@ -1,31 +1,27 @@
 <!--新規スレッド作成-->
-
-{% if  bbs.bbs_mode == 3 %}
-<p>&nbsp;</p>
 <div class="entry">
-	<h3>{% if is_english %}Create new thread{% else %}新しいスレッドの作成{% endif %}</h3>
-	{% if not is_english %}
-		{% if not bbs.disable_create_new_thread %}
-			この掲示板は誰でもスレッドが作成可能です。<br/>
-		{% else%}
-			{% if bbs.disable_create_new_thread == 1 %}
-				この掲示板は管理人のみスレッドが作成可能です。<br/>
-			{% else %}
-				この掲示板はログインしていれば誰でもスレッドが作成可能です。<br/>
-			{% endif %}
-		{% endif %}
-	{% endif %}
-	<br/>
-
 	{% if can_create_thread %}
 	<div class="g-button-group toggle-buttons">
 		<a href="javascript:display_comment_tab('text','new_thread');" class="g-button no-text comment_tab_new_thread comment_tab_new_thread_text">{% if is_english %}Create new thread{% else %}新しいスレッドを作成する{% endif %}</a>
 	</div>
-	<br>
+
+	{% else %}
+		{% if not is_english %}
+			{% if not bbs.disable_create_new_thread %}
+				この掲示板は誰でもスレッドが作成可能です。<br/>
+			{% else%}
+				{% if bbs.disable_create_new_thread == 1 %}
+					この掲示板は管理人のみスレッドが作成可能です。<br/>
+				{% else %}
+					この掲示板はログインしていれば誰でもスレッドが作成可能です。<br/>
+				{% endif %}
+			{% endif %}
+		{% endif %}
 	{% endif %}
 	
-	<div class="comment_tab_new_thread_body comment_tab_new_thread_body_text" style="display:none;">
 	{% if can_create_thread %}
+	<div class="comment_tab_new_thread_body comment_tab_new_thread_body_text" style="display:none;">
+		<p>&nbsp</p>
 		<form action='http://localhost/' enctype="multipart/form-data" method="post" onSubmit="this.action='{{host}}add_thread?bbs_key={{bbs.key()}}';">
 		<input type="hidden" name="illust_mode" value="0">
 		<table class="table_color"><tr><td>{% if is_english %}Title (MUST){% else %}タイトル（必須）{% endif %}</td>
@@ -48,7 +44,6 @@
 		<tr><td></td><td>
 		<input type="submit" value="{% if is_english %}Create{% else %}スレッドを作成する{% endif %}" class="g-button">
 		</td></tr></table></form>
-	{% endif %}
 	</div>
+	{% endif %}
 </div>
-{% endif %}

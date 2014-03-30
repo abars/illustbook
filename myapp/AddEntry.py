@@ -59,12 +59,14 @@ class AddEntry(webapp.RequestHandler):
 		entry.comment_no=thread.comment_cnt+1
 		entry.remote_addr=self.request.remote_addr
 
-	def update_thread_and_bbs_information(self,thread,bbs):
+	def update_thread_and_bbs_information(self,thread,bbs,entry):
 		#スレッドのコメント数を更新
 		thread.comment_cnt = thread.comment_cnt+1
 		thread.date=datetime.datetime.today()
 		thread.cached_entry_key=[]
 		thread.cached_entry_key_enable=None
+		if(entry.illust_reply):
+			thread.cached_entry_image_key=str(entry.illust_reply_image_key.key())
 		thread.put()
 
 		#掲示板のコメント数を追加
@@ -215,7 +217,7 @@ class AddEntry(webapp.RequestHandler):
 
 		#スレッドと掲示板の情報を更新
 		if(not overwrite):
-			self.update_thread_and_bbs_information(thread,bbs)
+			self.update_thread_and_bbs_information(thread,bbs,entry)
 
 		#上書き投稿時の昔のイラストの削除
 		if(delete_thread_image):

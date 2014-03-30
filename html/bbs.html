@@ -56,9 +56,10 @@
 			{% endif %}
 			#}
 
-			{% if bbs.bbs_mode == 3 %}
-				<!--空白を入れる-->
-				<p>&nbsp;</p>
+			{% if not contents_only %}
+				{% if bbs.bbs_mode == 3 %}
+					{% include 'bbs/bbs_new_thread.html'%}
+				{% endif %}
 			{% endif %}
 
 			<!--イラストが存在しない場合-->
@@ -73,6 +74,11 @@
 				{% if infinite_scroll %}
 				<div id="infinite-scroll-container" class="transitions-enabled infinite-scroll clearfix">
 				{% endif %}
+
+				{% if bbs.bbs_mode == 3 %}
+					<div class="entry">
+				{% endif %}
+
 				{% for thread in threads %}
 					{% if loop.index == 2 and not contents_only %}
 						<!--広告を一つ目の記事の後に入れる-->
@@ -88,16 +94,18 @@
 						{% include "bbs/bbs_entry.html" %}
 					{% endif %}
 				{% endfor %}
+
+				{% if bbs.bbs_mode == 3 %}
+					<!--空白を入れる-->
+					<br clear="all"/>
+					</div>
+				{% endif %}
+
 				{% if infinite_scroll %}
 				</div>
 				{% endif %}
 			{% endif%}
 			
-			{% if bbs.bbs_mode == 3 %}
-				<!--空白を入れる-->
-				<p>&nbsp;</p>
-			{% endif %}
-
 			<!-- ページ -->
 			{% if not infinite_scroll %}
 			<div id="entry-bottom">
@@ -108,9 +116,6 @@
 				{% endif %}
 			</div>
 			{% endif %}
-
-			<!-- サイドバー非表示時の要素 -->
-			{% include 'bbs/bbs_new_thread.html'%}　
 		</div>
 
 		<!-- サイドバー -->
