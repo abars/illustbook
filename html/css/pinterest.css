@@ -45,11 +45,6 @@ h2,h3 {font-size:100%;color:#E47911;}
   {% endif %}
 }
 
-#search{
-	display:none;
-	margin:5px;
-}
-
 {% if use_masonry %}
 #infinite-scroll-container {
   margin:auto;
@@ -71,9 +66,9 @@ h2,h3 {font-size:100%;color:#E47911;}
 }
 
 {% if is_iphone %}
-  {% set radius_r=2 %}
+  {% set radius_r=0 %}
 {% else %}
-  {% set radius_r=4 %}
+  {% set radius_r=2 %}
 {% endif %}
 
 .item {
@@ -201,6 +196,13 @@ color: #333;
 
 #order{
   margin:5px;
+}
+
+#search{
+  display:none;
+  margin:5px;
+  padding:5px;
+  background:#fff;
 }
 
 #more_tag{
