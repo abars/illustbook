@@ -235,7 +235,11 @@ class AddEntry(webapp.RequestHandler):
 		memcache.set("add_entry_double_block",self.request.get("comment"),30)
 		
 		#ランキング
-		Ranking.add_rank_global(thread,BbsConst.SCORE_ENTRY)
+		is_owner=False
+		if(thread.user_id and entry.user_id and thread.user_id == entry.user_id):
+			is_owner=True
+		if(not is_owner): #自分のスレッドへのコメントはランキングに反映しない
+			Ranking.add_rank_global(thread,BbsConst.SCORE_ENTRY)
 
 		#フィード
 		if(not link_to_profile):
