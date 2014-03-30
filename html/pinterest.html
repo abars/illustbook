@@ -180,6 +180,15 @@
 
 {% if is_iphone and top_page %}
   {% if not contents_only %}
+    <div class="message">
+        <div style="float:left;margin-right:4px;">
+          <img src="{{host}}static_files/banner_360b.png" width=74px height=74px>
+        </div>
+        <div>
+          <p><b>{% if is_english %}ILLUSTBOOK{% else %}イラストブック{% endif %}</b></p>
+          <p>{% if is_english %}BBS network of MANGA{% else %}無料のレンタルお絵かき掲示板{% endif %}</p>
+        </div>
+    </div>
      {% include "pinterest/corner_stamp.html" %}
   {% endif %}
 {% endif %}

@@ -25,7 +25,7 @@
 		{% else %}
 			{% if top_page or my_new_feed_count %}
 				<a href="{{host}}mypage" class="g-button mini {% if not show_link_detail %}no-text{% endif %}" style="margin:0px;">
-					<i class="icon-home"></i>
+					{% if not show_link_detail or not is_iphone %}<i class="icon-home"></i>{% endif %}
 					{% if show_link_detail %}
 						{% if is_english %}MyPage{%else%}マイページ{% endif %}
 					{% endif %}
@@ -67,7 +67,6 @@
 	    		<span class="caret"></span>
 	    	</a>
 			<ul class="dropdown-menu" style="right:0;left:auto;">
-				{#
 				<li><a href="{{host}}sample/">{% if is_english %}Trial{% else %}試し描き{% endif %}</a></li>
 				<li><a href="{{host}}mypage">{% if is_english %}Regist{% else %}レンタル{% endif %}</a></li>
 				<li><a href="{{host}}commu/">{% if is_english %}Community{% else %}コミュニティ{% endif %}</a></li>
@@ -75,7 +74,6 @@
 				<li><a href="{{host}}chat">{% if is_english %}Chat{% else %}チャット{% endif %}</a></li>
 				<li><a href="{{host}}support/">{% if is_english %}Support{% else %}サポート{% endif %}</a></li>
 				<li><a href="{{host}}guide">{% if is_english %}HowTo{% else %}使い方{% endif %}</a></li>
-				#}
 				{% if not user %}
 					<li><a href="{{redirect_url|login_url|escape}}">{% if is_english %}Login{%else%}ログイン{% endif %}</a></li>
 				{% else %}

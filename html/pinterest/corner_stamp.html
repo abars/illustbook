@@ -10,7 +10,7 @@
 
 <!-- ロゴ -->
 
-{% if page_mode == "index" %}
+{% if page_mode == "index" and not is_iphone %}
   <div class="logo">
   {% if is_iphone %}
    <img src="static_files/banner_360b.png" width="180px" height="180px" alt="ロゴ"/>
@@ -25,7 +25,9 @@
 
 <!-- メニュー -->
 {% if page_mode == "index" %}
+{% if not is_iphone %}
   {% include "pinterest/menulist.html" %}
+{% endif %}
   <br clear="all"/>
 {% endif %}
 
