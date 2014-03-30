@@ -42,6 +42,13 @@
 				<!-- イラスト -->
 				{% include "thread/thread_content.html" %}
 
+				<!-- 新規コメント -->
+				{% if not bbs.disable_comment and bbs.bbs_mode == 3 %}
+					<div class="entry">
+					{% include "thread/thread_comment_form.html" %}
+					</div>
+				{% endif %}
+
 				<!-- 広告 -->
 				<div class="entry mobile_ad">
 					{% include 'adsense/adsense_wide.html' %}
@@ -70,7 +77,9 @@
 					{% if comment %}
 						{% include "thread/thread_comment_order.html" %}
 					{% endif %}
-					{% include "thread/thread_comment_form.html" %}
+					{% if bbs.bbs_mode != 3 %}
+						{% include "thread/thread_comment_form.html" %}
+					{% endif %}
 					</div>
 				{% endif %}
 

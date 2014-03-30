@@ -1,9 +1,11 @@
 {%if show_comment_form %}
 	{% if (not bbs.disable_normal_reply) or bbs.enable_illust_reply %}
-		{% if template_path %}
-			<p>&nbsp;</p>
-		{% else %}
-			<br clear="all"/>
+		{% if bbs.bbs_mode != 3 %}
+			{% if template_path %}
+				<p>&nbsp;</p>
+			{% else %}
+				<br clear="all"/>
+			{% endif %}
 		{% endif %}
 		
 		<div class="g-button-group toggle-buttons">

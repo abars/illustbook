@@ -1,7 +1,7 @@
 	<!--スレッド式掲示板-->
 	<div class="square_thread_list" onclick="location.href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key()}}{%endif%}.html'">
 
-	{{ thread.title|escape }}<br/>
+	<p>{{ thread.title|escape }}</p>
 
 	{% if is_english %}{{thread.date|time_UTC_progress}}{% else %}{{thread.date|time_JST_progress}}{% endif %}
 	&nbsp;({{thread.comment_cnt}})
