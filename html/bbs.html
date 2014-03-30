@@ -75,7 +75,7 @@
 				<div id="infinite-scroll-container" class="transitions-enabled infinite-scroll clearfix">
 				{% endif %}
 
-				{% if bbs.bbs_mode == 3 %}
+				{% if bbs.bbs_mode == 3 and threads%}
 					<div class="entry">
 				{% endif %}
 
@@ -95,7 +95,7 @@
 					{% endif %}
 				{% endfor %}
 
-				{% if bbs.bbs_mode == 3 %}
+				{% if bbs.bbs_mode == 3 and threads%}
 					<!--空白を入れる-->
 					<br clear="all"/>
 					</div>

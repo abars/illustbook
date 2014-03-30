@@ -3,9 +3,14 @@
 <style type="text/css">
 	/* スレッド一覧 */
 	.square_thread_list {
-		width:150px;
-		height:150px;
-		border: 1px solid #eee;
+		{% if is_iphone %}
+			width:144px;
+			height:144px;
+		{% else %}
+			width:150px;
+			height:150px;
+		{% endif %}
+		border: 1px solid #ddd;
 		float:left;
 		margin:2px;
 		padding:2px;
@@ -13,7 +18,7 @@
 	}
 	
 	.square_thread_list:hover{
-		background: #eee;
+		background: #ddd;
 		text-decoration: none;
 	}
 
