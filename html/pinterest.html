@@ -157,6 +157,15 @@
   {% include "pinterest/order_menu.html" %}
 {% endif %}
 
+<!-- タグサーチ -->
+
+{% if search %}
+  <div class="message">
+    <p><b>{{search}}</b>の検索結果</p>
+  </div>
+  <br clear="all"/>
+{% endif %}
+
 <!-- index終了 -->
 </div>
 
@@ -180,16 +189,8 @@
 
 {% if is_iphone and top_page %}
   {% if not contents_only %}
-    <div class="message">
-        <div style="float:left;margin-right:4px;">
-          <img src="{{host}}static_files/banner_360b.png" width=74px height=74px>
-        </div>
-        <div>
-          <p><b>{% if is_english %}ILLUSTBOOK{% else %}イラストブック{% endif %}</b></p>
-          <p>{% if is_english %}BBS network of MANGA{% else %}無料のレンタルお絵かき掲示板{% endif %}</p>
-        </div>
-    </div>
-     {% include "pinterest/corner_stamp.html" %}
+    {% include "pinterest/about_iphone.html" %}
+    {% include "pinterest/corner_stamp.html" %}
   {% endif %}
 {% endif %}
 
