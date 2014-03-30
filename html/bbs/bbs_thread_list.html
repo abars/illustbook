@@ -1,10 +1,16 @@
 	<!--スレッド式掲示板-->
 	<div class="square_thread_list" onclick="location.href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key()}}{%endif%}.html'">
 
+	<div class="square_thread_list_comment_cnt">{{thread.comment_cnt}} {% if is_english %}comments{% else %}コメント{% endif %}</div>
+
+	<div class="square_thread_list_info">
 	<p>{{ thread.title|escape }}</p>
 
+	by {{thread.author}} &nbsp;
+
 	{% if is_english %}{{thread.date|time_UTC_progress}}{% else %}{{thread.date|time_JST_progress}}{% endif %}
-	&nbsp;({{thread.comment_cnt}})
+
+	</div>
 
 	<br/>
 

@@ -21,6 +21,10 @@
 
 	<div class="g-button-group">
 	<div id="contents-header-edit">
+		{% if bbs.bbs_mode==3 and can_create_thread %}
+			<input type="button" onclick="display_comment_tab('text','new_thread');" class="g-button" value="{% if is_english %}Create new thread{% else %}新しいスレッドを作成{% endif %}"/>
+		{% endif %}
+
 		{% if bbs.bbs_mode != 3 %}
 			{% if can_create_new_image %}
 				{% if not bbs.disable_create_new_illust %}
@@ -46,7 +50,7 @@
 		{% endif %}
 
 		{% if can_edit_design %}
-			{%if template_path and not is_english%}
+			{%if (bbs.bbs_mode!=3 and (template_path and not is_english)) %}
 				<a href="{{host}}edit_bbs?bbs_key={{bbs.key()}}"><img src="{{template_path}}images/header_edit3.jpg" alt="デザインの編集" width="103" height="28"/></a>
 			{% else %}
 				<input type="button" value="{% if is_english %}Edit BBS{% else %}デザインの編集{% endif %}"  class="g-button" onclick="window.location.href='{{host}}edit_bbs?bbs_key={{bbs.key()}}'"/>

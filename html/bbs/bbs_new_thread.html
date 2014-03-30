@@ -1,5 +1,7 @@
 <!--新規スレッド作成-->
-<div class="entry">
+{#
+	<div class="entry">
+
 	{% if can_create_thread %}
 	<div class="g-button-group toggle-buttons">
 		<a href="javascript:display_comment_tab('text','new_thread');" class="g-button no-text comment_tab_new_thread comment_tab_new_thread_text">{% if is_english %}Create new thread{% else %}新しいスレッドを作成する{% endif %}</a>
@@ -18,10 +20,11 @@
 			{% endif %}
 		{% endif %}
 	{% endif %}
-	
+#}
+
 	{% if can_create_thread %}
-	<div class="comment_tab_new_thread_body comment_tab_new_thread_body_text" style="display:none;">
-		<p>&nbsp</p>
+	<div class="entry comment_tab_new_thread_body comment_tab_new_thread_body_text" style="display:none;">
+		{# <p>&nbsp</p> #}
 		<form action='http://localhost/' enctype="multipart/form-data" method="post" onSubmit="this.action='{{host}}add_thread?bbs_key={{bbs.key()}}';">
 		<input type="hidden" name="illust_mode" value="0">
 		<table class="table_color"><tr><td>{% if is_english %}Title (MUST){% else %}タイトル（必須）{% endif %}</td>
@@ -46,4 +49,4 @@
 		</td></tr></table></form>
 	</div>
 	{% endif %}
-</div>
+{# </div> #}
