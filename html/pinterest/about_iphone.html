@@ -1,10 +1,14 @@
+{#
     <div class="message">
         <div style="float:left;margin-right:4px;">
-          <img src="{{host}}static_files/banner_360b.png" width=74px height=74px>
+          <img src="{{host}}static_files/banner_360b.png" width=74px height=74px/>
         </div>
-        <div style="float:left;">
-          <p style="margin-bottom:2px;"><b>{% if is_english %}ILLUSTBOOK{% else %}イラストブック{% endif %}</b></p>
+        <div style="float:left;width:220px;">
+          <b>{% if is_english %}ILLUSTBOOK{% else %}イラストブック{% endif %}</b>
+          <p>
           {% if is_english %}BBS network of MANGA{% else %}無料のレンタルお絵かき掲示板{% endif %}
+          </p>
         </div>
         <br clear="all"/>
     </div>
+  #}
