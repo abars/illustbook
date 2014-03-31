@@ -6,6 +6,7 @@ body{
   margin: 0px;
   font-size: 13px;
   overflow-y:scroll;
+  font-family: 'Lucida Grande', 'Hiragino Kaku Gothic ProN', 'ヒラギノ角ゴ ProN W3', Meiryo, メイリオ, sans-serif;
 }
 
 hr {border:0; border-top:1px solid {% if flat_ui %}#eeeeee;{%else%}#cccccc;{% endif %}}
