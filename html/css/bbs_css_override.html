@@ -86,9 +86,13 @@
 		}
 
 		#contents-header {
+		{% if template_path %}
 			height:32px;
 			padding:4px;
 			padding-left:8px;
+		{% else %}
+			padding:8px;
+		{% endif %}
 		}
 
 		.mobile_ad {
