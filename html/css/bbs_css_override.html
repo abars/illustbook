@@ -32,7 +32,7 @@
 
 	/* 投稿者名 */
 	.entry-info-tag {
-		{% if is_iphone %}
+		{% if is_iphone and not template_path %}
 			width:64px;
 		{% endif %}
 		float:left;
