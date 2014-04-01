@@ -9,10 +9,10 @@
 	<div class="entry-info-data">
 	{{thread|author_name_thread(host)|safe}}
 	</div>
+	{% if is_iphone %}<br clear="all"/>{% endif %}
 {% endif %}
 
 {% if thread.category %}
-	{% if is_iphone %}<br clear="all"/>{% endif %}
 	<div class="entry-info-tag">
 	{%if template_path and not is_english %}
 		<img src="{{template_path}}images/i_category.gif" alt="カテゴリ" width="64" height="20"/>
@@ -23,11 +23,11 @@
 	<div class="entry-info-data">
 		<a href="{{usrhost}}?category={{thread.category|iriencode}}" class="g-button mini">{{thread.category}}</a>
 	</div>
+	{% if is_iphone %}<br clear="all"/>{% endif %}
 {%endif%}
 
 {% if bbs.date_format!=-1 %}
 	{% if thread.create_date %}
-		{% if is_iphone %}<br clear="all"/>{% endif %}
 		<div class="entry-info-tag">
 		{%if template_path and not is_english %}
 			<img src="{{template_path}}images/i_day.gif" alt="投稿日" width="64" height="20"/>
@@ -43,6 +43,9 @@
 			{% endif %}
 		</div>
 	{% endif %}
+	{% if is_iphone %}<br clear="all"/>{% endif %}
 {% endif %}
 
+{% if not is_iphone %}
 <br clear="all"/>
+{% endif %}
