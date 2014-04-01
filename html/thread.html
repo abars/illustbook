@@ -44,7 +44,7 @@
 
 				<!-- 新規コメント -->
 				{% if not bbs.disable_comment and bbs.bbs_mode == 3 %}
-					<div class="entry">
+					<div class="entry" style="padding-top:2px;padding-bottom:2px;margin-bottom:18px;">
 					{% include "thread/thread_comment_form.html" %}
 					</div>
 				{% endif %}
