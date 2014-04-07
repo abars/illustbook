@@ -67,7 +67,7 @@ class CategoryList(webapp.RequestHandler):
 		for category in dic.keys():
 			#logging.error(""+str(dic[category])+"/["+category+"]/"+str(len(category)))
 			if(dic[category]==-1):
-				dic[category]=MesThread.all().filter("bbs_key =",bbs).filter("category =",category).count(limit=100)
+				dic[category]=MesThread.all().filter("bbs_key =",bbs).filter("category =",category).count(limit=1000)
 				if(dic[category]!=-1):
 					updated=True
 		if(updated):
