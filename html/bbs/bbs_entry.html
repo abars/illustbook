@@ -10,9 +10,12 @@
 {% else %}
 	{% if thread.illust_mode and not bbs.disable_content_image %}
 		<!--イラスト掲示板-->
+		{% if not bbs.disable_title or not bbs.disable_applause %}
 		<div class="entry-title">
 			<!-- タイトル -->
-			<h3><a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key()}}{%endif%}.html'>{{thread|regulation_name}}{{ thread.title|escape }}</a></h3>
+			{% if not bbs.disable_title %}
+				<h3><a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key()}}{%endif%}.html'>{{thread|regulation_name}}{{ thread.title|escape }}</a></h3>
+			{% endif %}
 
 			<!-- 拍手 -->
 			{% if not bbs.disable_applause %}
@@ -21,6 +24,7 @@
 			{% endif %}
 			<div class="clr"></div>
 		</div>
+		{% endif %}
 
 		<!--画像が存在する場合-->
 		{% if thread.cached_image_key %}

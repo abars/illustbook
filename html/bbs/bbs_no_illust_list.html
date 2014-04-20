@@ -2,12 +2,12 @@
 	{% if template_path %}
 		<div class="entry-name">
 	{% endif %}
-		<a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key()}}{%endif%}.html' class="declink">
+		<a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key()}}{%endif%}.html'>
 	{% if template_path %}<h3>{% endif %}
 		{{ thread.title|escape }}
 	{% if template_path %}</h3>{% endif %}
 		</a>
-	<br/>
+	<br/><br/>
 
 	{% if thread.author %}
 		{% if template_path %}

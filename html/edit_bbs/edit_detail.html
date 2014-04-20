@@ -39,12 +39,17 @@
 <div class="example">
 	<p>{% if is_english %}Illust information{% else %}イラスト詳細{% endif %}</p>
 		<TABLE BORDER=0 class="g-table">
-			<TR><TH>{% if is_english %}Date format{% else %}日付表記{% endif %}</TH><TD>
-			<select name="date_format">	
-			<option value="0" {% if not bbs.date_format  %}selected="selected"{% endif %}>{% if is_english %}Format1{% else %}年月日時分{% endif %}</option>
-			<option value="1" {% if bbs.date_format == 1 %}selected="selected"{% endif %}>{% if is_english %}Format2{% else %}年月日時{% endif %}</option>
-			<option value="2" {% if bbs.date_format == 2 %}selected="selected"{% endif %}>{% if is_english %}Format3{% else %}年月日{% endif %}</option>
-			<option value="-1" {% if bbs.date_format == -1 %}selected="selected"{% endif %}>{% if is_english %}Hide{% else %}表示しない{% endif %}</option>
+			<TR><TH>{% if is_english %}Show title{% else %}タイトルの表示{% endif %}</TH><TD>
+			<select name="disable_title">				
+			<option value="0" {%if not bbs.disable_title %}selected="selected"{% endif %}>{% if is_english %}Enable{% else %}表示する{% endif %}</option>
+			<option value="1" {%if bbs.disable_title %}selected="selected"{% endif %}>{% if is_english %}Disable{% else %}表示しない{% endif %}</option>
+			</select>
+			</TD></TR>
+
+			<TR><TH>{% if is_english %}Show Like button{% else %}拍手の表示{% endif %}</TH><TD>
+			<select name="disable_applause">			
+			<option value="0"{%if not bbs.disable_applause %} selected="selected"{% endif %}>{% if is_english %}Enable{% else %}表示する{% endif %}</option>
+			<option value="1"{%if bbs.disable_applause %} selected="selected"{% endif %}>{% if is_english %}Disable{% else %}表示しない{% endif %}</option>
 			</select>
 			</TD></TR>
 
@@ -55,10 +60,12 @@
 			</select>
 			</TD></TR>
 
-			<TR><TH>{% if is_english %}Show Like button{% else %}拍手の表示{% endif %}</TH><TD>
-			<select name="disable_applause">			
-			<option value="0"{%if not bbs.disable_applause %} selected="selected"{% endif %}>{% if is_english %}Enable{% else %}表示する{% endif %}</option>
-			<option value="1"{%if bbs.disable_applause %} selected="selected"{% endif %}>{% if is_english %}Disable{% else %}表示しない{% endif %}</option>
+			<TR><TH>{% if is_english %}Date format{% else %}日付表記{% endif %}</TH><TD>
+			<select name="date_format">	
+			<option value="0" {% if not bbs.date_format  %}selected="selected"{% endif %}>{% if is_english %}Format1{% else %}年月日時分{% endif %}</option>
+			<option value="1" {% if bbs.date_format == 1 %}selected="selected"{% endif %}>{% if is_english %}Format2{% else %}年月日時{% endif %}</option>
+			<option value="2" {% if bbs.date_format == 2 %}selected="selected"{% endif %}>{% if is_english %}Format3{% else %}年月日{% endif %}</option>
+			<option value="-1" {% if bbs.date_format == -1 %}selected="selected"{% endif %}>{% if is_english %}Hide{% else %}表示しない{% endif %}</option>
 			</select>
 			</TD></TR>
 
