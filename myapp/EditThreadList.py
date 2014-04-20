@@ -53,6 +53,23 @@ class EditThreadList(webapp.RequestHandler):
 			ApiFeed.invalidate_cache()
 		return count
 
+	def update_link(self,user):
+		link_update=self.request.get("link_update")
+		thread_list=link_update.split("/")
+		count=0
+		for thread in thread_list:
+			try:
+				thread=db.get(thread)
+			except:
+				continue
+			if(thread.user_id):
+				thread.user_id=None
+			else:
+				thread.user_id=user.user_id()
+			thread.put()
+			count=count+1
+		return count
+
 	def update_category(self):
 		count=0
 		category_update=self.request.get("category_update")
@@ -83,11 +100,12 @@ class EditThreadList(webapp.RequestHandler):
 			return
 
 		category_count=self.update_category()
+		link_count=self.update_link(user)
 		deleted_count=self.delete_thread(bbs)
 
 		page=self.request.get("page")
 		order=self.request.get("order")
-		url="./edit_thread_list?bbs_key="+str(bbs.key())+"&page="+str(page)+"&order="+order+"&deleted_count="+str(deleted_count)+"&category_count="+str(category_count)
+		url="./edit_thread_list?bbs_key="+str(bbs.key())+"&page="+str(page)+"&order="+order+"&deleted_count="+str(deleted_count)+"&category_count="+str(category_count)+"&link_count="+str(link_count)
 		self.redirect(str(url))
 
 	def get(self):
@@ -134,11 +152,14 @@ class EditThreadList(webapp.RequestHandler):
 
 		deleted_count=self.request.get("deleted_count")
 		category_count=self.request.get("category_count")
+		link_count=self.request.get("link_count")
 
 		if(deleted_count):
 			deleted_count=int(deleted_count)
 		if(category_count):
 			category_count=int(category_count)
+		if(link_count):
+			link_count=int(link_count)
 
 		category_list=CategoryList.get_category_list(bbs)
 
@@ -152,6 +173,7 @@ class EditThreadList(webapp.RequestHandler):
 			'order': order,
 			'deleted_count': deleted_count,
 			'category_count': category_count,
+			'link_count': link_count,
 			'is_iphone': CssDesign.is_iphone(self),
 			'category_list': category_list,
 			'is_english': CssDesign.is_english(self)

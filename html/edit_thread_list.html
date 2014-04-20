@@ -47,6 +47,10 @@
 		document.getElementById("category_update").value+=""+thread_key+":"+category+"/";
 	}
 
+	function link_change(thread_key,checked){
+		document.getElementById("link_update").value+=""+thread_key+"/";
+	}
+
 	function delete_change(){
 		delete_exec=true;
 	}
@@ -59,7 +63,10 @@
 			<p>{% if is_english %}Complete.{%else%}{{deleted_count}}件のイラストを削除しました。{% endif %}</p>
 		{% endif %}
 		{% if category_count %}
-			<p>{{category_count}}件のカテゴリを変更しました。</p>
+			<p>{% if is_english %}Complete.{% else %}{{category_count}}件のカテゴリを変更しました。{% endif %}</p>
+		{% endif %}
+		{% if link_count %}
+			<p>{% if is_english %}Complete.{% else %}{{link_count}}件のリンクを変更しました。{% endif %}</p>
 		{% endif %}
 		<p>{% if is_english %}You can delete multiple illust.{% else %}イラストの管理では、イラストの削除とカテゴリの変更が行えます。{% endif %}</p>
 
@@ -93,7 +100,7 @@
 		<input type="hidden" name="page" value="{{page}}"/>
 		<input type="hidden" name="order" value="{{order}}"/>
 		<table class="g-table">
-			<tr><th>{% if is_english %}Title{% else %}タイトル{% endif %}</th><th>{% if is_english %}Thumbnail{% else %}サムネイル{% endif %}</th><th>{% if is_english %}Name{%else %}投稿者{% endif %}</th><th>{% if is_english %}Date{% else %}投稿日{% endif %}</th><th>{% if is_english %}Category{% else %}カテゴリ{% endif %}</th><th>{% if is_english %}Delete{% else %}削除{% endif %}</th></tr>
+			<tr><th>{% if is_english %}Title{% else %}タイトル{% endif %}</th><th>{% if is_english %}Thumbnail{% else %}サムネイル{% endif %}</th><th>{% if is_english %}Name{%else %}投稿者{% endif %}</th><th>{% if is_english %}Date{% else %}投稿日{% endif %}</th><th>{% if is_english %}Category{% else %}カテゴリ{% endif %}</th><th>{% if is_english %}Mypage{%else %}マイページ{% endif %}</th><th>{% if is_english %}Delete{% else %}削除{% endif %}</th></tr>
 		{% for thread in thread_list %}
 		<tr><td>
 			<a href="{{host}}{{bbs.short}}/{{thread.key()}}.html" target="_blank">
@@ -118,12 +125,14 @@
 				{% endfor %}
 			</select>
 		</td>
+		<td><input type="checkbox" value="{{thread.key()}}" {%if thread.user_id %}checked{% endif %} onchange="link_change('{{thread.key()}}',this.checked);"/></td>
 		<td><input type="checkbox" name="thread_list" value="{{thread.key()}}" onchange="delete_change();"/></td></tr>
 		{% endfor %}
 		</table>
 		<br/>
 
 			<input name="category_update" id="category_update" value="" type="hidden"/>
+			<input name="link_update" id="link_update" value="" type="hidden"/>
 
 			<a href="javascript:confirm_delete({% if is_english %}true{% else %}false{% endif %});" class="g-button">{% if is_english %}Update{% else %}変更の反映{% endif %}</a>　
 		</form>
