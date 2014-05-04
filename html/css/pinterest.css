@@ -67,9 +67,9 @@ h2,h3 {font-size:100%;color:#E47911;}
 }
 
 {% if is_iphone %}
-  {% set radius_r=2 %}
+  {% set radius_r=0 %}
 {% else %}
-  {% set radius_r=3 %}
+  {% set radius_r=0 %}
 {% endif %}
 
 .item {
