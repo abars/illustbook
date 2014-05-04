@@ -3,6 +3,7 @@
 <style type="text/css">
 	/* スレッド一覧 */
 	.square_thread_list {
+		position:relative;
 		width:148px;
 		height:148px;
 		border: 1px solid #ddd;
@@ -15,19 +16,20 @@
 
 	.square_thread_list_comment_cnt {
 		padding: 2px;
+		background: #ffffff;
 	}
 
 	.square_thread_list_info {
-		margin:2px;
+		position:absolute;
+		margin:0px;
+		width:100%;
+		background: #ffffff;
+		bottom:0px;
 	}
 	
 	.square_thread_list:hover{
-		background: #ddd;
+		opacity: 0.5;
 		text-decoration: none;
-	}
-
-	.square_thread_list img{
-		width:148px;
 	}
 
 	/* 投稿者名 */

@@ -1,28 +1,19 @@
 	<!--スレッド式掲示板-->
-	<div class="square_thread_list" onclick="location.href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key()}}{%endif%}.html'">
+	<div class="square_thread_list" onclick="location.href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key()}}{%endif%}.html'" style="background-image:url('{% if thread.cached_entry_image_key %}{{host}}thumbnail/{{thread.cached_entry_image_key}}.jpg{% else %}{% if thread.cached_image_key %}{{host}}thumbnail/{{thread.cached_image_key}}.jpg{% else %}none{% endif %}{% endif %}');background-size:cover;">
 
-	<div class="square_thread_list_comment_cnt">{{thread.comment_cnt}} {% if is_english %}comments{% else %}コメント{% endif %}</div>
+	<div class="square_thread_list_comment_cnt">
+		<p>{{ thread.title|escape }}</p>
+	</div>
 
 	<div class="square_thread_list_info">
-	<p>{{ thread.title|escape }}</p>
+
+	{{thread.comment_cnt}} {% if is_english %}comments{% else %}コメント{% endif %}<br/>
 
 	{# by {{thread.author}} &nbsp; #}
 
 	{% if is_english %}{{thread.date|time_UTC_progress}}{% else %}{{thread.date|time_JST_progress}}{% endif %}
 
 	</div>
-
-	<br/>
-
-	<center>
-	{% if thread.cached_entry_image_key %}
-		<img src="{{host}}thumbnail/{{thread.cached_entry_image_key}}.jpg"/>
-	{% else %}
-		{% if thread.cached_image_key %}
-			<img src="{{host}}thumbnail/{{thread.cached_image_key}}.jpg"/>
-		{% endif %}
-	{% endif %}
-	</center>
 
 	</a>
 	</div>
