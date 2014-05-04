@@ -67,9 +67,9 @@ h2,h3 {font-size:100%;color:#E47911;}
 }
 
 {% if is_iphone %}
-  {% set radius_r=0 %}
+  {% set radius_r=2 %}
 {% else %}
-  {% set radius_r=0 %}
+  {% set radius_r=3 %}
 {% endif %}
 
 .item {
@@ -301,8 +301,8 @@ color: #333;
       width:56px;
       height:56px;
     {% else %}
-      width:86px;
-      height:86px;
+      width:68px;
+      height:68px;
       font-size:14px;
     {% endif %}
     float:left;

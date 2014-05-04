@@ -26,6 +26,8 @@ class Ranking(db.Model):
 	#イラストのランキング結果と、ユーザのランキング結果を格納
 	#ランキングの更新はBackendで行う
 	ranking_list = db.ListProperty(db.Key,indexed=False)
+	bbs_ranking_list = db.StringListProperty(indexed=False)
+
 	user_id_ranking_list = db.StringListProperty(indexed=False)
 	user_ranking_list = db.StringListProperty(indexed=False)
 
@@ -148,9 +150,19 @@ class Ranking(db.Model):
 					break
 		
 		#1次ランキングに出現したもののスコア補正（全てでthreadの実体を取得すると重いので）
+		rank_bbs={}
 		for k in first_ranking_list:
 			#スレッドの実体を取得
 			thread=ApiObject.get_cached_object(k)
+
+			#BBSランクを加算
+			if(thread):
+				bbs=thread.cached_bbs_key
+				bbs_main=ApiObject.get_cached_object(bbs)
+				if(not(bbs_main and bbs_main.disable_news)):
+					if(not rank_bbs.has_key(bbs)):
+						rank_bbs[bbs]=0
+					rank_bbs[bbs]=rank_bbs[bbs]+rank[k]
 			
 			#イラストモードだけ
 			if(not thread or thread.illust_mode!=BbsConst.ILLUSTMODE_ILLUST):
@@ -161,17 +173,29 @@ class Ranking(db.Model):
 			day_left=(self.get_sec(datetime.datetime.now())-self.get_sec(thread.create_date))/60/60/24
 			day_left=day_left/7+1	#1週間で1/2
 		
-		#ランキング作成
+		#スレッドランキング作成
 		self.ranking_list=[]
 		for k, v in sorted(rank.items(), key=lambda x:x[1], reverse=True):
 			self.ranking_list.append(k)
 			if(len(self.ranking_list)>=BbsConst.THREAD_RANKING_MAX):
+				break
+
+		#BBSランキング作成
+		self.bbs_ranking_list=[]
+		for k, v in sorted(rank_bbs.items(), key=lambda x:x[1], reverse=True):
+			self.bbs_ranking_list.append(k)
+			if(len(self.bbs_ranking_list)>=BbsConst.THREAD_RANKING_MAX):
 				break
 		
 	def get_rank(self,offset,limit):
 		if(not self.ranking_list):
 			return []
 		return self.ranking_list[offset:offset+limit]
+
+	def get_bbs_rank(self,offset,limit):
+		if(not self.bbs_ranking_list):
+			return []
+		return self.bbs_ranking_list[offset:offset+limit]
 	
 	def _get_rank_core(self,user_id,list):
 		try:
@@ -181,3 +205,4 @@ class Ranking(db.Model):
 	
 	def get_user_rank(self,user_id):
 		return self._get_rank_core(user_id,self.user_id_ranking_list)
+

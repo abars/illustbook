@@ -237,15 +237,8 @@ class Pinterest(webapp.RequestHandler):
 
 		search_api="search_tag"
 
-		#while(True):
 		thread_list=ApiFeed.feed_get_thread_list(self,order,(page-1)*unit,unit)
-		#if(len(thread_list)):
-		#		break
-
-		#	max_page=1000/unit
-		#	if(order!="new" or page>=max_page):
-		#		break
-		#	page=page+1	#新着で1画面全部イラストなしの場合は次のページを読み込んでくる
+		bbs_list=ApiFeed.feed_get_bbs_list(self,"hot",0,10)
 
 		template_values=Pinterest.initialize_template_value(self,user,user_id,page,request_page_mode,redirect_api,contents_only)
 		template_values['thread_list']=thread_list
@@ -255,6 +248,7 @@ class Pinterest(webapp.RequestHandler):
 		template_values['order']=order
 		template_values['page_mode']="index"
 		template_values['illust_enable']=True
+		template_values['bbs_list']=bbs_list
 
 		Pinterest._render_page(self,template_values)
 

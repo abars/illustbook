@@ -410,7 +410,7 @@ class ApiObject(webapp.RequestHandler):
 		thumbnail_url=""
 		if(bbs.cached_thumbnail_key and not bbs.del_flag):
 			thumbnail_url="http://"+req.request.host+"/thumbnail/"+bbs.cached_thumbnail_key+".jpg"
-		one_dic={"title":bbs.bbs_name,"bbs_url":bbs_url,"bookmark":bookmark_cnt,"key":str(bbs.key()),"thumbnail_url":thumbnail_url}
+		one_dic={"title":bbs.bbs_name,"bbs_url":bbs_url,"bookmark":bookmark_cnt,"key":str(bbs.key()),"thumbnail_url":thumbnail_url,"mode":bbs.bbs_mode}
 		return one_dic
 
 #-------------------------------------------------------------------

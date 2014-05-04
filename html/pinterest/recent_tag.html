@@ -1,30 +1,24 @@
-{% if is_iphone %}
-
-{% for tag2 in tag_list %}
-    {% if loop.index <= 100 %}
-      {{tag2|safe}}　
-    {% endif %}
+<div class="message" {% if not is_iphone %}style="width:350px;margin-left:0px;margin-right:0px;"{%else%}style="width:288px;"{% endif %}>
+  <p>人気の掲示板</p>
+{% for bbs in bbs_list %}
+  <a href="{{bbs.bbs_url}}" style="color: rgb(37, 143, 184);">
+  {{bbs.title}}
+  </font></a>
+  {#
+  {% if bbs.mode != 1 %}
+    [誰でも]
+  {% endif %}
+  #}
+  <br/>
 {% endfor %}
-
-{% else %}
+</div>
 
 <div class="message" {% if not is_iphone %}style="width:350px;margin-left:0px;margin-right:0px;"{%else%}style="width:288px;"{% endif %}>
+  <p>人気のタグ</p>
 {% for tag2 in tag_list %}
     {% if loop.index <= tag_display_n %}
       {{tag2|safe}}　
     {% endif %}
 {% endfor %}
-    <div id="more_tag">
-{% for tag2 in tag_list %}
-    {% if loop.index > tag_display_n %}
-      {% if loop.index <= 100 %}
-        {{tag2|safe}}　
-      {% endif %}
-    {% endif %}
-{% endfor %}
-      <a href="javascript:show_more_tag();" class="g-button mini">{% if is_english %}Close{% else %}閉じる{% endif %}</a>
-    </div>
-      <a id="show_more_tag_button" href="javascript:show_more_tag();" class="g-button mini">{% if is_english %}More{%else%}もっと見る{% endif %}</a>
 </div>
 
-{% endif %}

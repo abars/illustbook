@@ -33,6 +33,14 @@
 {% endif %}
 {% endif %}
 
+<!-- タグ一覧 -->
+{% if not is_iphone %}
+{% if tag_list %}
+  {% include "pinterest/recent_tag.html" %}
+{% endif %}
+{% endif %}
+
+{#
 <!-- 広告 -->
 {% if not is_iphone %}
   {% if page_mode == "index" %}
@@ -45,10 +53,5 @@
     {% endif %}
   {% endif %}
 {% endif %}
+#}
 
-<!-- タグ一覧 -->
-{% if not is_iphone %}
-{% if tag_list %}
-  {% include "pinterest/recent_tag.html" %}
-{% endif %}
-{% endif %}

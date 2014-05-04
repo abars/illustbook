@@ -41,6 +41,7 @@ class BbsConst:
 	OBJECT_NEW_BBS_CREATING_HEADER="new_bbs_"
 	OBJECT_BBS_MESSAGE_HEADER="bbs_message_"
 	OBJECT_THREAD_MESSAGE_HEADER="thread_message_"
+	OBJECT_BBS_RANKING_HEADER="bbs_ranking_"
 	
 	#memcacheの残存時間
 	OBJECT_MAPPING_CACHE_TIME=60*60*24

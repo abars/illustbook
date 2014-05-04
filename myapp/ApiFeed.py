@@ -137,6 +137,44 @@ class ApiFeed(webapp.RequestHandler):
 		
 		return dic
 
+	@staticmethod
+	def feed_get_bbs_list(req,order,offset,limit):
+		#最大取得数
+		if(limit>100):
+			limit=100
+
+		#キャッシュが有効かどうか
+		cache_enable=0
+		if(offset==0):
+			cache_enable=1
+		
+		#キャッシュ取得
+		cache_id=BbsConst.OBJECT_BBS_RANKING_HEADER
+		if(cache_enable):
+			data=memcache.get(cache_id)
+		else:
+			data=None
+		if(data and cache_enable):
+			return data
+		
+		#BBS一覧取得
+		rank=Ranking.get_by_key_name(BbsConst.THREAD_RANKING_KEY_NAME)
+		if(rank==None):
+			rank=Ranking.get_or_insert(BbsConst.THREAD_RANKING_KEY_NAME)
+		bbs_list=rank.get_bbs_rank(offset,limit)
+		
+		#リスト作成
+		dic=[]
+		bbs_list=ApiObject.get_cached_object_list(bbs_list)
+		for bbs in bbs_list:
+			dic.append(ApiObject.create_bbs_object(req,bbs))
+
+		#キャッシュに乗せる
+		if(cache_enable):
+			memcache.set(cache_id,dic,BbsConst.TOPPAGE_FEED_CACHE_TIME)
+		
+		return dic
+
 #-------------------------------------------------------------------
 #main
 #-------------------------------------------------------------------
