@@ -201,12 +201,12 @@ def add_bookmark_core(command,search,count,is_iphone,is_english,user):
 
 	if(count):
 		txt+='<a href="'+search
-		txt+='" class="g-button mini">'
+		txt+='">'
 		txt+='<i class="icon-star"></i>'+str(count)
 		txt+='</a>'
 
 	if(user):
-		txt+='<a href="javascript:'+command+'" class="g-button mini">'
+		txt+='<a href="javascript:'+command+'">'
 		txt+='<i class="icon-plus"></i>'
 		if(is_english):
 			txt+='Bookmark'

@@ -3,7 +3,7 @@
 	{% if user %}
 	<div style="float:left;padding-left:2px;padding-top:2px;padding-right:2px;font-weight:600;">
 		<a href="{{host}}mypage"><img src="{{host}}show_icon?key={{user.user_id()}}&size=mini" width="24px" height="24px" alt="icon"/></a>
-		{% if is_iphone and top_page and my_new_feed_count %}
+		{% if my_new_feed_count %}
 			<b>{{my_new_feed_count}}</b>
 		{% endif %}
 	</div>
@@ -21,50 +21,11 @@
 
 		{% set my_new_feed_count = user|new_feed_count %}
 
-		{% if top_page and (not user or is_iphone) %}
-			<div style="float:left;margin-top:4px;color:#333;">
-				{% if is_iphone %}<a href="{{host}}mypage">{% endif %}
-				<img src="static_files/logo{% if is_iphone %}_mobile{%else%}_pc{%endif%}.png" alt="ロゴ"/>
-				{% if is_iphone %}</a>{% endif %}
-			</div>
-		{% else %}
-			{% if top_page or my_new_feed_count %}
-				<a href="{{host}}mypage" class="g-button mini {% if not show_link_detail %}no-text{% endif %}" style="margin:0px;">
-					{% if True %}{# not show_link_detail or not is_iphone or bbs %} #}
-					<i class="icon-home"></i>
-					{% endif %}
-					{% if show_link_detail %}
-						{% if is_english %}MyPage{%else%}マイページ{% endif %}
-					{% endif %}
-					{% if my_new_feed_count %}
-						({{my_new_feed_count}})
-					{% endif %}
-					</a>
-			{% else %}
-				<a href="{{host}}" class="g-button mini {% if not show_link_detail %}no-text{% endif %}" style="margin:0px;">
-					{% if True %}{# not show_link_detail or not is_iphone or bbs %} #}
-					<i class="icon-home"></i>
-					{% endif %}
-					{% if show_link_detail %}
-						{% if is_english %}Top{%else%}トップ{% endif %}
-					{% endif %}
-				</a>
-			{% endif %}
-		{% endif %}
-		
-		{% if not edit_thread %}
-			{% if thread %}
-				{% if thread.user_id %}
-					<a href="{{host}}mypage?user_id={{thread.user_id}}" class="g-button mini"><i class="icon-user"></i>{% if is_english %}Drawer{% else %}ドロワー{% endif %}</a>
-				{% endif %}
-				{{thread|add_bookmark_thread(host,is_iphone,is_english,user)|safe}}
-			{% else %}
-				{% if bbs %}
-					<a href="{{host}}mypage?user_id={{bbs.user_id}}" class="g-button mini"><i class="icon-user"></i>{% if is_english %}Owner{% else %}オーナー{% endif %}</a>
-					{{bbs|add_bookmark_bbs(host,is_iphone,is_english,user)|safe}}
-				{% endif %}
-			{% endif %}
-		{% endif %}
+		<div style="float:left;margin-top:4px;color:#333;">
+			<a href="{{host}}">
+			<img src="{{host}}static_files/logo{% if is_iphone or bbs or True %}_mobile{%else%}_pc{%endif%}.png" alt="ロゴ"/>
+			</a>
+		</div>
 	</div>
 	</div>
 
@@ -92,13 +53,39 @@
 		</div>
 	{% else %}
 		<div style="float:right;padding-left:2px;padding-top:3px;padding-right:2px;font-weight:600;">
-			{% if user %}
-				{% if not is_iphone or mypage %}
-					<a href="{{redirect_url|logout_url|escape}}" class="g-button mini"><i class="icon-off"></i>{% if is_english %}Logout{%else%}ログアウト{% endif %}</a>
+	     	<div class="g-button-group">
+	    	<a class="g-button dropdown-toggle" style="padding:6px;" data-toggle="dropdown" href="#">
+	    		{% if is_english %}Menu{%else%}メニュー{% endif %}
+	    		<span class="caret"></span>
+	    	</a>
+			<ul class="dropdown-menu" style="right:0;left:auto;">
+				{% if user %}
+					<li><a href="{{host}}mypage"><i class="icon-home"></i>{% if is_english %}MyPage{%else%}マイページ{% endif %}</a></li>
 				{% endif %}
+
+		{% if not edit_thread %}
+			{% if thread %}
+				{% if thread.user_id %}
+					<li><a href="{{host}}mypage?user_id={{thread.user_id}}"><i class="icon-user"></i>{% if is_english %}Drawer{% else %}ドロワー{% endif %}</a></li>
+				{% endif %}
+				<li>{{thread|add_bookmark_thread(host,is_iphone,is_english,user)|safe}}</li>
 			{% else %}
-				<a href="{{redirect_url|login_url|escape}}" class="g-button mini"><i class="icon-off"></i>{% if is_english %}Login{% else %}ログイン{% endif %}</a>
+				{% if bbs %}
+					<li><a href="{{host}}mypage?user_id={{bbs.user_id}}"><i class="icon-user"></i>{% if is_english %}Owner{% else %}オーナー{% endif %}</a></li>
+					<li>{{bbs|add_bookmark_bbs(host,is_iphone,is_english,user)|safe}}</li>
+				{% endif %}
 			{% endif %}
+		{% endif %}
+
+				{% if user %}
+					{% if not is_iphone or mypage %}
+						<li><a href="{{redirect_url|logout_url|escape}}"><i class="icon-off"></i>{% if is_english %}Logout{%else%}ログアウト{% endif %}</a></li>
+					{% endif %}
+				{% else %}
+					<li><a href="{{redirect_url|login_url|escape}}"><i class="icon-off"></i>{% if is_english %}Login{% else %}ログイン{% endif %}</a></li>
+				{% endif %}
+	      	</ul>
+	    	</div>
 		</div>
       {% endif %}
 	
