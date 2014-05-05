@@ -79,7 +79,7 @@ class SearchTag(webapp.RequestHandler):
 			size=round(math.log(size+1,2)+1)
 			
 			one_tag+='<font color="#258FB8" size="'+str(size)+'">'
-			one_tag+=tag2+"("+str(score)+")"
+			one_tag+=tag2#+"("+str(score)+")"
 			one_tag+='</font></a>'
 			
 			tag_list.append(one_tag)

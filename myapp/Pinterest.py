@@ -578,7 +578,7 @@ class Pinterest(webapp.RequestHandler):
 		template_values['host']="./"
 		template_values['is_iphone']=CssDesign.is_iphone(self)
 		template_values['is_tablet']=CssDesign.is_tablet(self)
-		template_values['tag_display_n']=20
+		template_values['tag_display_n']=40
 		template_values['is_maintenance']=MaintenanceCheck.is_appengine_maintenance()
 		if(template_values['user']):
 			template_values['login_flag']=1
