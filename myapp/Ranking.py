@@ -112,9 +112,9 @@ class Ranking(db.Model):
 			#経過日数で補正
 			day_left=(self.get_sec(datetime.datetime.now())-self.get_sec(thread.create_date))/60/60/24
 			day_left=day_left/7+1	#1週間で1/2
-			rank[k]=rank[k]/day_left
-			if(rank[k]<1):
-				rank[k]=1
+			#rank[k]=rank[k]/day_left
+			#if(rank[k]<1):
+			#	rank[k]=1
 		
 			#BBSランクを加算
 			if(thread):
