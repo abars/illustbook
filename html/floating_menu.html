@@ -3,6 +3,9 @@
 	{% if user %}
 	<div style="float:left;padding-left:2px;padding-top:2px;padding-right:2px;font-weight:600;">
 		<a href="{{host}}mypage"><img src="{{host}}show_icon?key={{user.user_id()}}&size=mini" width="24px" height="24px" alt="icon"/></a>
+		{% if is_iphone and top_page and my_new_feed_count %}
+			<b>{{my_new_feed_count}}</b>
+		{% endif %}
 	</div>
 	{% endif %}
 
@@ -18,9 +21,11 @@
 
 		{% set my_new_feed_count = user|new_feed_count %}
 
-		{% if top_page and not user%}
+		{% if top_page and (not user or is_iphone) %}
 			<div style="float:left;margin-top:4px;color:#333;">
+				{% if is_iphone %}<a href="{{host}}mypage">{% endif %}
 				<img src="static_files/logo{% if is_iphone %}_mobile{%else%}_pc{%endif%}.png" alt="ロゴ"/>
+				{% if is_iphone %}</a>{% endif %}
 			</div>
 		{% else %}
 			{% if top_page or my_new_feed_count %}
@@ -73,16 +78,13 @@
 			<ul class="dropdown-menu" style="right:0;left:auto;">
 				<li><a href="{{host}}sample/">{% if is_english %}Trial{% else %}試し描き{% endif %}</a></li>
 				<li><a href="{{host}}mypage">{% if is_english %}Regist{% else %}レンタル{% endif %}</a></li>
-				{#
-				<li><a href="{{host}}commu/">{% if is_english %}Community{% else %}コミュニティ{% endif %}</a></li>
-				#}
-				{# <li><a href="{{host}}anything/">{% if is_english %}Anything{% else %}何でも投稿{% endif %}</a></li> #}
-				<li><a href="{{host}}chat">{% if is_english %}Chat{% else %}チャット{% endif %}</a></li>
 				<li><a href="{{host}}support/">{% if is_english %}Support{% else %}サポート{% endif %}</a></li>
 				<li><a href="{{host}}guide">{% if is_english %}HowTo{% else %}使い方{% endif %}</a></li>
+				<li><a href="{{host}}chat">{% if is_english %}Chat{% else %}チャット{% endif %}</a></li>
 				{% if not user %}
 					<li><a href="{{redirect_url|login_url|escape}}">{% if is_english %}Login{%else%}ログイン{% endif %}</a></li>
 				{% else %}
+					<li><a href="{{host}}mypage">{% if is_english %}MyPage{%else%}マイページ{% endif %}</a></li>
 					<li><a href="{{redirect_url|logout_url|escape}}">{% if is_english %}Logout{%else%}ログアウト{% endif %}</a></li>
 				{% endif %}
 	      	</ul>
