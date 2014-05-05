@@ -21,7 +21,7 @@
 
 		{% set my_new_feed_count = user|new_feed_count %}
 
-		<div style="float:left;margin-top:4px;color:#333;">
+		<div style="float:left;margin-top:3px;color:#333;">
 			<a href="{{host}}">
 			<img src="{{host}}static_files/logo{% if is_iphone %}_mobile{%else%}_pc{%endif%}.png" alt="ロゴ"/>
 			</a>
@@ -52,7 +52,7 @@
 	    	</div>
 		</div>
 	{% else %}
-		<div style="float:right;padding-left:2px;padding-top:3px;padding-right:2px;font-weight:600;">
+		<div style="float:right;padding-left:2px;padding-top:1px;padding-right:2px;font-weight:600;">
 	     	<div class="g-button-group">
 	    	<a class="g-button dropdown-toggle" style="padding:6px;" data-toggle="dropdown" href="#">
 	    		{% if is_english %}Menu{%else%}メニュー{% endif %}
