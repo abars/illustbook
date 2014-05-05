@@ -1,8 +1,8 @@
 <div id="order">
   <div style="float:left;">
     <div class="g-button-group toggle-buttons">
-    <a href="{{host}}{{redirect_api}}?order=hot" class="g-button {%if order == "hot"%}checked{%endif%}">{% if is_english %}Hot{%else%}人気{% endif %}</a>
     <a href="{{host}}{{redirect_api}}?order=new" class="g-button {%if order == "new"%}checked{%endif%}">{% if is_english %}New{%else%}新着{% endif %}</a>
+    <a href="{{host}}{{redirect_api}}?order=hot" class="g-button {%if order == "hot"%}checked{%endif%}">{% if is_english %}Hot{%else%}人気{% endif %}</a>
     <a href="{{host}}{{redirect_api}}?order=bookmark" class="g-button {%if order == "bookmark"%}checked{%endif%}">{% if is_english %}Bookmark{%else %}{% if is_iphone %}ブクマ{%else%}ブックマーク{% endif %}{% endif %}</a>
     {% if not is_iphone %}
       <a href="{{host}}{{redirect_api}}?order=moper" class="g-button {%if order == "moper"%}checked{%endif%}">{% if is_english %}Moper{%else %}動画{% endif %}</a>

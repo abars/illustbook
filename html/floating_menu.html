@@ -3,6 +3,7 @@
 	{% if user %}
 	<div style="float:left;padding-left:2px;padding-top:2px;padding-right:2px;font-weight:600;">
 		<a href="{{host}}mypage"><img src="{{host}}show_icon?key={{user.user_id()}}&size=mini" width="24px" height="24px" alt="icon"/></a>
+		{% set my_new_feed_count = user|new_feed_count %}
 		{% if my_new_feed_count %}
 			<b>{{my_new_feed_count}}</b>
 		{% endif %}
@@ -18,8 +19,6 @@
 				{% set show_link_detail = 1 %}
 			{% endif %}
 		{% endif %}
-
-		{% set my_new_feed_count = user|new_feed_count %}
 
 		<div style="float:left;margin-top:3px;color:#333;">
 			<a href="{{host}}">
