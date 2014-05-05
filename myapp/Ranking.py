@@ -24,14 +24,13 @@ class Ranking(db.Model):
 	user_list = db.StringListProperty(indexed=False)
 	
 	#イラストのランキング結果と、ユーザのランキング結果を格納
-	#ランキングの更新はBackendで行う
+	#ランキングの更新はcronで行う
 	ranking_list = db.ListProperty(db.Key,indexed=False)
 	bbs_ranking_list = db.StringListProperty(indexed=False)
-
 	user_id_ranking_list = db.StringListProperty(indexed=False)
-	user_ranking_list = db.StringListProperty(indexed=False)
 
-	#掲示板のオーナーランクは廃止
+	#以下のランキングは廃止
+	user_ranking_list = db.StringListProperty(indexed=False)
 	owner_list = db.StringListProperty(indexed=False)
 	owner_ranking_list = db.StringListProperty(indexed=False)
 	owner_id_ranking_list = db.StringListProperty(indexed=False)
@@ -62,77 +61,25 @@ class Ranking(db.Model):
 	def add_rank_from_taskqueue(self,thread_key,user_id,score):
 		for cnt in range(score):
 			self._add_rank_core(thread_key,self.thread_list,BbsConst.THREAD_RANKING_RECENT)
-			self._add_rank_core(user_id,self.user_list,BbsConst.USER_RANKING_RECENT)
+			#self._add_rank_core(user_id,self.user_list,BbsConst.USER_RANKING_RECENT)
+			self.user_list=[]	#deleted
 		self.put()
 
 	def get_sec(self,now):
 		return int(time.mktime(now.timetuple()))
 
 	def create_rank(self,req):
-		self._create_thread_rank()
+		self._create_ranking_core()
 		
-		rank=self._create_user_rank(self.user_list,req)
-		self.user_ranking_list=rank["user"]
-		self.user_id_ranking_list=rank["user_id"]
-		
+		#削除した要素
+		self.user_ranking_list=["empty"]
 		self.owner_list = ["empty"]
 		self.owner_ranking_list = ["empty"]
 		self.owner_id_ranking_list = ["empty"]
 		
 		self.put()
 	
-	def _create_user_rank(self,user_list,req):
-		rank_user={}
-		
-		for user_id in user_list:
-			if(user_id):
-				if(rank_user.has_key(user_id)):
-					rank_user[user_id]=rank_user[user_id]+1
-				else:
-					rank_user[user_id]=1
-
-		ranking_list=[]
-		user_id_list=[]
-
-		no=1
-		for k, v in sorted(rank_user.items(), key=lambda x:x[1], reverse=True):
-			bookmark=ApiObject.get_bookmark_of_user_id(k)
-			if(not bookmark):
-				continue
-			if(bookmark and bookmark.disable_rankwatch):
-				continue
-			name=bookmark.name
-			profile=bookmark.profile
-			
-			query=db.Query(MesThread)
-			query=query.filter("illust_mode =",BbsConst.ILLUSTMODE_ILLUST)
-			query=query.filter("user_id =",k).order("-create_date")
-			try:
-				thread_list=query.fetch(offset=0,limit=1)
-				req_for_host=None
-				thread=ApiObject.create_thread_object(req_for_host,thread_list[0])
-				thumbnail_url=thread["thumbnail_url"]
-				thread_url=thread["thread_url"]
-			except:
-				thumbnail_url=""
-				thread_url=""
-
-			dic={"no":no,"user_id":k,"name":name,"thumbnail_url":thumbnail_url,"thread_url":thread_url}
-			no=no+1
-
-			try:
-				ranking_list.append(json.dumps(dic))
-			except:
-				ranking_list.append("overflow")
-
-			user_id_list.append(k)
-
-			if(len(ranking_list)>=BbsConst.USER_RANKING_MAX):
-				break
-
-		return {"user":ranking_list,"user_id":user_id_list}
-	
-	def _create_thread_rank(self):
+	def _create_ranking_core(self):
 		#ハッシュにthread_keyを入れていく
 		rank={}
 		for thread in self.thread_list:
@@ -142,19 +89,33 @@ class Ranking(db.Model):
 				rank[thread]=1
 		
 		#1次ランキングを作成
+		#（全てでthreadの実体を取得すると重いので）
 		first_ranking_list=[]
 		for k, v in sorted(rank.items(), key=lambda x:x[1], reverse=True):
 			if(v>=1):
 				first_ranking_list.append(k)
-				if(len(first_ranking_list)>=BbsConst.THREAD_RANKING_MAX*2):
+				if(len(first_ranking_list)>=BbsConst.THREAD_RANKING_MAX*BbsConst.THREAD_RANKING_BEFORE_FILTER_MULT):
 					break
 		
-		#1次ランキングに出現したもののスコア補正（全てでthreadの実体を取得すると重いので）
+		#1次ランキングに出現したもののスコア補正
 		rank_bbs={}
+		rank_user={}
 		for k in first_ranking_list:
 			#スレッドの実体を取得
 			thread=ApiObject.get_cached_object(k)
 
+			#イラストモードだけ
+			if(not thread or thread.illust_mode!=BbsConst.ILLUSTMODE_ILLUST):
+				rank[k]=0
+				continue
+			
+			#経過日数で補正
+			day_left=(self.get_sec(datetime.datetime.now())-self.get_sec(thread.create_date))/60/60/24
+			day_left=day_left/7+1	#1週間で1/2
+			rank[k]=rank[k]/day_left
+			if(rank[k]<1):
+				rank[k]=1
+		
 			#BBSランクを加算
 			if(thread):
 				bbs=thread.cached_bbs_key
@@ -163,16 +124,15 @@ class Ranking(db.Model):
 					if(not rank_bbs.has_key(bbs)):
 						rank_bbs[bbs]=0
 					rank_bbs[bbs]=rank_bbs[bbs]+rank[k]
+
+			#USERランクを加算
+			if(thread):
+				user_id=thread.user_id
+				if(user_id):
+					if(not rank_user.has_key(user_id)):
+						rank_user[user_id]=0
+					rank_user[user_id]=rank_user[user_id]+rank[k]
 			
-			#イラストモードだけ
-			if(not thread or thread.illust_mode!=BbsConst.ILLUSTMODE_ILLUST):
-				rank[k]=0
-				continue
-			
-			#経過日数
-			day_left=(self.get_sec(datetime.datetime.now())-self.get_sec(thread.create_date))/60/60/24
-			day_left=day_left/7+1	#1週間で1/2
-		
 		#スレッドランキング作成
 		self.ranking_list=[]
 		for k, v in sorted(rank.items(), key=lambda x:x[1], reverse=True):
@@ -184,7 +144,14 @@ class Ranking(db.Model):
 		self.bbs_ranking_list=[]
 		for k, v in sorted(rank_bbs.items(), key=lambda x:x[1], reverse=True):
 			self.bbs_ranking_list.append(k)
-			if(len(self.bbs_ranking_list)>=BbsConst.THREAD_RANKING_MAX):
+			if(len(self.bbs_ranking_list)>=BbsConst.BBS_RANKING_MAX):
+				break
+
+		#USERランキング作成
+		self.user_id_ranking_list=[]
+		for k, v in sorted(rank_user.items(), key=lambda x:x[1], reverse=True):
+			self.user_id_ranking_list.append(k)
+			if(len(self.user_id_ranking_list)>=BbsConst.USER_RANKING_MAX):
 				break
 		
 	def get_rank(self,offset,limit):

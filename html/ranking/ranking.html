@@ -1,31 +1,14 @@
-<script><!--
-	function show_one_user(code){
-		//JSONをデコード
-		code="("+decodeURI(code)+")";
-		
-		//タグ作成
-		var obj=eval(code);
-		var txt="";
-		txt+='<a href="./mypage?user_id='+obj['user_id']+'">'
-		txt+="<h2>"+obj["no"]+"位&nbsp;"+obj["name"]+"</h2>";
-		txt+='<img src="./show_icon?key='+obj['user_id']+'&size=mini" width=50px height=50px />　';
-		txt+='</a>';
-
-		txt+='<a href="'+obj['thread_url']+'">'
-		txt+='<img src="'+obj["thumbnail_url"]+'"/>　';
-		txt+='</a>';
-
-		//ライト
-		document.write(txt);
-	}
---></script>
-
 <!-- ユーザ一覧 -->
 <div>
 	<h2>{{ranking_name}}</h2>
+	{% set count = (page-1)*page_unit+1 %}
 	{% for user in ranking_list %}
 	<div class="item">
-		<script>show_one_user('{{user|safe}}');</script>
+		<a href="{{user.profile_url}}">
+		<h2>{{count}}位&nbsp;{{user.name}}</h2>
+		<img src="{{user.icon_url}}" width=50px height=50px />　
+		</a>
+		{% set count = count + 1 %}
 	</div>
 	{% endfor %}
 	<br clear="all">

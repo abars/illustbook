@@ -231,7 +231,7 @@ class Pinterest(webapp.RequestHandler):
 	def _index(self,user,user_id,page,request_page_mode,redirect_api,contents_only):
 		unit=BbsConst.PINTEREST_PAGE_UNIT
 
-		order="new"
+		order="hot"#new"
 		if(self.request.get("order")):
 			order=self.request.get("order")
 

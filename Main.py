@@ -207,7 +207,13 @@ class RankingPortal(webapp.RequestHandler):
 		#	ranking_name="オーナーランキング"
 		#else:
 		
-		ranking_list=rank.user_ranking_list[(page-1)*page_unit:page*page_unit]
+		ranking_id_list=rank.user_id_ranking_list[(page-1)*page_unit:page*page_unit]
+		ranking_list=[]
+		for user_id in ranking_id_list:
+			obj=ApiObject.get_bookmark_of_user_id(user_id)
+			obj=ApiObject.create_user_object(self,obj)
+			ranking_list.append(obj)
+
 		ranking_name="人気のユーザ"
 
 		template_values = {
@@ -220,7 +226,8 @@ class RankingPortal(webapp.RequestHandler):
 			'ranking_list': ranking_list,
 			'ranking_name': ranking_name,
 			'ranking_mode': ranking_mode,
-			'page': page
+			'page': page,
+			'page_unit': page_unit
 		}
 
 		path = '/html/portal.html'
