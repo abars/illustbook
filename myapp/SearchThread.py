@@ -130,7 +130,7 @@ class SearchThread(webapp.RequestHandler):
 		sort_options = search.SortOptions(
 			expressions=[
 #				search.SortExpression(expression='date', direction=search.SortExpression.DESCENDING, default_value=0)
-				search.SortExpression(expression='applause', direction=search.SortExpression.DESCENDING, default_value=0)
+				search.SortExpression(expression='applause+bookmark*5', direction=search.SortExpression.DESCENDING, default_value=0)
 			],limit=1000)
 		options = search.QueryOptions(
 			limit=unit,
