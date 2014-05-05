@@ -42,6 +42,15 @@
 				<option value="1" {% if bbs.disable_news == 1 %}selected="selected"{% endif %}>{% if is_english %}Private{% else %}表示しない{% endif %}</option>
 				<option value="0" {% if not bbs.disable_news %}selected="selected"{% endif %}>{% if is_english %}Public{% else %}表示する{% endif %}</option>
 			</select></TD></TR>
+
+		{% if is_admin %}
+			<TR><TH>{% if is_english %}Disable{% else %}運営によるポータル非表示（管理モード）{% endif %}</TH><TD>
+			<select name="violate_terms">
+				<option value="1" {% if bbs.violate_terms == 1 %}selected="selected"{% endif %}>{% if is_english %}Private{% else %}表示しない{% endif %}</option>
+				<option value="0" {% if not bbs.violate_terms %}selected="selected"{% endif %}>{% if is_english %}Public{% else %}表示する{% endif %}</option>
+			</select></TD></TR>
+		{% endif %}
+
 			<TR><TH>{% if is_english %}Design{% else %}デザインテンプレート{% endif %}</TH><TD>
 				<select name="design_template_no" id="design_template_no" onchange="javascript:design_template_change(''+this.value);">
 					<option value="0" {% if not bbs.design_template_no %} selected="selected" {% endif%}>{% if is_english %}Custom{% else %}フォームデザイン{% endif %}</option>

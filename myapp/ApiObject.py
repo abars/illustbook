@@ -286,6 +286,8 @@ class ApiObject(webapp.RequestHandler):
 		violate_terms=0
 		if(bbs.disable_news):
 			disable_news=1
+		if(bbs.violate_terms):
+			disable_news=1
 		if(thread.violate_terms):
 			disable_news=1
 			violate_terms=1

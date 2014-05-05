@@ -214,6 +214,7 @@ class UpdateBbs(webapp.RequestHandler):
 		bbs.disable_draw_time=int(self.request.get('disable_draw_time'))
 		#bbs.disable_portal_menu=int(self.request.get('disable_portal_menu'))
 		bbs.disable_news=int(self.request.get('disable_news'))
+		bbs.violate_terms=int(self.request.get('violate_terms'))
 		bbs.disable_comment=int(self.request.get('disable_comment'))
 		bbs.disable_tag=int(self.request.get('disable_tag'))
 		bbs.default_order=int(self.request.get('order'))

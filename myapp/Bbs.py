@@ -131,6 +131,8 @@ class Bbs(CachedDbModel):
 	cached_thumbnail_key = db.StringProperty()					#サムネイルへのKey
 	cached_threads_num = db.IntegerProperty()					#スレッド数
 
+	violate_terms=db.IntegerProperty()							#規約による非表示
+
 	create_date = 	db.DateTimeProperty(auto_now=False)
 	date = db.DateTimeProperty(auto_now=True)
 
