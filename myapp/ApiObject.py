@@ -238,6 +238,9 @@ class ApiObject(webapp.RequestHandler):
 			if(not bbs_id or (bbs_id=="search")):
 				if(one_dic and one_dic["disable_news"]):
 					continue
+			if(bbs_id and bbs_id=="search"):
+				if(thread.illust_mode==BbsConst.ILLUSTMODE_MOPER):
+					continue
 			if(bbs_id and (bbs_id=="search" or bbs_id=="pinterest")):
 				if(one_dic and one_dic["violate_terms"]):
 					continue
