@@ -74,4 +74,8 @@
 			-->
 			
 			</TABLE>
+
+		{% if not is_admin %}
+			<input type="hidden" name="violate_terms" value="{% if bbs.violate_terms == 1 %}1{% else %}0{% endif %}"/>
+		{% endif %}
 </div>
