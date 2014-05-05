@@ -30,7 +30,7 @@ class BbsConst:
 	SPAM_CHECKED ="スパムと判定されました。コメントを修正して再投稿して下さい。コマントにURLや禁止ワードを含む場合にスパム判定されやすくなります。"
 	
 	#memcacheコントロール
-	OBJECT_CACHE_HEADER="ocache72_"	#この値を変更することで全てのキャッシュが無効になる
+	OBJECT_CACHE_HEADER="ocache73_"	#この値を変更することで全てのキャッシュが無効になる
 	OBJECT_BOOKMARK_CACHE_HEADER="bookmark_"
 	OBJECT_ENTRY_CACHE_HEADER="entry_"
 	OBJECT_THREAD_CACHE_HEADER="thread_"
@@ -103,7 +103,7 @@ class BbsConst:
 
 	#thread search
 	SEARCH_THREAD_INDEX_NAME="search_thread_index"
-	SEARCH_THREAD_VERSION=1
+	SEARCH_THREAD_VERSION=2
 
 	SEARCH_ENTRY_INDEX_NAME="search_entry_index"
 	SEARCH_ENTRY_VERSION=4

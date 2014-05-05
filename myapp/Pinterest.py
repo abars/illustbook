@@ -285,7 +285,9 @@ class Pinterest(webapp.RequestHandler):
 		template_values['illust_enable']=True
 		template_values['search']=tag
 
-		Pinterest._render_page(self,template_values)
+		#Pinterest._render_page(self,template_values)
+
+		Pinterest._text_search(self,tag,user,user_id,page,request_page_mode,redirect_api,contents_only)
 
 	@staticmethod
 	def _login_require(self,user,user_id,page,request_page_mode,redirect_api,contents_only):

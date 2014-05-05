@@ -1,21 +1,5 @@
-{% if bbs_list %}
-<div class="message" {% if not is_iphone %}style="width:350px;margin-left:0px;margin-right:0px;"{%else%}style="width:288px;"{% endif %}>
-  <p>{% if is_english %}Hot BBS{% else %}人気の掲示板{% endif %}</p>
-{% for bbs in bbs_list %}
-  <a href="{{bbs.bbs_url}}" style="color: rgb(37, 143, 184);">
-  {{bbs.title}}
-  </font></a>
-  {#
-  {% if bbs.mode != 1 %}
-    [誰でも]
-  {% endif %}
-  #}
-  <br/>
-{% endfor %}
-</div>
-{% endif %}
-
-<div class="message" {% if not is_iphone %}style="width:350px;margin-left:0px;margin-right:0px;"{%else%}style="width:288px;"{% endif %}>
+{% if tag_list %}
+<div class="message" {% if not is_iphone %}style="width:350px;margin-left:0px;margin-right:0px;"{% endif %}>
   <p>{% if is_english %}Hot Tag{% else %}人気のタグ{% endif %}</p>
 {% for tag2 in tag_list %}
     {% if loop.index <= tag_display_n %}
@@ -23,4 +7,4 @@
     {% endif %}
 {% endfor %}
 </div>
-
+{% endif %}

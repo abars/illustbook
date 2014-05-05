@@ -35,8 +35,14 @@ class SearchThread(webapp.RequestHandler):
 	def _tag_compaction(tag_list):
 		tag_string=""
 		for tag in tag_list:
-			tag_string=tag_string+tag+","
+			tag_string=tag_string+tag+" "
 		return tag_string
+
+	@staticmethod
+	def _number_validate(value):
+		if(not value):
+			return 0
+		return value
 
 	@staticmethod
 	def _create_document(thread):
@@ -47,6 +53,9 @@ class SearchThread(webapp.RequestHandler):
 				search.TextField(name='title', value=thread.title),
 				search.TextField(name='category', value=thread.category),
 				search.TextField(name='tag', value=SearchThread._tag_compaction(thread.tag_list)),
+				search.NumberField(name='applause', value=SearchThread._number_validate(thread.applause)),
+				search.NumberField(name='bookmark', value=SearchThread._number_validate(thread.bookmark_count)),
+				search.NumberField(name='comment', value=SearchThread._number_validate(thread.comment_cnt)),
 				search.HtmlField(name='summary', value=thread.summary),
 				search.DateField(name='date', value=thread.create_date)
 			])
@@ -120,7 +129,8 @@ class SearchThread(webapp.RequestHandler):
 	def search(query,page,unit,index):
 		sort_options = search.SortOptions(
 			expressions=[
-				search.SortExpression(expression='date', direction=search.SortExpression.DESCENDING, default_value=0)
+#				search.SortExpression(expression='date', direction=search.SortExpression.DESCENDING, default_value=0)
+				search.SortExpression(expression='applause', direction=search.SortExpression.DESCENDING, default_value=0)
 			],limit=1000)
 		options = search.QueryOptions(
 			limit=unit,

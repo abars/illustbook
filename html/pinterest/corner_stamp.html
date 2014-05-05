@@ -33,11 +33,14 @@
 {% endif %}
 {% endif %}
 
+<!-- 人気のBBS -->
+{% if not is_iphone %}
+  {% include "pinterest/hot_bbs.html" %}
+{% endif %}
+
 <!-- タグ一覧 -->
 {% if not is_iphone %}
-{% if tag_list %}
   {% include "pinterest/recent_tag.html" %}
-{% endif %}
 {% endif %}
 
 {#
