@@ -23,6 +23,7 @@ from google.appengine.api import images
 from google.appengine.api import memcache
 
 from myapp.Bbs import Bbs
+from myapp.MesThread import MesThread
 from myapp.Counter import Counter
 from myapp.Alert import Alert
 from myapp.MappingId import MappingId
@@ -160,6 +161,9 @@ class ShowThread(webapp.RequestHandler):
 		#英語版かどうか
 		is_english=CssDesign.is_english(self)
 
+		#関連イラスト
+		related=self._get_related(bbs,thread)
+
 		#描画
 		template_values = {
 			'host': host_url,
@@ -194,13 +198,36 @@ class ShowThread(webapp.RequestHandler):
 			'frozen': frozen,
 			'applause_enable': applause_enable,
 			'message': message,
-			'is_english': is_english
+			'is_english': is_english,
+			'related': related
 			}
 
 		path = "/html/"+design["base_name"]
 		self.response.out.write(template_select.render(path, template_values))
 
 		CounterWorker.update_counter(self,bbs,thread,owner)
+
+	@staticmethod
+	def _get_related(bbs,thread):
+		related_illust_cnt=6
+
+		thread_query = db.Query(MesThread,keys_only=True)
+		if(thread.user_id):
+			thread_query.filter('user_id =',thread.user_id)
+		else:
+			thread_query.filter('bbs_key =', bbs)
+		thread_query.filter("illust_mode =",BbsConst.ILLUSTMODE_ILLUST)
+		thread_query.order('-create_date')
+		all_threads=thread_query.fetch(limit=related_illust_cnt*2)
+
+		if(thread.key() in all_threads):
+			all_threads.remove(thread.key())
+		while(len(all_threads)>related_illust_cnt):
+			no=int(random.random()*len(all_threads))
+			all_threads.remove(all_threads[no])
+
+		all_threads_cached=ApiObject.get_cached_object_list(all_threads)
+		return all_threads_cached
 
 	@staticmethod
 	def get_thread(bbs,thread_key):
