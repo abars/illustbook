@@ -5,7 +5,7 @@
 		<a href="{{host}}mypage"><img src="{{host}}show_icon?key={{user.user_id()}}&size=mini" width="24px" height="24px" alt="icon"/></a>
 		{% set my_new_feed_count = user|new_feed_count %}
 		{% if my_new_feed_count %}
-			<b>{{my_new_feed_count}}</b>
+			<b><font color="#ea5376">{{my_new_feed_count}}</a></b>
 		{% endif %}
 	</div>
 	{% endif %}
