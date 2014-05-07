@@ -110,8 +110,10 @@ class ImageFile (webapp.RequestHandler):
 			h=w*src_h/src_w
 		margin=1
 		try:
-			img.resize(width=w+margin,height=h+margin)
-			img.crop(0.0,0.0,1.0*w/(w+margin),1.0*h/(h+margin))
+			img.resize(width=w+margin*2,height=h+margin*2)
+			margin_w=1.0*margin/(w+margin*2)
+			margin_h=1.0*margin/(h+margin*2)
+			img.crop(margin_w,margin_h,1.0-margin_w,1.0-margin_h)
 		except:
 			return None	#size error
 

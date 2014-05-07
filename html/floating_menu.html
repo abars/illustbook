@@ -58,9 +58,31 @@
 	    		<span class="caret"></span>
 	    	</a>
 			<ul class="dropdown-menu" style="right:0;left:auto;">
+
+			<!-- order -->
+				{% if bbs and not thread %}
+					{% if order!="new" %}
+					<li><a href="javascript:bbs_select_change('new','{{page_url_order_base}}');">
+						<i class="icon-align-left"></i>{% if is_english %}New{% else %}新着順{% endif %}
+					</a></li>
+					{% endif %}
+					{% if order!="update" %}
+					<li><a href="javascript:bbs_select_change('update','{{page_url_order_base}}');">
+						<i class="icon-align-left"></i>{% if is_english %}Update{% else %}更新順{% endif %}
+					</a></li>
+					{% endif %}
+					{% if order!="thumbnail" %}
+					<li><a href="javascript:bbs_select_change('thumbnail','{{page_url_order_base}}');">
+						<i class="icon-th"></i>{% if is_english %}Thumbnail{% else %}サムネイル{% endif %}
+					</a></li>
+					{% endif %}
+				{% endif %}
+
 				{% if user %}
 					<li><a href="{{host}}mypage"><i class="icon-home"></i>{% if is_english %}MyPage{%else%}マイページ{% endif %}</a></li>
 				{% endif %}
+
+			<!-- thread -->
 
 		{% if not edit_thread %}
 			{% if thread %}

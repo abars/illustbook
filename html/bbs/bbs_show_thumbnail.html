@@ -1,25 +1,19 @@
 <div class="entry">
-	イラスト
-	<hr/>
-		{% for thread in threads %}
-			<a href='{{usrhost}}{{thread.key()}}.html' class='imagelink'>
-			{% if thread.image_key %}
-				{%if thread.illust_mode == 2%}
-					<img src="{{host}}thumbnail/{{thread.image_key.key()}}.gif" alt="{{thread.title}}"/>
-				{%else%}
-					<img src="{{host}}thumbnail/{{thread.image_key.key()}}.jpg" alt="{{thread.title}}"/>
-				{%endif%}
-			{% endif%}
-			</a>
-		{% endfor %}
-</div>
+	{% for thread in threads %}
+		<a href='{{usrhost}}{{thread.key()}}.html' class='imagelink'>
+		{% if thread.image_key %}
+			{%if thread.illust_mode == 2%}
+				<img src="{{host}}thumbnail/{{thread.image_key.key()}}.gif" alt="{{thread.title}}"/>
+			{%else%}
+				<img src="{{host}}thumbnail/{{thread.image_key.key()}}.jpg" alt="{{thread.title}}"/>
+			{%endif%}
+		{% endif%}
+		</a>
+	{% endfor %}
 
-{%if all_entries %}
-<div class="entry">
-リプライ
-<hr/>
-{%for entry in all_entries %}
-	{{entry|reply_with_except(host)|safe}}
-{%endfor%}
+	{%if all_entries %}
+		{%for entry in all_entries %}
+			{{entry|reply_with_except(host)|safe}}
+		{%endfor%}
+	{%endif%}
 </div>
-{%endif%}

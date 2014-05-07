@@ -65,15 +65,16 @@
 			<!--イラストが存在しない場合-->
 			{% include "bbs/bbs_no_illust.html" %}
 	
+			{% if infinite_scroll %}
+			<div id="infinite-scroll-container" class="transitions-enabled infinite-scroll clearfix">
+			{% endif %}
+
 			<!--イラストループ-->
 			{% if order == "thumbnail" %}
 				<!-- サムネイル -->
-					{% include 'bbs/bbs_show_thumbnail.html' %}
+				{% include 'bbs/bbs_show_thumbnail.html' %}
 			{% else%}
 				<!-- エントリー -->
-				{% if infinite_scroll %}
-				<div id="infinite-scroll-container" class="transitions-enabled infinite-scroll clearfix">
-				{% endif %}
 
 				{% if bbs.bbs_mode == 3 and threads%}
 					<div class="entry">
@@ -101,11 +102,12 @@
 					</div>
 				{% endif %}
 
-				{% if infinite_scroll %}
-				</div>
-				{% endif %}
 			{% endif%}
-			
+
+			{% if infinite_scroll %}
+			</div>
+			{% endif %}
+
 			<!-- ページ -->
 			{% if not infinite_scroll %}
 			<div id="entry-bottom">
