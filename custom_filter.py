@@ -79,7 +79,7 @@ def reply_with_except(entry,host):
 			ret+=str(entry.thread_key.key())
 		ret+=".html' class='imagelink'>"
 		ret+="<img src='"+host+"thumbnail/"+str(entry.illust_reply_image_key.key())+".jpg' border='0' "
-		ret+="alt='"+str(entry.thread_key.title)+"'>/"
+		ret+="alt='"+str(entry.thread_key.title)+"'/>"
 		ret+="</a>"
 	except:
 		return ""#+traceback.format_exc()

@@ -1,3 +1,4 @@
+{% if threads or all_entries %}
 <div class="entry">
 	{% for thread in threads %}
 		<a href='{{usrhost}}{{thread.key()}}.html' class='imagelink'>
@@ -17,3 +18,4 @@
 		{%endfor%}
 	{%endif%}
 </div>
+{% endif %}
