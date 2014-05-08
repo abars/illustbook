@@ -34,7 +34,7 @@
 
 	/* 投稿者名 */
 	.entry-info-tag {
-		{% if is_iphone and not template_path %}
+		{% if is_iphone and (not template_path or is_english) %}
 			width:64px;
 		{% endif %}
 		float:left;

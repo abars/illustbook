@@ -12,10 +12,12 @@
 		</a>
 	{% endfor %}
 
+{#
 	{%if all_entries %}
 		{%for entry in all_entries %}
 			{{entry|reply_with_except(host)|safe}}
 		{%endfor%}
 	{%endif%}
+#}
 </div>
 {% endif %}

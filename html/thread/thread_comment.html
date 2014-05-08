@@ -14,7 +14,7 @@
 				{{entry.com.create_date|time_JST_progress}}
 			{% endif %}
 		{%else%}{{entry.com.date|time_JST_progress}}{%endif%}
-		{% if entry.com.comment_no %}　{% if is_english %}NO{% else %}投稿番号{% endif %}：{{entry.com.comment_no}}{%endif%}
+		{% if entry.com.comment_no %}　{% if is_english %}No{% else %}投稿番号{% endif %}：{{entry.com.comment_no}}{%endif%}
 		{% if bbs.show_remote_addr_id %}　ID：{{entry.com.remote_addr|ip_hash}}{% endif %}
 		
 		<div class="g-button-group" style="float:right;">
