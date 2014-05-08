@@ -99,11 +99,11 @@ class ShowBbs(webapp.RequestHandler):
 		
 		#返信イラストを取得
 		all_entries = None
-		if(order=="thumbnail"):
-			all_entries=ShowBbs.get_illust_reply(bbs,page,col_num)
-			if(threads_num<all_entries["count"]):
-				threads_num=all_entries["count"]
-			all_entries=all_entries["entry"]
+		#if(order=="thumbnail"):
+		#	all_entries=ShowBbs.get_illust_reply(bbs,page,col_num)
+		#	if(threads_num<all_entries["count"]):
+		#		threads_num=all_entries["count"]
+		#	all_entries=all_entries["entry"]
 		
 		#ホストURLを取得
 		host_url="http://"+MappingId.mapping_host(self.request.host)+"/";
