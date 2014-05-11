@@ -37,17 +37,17 @@
 			</select>
 			</TD></TR>
 			
-			<TR><TH>{% if is_english %}Scope{% else %}イラストをポータルの新着とランキングに表示{% endif %}</TH><TD>
+			<TR><TH>{% if is_english %}Audience{% else %}イラストをポータルの新着とランキングに表示{% endif %}</TH><TD>
 			<select name="disable_news">
 				<option value="1" {% if bbs.disable_news == 1 %}selected="selected"{% endif %}>{% if is_english %}Private{% else %}表示しない{% endif %}</option>
 				<option value="0" {% if not bbs.disable_news %}selected="selected"{% endif %}>{% if is_english %}Public{% else %}表示する{% endif %}</option>
 			</select></TD></TR>
 
 		{% if is_admin %}
-			<TR><TH>{% if is_english %}Disable{% else %}運営によるポータル非表示（管理モード）{% endif %}</TH><TD>
+			<TR><TH>{% if is_english %}Mute (*ADMIN){% else %}運営によるポータル非表示（管理モード）{% endif %}</TH><TD>
 			<select name="violate_terms">
-				<option value="1" {% if bbs.violate_terms == 1 %}selected="selected"{% endif %}>{% if is_english %}Private{% else %}表示しない{% endif %}</option>
-				<option value="0" {% if not bbs.violate_terms %}selected="selected"{% endif %}>{% if is_english %}Public{% else %}表示する{% endif %}</option>
+				<option value="1" {% if bbs.violate_terms == 1 %}selected="selected"{% endif %}>{% if is_english %}Mute{% else %}表示しない{% endif %}</option>
+				<option value="0" {% if not bbs.violate_terms %}selected="selected"{% endif %}>{% if is_english %}No mute{% else %}表示する{% endif %}</option>
 			</select></TD></TR>
 		{% endif %}
 
