@@ -80,7 +80,7 @@ class Pinterest(webapp.RequestHandler):
 
 	@staticmethod
 	def get_profile_for_edit(bookmark,view_mode):
-		edit_profile="コメントを入力して下さい"
+		edit_profile=""
 		if(bookmark):
 			if(not view_mode):
 				if(bookmark.profile):

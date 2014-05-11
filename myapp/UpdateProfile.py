@@ -31,6 +31,7 @@ from myapp.RecentTag import RecentTag
 from myapp.Bookmark import Bookmark
 from myapp.ApiObject import ApiObject
 from myapp.Pinterest import Pinterest
+from myapp.CssDesign import CssDesign
 
 from myapp.SyncPut import SyncPut
 
@@ -57,13 +58,18 @@ class UpdateProfile(webapp.RequestHandler):
 		if(self.request.get("regulation_r15_gl")):
 			regulation+=4
 
+		is_english=CssDesign.is_english(self)
+
 		if(name==""):
-			Alert.alert_msg_with_write(self,"名前がありません。");
+			if(is_english):
+				Alert.alert_msg_with_write(self,"No name");
+			else:
+				Alert.alert_msg_with_write(self,"名前がありません。");
 			return
 
-		if(profile==""):
-			Alert.alert_msg_with_write(self,"プロフィールがありません。");
-			return
+		#if(profile==""):
+		#	Alert.alert_msg_with_write(self,"プロフィールがありません。");
+		#	return
 
 		user = users.get_current_user()
 		if(not(user)):
@@ -101,7 +107,10 @@ class UpdateProfile(webapp.RequestHandler):
 			try:
 				birthday_year=int(birthday_year)
 			except:
-				Alert.alert_msg_with_write(self,"生まれた年は半角数字である必要があります。");
+				if is_english:
+					Alert.alert_msg_with_write(self,"Birthday must be number");
+				else:
+					Alert.alert_msg_with_write(self,"生まれた年は半角数字である必要があります。");
 				return
 		else:
 			birthday_year=0
@@ -110,7 +119,10 @@ class UpdateProfile(webapp.RequestHandler):
 			try:
 				birthday_month=int(birthday_month)
 			except:
-				Alert.alert_msg_with_write(self,"生まれた月は半角数字である必要があります。");
+				if is_english:
+					Alert.alert_msg_with_write(self,"Birthday must be number");
+				else:
+					Alert.alert_msg_with_write(self,"生まれた月は半角数字である必要があります。");
 				return
 		else:
 			birthday_month=0
@@ -119,7 +131,10 @@ class UpdateProfile(webapp.RequestHandler):
 			try:
 				birthday_day=int(birthday_day)
 			except:
-				Alert.alert_msg_with_write(self,"生まれた日は半角数字である必要があります。");
+				if is_english:
+					Alert.alert_msg_with_write(self,"Birthday must be number");
+				else:
+					Alert.alert_msg_with_write(self,"生まれた日は半角数字である必要があります。");
 				return
 		else:
 			birthday_day=0
@@ -142,7 +157,10 @@ class UpdateProfile(webapp.RequestHandler):
 			img = self.request.body_file.vars['icon']
 			bookmark.icon_content_type=img.headers['content-type']
 			if(not ApiObject.create_user_thumbnail(bookmark)):
-				Alert.alert_msg_with_write(self,"アイコン画像が大きすぎます。");
+				if is_english:
+					Alert.alert_msg_with_write(self,"Too big icon image");
+				else:
+					Alert.alert_msg_with_write(self,"アイコン画像が大きすぎます。");
 				return
 
 		try:

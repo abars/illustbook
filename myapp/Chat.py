@@ -316,7 +316,8 @@ class Chat(webapp.RequestHandler):
 			'header_enable': False,
 			'room_list': show_room,
 			'is_admin':is_admin,
-			'user_name': user_name
+			'user_name': user_name,
+			'is_english':CssDesign.is_english(self)
 		}
 		path = '/html/portal.html'
 		self.response.out.write(template_select.render(path, template_values))
@@ -487,7 +488,8 @@ class Chat(webapp.RequestHandler):
 		'viewmode':viewmode,
 		'room_name':room.name,
 		'token':token,
-		'client_id':client_id
+		'client_id':client_id,
+		'is_english':CssDesign.is_english(self)
 		}
 		
 		path = '/html/tools/draw_window_ipad.htm'

@@ -12,9 +12,9 @@
 {% if mode == "community" %}コミュニティ{% endif %}
 {% if mode == "profile" %}会社概要{% endif %}
 {% if mode == "link" %}リンク{% endif %}
-{% if mode == "chat" %}お絵かきチャット{% endif %}
+{% if mode == "chat" %}{% if is_english %}ilbchat{% else %}お絵かきチャット{% endif %}{% endif %}
 {% if mode == "ranking" %}ランキング{% endif %}
-｜イラストブック</title>
+｜{% if is_english %}ILLUSTBOOK{% else %}イラストブック{% endif %}</title>
 
 {%include "meta.html" %}
 <meta http-equiv="Content-Script-Type" content="text/javascript" />

@@ -13,7 +13,7 @@
 				<tr><td>{% if is_english %}Birth Year{% else %}生まれた年(西暦){% endif %}</td><td>　</td><td>
 				<input name="birthday_year" type="text" value="{% if bookmark.birthday_year %}{{bookmark.birthday_year}}{% endif %}" style="width:80px;">{% if not is_english %}年<br/>何も書かなければ非公開になります{% endif %}
 				</td></tr>
-				<tr><td>{% if is_english %}{% else %}誕生日（半角）{% endif %}</td><td>　</td><td>
+				<tr><td>{% if is_english %}Birth Day{% else %}誕生日（半角）{% endif %}</td><td>　</td><td>
 				<input name="birthday_month" type="text" value="{% if bookmark.birthday_month %}{{bookmark.birthday_month}}{%endif%}" style="width:40px;">{% if is_english %}/{% else %}月{% endif %}
 				<input name="birthday_day" type="text" value="{% if bookmark.birthday_day %}{{bookmark.birthday_day}}{% endif %}" style="width:40px;">{% if not is_english %}日<br/>何も書かなければ非公開になります{% endif %}
 				</td></tr>
