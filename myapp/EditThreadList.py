@@ -175,6 +175,7 @@ class EditThreadList(webapp.RequestHandler):
 			'category_count': category_count,
 			'link_count': link_count,
 			'is_iphone': CssDesign.is_iphone(self),
+			'is_tablet': CssDesign.is_tablet(self),
 			'category_list': category_list,
 			'is_english': CssDesign.is_english(self)
 		}

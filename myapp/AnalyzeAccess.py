@@ -70,6 +70,8 @@ class AnalyzeAccess(webapp.RequestHandler):
 			'analyze_data':analyze,
 			'user': user,
 			'show_analyze': show_analyze,
+			'is_iphone': CssDesign.is_iphone(self),
+			'is_tablet': CssDesign.is_tablet(self),
 			'is_english': CssDesign.is_english(self)
 			}
 		path = '/html/analyze.html'

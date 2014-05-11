@@ -58,7 +58,7 @@
 	<p>イラブチャット（β）はPCとiPadで楽しめるお絵かきチャットです。<br/>
 作成したイラストはイラストブックに投稿することができます。<br/>
 ご利用にはHTML5に対応したブラウザが必要です。</p>
-	<a href="chat?mode=tool&amp;key=always&amp;viewmode=false&amp;pass=false" class="g-button green">まずはお試し</a>&nbsp;
+	<a href="chat?mode=tool&amp;key=always&amp;viewmode=false&amp;pass=false" class="g-button">まずはお試し</a>&nbsp;
 	<a href="https://twitter.com/share" class="twitter-share-button" data-lang="ja" data-hashtags="ilbchat">ツイート</a>
 	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 </div>
@@ -98,8 +98,8 @@
 			</p>
 			<div class="actions g-button-container">
 				<div class="g-button-group">
-					<a href="javascript:join_chat('{{room.key()}}',false,{% if room.password %}true{%else%}false{%endif%});" class="g-button green">{% if not is_iphone %}{% endif %}参加（{{room.user_count}}人）</a>
-					{% if user %}{% if user.user_id() == room.user_id %}<a href="javascript:delete_room('./chat?mode=delete&amp;key={{room.key()}}');" class="g-button green">{% if not is_iphone %}{% endif %}削除</a>{% endif %}{% endif %}
+					<a href="javascript:join_chat('{{room.key()}}',false,{% if room.password %}true{%else%}false{%endif%});" class="g-button">{% if not is_iphone %}{% endif %}参加（{{room.user_count}}人）</a>
+					{% if user %}{% if user.user_id() == room.user_id %}<a href="javascript:delete_room('./chat?mode=delete&amp;key={{room.key()}}');" class="g-button">{% if not is_iphone %}{% endif %}削除</a>{% endif %}{% endif %}
 				</div>
 			</div>
 		</div>
@@ -138,7 +138,7 @@
 		</td></tr>
 		</table>
 		<br/>
-		<a href="javascript:create_new_room();" class="g-button green">ルームを作成</a>
+		<a href="javascript:create_new_room();" class="g-button">ルームを作成</a>
 	</form>
 	{% endif %}
 </div>

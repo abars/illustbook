@@ -64,6 +64,7 @@ class EditBbs(webapp.RequestHandler):
 			'is_css_enable': is_css_enable,
 			'is_admin': is_admin,
 			'is_iphone': CssDesign.is_iphone(self),
+			'is_tablet': CssDesign.is_tablet(self),
 			'my_app_list': my_app_list,
 			'user': user,
 			'tab': tab,
