@@ -279,6 +279,8 @@ class Chat(webapp.RequestHandler):
 	#ポータル
 	def show_portal(self,user):
 		is_iphone=CssDesign.is_iphone(self)
+		is_tablet=CssDesign.is_tablet(self)
+
 		room_list=db.Query(ChatRoom,keys_only=True).order("-create_date").fetch(limit=100)
 		
 		show_room=[]
@@ -307,6 +309,7 @@ class Chat(webapp.RequestHandler):
 		template_values = {
 			'host': "./",
 			'is_iphone': is_iphone,
+			'is_tablet': is_tablet,
 			'user': user,
 			'redirect_url': self.request.path,
 			'mode': "chat",

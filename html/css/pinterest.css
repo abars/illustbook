@@ -10,8 +10,8 @@ body{
 }
 
 hr {border:0; border-top:1px solid {% if flat_ui %}#eeeeee;{%else%}#cccccc;{% endif %}}
-h1 {font-size:100%;color:#E47911;}
-h2,h3 {font-size:100%;color:#E47911;}
+h1 {font-size:100%;color:#ea5376;}
+h2,h3 {font-size:100%;color:#ea5376;}
 
 #contents {
     {% if is_iphone %}
