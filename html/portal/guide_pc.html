@@ -1,7 +1,8 @@
 <div class="result">
 
-<h1 id="page2">イラブペイント(PC版/アプリ版)の使い方</h1>
+<h1 id="page2">{% if is_english %}Draw tool tutorial (PC/App){% else %}イラブペイント(PC版/アプリ版)の使い方{% endif %}</h1>
 
+{% if not is_english %}
 <h2>インストール</h2>
 
 <p>
@@ -10,52 +11,53 @@ iPad向けのアプリ版は以下からインストールして下さい。
 </p>
 
 <div class="pochireba" style="text-align:left;font-size:small;padding:20px 0;/zoom: 1;overflow: hidden;"><a href="https://itunes.apple.com/jp/app/id765479109" target="_blank" ><img src="http://a1741.phobos.apple.com/us/r30/Purple6/v4/04/25/71/042571e2-faad-e277-e044-0971e87c70e3/mzl.lxsnydch.png" alt="イラブペイント" width="75" height="75" style="float:left;margin:0 15px 0 0;width:75px;height:75px;" class="pochi_img" ></a><div class="pochi_info" style="text-align:left;/zoom: 1;overflow: hidden;"><div class="pochi_name"><a href="https://itunes.apple.com/jp/app/id765479109" target="_blank" >イラブペイント</a></div><div class="pochi_price" style="display:inline;">無料</div><div class="pochi_time" style="font-size:x-small;display:inline;">(2013.12.04時点)</div><div class="pochi_seller"><a href="https://itunes.apple.com/jp/artist/abars/id391490089" target="_blank" >ABARS</a></div><div class="pochi_post" style="font-size:x-small;">posted with <a href="http://pochireba.com" rel="nofollow" target="_blank">ポチレバ</a></div></div><div class="pochireba-footer" style="clear: left"></div></div>
+{% endif %}
 
-<h2>画面構成</h2>
+<h2>{% if is_english %}Tool layout{% else %}画面構成{% endif %}</h2>
 
+{% if not is_english %}
 <p>
 イラブペイント(PC版/アプリ版)を開くと次のような画面になります。<br/>
 画面右のツールを使って、左のキャンバスに絵を描いていきます。
 </p>
+{% endif %}
 	<div style="position: relative;">
 	<img src="static_files/guide/tool7.png" alt="イラブペイント"/>
 	{% if not is_iphone %}
 	<div style="position: absolute; top: 0px; left: 0px;width:100%;height:100%;" class="tool_guide">
-	<div style="position: absolute; top: 15px; left: 20px; background:#ffffff;">ウィンドウメニュー</div>
-	<div style="position: absolute; top: 380px; left: 200px; background:#ffffff;">ナビゲーション</div>
-	<div style="position: absolute; top: 15px; left: 440px; background:#ffffff;">ツールパレット</div>
-	<div style="position: absolute; top: 15px; left: 600px; background:#ffffff;">レイヤー</div>
-<!--
-	<div style="position: absolute; top: 110px; left: 480px; background:#ffffff;">全消去</div>
-	<div style="position: absolute; top: 135px; left: 440px; background:#ffffff;">筆圧・アンドゥ</div>
--->
-	<div style="position: absolute; top: 150px; left: 600px; background:#ffffff;">ペン設定</div>
-	<div style="position: absolute; top: 190px; left: 580px; background:#ffffff;">ズーム・回転</div>
-	<div style="position: absolute; top: 210px; left: 440px; background:#ffffff;">カラーサークル</div>
-	<div style="position: absolute; top: 320px; left: 440px; background:#ffffff;">カラーパレット</div>
-	<div style="position: absolute; top: 360px; left: 440px; background:#ffffff;">カラースライダー</div>
+	<div style="position: absolute; top: 15px; left: 20px; background:#ffffff;">{% if is_english %}Window menu{% else %}ウィンドウメニュー{% endif %}</div>
+	<div style="position: absolute; top: 380px; left: 200px; background:#ffffff;">{% if is_english %}Navigation{% else %}ナビゲーション{% endif %}</div>
+	<div style="position: absolute; top: 15px; left: 440px; background:#ffffff;">{% if is_english %}Tool palette{% else %}ツールパレット{% endif %}</div>
+	<div style="position: absolute; top: 15px; left: 600px; background:#ffffff;">{% if is_english %}Layer{% else %}レイヤー{% endif %}</div>
+	<div style="position: absolute; top: 150px; left: 600px; background:#ffffff;">{% if is_english %}Pen setting{% else %}ペン設定{% endif %}</div>
+	<div style="position: absolute; top: 190px; left: 580px; background:#ffffff;">{% if is_english %}Zoom{% else %}ズーム・回転{% endif %}</div>
+	<div style="position: absolute; top: 210px; left: 440px; background:#ffffff;">{% if is_english %}Color circle{% else %}カラーサークル{% endif %}</div>
+	<div style="position: absolute; top: 320px; left: 440px; background:#ffffff;">{% if is_english %}Color palette{% else %}カラーパレット{% endif %}</div>
+	<div style="position: absolute; top: 360px; left: 440px; background:#ffffff;">{% if is_english %}Color slider{% else %}カラースライダー{% endif %}</div>
 	</div>
 	{% endif %}
 	</div>
 	
 <p>&nbsp;</p>
-<h2>ツールパレット</h2>
+<h2>{% if is_english %}Tool palette{% else %}ツールパレット{% endif %}</h2>
+{% if not is_english %}
 <p>ツールパレットでは、使用する画材を選択します。</p>
+{% endif %}
 <div style="float:left;margin-right:20px;">
 <img src="static_files/guide/guide_tool3.png" alt="ツールパレット"/>
 </div>
 <table class="g-table">
-<tr><th>鉛筆</th><td>線を引く</td><th>直線</th><td>直線を引く</td></tr>
-<tr><th>筆</th><td>色を塗る</td><th>覆い焼き</th><td>明るくする</td></tr>
-<tr><th>スポイト</th><td>色を取得する</td><th>焼き込み</th><td>暗くする</td></tr>
-<tr><th>消しゴム</th><td>線や色を消す</td><th>ぼかし</th><td>にじませる</td></tr>
-<tr><th>塗り潰し</th><td>線で囲まれている範囲を塗りつぶす</td><th>テキスト</th><td>選択範囲に文字を書く</td></tr>
-<tr><th>矩形選択</th><td>選択して移動やコピーを行う</td><th>自由選択</th><td>選択して移動やコピーを行う</td></tr>
-<tr><th>ハンド</th><td>キャンバスを移動する</td><th>ズーム</th><td>ドラッグでキャンバスを拡大する</td></tr>
-<tr><th>ムーブ</th><td>レイヤーを移動する</td><th>回転</th><td>ドラッグでキャンバスを回転する</td></tr>
-<tr><th>矩形</th><td>ドラッグで矩形を描く(*)</td><th>楕円</th><td>ドラッグで楕円を描く(*)</td></tr>
+<tr><th>{% if is_english %}Pencil{% else %}鉛筆{% endif %}</th><td>線を引く</td><th>{% if is_english %}Line{% else %}直線{% endif %}</th><td>直線を引く</td></tr>
+<tr><th>{% if is_english %}Brush{% else %}筆{% endif %}</th><td>色を塗る</td><th>{% if is_english %}Burn in{% else %}覆い焼き{% endif %}</th><td>明るくする</td></tr>
+<tr><th>{% if is_english %}Spoit{% else %}スポイト{% endif %}</th><td>色を取得する</td><th>{% if is_english %}Burn out{% else %}焼き込み{% endif %}</th><td>暗くする</td></tr>
+<tr><th>{% if is_english %}Eraser{% else %}消しゴム{% endif %}</th><td>線や色を消す</td><th>{% if is_english %}Blur{% else %}ぼかし{% endif %}</th><td>にじませる</td></tr>
+<tr><th>{% if is_english %}Fill{% else %}塗り潰し{% endif %}</th><td>線で囲まれている範囲を塗りつぶす</td><th>{% if is_english %}Text{% else %}テキスト{% endif %}</th><td>選択範囲に文字を書く</td></tr>
+<tr><th>{% if is_english %}Rect Select{% else %}矩形選択{% endif %}</th><td>選択して移動やコピーを行う</td><th>{% if is_english %}Free Select{% else %}自由選択{% endif %}</th><td>選択して移動やコピーを行う</td></tr>
+<tr><th>{% if is_english %}Hand{% else %}ハンド{% endif %}</th><td>キャンバスを移動する</td><th>{% if is_english %}Zoom{% else %}ズーム{% endif %}</th><td>ドラッグでキャンバスを拡大する</td></tr>
+<tr><th>{% if is_english %}Move{% else %}ムーブ{% endif %}</th><td>レイヤーを移動する</td><th>{% if is_english %}Rotate{% else %}回転{% endif %}</th><td>ドラッグでキャンバスを回転する</td></tr>
+<tr><th>{% if is_english %}Rect{% else %}矩形{% endif %}</th><td>ドラッグで矩形を描く(*)</td><th>{% if is_english %}Circle{% else %}楕円{% endif %}</th><td>ドラッグで楕円を描く(*)</td></tr>
 </table>
-<p>(*)矩形と楕円は選択された状態でもう一度クリックすることで塗りつぶしモードにすることができます</p>
+<p>(*){% if is_english %}You can change mode by click{% else %}矩形と楕円は選択された状態でもう一度クリックすることで塗りつぶしモードにすることができます{% endif %}</p>
 
 <br clear="all"/>
 
@@ -116,33 +118,6 @@ iPad向けのアプリ版は以下からインストールして下さい。
 アルファ値は、レイヤーの透明度で、値が小さいほど、透明に近づいていきます。<br/>
 アルファ値の変更はスライダーをドラッグします。<br/>
 </p>
-
-<!--
-<p>&nbsp;</p>
-<h2>ボタン</h2>
-
-<table class="g-table">
-<tr>
-<th>全消去</th>
-<td><img src="static_files/guide/guide_clear.png" alt="全消去"/></td>
-<td>全てを消去してキャンバスを真っ白にします。
-確認のダイアログが出ます。</td>
-</tr>
-
-<tr>
-<th>筆圧</th>
-<td><img src="static_files/guide/guide_pressure.png" alt="筆圧"/></td>
-<td>ツールごとに筆圧の有効、無効を選択します。</td>
-</tr>
-
-<tr>
-<th>アンドゥ・リドゥ</th>
-<td><img src="static_files/guide/guide_undo.png" alt="アンドゥ"/></td>
-<td>16回まで直前の操作を戻したり、やり直したりすることができます。</td>
-</tr>
-
-</table>
--->
 
 <p>&nbsp;</p>
 <h2>ナビゲーション</h2>
@@ -241,30 +216,32 @@ iPad向けのアプリ版は以下からインストールして下さい。
 
 <p>&nbsp;</p>
 
-<h2>キーボードショートカット</h2>
+<h2>{% if is_english %}Keyboard shortcut{% else %}キーボードショートカット{% endif %}</h2>
 
+{% if not is_english %}
 <p>キーボードとマウスを併用することで効率を上げることができます。　</p>
+{% endif %}
 
 <table class="g-table">
-	<tr><th>アンドゥ</th><td>Z</td></tr>
-	<tr><th>リドゥ</th><td>Y</td></tr>
-	<tr><th>キャンバス反転</th><td>HおよびV</td></tr>
-	<tr><th>スポイト</th><td>ALT+クリック(*)、右クリック</td></tr>
-	<tr><th>ハンド</th><td>CTRL+ドラッグ(*)、スペース+ドラッグ</td></tr>
-	<tr><th>直線を引く</th><td>SHIFT+ドラッグ(*)</td></tr>
-	<tr><th>円を描く</th><td>楕円ツールでSHIFT+ドラッグ(*)</td></tr>
-	<tr><th>ペンサイズダウン</th><td>[</td></tr>
-	<tr><th>ペンサイズアップ</th><td>]</td></tr>
-	<tr><th>フルスクリーン表示</th><td>F</td></tr>
-	<tr><th>ズームイン</th><td>W、マウススクロール</td></tr>
-	<tr><th>ズームアウト</th><td>S、マウススクロール</td></tr>
-	<tr><th>レイヤー移動</th><td>K</td></tr>
-	<tr><th>塗りつぶし</th><td>G</td></tr>
-	<tr><th>スポイト</th><td>I</td></tr>
-	<tr><th>ペン(およびブラシ切り替え)</th><td>B</td></tr>
-	<tr><th>ライン</th><td>U</td></tr>
-	<tr><th>消しゴム</th><td>E</td></tr>
-	<tr><th>覆い焼き</th><td>J</td></tr>
+	<tr><th>{% if is_english %}Undo{% else %}アンドゥ{% endif %}</th><td>Z</td></tr>
+	<tr><th>{% if is_english %}Redo{% else %}リドゥ{% endif %}</th><td>Y</td></tr>
+	<tr><th>{% if is_english %}Reverse{% else %}キャンバス反転{% endif %}</th><td>H、V</td></tr>
+	<tr><th>{% if is_english %}Spoit{% else %}スポイト{% endif %}</th><td>ALT+{% if is_english %}Click{% else %}クリック{% endif %}(*)、{% if is_english %}Right click{% else %}右クリック{% endif %}</td></tr>
+	<tr><th>{% if is_english %}Hand{% else %}ハンド{% endif %}</th><td>CTRL+{% if is_english %}Drag{% else %}ドラッグ{% endif %}(*)、{% if is_english %}Space + Drag{% else %}スペース+ドラッグ{% endif %}</td></tr>
+	<tr><th>{% if is_english %}Line{% else %}直線を引く{% endif %}</th><td>SHIFT+{% if is_english %}Drag{% else %}ドラッグ{% endif %}(*)</td></tr>
+	<tr><th>{% if is_english %}Circle{% else %}円を描く{% endif %}</th><td>{% if not is_english %}楕円ツールで{% endif %}SHIFT+{% if is_english %}Drag{% else %}ドラッグ{% endif %}(*)</td></tr>
+	<tr><th>{% if is_english %}Pen size up{% else %}ペンサイズダウン{% endif %}</th><td>[</td></tr>
+	<tr><th>{% if is_english %}Pen size down{% else %}ペンサイズアップ{% endif %}</th><td>]</td></tr>
+	<tr><th>{% if is_english %}Full screen{% else %}フルスクリーン表示{% endif %}</th><td>F</td></tr>
+	<tr><th>{% if is_english %}Zoom in{% else %}ズームイン{% endif %}</th><td>W、{% if is_english %}Scroll{% else %}マウススクロール{% endif %}</td></tr>
+	<tr><th>{% if is_english %}Zoom out{% else %}ズームアウト{% endif %}</th><td>S、{% if is_english %}Scroll{% else %}マウススクロール{% endif %}</td></tr>
+	<tr><th>{% if is_english %}Move{% else %}レイヤー移動{% endif %}</th><td>K</td></tr>
+	<tr><th>{% if is_english %}Fill{% else %}塗りつぶし{% endif %}</th><td>G</td></tr>
+	<tr><th>{% if is_english %}Spoit{% else %}スポイト{% endif %}</th><td>I</td></tr>
+	<tr><th>{% if is_english %}Pen{% else %}ペン(およびブラシ切り替え){% endif %}</th><td>B</td></tr>
+	<tr><th>{% if is_english %}Line{% else %}ライン{% endif %}</th><td>U</td></tr>
+	<tr><th>{% if is_english %}Eraser{% else %}消しゴム{% endif %}</th><td>E</td></tr>
+	<tr><th>{% if is_english %}Burn in{% else %}覆い焼き{% endif %}</th><td>J</td></tr>
 	
 </table>
 

@@ -158,7 +158,7 @@
 
 {% if search %}
   <div class="message">
-    <p><b>{{search}}</b>の検索結果</p>
+    <p>{% if is_english %}Search result of {% endif %}<b>{{search}}</b>{% if not is_english %}の検索結果{% endif %}</p>
   </div>
   <br clear="all"/>
 {% endif %}

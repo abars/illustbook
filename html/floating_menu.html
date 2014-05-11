@@ -46,7 +46,7 @@
 	    	</a>
 	{% endif %}
 
-	{% if is_iphone and top_page %}
+	{% if is_iphone and (top_page or (not bbs)) %}
 			<ul class="dropdown-menu" style="right:0;left:auto;">
 				{% if user %}
 					<li><a href="{{host}}mypage"><i class="icon-home"></i>{% if is_english %}MyPage{%else%}マイページ{% endif %}</a></li>

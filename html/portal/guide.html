@@ -4,22 +4,27 @@
 
 {% if not contents %}
 
-{% if is_english %}<h1>These articles are Japanese version only.</h1>{% endif %}
-
 <h1>{% if is_english %}What's ILLUSTBOOK{% else %}イラストブックとは？{% endif %}</h1>
 
-イラストブックは無料のレンタルお絵描き掲示板です。<br/>
-自分用の掲示板をレンタルしてイラストを公開したり、
-友達の掲示板にイラストやコメントを投稿することができます。<br/>
+{% if is_english %}
+ILLUSTBOOK is BBS network of MANGA.<br/>
+You can create own BBS, and you can communicate using illust or comment.<br/>
+{% else %}
+<p>イラストブックは無料で使える第二世代のお絵かき掲示板です。
+<br/>高機能なお絵かきツールとあなた専用のお絵かき掲示版を使って、作品を世界中に公開することができます。
+<br/>現在、{% if bbs_n %}{{bbs_n}}件の掲示板がレンタルされ、{{illust_n}}枚のイラストが公開されています。{% endif %}</p>
+{% endif %}
 
 <p>&nbsp;</p>
 
+{% if is_english %}<h1>These articles are Japanese version only.</h1>{% endif %}
+
 <h1>{% if is_english %}How to use ILLUSTBOOK{% else %}イラストブックの使い方{% endif %}</h1>
 
-<a href="{{host}}guide?contents=about">イラストブックの特徴</a><br/>
-<a href="{{host}}guide?contents=pc">イラブペイント(PC版/アプリ版)の使い方</a><br/>
-<a href="{{host}}guide?contents=mobile">イラブペイント(モバイル版)の使い方</a><br/>
-<a href="{{host}}guide?contents=sns">SNS機能の使い方</a><br/>
+<a href="{{host}}guide?contents=about">{% if is_english %}Features{% else %}イラストブックの特徴{% endif %}</a><br/>
+<a href="{{host}}guide?contents=pc">{% if is_english %}Draw tool tutorial (PC/App){% else %}イラブペイント(PC版/アプリ版)の使い方{% endif %}</a><br/>
+<a href="{{host}}guide?contents=mobile">{% if is_english %}Draw tool tutorial (Mobile){% else %}イラブペイント(モバイル版)の使い方{% endif %}</a><br/>
+<a href="{{host}}guide?contents=sns">{% if is_english %}SNS tutorial{% else %}SNS機能の使い方{% endif %}</a><br/>
 
 <p>&nbsp;</p>
 
@@ -34,11 +39,11 @@
 <h1>{% if is_english %}Link{% else %}リンク{% endif %}</h1>
 
 <p>
-<a href="{{host}}terms" class="declink">利用規約</a><br/>
-<a href="./{{host}}guide?contents=ad" class="declink">広告掲載のお問い合わせ</a><br/>
-<a href="./dev" class="declink">開発者向けサイト</a><br/>
-<a href="./moper_guide" class="declink">動画お絵かきツールの使い方</a><br/>
-<a href="http://www.kooss.com/" class="declink">無料サイト集 Kooss.com</a><br/>
+<a href="{{host}}terms" class="declink">{% if is_english %}Terms{% else %}利用規約{% endif %}</a><br/>
+<a href="./{{host}}guide?contents=ad" class="declink">{% if is_english %}For ad partnership{% else %}広告掲載のお問い合わせ{% endif %}</a><br/>
+<a href="./dev" class="declink">{% if is_english %}Developer site{% else %}開発者向けサイト{% endif %}</a><br/>
+<a href="./moper_guide" class="declink">{% if is_english %}Movie tool turotial{% else %}動画お絵かきツールの使い方{% endif %}</a><br/>
+<a href="http://www.kooss.com/" class="declink">{% if is_english %}Link{% else %}無料サイト集 Kooss.com{% endif %}</a><br/>
 </p>
 
 {% endif %}
