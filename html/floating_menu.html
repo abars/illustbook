@@ -31,10 +31,11 @@
 
 	<!-- menu -->
 	{% if is_iphone %}
-		<div style="float:right;padding-left:2px;padding-top:2px;padding-right:2px;font-weight:600;">
+		<div style="float:right;padding-left:3px;padding-top:3px;padding-right:3px;font-weight:600;">
 	     	<div class="g-button-group">
-	    	<a class="g-button dropdown-toggle" data-toggle="dropdown" href="#" style="background:none;">
-	    		<i class="icon-list"></i>
+	    	<a class="g-button dropdown-toggle" data-toggle="dropdown" href="#" style="background:none;border:none;">
+	    		{% if is_english %}Menu{%else%}メニュー{% endif %}
+	    		<span class="caret"></span>
 	    	</a>
 	{% else %}
 		<div style="float:right;padding-left:2px;padding-top:1px;padding-right:2px;font-weight:600;">
