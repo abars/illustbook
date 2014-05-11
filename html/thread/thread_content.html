@@ -16,7 +16,9 @@
 		{% if thread.illust_mode == 2 %}
 			<script type="text/javascript" src="{{host}}moper_player?bbs_key={{bbs_key}}&amp;thread_key={{thread.key()}}{% if is_iphone %}&amp;is_iphone=1{% endif %}"></script><br/>
 		{%else%}
-			{% include "bbs_thread/image.html" %}
+			<a href='{{host}}img/{{thread.cached_image_key}}{% if thread.is_png %}.png{%else%}.jpg{%endif%}' class="imagelink">
+				{% include "bbs_thread/image.html" %}
+			</a>
 		{% endif %}
 	{% endif %}
 	</div>
