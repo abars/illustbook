@@ -36,15 +36,17 @@
 	    		<span class="caret"></span>
 	    	</a>
 			<ul class="dropdown-menu" style="right:0;left:auto;">
+				{% if user %}
+					<li><a href="{{host}}mypage">{% if is_english %}MyPage{%else%}マイページ{% endif %}</a></li>
+				{% endif %}
+				<li><a href="{{host}}guide">{% if is_english %}HowTo{% else %}使い方{% endif %}</a></li>
 				<li><a href="{{host}}sample/">{% if is_english %}Trial{% else %}試し描き{% endif %}</a></li>
 				<li><a href="{{host}}mypage">{% if is_english %}Regist{% else %}レンタル{% endif %}</a></li>
 				<li><a href="{{host}}support/">{% if is_english %}Support{% else %}サポート{% endif %}</a></li>
-				<li><a href="{{host}}guide">{% if is_english %}HowTo{% else %}使い方{% endif %}</a></li>
 				<li><a href="{{host}}chat">{% if is_english %}Chat{% else %}チャット{% endif %}</a></li>
 				{% if not user %}
 					<li><a href="{{redirect_url|login_url|escape}}">{% if is_english %}Login{%else%}ログイン{% endif %}</a></li>
 				{% else %}
-					<li><a href="{{host}}mypage">{% if is_english %}MyPage{%else%}マイページ{% endif %}</a></li>
 					<li><a href="{{redirect_url|logout_url|escape}}">{% if is_english %}Logout{%else%}ログアウト{% endif %}</a></li>
 				{% endif %}
 	      	</ul>
