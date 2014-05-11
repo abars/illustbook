@@ -152,7 +152,7 @@
 	{% if infinite_scroll %}
 		<script type="text/javascript">
 		$(document).ready(function(){
-			infinite_scroll_initialize('{{infinite_scroll_selecter}}',"{{use_masonry}}"=="True","{{host}}",{{page}});
+			infinite_scroll_initialize('{{infinite_scroll_selecter}}',"{{use_masonry}}"=="True","{{host}}",{{page}},{% if is_english %}true{% else %}false{% endif %});
 		});
 		</script>
 	{% endif %}

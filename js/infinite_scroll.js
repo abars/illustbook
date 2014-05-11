@@ -20,10 +20,10 @@
 function infinite_scroll_initialize(itemSelector,use_masonry,host,page,is_english){
 	var $container = $('#infinite-scroll-container');
   var final_page="ページの終端です。";
-  var loading_page="次のページを読込中"
+  var loading_page="次のページを読込中";
   if(is_english){
-    final_page="finish"
-    loading_page="loading next page"
+    final_page="finish";
+    loading_page="loading next page";
   }
 	$container.infinitescroll({
       navSelector  : '#page-nav',    // selector for the paged navigation 
