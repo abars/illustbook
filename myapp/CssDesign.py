@@ -93,6 +93,10 @@ class CssDesign (webapp.RequestHandler):
 		if(p_tablet.search(agent) and not p_mobile.search(agent)):
 			return 1
 
+		if(main.request.get("is_tablet")):
+			if(main.request.get("is_tablet")=="1"):
+				return 1
+
 		return 0
 	
 	@staticmethod

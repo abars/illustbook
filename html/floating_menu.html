@@ -2,7 +2,7 @@
 	<!-- icon -->
 	{% if user %}
 	<div style="float:left;padding-left:2px;padding-top:2px;padding-right:2px;font-weight:600;">
-		<a href="{{host}}mypage"><img src="{{host}}show_icon?key={{user.user_id()}}&size=mini" width="{% if is_iphone %}30px{% else %}24px{% endif %}" height="{% if is_iphone %}30px{% else %}24px{% endif %}" alt="icon"/></a>
+		<a href="{{host}}mypage"><img src="{{host}}show_icon?key={{user.user_id()}}&size=mini" width="{% if is_iphone or is_tablet %}30px{% else %}24px{% endif %}" height="{% if is_iphone or is_tablet %}30px{% else %}24px{% endif %}" alt="icon"/></a>
 		{% set my_new_feed_count = user|new_feed_count %}
 		{% if my_new_feed_count %}
 			<b>{{my_new_feed_count}}</b>
@@ -21,7 +21,7 @@
 			{% endif %}
 		{% endif %}
 
-		<div style="float:left;margin-top:{% if is_iphone %}6px{% else %}3px{% endif %};color:#333;">
+		<div style="float:left;margin-top:{% if is_iphone or is_tablet %}6px{% else %}3px{% endif %};color:#333;">
 			<a href="{{host}}">
 			<img src="{{host}}static_files/logo{% if is_iphone %}_mobile{%else%}_pc{%endif%}.png" alt="ロゴ"/>
 			</a>
@@ -30,7 +30,7 @@
 	</div>
 
 	<!-- menu -->
-	{% if is_iphone %}
+	{% if is_iphone or is_tablet %}
 		<div style="float:right;padding-left:3px;padding-top:3px;padding-right:3px;font-weight:600;">
 	     	<div class="g-button-group">
 	    	<a class="g-button dropdown-toggle" data-toggle="dropdown" href="#" style="background:none;border:none;">
