@@ -46,23 +46,44 @@ iPad向けのアプリ版は以下からインストールして下さい。
 <div style="float:left;margin-right:20px;">
 <img src="static_files/guide/guide_tool3.png" alt="ツールパレット"/>
 </div>
+
+{% if is_english %}
 <table class="g-table">
-<tr><th>{% if is_english %}Pencil{% else %}鉛筆{% endif %}</th><td>線を引く</td><th>{% if is_english %}Line{% else %}直線{% endif %}</th><td>直線を引く</td></tr>
-<tr><th>{% if is_english %}Brush{% else %}筆{% endif %}</th><td>色を塗る</td><th>{% if is_english %}Burn in{% else %}覆い焼き{% endif %}</th><td>明るくする</td></tr>
-<tr><th>{% if is_english %}Spoit{% else %}スポイト{% endif %}</th><td>色を取得する</td><th>{% if is_english %}Burn out{% else %}焼き込み{% endif %}</th><td>暗くする</td></tr>
-<tr><th>{% if is_english %}Eraser{% else %}消しゴム{% endif %}</th><td>線や色を消す</td><th>{% if is_english %}Blur{% else %}ぼかし{% endif %}</th><td>にじませる</td></tr>
-<tr><th>{% if is_english %}Fill{% else %}塗り潰し{% endif %}</th><td>線で囲まれている範囲を塗りつぶす</td><th>{% if is_english %}Text{% else %}テキスト{% endif %}</th><td>選択範囲に文字を書く</td></tr>
-<tr><th>{% if is_english %}Rect Select{% else %}矩形選択{% endif %}</th><td>選択して移動やコピーを行う</td><th>{% if is_english %}Free Select{% else %}自由選択{% endif %}</th><td>選択して移動やコピーを行う</td></tr>
-<tr><th>{% if is_english %}Hand{% else %}ハンド{% endif %}</th><td>キャンバスを移動する</td><th>{% if is_english %}Zoom{% else %}ズーム{% endif %}</th><td>ドラッグでキャンバスを拡大する</td></tr>
-<tr><th>{% if is_english %}Move{% else %}ムーブ{% endif %}</th><td>レイヤーを移動する</td><th>{% if is_english %}Rotate{% else %}回転{% endif %}</th><td>ドラッグでキャンバスを回転する</td></tr>
-<tr><th>{% if is_english %}Rect{% else %}矩形{% endif %}</th><td>ドラッグで矩形を描く(*)</td><th>{% if is_english %}Circle{% else %}楕円{% endif %}</th><td>ドラッグで楕円を描く(*)</td></tr>
+<tr><th>Pencil</th><td>Draw free hand line</td><th>Line</th><td>Draw straight line</td></tr>
+<tr><th>Brush</th><td>Paint color</td><th>Burn out</th><td>Lighter effect</td></tr>
+<tr><th>Spoit</th><td>Get canvas color</td><th>Burn in</th><td>Darker effect</td></tr>
+<tr><th>Eraser</th><td>Delete line</td><th>Blur</th><td>Water blur</td></tr>
+<tr><th>Fill</th><td>Flood fill</td><th>Text</th><td>Draw text</td></tr>
+<tr><th>Rect select</th><td>Select rectangle area</td><th>Free select</th><td>Select free area</td></tr>
+<tr><th>Hand</th><td>Move canvas</td><th>Zoom</th><td>Zoom canvas</td></tr>
+<tr><th>Move</th><td>Move layer</td><th>Rotate</th><td>Rotate canvas</td></tr>
+<tr><th>Rect</th><td>Draw Rectangle(*)</td><th>Circle</th><td>Draw circle(*)</td></tr>
 </table>
+{% else %}
+<table class="g-table">
+<tr><th>鉛筆</th><td>線を引く</td><th>直線</th><td>直線を引く</td></tr>
+<tr><th>筆</th><td>色を塗る</td><th>覆い焼き</th><td>明るくする</td></tr>
+<tr><th>スポイト</th><td>色を取得する</td><th>焼き込み</th><td>暗くする</td></tr>
+<tr><th>消しゴム</th><td>線や色を消す</td><th>ぼかし</th><td>にじませる</td></tr>
+<tr><th>塗り潰し</th><td>線で囲まれている範囲を塗りつぶす</td><th>テキスト</th><td>選択範囲に文字を書く</td></tr>
+<tr><th>矩形選択</th><td>選択して移動やコピーを行う</td><th>自由選択</th><td>選択して移動やコピーを行う</td></tr>
+<tr><th>ハンド</th><td>キャンバスを移動する</td><th>ズーム</th><td>ドラッグでキャンバスを拡大する</td></tr>
+<tr><th>ムーブ</th><td>レイヤーを移動する</td><th>回転</th><td>ドラッグでキャンバスを回転する</td></tr>
+<tr><th>矩形</th><td>ドラッグで矩形を描く(*)</td><th>楕円</th><td>ドラッグで楕円を描く(*)</td></tr>
+</table>
+{% endif %}
+
 <p>(*){% if is_english %}You can change mode by click{% else %}矩形と楕円は選択された状態でもう一度クリックすることで塗りつぶしモードにすることができます{% endif %}</p>
 
 <br clear="all"/>
 
-<h2>ペン設定</h2>
-<p><img src="static_files/guide/guide_pen2.png" alt="スライダー"/><br/><br/>ペンの大きさ、透明度、境界のぼかし度をスライダーで選択します。<br/></p>
+<h2>{% if is_english %}Pen setting{% else %}ペン設定{% endif %}</h2>
+<p><img src="static_files/guide/guide_pen2.png" alt="スライダー"/><br/><br/>
+{% if is_english %}
+You can change pen size, pen opacity, pen blur using slider.
+{% else %}
+ペンの大きさ、透明度、境界のぼかし度をスライダーで選択します。
+{% endif %}<br/></p>
 
 <p>&nbsp;</p>
 <h2>ズーム・回転</h2>
@@ -97,14 +118,21 @@ iPad向けのアプリ版は以下からインストールして下さい。
 レイヤーは透明の紙のようなもので、下のレイヤーから順に重なって表示されます。<br/>
 上のレイヤーに線を描き、下のレイヤーに色を塗る、というように使い分けることで、効率的に絵を描くことができます。<br/>
 <br/>
-描画対象のレイヤーを変更するには、レイヤーをクリックします。<br/>
-レイヤーの順番を入れ替えるには、レイヤーをドラッグします。<br/>レイヤーの目のアイコンをクリックすることで、レイヤーの表示、非表示を変更することができます。<br/>
-レイヤーの統合やレイヤーの削除は、ウィンドウメニューの編集から行うことができます。<br/>
-<br/>
-レイヤーにはレイヤーモードとアルファ値が存在します。<br/><br/>
-レイヤーモードは、色の重なり方を示します。<br/>
-レイヤーモードをクリックすることでレイヤーモードを変更することができます。
+レイヤーには以下の操作を行うことができます。<br/>
+
+<table class="g-table">
+<tr><th>操作</th><th>方法</th></tr>
+<tr><td>描画対象のレイヤーを変更</td><td>レイヤーをクリック</td></tr>
+<tr><td>レイヤーの順番を入れ替え</td><td>レイヤーをドラッグ</td></tr>
+<tr><td>レイヤーの表示、非表示を変更</td><td>レイヤーの目のアイコンをクリック</td></tr>
+<tr><td>レイヤーの統合やレイヤーの削除</td><td>ウィンドウメニューの編集</td></tr>
+</table>
+
 </p>
+
+<p>&nbsp;</p>
+
+<p>レイヤーはレイヤーモードを持ちます。レイヤーモードはクリックすることで変更することができます。</p>
 
 <table class="g-table">
 <tr><th>レイヤーモード</th><th>効果</th></tr>
@@ -114,8 +142,11 @@ iPad向けのアプリ版は以下からインストールして下さい。
 <tr><td>スクリーン</td><td>光を付けることができます</td></tr>
 </table>
 
+<p>&nbsp;</p>
+
 <p>
-アルファ値は、レイヤーの透明度で、値が小さいほど、透明に近づいていきます。<br/>
+レイヤーはアルファ値を持ちます。<br/>
+アルファ値はレイヤーの透明度で、値が小さいほど、透明に近づいていきます。<br/>
 アルファ値の変更はスライダーをドラッグします。<br/>
 </p>
 
@@ -249,10 +280,16 @@ iPad向けのアプリ版は以下からインストールして下さい。
 
 <p>&nbsp;</p>
 
-<h2>筆圧</h2>
+<h2>{% if is_english %}Pen Pressure{% else %}筆圧{% endif %}</h2>
 
-<p>2013年3月30日より、全てのブラウザで筆圧を使用できるようになりました。<br/>
-筆圧を使用するには、<a href="http://tablet.wacom.co.jp/download/" class="declink">Wacomのドライバのダウンロードページ</a>から、最新のドライバをインストールして下さい。<br/>
+{% if is_english %}
+
+<p>ILLUSTBOOK using Wacom Tablet Data Plugin.<br/>
+	Please install latest Wacom driver for pressure enable.</p>
+
+{% else %}
+
+<p>筆圧を使用するには、<a href="http://tablet.wacom.co.jp/download/" class="declink">Wacomのドライバのダウンロードページ</a>から、最新のドライバをインストールして下さい。<br/>
 自動的に、必要なWacomTabletDataPluginがインストールされます。</p>
 <p>また、以下から、WacomTabletDataPluginだけを更新することもできます。<br/>
 <a href="http://www.wacomeng.com/web/Wacom%20Mac%20Plug-in%20Installer.zip">Mac版</a>　<a href="http://www.wacomeng.com/web/fbWTPInstall.zip">Windows版</a>
@@ -260,6 +297,8 @@ iPad向けのアプリ版は以下からインストールして下さい。
 <p>筆圧を使いたくない場合や、不安定な場合は、WacomTabletDataPluginをアンインストールして下さい。<br/>
 SurfaceProで筆圧を使用する方法は、<a href="http://blog.livedoor.jp/abars/archives/52210859.html">Surface ProでWacomTabletDataPluginを使う</a>を参照して下さい。</p>
 <p>アプリ版では筆圧は使用できません。</p>
+
+{% endif %}
 
 <p>&nbsp;</p>
 
