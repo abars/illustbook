@@ -1,8 +1,8 @@
 <div id="floating_menu">
-
+	<!-- icon -->
 	{% if user %}
 	<div style="float:left;padding-left:2px;padding-top:2px;padding-right:2px;font-weight:600;">
-		<a href="{{host}}mypage"><img src="{{host}}show_icon?key={{user.user_id()}}&size=mini" width="24px" height="24px" alt="icon"/></a>
+		<a href="{{host}}mypage"><img src="{{host}}show_icon?key={{user.user_id()}}&size=mini" width="{% if is_iphone %}30px{% else %}24px{% endif %}" height="{% if is_iphone %}30px{% else %}24px{% endif %}" alt="icon"/></a>
 		{% set my_new_feed_count = user|new_feed_count %}
 		{% if my_new_feed_count %}
 			<b>{{my_new_feed_count}}</b>
@@ -10,6 +10,7 @@
 	</div>
 	{% endif %}
 
+	<!-- logo -->
 	<div style="float:left;padding-left:2px;padding-top:3px;padding-right:2px;font-weight:600;">
 	<div class="g-button-group">
 		{% set show_link_detail = 0 %}
@@ -20,7 +21,7 @@
 			{% endif %}
 		{% endif %}
 
-		<div style="float:left;margin-top:3px;color:#333;">
+		<div style="float:left;margin-top:{% if is_iphone %}6px{% else %}3px{% endif %};color:#333;">
 			<a href="{{host}}">
 			<img src="{{host}}static_files/logo{% if is_iphone %}_mobile{%else%}_pc{%endif%}.png" alt="ロゴ"/>
 			</a>
@@ -28,30 +29,13 @@
 	</div>
 	</div>
 
-	{% if is_iphone and top_page %}
-		<div style="float:right;padding-left:2px;padding-top:1px;padding-right:2px;font-weight:600;">
+	<!-- menu -->
+	{% if is_iphone %}
+		<div style="float:right;padding-left:2px;padding-top:2px;padding-right:2px;font-weight:600;">
 	     	<div class="g-button-group">
-	    	<a class="g-button dropdown-toggle" style="padding:6px;" data-toggle="dropdown" href="#">
-	    		{% if is_english %}Menu{%else%}メニュー{% endif %}
-	    		<span class="caret"></span>
+	    	<a class="g-button dropdown-toggle" data-toggle="dropdown" href="#" style="background:none;">
+	    		<i class="icon-list"></i>
 	    	</a>
-			<ul class="dropdown-menu" style="right:0;left:auto;">
-				{% if user %}
-					<li><a href="{{host}}mypage">{% if is_english %}MyPage{%else%}マイページ{% endif %}</a></li>
-				{% endif %}
-				<li><a href="{{host}}guide">{% if is_english %}HowTo{% else %}使い方{% endif %}</a></li>
-				<li><a href="{{host}}sample/">{% if is_english %}Trial{% else %}試し描き{% endif %}</a></li>
-				<li><a href="{{host}}mypage">{% if is_english %}Regist{% else %}レンタル{% endif %}</a></li>
-				<li><a href="{{host}}support/">{% if is_english %}Support{% else %}サポート{% endif %}</a></li>
-				<li><a href="{{host}}chat">{% if is_english %}Chat{% else %}チャット{% endif %}</a></li>
-				{% if not user %}
-					<li><a href="{{redirect_url|login_url|escape}}">{% if is_english %}Login{%else%}ログイン{% endif %}</a></li>
-				{% else %}
-					<li><a href="{{redirect_url|logout_url|escape}}">{% if is_english %}Logout{%else%}ログアウト{% endif %}</a></li>
-				{% endif %}
-	      	</ul>
-	    	</div>
-		</div>
 	{% else %}
 		<div style="float:right;padding-left:2px;padding-top:1px;padding-right:2px;font-weight:600;">
 	     	<div class="g-button-group">
@@ -59,6 +43,27 @@
 	    		{% if is_english %}Menu{%else%}メニュー{% endif %}
 	    		<span class="caret"></span>
 	    	</a>
+	{% endif %}
+
+	{% if is_iphone and top_page %}
+			<ul class="dropdown-menu" style="right:0;left:auto;">
+				{% if user %}
+					<li><a href="{{host}}mypage"><i class="icon-home"></i>{% if is_english %}MyPage{%else%}マイページ{% endif %}</a></li>
+				{% endif %}
+				<li><a href="{{host}}guide"><i class="icon-exclamation-sign"></i>{% if is_english %}HowTo{% else %}使い方{% endif %}</a></li>
+				<li><a href="{{host}}sample/"><i class="icon-pencil"></i>{% if is_english %}Trial{% else %}試し描き{% endif %}</a></li>
+				<li><a href="{{host}}mypage"><i class="icon-check"></i>{% if is_english %}Regist{% else %}レンタル{% endif %}</a></li>
+				<li><a href="{{host}}support/"><i class="icon-user"></i>{% if is_english %}Support{% else %}サポート{% endif %}</a></li>
+				<li><a href="{{host}}chat"><i class="icon-retweet"></i>{% if is_english %}Chat{% else %}チャット{% endif %}</a></li>
+				{% if not user %}
+					<li><a href="{{redirect_url|login_url|escape}}"><i class="icon-off"></i>{% if is_english %}Login{%else%}ログイン{% endif %}</a></li>
+				{% else %}
+					<li><a href="{{redirect_url|logout_url|escape}}"><i class="icon-off"></i>{% if is_english %}Logout{%else%}ログアウト{% endif %}</a></li>
+				{% endif %}
+	      	</ul>
+	    	</div>
+		</div>
+	{% else %}
 			<ul class="dropdown-menu" style="right:0;left:auto;">
 
 			<!-- order -->

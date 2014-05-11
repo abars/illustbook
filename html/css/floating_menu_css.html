@@ -1,8 +1,11 @@
 <style type="text/css">
 #floating_menu{
-padding: 1px 0;
-padding-left:2px;
+padding: 1px;
+{% if is_iphone %}
+min-height:34px;
+{% else %}
 min-height:28px;
+{% endif %}
 text-align: left;
 {% if not flat_ui %}
 border-bottom: 1px solid #ccc;
