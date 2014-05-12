@@ -162,7 +162,7 @@ class ShowThread(webapp.RequestHandler):
 		is_english=CssDesign.is_english(self)
 
 		#関連イラスト
-		related=self._get_related(bbs,thread)
+		related=self._get_related(bbs,thread,design["is_iphone"])
 
 		#描画
 		template_values = {
@@ -208,7 +208,7 @@ class ShowThread(webapp.RequestHandler):
 		CounterWorker.update_counter(self,bbs,thread,owner)
 
 	@staticmethod
-	def _get_related(bbs,thread):
+	def _get_related(bbs,thread,is_iphone):
 		related_illust_cnt=6
 
 		thread_query = db.Query(MesThread,keys_only=True)
@@ -222,9 +222,10 @@ class ShowThread(webapp.RequestHandler):
 
 		if(thread.key() in all_threads):
 			all_threads.remove(thread.key())
-		while(len(all_threads)>related_illust_cnt):
-			no=int(random.random()*len(all_threads))
-			all_threads.remove(all_threads[no])
+		if(not is_iphone):
+			while(len(all_threads)>related_illust_cnt):
+				no=int(random.random()*len(all_threads))
+				all_threads.remove(all_threads[no])
 
 		all_threads_cached=ApiObject.get_cached_object_list(all_threads)
 		return all_threads_cached
