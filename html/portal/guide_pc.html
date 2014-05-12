@@ -86,40 +86,86 @@ You can change pen size, pen opacity, pen blur using slider.
 {% endif %}<br/></p>
 
 <p>&nbsp;</p>
-<h2>ズーム・回転</h2>
-<p><img src="static_files/guide/guide_zoom2.png" alt="回転"/><br/><br/>キャンバスを拡大したり回転した状態で描くことができます。<br/></p>
+<h2>{% if is_english %}Zoom setting{% else %}ズーム・回転{% endif %}</h2>
+<p><img src="static_files/guide/guide_zoom2.png" alt="回転"/><br/><br/>
+{% if is_english %}
+	You can draw image into zoomed and rotated canvas.
+{% else %}
+	キャンバスを拡大したり回転した状態で描くことができます。
+{% endif %}
+<br/></p>
 
 <p>&nbsp;</p>
-<h2>カラーサークル</h2>
-<p><img src="static_files/guide/guide_circle.png" alt="カラーサークル"/><br/><br/>サークルで色相を選択し、中央のボックスで彩度と明度を決定します。<br/></p>
+<h2>{% if is_english %}Color circle{% else %}カラーサークル{% endif %}</h2>
+<p><img src="static_files/guide/guide_circle.png" alt="カラーサークル"/><br/><br/>
+{% if is_english %}
+You can use color circle to determine draw color.
+{% else %}
+サークルで色相を選択し、中央のボックスで彩度と明度を決定します。
+{% endif %}
+<br/></p>
 
 <p>&nbsp;</p>
-<h2>カラーパレット</h2>
+<h2>{% if is_english %}Color palette{% else %}カラーパレット{% endif %}</h2>
 <p><img src="static_files/guide/guide_palette.png" alt="カラーパレット"/><br/><br/>
+{% if is_english %}
+Color palette has 4 button.
+{% else %}
 パレットの色をクリックすることでその色を使用することができます。<br/>
-また、パレットには次の4つのボタンがあります。<br/></p>
+また、パレットには次の4つのボタンがあります。<br/>
+{% endif %}
+</p>
 
+{% if is_english %}
+<table class="g-table">
+<tr><th>Update</th><td>Update selecting palette color by now color</td></tr>
+<tr><th>Add</th><td>Add now color to palette</td></tr>
+<tr><th>Delete</th><td>Delete selecting palette color</td></tr>
+<tr><th>Initialize</th><td>Initialize all color</td></tr>
+</table>
+{% else %}
 <table class="g-table">
 <tr><th>更新</th><td>選択しているパレットの色を、現在の色で上書き</td></tr>
 <tr><th>追加</th><td>選択しているパレットの位置に、現在の色を追加</td></tr>
 <tr><th>削除</th><td>選択しているパレットを削除</td></tr>
 <tr><th>初期化</th><td>パレットを初期化</td></tr>
 </table>
+{% endif %}
 
 <p>&nbsp;</p>
-<h2>カラースライダー</h2>
+<h2>{% if is_english %}Color slider{% else %}カラースライダー{% endif %}</h2>
 <p><img src="static_files/guide/guide_rgb.png" alt="カラースライダー"/><br/><br/>
-現在選択している色をRGB値で細かく編集することができます。<br/></p>
+{% if is_english %}
+You can edit RGB color.
+{% else %}
+現在選択している色をRGB値で細かく編集することができます。
+{% endif %}
+<br/></p>
 
 <p>&nbsp;</p>
-<h2>レイヤー</h2>
+<h2>{% if is_english %}Layer{% else %}レイヤー{% endif %}</h2>
 <img src="static_files/guide/guide_layer2.png" alt="レイヤー"/>
 <p>
+{% if is_english %}
+Layer is a sheet of clear transparent film.<br/>
+Layer is simply stacked on top of another.<br/>
+<br/>
+{% else %}
 レイヤーは透明の紙のようなもので、下のレイヤーから順に重なって表示されます。<br/>
 上のレイヤーに線を描き、下のレイヤーに色を塗る、というように使い分けることで、効率的に絵を描くことができます。<br/>
 <br/>
 レイヤーには以下の操作を行うことができます。<br/>
+{% endif %}
 
+{% if is_english %}
+<table class="g-table">
+<tr><th>Operation</th><th>How</th></tr>
+<tr><td>Select layer</td><td>Click layer</td></tr>
+<tr><td>Change layer order</td><td>Drag layer</td></tr>
+<tr><td>Change layer visibility</td><td>Click eye icon</td></tr>
+<tr><td>Delete layer</td><td>User window menu</td></tr>
+</table>
+{% else %}
 <table class="g-table">
 <tr><th>操作</th><th>方法</th></tr>
 <tr><td>描画対象のレイヤーを変更</td><td>レイヤーをクリック</td></tr>
@@ -127,13 +173,29 @@ You can change pen size, pen opacity, pen blur using slider.
 <tr><td>レイヤーの表示、非表示を変更</td><td>レイヤーの目のアイコンをクリック</td></tr>
 <tr><td>レイヤーの統合やレイヤーの削除</td><td>ウィンドウメニューの編集</td></tr>
 </table>
+{% endif %}
 
 </p>
 
 <p>&nbsp;</p>
 
-<p>レイヤーはレイヤーモードを持ちます。レイヤーモードはクリックすることで変更することができます。</p>
+<p>
+{% if is_english %}
+Layer has 4 layer mode. You can change layer mode by click.
+{% else %}
+レイヤーはレイヤーモードを持ちます。レイヤーモードはクリックすることで変更することができます。
+{% endif %}
+</p>
 
+{% if is_english %}
+<table class="g-table">
+<tr><th>Layer mode</th><th>Effect</th></tr>
+<tr><td>Normal</td><td>No effect</td></tr>
+<tr><td>Multiply</td><td>Multiply colors on the layer below</td></tr>
+<tr><td>Overlay</td><td>Apply shade effect</td></tr>
+<tr><td>Screen</td><td>Apply lighting effect</td></tr>
+</table>
+{% else %}
 <table class="g-table">
 <tr><th>レイヤーモード</th><th>効果</th></tr>
 <tr><td>通常</td><td>単純に上に重なって表示されます</td></tr>
@@ -141,20 +203,33 @@ You can change pen size, pen opacity, pen blur using slider.
 <tr><td>オーバレイ</td><td>影を付けることができます</td></tr>
 <tr><td>スクリーン</td><td>光を付けることができます</td></tr>
 </table>
+{% endif %}
 
 <p>&nbsp;</p>
 
 <p>
+{% if is_english %}
+Also layer has opacity value.<br/>
+You can change opacity using slider.<br/>
+{% else %}
 レイヤーはアルファ値を持ちます。<br/>
 アルファ値はレイヤーの透明度で、値が小さいほど、透明に近づいていきます。<br/>
 アルファ値の変更はスライダーをドラッグします。<br/>
+{% endif %}
 </p>
 
 <p>&nbsp;</p>
-<h2>ナビゲーション</h2>
+<h2>{% if is_english %}Navigation{% else %}ナビゲーション{% endif %}</h2>
 <p>
 <img src="static_files/guide/guide_navigation.png" style="max-width:100%;" alt="ナビゲーション"/><br/>
-キャンバスの拡大や回転を制御したり、スクロールバーでキャンバスを移動したりすることができます。<br/></p>
+{% if is_english %}
+You can zoom and roate canvas , and move canvas using scroll bar.
+{% else %}
+キャンバスの拡大や回転を制御したり、スクロールバーでキャンバスを移動したりすることができます。
+{% endif %}
+<br/></p>
+
+{% if not is_english %}
 
 <p>&nbsp;</p>
 <h2>ウィンドウメニュー</h2>
@@ -237,12 +312,21 @@ You can change pen size, pen opacity, pen blur using slider.
 <tr><th>フォントを選択</th><td>テキストツールで使用するフォントを選択することができます。</td></tr>
 </table>
 
-<p>&nbsp;</p>
-<h2>オートセーブについて</h2>
+{% endif %}
 
-<p>何もクリックしない状態で2秒経つと自動的に現在の画像がローカルに保存されます。<br/>
+<p>&nbsp;</p>
+<h2>{% if is_english %}Auto save{% else %}オートセーブについて{% endif %}</h2>
+
+<p>
+{% if is_english %}
+Auto save every 2 seconds.<br/>
+The data is deleted when submit.
+{% else %}
+何もクリックしない状態で2秒経つと自動的に現在の画像がローカルに保存されます。<br/>
 保存された情報は、次回起動時に自動的にロードされます。<br/>
-保存された情報は、投稿すると削除されます。</p>
+保存された情報は、投稿すると削除されます。
+{% endif %}
+</p>
 
 
 <p>&nbsp;</p>
@@ -276,7 +360,7 @@ You can change pen size, pen opacity, pen blur using slider.
 	
 </table>
 
-<p>(*)Internet Explorerのバージョンによっては動作しない場合があります。</p>
+<p>(*){% if is_english %}Dont support IE{% else %}Internet Explorerのバージョンによっては動作しない場合があります。{% endif %}</p>
 
 <p>&nbsp;</p>
 
@@ -299,44 +383,5 @@ SurfaceProで筆圧を使用する方法は、<a href="http://blog.livedoor.jp/a
 <p>アプリ版では筆圧は使用できません。</p>
 
 {% endif %}
-
-<p>&nbsp;</p>
-
-<h2>投稿ウィンドウを開く</h2>
-
-<p>イラブペイントのウィンドウメニューから、投稿ボタンを押すと、投稿ウィンドウが開きます。</p>
-
-<p>&nbsp;</p>
-
-<h2>投稿ウィンドウでイラストにコメントを付ける</h2>
-
-<p>投稿ウィンドウのフォームにイラストのコメントを入力します。<br/>文字をドラッグで選択した後に色やサイズを選択すると、文字を装飾することができます。</p>
-
-<img src="static_files/guide/guide_comment.png" alt="コメント"/>
-
-<p>&nbsp;</p>
-
-<h2>投稿オプションの設定</h2>
-
-<p>投稿時には、以下のオプションを指定することができます。</p>
-
-<table class="g-table">
-<tr><th>文字だけで投稿</th><td>画像を投稿せずに、コメントだけを投稿します。</td></tr>
-<tr><th>透過PNGで投稿</th><td>JPEGではなくアルファ付きのPNGで投稿します。</td></tr>
-<tr><th>700px以上の画像を縮小</th><td>大きな画像を自動的に700pxに縮小します。</td></tr>
-<tr><th>トップに非表示</th><td>イラストブックのトップページの新着に表示されないようにします。</td></tr>
-</table>
-
-<p>&nbsp;</p>
-
-<h2>イラストに年齢制限を付ける</h2>
-
-イラストには年齢制限を設定することができます。年齢制限の付けられたイラストは、マイページで年齢制限付きイラストの表示設定をしているユーザのみが閲覧可能です。
-年齢制限区分のNL/BL/GLについては、<a href="http://detail.chiebukuro.yahoo.co.jp/qa/question_detail/q1417663279">BL・GL・NLってどういう意味ですか？</a>を参照して下さい。また、投稿可能なイラストの範囲については、<a href="{{host}}terms">利用規約</a>を参照して下さい。
-
-<p>&nbsp;</p>
-<h2>再編集する必要がある場合は保存する</h2>
-
-<p>投稿するとレイヤーの情報が失われますので、再編集をする必要がある場合は、ファイルメニューからイラブ形式(.ilb)で保存して下さい。アプリ版は保存機能はありません。</p>
 
 </div>

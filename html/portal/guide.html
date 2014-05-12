@@ -17,13 +17,20 @@ You can create own BBS, and you can communicate using illust or comment.<br/>
 
 <p>&nbsp;</p>
 
-{% if is_english %}<h1>These articles are Japanese version only.</h1>{% endif %}
-
 <h1>{% if is_english %}How to use ILLUSTBOOK{% else %}イラストブックの使い方{% endif %}</h1>
 
+{% if not is_english %}
 <a href="{{host}}guide?contents=about">{% if is_english %}Features{% else %}イラストブックの特徴{% endif %}</a><br/>
+{% endif %}
 <a href="{{host}}guide?contents=pc">{% if is_english %}Draw tool tutorial (PC/App){% else %}イラブペイント(PC版/アプリ版)の使い方{% endif %}</a><br/>
+
+{% if is_english %}
+<p>&nbsp;</p>
+<h1>These articles are Japanese version only.</h1>
+{% endif %}
+
 <a href="{{host}}guide?contents=mobile">{% if is_english %}Draw tool tutorial (Mobile){% else %}イラブペイント(モバイル版)の使い方{% endif %}</a><br/>
+<a href="{{host}}guide?contents=edit">{% if is_english %}Edit tutorial{% else %}投稿機能の使い方{% endif %}</a><br/>
 <a href="{{host}}guide?contents=sns">{% if is_english %}SNS tutorial{% else %}SNS機能の使い方{% endif %}</a><br/>
 
 <p>&nbsp;</p>
@@ -58,6 +65,10 @@ You can create own BBS, and you can communicate using illust or comment.<br/>
 
 {% if contents=="mobile" %}
 	{% include "portal/guide_mobile.html" %}
+{% endif %}
+
+{% if contents=="edit" %}
+	{% include "portal/guide_edit.html" %}
 {% endif %}
 
 {% if contents=="sns" %}
