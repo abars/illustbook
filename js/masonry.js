@@ -83,7 +83,7 @@ function show_search(is_english){
     $('#search').hide();
     //$('#search_button').text(search)
   }else{
-    $('#search').show();  
+    $('#search').fadeIn();  
     //$('#search_button').text(close)
   }
   masonry_reload();
