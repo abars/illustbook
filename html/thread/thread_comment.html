@@ -62,7 +62,10 @@
 		{% if not(entry.com|regulation_check(user)) %}
 			[年齢制限付きイラスト]
 		{% else %}
-			<img src="{{host}}img/{{entry.image_key}}.jpg" border="0" {% if is_iphone %} style="max-width:100%;"{%endif%}/><br/>
+			<a href="{{host}}img/{{entry.image_key}}.jpg" class="imagelink">
+			<img src="{{host}}img/{{entry.image_key}}.jpg" border="0" {% if is_iphone %} style="max-width:100%;"{%endif%}/>
+			</a>
+			<br/>
 			{{entry.com|regulation_name}}
 		{% endif %}
 	{% endif %}
