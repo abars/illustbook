@@ -38,6 +38,11 @@
   {% include "pinterest/hot_bbs.html" %}
 {% endif %}
 
+<!-- 検索オプション -->
+{% if not is_iphone %}
+  {% include "pinterest/search_option.html" %}
+{% endif %}
+
 <!-- タグ一覧 -->
 {% if not is_iphone %}
   {% include "pinterest/recent_tag.html" %}
