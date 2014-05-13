@@ -134,11 +134,11 @@ class SearchThread(webapp.RequestHandler):
 	@staticmethod
 	def search(query,page,unit,index):
 		now_sec=SearchThread._get_sec(datetime.datetime.now())
-		reduct='(1+('+str(now_sec)+'-sec)/(3600*24*30))';	#一ヶ月で半分のスコアにする
+		reduct='(1+('+str(now_sec)+'-sec)/(3600*24*30))';	#1ヶ月で半分のスコアにする
 
 		sort_options = search.SortOptions(
 			expressions=[
-				search.SortExpression(expression='(applause+bookmark*3)/'+reduct, direction=search.SortExpression.DESCENDING, default_value=0)
+				search.SortExpression(expression='(applause+bookmark*5)/'+reduct, direction=search.SortExpression.DESCENDING, default_value=0)
 			],limit=1000)
 		options = search.QueryOptions(
 			limit=unit,
