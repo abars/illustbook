@@ -58,6 +58,7 @@ class SearchThread(webapp.RequestHandler):
 				search.NumberField(name='bookmark', value=SearchThread._number_validate(thread.bookmark_count)),
 				search.NumberField(name='comment', value=SearchThread._number_validate(thread.comment_cnt)),
 				search.HtmlField(name='summary', value=thread.summary),
+				search.NumberField(name='version', value=BbsConst.SEARCH_THREAD_VERSION),
 				search.DateField(name='date', value=thread.create_date),
 				search.NumberField(name='sec', value=SearchThread._get_sec(thread.create_date))
 			])
