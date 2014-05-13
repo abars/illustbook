@@ -60,6 +60,7 @@ class Applause(webapp.RequestHandler):
 			thread.applause_ip2=thread.applause_ip
 			thread.applause_ip=self.request.remote_addr
 			thread.applause_date=datetime.datetime.today()
+			thread.search_index_version=0
 			thread.put()
 
 			if(bbs.applause_n) :

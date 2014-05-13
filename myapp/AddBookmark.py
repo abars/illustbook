@@ -72,6 +72,7 @@ class AddBookmark(webapp.RequestHandler):
 
 			#格納
 			thread.bookmark_count=AddBookmark.get_bookmark_count(thread,add_thread_key)+1
+			thread.search_index_version=0
 			thread.put()
 			return True
 		else:
@@ -81,6 +82,7 @@ class AddBookmark(webapp.RequestHandler):
 
 			#現在のブックマーク数で更新
 			thread.bookmark_count=AddBookmark.get_bookmark_count(thread,add_thread_key)
+			thread.search_index_version=0
 			thread.put()
 			
 			return False

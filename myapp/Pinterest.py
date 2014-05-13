@@ -237,7 +237,12 @@ class Pinterest(webapp.RequestHandler):
 
 		search_api="search_tag"
 
-		thread_list=ApiFeed.feed_get_thread_list(self,order,(page-1)*unit,unit)
+		if(order=="monthly"):
+			thread_list=SearchThread.search("",page,unit,BbsConst.SEARCH_THREAD_INDEX_NAME)
+			thread_list=ApiObject.create_thread_object_list(self,thread_list,"search")
+		else:
+			thread_list=ApiFeed.feed_get_thread_list(self,order,(page-1)*unit,unit)
+		
 		bbs_list=ApiFeed.feed_get_bbs_list(self,"hot",0,10)
 
 		template_values=Pinterest.initialize_template_value(self,user,user_id,page,request_page_mode,redirect_api,contents_only)

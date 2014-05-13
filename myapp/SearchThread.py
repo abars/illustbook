@@ -113,10 +113,10 @@ class SearchThread(webapp.RequestHandler):
 		document=SearchThread._create_document(thread)
 		try:
 			search.Index(name=BbsConst.SEARCH_THREAD_INDEX_NAME).put(document)
+			thread.search_index_version=BbsConst.SEARCH_THREAD_VERSION
+			thread.put()
 		except search.Error:
 			logging.exception('Search Put failed')
-		thread.search_index_version=BbsConst.SEARCH_THREAD_VERSION
-		thread.put()
 
 	@staticmethod
 	def add_index_entry(entry):
@@ -126,11 +126,10 @@ class SearchThread(webapp.RequestHandler):
 		document=SearchThread._create_document_entry(entry)
 		try:
 			search.Index(name=BbsConst.SEARCH_ENTRY_INDEX_NAME).put(document)
+			entry.search_index_version=BbsConst.SEARCH_ENTRY_VERSION
+			entry.put()
 		except search.Error:
 			logging.exception('Search Put failed')
-
-		entry.search_index_version=BbsConst.SEARCH_ENTRY_VERSION
-		entry.put()
 
 	@staticmethod
 	def search(query,page,unit,index):
