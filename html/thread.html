@@ -86,15 +86,7 @@
 				<!--関連-->
 				{% if related %}
 				<div class="entry">
-					{% if is_english %}Related{% else %}関連イラスト{% endif %}
-					<hr/>
-					<div class="related">
-					{% for related_one in related %}
-						<a href='{{host}}usr/{{related_one.cached_bbs_key}}/{% if related_one.short %}{{related_one.short}}{%else%}{{related_one.key()}}{%endif%}.html'>
-						<img src="{{host}}thumbnail/{{related_one.cached_image_key}}.jpg" border="0" alt="{{related_one.title}}" width="{% if is_iphone %}70px{% else %}100px{% endif %}" height="{% if is_iphone %}70px{% else %}100px{% endif %}"/>
-						</a>
-					{% endfor %}
-					</div>
+					{% include "thread/thread_related.html" %}
 				</div>
 				{% endif %}
 

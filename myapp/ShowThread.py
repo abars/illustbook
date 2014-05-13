@@ -162,7 +162,7 @@ class ShowThread(webapp.RequestHandler):
 		is_english=CssDesign.is_english(self)
 
 		#関連イラスト
-		related=self._get_related(bbs,thread,design["is_iphone"])
+		related=self._get_related(bbs,thread,design["is_iphone"],design["is_tablet"])
 
 		#描画
 		template_values = {
@@ -212,13 +212,12 @@ class ShowThread(webapp.RequestHandler):
 		thread_query = db.Query(MesThread,keys_only=True)
 		if(thread.user_id):
 			thread_query.filter('user_id =',thread.user_id)
-		else:
-			thread_query.filter('bbs_key =', bbs)
+		thread_query.filter('bbs_key =', bbs)
 		thread_query.filter("illust_mode =",BbsConst.ILLUSTMODE_ILLUST)
 		return thread_query
 
 	@staticmethod
-	def _get_related(bbs,thread,is_iphone):
+	def _get_related(bbs,thread,is_iphone,is_tablet):
 		related_illust_cnt=6
 
 		try:
@@ -246,7 +245,7 @@ class ShowThread(webapp.RequestHandler):
 		for before in thread_before:
 			all_threads.append(before)
 
-		if(not is_iphone):
+		if(not is_iphone and not is_tablet):
 			while(len(all_threads)>related_illust_cnt+1):
 				no=int(random.random()*len(all_threads))
 				all_threads.remove(all_threads[no])

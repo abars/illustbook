@@ -122,15 +122,26 @@
 			padding-right:0px;
 			background: none;
 		}
+	{% endif %}
 
-		/* 関連スレッド */
-		.related {
+	/* 関連スレッド */
+	.related {
+		{% if is_iphone or is_tablet %}
 			width:100%;
-			height:70px;
+			{% if is_tablet %}
+				height:100px;
+			{% else %}
+				height:70px;
+			{% endif %}
 			overflow-y:hidden;
 			overflow-x:scroll;
 			white-space:nowrap;
 			-webkit-overflow-scrolling:touch;
-		}
-	{% endif %}
+		{% endif %}
+	}
+
+	.related_image{
+		width:{% if is_iphone %}70px{% else %}100px{% endif %};
+		height:{% if is_iphone %}70px{% else %}100px{% endif %};
+	}
 </style>
