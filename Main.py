@@ -211,8 +211,9 @@ class RankingPortal(webapp.RequestHandler):
 		ranking_list=[]
 		for user_id in ranking_id_list:
 			obj=ApiObject.get_bookmark_of_user_id(user_id)
-			obj=ApiObject.create_user_object(self,obj)
-			ranking_list.append(obj)
+			if(obj):
+				obj=ApiObject.create_user_object(self,obj)
+				ranking_list.append(obj)
 
 		ranking_name="人気のユーザ"
 
