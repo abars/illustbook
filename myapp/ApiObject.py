@@ -225,8 +225,8 @@ class ApiObject(webapp.RequestHandler):
 
 		#文字だけのスレッドを含むか
 		only_image_thread=True
-		if(bbs_id=="search" or bbs_id=="pinterest"):
-			only_image_thread=False
+		#if(bbs_id=="search" or bbs_id=="pinterest"):
+		#	only_image_thread=False
 		
 		#スレッドをJSON形式に変換しながら格納
 		dic=[]
