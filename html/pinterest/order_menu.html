@@ -30,8 +30,9 @@
 {% if is_iphone %}
   <div id="search" style="background:none;padding:0px;margin:0px;">
       <div class="message">
-        <p>{% if is_english %}Search illust{% else %}イラストの検索{% endif %}</p>
+<center>
         {% include "pinterest/search.html" %}
+</center>
       </div>
       <br clear="all"/>
       {% include "pinterest/hot_bbs.html" %}
