@@ -158,7 +158,15 @@
 
 {% if search %}
   <div class="message">
-    <p>{% if is_english %}Search result of {% endif %}<b>{{search}}</b>{% if not is_english %}の検索結果{% endif %}</p>
+    {% include "pinterest/search.html" %}
+    {#
+    <div style="float:left;margin-right:32px;">
+      <p>{% if is_english %}Search result of {% endif %}<b>{{search}}</b>{% if not is_english %}の検索結果{% endif %}</p>
+    </div>
+    <div style="float:left;margin-top:8px;">  
+      {% include "pinterest/search.html" %}
+    </div>
+    #}
   </div>
   <br clear="all"/>
 {% endif %}
