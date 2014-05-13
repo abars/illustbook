@@ -208,20 +208,45 @@ class ShowThread(webapp.RequestHandler):
 		CounterWorker.update_counter(self,bbs,thread,owner)
 
 	@staticmethod
-	def _get_related(bbs,thread,is_iphone):
-		related_illust_cnt=6
-
+	def _get_related_query(bbs,thread):
 		thread_query = db.Query(MesThread,keys_only=True)
 		if(thread.user_id):
 			thread_query.filter('user_id =',thread.user_id)
 		else:
 			thread_query.filter('bbs_key =', bbs)
 		thread_query.filter("illust_mode =",BbsConst.ILLUSTMODE_ILLUST)
-		thread_query.order('-create_date')
-		all_threads=thread_query.fetch(limit=related_illust_cnt*2)
+		return thread_query
+
+	@staticmethod
+	def _get_related(bbs,thread,is_iphone):
+		related_illust_cnt=6
+
+		try:
+			thread_query=ShowThread._get_related_query(bbs,thread)
+			thread_query.filter('create_date > ',thread.date)
+			thread_query.order('create_date')
+			thread_after=thread_query.fetch(limit=related_illust_cnt)
+
+			thread_query=ShowThread._get_related_query(bbs,thread)
+			thread_query.filter('create_date < ',thread.date)
+			thread_query.order('-create_date')
+			thread_before=thread_query.fetch(limit=related_illust_cnt)
+		except:
+			return []
+
+		all_threads=[]
+		if(thread_before):
+			thread_before.reverse()
+			for one_thread in thread_before:
+				all_threads.append(one_thread)
+		if(thread_after):
+			thread_after.reverse()
+			for one_thread in thread_after:
+				all_threads.append(one_thread)
 
 		if(thread.key() in all_threads):
 			all_threads.remove(thread.key())
+
 		if(not is_iphone):
 			while(len(all_threads)>related_illust_cnt):
 				no=int(random.random()*len(all_threads))

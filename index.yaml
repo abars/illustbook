@@ -313,6 +313,12 @@ indexes:
   - name: illust_mode
   - name: user_id
   - name: create_date
+
+- kind: MesThread
+  properties:
+  - name: illust_mode
+  - name: user_id
+  - name: create_date
     direction: desc
 
 - kind: MesThread
