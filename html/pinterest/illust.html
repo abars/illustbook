@@ -30,7 +30,10 @@
               {% if loop.index == 1 %}{% if order == "new" %}
                 <p><span>Newest</span></p>
               {% endif %}{% endif %}
-              {% if loop.index <= 10 %}{% if order == "monthly" %}
+              {% if loop.index == 1 %}{% if order == "hot" %}
+                <p><span>Most</span></p>
+              {% endif %}{% endif %}
+              {% if loop.index <= 3 %}{% if order == "monthly" %}
                 <p><span>{{loop.index}}</span></p>
               {% endif %}{% endif %}
              {% endif %}
