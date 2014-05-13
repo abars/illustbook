@@ -223,32 +223,31 @@ class ShowThread(webapp.RequestHandler):
 
 		try:
 			thread_query=ShowThread._get_related_query(bbs,thread)
-			thread_query.filter('create_date > ',thread.date)
+			thread_query.filter('create_date > ',thread.create_date)
 			thread_query.order('create_date')
 			thread_after=thread_query.fetch(limit=related_illust_cnt)
-
-			thread_query=ShowThread._get_related_query(bbs,thread)
-			thread_query.filter('create_date < ',thread.date)
-			thread_query.order('-create_date')
-			thread_before=thread_query.fetch(limit=related_illust_cnt)
 		except:
-			return []
+			thread_after=[]
+
+		try:
+			thread_query=ShowThread._get_related_query(bbs,thread)
+			thread_query.filter('create_date < ',thread.create_date)
+			thread_query.order('-create_date')
+			thread_before=thread_query.fetch(limit=related_illust_cnt*2-len(thread_after))
+		except:
+			thread_before=[]
 
 		all_threads=[]
-		if(thread_before):
-			thread_before.reverse()
-			for one_thread in thread_before:
-				all_threads.append(one_thread)
 		if(thread_after):
 			thread_after.reverse()
-			for one_thread in thread_after:
-				all_threads.append(one_thread)
 
-		if(thread.key() in all_threads):
-			all_threads.remove(thread.key())
+		for after in thread_after:
+			all_threads.append(after)
+		for before in thread_before:
+			all_threads.append(before)
 
 		if(not is_iphone):
-			while(len(all_threads)>related_illust_cnt):
+			while(len(all_threads)>related_illust_cnt+1):
 				no=int(random.random()*len(all_threads))
 				all_threads.remove(all_threads[no])
 
