@@ -237,11 +237,14 @@ class Pinterest(webapp.RequestHandler):
 
 		search_api="search_tag"
 
-		if(order=="weekly"):
+		if(order=="weekly" or order=="monthly"):
 			#検索範囲を絞らなければ正常にソートできないので、できるだけ絞る
-			one_month=datetime.date.today() - datetime.timedelta(days = 7)
-			search_str="(bookmark >= 1 OR applause >= 3) AND date > "+str(one_month)+" AND version = "+str(BbsConst.SEARCH_THREAD_VERSION)
-			thread_list=SearchThread.search(search_str,page,unit,BbsConst.SEARCH_THREAD_INDEX_NAME,True)
+			days=7
+			if(order=="monthly"):
+				days=30
+			one_month=datetime.date.today() - datetime.timedelta(days = days)
+			search_str="(bookmark >= 1 OR applause >= 3) AND date > "+str(one_month)
+			thread_list=SearchThread.search(search_str,page,unit,BbsConst.SEARCH_THREAD_INDEX_NAME)
 			thread_list=ApiObject.create_thread_object_list(self,thread_list,"search")
 		else:
 			thread_list=ApiFeed.feed_get_thread_list(self,order,(page-1)*unit,unit)
