@@ -3,17 +3,20 @@
 			{%else%}
 				{%if thread.draw_time %}
 					{%if thread.draw_time == -1 %}
-					（{% if is_english %}Upload{% else %}アップロード{% endif %}）
+					({% if is_english %}Upload{% else %}アップロード{% endif %})
 					{% else %}
-					（{% if is_english %}Draw Time {% else %}描画時間{% endif %}{{thread.draw_time|div}}{% if is_english %}min{% else %}分{% endif %}）
+					({% if is_english %}Draw Time {% else %}描画時間{% endif %}{{thread.draw_time|div}}{% if is_english %}min{% else %}分{% endif %})
 					{% endif %}
 				{% endif %}
 			{%endif%}
 			{%if thread.is_ipad %}
-			（{% if is_english %}from HTML5 version{% else %}HTML5版から投稿{% endif %}）
+			({% if is_english %}from HTML5 version{% else %}HTML5版から投稿{% endif %})
 			{% endif %}
 			{% if bbs.show_remote_addr_id %}
-			（ID：{{thread.remote_addr|ip_hash}}）
+			(ID：{{thread.remote_addr|ip_hash}})
 			{% endif %}
 		{%endif%}
-		{{thread.search_index_version}}
+
+		{% if admin_user %}
+		(Search ver：{{thread.search_index_version}})
+		{% endif %}
