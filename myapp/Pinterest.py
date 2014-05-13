@@ -237,8 +237,8 @@ class Pinterest(webapp.RequestHandler):
 
 		search_api="search_tag"
 
-		if(order=="monthly"):
-			one_month=datetime.date.today() - datetime.timedelta(days = 30)
+		if(order=="weekly"):
+			one_month=datetime.date.today() - datetime.timedelta(days = 7)
 			search_str="date > "+str(one_month)+" version = "+str(BbsConst.SEARCH_THREAD_VERSION)
 			thread_list=SearchThread.search(search_str,page,unit,BbsConst.SEARCH_THREAD_INDEX_NAME)
 			thread_list=ApiObject.create_thread_object_list(self,thread_list,"search")
