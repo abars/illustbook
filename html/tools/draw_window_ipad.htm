@@ -194,18 +194,29 @@
 	</div>
 
 	<div id="storage_form" class="storage_form">
-		{% if is_english %}Canvas size{% else %}キャンバスサイズ{% endif %}：
+		<table>
+		<tr>
+		<td>
+		{% if is_english %}Canvas size{% else %}キャンバスサイズ{% endif %}&nbsp;
+		</td>
+		<td>
 		<input id="canvas_width" value="{{canvas_width}}" size="4"/>
 		x
 		<input id="canvas_height" value="{{canvas_height}}" size="4"/>
 		&nbsp;
 		<input class="g-button blue" type="button" value="{% if is_english %}Resize{% else %}変更{% endif %}" onclick="javascript:g_storage.resize()"/>
-		<br/>
-
-		{% if is_english %}Local Storage{% else %}ローカルストレージ{% endif %}：
-
-		<input class="g-button blue" type="button" value="{% if is_english %}Save{% else %}保存{% endif %}" onclick="javascript:g_storage.save();"/>
-		<input class="g-button blue" type="button" value="{% if is_english %}Load{% else %}読込{% endif %}" onclick="javascript:g_storage.load();"/>
+		</td>
+		</tr>
+		<tr>
+		<td>
+		{% if is_english %}Local Storage{% else %}ローカルストレージ{% endif %}&nbsp;
+		</td>
+		<td>
+		<input class="g-button blue" type="button" value="{% if is_english %}Save image{% else %}画像を保存{% endif %}" onclick="javascript:g_storage.save();"/>
+		<input class="g-button blue" type="button" value="{% if is_english %}Load image{% else %}画像を読込{% endif %}" onclick="javascript:g_storage.load();"/>
+		</td>
+		</tr>
+		</table>
 	</div>
 
 		<div id="uploading" class="upload_form">
