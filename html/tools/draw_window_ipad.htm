@@ -194,7 +194,16 @@
 	</div>
 
 	<div id="storage_form" class="storage_form">
-		{% if is_english %}Local storage{% else %}ブラウザのローカルストレージに現在のイラストを保存し、後で読込を行うことができます。{% endif %}<br/>
+		{% if is_english %}Canvas size{% else %}キャンバスサイズ{% endif %}：
+		<input id="canvas_width" value="{{canvas_width}}" size="4"/>
+		x
+		<input id="canvas_height" value="{{canvas_height}}" size="4"/>
+		&nbsp;
+		<input class="g-button blue" type="button" value="{% if is_english %}Resize{% else %}変更{% endif %}" onclick="javascript:g_storage.resize()"/>
+		<br/>
+
+		{% if is_english %}Local Storage{% else %}ローカルストレージ{% endif %}：
+
 		<input class="g-button blue" type="button" value="{% if is_english %}Save{% else %}保存{% endif %}" onclick="javascript:g_storage.save();"/>
 		<input class="g-button blue" type="button" value="{% if is_english %}Load{% else %}読込{% endif %}" onclick="javascript:g_storage.load();"/>
 	</div>
