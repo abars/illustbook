@@ -11,7 +11,7 @@
 	</div>
 	{% endif %}
 
-	<div class="entry-illust" style="text-align:left;">
+	<div class="entry-illust">
 	{% if thread.cached_image_key %}
 		{% if thread.illust_mode == 2 %}
 			<script type="text/javascript" src="{{host}}moper_player?bbs_key={{bbs_key}}&amp;thread_key={{thread.key()}}{% if is_iphone %}&amp;is_iphone=1{% endif %}"></script><br/>
