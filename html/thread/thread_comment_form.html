@@ -21,7 +21,7 @@
 {% endif %}
 
 {%if show_comment_form %}
-	<div class="comment_tab_{{thread.key()}}_body comment_tab_{{thread.key()}}_body_text" style="display:none;margin:4px;">
+	<div class="comment_tab_{{thread.key()}}_body comment_tab_{{thread.key()}}_body_text comment-tab">
 
 		{%if bbs.comment_rule_enable %}
 		<p>&nbsp;</p>
@@ -64,14 +64,27 @@
 		</form>
 	</div>
 
-	<div class="comment_tab_{{thread.key()}}_body comment_tab_{{thread.key()}}_body_illust" style="display:none;margin:4px;">
-		<div style="margin:4px;">
-		<p>{% if is_english %}Width{%else%}イラストの横幅{% endif %}　<input type="text" id="canvas_width_{{thread.key()}}" value="{{bbs.illust_reply_width}}" maxlength="3" size="3"/>px</p>
-		<p>{% if is_english %}Height{%else%}イラストの高さ{% endif %}　<input type="text" id="canvas_height_{{thread.key()}}" value="{{bbs.illust_reply_height}}" maxlength="3" size="3"/>px</p>
+	<div class="comment_tab_{{thread.key()}}_body comment_tab_{{thread.key()}}_body_illust comment-tab">
+		<table class="table_color">
+		<tr><td>
+			{% if is_english %}Width{%else%}イラストの横幅{% endif %}
+		</td><td>
+			<input type="text" id="canvas_width_{{thread.key()}}" value="{{bbs.illust_reply_width}}" maxlength="3" size="3"/> px
+		</td></tr>
+		<tr><td>
+			{% if is_english %}Height{%else%}イラストの高さ{% endif %}
+		</td><td>
+			<input type="text" id="canvas_height_{{thread.key()}}" value="{{bbs.illust_reply_height}}" maxlength="3" size="3"/> px
+		</td></tr>
 		{%if bbs.enable_illust_reply_continue %}
-		<p>{% if is_english %}Continue{%else%}絵で続きからコメント{% endif %} <input type="checkbox" id="continue_reply_{{thread.key()}}"/></p>
+		<tr><td>
+			{% if is_english %}Continue{%else%}絵で続きからコメント{% endif %}
+		</td><td>
+			<input type="checkbox" id="continue_reply_{{thread.key()}}"/>
+		</td></tr>
 		{% endif %}
-		</div>
+		</table>
+		<br/>
 		<input type="button" value="{% if is_english %}Open Draw Tool{% else %}イラブペイントを開く{% endif %}" class="g-button" onclick="open_draw('{{thread.cached_image_key}}',1,'{{host}}','','{{thread.key()}}','{{bbs.key()}}',{{thread.illust_mode}});"/>
 	</div>
 {% endif %}

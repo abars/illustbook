@@ -1,20 +1,71 @@
 <style type="text/css">
+
 #floating_menu{
-padding: 1px;
-{% if is_iphone or is_tablet %}
-min-height:34px;
-{% else %}
-min-height:28px;
-{% endif %}
-text-align: left;
-border-bottom: 1px solid #dcdcdc;
-background-color:#ffffff;
-color: #444;
-font-family: "ＭＳ Ｐゴシック", "Arial", "Osaka", "ヒラギノ角ゴPro W3";
-font-size: 12px;
+	padding: 1px;
+	{% if is_iphone or is_tablet %}
+	min-height:34px;
+	{% else %}
+	min-height:28px;
+	{% endif %}
+	text-align: left;
+	border-bottom: 1px solid #dcdcdc;
+	background-color:#ffffff;
+	color: #444;
+	font-family: "ＭＳ Ｐゴシック", "Arial", "Osaka", "ヒラギノ角ゴPro W3";
+	font-size: 12px;
 }
 
 #floating_menu a{
 color: #444;
 }
+
+#floating_menu .user_icon {
+	float:left;
+	padding-left:2px;
+	padding-top:2px;
+	padding-right:2px;
+	font-weight:600;
+}
+
+#floating_menu .logo {
+	float:left;
+	padding-left:2px;
+	padding-top:3px;
+	padding-right:2px;
+	font-weight:600;
+	margin-top:{% if is_iphone or is_tablet %}6px{% else %}3px{% endif %};
+}
+
+#floating_menu .menu {
+	{% if is_iphone or is_tablet %}
+		float:right;
+		padding-left:3px;
+		padding-top:3px;
+		padding-right:3px;
+		font-weight:600;
+	{% else %}
+		float:right;
+		padding-left:2px;
+		padding-top:2px;
+		padding-right:2px;
+		font-weight:600;
+	{% endif %}
+}
+
+#floating_menu .menu_button {
+	{% if is_iphone or is_tablet %}
+		background:none;
+		border:none;
+	{% else %}
+		padding:6px;
+		background:none;
+		border:none;"
+	{% endif %}
+}
+
+#floating_menu .menu_list{
+	right:0;	/* 画面外に出ないため */
+	left:auto;
+}
+
 </style>

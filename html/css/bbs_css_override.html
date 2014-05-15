@@ -2,6 +2,7 @@
 
 <style type="text/css">
 	/* スレッド一覧 */
+{% if bbs.bbs_mode == 3 %}
 	.square_thread_list {
 		position:relative;
 		width:148px;
@@ -31,6 +32,7 @@
 		opacity: 0.5;
 		text-decoration: none;
 	}
+{% endif %}
 
 	/* 投稿者名 */
 	.entry-info-tag {
@@ -68,6 +70,11 @@
 		line-height:normal;
 	}
 
+	.comment-tab {
+		display:none;
+		margin:4px;
+	}
+	
 	{% if is_iphone and template_path %}
 	.entry-title {
 		border-bottom: dotted 1px #999999;
@@ -85,6 +92,7 @@
 	}
 	{% endif %}
 
+	/* iPhone用 */
 	{% if is_iphone %}
 		{# 高解像度 Android 対応 #}
 		#container {
@@ -125,8 +133,8 @@
 	{% endif %}
 
 	/* 関連スレッド */
-	.related {
-		{% if is_iphone or is_tablet %}
+	{% if is_iphone or is_tablet %}
+		.related {
 			width:100%;
 			{% if is_tablet %}
 				height:100px;
@@ -137,8 +145,8 @@
 			overflow-x:scroll;
 			white-space:nowrap;
 			-webkit-overflow-scrolling:touch;
-		{% endif %}
-	}
+		}
+	{% endif %}
 
 	.related_image{
 		width:{% if is_iphone %}70px{% else %}100px{% endif %};
