@@ -174,7 +174,11 @@ class AddEntry(webapp.RequestHandler):
 				timage.thumbnail=db.Blob(self.request.get("thumbnail"))
 			timage.thumbnail2=None
 			timage.illust_mode=1;
-			timage.put()
+			try:
+				timage.put()
+			except:
+				self.write_status(is_flash,"画像サイズが大きすぎます。");
+				return
 
 			entry.illust_reply=1
 			entry.illust_reply_image_key=timage
