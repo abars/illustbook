@@ -3,10 +3,11 @@
       {% if is_english %}Edit profile{% else %}プロフィールを編集{% endif %}<br/>
       {%include "mypage/edit_profile.html"%}
     {% else %}
-    <div style="float:left;margin-right:4px;">
+    <div style="float:left;{% if is_iphone %}width:78px;{% else %}width:164px{% endif %}">
       <img src="{{view_user.icon_url}}" {% if is_iphone %}width=74px height=74px{%else%}width=160px height=160px{% endif %}>
     </div>
-    <div style="float:left;word-break:break-all;{% if is_iphone %}width:220px;{% endif %}">
+    <div style="float:right;word-break:break-all;width:100%;{% if is_iphone %}margin-left:-78px;{% else %}margin-left:-164px;{% endif %}">
+    <div style="{% if is_iphone %}margin-left:78px;{% else %}margin-left:164px;{% endif %}">
       {% if view_user.name %}
        {% if not is_iphone %}<p>{% endif %}<b>{{view_user.name}}</b>{% if not is_iphone %}</p>{% endif %}
        <p>{% if view_user_profile.profile and view_user_profile.profile!="None" %}{{view_user_profile.profile|safe}}{% else %}&nbsp;{% endif %}</p>
@@ -97,6 +98,7 @@
       </ul>
      </div>
 
+   </div>
     </div>
     <br clear="all">
     {% endif %}

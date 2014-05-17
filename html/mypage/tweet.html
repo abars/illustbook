@@ -3,12 +3,12 @@
 <!-- ツイートボタン -->
 <div class="message">
 	<form action="./feed_tweet" enctype="multipart/form-data" method="post" name="frm">
-		<textarea name="message" id="message" value="" rows="{% if is_iphone %}2{%else%}3{% endif %}" style="min-width:90%;"></textarea>
+		<textarea name="message" id="message" value="" rows="1" onclick="document.getElementById('message').rows=4;"></textarea>
 		<input type="hidden" name="mode" id="mode" value="add">
 		{% if view_mode %}
 			<input type="hidden" name="to_user_id" id="to_user_id" value="{{bookmark.user_id}}">
 		{% endif %}
-		<div style="margin-top:8px;">
+		&nbsp;
 		<a href="javascript:document.frm.submit();" class="g-button mini"><i class="icon-comment"></i>
 		{% if view_mode %}
 			{% if is_english %}Tweet to {% endif %}{{bookmark.name}}{% if not is_english %}さんに向けてツイート{% endif %}
@@ -16,7 +16,6 @@
 			{% if is_english %}Tweet{% else %}ツイート{% endif %}
 		{% endif %}
 		</a>
-		</div>
 	</form>
 </div>
 
