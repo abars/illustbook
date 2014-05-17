@@ -15,10 +15,10 @@ h2,h3 {font-size:100%;color:#ea5376;}
 
 #contents {
     {% if is_iphone %}
-      width:320px;
+      min-width:320px;
     {% else %}
       {% if not thread_list %}
-        width:848px;
+        min-width:848px;
       {% endif %}
     {% endif %}
     margin:0 auto;
@@ -93,6 +93,11 @@ font-size:11px;
 {% if flat_ui %}
   border-radius: {{radius_r}}px;
 {% endif %}
+}
+
+.item_info hr{
+   margin:0px;
+   clear:both;
 }
 
 {% if flat_ui %}
@@ -282,6 +287,14 @@ color: #333;
 
 .tag:hover{
   background:#F2F0F0;
+}
+
+.recent_tag a{
+ color:#258FB8;
+}
+
+.hot_bbs a{
+ color:#258FB8;
 }
 
 /* portal modern menu */

@@ -1,10 +1,3 @@
-{% if not is_iphone and page_mode != "user" %}
-  {#{% set target_page = "target='_BLANK'" %}#}
-  {% set target_page = "" %}
-{% else %}
-  {% set target_page = "" %}
-{% endif %}
-
 {% if not thread_list %}
   {% if order == "new" %}
     {# disable newsの1ページitemが存在しない対策 #}
@@ -21,7 +14,7 @@
   <div class="deletable">
   {% if thread.image_url %}
         <div class="side-corner-tag">
-          <a href="{{thread.thread_url}}" {{target_page}}>
+          <a href="{{thread.thread_url}}">
             <img src="{{thread.thumbnail2_url}}" width="{{thread|thumbnail2_width(is_iphone)}}px" height="{{thread|thumbnail2_height(is_iphone)}}px" alt="{{thread.title}}"/>
           </a>
 
@@ -52,7 +45,7 @@
   <div class="illust_summary">
     {% if thread.title %}
     {% if thread.title != "notitle" %}
-      <a href="{{thread.thread_url}}" {{target_page}}>
+      <a href="{{thread.thread_url}}">
        <b>{{thread|regulation_name}}{{thread.title}}</b>
       </a>
       <br/>
@@ -73,7 +66,7 @@
 <div class="item_info">
   {# author #}
 {% if thread.author %}
-  <hr style="margin:0px;"/>
+  <hr/>
     <div style="float:left;margin:4px;">
       <div style="float:left;margin-top:0px;margin-bottom:0px;margin-right:4px;">
         {%if thread.user_id %}<a href="{{host}}mypage?user_id={{thread.user_id}}">{% endif %}
@@ -113,17 +106,17 @@
 
     {# bbs #}
   {% if thread.bbs_url %}
-    <hr style="margin:0px;clear:both;"/>  
+    <hr/>  
     <div style="text-align:center;padding:4px;">
-      <a href="{{thread.bbs_url}}" {{target_page}} style="display:block;"><small>{{thread.bbs_title}}</small></a>
+      <a href="{{thread.bbs_url}}" style="display:block;"><small>{{thread.bbs_title}}</small></a>
     </div>
   {% endif %}
 
     {# comment #}
     {%if thread.comment %}
-    <hr style="margin:0px;clear:both;"/>
+    <hr/>
     <div style="text-align:center;padding:4px;">
-      <a href="{{thread.thread_url}}" {{target_page}} style="display:block;"><small>{{thread.comment}}{% if is_english %} Comment{% else %}件のコメント{% endif %}</small></a>
+      <a href="{{thread.thread_url}}" style="display:block;"><small>{{thread.comment}}{% if is_english %} Comment{% else %}件のコメント{% endif %}</small></a>
     </div>
     {% endif %}
   </div>
