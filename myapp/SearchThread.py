@@ -133,9 +133,12 @@ class SearchThread(webapp.RequestHandler):
 			logging.exception('Search Put failed')
 
 	@staticmethod
-	def search(query,page,unit,index):
+	def search(query,page,unit,index,no_reduct=False):
 		now_sec=SearchThread._get_sec(datetime.datetime.now())
-		reduct='/(1+('+str(now_sec)+'-sec)/(3600*24*30))'	#1ヶ月で半分のスコアにする
+		if(no_reduct):
+			reduct=""
+		else:
+			reduct='/(1+('+str(now_sec)+'-sec)/(3600*24*30))'	#1ヶ月で半分のスコアにする
 
 		sort_options = search.SortOptions(
 			expressions=[

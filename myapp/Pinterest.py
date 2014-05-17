@@ -268,6 +268,7 @@ class Pinterest(webapp.RequestHandler):
 			if(month_query==""):
 				from_month=datetime.date.today()+datetime.timedelta(days=-30)
 				next_month=datetime.date.today()
+				no_reduct=False
 			else:
 				today=datetime.datetime.strptime(month_query,"%Y-%m-%d")
 				from_month=datetime.datetime(today.year,today.month,today.day).strftime('%Y-%m-%d')
@@ -275,10 +276,11 @@ class Pinterest(webapp.RequestHandler):
 					next_month=datetime.datetime(today.year+1,1,today.day).strftime('%Y-%m-%d')
 				else:
 					next_month=datetime.datetime(today.year,today.month+1,today.day).strftime('%Y-%m-%d')
+				no_reduct=True
 
 			#検索範囲を絞らなければ正常にソートできないので、できるだけ絞る
 			search_str="(bookmark >= 1 OR applause >= 3) AND date > "+str(from_month)+" AND date < "+str(next_month)
-			thread_list=SearchThread.search(search_str,page,unit,BbsConst.SEARCH_THREAD_INDEX_NAME)
+			thread_list=SearchThread.search(search_str,page,unit,BbsConst.SEARCH_THREAD_INDEX_NAME,no_reduct)
 			thread_list=ApiObject.create_thread_object_list(self,thread_list,"search")
 
 			#ranking_month_list.reverse()

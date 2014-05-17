@@ -11,6 +11,7 @@
   </div>
 
 {% if order=="monthly" and ranking_month_list%}
+  <div style="float:left;">
     &nbsp;
     <div class="g-button-group">
       <a class="g-button dropdown-toggle menu_button" data-toggle="dropdown" href="#">
@@ -27,6 +28,7 @@
       <li><a href="{{host}}{{redirect_api}}?order=monthly&month={{one_month.query}}">{{one_month.str}}</a></li>
       {% endfor %}
       </ul>
+    </div>
   </div>
 {% endif %}
 
