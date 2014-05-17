@@ -243,6 +243,12 @@ class Pinterest(webapp.RequestHandler):
 		ranking_month_list=[]
 
 		if(order=="monthly"):
+			#直近
+			days_str="直近30日"
+			if(CssDesign.is_english(self)):
+				days_str="30 Days"
+			ranking_month_list.append({"query":"","str":days_str})
+
 			#日付のリストを作成
 			if(month_query):
 				today=datetime.datetime.strptime(month_query,"%Y-%m-%d")
@@ -257,17 +263,21 @@ class Pinterest(webapp.RequestHandler):
 				if(month<=0):
 					year=year-1
 					month=12
+
+			#日付の範囲を決定
 			if(month_query==""):
-				month_query=ranking_month_list[0]["query"]
+				from_month=datetime.date.today()+datetime.timedelta(days=-30)
+				next_month=datetime.date.today()
+			else:
+				today=datetime.datetime.strptime(month_query,"%Y-%m-%d")
+				from_month=datetime.datetime(today.year,today.month,today.day).strftime('%Y-%m-%d')
+				if(today.month==12):
+					next_month=datetime.datetime(today.year+1,1,today.day).strftime('%Y-%m-%d')
+				else:
+					next_month=datetime.datetime(today.year,today.month+1,today.day).strftime('%Y-%m-%d')
 
 			#検索範囲を絞らなければ正常にソートできないので、できるだけ絞る
-			today=datetime.datetime.strptime(month_query,"%Y-%m-%d")
-			one_month=datetime.datetime(today.year,today.month,today.day).strftime('%Y-%m-%d')
-			if(today.month==12):
-				next_month=datetime.datetime(today.year+1,1,today.day).strftime('%Y-%m-%d')
-			else:
-				next_month=datetime.datetime(today.year,today.month+1,today.day).strftime('%Y-%m-%d')
-			search_str="(bookmark >= 1 OR applause >= 3) AND date > "+str(one_month)+" AND date < "+str(next_month)
+			search_str="(bookmark >= 1 OR applause >= 3) AND date > "+str(from_month)+" AND date < "+str(next_month)
 			thread_list=SearchThread.search(search_str,page,unit,BbsConst.SEARCH_THREAD_INDEX_NAME)
 			thread_list=ApiObject.create_thread_object_list(self,thread_list,"search")
 
@@ -279,7 +289,7 @@ class Pinterest(webapp.RequestHandler):
 
 		template_values=Pinterest.initialize_template_value(self,user,user_id,page,request_page_mode,redirect_api,contents_only)
 		template_values['thread_list']=thread_list
-		template_values['next_query']="order="+order+"&month_quer="+month_query
+		template_values['next_query']="order="+order+"&month="+month_query
 		template_values['tag_list']=SearchTag.get_recent_tag(search_api)
 		template_values['top_page']=True
 		template_values['order']=order
