@@ -112,7 +112,6 @@ from myapp.VisibilityChangeEntry import VisibilityChangeEntry
 from myapp.EditThreadList import EditThreadList
 from myapp.SearchTag import SearchTag
 from myapp.AddRankingScore import AddRankingScore
-from myapp.Tolot import Tolot
 from myapp.UploadTemp import UploadTemp
 
 #-----------------------------------------------------------------
@@ -256,9 +255,6 @@ application = webapp.WSGIApplication(
 	('/pinterest', Pinterest),
 	('/_ah/channel/connected/',ChatConnected),
 	('/_ah/channel/disconnected/',ChatDisconnected),
-	(r'/(tolot)/(.*)\.(jpg)',ImageFile), 
-	(r'/(tolot)/(.*)\.(png)',ImageFile), 
-	('/tolot/(.*)\.(.*)',Tolot),
 	(r'/usr/(.*)/(.*)\.html',ShowThread),
 	(r'/usr/(.*)/',ShowBbs),
 	(r'/usr/(.*)/index.xml',RssFeed),

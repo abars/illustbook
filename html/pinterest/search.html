@@ -1,6 +1,6 @@
   <div class="g-button-group toggle-buttons">
       <form method="get" action="./" id="search_form">
-        <input name="search" style="-webkit-appearance:none;float:left;width:200px;height:22px;margin-top:1px;margin-right:2px;border:1px solid #dcdcdc;" value="{% if search %}{{search}}{% endif %}"/>
+        <input name="search" style="-webkit-appearance:none;float:left;width:200px;margin-top:4px;margin-right:2px;border:1px solid #dcdcdc;" value="{% if search %}{{search}}{% endif %}"/>
         {% if is_iphone and not search %}
 	        <input type="submit" value="{% if is_english %}Search{%else%}検索{% endif %}" class="g-button"/>
 	    {% else %}
