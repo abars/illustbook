@@ -210,6 +210,13 @@ color: #333;
   margin:5px;
 }
 
+{% if is_iphone %}
+#order .menu_list{
+    right:0;  /* 画面外に出ないため */
+    left:auto;
+}
+{% endif %}
+
 #search{
   display:none;
   margin:5px;

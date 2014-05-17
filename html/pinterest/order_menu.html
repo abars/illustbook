@@ -10,6 +10,27 @@
     </div>
   </div>
 
+{% if order=="monthly" and ranking_month_list%}
+    &nbsp;
+    <div class="g-button-group">
+      <a class="g-button dropdown-toggle menu_button" data-toggle="dropdown" href="#">
+        {% for one_month in ranking_month_list %}
+          {% if one_month.query == month %}
+            {{one_month.str}}
+          {% endif %}
+        {% endfor %}
+        <span class="caret"></span>
+      </a>
+
+      <ul class="dropdown-menu menu_list">
+      {% for one_month in ranking_month_list %}
+      <li><a href="{{host}}{{redirect_api}}?order=monthly&month={{one_month.query}}">{{one_month.str}}</a></li>
+      {% endfor %}
+      </ul>
+  </div>
+{% endif %}
+
+{% if order!="monthly" or not is_iphone %}
   <div style="float:right;">
     {% if is_iphone %}
      <div class="g-button-group toggle-buttons">
@@ -23,6 +44,7 @@
        </div>
     {% endif %}
   </div>
+{% endif %}
 
   <br clear="all"/>
 </div>

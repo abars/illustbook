@@ -235,17 +235,43 @@ class Pinterest(webapp.RequestHandler):
 		if(self.request.get("order")):
 			order=self.request.get("order")
 
-		search_api="search_tag"
+		month_query=""
+		if(self.request.get("month")):
+			month_query=self.request.get("month")
 
-		if(order=="weekly" or order=="monthly"):
+		search_api="search_tag"
+		ranking_month_list=[]
+
+		if(order=="monthly"):
+			#日付のリストを作成
+			if(month_query):
+				today=datetime.datetime.strptime(month_query,"%Y-%m-%d")
+			else:
+				today=datetime.date.today()
+			year=today.year
+			month=today.month
+			for i in range(0,10):
+				dare_str=datetime.datetime(year,month,1).strftime('%Y-%m-%d')
+				ranking_month_list.append({"query":dare_str,"str":str(year)+"-"+str(month)})
+				month=month-1
+				if(month<=0):
+					year=year-1
+					month=12
+			if(month_query==""):
+				month_query=ranking_month_list[0]["query"]
+
 			#検索範囲を絞らなければ正常にソートできないので、できるだけ絞る
-			days=7
-			if(order=="monthly"):
-				days=30
-			one_month=datetime.date.today() - datetime.timedelta(days = days)
-			search_str="(bookmark >= 1 OR applause >= 3) AND date > "+str(one_month)
+			today=datetime.datetime.strptime(month_query,"%Y-%m-%d")
+			one_month=datetime.datetime(today.year,today.month,today.day).strftime('%Y-%m-%d')
+			if(today.month==12):
+				next_month=datetime.datetime(today.year+1,1,today.day).strftime('%Y-%m-%d')
+			else:
+				next_month=datetime.datetime(today.year,today.month+1,today.day).strftime('%Y-%m-%d')
+			search_str="(bookmark >= 1 OR applause >= 3) AND date > "+str(one_month)+" AND date < "+str(next_month)
 			thread_list=SearchThread.search(search_str,page,unit,BbsConst.SEARCH_THREAD_INDEX_NAME)
 			thread_list=ApiObject.create_thread_object_list(self,thread_list,"search")
+
+			#ranking_month_list.reverse()
 		else:
 			thread_list=ApiFeed.feed_get_thread_list(self,order,(page-1)*unit,unit)
 		
@@ -253,13 +279,15 @@ class Pinterest(webapp.RequestHandler):
 
 		template_values=Pinterest.initialize_template_value(self,user,user_id,page,request_page_mode,redirect_api,contents_only)
 		template_values['thread_list']=thread_list
-		template_values['next_query']="order="+order
+		template_values['next_query']="order="+order+"&month_quer="+month_query
 		template_values['tag_list']=SearchTag.get_recent_tag(search_api)
 		template_values['top_page']=True
 		template_values['order']=order
 		template_values['page_mode']="index"
 		template_values['illust_enable']=True
 		template_values['bbs_list']=bbs_list
+		template_values['ranking_month_list']=ranking_month_list
+		template_values['month']=month_query
 
 		Pinterest._render_page(self,template_values)
 
