@@ -2,7 +2,7 @@
 {% if page_mode == "user" and is_timeline_enable %}
 
 {% if not view_mode and edit_mode %}
-	<form method="post" action="{{host}}feed_tweet" id="del_tweet_list">
+<form method="post" action="{{host}}feed_tweet" id="del_tweet_list">
 	<input type="hidden" value="{{user_id}}" name="user_id" id="user_id"/>
 	<input type="hidden" value="del_tweet_list" name="mode" id="mode"/>
 {% endif %}
@@ -17,7 +17,7 @@
 </div>
 
 {% if not view_mode and edit_mode %}
-	</form>
+</form>
 {% endif %}
 
 {% endif %}

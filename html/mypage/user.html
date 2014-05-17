@@ -1,145 +1,136 @@
-  <div class="message">
-    {% if edit_mode == 2%}
-      {% if is_english %}Edit profile{% else %}プロフィールを編集{% endif %}<br/>
-      {%include "mypage/edit_profile.html"%}
-    {% else %}
-    <div style="float:left;{% if is_iphone %}width:78px;{% else %}width:164px{% endif %}">
-      <img src="{{view_user.icon_url}}" {% if is_iphone %}width=74px height=74px{%else%}width=160px height=160px{% endif %}>
-    </div>
-    <div style="float:right;word-break:break-all;width:100%;{% if is_iphone %}margin-left:-78px;{% else %}margin-left:-164px;{% endif %}">
-    <div style="{% if is_iphone %}margin-left:78px;{% else %}margin-left:164px;{% endif %}">
-      {% if view_user.name %}
-       {% if not is_iphone %}<p>{% endif %}<b>{{view_user.name}}</b>{% if not is_iphone %}</p>{% endif %}
-       <p>{% if view_user_profile.profile and view_user_profile.profile!="None" %}{{view_user_profile.profile|safe}}{% else %}&nbsp;{% endif %}</p>
-      {% else %}
-        <p>
-        {% if is_english %}
-        Welcome to ILLUSTBOOK<br/>
-        You can create BBS in BBS tab.
-        {% else %}
-        イラストブックへようこそ。<br/>
-        編集ボタンを押すと、ユーザ情報を登録することができます。<br/>
-        掲示板タブでは、掲示板をレンタルすることができます。
-        {% endif %}
-        </p>
-      {% endif %}
-      <div id="profile">
-            <table>
-            {% if bookmark.sex %}<tr><td>{% if is_english %}Sex{%else%}性別{% endif %}</td><td>　</td><td>
-              {% if bookmark.sex == 1 %}
-                {% if is_english %}Male{%else%}男{% endif %}
-              {%else%}
-                {% if is_english %}Female{%else%}女{% endif %}
-              {%endif%}
-            </td></tr>
-            {% endif %}
-            {% if age %}<tr><td>{% if is_english %}Age{%else%}年齢{% endif %}</td><td>　</td><td>{{age}}{% if not is_english %}才{% endif %}</td></tr>{%endif%}
-            {% if bookmark.birthday_month %}<tr><td>{% if is_english %}Birthday{%else%}誕生日{% endif %}</td><td>　</td><td>{{bookmark.birthday_month}}{% if is_english %}/{% else %}月{% endif %}{{bookmark.birthday_day}}{% if not is_english %}日{% endif %}</td></tr>{%endif %}
-            {% if bookmark.homepage %}<tr><td>{% if is_english %}Homepage{%else%}ホームページ{% endif %}</td><td>　</td><td><a href="{{bookmark.homepage}}" class="declink"><div class="linebreak">{{bookmark.homepage}}</div></a></td></tr>{% endif %}
-            {% if bookmark.mail %}<tr><td>{% if is_english %}Mail{%else%}メール{% endif %}</td><td>　</td><td><a href="mailto:{{bookmark.mail}}" class="declink"><div class="linebreak">{{bookmark.mail|safe}}</div></a></td></tr>{% endif %}
-            {% if bookmark.twitter_id %}<tr><td>Twitter</td><td>　</td><td>{% if bookmark.twitter_id %}<a href="https://twitter.com/#!/{{bookmark.twitter_id}}" class="declink"><div class="linebreak">{{bookmark.twitter_id}}</div></a>{% endif %}</td></tr>{% endif %}
-            {% if is_admin %}{% if bookmark.owner %}<tr><td>{% if is_english %}Account(*ADMIN){% else %}アカウント(＊管理モード){% endif %}</td><td>　</td><td>{{bookmark.owner.email()}}</td></tr>{% endif %}{% endif %}
-            </table>
-      </div>
+<div class="message">
+	{% if edit_mode == 2%}
+		{% if is_english %}Edit profile{% else %}プロフィールを編集{% endif %}<br/>
+		{%include "mypage/edit_profile.html"%}
+	{% else %}
+		<div style="float:left;{% if is_iphone %}width:78px;{% else %}width:164px{% endif %}">
+			<img src="{{view_user.icon_url}}" {% if is_iphone %}width=74px height=74px{%else%}width=160px height=160px{% endif %}>
+		</div>
+		<div style="float:right;word-break:break-all;width:100%;{% if is_iphone %}margin-left:-78px;{% else %}margin-left:-164px;{% endif %}">
+		<div style="{% if is_iphone %}margin-left:78px;{% else %}margin-left:164px;{% endif %}">
+			{% if view_user.name %}
+				{% if not is_iphone %}<p>{% endif %}<b>{{view_user.name}}</b>{% if not is_iphone %}</p>{% endif %}
+				<p>{% if view_user_profile.profile and view_user_profile.profile!="None" %}{{view_user_profile.profile|safe}}{% else %}&nbsp;{% endif %}</p>
+			{% else %}
+				<p>
+				{% if is_english %}
+				Welcome to ILLUSTBOOK<br/>
+				You can create BBS in BBS tab.
+				{% else %}
+				イラストブックへようこそ。<br/>
+				編集ボタンを押すと、ユーザ情報を登録することができます。<br/>
+				掲示板タブでは、掲示板をレンタルすることができます。
+				{% endif %}
+				</p>
+			{% endif %}
+			<div id="profile">
+				<table>
+						{% if bookmark.sex %}<tr><td>{% if is_english %}Sex{%else%}性別{% endif %}</td><td>　</td><td>
+							{% if bookmark.sex == 1 %}
+								{% if is_english %}Male{%else%}男{% endif %}
+							{%else%}
+								{% if is_english %}Female{%else%}女{% endif %}
+							{%endif%}
+						</td></tr>
+						{% endif %}
+						{% if age %}<tr><td>{% if is_english %}Age{%else%}年齢{% endif %}</td><td>　</td><td>{{age}}{% if not is_english %}才{% endif %}</td></tr>{%endif%}
+						{% if bookmark.birthday_month %}<tr><td>{% if is_english %}Birthday{%else%}誕生日{% endif %}</td><td>　</td><td>{{bookmark.birthday_month}}{% if is_english %}/{% else %}月{% endif %}{{bookmark.birthday_day}}{% if not is_english %}日{% endif %}</td></tr>{%endif %}
+						{% if bookmark.homepage %}<tr><td>{% if is_english %}Homepage{%else%}ホームページ{% endif %}</td><td>　</td><td><a href="{{bookmark.homepage}}" class="declink"><div class="linebreak">{{bookmark.homepage}}</div></a></td></tr>{% endif %}
+						{% if bookmark.mail %}<tr><td>{% if is_english %}Mail{%else%}メール{% endif %}</td><td>　</td><td><a href="mailto:{{bookmark.mail}}" class="declink"><div class="linebreak">{{bookmark.mail|safe}}</div></a></td></tr>{% endif %}
+						{% if bookmark.twitter_id %}<tr><td>Twitter</td><td>　</td><td>{% if bookmark.twitter_id %}<a href="https://twitter.com/#!/{{bookmark.twitter_id}}" class="declink"><div class="linebreak">{{bookmark.twitter_id}}</div></a>{% endif %}</td></tr>{% endif %}
+						{% if is_admin %}{% if bookmark.owner %}<tr><td>{% if is_english %}Account(*ADMIN){% else %}アカウント(＊管理モード){% endif %}</td><td>　</td><td>{{bookmark.owner.email()}}</td></tr>{% endif %}{% endif %}
+				</table>
+			</div>
 
-     {% if violate_icon %}
-         <p><b>申し立てによりアイコンが無効化されました。<br/>
-         イラスト投稿サイトに投稿されたイラストには著作権がありますので、<br/>
-         アイコンには権利的に問題のない画像をご利用下さい。</b></p>
-     {% endif %}
+		 {% if violate_icon %}
+				<p><b>申し立てによりアイコンが無効化されました。<br/>
+				イラスト投稿サイトに投稿されたイラストには著作権がありますので、<br/>
+				アイコンには権利的に問題のない画像をご利用下さい。</b></p>
+		 {% endif %}
 
-     <div class="g-button-group">
-      {% if view_mode %}
-       {% if following %}
-         <a href="javascript:confirm_unfollow('{{view_user.user_id}}','{{view_user.name}}',{% if is_english %}true{%else%}false{% endif %});" class="g-button">{% if is_english %}Following{%else%}フォロー中{% endif %}</a>
-       {% else %}
-         <a href="javascript:confirm_follow('{{view_user.user_id}}','{{view_user.name}}',{% if is_english %}true{%else%}false{% endif %});" class="g-button"><i class="icon-plus"></i>{% if is_english %}Follow{%else%}フォロー{% endif %}</a>
-       {% endif %}
-      {% endif %}
-      {% if detail_exist %}
-        <a id="profile_button" href="javascript:show_profile({% if is_english %}true{% else %}false{% endif %});" class="g-button">{% if is_english %}Detail{%else%}詳細{% endif %}</a>
-      {% endif %}
-      {% if not view_mode %}
-         <A HREF="{{host}}{{redirect_api}}?tab={{tab}}&edit=2" class="g-button">{% if is_english %}Edit{%else%}編集{% endif %}</A>
-      {% endif %}
-      {% if not view_mode or is_admin %}
-    <a class="g-button dropdown-toggle" data-toggle="dropdown" href="#">
-      {% if is_english %}Others{%else%}その他{% endif %} <span class="caret"></span>
-    </a>
+			<div class="g-button-group">
+			{% if view_mode %}
+			 {% if following %}
+				 <a href="javascript:confirm_unfollow('{{view_user.user_id}}','{{view_user.name}}',{% if is_english %}true{%else%}false{% endif %});" class="g-button">{% if is_english %}Following{%else%}フォロー中{% endif %}</a>
+			 {% else %}
+				 <a href="javascript:confirm_follow('{{view_user.user_id}}','{{view_user.name}}',{% if is_english %}true{%else%}false{% endif %});" class="g-button"><i class="icon-plus"></i>{% if is_english %}Follow{%else%}フォロー{% endif %}</a>
+			 {% endif %}
+			{% endif %}
+			{% if detail_exist %}
+				<a id="profile_button" href="javascript:show_profile({% if is_english %}true{% else %}false{% endif %});" class="g-button">{% if is_english %}Detail{%else%}詳細{% endif %}</a>
+			{% endif %}
+			{% if not view_mode %}
+				 <a href="{{host}}{{redirect_api}}?tab={{tab}}&edit=2" class="g-button">{% if is_english %}Edit{%else%}編集{% endif %}</a>
+			{% endif %}
 
-    <ul class="dropdown-menu">
-          <li><a href="{{host}}{{redirect_api}}">{% if is_english %}Top{% else %}トップへ戻る{% endif %}</a></li>
-          {%if not bookmark.disable_rankwatch and not is_english%}
-          <li>
-            <a href="ranking?mode=user">ランキング
-              {% if user_rank %}{{user_rank}}位{% else %}-{% endif %}
-            </a>
-          </li>
-          {%endif%}
-          {% if not view_mode %}
-            <li><a href="./mypage?tab=timeline">{% if is_english %}My Timeline{% else %}マイタイムライン{% endif %}</a></li>
-          {% endif %}
-          <li><a href="{{redirect_url|logout_url}}">{% if is_english %}Logout{% else %}ログアウト{% endif %}</a></li>
-          {% if is_admin %}
-          <li><a href="javascript:if(confirm('アイコンを凍結しますか？')){ window.location.href='{{host}}violation?user_id={{bookmark.user_id}}' }">アイコン凍結（＊管理モード）</a></li>
-          <li><a href="javascript:if(confirm('アカウントを凍結しますか？')){ window.location.href='{{host}}mypage?freez=1&user_id={{bookmark.user_id}}' }">アカウント凍結（＊管理モード）</a></li>
-          {% endif %}
-          {% if not view_mode %}
-          <li><a href="javascript:confirm_remove_tweet_all('{{bookmark.user_id}}',{% if is_english %}true{%else%}false{% endif %});"/>
-          {% if is_english %}Delete all Tweet{% else %}ツイートを全て削除{% endif %}</a></li>
-          <li><a href="javascript:confirm_withdraw('mypage?withdraw=go&user_id={{bookmark.user_id}}',{% if is_english %}true{%else%}false{% endif %})">{% if is_english %}Withdraw{% else %}退会する{% endif %}</a></li>
-          {% endif %}
-          {% if is_admin %}
-          <li><a href="{{host}}tolot/{{bookmark.user_id}}.html">アルバムを作成(β)</a></li>
-          {% endif %}
-    </ul>
+			{% if not view_mode or is_admin %}
+				<a class="g-button dropdown-toggle" data-toggle="dropdown" href="#">
+				{% if is_english %}Others{%else%}その他{% endif %} <span class="caret"></span>
+				</a>
 
-       {% endif %}
-      </ul>
-     </div>
+				<ul class="dropdown-menu">
+					<li><a href="{{host}}{{redirect_api}}">{% if is_english %}Top{% else %}トップへ戻る{% endif %}</a></li>
+					{%if not bookmark.disable_rankwatch and not is_english%}
+					<li>
+						<a href="ranking?mode=user">ランキング
+							{% if user_rank %}{{user_rank}}位{% else %}-{% endif %}
+						</a>
+					</li>
+					{%endif%}
+					{% if not view_mode %}
+						<li><a href="./mypage?tab=timeline">{% if is_english %}My Timeline{% else %}マイタイムライン{% endif %}</a></li>
+					{% endif %}
+					<li><a href="{{redirect_url|logout_url}}">{% if is_english %}Logout{% else %}ログアウト{% endif %}</a></li>
+					{% if is_admin %}
+					<li><a href="javascript:if(confirm('アイコンを凍結しますか？')){ window.location.href='{{host}}violation?user_id={{bookmark.user_id}}' }">アイコン凍結（＊管理モード）</a></li>
+					<li><a href="javascript:if(confirm('アカウントを凍結しますか？')){ window.location.href='{{host}}mypage?freez=1&user_id={{bookmark.user_id}}' }">アカウント凍結（＊管理モード）</a></li>
+					{% endif %}
+					{% if not view_mode %}
+					<li><a href="javascript:confirm_remove_tweet_all('{{bookmark.user_id}}',{% if is_english %}true{%else%}false{% endif %});"/>
+					{% if is_english %}Delete all Tweet{% else %}ツイートを全て削除{% endif %}</a></li>
+					<li><a href="javascript:confirm_withdraw('mypage?withdraw=go&user_id={{bookmark.user_id}}',{% if is_english %}true{%else%}false{% endif %})">{% if is_english %}Withdraw{% else %}退会する{% endif %}</a></li>
+					{% endif %}
+				</ul>
+			{% endif %}
+			</div>
+		</div>
+		</div>
+	<br clear="all">
+	{% endif %}
+</div>
 
-   </div>
-    </div>
-    <br clear="all">
-    {% endif %}
-  </div>
+{% if follow or follower %}
+<div class="message">
+		<div id="follower_button">
+			{% if is_english %}Follow{%else%}フォロー{% endif %}{{follow|length}}　{% if is_english %}Follower{%else%}フォロワー{% endif %}{{follower|length}}
+			<a href="javascript:show_follower();" class="g-button mini">{% if is_english %}Detail{%else%}詳細{% endif %}</a>
+		</div>
+		<div id="follower">
+			{% if follow %}
+		 {% if is_english %}Follow{%else%}フォローしている{% endif %}<br/>
+		 {% for user in follow %}
+		 <div class="deletable" style="float:left;">
+			 <a href="{{redirect_api}}?user_id={{user.user_id}}"><img src="{{user.icon_url}}&size=mini" width="50px" height="50px" alt='{{user.name}}'/></a>
+			 {% if edit_mode %}
+			 <a href="javascript:confirm_delete('del_user&user_key={{user.user_id}}','フォロー','{{user.name}}',{% if is_english %}true{%else%}false{% endif %});" class="g-button no-text delete_button"><i class="icon-remove"></i></a>
+			 {% endif %}
+		 </div>
+		 {% endfor %}
+		 <br clear="all"/>
+		 {% endif %}
+		 {% if follower %}
+		 {% if is_english %}Follower{%else%}フォローされている{% endif %}<br/>
+		 {% for user in follower %}
+		 <a href="{{redirect_api}}?user_id={{user.user_id}}"><img src="{{user.icon_url}}&size=mini" width=50px height=50px></a>
+		 {% endfor %}
+		 {% endif %}
+		 <!--
+			<br/><a href="javascript:show_follower();" class="g-button mini">閉じる</a>
+		-->
+	 </div>
+</div>
+{% endif %}
 
-  {% if 0 %}
-   {% include "adsense/adsense_wide.html" %}
-  {% endif %}
-
-    {% if follow or follower %}
-  <div class="message">
-    <div id="follower_button">
-      {% if is_english %}Follow{%else%}フォロー{% endif %}{{follow|length}}　{% if is_english %}Follower{%else%}フォロワー{% endif %}{{follower|length}}
-      <a href="javascript:show_follower();" class="g-button mini">{% if is_english %}Detail{%else%}詳細{% endif %}</a>
-    </div>
-    <div id="follower">
-      {% if follow %}
-     {% if is_english %}Follow{%else%}フォローしている{% endif %}<br/>
-     {% for user in follow %}
-     <div class="deletable" style="float:left;">
-       <a href="{{redirect_api}}?user_id={{user.user_id}}"><img src="{{user.icon_url}}&size=mini" width="50px" height="50px" alt='{{user.name}}'/></a>
-       {% if edit_mode %}
-       <a href="javascript:confirm_delete('del_user&user_key={{user.user_id}}','フォロー','{{user.name}}',{% if is_english %}true{%else%}false{% endif %});" class="g-button no-text delete_button"><i class="icon-remove"></i></a>
-       {% endif %}
-     </div>
-     {% endfor %}
-     <br clear="all"/>
-     {% endif %}
-     {% if follower %}
-     {% if is_english %}Follower{%else%}フォローされている{% endif %}<br/>
-     {% for user in follower %}
-     <a href="{{redirect_api}}?user_id={{user.user_id}}"><img src="{{user.icon_url}}&size=mini" width=50px height=50px></a>
-     {% endfor %}
-     {% endif %}
-     <!--
-      <br/><a href="javascript:show_follower();" class="g-button mini">閉じる</a>
-    -->
-   </div>
- </div>
-   {% endif %}
-
-   {% if page_mode == "user" and is_timeline_enable %}
-    {% include "mypage/tweet.html" %}
-   {% endif %}
+{% if page_mode == "user" and is_timeline_enable %}
+	{% include "mypage/tweet.html" %}
+{% endif %}
