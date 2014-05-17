@@ -46,7 +46,6 @@ from myapp.ShowThread import ShowThread
 from myapp.ShowBbs import ShowBbs
 from myapp.MoveAccount import MoveAccount
 from myapp.MaintenanceCheck import MaintenanceCheck
-from myapp.Embedded import Embedded
 from myapp.AnalyzeAccess import AnalyzeAccess
 from myapp.CssDesign import CssDesign
 from myapp.ImageFile import ImageFile

@@ -59,7 +59,6 @@ from myapp.MoperGuide import MoperGuide
 from myapp.MoperLoad import MoperLoad
 from myapp.MoperPlayer import MoperPlayer
 from myapp.MoperDraw import MoperDraw
-from myapp.Embedded import Embedded
 from myapp.AnalyzeAccess import AnalyzeAccess
 from myapp.CssDesign import CssDesign
 from myapp.ImageFile import ImageFile
@@ -300,7 +299,6 @@ application = webapp.WSGIApplication(
 	('/applause',Applause),
 	('/analyze',AnalyzeAccess),
 	('/check_id',CheckId),
-	('/embedded',Embedded),
 	('/draw_moper',MoperDraw),
 	('/upload_moper',MoperUpload),
 	('/moper_load',MoperLoad),
