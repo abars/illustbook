@@ -5,7 +5,10 @@
 {% include "viewport.html" %}
 
 <title>
-{% if is_english %}ilbchat{% else %}お絵かきチャット{% endif %} - {% if is_english %}ILLUSTBOOK{% else %}イラストブック{% endif %}
+{% if mode == "terms" %}ご利用規約{% endif %}
+{% if mode == "chat" %}{% if is_english %}ilbchat{% else %}お絵かきチャット{% endif %}{% endif %}
+{% if mode == "ranking" %}ランキング{% endif %}
+ - {% if is_english %}ILLUSTBOOK{% else %}イラストブック{% endif %}
 </title>
 
 {%include "meta.html" %}
@@ -24,7 +27,23 @@
 
 <div id="container">
 	<div id="contents" style="background-color:#ffffff;{% if not is_iphone %}width:840px;{% endif %}">
-		{% include "chat/chat.html" %}
+		{% if mode == "ranking" %}
+			{% include "ranking/ranking.html" %}
+		{% endif %}
+
+		{% if mode == "terms" %}
+			<div style="padding:4px;">
+			<h1>ご利用規約</h1>
+			{% include "portal/terms.html" %}
+			<p>&nbsp;</p>
+			<h1>プライバシーポリシー</h1>
+			{% include "portal/privacy.html" %}
+			</div>
+		{% endif %}
+		
+		{% if mode == "chat" %}
+			{% include "chat/chat.html" %}
+		{% endif %}
 	</div>
 </div>
 

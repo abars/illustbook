@@ -319,7 +319,7 @@ class Chat(webapp.RequestHandler):
 			'user_name': user_name,
 			'is_english':CssDesign.is_english(self)
 		}
-		path = '/html/chat.html'
+		path = '/html/portal.html'
 		self.response.out.write(template_select.render(path, template_values))
 	
 	#経過時間取得
