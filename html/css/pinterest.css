@@ -15,7 +15,7 @@ h2,h3 {font-size:100%;color:#ea5376;}
 
 #contents {
     {% if is_iphone %}
-      min-width:320px;
+      width:320px;
     {% else %}
       {% if not thread_list %}
         width:848px;
