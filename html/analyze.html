@@ -1,6 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
 <html>
 <head>
+	{% include "viewport.html" %}
 	<title>{% if is_english %}Analyze {% endif %}{{page_name}}{% if not is_english %}のアクセス解析 - イラストブック{% endif %}</title>
 	{% include "css/portal.css" %}
 </head>
@@ -21,7 +22,7 @@
 <H1>{% if is_english %}Analyze {% endif %}{{page_name}}{% if not is_english %}のアクセス解析（直近256アクセスからの分析）{% endif %}</H1>
 </div>
 
-<div class="entry">
+<div class="entry" style="word-break:break-all;">
 <H1>{% if is_english %}Access from{% else %}アクセス元{% endif %}</H1>
 <div id="access"></div>
 <p>&nbsp;</p>

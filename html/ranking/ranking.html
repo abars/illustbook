@@ -1,6 +1,9 @@
 <!-- ユーザ一覧 -->
-<div>
+<div style="padding:4px;">
 	<h2>{{ranking_name}}</h2>
+</div>
+
+<div>
 	{% set count = (page-1)*page_unit+1 %}
 	{% for user in ranking_list %}
 	<div class="item">
@@ -15,7 +18,9 @@
 </div>
 
 <!-- ページ -->
-<div class="g-button-group">
-	<a id="feed_previous_page" href="{{host}}ranking?mode={{ranking_mode}}&page={{page-1}}" class="g-button no-text {%if page == 1%}disabled2{%endif%}"><i class="icon-chevron-left"></i></a>
-	<a id="feed_next_page" href="{{host}}ranking?mode={{ranking_mode}}&page={{page+1}}" class="g-button no-text"><i class="icon-chevron-right"></i></a>
+<div style="padding:4px;">
+	<div class="g-button-group">
+		<a id="feed_previous_page" href="{{host}}ranking?mode={{ranking_mode}}&page={{page-1}}" class="g-button no-text {%if page == 1%}disabled2{%endif%}"><i class="icon-chevron-left"></i></a>
+		<a id="feed_next_page" href="{{host}}ranking?mode={{ranking_mode}}&page={{page+1}}" class="g-button no-text"><i class="icon-chevron-right"></i></a>
+	</div>
 </div>

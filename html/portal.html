@@ -26,7 +26,7 @@
 {% include "floating_menu.html" %}
 
 <div id="container">
-	<div id="contents" style="background-color:#ffffff;padding:5px;{% if not is_iphone %}width:840px;{% endif %}">
+	<div id="contents" style="background-color:#ffffff;{% if not is_iphone %}width:840px;{% endif %}">
 		{% if mode == "ranking" %}
 			{% include "ranking/ranking.html" %}
 		{% endif %}
