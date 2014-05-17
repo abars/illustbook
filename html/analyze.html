@@ -2,11 +2,7 @@
 <html>
 <head>
 	<title>{% if is_english %}Analyze {% endif %}{{page_name}}{% if not is_english %}のアクセス解析 - イラストブック{% endif %}</title>
-{% if is_iphone %}
-	{% include "portal_css/css_iphone.html" %}
-{% else %}
-	{% include "portal_css/css_pc.html" %}
-{% endif %}
+	{% include "css/portal.css" %}
 </head>
 
 <body onload="update('{{analyze_data|safe}}');">

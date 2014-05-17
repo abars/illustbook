@@ -63,7 +63,6 @@ from myapp.AddBookmark import AddBookmark
 from myapp.NicoTracker import NicoTracker
 from myapp.UpdateProfile import UpdateProfile
 from myapp.MyPage import MyPage
-from myapp.ShowBookmark import ShowBookmark
 from myapp.Comic import Comic
 from myapp.AppPortal import AppPortal
 from myapp.ApiUser import ApiUser

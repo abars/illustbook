@@ -75,7 +75,6 @@ from myapp.AddBookmark import AddBookmark
 from myapp.NicoTracker import NicoTracker
 from myapp.UpdateProfile import UpdateProfile
 from myapp.MyPage import MyPage
-from myapp.ShowBookmark import ShowBookmark
 from myapp.Comic import Comic
 from myapp.AppPortal import AppPortal
 from myapp.ApiUser import ApiUser
@@ -317,7 +316,6 @@ application = webapp.WSGIApplication(
 	('/violation',ViolationTerms),
 	('/nico_tracker',NicoTracker),
 	('/update_profile',UpdateProfile),
-	('/show_bookmark',ShowBookmark),
 	('/show_icon',ShowIcon),
 	('/comic',Comic),
 	('/scheme_update',SchemeUpdate),

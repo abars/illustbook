@@ -2,7 +2,8 @@
 <html>
 <head>
 	<title>イラストブック　-　アカウントの移動</title>
-	<link rel="stylesheet" type="text/css" media="screen,print" href="{{host}}static_files/general/css/common.css" />
+{% include "css/pinterest.css" %}
+{% include "css/google_button.html" %}
 </head>
 
 <body>
@@ -10,7 +11,7 @@
 <div id="container">
 　<div id="contents">
 　
-　<div id="main">
+　<div class="message">
 {%if exec_move %}
 
 <p>移行が完了しました。</p>

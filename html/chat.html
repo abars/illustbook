@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+{% include "viewport.html" %}
+
+<title>
+{% if is_english %}ilbchat{% else %}お絵かきチャット{% endif %} - {% if is_english %}ILLUSTBOOK{% else %}イラストブック{% endif %}
+</title>
+
+{%include "meta.html" %}
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="Copyright" content="Copyright: ABARS" />
+{% include "jquery.html" %}
+{% include "css/pinterest.css" %}
+{% include "css/google_button.html" %}
+{% include "css/floating_menu_css.html" %}
+</head>
+
+<body>
+
+{% include "floating_menu.html" %}
+
+<div id="container">
+	<div id="contents" style="background-color:#ffffff;{% if not is_iphone %}width:840px;{% endif %}">
+		{% include "chat/chat.html" %}
+	</div>
+</div>
+
+<!-- フッター -->
+<div id="back-top">
+  <a href="#top">TOP</a>
+</div>
+
+<div id="pinterest_footer" style="display:block;">
+	{% include "portal/footer_link.html" %}
+</div>
+
+<script language="javascript" src="{{host}}js/infinite_scroll.js" type="text/javascript"></script>
+
+</body>
+</html>

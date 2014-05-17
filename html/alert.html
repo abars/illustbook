@@ -4,23 +4,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 {% include "viewport.html" %}
 	<title>{% if is_english %}Alert - ILLUSTBOOK{% else %}アラート　-　イラストブック{% endif %}</title>
-	<link rel="stylesheet" type="text/css" media="screen,print" href="{{host}}static_files/general/css/top.css" />
-{% if is_iphone %}
-	{% include "portal_css/css_iphone.html" %}
-{% else %}
-	{% include "portal_css/css_pc.html" %}
-{% endif %}
+{% include "css/pinterest.css" %}
+{% include "css/google_button.html" %}
 </head>
 
 <body>
 	
 <div id="container">
 	<div id="contents">
-		<p>&nbsp</p>
-		<p>{{alert_msg|safe}}</p>
-	</div>
-	<div id="footer">
-		{% include 'footer.html' %}
+		<div class="message">
+			<p>{{alert_msg|safe}}</p>
+		</div>
 	</div>
 </div>
 

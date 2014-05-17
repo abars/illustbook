@@ -1,4 +1,7 @@
-@charset "utf-8";
+{% include "css/google_button.html" %}
+{% include "jquery.html" %}
+
+<style type="text/css">
 
 /*-- reset  --*/
 
@@ -15,11 +18,8 @@ body {
 	color: #333333;
 	font-family: "ＭＳ Ｐゴシック", "Arial", "Osaka", "ヒラギノ角ゴPro W3";
 	font-size: 62.5%;
-	background-color: #C5DE94;
+	background-color:#f2f2f2;
 	text-align: center;
-	background-image: url(../images/top/bg.jpg);
-	background-repeat: repeat-y;
-	background-position: top center;
 }
 
 h1, h2, h3, h4, h5, h6, p, li, dt, dd {
@@ -33,7 +33,7 @@ h1, h2, h3, h4, h5, h6, p, li, dt, dd {
 }
 
 h1, h2, h3 {
-    color: #E47911;
+    color: #ea5376;
 }
 
 fieldset, img {
@@ -120,8 +120,7 @@ img.vbtm {
 
 #container {
 	width: 950px;
-/*	background-image: url(../images/top/bg.gif);
-	background-repeat: repeat-y; */
+	background-color: #ffffff;
 	margin: 0 auto;
 	padding: 0 0 20px 0;
 	text-align: left;
@@ -227,3 +226,37 @@ background-color: #2299cc;
 text-align: center;
 font-size: 62.5%;
 }
+
+</style>
+
+{% if is_iphone %}
+
+<style type="text/css">
+	#container{
+		width:320px;
+		margin-left:auto;
+		margin-right:auto;
+	}
+	
+	#contents{
+		padding:0px;
+		margin:8px;
+	}
+	
+	.linebreak{
+		word-wrap:break-word;
+		width:180px;
+	}
+	
+	img{
+		max-width:100%;
+	}
+
+	#footer{
+		padding:0px;
+		margin:8px;
+		width:300px;
+	}
+</style>
+
+{% endif %}
