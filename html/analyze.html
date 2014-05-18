@@ -6,7 +6,7 @@
 	{% include "css/portal.css" %}
 </head>
 
-<body onload="update('{{analyze_data|safe}}');">
+<body onload="update('{{analyze_data|safe}}',{% if is_english %}true{% else %}false{% endif %});">
 <div id="container">
 <div id="contents">
 

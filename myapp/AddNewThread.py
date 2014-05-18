@@ -45,6 +45,7 @@ from myapp.CategoryList import CategoryList
 from myapp.EscapeComment import EscapeComment
 from myapp.RssFeed import RssFeed
 from myapp.ApiUser import ApiUser
+from myapp.CssDesign import CssDesign
 
 class AddNewThread(webapp.RequestHandler):
 	def write_status(self,is_flash,msg):
@@ -56,27 +57,39 @@ class AddNewThread(webapp.RequestHandler):
 
 	def post(self):
 		is_flash=self.request.get('mode')=="illust" or self.request.get('mode')=="illust_all";
+		is_english=CssDesign.is_english(self)
 
 		if(self.request.get('thread_title')==""):
-			self.write_status(is_flash,"スレッドタイトルを入力して下さい。");
+			if(is_english):
+				self.write_status(is_flash,"Please input title");
+			else:
+				self.write_status(is_flash,"スレッドタイトルを入力して下さい。");
 			return                        
 		if(self.request.get('author')==""):
-			self.write_status(is_flash,"投稿者名を入力して下さい。");
-			return                        
+			if(is_english):
+				self.write_status(is_flash,"Please input author");
+			else:
+				self.write_status(is_flash,"投稿者名を入力して下さい。");
+			return
+
+		permission_error_str="スレッドを作成する権限がありません。"
+		if(is_english):
+			permission_error_str="Permission denied"
+
 		bbs = db.get(self.request.get("bbs_key"))
 		user = users.get_current_user()
 		if(bbs.bbs_mode==BbsConst.BBS_MODE_ONLY_ADMIN):
 			if(OwnerCheck.check(bbs,user)):
-				self.write_status(is_flash,"スレッドを作成する権限がありません。");
+				self.write_status(is_flash,permission_error_str);
 				return
 		if(bbs.bbs_mode==BbsConst.BBS_MODE_NO_IMAGE):
 			if(bbs.disable_create_new_thread==1):
 				if(OwnerCheck.check(bbs,user)):
-					self.write_status(is_flash,"スレッドを作成する権限がありません。");
+					self.write_status(is_flash,permission_error_str);
 					return
 			if(bbs.disable_create_new_thread==2):
 				if(not user):
-					self.write_status(is_flash,"スレッドを作成する権限がありません。");
+					self.write_status(is_flash,permission_error_str);
 					return
 
 		checkcode=SpamCheck.get_check_code()
@@ -200,7 +213,10 @@ class AddNewThread(webapp.RequestHandler):
 			try:
 				timage.put()
 			except:
-				self.write_status(is_flash,"画像の容量が大きすぎます。");
+				if(is_english):
+					self.write_status(is_flash,"Too big image");
+				else:
+					self.write_status(is_flash,"画像の容量が大きすぎます。");
 				return
 			new_thread.image_key=timage
 			ImageFile.invalidate_cache(str(timage.key()))

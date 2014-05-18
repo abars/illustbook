@@ -10,7 +10,7 @@
 		return cnt_hash[right]-cnt_hash[left];
 	}
 	
-	function get_ranking(txt,is_content_mode){
+	function get_ranking(txt,is_content_mode,is_english){
 		var access_list=txt.split("#")
 		
 		cnt_hash=new Array()
@@ -27,14 +27,20 @@
 			if(is_content_mode){
 				str=str.split("?")[0]
 			}
+
+			var search_engine="検索エンジン"
+			if(is_english){
+				search_engine="Search Engine"
+			}
+
 			var search_str=""
 			if(str.match(/.*google.co.jp\/search?.*q=(.*?)&/)){
 				search_str=RegExp.$1+"@"+str;
-				str="検索エンジン(Google)";
+				str=search_engine+"(Google)";
 			}
 			if(str.match(/.*yahoo.co.jp\/search?.*p=(.*?)&/)){
 				search_str=RegExp.$1+"@"+str;
-				str="検索エンジン(Yahoo)";
+				str=search_engine+"(Yahoo)";
 			}	
 			if(search_str!=""){
 				if(!search_list[search_str]){
@@ -67,7 +73,7 @@
 		return access_txt;
 	}
 	
-	function get_search_str(){
+	function get_search_str(is_english){
 		var ret=""
 		for(var search in search_list){
 			var list=search.split("@")
@@ -78,16 +84,20 @@
 			ret+="<a href='"+url+"' target='_blank' class='decnone' style='font-size:"+size+"px'>"+txt+"</font></a>　"
 		}
 		if(ret==""){
-			return "<p>検索エンジンからのアクセスは見つかりませんでした。</p>";
+			if(is_english){
+				return "<p>No access from search engine</p>";
+			}else{
+				return "<p>検索エンジンからのアクセスは見つかりませんでした。</p>";
+			}
 		}
 		return ret;
 	}
 	
-	function update(analyze_data){
+	function update(analyze_data,is_english){
 		var access_or_content=analyze_data.split("<>")
-		write("access",get_ranking(access_or_content[0],false))
-		write("content",get_ranking(access_or_content[1],true))
-		write("search",get_search_str())
+		write("access",get_ranking(access_or_content[0],false,is_english))
+		write("content",get_ranking(access_or_content[1],true,is_english))
+		write("search",get_search_str(is_english))
 	}
 	
 	function write(id,value){

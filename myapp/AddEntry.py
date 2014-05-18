@@ -40,6 +40,7 @@ from myapp.Ranking import Ranking
 from myapp.EscapeComment import EscapeComment
 from myapp.SyncPut import SyncPut
 from myapp.SetUtf8 import SetUtf8
+from myapp.CssDesign import CssDesign
 
 class AddEntry(webapp.RequestHandler):
 	def write_status(self,is_flash,msg):
@@ -79,6 +80,7 @@ class AddEntry(webapp.RequestHandler):
 
 	def post(self):
 		SetUtf8.set()
+		is_english=CssDesign.is_english(self)
 
 		#エラーコードはFlash向けかどうか
 		is_flash=False
@@ -93,15 +95,30 @@ class AddEntry(webapp.RequestHandler):
 			entry = Entry()
 			overwrite = False
 	
-		#設定
+		#コメント
 		if(self.request.get('comment')):
 			entry.content = self.request.get('comment')
 		else:
 			if(self.request.get('image')):
 				entry.content = ""
 			else:
-				self.write_status(is_flash,"コメントを入力して下さい。");
+				if(is_english):
+					self.write_status(is_flash,"Please input comment");
+				else:
+					self.write_status(is_flash,"コメントを入力して下さい。");
 				return
+
+		#名前
+		if(self.request.get('author')):
+			entry.editor = cgi.escape(self.request.get('author'))
+		else:
+			entry.editor = "no_name"
+			if(is_english):
+				self.write_status(is_flash,"Please input name");
+			else:
+				self.write_status(is_flash,"名前を入力して下さい。");
+			return
+			
 
 		if(not self.request.get('image')):
 			if(self.request.get("seed")!=BbsConst.SUBMIT_SEED):
@@ -177,7 +194,10 @@ class AddEntry(webapp.RequestHandler):
 			try:
 				timage.put()
 			except:
-				self.write_status(is_flash,"画像サイズが大きすぎます。");
+				if(is_english):
+					self.write_status(is_flash,"Too big image");
+				else:
+					self.write_status(is_flash,"画像サイズが大きすぎます。");
 				return
 
 			entry.illust_reply=1
@@ -188,13 +208,6 @@ class AddEntry(webapp.RequestHandler):
 
 		entry.content=EscapeComment.escape_br(entry.content)
 
-		if(self.request.get('author')):
-			entry.editor = cgi.escape(self.request.get('author'))
-		else:
-			entry.editor = "no_name"
-			self.write_status(is_flash,"名前を入力して下さい。");
-			return
-			
 		entry.thread_key = thread
 		entry.bbs_key = bbs
 		entry.del_flag = 1
