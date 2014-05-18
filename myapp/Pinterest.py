@@ -85,7 +85,7 @@ class Pinterest(webapp.RequestHandler):
 			if(not view_mode):
 				if(bookmark.profile):
 					edit_profile=bookmark.profile
-					compiled_line = re.compile("<br>")
+					compiled_line = re.compile("<br/?>")
 					edit_profile = compiled_line.sub(r'\r\n', edit_profile)
 		return edit_profile
 

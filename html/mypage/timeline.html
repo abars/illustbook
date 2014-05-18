@@ -6,6 +6,178 @@
 <div class="feed">
 	{% for feed in timeline %}
 	<div style="padding:4px;">
+		<!-- メイン -->
+		<div style="float:right;width:100%;margin-left:-64px;">
+			<div style="margin-left:64px;">
+		
+			<!-- ユーザ名 -->
+			<div style="float:left;"> 
+			{% if feed.mode != "deleted" %}
+				<b>
+				{% if feed.from_user %}
+					<a href="{{feed.from_user.profile_url}}">
+						{{feed.from_user.name}}
+					</a>
+				{% else %}
+					匿名ユーザ
+				{% endif %}
+				{% if feed.to_user %}
+				　->　<a href="{{feed.to_user.profile_url}}">
+					{{feed.to_user.name}}
+				</a>
+				{% endif %}
+				</b>
+			{% endif %}
+			</div>
+
+			<!-- オプション -->
+			<div style="float:right;text-align:right;">
+			{{feed.create_date}}<br/>
+
+			{% if not view_mode %}
+				{% if edit_mode == 1 %}
+					<input type="checkbox" name="tweet_list" value="{{feed.key}}"/>
+				{% endif %}
+				{% if feed.to_user.user_id == user_id %}
+					<a href="mypage?user_id={{feed.from_user.user_id}}&amp;tab=feed" class="g-button mini">
+					{% if is_english %}Reply{% else %}返信{% endif %}
+					</a><br/>
+				{% endif %}
+			{% endif %}
+			</div>
+
+			<br clear="all"/>
+
+			{% set deleted_style_header = "<font color='#888'>" %}
+			{% set deleted_style_footer = "</font>" %}
+			{% set enh_style_header = "<font color='#E47911'>" %}
+			{% set enh_style_footer = "</font>" %}
+			{% set message = feed.message %}
+
+			<!-- メッセージ -->
+			<p>
+			{% if feed.mode == "bbs_new_illust" %}
+				{% if not feed.thread.title %}
+					{{deleted_style_header}}投稿したイラストは削除されました。{{deleted_style_footer}}
+				{% else %}
+					{% if feed.thread.thumbnail_url == "" %}
+						<a href="{{feed.thread.thread_url}}">
+							{% if is_english %}
+								Submit {{feed.thread.title}}
+							{% else %}
+								{{feed.bbs.title}}に{{feed.thread.title}}を投稿しました。
+							{% endif %}
+						</a>
+						<blockquote>
+							<a href="{{feed.thread.thread_url}}">
+								{{feed.thread.summary}}
+							</a>
+						</blockquote>
+					{% else %}
+						<a href="{{feed.thread.thread_url}}">
+							{% if is_english %}
+								Submit {{feed.thread.title}}
+							{% else %}
+								{{feed.bbs.title}}に{{feed.thread.title}}を投稿しました。
+							{% endif %}
+						</a>
+					{% endif %}
+				{% endif %}
+			{% endif %}
+
+			{% if feed.mode == "new_follow" %}
+				<a href="{{feed.follow_user.profile_url}}">
+					{% if is_english %}Follow {% endif %}{{feed.follow_user.name}}{% if not is_english %}をフォローしました。{% endif %}
+				</a>
+			{% endif %}
+
+			{% if feed.mode == "new_bookmark_thread" %}
+				<a href="{{feed.thread.thread_url}}">
+					{% if not feed.thread.title %}
+						{{deleted_style_header}}ブックマークしたイラストは削除されました。{{deleted_style_footer}}
+					{% else %}
+						{% if is_english %}Bookmark {% endif %}{{feed.thread.title}}{% if not is_english %}をブックマークしました。{% endif %}
+					{% endif %}
+				</a>
+			{% endif %}
+
+			{% if feed.mode == "new_comment_thread" %}
+				{% if not feed.thread %}
+					{{deleted_style_header}}
+					コメントしたイラストは削除されました。
+					{{deleted_style_footer}}
+					{% set message = "" %}
+				{% else %}
+					<a href="{{feed.thread.thread_url}}">
+						{% if is_english %}Comment to {% endif %}{{feed.thread.title}}{% if not is_english %}にコメントしました。{% endif %}
+					</a>
+				{% endif %}
+			{% endif %}
+
+			{% if feed.mode == "new_bookmark_bbs" %}
+				<a href="{{feed.bbs.bbs_url}}">
+					{% if not feed.bbs.title %}
+						{{deleted_style_header}}ブックマークした掲示板は削除されました。{{deleted_style_footer}}
+					{% else %}
+						{% if is_english %}Bookmark {% endif %}{{feed.bbs.title}}{% if not is_english %}をブックマークしました。{% endif %}
+					{% endif %}
+				</a>
+			{% endif %}
+
+			{% if feed.mode == "new_applause_thread" %}
+				<a href="{{feed.thread.thread_url}}">
+					{% if not feed.thread.title %}
+						{{deleted_style_header}}拍手したイラストは削除されました。{{deleted_style_footer}}
+					{% else %}
+						{% if is_english %}Like to {% endif %}{{feed.thread.title}}{% if not is_english %}に拍手しました。{% endif %}
+					{% endif %}
+				</a>
+			{% endif %}
+
+			</p>
+
+			<!-- 付加画像データ -->
+			{% if feed.mode == "bbs_new_illust" or feed.mode == "new_applause_thread" or feed.mode == "new_bookmark_thread" %}
+				{% if feed.thread.thumbnail_url %}
+					{% if feed.thread|regulation_check(user)%}
+						<a href="{{feed.thread.thread_url}}">
+							<img src="{{feed.thread.thumbnail_url}}" width="100px" height="100px" alt="{{feed.thread.title}}"/>
+						</a>
+					{% else %}
+						[年齢制限付きイラスト]
+					{% endif %}
+				{% endif %}
+			{% endif %}
+
+			{% if feed.mode == "new_follow" %}
+				<a href="{{feed.follow_user.profile_url}}">
+					<img src="{{feed.follow_user.icon_url}}&amp;size=mini" width="50px" height="50px" alt="{{feed.follow_user.name}}"/>
+				</a>
+			{% endif %}
+
+			{% if message %}
+				{% if feed.mode == "new_comment_thread" %}
+					<blockquote><p>
+						<a href="{{feed.thread.thread_url}}">
+							{% if message == "deleted" %}
+								{{deleted_style_header}}コメントは削除されました。{{deleted_style_footer}}
+							{% else %}
+								{{message}}
+							{% endif %}
+						</a>
+					</p></blockquote>
+				{% else %}
+					{% if feed.mode == "deleted" %}
+						<p>{{deleted_style_header}}{{message}}{{deleted_style_footer}}</p>
+					{% else %}
+						<p>{{message}}</p>
+					{% endif %}
+				{% endif %}
+			{% endif %}
+
+			</div>
+		</div>
+
 		<!-- アイコン -->
 		<div style="float:left;width:58px;text-align:center;margin:auto;">
 		{% if feed.from_user and feed.mode != "deleted" %}
@@ -16,180 +188,6 @@
 			<img src="static_files/empty_user.png" width="50px" height="50px" alt="no user"/>
 		{% endif %}
 		</div>
-
-		<!-- メイン -->
-		<div style="float:right;width:100%;margin-left:-64px;">
-		<div style="margin-left:64px;">
-	
-		<!-- ユーザ名 -->
-		<div style="float:left;"> 
-		{% if feed.mode != "deleted" %}
-			<b>
-			{% if feed.from_user %}
-				<a href="{{feed.from_user.profile_url}}">
-					{{feed.from_user.name}}
-				</a>
-			{% else %}
-				匿名ユーザ
-			{% endif %}
-			{% if feed.to_user %}
-			　->　<a href="{{feed.to_user.profile_url}}">
-				{{feed.to_user.name}}
-			</a>
-			{% endif %}
-			</b>
-		{% endif %}
-		</div>
-
-		<!-- オプション -->
-		<div style="float:right;text-align:right;">
-		{{feed.create_date}}<br/>
-
-		{% if not view_mode %}
-			{% if edit_mode == 1 %}
-				<input type="checkbox" name="tweet_list" value="{{feed.key}}"/>
-			{% endif %}
-			{% if feed.to_user.user_id == user_id %}
-				<a href="mypage?user_id={{feed.from_user.user_id}}&amp;tab=feed" class="g-button mini">
-				{% if is_english %}Reply{% else %}返信{% endif %}
-				</a><br/>
-			{% endif %}
-		{% endif %}
-		</div>
-
-		<br clear="all"/>
-
-		{% set deleted_style_header = "<font color='#888'>" %}
-		{% set deleted_style_footer = "</font>" %}
-		{% set enh_style_header = "<font color='#E47911'>" %}
-		{% set enh_style_footer = "</font>" %}
-		{% set message = feed.message %}
-
-		<!-- メッセージ -->
-		<p>
-		{% if feed.mode == "bbs_new_illust" %}
-			{% if not feed.thread.title %}
-				{{deleted_style_header}}投稿したイラストは削除されました。{{deleted_style_footer}}
-			{% else %}
-				{% if feed.thread.thumbnail_url == "" %}
-					<a href="{{feed.thread.thread_url}}">
-						{% if is_english %}
-							Submit {{feed.thread.title}}
-						{% else %}
-							{{feed.bbs.title}}に{{feed.thread.title}}を投稿しました。
-						{% endif %}
-					</a>
-					<blockquote>
-						<a href="{{feed.thread.thread_url}}">
-							{{feed.thread.summary}}
-						</a>
-					</blockquote>
-				{% else %}
-					<a href="{{feed.thread.thread_url}}">
-						{% if is_english %}
-							Submit {{feed.thread.title}}
-						{% else %}
-							{{feed.bbs.title}}に{{feed.thread.title}}を投稿しました。
-						{% endif %}
-					</a>
-				{% endif %}
-			{% endif %}
-		{% endif %}
-
-		{% if feed.mode == "new_follow" %}
-			<a href="{{feed.follow_user.profile_url}}">
-				{% if is_english %}Follow {% endif %}{{feed.follow_user.name}}{% if not is_english %}をフォローしました。{% endif %}
-			</a>
-		{% endif %}
-
-		{% if feed.mode == "new_bookmark_thread" %}
-			<a href="{{feed.thread.thread_url}}">
-				{% if not feed.thread.title %}
-					{{deleted_style_header}}ブックマークしたイラストは削除されました。{{deleted_style_footer}}
-				{% else %}
-					{% if is_english %}Bookmark {% endif %}{{feed.thread.title}}{% if not is_english %}をブックマークしました。{% endif %}
-				{% endif %}
-			</a>
-		{% endif %}
-
-		{% if feed.mode == "new_comment_thread" %}
-			{% if not feed.thread %}
-				{{deleted_style_header}}
-				コメントしたイラストは削除されました。
-				{{deleted_style_footer}}
-				{% set message = "" %}
-			{% else %}
-				<a href="{{feed.thread.thread_url}}">
-					{% if is_english %}Comment to {% endif %}{{feed.thread.title}}{% if not is_english %}にコメントしました。{% endif %}
-				</a>
-			{% endif %}
-		{% endif %}
-
-		{% if feed.mode == "new_bookmark_bbs" %}
-			<a href="{{feed.bbs.bbs_url}}">
-				{% if not feed.bbs.title %}
-					{{deleted_style_header}}ブックマークした掲示板は削除されました。{{deleted_style_footer}}
-				{% else %}
-					{% if is_english %}Bookmark {% endif %}{{feed.bbs.title}}{% if not is_english %}をブックマークしました。{% endif %}
-				{% endif %}
-			</a>
-		{% endif %}
-
-		{% if feed.mode == "new_applause_thread" %}
-			<a href="{{feed.thread.thread_url}}">
-				{% if not feed.thread.title %}
-					{{deleted_style_header}}拍手したイラストは削除されました。{{deleted_style_footer}}
-				{% else %}
-					{% if is_english %}Like to {% endif %}{{feed.thread.title}}{% if not is_english %}に拍手しました。{% endif %}
-				{% endif %}
-			</a>
-		{% endif %}
-
-	</p>
-
-	<!-- 付加画像データ -->
-	{% if feed.mode == "bbs_new_illust" or feed.mode == "new_applause_thread" or feed.mode == "new_bookmark_thread" %}
-		{% if feed.thread.thumbnail_url %}
-			{% if feed.thread|regulation_check(user)%}
-				<a href="{{feed.thread.thread_url}}">
-					<img src="{{feed.thread.thumbnail_url}}" width="100px" height="100px" alt="{{feed.thread.title}}"/>
-				</a>
-			{% else %}
-				[年齢制限付きイラスト]
-			{% endif %}
-		{% endif %}
-	{% endif %}
-
-	{% if feed.mode == "new_follow" %}
-		<a href="{{feed.follow_user.profile_url}}">
-			<img src="{{feed.follow_user.icon_url}}&amp;size=mini" width="50px" height="50px" alt="{{feed.follow_user.name}}"/>
-		</a>
-	{% endif %}
-
-	{% if message %}
-		{% if feed.mode == "new_comment_thread" %}
-			<blockquote><p>
-				<a href="{{feed.thread.thread_url}}">
-					{% if message == "deleted" %}
-						{{deleted_style_header}}コメントは削除されました。{{deleted_style_footer}}
-					{% else %}
-						{{message}}
-					{% endif %}
-				</a>
-			</p></blockquote>
-		{% else %}
-			{% if feed.mode == "deleted" %}
-				<p>{{deleted_style_header}}{{message}}{{deleted_style_footer}}</p>
-			{% else %}
-				<p>{{message}}</p>
-			{% endif %}
-		{% endif %}
-	{% endif %}
-
-		<!-- メインブロック -->
-		</div>
-		</div>
-
 	</div>
 	<br clear='all'/>
 

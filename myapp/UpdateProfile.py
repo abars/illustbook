@@ -83,7 +83,7 @@ class UpdateProfile(webapp.RequestHandler):
 		
 		profile = cgi.escape(profile)
 		compiled_line = re.compile("\r\n|\r|\n")
-		profile = compiled_line.sub(r'<br>', profile)
+		profile = compiled_line.sub(r'<br/>', profile)
 
 		if(mail=="None"):
 			mail=""
