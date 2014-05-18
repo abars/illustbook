@@ -193,6 +193,7 @@
   {% endif %}
 {% endif %}
 
+{% if not is_timeline_enable %}
 <div id="infinite-scroll-container" class="transitions-enabled infinite-scroll clearfix">
   <div class="corner-stamp">
   {% if not(is_iphone and top_page) %}
@@ -212,6 +213,7 @@
   <!-- page must be 2 for inf-scroll path detecter -->
   <a href="{{redirect_api}}?{{next_query}}&amp;contents_only=1&amp;page=2"></a>
 </div>
+{% endif %}
 {% endif %}
 
 <!-- コンテンツ終了　-->

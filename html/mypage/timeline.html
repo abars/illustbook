@@ -9,9 +9,11 @@
 		<!-- アイコン -->
 		<div style="float:left;width:58px;text-align:center;margin:auto;">
 		{% if feed.from_user and feed.mode != "deleted" %}
-			<a href="{{feed.from_user.profile_url}}"><img src="{{feed.from_user.icon_url}}&size=mini" width="50px" height="50px"/></a>
+			<a href="{{feed.from_user.profile_url}}">
+				<img src="{{feed.from_user.icon_url}}&amp;size=mini" width="50px" height="50px" alt="{{feed.from_user.name}}"/>
+			</a>
 		{% else %}
-			<img src="static_files/empty_user.png" width="50px" height="50px"/>
+			<img src="static_files/empty_user.png" width="50px" height="50px" alt="no user"/>
 		{% endif %}
 		</div>
 
@@ -33,7 +35,7 @@
 			{% if feed.to_user %}
 			　->　<a href="{{feed.to_user.profile_url}}">
 				{{feed.to_user.name}}
-			</A>
+			</a>
 			{% endif %}
 			</b>
 		{% endif %}
@@ -46,20 +48,9 @@
 		{% if not view_mode %}
 			{% if edit_mode == 1 %}
 				<input type="checkbox" name="tweet_list" value="{{feed.key}}"/>
-				{#
-				{% if feed.from_user.user_id == user_id %}				
-				<a href="#" onclick="confirm_delete_tweet('{{feed.key}}','{{page}}','{{tab}}',{% if is_english %}true{%else%}false{% endif %});" class="g-button mini">
-					{% if is_english %}Remove{% else %}削除{% endif %}
-				</a><br/>
-				{% else %}
-				<a href="#" onclick="confirm_remove_tweet('{{feed.key}}','{{page}}','{{tab}}',{% if is_english %}true{%else%}false{% endif %});" class="g-button mini">
-					{% if is_english %}Hide{% else %}除外{% endif %}
-				</a><br/>
-				{% endif %}
-				#}
 			{% endif %}
 			{% if feed.to_user.user_id == user_id %}
-				<a href="mypage?user_id={{feed.from_user.user_id}}&tab=feed" class="g-button mini">
+				<a href="mypage?user_id={{feed.from_user.user_id}}&amp;tab=feed" class="g-button mini">
 				{% if is_english %}Reply{% else %}返信{% endif %}
 				</a><br/>
 			{% endif %}
@@ -161,7 +152,7 @@
 		{% if feed.thread.thumbnail_url %}
 			{% if feed.thread|regulation_check(user)%}
 				<a href="{{feed.thread.thread_url}}">
-					<img src="{{feed.thread.thumbnail_url}}" width="100px" height="100px"/>
+					<img src="{{feed.thread.thumbnail_url}}" width="100px" height="100px" alt="{{feed.thread.title}}"/>
 				</a>
 			{% else %}
 				[年齢制限付きイラスト]
@@ -171,7 +162,7 @@
 
 	{% if feed.mode == "new_follow" %}
 		<a href="{{feed.follow_user.profile_url}}">
-			<img src="{{feed.follow_user.icon_url}}&size=mini" width="50px" height="50px"/>
+			<img src="{{feed.follow_user.icon_url}}&amp;size=mini" width="50px" height="50px" alt="{{feed.follow_user.name}}"/>
 		</a>
 	{% endif %}
 

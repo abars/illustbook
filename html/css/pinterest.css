@@ -94,7 +94,7 @@ h2,h3 {font-size:100%;color:#ea5376;}
 	clear:both;
 }
 
-.item img{
+.item_radius_image{
 	border-radius: {{radius_r}}px {{radius_r}}px 0px 0px;
 }
 
