@@ -4,7 +4,7 @@
 		{%include "mypage/edit_profile.html"%}
 	{% else %}
 		<div style="float:left;{% if is_iphone %}width:78px;{% else %}width:164px{% endif %}">
-			<img src="{{view_user.icon_url}}" {% if is_iphone %}width=74px height=74px{%else%}width=160px height=160px{% endif %}>
+			<img src="{{view_user.icon_url}}" {% if is_iphone %}width="74px" height="74px"{%else%}width="160px" height="160px"{% endif %} alt="{{view_user.name}}"/>
 		</div>
 		<div style="float:right;word-break:break-all;width:100%;{% if is_iphone %}margin-left:-78px;{% else %}margin-left:-164px;{% endif %}">
 		<div style="{% if is_iphone %}margin-left:78px;{% else %}margin-left:164px;{% endif %}">
@@ -35,9 +35,9 @@
 						{% endif %}
 						{% if age %}<tr><td>{% if is_english %}Age{%else%}年齢{% endif %}</td><td>　</td><td>{{age}}{% if not is_english %}才{% endif %}</td></tr>{%endif%}
 						{% if bookmark.birthday_month %}<tr><td>{% if is_english %}Birthday{%else%}誕生日{% endif %}</td><td>　</td><td>{{bookmark.birthday_month}}{% if is_english %}/{% else %}月{% endif %}{{bookmark.birthday_day}}{% if not is_english %}日{% endif %}</td></tr>{%endif %}
-						{% if bookmark.homepage %}<tr><td>{% if is_english %}Homepage{%else%}ホームページ{% endif %}</td><td>　</td><td><a href="{{bookmark.homepage}}" class="declink"><div class="linebreak">{{bookmark.homepage}}</div></a></td></tr>{% endif %}
-						{% if bookmark.mail %}<tr><td>{% if is_english %}Mail{%else%}メール{% endif %}</td><td>　</td><td><a href="mailto:{{bookmark.mail}}" class="declink"><div class="linebreak">{{bookmark.mail|safe}}</div></a></td></tr>{% endif %}
-						{% if bookmark.twitter_id %}<tr><td>Twitter</td><td>　</td><td>{% if bookmark.twitter_id %}<a href="https://twitter.com/#!/{{bookmark.twitter_id}}" class="declink"><div class="linebreak">{{bookmark.twitter_id}}</div></a>{% endif %}</td></tr>{% endif %}
+						{% if bookmark.homepage %}<tr><td>{% if is_english %}Homepage{%else%}ホームページ{% endif %}</td><td>　</td><td><a href="{{bookmark.homepage}}" class="declink linebreak">{{bookmark.homepage}}</a></td></tr>{% endif %}
+						{% if bookmark.mail %}<tr><td>{% if is_english %}Mail{%else%}メール{% endif %}</td><td>　</td><td><a href="mailto:{{bookmark.mail}}" class="declink linebreak">{{bookmark.mail|safe}}</a></td></tr>{% endif %}
+						{% if bookmark.twitter_id %}<tr><td>Twitter</td><td>　</td><td>{% if bookmark.twitter_id %}<a href="https://twitter.com/#!/{{bookmark.twitter_id}}" class="declink linebreak">{{bookmark.twitter_id}}</a>{% endif %}</td></tr>{% endif %}
 						{% if is_admin %}{% if bookmark.owner %}<tr><td>{% if is_english %}Account(*ADMIN){% else %}アカウント(＊管理モード){% endif %}</td><td>　</td><td>{{bookmark.owner.email()}}</td></tr>{% endif %}{% endif %}
 				</table>
 			</div>
@@ -95,7 +95,7 @@
 			</div>
 		</div>
 		</div>
-	<br clear="all">
+	<br clear="all"/>
 	{% endif %}
 </div>
 
@@ -110,7 +110,7 @@
 		 {% if is_english %}Follow{%else%}フォローしている{% endif %}<br/>
 		 {% for user in follow %}
 		 <div class="deletable" style="float:left;">
-			 <a href="{{redirect_api}}?user_id={{user.user_id}}"><img src="{{user.icon_url}}&size=mini" width="50px" height="50px" alt='{{user.name}}'/></a>
+			 <a href="{{redirect_api}}?user_id={{user.user_id}}"><img src="{{user.icon_url}}&amp;size=mini" width="50px" height="50px" alt='{{user.name}}'/></a>
 			 {% if edit_mode %}
 			 <a href="javascript:confirm_delete('del_user&user_key={{user.user_id}}','フォロー','{{user.name}}',{% if is_english %}true{%else%}false{% endif %});" class="g-button no-text delete_button"><i class="icon-remove"></i></a>
 			 {% endif %}
@@ -121,7 +121,7 @@
 		 {% if follower %}
 		 {% if is_english %}Follower{%else%}フォローされている{% endif %}<br/>
 		 {% for user in follower %}
-		 <a href="{{redirect_api}}?user_id={{user.user_id}}"><img src="{{user.icon_url}}&size=mini" width=50px height=50px></a>
+		 <a href="{{redirect_api}}?user_id={{user.user_id}}"><img src="{{user.icon_url}}&amp;size=mini" width="50px" height="50px" alt='{{user.name}}'/></a>
 		 {% endfor %}
 		 {% endif %}
 		 <!--

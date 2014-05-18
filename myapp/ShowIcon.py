@@ -21,12 +21,6 @@ class ShowIcon (webapp.RequestHandler):
 			self.redirect(str("/static_files/empty_user.png"));
 			return
 		
-		#try:
-		#	key=Bookmark.user_icon.get_value_for_datastore(bookmark)
-		#	user_icon=ApiObject.get_cached_object(key)
-		#except:
-		#	user_icon=None
-		
 		size="big"
 		if(self.request.get("size") and self.request.get("size")=="mini"):
 			size="mini"

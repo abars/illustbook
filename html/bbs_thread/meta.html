@@ -1,11 +1,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 {% if thread and thread.cached_image_key%}
   <meta name="msapplication-TileImage" content="{{host}}tile/{{thread.cached_image_key}}.png"/>
-  <link rel="apple-touch-icon" href="{{host}}tile/{{thread.cached_image_key}}.png">
+  <link rel="apple-touch-icon" href="{{host}}tile/{{thread.cached_image_key}}.png"/>
 {% else %}
 {% if bbs and bbs.cached_thumbnail_key%}
   <meta name="msapplication-TileImage" content="{{host}}tile/{{bbs.cached_thumbnail_key}}.png"/>
-  <link rel="apple-touch-icon" href="{{host}}tile/{{bbs.cached_thumbnail_key}}.png">
+  <link rel="apple-touch-icon" href="{{host}}tile/{{bbs.cached_thumbnail_key}}.png"/>
 {% endif %}
 {% endif %}
 {% include "viewport.html" %}

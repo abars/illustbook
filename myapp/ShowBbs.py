@@ -111,9 +111,9 @@ class ShowBbs(webapp.RequestHandler):
 		#URLを作成
 		mapped_category=urllib.quote(category.encode('utf-8'))
 		page_url=MappingId.get_usr_url(host_url,bbs)
-		page_url_base=MappingId.get_usr_url(host_url,bbs)+'?order='+order+'&category='+mapped_category+'&page='
-		page_url_order_base=MappingId.get_usr_url(host_url,bbs)+'?page=1&category='+mapped_category+'&order='
-		page_url_category_base=MappingId.get_usr_url(host_url,bbs)+'?page=1&order='+order+"&category="
+		page_url_base=MappingId.get_usr_url(host_url,bbs)+'?order='+order+'&amp;category='+mapped_category+'&amp;page='
+		page_url_order_base=MappingId.get_usr_url(host_url,bbs)+'?page=1&amp;category='+mapped_category+'&amp;order='
+		page_url_category_base=MappingId.get_usr_url(host_url,bbs)+'?page=1&amp;order='+order+"&amp;category="
 
 		#ページリストを作成
 		page_list=PageGenerate.generate_page(page,threads_num,col_num)

@@ -236,8 +236,8 @@ class Pinterest(webapp.RequestHandler):
 			order=self.request.get("order")
 
 		month_query=""
-		if(self.request.get("month")):
-			month_query=self.request.get("month")
+		if(self.request.get("query")):
+			month_query=self.request.get("query")
 
 		search_api="search_tag"
 		ranking_month_list=[]
@@ -291,7 +291,7 @@ class Pinterest(webapp.RequestHandler):
 
 		template_values=Pinterest.initialize_template_value(self,user,user_id,page,request_page_mode,redirect_api,contents_only)
 		template_values['thread_list']=thread_list
-		template_values['next_query']="order="+order+"&month="+month_query
+		template_values['next_query']="order="+order+"&amp;query="+month_query
 		template_values['tag_list']=SearchTag.get_recent_tag(search_api)
 		template_values['top_page']=True
 		template_values['order']=order
@@ -299,7 +299,7 @@ class Pinterest(webapp.RequestHandler):
 		template_values['illust_enable']=True
 		template_values['bbs_list']=bbs_list
 		template_values['ranking_month_list']=ranking_month_list
-		template_values['month']=month_query
+		template_values['month_query']=month_query
 
 		Pinterest._render_page(self,template_values)
 
@@ -533,7 +533,7 @@ class Pinterest(webapp.RequestHandler):
 		view_user_profile=ApiUser.user_get_profile(self,user_id,bookmark)
 		tag_list=None
 
-		next_query="user_id="+user_id+"&tab="+tab+"&edit="+str(edit_mode)
+		next_query="user_id="+user_id+"&amp;tab="+tab+"&amp;edit="+str(edit_mode)
 		if(only_one_page):
 			next_query=None
 		
