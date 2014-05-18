@@ -4,4 +4,11 @@
 検索には評価式も入力可能です。例えば、bookmark > 5、と入力するとブックマークが5以上のイラストを検索します。
 また、date < 2011-01-01、と入力すると2010年のイラストを検索します。
 </div>
+
+<div class="message recent_tag" {% if not is_iphone %}style="width:350px;margin-left:0px;margin-right:0px;"{% endif %}>
+<p>{% if is_english %}External Search{% else %}他のサイトで検索{% endif %}</p>
+<a href="http://dic.pixiv.net/a/{{search}}" target="_BLANK">Pixiv百科事典</a>&nbsp;
+<a href="http://dic.nicovideo.jp/s/al/t/{{search}}" target="_BLANK">ニコニコ大百科</a>
+</div>
+
 {% endif %}
