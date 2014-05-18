@@ -199,11 +199,6 @@ class RankingPortal(webapp.RequestHandler):
 		rank=Ranking.get_or_insert(BbsConst.THREAD_RANKING_KEY_NAME)
 		ranking_mode=self.request.get("mode")
 		
-		#if(ranking_mode=="owner"):
-		#	ranking_list=rank.owner_ranking_list[(page-1)*page_unit:page*page_unit]
-		#	ranking_name="オーナーランキング"
-		#else:
-		
 		ranking_id_list=rank.user_id_ranking_list[(page-1)*page_unit:page*page_unit]
 		ranking_list=[]
 		for user_id in ranking_id_list:
@@ -243,6 +238,10 @@ class GuidePage(webapp.RequestHandler):
 				Pinterest.get_core(self,Pinterest.PAGE_MODE_GUIDE)
 				return
 		Portal.get(self,"guide",True)
+
+class ShowBookmark(webapp.RequestHandler):
+	def get(self):
+		return Pinterest.get_core(self,Pinterest.PAGE_MODE_BOOKMARK)
 
 #-----------------------------------------------------------------
 #振り分け
@@ -310,6 +309,7 @@ application = webapp.WSGIApplication(
 	('/admin',Admin),
 	('/terms',Terms),
 	('/search_tag',Pinterest),
+	('/show_bookmark',ShowBookmark),
 	('/move_account',MoveAccount),
 	('/violation',ViolationTerms),
 	('/nico_tracker',NicoTracker),
