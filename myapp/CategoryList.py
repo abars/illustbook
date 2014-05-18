@@ -33,14 +33,10 @@ from myapp.BbsConst import BbsConst
 class CategoryList(webapp.RequestHandler):
 	@staticmethod
 	def get_category_list(bbs):
-		dic=CategoryList.get_category_dic(bbs)
-		ret=[]
-		for text in dic.keys():
-			ret.append({"category":text,"count":dic[text]})
-		return ret
+		return CategoryList._get_category_dic(bbs,None)
 
 	@staticmethod
-	def get_category_dic(bbs):
+	def _get_category_dic(bbs,new_category):
 		#文字列->リスト
 		category_list=[]
 		if(bbs.category_list and bbs.category_list!=""):
@@ -48,8 +44,10 @@ class CategoryList(webapp.RequestHandler):
 		else:
 			bbs.category_list=""
 		
-		#カウント分離
-		dic=OrderedDict()
+		#カテゴリとカウントの分離
+		dic=[]
+		category_found=False
+		updated=False
 		for text in category_list:
 			m = re.search('(.*)\(([0-9]*)\)', text)
 			if m:
@@ -60,38 +58,45 @@ class CategoryList(webapp.RequestHandler):
 				count=-1
 			if(name==""):
 				continue
-			dic[name]=count
+
+			#カテゴリの更新を行う場合
+			if(new_category):
+				if(name==new_category):
+					count=-1
+					category_found=True
+
+			#更新リクエスト
+			if(count==-1):
+				count=MesThread.all().filter("bbs_key =",bbs).filter("category =",name).count(limit=1000)
+				updated=True
+				dic.insert(0,{"category":name,"count":count})
+			else:
+				dic.append({"category":name,"count":count})
 		
-		#カウント値更新
-		updated=False
-		for category in dic.keys():
-			#logging.error(""+str(dic[category])+"/["+category+"]/"+str(len(category)))
-			if(dic[category]==-1):
-				dic[category]=MesThread.all().filter("bbs_key =",bbs).filter("category =",category).count(limit=1000)
-				if(dic[category]!=-1):
-					updated=True
+		#カテゴリが存在しなかったら新規追加
+		if(new_category and (not category_found)):
+			dic.insert(0,{"category":new_category,"count":1})
+			updated=True
+
+		#更新
 		if(updated):
-			CategoryList.put_category_dic(bbs,dic)
+			CategoryList._put_category_dic(bbs,dic)
 		
 		return dic
 	
 	@staticmethod
-	def put_category_dic(bbs,category_dic):
+	def _put_category_dic(bbs,category_dic):
 		category_list_text=""
-		for category in category_dic.keys():
+		for one in category_dic:
+			category=one["category"]
+			count=one["count"]
 			if(len(category)==0):
 				next
-			if(category_dic[category]==-1):
-				category_list_text=category_list_text+category+","
-			else:
-				category_list_text=category_list_text+category+"("+str(category_dic[category])+"),"
+			category_list_text=category_list_text+category+"("+str(count)+"),"
 		bbs.category_list=category_list_text
 		bbs.put()
 
 	@staticmethod
 	def add_new_category(bbs,category):
-		category_dic=CategoryList.get_category_dic(bbs)
-		if not (category in category_dic.keys()):
-			category_dic[category]=-1	#カテゴリを追加
-		category_dic[category]=-1	#カウント更新リクエスト
-		CategoryList.put_category_dic(bbs,category_dic)
+		#update request
+		category_dic=CategoryList._get_category_dic(bbs,category)
