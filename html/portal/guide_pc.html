@@ -1,6 +1,9 @@
+<div class="guide">
 <h1 id="page2">{% if is_english %}Draw tool tutorial (PC/App){% else %}イラブペイント(PC版/アプリ版)の使い方{% endif %}</h1>
+</div>
 
 {% if not is_english %}
+<div class="guide">
 <h2>インストール</h2>
 
 <p>
@@ -9,8 +12,10 @@ iPad向けのアプリ版は以下からインストールして下さい。
 </p>
 
 <div class="pochireba" style="text-align:left;font-size:small;padding:20px 0;/zoom: 1;overflow: hidden;"><a href="https://itunes.apple.com/jp/app/id765479109" target="_blank" ><img src="http://a1741.phobos.apple.com/us/r30/Purple6/v4/04/25/71/042571e2-faad-e277-e044-0971e87c70e3/mzl.lxsnydch.png" alt="イラブペイント" width="75" height="75" style="float:left;margin:0 15px 0 0;width:75px;height:75px;" class="pochi_img" ></a><div class="pochi_info" style="text-align:left;/zoom: 1;overflow: hidden;"><div class="pochi_name"><a href="https://itunes.apple.com/jp/app/id765479109" target="_blank" >イラブペイント</a></div><div class="pochi_price" style="display:inline;">無料</div><div class="pochi_time" style="font-size:x-small;display:inline;">(2013.12.04時点)</div><div class="pochi_seller"><a href="https://itunes.apple.com/jp/artist/abars/id391490089" target="_blank" >ABARS</a></div><div class="pochi_post" style="font-size:x-small;">posted with <a href="http://pochireba.com" rel="nofollow" target="_blank">ポチレバ</a></div></div><div class="pochireba-footer" style="clear: left"></div></div>
+</div>
 {% endif %}
 
+<div class="guide">
 <h2>{% if is_english %}Tool layout{% else %}画面構成{% endif %}</h2>
 
 {% if not is_english %}
@@ -35,8 +40,10 @@ iPad向けのアプリ版は以下からインストールして下さい。
 	</div>
 	{% endif %}
 	</div>
+</div>
 	
-<p>&nbsp;</p>
+<div class="guide">
+
 <h2>{% if is_english %}Tool palette{% else %}ツールパレット{% endif %}</h2>
 {% if not is_english %}
 <p>ツールパレットでは、使用する画材を選択します。</p>
@@ -74,6 +81,9 @@ iPad向けのアプリ版は以下からインストールして下さい。
 <p>(*){% if is_english %}You can change mode by click{% else %}矩形と楕円は選択された状態でもう一度クリックすることで塗りつぶしモードにすることができます{% endif %}</p>
 
 <br clear="all"/>
+</div>
+
+<div class="guide">
 
 <h2>{% if is_english %}Pen setting{% else %}ペン設定{% endif %}</h2>
 <p><img src="static_files/guide/guide_pen2.png" alt="スライダー"/><br/><br/>
@@ -83,7 +93,9 @@ You can change pen size, pen opacity, pen blur using slider.
 ペンの大きさ、透明度、境界のぼかし度をスライダーで選択します。
 {% endif %}<br/></p>
 
-<p>&nbsp;</p>
+</div>
+<div class="guide">
+
 <h2>{% if is_english %}Zoom setting{% else %}ズーム・回転{% endif %}</h2>
 <p><img src="static_files/guide/guide_zoom2.png" alt="回転"/><br/><br/>
 {% if is_english %}
@@ -93,7 +105,8 @@ You can change pen size, pen opacity, pen blur using slider.
 {% endif %}
 <br/></p>
 
-<p>&nbsp;</p>
+</div>
+<div class="guide">
 <h2>{% if is_english %}Color circle{% else %}カラーサークル{% endif %}</h2>
 <p><img src="static_files/guide/guide_circle.png" alt="カラーサークル"/><br/><br/>
 {% if is_english %}
@@ -103,7 +116,8 @@ You can use color circle to determine draw color.
 {% endif %}
 <br/></p>
 
-<p>&nbsp;</p>
+</div>
+<div class="guide">
 <h2>{% if is_english %}Color palette{% else %}カラーパレット{% endif %}</h2>
 <p><img src="static_files/guide/guide_palette.png" alt="カラーパレット"/><br/><br/>
 {% if is_english %}
@@ -130,7 +144,8 @@ Color palette has 4 button.
 </table>
 {% endif %}
 
-<p>&nbsp;</p>
+</div>
+<div class="guide">
 <h2>{% if is_english %}Color slider{% else %}カラースライダー{% endif %}</h2>
 <p><img src="static_files/guide/guide_rgb.png" alt="カラースライダー"/><br/><br/>
 {% if is_english %}
@@ -140,7 +155,21 @@ You can edit RGB color.
 {% endif %}
 <br/></p>
 
-<p>&nbsp;</p>
+</div>
+
+<div class="guide">
+<h2>{% if is_english %}Navigation{% else %}ナビゲーション{% endif %}</h2>
+<p>
+<img src="static_files/guide/guide_navigation.png" style="max-width:100%;" alt="ナビゲーション"/><br/>
+{% if is_english %}
+You can zoom and roate canvas , and move canvas using scroll bar.
+{% else %}
+キャンバスの拡大や回転を制御したり、スクロールバーでキャンバスを移動したりすることができます。
+{% endif %}
+<br/></p>
+</div>
+
+<div class="guide">
 <h2>{% if is_english %}Layer{% else %}レイヤー{% endif %}</h2>
 <img src="static_files/guide/guide_layer2.png" alt="レイヤー"/>
 <p>
@@ -196,10 +225,10 @@ Layer has 4 layer mode. You can change layer mode by click.
 {% else %}
 <table class="g-table">
 <tr><th>レイヤーモード</th><th>効果</th></tr>
-<tr><td>通常</td><td>単純に上に重なって表示されます</td></tr>
-<tr><td>乗算</td><td>線画の上に乗算を使うと線を残して色を塗ることができます</td></tr>
-<tr><td>オーバレイ</td><td>影を付けることができます</td></tr>
-<tr><td>スクリーン</td><td>光を付けることができます</td></tr>
+<tr><td>通常</td><td>単純に上に重なって表示される</td></tr>
+<tr><td>乗算</td><td>線画の上に乗算を使うと線を残して色を塗ることができる</td></tr>
+<tr><td>オーバレイ</td><td>影を付けることができる</td></tr>
+<tr><td>スクリーン</td><td>光を付けることができる</td></tr>
 </table>
 {% endif %}
 
@@ -216,20 +245,11 @@ You can change opacity using slider.<br/>
 {% endif %}
 </p>
 
-<p>&nbsp;</p>
-<h2>{% if is_english %}Navigation{% else %}ナビゲーション{% endif %}</h2>
-<p>
-<img src="static_files/guide/guide_navigation.png" style="max-width:100%;" alt="ナビゲーション"/><br/>
-{% if is_english %}
-You can zoom and roate canvas , and move canvas using scroll bar.
-{% else %}
-キャンバスの拡大や回転を制御したり、スクロールバーでキャンバスを移動したりすることができます。
-{% endif %}
-<br/></p>
+</div>
 
 {% if not is_english %}
 
-<p>&nbsp;</p>
+<div class="guide">
 <h2>ウィンドウメニュー</h2>
 
 <img src="static_files/guide/guide_window_menu2.png" alt="ウィンドウメニュー"/>
@@ -241,22 +261,21 @@ You can zoom and roate canvas , and move canvas using scroll bar.
 <p>ファイルメニュー(PC版)</p>
 
 <table class="g-table">
-<tr><th>新規</th><td>クリアして新しいイラストを描き始めます。</td></tr>
-<tr><th>開く</th><td>パソコン上の画像ファイル(.jpg/.png/.ilb)を開きます。画像のアップロードにも使用できます。</td></tr>
-<tr><th>保存</th><td>.ilb形式で保存します。</td></tr>
-<tr><th>JPG書出</th><td>JPEGファイルを書き出します。(*)</td></tr>
-<tr><th>PNG書出</th><td>PNGファイルを書き出します。(*)</td></tr>
+<tr><th>新規</th><td>クリアして新しいイラストを描き始める</td></tr>
+<tr><th>開く</th><td>パソコン上の画像ファイル(.jpg/.png/.ilb)を開く</td></tr>
+<tr><th>保存</th><td>.ilb形式で保存</td></tr>
+<tr><th>JPG書出</th><td>JPEGファイルを書き出す(*)</td></tr>
+<tr><th>PNG書出</th><td>PNGファイルを書き出す(*)</td></tr>
 </table>
-<p>(*)保存メニューに統合したいのですが、バイナリを先に生成しなければならないというFlashの制約から別項目となっています</p>
 
 <p>&nbsp;</p>
 
 <p>ファイルメニュー(アプリ版)</p>
 
 <table class="g-table">
-<tr><th>新規</th><td>クリアして新しいイラストを描き始めます。</td></tr>
-<tr><th>カメラロールから開く</th><td>画像をカメラロールから読込みます。</td></tr>
-<tr><th>カメラロールに保存</th><td>画像をカメラロールに保存します。</td></tr>
+<tr><th>新規</th><td>クリアして新しいイラストを描き始める</td></tr>
+<tr><th>カメラロールから開く</th><td>画像をカメラロールから読込</td></tr>
+<tr><th>カメラロールに保存</th><td>画像をカメラロールに保存</td></tr>
 </table>
 
 <p>&nbsp;</p>
@@ -265,17 +284,17 @@ You can zoom and roate canvas , and move canvas using scroll bar.
 
 <table class="g-table">
 <tr><th>キャンバスサイズ変更</th><td>
-	キャンバスのサイズを変更します。
-	現在のキャンバスよりも小さなサイズを指定した場合は縮小されます。
-	大きなサイズを指定した場合は余白が追加されます。</td></tr>
+	キャンバスのサイズを変更<br/>
+	現在のキャンバスよりも小さなサイズを指定した場合は縮小される<br/>
+	大きなサイズを指定した場合は余白が追加される</td></tr>
 <tr><th>全体を選択</th><td>
-	選択ツールでキャンバス全体を選択します。
+	選択ツールでキャンバス全体を選択
 <tr><th>選択を解除</th><td>
-	選択ツールで選択している範囲を解除します。
+	選択ツールで選択している範囲を解除
 <tr><th>選択範囲を切り取り</th><td>
-	選択ツールで選択している範囲を新たなキャンバスにします。
+	選択ツールで選択している範囲を新たなキャンバスとする
 </td></tr>
-<tr><th>フィルタを適用</th><td>画像に明るさとコントラストのフィルタを適用します。</td></tr>
+<tr><th>フィルタを適用</th><td>画像に明るさとコントラストのフィルタを適用</td></tr>
 </table>
 
 <p>&nbsp;</p>
@@ -283,14 +302,14 @@ You can zoom and roate canvas , and move canvas using scroll bar.
 <p>編集メニュー</p>
 
 <table class="g-table">
-<tr><th>レイヤーを追加</th><td>新しいレイヤーを上に追加します。</td></tr>
-<tr><th>レイヤーをクリア</th><td>選択しているレイヤーをクリアします。</td></tr>
-<tr><th>レイヤーを上に複製</th><td>選択しているレイヤーを複製して新しいレイヤーを作成します。</td></tr>
-<tr><th>レイヤーを下に転写</th><td>選択しているレイヤーと下のレイヤーを統合します。</td></tr>
-<tr><th>レイヤーの透明色保護</th><td>透明色を保護して描画するモードに切り替えます。線の色だけを変えたい場合などに使用します。</td></tr>
-<tr><th>レイヤーを左右反転</th><td>レイヤーの画像を左右反転します。</td></tr>
-<tr><th>レイヤーを上下反転</th><td>レイヤーの画像を上下反転します。</td></tr>
-<tr><th>レイヤーに画像を読込</th><td>レイヤーに外部の画像ファイルをインポートします。</td></tr>
+<tr><th>レイヤーを追加</th><td>新しいレイヤーを上に追加</td></tr>
+<tr><th>レイヤーをクリア</th><td>選択しているレイヤーをクリア</td></tr>
+<tr><th>レイヤーを上に複製</th><td>選択しているレイヤーを複製して新しいレイヤーを作成</td></tr>
+<tr><th>レイヤーを下に転写</th><td>選択しているレイヤーと下のレイヤーを統合</td></tr>
+<tr><th>レイヤーの透明色保護</th><td>透明色を保護して描画するモードに切り替<br/>線の色だけを変えたい場合などに使用</td></tr>
+<tr><th>レイヤーを左右反転</th><td>レイヤーの画像を左右反転</td></tr>
+<tr><th>レイヤーを上下反転</th><td>レイヤーの画像を上下反転</td></tr>
+<tr><th>レイヤーに画像を読込</th><td>レイヤーに外部の画像ファイルをインポート</td></tr>
 </table>
 
 <p>&nbsp;</p>
@@ -298,36 +317,22 @@ You can zoom and roate canvas , and move canvas using scroll bar.
 <p>設定メニュー</p>
 
 <table class="g-table">
-<tr><th>スポイト</th><td>スポイトがレイヤーの色を取得するか、キャンバスの色を取得するかを選択します。</td></tr>
-<tr><th>筆圧</th><td>ツールごとに筆圧を使用するかどうかを選択します。</td></tr>
-<tr><th>入抜き</th><td>描画した線の始点と終点を細くするかを選択します。</td></tr>
-<tr><th>手ぶれ補正</th><td>手ぶれ補正を使用するかを選択します。</td></tr>
-<tr><th>トーン</th><td>1/2と1/4のトーンで塗るかどうかを選択します。</td></tr>
-<tr><th>アンチエイリアス</th><td>アンチエイリアスを切ることができます。</td></tr>
-<tr><th>グリッド</th><td>グリッドを表示することができます。投稿時はグリッドは表示されません。</td></tr>
-<tr><th>UI配置</th><td>UIの配置を4パターンから選択することができます。</td></tr>
-<tr><th>テキスト</th><td>テキストツールの文字の方向を指定することができます。</td></tr>
-<tr><th>フォントを選択</th><td>テキストツールで使用するフォントを選択することができます。</td></tr>
+<tr><th>スポイト</th><td>スポイトがレイヤーの色を取得するか、キャンバスの色を取得するかを選択</td></tr>
+<tr><th>筆圧</th><td>ツールごとに筆圧を使用するかどうかを選択</td></tr>
+<tr><th>入抜き</th><td>描画した線の始点と終点を細くするかを選択</td></tr>
+<tr><th>手ぶれ補正</th><td>手ぶれ補正を使用するかを選択</td></tr>
+<tr><th>トーン</th><td>1/2と1/4のトーンで塗るかどうかを選択</td></tr>
+<tr><th>アンチエイリアス</th><td>アンチエイリアスの有効無効を選択</td></tr>
+<tr><th>グリッド</th><td>グリッドを表示するかどうかを選択</td></tr>
+<tr><th>UI配置</th><td>UIの配置を4パターンから選択</td></tr>
+<tr><th>テキスト</th><td>テキストツールの文字の方向を指定</td></tr>
+<tr><th>フォントを選択</th><td>テキストツールで使用するフォントを選択</td></tr>
 </table>
+</div>
 
 {% endif %}
 
-<p>&nbsp;</p>
-<h2>{% if is_english %}Auto save{% else %}オートセーブについて{% endif %}</h2>
-
-<p>
-{% if is_english %}
-Auto save every 2 seconds.<br/>
-The data is deleted when submit.
-{% else %}
-何もクリックしない状態で2秒経つと自動的に現在の画像がローカルに保存されます。<br/>
-保存された情報は、次回起動時に自動的にロードされます。<br/>
-保存された情報は、投稿すると削除されます。
-{% endif %}
-</p>
-
-
-<p>&nbsp;</p>
+<div class="guide">
 
 <h2>{% if is_english %}Keyboard shortcut{% else %}キーボードショートカット{% endif %}</h2>
 
@@ -359,9 +364,10 @@ The data is deleted when submit.
 </table>
 
 <p>(*){% if is_english %}Dont support IE{% else %}Internet Explorerのバージョンによっては動作しない場合があります。{% endif %}</p>
+</div>
 
-<p>&nbsp;</p>
 
+<div class="guide">
 <h2>{% if is_english %}Pen Pressure{% else %}筆圧{% endif %}</h2>
 
 {% if is_english %}
@@ -381,3 +387,19 @@ SurfaceProで筆圧を使用する方法は、<a href="http://blog.livedoor.jp/a
 <p>アプリ版では筆圧は使用できません。</p>
 
 {% endif %}
+</div>
+
+<div class="guide">
+<h2>{% if is_english %}Auto save{% else %}オートセーブについて{% endif %}</h2>
+
+<p>
+{% if is_english %}
+Auto save every 2 seconds.<br/>
+The data is deleted when submit.
+{% else %}
+何もクリックしない状態で2秒経つと自動的に現在の画像がローカルに保存されます。<br/>
+保存された情報は、次回起動時に自動的にロードされます。<br/>
+保存された情報は、投稿すると削除されます。
+{% endif %}
+</p>
+</div>

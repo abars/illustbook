@@ -22,9 +22,12 @@ You can create own BBS, and you can communicate using illust or comment.<br/>
 
 <h1>{% if is_english %}How to use ILLUSTBOOK{% else %}イラストブックの使い方{% endif %}</h1>
 
+{#
 {% if not is_english %}
 <a href="{{host}}guide?contents=about">{% if is_english %}Features{% else %}イラストブックの特徴{% endif %}</a><br/>
 {% endif %}
+#}
+
 <a href="{{host}}guide?contents=pc">{% if is_english %}Draw tool tutorial (PC/App){% else %}イラブペイント(PC版/アプリ版)の使い方{% endif %}</a><br/>
 
 {% if is_english %}
@@ -71,27 +74,19 @@ You can create own BBS, and you can communicate using illust or comment.<br/>
 {% endif %}
 
 {% if contents=="pc" %}
-<div class="guide">
 	{% include "portal/guide_pc.html" %}
-</div>
 {% endif %}
 
 {% if contents=="mobile" %}
-<div class="guide">
 	{% include "portal/guide_mobile.html" %}
-</div>
 {% endif %}
 
 {% if contents=="edit" %}
-<div class="guide">
 	{% include "portal/guide_edit.html" %}
-</div>
 {% endif %}
 
 {% if contents=="sns" %}
-<div class="guide">
 	{% include "portal/guide_sns.html" %}
-</div>
 {% endif %}
 
 {% if contents=="ad" %}
