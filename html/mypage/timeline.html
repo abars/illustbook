@@ -5,6 +5,24 @@
 {% if timeline %}
 <div class="feed">
 	{% for feed in timeline %}
+
+	<!-- 削除された場合はスキップ -->
+	{% set deleted = False %}
+	{% if feed.mode == "deleted" %}
+		{% set deleted = True %}
+	{% endif %}
+	{% if (feed.mode == "bbs_new_illust" or feed.mode == "new_bookmark_thread"  or feed.mode == "new_comment_thread" or feed.mode == "new_applause_thread") and (not feed.thread.title) %}
+		{% set deleted = True %}
+	{% endif %}
+	{% if feed.mode == "new_bookmark_bbs" and not feed.bbs.title %}
+		{% set deleted = True %}
+	{% endif %}
+	{% if message and message == "deleted" %}
+		{% set deleted = True %}
+	{% endif %}
+	{% if not deleted or edit_mode == 1%}
+
+	<!-- 有効 -->
 	<div style="padding:4px;">
 		<!-- メイン -->
 		<div style="float:right;width:100%;margin-left:-64px;">
@@ -102,7 +120,7 @@
 			{% endif %}
 
 			{% if feed.mode == "new_comment_thread" %}
-				{% if not feed.thread %}
+				{% if not feed.thread.title %}
 					{{deleted_style_header}}
 					コメントしたイラストは削除されました。
 					{{deleted_style_footer}}
@@ -198,6 +216,7 @@
 		<hr/>
 	{% endif %}
 
+	{% endif %}
 	{% endfor %}
 </div>
 {% endif %}
