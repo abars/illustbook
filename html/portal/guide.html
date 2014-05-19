@@ -4,6 +4,8 @@
 
 {% if not contents %}
 
+<div class="guide">
+
 <h1>{% if is_english %}What's ILLUSTBOOK{% else %}イラストブックとは？{% endif %}</h1>
 
 {% if is_english %}
@@ -14,8 +16,9 @@ You can create own BBS, and you can communicate using illust or comment.<br/>
 <br/>高機能なお絵かきツールとあなた専用のお絵かき掲示版を使って、作品を世界中に公開することができます。
 <br/>現在、{% if bbs_n %}{{bbs_n}}件の掲示板がレンタルされ、{{illust_n}}枚のイラストが公開されています。{% endif %}</p>
 {% endif %}
+</div>
 
-<p>&nbsp;</p>
+<div class="guide">
 
 <h1>{% if is_english %}How to use ILLUSTBOOK{% else %}イラストブックの使い方{% endif %}</h1>
 
@@ -25,7 +28,7 @@ You can create own BBS, and you can communicate using illust or comment.<br/>
 <a href="{{host}}guide?contents=pc">{% if is_english %}Draw tool tutorial (PC/App){% else %}イラブペイント(PC版/アプリ版)の使い方{% endif %}</a><br/>
 
 {% if is_english %}
-<p>&nbsp;</p>
+
 <h1>These articles are Japanese version only.</h1>
 {% endif %}
 
@@ -33,7 +36,9 @@ You can create own BBS, and you can communicate using illust or comment.<br/>
 <a href="{{host}}guide?contents=edit">{% if is_english %}Edit tutorial{% else %}投稿機能の使い方{% endif %}</a><br/>
 <a href="{{host}}guide?contents=sns">{% if is_english %}SNS tutorial{% else %}SNS機能の使い方{% endif %}</a><br/>
 
-<p>&nbsp;</p>
+</div>
+
+<div class="guide">
 
 <h1>{% if is_english %}Manga for Introduction{% else %}イラストブック紹介漫画{% endif %}</h1>
 
@@ -41,7 +46,9 @@ You can create own BBS, and you can communicate using illust or comment.<br/>
 <img src="./static_files/comic/banar.png" alt="コミック"/>
 </a>
 
-<p>&nbsp;</p>
+</div>
+
+<div class="guide">
 
 <h1>{% if is_english %}Link{% else %}リンク{% endif %}</h1>
 
@@ -53,28 +60,41 @@ You can create own BBS, and you can communicate using illust or comment.<br/>
 <a href="http://www.kooss.com/" class="declink">{% if is_english %}Link{% else %}無料サイト集 Kooss.com{% endif %}</a><br/>
 </p>
 
+</div>
+
 {% endif %}
 
 {% if contents=="about" %}
+<div class="guide">
 	{% include "portal/guide_about.html" %}
+</div>
 {% endif %}
 
 {% if contents=="pc" %}
+<div class="guide">
 	{% include "portal/guide_pc.html" %}
+</div>
 {% endif %}
 
 {% if contents=="mobile" %}
+<div class="guide">
 	{% include "portal/guide_mobile.html" %}
+</div>
 {% endif %}
 
 {% if contents=="edit" %}
+<div class="guide">
 	{% include "portal/guide_edit.html" %}
+</div>
 {% endif %}
 
 {% if contents=="sns" %}
+<div class="guide">
 	{% include "portal/guide_sns.html" %}
+</div>
 {% endif %}
 
 {% if contents=="ad" %}
+<div class="guide">
 	{% include "portal/guide_ad.html" %}
 {% endif %}

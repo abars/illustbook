@@ -139,9 +139,7 @@
 
 <!-- ガイド -->
 {% if page_mode == "guide" %}
-  <div class="guide">
-    {%include "portal/guide.html"%}
-  </div>
+  {%include "portal/guide.html"%}
 {% endif %}
 
 <!-- ログイン要求 -->
@@ -195,7 +193,7 @@
   {% endif %}
 {% endif %}
 
-{% if not is_timeline_enable %}
+{% if not is_timeline_enable and page_mode !="guide" %}
 <div id="infinite-scroll-container" class="transitions-enabled infinite-scroll clearfix">
   <div class="corner-stamp">
   {% if not(is_iphone and top_page) %}
