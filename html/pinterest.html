@@ -5,8 +5,6 @@
 <meta name="msapplication-TileImage" content="/static_files/tile144.png"/>
 <link rel="apple-touch-icon" href="/static_files/tile144.png"/>
 {% include "viewport.html" %}
-<meta name="Keywords" content="お絵かき掲示板,お絵かきブログ,無料,お絵かき,レンタル" />
-<meta name="Description" content="イラストブックはお絵かきツールがなくてもすぐに描ける完全無料のレンタルお絵かき掲示板サービスです。" />
 
 {% if page_mode == "bookmark" %}
   <title>
@@ -21,10 +19,10 @@
   </title>
 {%else%}
 {% if search %}
-<title>{{search}} - {% if is_english %}ILLUSTBOOK{% else %}イラストブック{% endif %}</title>
+<title>{{search}}{% if not is_english %}の検索結果{% endif %} - {% if is_english %}ILLUSTBOOK{% else %}イラストブック{% endif %}</title>
 {% else %}
 {% if tag %}
-<title>{{tag}} - {% if is_english %}ILLUSTBOOK{% else %}イラストブック{% endif %}</title>
+<title>{{tag}}{% if not is_english %}の検索結果{% endif %} - {% if is_english %}ILLUSTBOOK{% else %}イラストブック{% endif %}</title>
 {% else %}
 {% if page_mode == "user" %}
 {% if not view_user.name %}
@@ -37,6 +35,10 @@
 <title>{% if is_english %}How to use ILLUSTBOOK - ILLUSTBOOK{% else %}イラストブックの使い方 - イラストブック{% endif %}</title>
 {% else %}
 <title>{% if is_english %}ILLUSTBOOK - the BBS network of Manga{% else %}イラストブック - 無料レンタルお絵かき掲示板{% endif %}</title>
+{% if not is_english %}
+<meta name="Keywords" content="お絵かき掲示板,お絵かきブログ,無料,お絵かき,レンタル" />
+<meta name="Description" content="イラストブックはお絵かきツールがなくてもすぐに描ける完全無料のレンタルお絵かき掲示板サービスです。" />
+{% endif %}
 {% endif %}
 {% endif %}
 {% endif %}
