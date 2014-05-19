@@ -96,7 +96,7 @@
 		<input type="hidden" name="page" value="{{page}}"/>
 		<input type="hidden" name="order" value="{{order}}"/>
 		<table class="g-table">
-			<tr><th>{% if is_english %}Title{% else %}タイトル{% endif %}</th><th>{% if is_english %}Thumbnail{% else %}サムネイル{% endif %}</th><th>{% if is_english %}Name{%else %}投稿者{% endif %}</th><th>{% if is_english %}Date{% else %}投稿日{% endif %}</th><th>{% if is_english %}Category{% else %}カテゴリ{% endif %}</th><th>{% if is_english %}Mypage{%else %}マイページ{% endif %}</th><th>{% if is_english %}Delete{% else %}削除{% endif %}</th></tr>
+			<tr><th>{% if is_english %}Title{% else %}タイトル{% endif %}</th><th>{% if is_english %}Thumbnail{% else %}サムネイル{% endif %}</th><th>{% if is_english %}Author{%else %}投稿者{% endif %}</th><th>{% if is_english %}Date{% else %}投稿日{% endif %}</th><th>{% if is_english %}Category{% else %}カテゴリ{% endif %}</th><th>{% if is_english %}Mypage{%else %}マイページ{% endif %}</th><th>{% if is_english %}Delete{% else %}削除{% endif %}</th></tr>
 		{% for thread in thread_list %}
 		<tr><td>
 			<a href="{{host}}{{bbs.short}}/{{thread.key()}}.html" target="_blank">

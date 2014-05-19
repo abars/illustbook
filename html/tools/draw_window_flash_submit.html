@@ -34,7 +34,7 @@
 					{% else %}
 					<tr><td><p>{% if is_english %}Title{% else %}タイトル{% endif %}</p></td><td><input id="title" style="width:100%;"/></td></tr>
 					{% endif %}
-					<tr><td><p>{% if is_english %}Name (MUST){% else %}投稿者名（必須）{% endif %}</p></td><td><input id="name" style="width:30%;"/>&nbsp;
+					<tr><td><p>{% if is_english %}Author (MUST){% else %}投稿者名（必須）{% endif %}</p></td><td><input id="name" style="width:30%;"/>&nbsp;
 						{% if logined %}
 							<input  type="checkbox" id="link_to_profile"checked>{% if is_english %}Link to mypage{% else %}マイページにリンク{% endif %}
 						{% endif %}
