@@ -82,7 +82,7 @@
 				{% endif %}
 			</a>
 		</div>
-		<div style="float:left;margin:4px;">
+		<div style="float:left;margin:4px;{% if is_iphone %}width:170px;{% endif %}">
 			<h2>{{room.name}}{# {% if room.is_always %}（常時稼動ルーム）{% endif %} #}
 			{% if room.password %}
 				（{% if is_english %}Password{% else %}パスワード{% endif %}）{% if user %}{% if user.user_id == room.user_id %}（{{room.password}}）{% endif %}{% endif %}　
