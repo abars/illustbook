@@ -19,6 +19,10 @@
 {% include "css/pinterest.css" %}
 {% include "css/google_button.html" %}
 {% include "css/floating_menu_css.html" %}
+{% if mode == "chat" %}
+<link rel="stylesheet" type="text/css" media="screen,print" href="{{host}}js/jquery/jquery.alerts.css" />
+<script language="javascript" src="{{host}}js/jquery/jquery.alerts.js" type="text/javascript"></script>
+{% endif %}
 </head>
 
 <body>
@@ -26,19 +30,14 @@
 {% include "floating_menu.html" %}
 
 <div id="container">
-	<div id="contents" style="background-color:#ffffff;{% if not is_iphone %}width:840px;{% endif %}">
+	<div id="contents">
 		{% if mode == "ranking" %}
 			{% include "ranking/ranking.html" %}
 		{% endif %}
 
 		{% if mode == "terms" %}
-			<div style="padding:4px;">
-			<h1>ご利用規約</h1>
 			{% include "portal/terms.html" %}
-			<p>&nbsp;</p>
-			<h1>プライバシーポリシー</h1>
 			{% include "portal/privacy.html" %}
-			</div>
 		{% endif %}
 		
 		{% if mode == "chat" %}
@@ -51,6 +50,8 @@
 <div id="back-top">
   <a href="#top">TOP</a>
 </div>
+
+<br clear="all"/>
 
 <div id="pinterest_footer" style="display:block;">
 	{% include "portal/footer_link.html" %}
