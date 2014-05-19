@@ -9,8 +9,8 @@
 		function init(){
 			{% if thread %}
 				var color="{%if bbs.font_color and not template_path %}#{{bbs.font_color}}{% else %}#333333{% endif %}";
-				rediter_init('rediter_summary','{{summary|safe}}','14px',color,true);
-				rediter_init('rediter_postscript','{{postscript|safe}}','14px',color,true);
+				rediter_init('rediter_summary','{{summary|safe}}','14px',color,true,{% if is_english %}true{% else %}false{% endif %});
+				rediter_init('rediter_postscript','{{postscript|safe}}','14px',color,true,{% if is_english %}true{% else %}false{% endif %});
 			{% endif %}
 		}		
 
