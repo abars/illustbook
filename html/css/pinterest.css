@@ -155,7 +155,7 @@ h2,h3 {font-size:100%;color:#ea5376;}
 	position:absolute;
 	right:0px;
 	bottom:20px;
-	text-align:center;
+	text-align:left;
 	background-color:#ffffff;
 	font-size:13px;
 	color:#333;
@@ -168,7 +168,7 @@ h2,h3 {font-size:100%;color:#ea5376;}
 }
 
 #pinterest_footer{
-	text-align: center;
+	text-align: right;
 	font-size:12px;
 	background-color:#ffffff;
 	{% if not is_iphone %}
