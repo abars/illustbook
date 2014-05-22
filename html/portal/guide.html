@@ -8,6 +8,8 @@
 
 <h1>{% if is_english %}What's ILLUSTBOOK{% else %}イラストブックとは？{% endif %}</h1>
 
+<img src="static_files/banner_360b.png" alt="ロゴ" width="180px" height="180px"/><br/>
+
 {% if is_english %}
 ILLUSTBOOK is BBS network of MANGA.<br/>
 You can create own BBS, and you can communicate using illust or comment.<br/>
@@ -32,6 +34,9 @@ You can create own BBS, and you can communicate using illust or comment.<br/>
 
 {% if is_english %}
 
+</div>
+<div class="guide">
+
 <h1>These articles are Japanese version only.</h1>
 {% endif %}
 
@@ -46,7 +51,8 @@ You can create own BBS, and you can communicate using illust or comment.<br/>
 <h1>{% if is_english %}Manga for Introduction{% else %}イラストブック紹介漫画{% endif %}</h1>
 
 <a href="./comic">
-<img src="./static_files/comic/banar.png" alt="コミック"/>
+<img src="./static_files/comic/banar2.png" alt="コミック"/>
+<br/>{% if is_english %}Read manga{% else %}まことじさんによる紹介漫画を読む{% endif %}
 </a>
 
 </div>

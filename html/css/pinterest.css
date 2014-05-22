@@ -32,7 +32,7 @@ h2,h3 {font-size:100%;color:#ea5376;}
 		{% if not bookmark %}
 			width: 362px;
 		{% endif %}
-		padding:1px;
+		{# padding:1px; #}
 		margin:5px;
 	{% endif %}
 }
@@ -168,7 +168,7 @@ h2,h3 {font-size:100%;color:#ea5376;}
 }
 
 #pinterest_footer{
-	text-align: right;
+	text-align: center;
 	font-size:12px;
 	background-color:#ffffff;
 	{% if not is_iphone %}
