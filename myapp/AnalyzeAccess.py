@@ -22,11 +22,12 @@ from myapp.SetUtf8 import SetUtf8
 from myapp.Alert import Alert
 from myapp.Counter import Counter
 from myapp.CssDesign import CssDesign
+from myapp.AnalyticsGet import AnalyticsGet
 
 class AnalyzeAccess(webapp.RequestHandler):
 	def get(self):
 		SetUtf8.set()
-		
+
 		page_name=""
 		bbs=None
 
@@ -54,6 +55,13 @@ class AnalyzeAccess(webapp.RequestHandler):
 
 			analyze=bbs.analyze.get_referer()
 			page_name=bbs.bbs_name;
+
+		#analytics=AnalyticsGet()
+		#result_json=analytics.get("mogeko")
+
+		#txt=""
+		#for result in result_json:
+		#	txt=txt+""+str(result["ga:visits"])+" http://"+result["ga:source"]+result["ga:referralPath"]
 
 		analyze=re.sub("\"","\\\"",analyze)
 		analyze=re.sub("\'","\\\'",analyze)
