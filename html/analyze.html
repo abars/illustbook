@@ -13,11 +13,11 @@
 		function drawChart() {
 			var data = new google.visualization.DataTable();
 			data.addColumn('string', 'Date');
-			data.addColumn('number', 'Session');
+			data.addColumn('number', 'Pageviews');
 			data.addRows({{access_list|length}});
 			{% for access in access_list %}
 				data.setValue({{loop.index-1}},0,'{{access["ga:date"]}}');
-				data.setValue({{loop.index-1}},1,{{access["ga:visits"]}});
+				data.setValue({{loop.index-1}},1,{{access["ga:pageviews"]}});
 			{% endfor %}
 			var chart = new google.visualization.LineChart(document.getElementById('chart'));
 			chart.draw(data, {width: '100%', height: 300});//, title: 'アクセス数の推移'});//, vAxis: {minValue: 0}});
@@ -113,7 +113,7 @@
 {% if ref_list %}
 	{% for ref in ref_list %}
 		<div class="col_header"><p>
-			{{ ref["ga:visits"] }}
+			{{ ref["ga:pageviews"] }}
 		</p></div>
 		<div class="col_content">
 			<p><a href="http://{{ ref["ga:source"] }}{% if ref["ga:referralPath"]!="(not set)" %}{{ ref["ga:referralPath"] }}{% endif %}" target="_BLANK">{{ ref["ga:source"] }}{% if ref["ga:referralPath"]!="(not set)" %}{{ ref["ga:referralPath"] }}{% endif %}</a></p>
@@ -125,7 +125,7 @@
 {% if page_list %}
 	{% for ref in page_list %}
 		<div class="col_header">
-			<p>{{ ref["ga:visits"] }}</p>
+			<p>{{ ref["ga:pageviews"] }}</p>
 		</div>
 		<div class="col_content">
 			<p><a href="http://www.illustbook.net{{ ref["ga:pagePath"] }}" target="_BLANK">{{ ref["ga:pageTitle"] }}</a></p>
@@ -136,7 +136,7 @@
 
 {% if keyword_list %}
 	{% for ref in keyword_list %}
-		<div class="col_header"><p>{{ ref["ga:visits"] }}</p></div>
+		<div class="col_header"><p>{{ ref["ga:pageviews"] }}</p></div>
 		<div class="col_content"><p>{{ ref["ga:keyword"] }}</p></div>
 		<br clear="all"/>
 	{% endfor %}
