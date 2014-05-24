@@ -2,7 +2,7 @@
 					<hr/>
 					<div class="related">
 					{% for related_one in related %}
-						<a href='{{host}}usr/{{related_one.cached_bbs_key}}/{% if related_one.short %}{{related_one.short}}{%else%}{{related_one.key()}}{%endif%}.html'>
+						<a href='{{host}}{% if bbs_str_key == related_one.cached_bbs_key and bbs.short %}{{bbs.short}}{% else %}usr/{{related_one.cached_bbs_key}}{% endif %}/{% if related_one.short %}{{related_one.short}}{%else%}{{related_one.key()}}{%endif%}.html'>
 						<img src="{{host}}thumbnail/{{related_one.cached_image_key}}.jpg" border="0" alt="{{related_one.title}}" class="related_image"/>
 						</a>
 					{% endfor %}

@@ -169,6 +169,7 @@ class ShowThread(webapp.RequestHandler):
 			'host': host_url,
 			'usrhost': MappingId.get_usr_url(host_url,bbs),
 			'bbs': bbs,
+			'bbs_str_key': str(bbs.key()),
 			'thread': thread,
 			'edit_flag':edit_flag,
 			'url': 'edit',

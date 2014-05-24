@@ -21,7 +21,7 @@ from apiclient.discovery import build
 from oauth2client.client import SignedJwtAssertionCredentials
 
 class AnalyticsGet():
-  def get(self,bbs_name):
+  def create_session(self):
     KEY = "privatekey.pem"
     SCOPES = [
       'https://www.googleapis.com/auth/analytics',
@@ -37,19 +37,18 @@ class AnalyticsGet():
                         key,
                         scope=SCOPES)
    
-    #credentials = SignedJwtAssertionCredentials(
-    #   SERVICE_ACCOUNT,
-    #   key,
-    #   scope=SCOPES)
-    
     http = httplib2.Http()
     httplib2.debuglevel = True
     http = credentials.authorize(http)
 
-    #credentials = AppAssertionCredentials( scope=SCOPES)
-    #http = credentials.authorize(httplib2.Http(memcache)) 
-
     service = build('analytics', 'v3', http=httplib2.Http(memcache))
+
+    self.http=http
+    self.service=service
+
+  def get(self,mode,bbs_name,start_date,end_date):
+    http=self.http
+    service=self.service
 
     # Try to make a request to the API. Print the results or handle errors.
     try:
@@ -58,7 +57,14 @@ class AnalyticsGet():
         logging.error ('Could not find a valid profile for this user.')
         return []
       else:
-        results = self.get_ref(service, first_profile_id, http)
+        if(mode=="page"):
+          results = self.get_page(service, first_profile_id, http, bbs_name , start_date , end_date)
+        if(mode=="access"):
+          results = self.get_access(service, first_profile_id, http, bbs_name , start_date , end_date)
+        if(mode=="ref"):
+          results = self.get_ref(service, first_profile_id, http, bbs_name , start_date , end_date)
+        if(mode=="keyword"):
+          results = self.get_keywords(service, first_profile_id, http, bbs_name , start_date , end_date)
         result_json = self.get_results(results)
         return result_json
 
@@ -99,27 +105,51 @@ class AnalyticsGet():
 
     return None
 
-  def get_top_keywords(self,service, profile_id, http):
+  def get_access(self,service, profile_id, http, bbs_name, start_date, end_date):
     return service.data().ga().get(
         ids='ga:' + profile_id,
-        start_date='2012-01-01',
-        end_date='2012-01-15',
+        start_date=start_date,
+        end_date=end_date,
         metrics='ga:visits',
-        dimensions='ga:source,ga:keyword',
+        dimensions='ga:date',
+        sort='ga:date',
+        filters='ga:pagePath=~/'+bbs_name+'/*',
+        start_index='1',
+        max_results='1000').execute(http=http)
+
+  def get_keywords(self,service, profile_id, http, bbs_name, start_date, end_date):
+    return service.data().ga().get(
+        ids='ga:' + profile_id,
+        start_date=start_date,
+        end_date=end_date,
+        metrics='ga:visits',
+        dimensions='ga:keyword',
         sort='-ga:visits',
-        filters='ga:medium==organic',
+        filters='ga:pagePath=~/'+bbs_name+'/*',
         start_index='1',
         max_results='25').execute(http=http)
 
-  def get_ref(self,service, profile_id, http):
+  def get_page(self,service, profile_id, http, bbs_name, start_date, end_date):
     return service.data().ga().get(
         ids='ga:' + profile_id,
-        start_date='2014-01-01',
-        end_date='2014-05-23',
+        start_date=start_date,
+        end_date=end_date,
+        metrics='ga:visits',
+        dimensions='ga:pageTitle,ga:pagePath',
+        sort='-ga:visits',
+        filters='ga:pagePath=~/'+bbs_name+'/*',
+        start_index='1',
+        max_results='25').execute(http=http)
+
+  def get_ref(self,service, profile_id, http, bbs_name, start_date, end_date):
+    return service.data().ga().get(
+        ids='ga:' + profile_id,
+        start_date=start_date,#'2014-01-01',
+        end_date=end_date,#'2014-05-23',
         metrics='ga:visits',
         dimensions='ga:source,ga:referralPath',
         sort='-ga:visits',
-        filters='ga:pagePath=~/mogeko/*',
+        filters='ga:pagePath=~/'+bbs_name+'/*',
         start_index='1',
         max_results='25').execute(http=http)
 

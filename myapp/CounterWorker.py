@@ -115,6 +115,9 @@ class CounterWorker(webapp.RequestHandler):
 		if(thread):
 			AddRankingScore.add_rank_direct(thread.key(),str(thread.user_id),BbsConst.SCORE_PV)
 
+		#アクセス解析はAnalyticsに移行
+		return
+
 		#アクセス解析で表示する名前
 		analyze_name=bbs.bbs_name
 		if(thread):
