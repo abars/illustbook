@@ -31,6 +31,10 @@ class AnalyzeAccess(webapp.RequestHandler):
 		SetUtf8.set()
 
 		page_name=""
+		mode="access"
+		if(self.request.get("mode")):
+			mode=self.request.get("mode")
+
 		bbs=None
 
 		user=None
@@ -70,18 +74,35 @@ class AnalyzeAccess(webapp.RequestHandler):
 				bbs_id=self.request.get("bbs_id")
 				page_name=bbs_id
 
-		page_list=analytics.get("page",bbs_id,start_date,end_date)
-		ref_list=analytics.get("ref",bbs_id,start_date,end_date)
-		keyword_list=analytics.get("keyword",bbs_id,start_date,end_date)
-		access_list=analytics.get("access",bbs_id,start_date,end_date)
+		page_list=None
+		ref_list=None
+		keyword_list=None
+		access_list=None
 
 		show_analyze=False
 		if(user or bbs.short=="sample"):
 			show_analyze=True
 		
+		if(show_analyze):
+			if(mode=="page"):
+				page_list=analytics.get("page",bbs_id,start_date,end_date)
+			if(mode=="ref"):
+				ref_list=analytics.get("ref",bbs_id,start_date,end_date)
+			if(mode=="keyword"):
+				keyword_list=analytics.get("keyword",bbs_id,start_date,end_date)
+			if(mode=="access"):
+				access_list=analytics.get("access",bbs_id,start_date,end_date)
+
+		quota_error=(not page_list and not ref_list and not keyword_list and not access_list)
+
+		redirect_api="analyze?start_date="+start_date+"&amp;end_date="+end_date+"&amp;bbs_id="+bbs_id+"&amp;bbs_key="+str(bbs.key())+"&amp;"
+
 		host_url ="./"
 		template_values = {
 			'host': host_url,
+			'mode': mode,
+			'redirect_api': redirect_api,
+			'quota_error': quota_error,
 			'bbs': bbs,
 			'bbs_id': bbs_id,
 			'page_name': page_name,

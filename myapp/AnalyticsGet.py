@@ -49,6 +49,7 @@ class AnalyticsGet():
   def get(self,mode,bbs_name,start_date,end_date):
     http=self.http
     service=self.service
+    self.result_cnt=50
 
     # Try to make a request to the API. Print the results or handle errors.
     try:
@@ -127,7 +128,7 @@ class AnalyticsGet():
         sort='-ga:visits',
         filters='ga:pagePath=~/'+bbs_name+'/*',
         start_index='1',
-        max_results='25').execute(http=http)
+        max_results=str(self.result_cnt)).execute(http=http)
 
   def get_page(self,service, profile_id, http, bbs_name, start_date, end_date):
     return service.data().ga().get(
@@ -139,7 +140,7 @@ class AnalyticsGet():
         sort='-ga:visits',
         filters='ga:pagePath=~/'+bbs_name+'/*',
         start_index='1',
-        max_results='25').execute(http=http)
+        max_results=str(self.result_cnt)).execute(http=http)
 
   def get_ref(self,service, profile_id, http, bbs_name, start_date, end_date):
     return service.data().ga().get(
@@ -151,7 +152,7 @@ class AnalyticsGet():
         sort='-ga:visits',
         filters='ga:pagePath=~/'+bbs_name+'/*',
         start_index='1',
-        max_results='25').execute(http=http)
+        max_results=str(self.result_cnt)).execute(http=http)
 
   def get_results(self,results):
     # Get header.

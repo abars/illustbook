@@ -5,6 +5,7 @@
 	<title>{% if is_english %}Analyze {% endif %}{{page_name}}{% if not is_english %}のアクセス解析 - イラストブック{% endif %}</title>
 	{% include "css/portal.css" %}
 
+	{% if access_list %}
 	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 	<script type="text/javascript">
 		google.load("visualization", "1", {packages:["corechart"]});
@@ -22,73 +23,127 @@
 			chart.draw(data, {width: '100%', height: 300});//, title: 'アクセス数の推移'});//, vAxis: {minValue: 0}});
 		}
 	</script>
+	{% endif %}
+
+	{% include "css/floating_menu_css.html" %}
+
+	<style>
+		.col_header{
+			float:left;
+			text-align: right;
+			margin-right:8px;
+			width:48px;
+			color:#ea5376;
+			font-size:12px;
+		}
+		.col_content{
+			float:left;
+			font-size:12px;
+		}
+	</style>
 </head>
 
 <body>
+
+{% include "floating_menu.html" %}
 
 <div id="container">
 <div id="contents">
 
 <p>&nbsp;</p>
 
-{% if not show_analyze %}
+<div class="entry">
+	<h1>{% if is_english %}Analyze {% endif %}{{page_name}}{% if not is_english %}のアクセス解析{% endif %}</h1>
+</div>
 
-<p>{% if is_english %}Login require{% else %}アクセス解析の閲覧にはログインが必要です。{% endif %}</p>
+{% if quota_error or not show_analyze%}
+
+	<div class="entry">
+		{% if quota_error %}
+		<p>
+			{% if is_english %}
+				Quota error. Please access tomorrow.
+			{% else %}
+				Google Analytics APIのQuotaを超えました。一日後にアクセスして下さい。
+			{% endif %}
+		</p>
+		{% else %}
+		<p>{% if is_english %}Login require{% else %}アクセス解析の閲覧にはログインが必要です。{% endif %}</p>
+		{% endif %}
+	</div>
 
 {% else %}
 
-<div class="entry">
-	<H1>{% if is_english %}Analyze {% endif %}{{page_name}}{% if not is_english %}のアクセス解析{% endif %}</H1>
+<div class="entry" style="word-break:break-all;">
+	<div style="float:left">
+	<div class="g-button-group toggle-buttons">
+	<a href="{{host}}{{redirect_api}}mode=access" class="g-button {%if mode == "access"%}checked{%endif%}">{% if is_english %}Access{%else%}アクセス数{% endif %}</a>
+	<a href="{{host}}{{redirect_api}}mode=ref" class="g-button {%if mode == "ref"%}checked{%endif%}">{% if is_english %}Referer{%else%}参照元{% endif %}</a>
+	<a href="{{host}}{{redirect_api}}mode=page" class="g-button {%if mode == "page"%}checked{%endif%}">{% if is_english %}Page{%else %}人気{% if not is_iphone %}ページ{% endif %}{% endif %}</a>
+	  <a href="{{host}}{{redirect_api}}mode=keyword" class="g-button {%if mode == "keyword"%}checked{%endif%}">{% if is_english %}Keyword{%else %}検索{% if not is_iphone %}キーワード{% endif %}{% endif %}</a>
+	</div>
+	</div>
+
+	<div style="float:left;margin-left:{% if is_iphone %}4px;{% else %}16px;{% endif %}">
+	<form method="get" action="{{host}}analyze">
+		<input type="hidden" name="bbs_key" value="{{bbs.key()}}"/>
+		<input type="hidden" name="mode" value="{{mode}}"/>
+		<input name="start_date" value="{{start_date}}" size="12"/> - 
+		<input name="end_date" value="{{end_date}}" size="12"/>
+		<input type="submit" value="{% if is_english %}Set{%else%}期間指定{% endif %}" class="g-button" style="margin-left:4px;"/>
+	</form>
+	</div>
+
+{#
+	<div style="float:left;margin-left:{% if is_iphone %}4px;{% else %}16px;{% endif %}">
+	<a href="./usr/{{bbs.key()}}/" class="g-button">{% if is_english %}Back{% else %}{{page_name}}に戻る{% endif %}</a>
+	</div>
+#}
+
+	<br clear="all"/>
 </div>
 
-<div class="entry" style="word-break:break-all;">
-	<H1>{% if is_english %}Access{% else %}アクセス数の推移{% endif %}</H1>
+<div class="entry" style="word-break:break-all;margin:4px;margin-top:16px;">
 
-	{% if not access_list %}<p>Access list not found</p>{% endif %}
-
+{% if access_list %}
 	<div id="chart"></div>
+{% endif %}
 
-	<center>
-		<form method="get" action="{{host}}analyze">
-			<input type="hidden" name="bbs_key" value="{{bbs.key()}}"/>
-			{% if is_admin %}<input name="bbs_id" value="{{bbs_id}}"/>&nbsp;{% endif %}
-			<input name="start_date" value="{{start_date}}"/> - 
-			<input name="end_date" value="{{end_date}}"/>&nbsp;
-			<input type="submit" value="{% if is_english %}Update{%else%}更新{% endif %}" class="g-button"/>
-		</form>
-	</center>
-</div>
+{% if ref_list %}
+	{% for ref in ref_list %}
+		<div class="col_header"><p>
+			{{ ref["ga:visits"] }}
+		</p></div>
+		<div class="col_content">
+			<p><a href="http://{{ ref["ga:source"] }}{% if ref["ga:referralPath"]!="(not set)" %}{{ ref["ga:referralPath"] }}{% endif %}" target="_BLANK">{{ ref["ga:source"] }}{% if ref["ga:referralPath"]!="(not set)" %}{{ ref["ga:referralPath"] }}{% endif %}</a></p>
+		</div>
+		<br clear="all"/>
+	{% endfor %}
+{% endif %}
 
-<div class="entry" style="word-break:break-all;">
-<H1>{% if is_english %}Referer{% else %}アクセス元{% endif %}</H1>
-
-{% for ref in ref_list %}
-	<p>{{ ref["ga:visits"] }}&nbsp;<a href="http://{{ ref["ga:source"] }}{{ ref["ga:referralPath"] }}" target="_BLANK">{{ ref["ga:source"] }}{{ ref["ga:referralPath"] }}</a></p>
-{% endfor %}
-
-<p>&nbsp;</p>
-</div>
-
-<div class="entry">
-	<H1>{% if is_english %}Contents{% else %}人気のコンテンツ{% endif %}</H1>
-
+{% if page_list %}
 	{% for ref in page_list %}
-		<p>{{ ref["ga:visits"] }}&nbsp;<a href="http://www.illustbook.net{{ ref["ga:pagePath"] }}" target="_BLANK">{{ ref["ga:pageTitle"] }}</a></p>
+		<div class="col_header">
+			<p>{{ ref["ga:visits"] }}</p>
+		</div>
+		<div class="col_content">
+			<p><a href="http://www.illustbook.net{{ ref["ga:pagePath"] }}" target="_BLANK">{{ ref["ga:pageTitle"] }}</a></p>
+		</div>
+		<br clear="all"/>
 	{% endfor %}
+{% endif %}
 
-	<p>&nbsp;</p>
-</div>
-
-<div class="entry">
-	<H1>{% if is_english %}Search word{% else %}検索語{% endif %}</H1>
-
+{% if keyword_list %}
 	{% for ref in keyword_list %}
-		<p>{{ ref["ga:visits"] }}&nbsp;{{ ref["ga:keyword"] }}</p>
+		<div class="col_header"><p>{{ ref["ga:visits"] }}</p></div>
+		<div class="col_content"><p>{{ ref["ga:keyword"] }}</p></div>
+		<br clear="all"/>
 	{% endfor %}
+{% endif %}
 
-	<p>&nbsp;</p>
 </div>
 
+{#
 {% if not is_english %}
 <div class="entry">
 	<H1>カウンター</H1>
@@ -97,14 +152,7 @@
 	<p>&nbsp;</p>
 </div>
 {% endif %}
-
-{% if bbs %}
-	<div class="entry">
-		<div class="g-button-group">
-		<a href="./usr/{{bbs.key()}}/" class="g-button">{% if is_english %}Back to BBS{% else %}{{page_name}}へ戻る{% endif %}</a>
-		</div>
-	</div>
-{% endif %}
+#}
 
 <script language="javascript" src="{{host}}js/analyze.js" type="text/javascript"></script>
 
