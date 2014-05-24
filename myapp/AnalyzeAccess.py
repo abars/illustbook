@@ -72,7 +72,8 @@ class AnalyzeAccess(webapp.RequestHandler):
 		if(is_admin):
 			if(self.request.get("bbs_id")):
 				bbs_id=self.request.get("bbs_id")
-				page_name=bbs_id
+				if(bbs.short!=bbs_id):
+					page_name=bbs_id
 
 		page_list=None
 		ref_list=None
