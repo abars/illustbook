@@ -117,7 +117,8 @@ class AnalyzeAccess(webapp.RequestHandler):
 			'end_date': end_date,
 			'is_iphone': CssDesign.is_iphone(self),
 			'is_tablet': CssDesign.is_tablet(self),
-			'is_english': CssDesign.is_english(self)
+			'is_english': CssDesign.is_english(self),
+			'redirect_url': self.request.path,
 			}
 		path = '/html/analyze.html'
 		self.response.out.write(template_select.render(path, template_values))
