@@ -137,7 +137,11 @@
 {% if keyword_list %}
 	{% for ref in keyword_list %}
 		<div class="col_header"><p>{{ ref["ga:pageviews"] }}</p></div>
-		<div class="col_content"><p>{{ ref["ga:keyword"] }}</p></div>
+		<div class="col_content"><p>
+			<a href="http://www.google.{% if is_english %}com{% else %}co.jp{% endif %}/search?q={{ref['ga:keyword']}}" target="_BLANK">
+			{{ ref["ga:keyword"] }}
+			</a>
+			</p></div>
 		<br clear="all"/>
 	{% endfor %}
 {% endif %}
