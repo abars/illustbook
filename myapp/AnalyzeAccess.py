@@ -93,8 +93,8 @@ class AnalyzeAccess(webapp.RequestHandler):
 			if(mode=="access"):
 				access_list=analytics.get("access",bbs_id,start_date,end_date)
 
-		quota_error=(not page_list and not ref_list and not keyword_list and not access_list)
-
+		quota_error=(mode=="access" and not access_list)
+		
 		redirect_api="analyze?start_date="+start_date+"&amp;end_date="+end_date+"&amp;bbs_id="+bbs_id+"&amp;bbs_key="+str(bbs.key())+"&amp;"
 
 		host_url ="./"
