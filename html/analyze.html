@@ -86,6 +86,7 @@
 
 	<div style="float:left;margin-left:{% if is_iphone %}4px;{% else %}16px;{% endif %}">
 	<form method="get" action="{{host}}analyze">
+		<input type="hidden" name="bbs_id" value="{{bbs_id}}"/>
 		<input type="hidden" name="bbs_key" value="{{bbs.key()}}"/>
 		<input type="hidden" name="mode" value="{{mode}}"/>
 		<input name="start_date" value="{{start_date}}" size="12"/> - 
