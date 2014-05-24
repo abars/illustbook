@@ -32,13 +32,18 @@
 			float:left;
 			text-align: right;
 			margin-right:8px;
-			width:48px;
+			width:64px;
 			color:#ea5376;
 			font-size:12px;
 		}
 		.col_content{
-			float:left;
+			float:right;
 			font-size:12px;
+			width:100%;
+			margin-left:-72px;
+		}
+		.col_content_main{
+			margin-left:72px;
 		}
 	</style>
 </head>
@@ -116,7 +121,7 @@
 			{{ ref["ga:pageviews"] }}
 		</p></div>
 		<div class="col_content">
-			<p><a href="http://{{ ref["ga:source"] }}{% if ref["ga:referralPath"]!="(not set)" %}{{ ref["ga:referralPath"] }}{% endif %}" target="_BLANK">{{ ref["ga:source"] }}{% if ref["ga:referralPath"]!="(not set)" %}{{ ref["ga:referralPath"] }}{% endif %}</a></p>
+			<p class="col_content_main"><a href="http://{{ ref["ga:source"] }}{% if ref["ga:referralPath"]!="(not set)" %}{{ ref["ga:referralPath"] }}{% endif %}" target="_BLANK">{{ ref["ga:source"] }}{% if ref["ga:referralPath"]!="(not set)" %}{{ ref["ga:referralPath"] }}{% endif %}</a></p>
 		</div>
 		<br clear="all"/>
 	{% endfor %}
@@ -128,7 +133,7 @@
 			<p>{{ ref["ga:pageviews"] }}</p>
 		</div>
 		<div class="col_content">
-			<p><a href="http://www.illustbook.net{{ ref["ga:pagePath"] }}" target="_BLANK">{{ ref["ga:pageTitle"] }}</a></p>
+			<p class="col_content_main"><a href="http://www.illustbook.net{{ ref["ga:pagePath"] }}" target="_BLANK">{{ ref["ga:pageTitle"] }}</a></p>
 		</div>
 		<br clear="all"/>
 	{% endfor %}
@@ -137,7 +142,7 @@
 {% if keyword_list %}
 	{% for ref in keyword_list %}
 		<div class="col_header"><p>{{ ref["ga:pageviews"] }}</p></div>
-		<div class="col_content"><p>
+		<div class="col_content"><p class="col_content_main">
 			<a href="http://www.google.{% if is_english %}com{% else %}co.jp{% endif %}/search?q={{ref['ga:keyword']}}" target="_BLANK">
 			{{ ref["ga:keyword"] }}
 			</a>
