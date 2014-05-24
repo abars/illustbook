@@ -40,9 +40,14 @@ handlers:
   static_files: sitemap.xml
   upload: sitemap.xml
 
-- url: /favicon.ico
+- url: /.*/favicon.ico
   static_files: favicon.ico
   upload: favicon.ico
+  expiration: "1d"
+
+- url: /favicon.ico
+  static_files: favicon_pochi.ico
+  upload: favicon_pochi.ico
   expiration: "1d"
 
 - url: /.*
