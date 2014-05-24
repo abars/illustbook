@@ -4,9 +4,28 @@
 	{% include "viewport.html" %}
 	<title>{% if is_english %}Analyze {% endif %}{{page_name}}{% if not is_english %}のアクセス解析 - イラストブック{% endif %}</title>
 	{% include "css/portal.css" %}
+
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script type="text/javascript">
+		google.load("visualization", "1", {packages:["corechart"]});
+		google.setOnLoadCallback(drawChart);
+		function drawChart() {
+			var data = new google.visualization.DataTable();
+			data.addColumn('string', 'Date');
+			data.addColumn('number', 'Session');
+			data.addRows({{access_list|length}});
+			{% for access in access_list %}
+				data.setValue({{loop.index-1}},0,'{{access["ga:date"]}}');
+				data.setValue({{loop.index-1}},1,{{access["ga:visits"]}});
+			{% endfor %}
+			var chart = new google.visualization.LineChart(document.getElementById('chart'));
+			chart.draw(data, {width: '100%', height: 300});//, title: 'アクセス数の推移'});//, vAxis: {minValue: 0}});
+		}
+	</script>
 </head>
 
-<body onload="update('{{analyze_data|safe}}',{% if is_english %}true{% else %}false{% endif %});">
+<body>
+
 <div id="container">
 <div id="contents">
 
@@ -19,45 +38,72 @@
 {% else %}
 
 <div class="entry">
-<H1>{% if is_english %}Analyze {% endif %}{{page_name}}{% if not is_english %}のアクセス解析（直近256アクセスからの分析）{% endif %}</H1>
+	<H1>{% if is_english %}Analyze {% endif %}{{page_name}}{% if not is_english %}のアクセス解析{% endif %}</H1>
 </div>
 
 <div class="entry" style="word-break:break-all;">
-<H1>{% if is_english %}Access from{% else %}アクセス元{% endif %}</H1>
-<div id="access"></div>
+	<H1>{% if is_english %}Access{% else %}アクセス数の推移{% endif %}</H1>
+
+	{% if not access_list %}<p>Access list not found</p>{% endif %}
+
+	<div id="chart"></div>
+
+	<center>
+		<form method="get" action="{{host}}analyze">
+			<input type="hidden" name="bbs_key" value="{{bbs.key()}}"/>
+			{% if is_admin %}<input name="bbs_id" value="{{bbs_id}}"/>&nbsp;{% endif %}
+			<input name="start_date" value="{{start_date}}"/> - 
+			<input name="end_date" value="{{end_date}}"/>&nbsp;
+			<input type="submit" value="{% if is_english %}Update{%else%}更新{% endif %}" class="g-button"/>
+		</form>
+	</center>
+</div>
+
+<div class="entry" style="word-break:break-all;">
+<H1>{% if is_english %}Referer{% else %}アクセス元{% endif %}</H1>
+
+{% for ref in ref_list %}
+	<p>{{ ref["ga:visits"] }}&nbsp;<a href="http://{{ ref["ga:source"] }}{{ ref["ga:referralPath"] }}" target="_BLANK">{{ ref["ga:source"] }}{{ ref["ga:referralPath"] }}</a></p>
+{% endfor %}
+
 <p>&nbsp;</p>
 </div>
 
 <div class="entry">
-<H1>{% if is_english %}Hot contents{% else %}人気コンテンツ{% endif %}</H1>
-<div id="content"></div>
-<p>&nbsp;</p>
+	<H1>{% if is_english %}Contents{% else %}人気のコンテンツ{% endif %}</H1>
+
+	{% for ref in page_list %}
+		<p>{{ ref["ga:visits"] }}&nbsp;<a href="http://www.illustbook.net{{ ref["ga:pagePath"] }}" target="_BLANK">{{ ref["ga:pageTitle"] }}</a></p>
+	{% endfor %}
+
+	<p>&nbsp;</p>
 </div>
 
 <div class="entry">
-<H1>{% if is_english %}Search word{% else %}検索語{% endif %}</H1>
-<div id="search"></div>
-<p>&nbsp;</p>
+	<H1>{% if is_english %}Search word{% else %}検索語{% endif %}</H1>
+
+	{% for ref in keyword_list %}
+		<p>{{ ref["ga:visits"] }}&nbsp;{{ ref["ga:keyword"] }}</p>
+	{% endfor %}
+
+	<p>&nbsp;</p>
 </div>
 
 {% if not is_english %}
 <div class="entry">
-<H1>アクセス数</H1>
-<p>本日のアクセス数は{{bbs.counter.today_cnt}}、
-昨日のアクセス数は{{bbs.counter.yesterday_cnt}}でした。</p>
-<p>&nbsp;</p>
+	<H1>カウンター</H1>
+	<p>本日のアクセス数は{{bbs.counter.today_cnt}}、
+	昨日のアクセス数は{{bbs.counter.yesterday_cnt}}でした。</p>
+	<p>&nbsp;</p>
 </div>
 {% endif %}
 
 {% if bbs %}
-<div class="entry">
-<div class="g-button-group">
-<a href="./usr/{{bbs.key()}}/" class="g-button">{% if is_english %}Back to BBS{% else %}{{page_name}}へ戻る{% endif %}</a>
-{% if user %}
-　<a href="./analyze?bbs_key={{bbs.key()}}&mode=delete" class="g-button">{% if is_english %}Delete analyze data{% else %}解析結果の初期化{% endif %}</a>
-{% endif %}
-</div>
-</div>
+	<div class="entry">
+		<div class="g-button-group">
+		<a href="./usr/{{bbs.key()}}/" class="g-button">{% if is_english %}Back to BBS{% else %}{{page_name}}へ戻る{% endif %}</a>
+		</div>
+	</div>
 {% endif %}
 
 <script language="javascript" src="{{host}}js/analyze.js" type="text/javascript"></script>

@@ -111,23 +111,7 @@ from myapp.EditThreadList import EditThreadList
 from myapp.SearchTag import SearchTag
 from myapp.AddRankingScore import AddRankingScore
 from myapp.UploadTemp import UploadTemp
-
-#-----------------------------------------------------------------
-#Google Analytics API
-#-----------------------------------------------------------------
-
 from myapp.AnalyticsGet import AnalyticsGet
-
-class AnalyticsHandler(webapp.RequestHandler):
-	def get(self):
-		analytics=AnalyticsGet()
-		result_json=analytics.get("")
-
-		txt=""
-		for result in result_json:
-		  txt=txt+""+str(result["ga:visits"])+" http://"+result["ga:source"]+result["ga:referralPath"]+"<br/>"
-
-		self.response.out.write(txt)
 
 #-----------------------------------------------------------------
 #ポータル
@@ -351,7 +335,6 @@ application = webapp.WSGIApplication(
 	('/ad_goto',AdGoto),
 	('/dropbox',DropBox),
 	('/dropbox_blog',DropBox),
-	('/analytics', AnalyticsHandler),
 	],debug=False)
 
 if __name__ == "__main__":
