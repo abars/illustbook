@@ -6,7 +6,7 @@
 			<a href="{{host}}{{redirect_api}}?order=moper" class="order-button {%if order == "moper"%}checked{%endif%}">{% if is_english %}Moper{%else %}動画{% endif %}</a>
 		{% endif %}
 		<a href="{{host}}{{redirect_api}}?order=monthly" class="order-button {%if order == "monthly"%}checked{%endif%}">{% if is_english %}Ranking{%else %}ランキング{% endif %}</a>
-		{% if is_iphone and order!="monthly" %}
+		{% if (is_iphone and order!="monthly") or search %}
 				<a href="{{host}}?search=empty" class="order-button {%if search %}checked{%endif%}">
 					{% if is_english %}Search{% else %}検索{% endif %}
 				</a>
@@ -36,9 +36,9 @@
 
 {% if not is_iphone %}
 	<div style="float:right;">
-			<div style="float:right;">
-				{% include "pinterest/search.html" %}
-			 </div>
+		<div style="float:right;">
+			{% include "pinterest/search.html" %}
+		 </div>
 	</div>
 {% endif %}
 

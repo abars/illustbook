@@ -140,7 +140,7 @@ h2,h3 {font-size:100%;color:#ea5376;}
 	float:left;margin-left:34px;line-height:13px;
 }
 
-item_info_applause{
+.item_info_applause{
 	float:right;margin-right:4px;line-height:13px;
 }
 
@@ -240,13 +240,17 @@ item_info_applause{
 		width:100px;
 	{% endif %}
 	text-align: center;
+	border-radius: 2px;
 }
 
 .order-button.checked{
-	color: #ffffff;
 	margin:4px;
 	border: solid 1px #ffffff;
-	border-radius: 2px;
+}
+
+.order-button:hover{
+	margin:3px;
+	border: solid 2px #ffffff;
 }
 
 #user_menu{
@@ -432,7 +436,7 @@ item_info_applause{
 	text-align: center;
 	text-transform: uppercase;
 	top: 22px;
-	background: #d93131;
+	background: #ea5376;/* d93131; */
 	width: 100px;
 	padding: 3px 10px;
 	-webkit-transform: rotate(45deg);
