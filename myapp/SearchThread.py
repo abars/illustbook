@@ -153,14 +153,14 @@ class SearchThread(webapp.RequestHandler):
 				query_string=query,
 				options=options,)
 		except:
-			return []
+			return None
 
 		index = search.Index(name=index)
 
 		try:
 			results=index.search(query)
 		except:
-			return []
+			return None
 		
 		key_list=[]
 		for doc in results:

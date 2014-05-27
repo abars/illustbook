@@ -241,6 +241,7 @@ class Pinterest(webapp.RequestHandler):
 
 		search_api="search_tag"
 		ranking_month_list=[]
+		search_api_error=False
 
 		if(order=="monthly"):
 			#直近
@@ -281,7 +282,11 @@ class Pinterest(webapp.RequestHandler):
 			#検索範囲を絞らなければ正常にソートできないので、できるだけ絞る
 			search_str="(bookmark >= 1 OR applause >= 3) AND date > "+str(from_month)+" AND date < "+str(next_month)
 			thread_list=SearchThread.search(search_str,page,unit,BbsConst.SEARCH_THREAD_INDEX_NAME,no_reduct)
-			thread_list=ApiObject.create_thread_object_list(self,thread_list,"search")
+			if(thread_list!=None):
+				thread_list=ApiObject.create_thread_object_list(self,thread_list,"search")
+				search_api_error=False
+			else:
+				search_api_error=True
 
 			#ranking_month_list.reverse()
 		else:
@@ -300,6 +305,7 @@ class Pinterest(webapp.RequestHandler):
 		template_values['bbs_list']=bbs_list
 		template_values['ranking_month_list']=ranking_month_list
 		template_values['month_query']=month_query
+		template_values['search_api_error']=search_api_error
 
 		Pinterest._render_page(self,template_values)
 
@@ -311,7 +317,11 @@ class Pinterest(webapp.RequestHandler):
 		unit=BbsConst.PINTEREST_PAGE_UNIT
 
 		thread_list=SearchThread.search(search,page,unit,BbsConst.SEARCH_THREAD_INDEX_NAME)
-		thread_list=ApiObject.create_thread_object_list(self,thread_list,"search")
+		if(thread_list!=None):
+			thread_list=ApiObject.create_thread_object_list(self,thread_list,"search")
+			search_api_error=False
+		else:
+			search_api_error=True
 
 		if(search=="empty"):
 			thread_list=None
@@ -322,6 +332,7 @@ class Pinterest(webapp.RequestHandler):
 		template_values['page_mode']="search"
 		template_values['illust_enable']=True
 		template_values['search']=search
+		template_values['search_api_error']=search_api_error
 
 		Pinterest._render_page(self,template_values)
 
