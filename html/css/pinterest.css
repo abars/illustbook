@@ -109,7 +109,6 @@ h2,h3 {font-size:100%;color:#ea5376;}
 .item_info_bbs{
 	text-align:left;
 	padding:4px;
-	height:15px;
 	overflow-x:hidden;
 	overflow-y:hidden;
 	white-space:nowrap;
@@ -127,6 +126,14 @@ h2,h3 {font-size:100%;color:#ea5376;}
 .item a{
 	text-decoration: none;
 	color:#333;
+}
+
+.illust_summary{
+	clear:both;
+	margin:4px;
+}
+
+.illust_title{
 }
 
 .message {
@@ -266,11 +273,6 @@ h2,h3 {font-size:100%;color:#ea5376;}
 
 #profile{
 	display:none;
-}
-
-.illust_summary{
-	clear:both;
-	margin:4px;
 }
 
 .tag{
