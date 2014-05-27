@@ -128,6 +128,22 @@ h2,h3 {font-size:100%;color:#ea5376;}
 	color:#333;
 }
 
+.item_info_author{
+	float:left;margin-left:34px;margin-top:4px;line-height:13px;
+}
+
+.item_info_bookmark{
+	float:right;margin-top:4px;margin-right:4px;line-height:13px;
+}
+
+.item_info_date{
+	float:left;margin-left:34px;line-height:13px;
+}
+
+item_info_applause{
+	float:right;margin-right:4px;line-height:13px;
+}
+
 .illust_summary{
 	clear:both;
 	margin:4px;
@@ -217,6 +233,7 @@ h2,h3 {font-size:100%;color:#ea5376;}
 	display: block;
 	float:left;
 	margin:5px;
+	line-height: 20px;
 	{% if is_iphone %}
 		width:68px;
 	{% else %}
