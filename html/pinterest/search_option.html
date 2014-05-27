@@ -1,9 +1,11 @@
 {% if not is_english %}
+{#
 <div class="message" {% if not is_iphone %}style="width:350px;margin-left:0px;margin-right:0px;"{% endif %}>
 <p>{% if is_english %}Search Option{% else %}検索オプション{% endif %}</p>
 検索には評価式も入力可能です。例えば、bookmark &gt; 5、と入力するとブックマークが5以上のイラストを検索します。
 また、date &lt; 2011-01-01、と入力すると2010年のイラストを検索します。
 </div>
+#}
 
 <div class="message recent_tag" {% if not is_iphone %}style="width:350px;margin-left:0px;margin-right:0px;"{% endif %}>
 <p>{% if is_english %}External Search{% else %}他のサイトで検索{% endif %}</p>
