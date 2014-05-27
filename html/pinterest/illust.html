@@ -47,10 +47,10 @@
 	<div class="illust_summary">
 		{% if thread.title %}
 		{% if thread.title != "notitle" %}
-			<a href="{{thread.thread_url}}">
-			 <b>{{thread|regulation_name}}{{thread.title}}</b>
+			<a href="{{thread.thread_url}}" class="illust_title">
+				<b>{{thread|regulation_name}}{{thread.title}}</b>
+				<br/>
 			</a>
-			<br/>
 		{% endif %}
 		{% endif %}
 		{% if thread.tag %}
