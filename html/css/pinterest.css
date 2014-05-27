@@ -216,20 +216,18 @@ h2,h3 {font-size:100%;color:#ea5376;}
 	color:#ffffff;
 	display: block;
 	float:left;
-	padding:2px;
+	margin:5px;
 	{% if is_iphone %}
-		width:72px;
+		width:68px;
 	{% else %}
 		width:100px;
 	{% endif %}
-	padding-top:5px;
 	text-align: center;
 }
 
 .order-button.checked{
 	color: #ffffff;
-	margin:2px;
-	padding-top:2px;
+	margin:4px;
 	border: solid 1px #ffffff;
 	border-radius: 2px;
 }
