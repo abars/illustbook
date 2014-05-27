@@ -181,7 +181,11 @@
 {% if page_mode != "guide" %}
 {% if page_mode != "login_require" %}
 <div class="message">
-{% if is_english %}Illust not found{% else %}イラストは見つかりませんでした。{% endif %}
+{% if search_api_error %}
+  {% if is_english %}Search api error{% else %}サーチAPIの呼び出しに失敗しました。リロードして下さい。{% endif %}
+{% else %}
+  {% if is_english %}Illust not found{% else %}イラストは見つかりませんでした。{% endif %}
+{% endif %}
 </div>
 {% endif %}
 {% endif %}
