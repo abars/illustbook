@@ -123,7 +123,7 @@
 		{# bbs #}
 		{% if thread.bbs_url %}
 		<hr/>  
-		<div style="text-align:left;padding:4px;">
+		<div class="item_info_bbs">
 			<a href="{{thread.bbs_url}}" style="display:block;"><small>{{thread.bbs_title}}</small></a>
 		</div>
 		{% endif %}
@@ -131,7 +131,7 @@
 		{# comment #}
 		{%if thread.comment %}
 		<hr/>
-		<div style="text-align:left;padding:4px;">
+		<div class="item_info_comment">
 			<a href="{{thread.thread_url}}" style="display:block;"><small>{{thread.comment}}{% if is_english %} Comment{% else %}件のコメント{% endif %}</small></a>
 		</div>
 		{% endif %}
