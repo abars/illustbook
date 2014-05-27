@@ -62,7 +62,7 @@
 {% include "floating_menu.html" %}
 
 <!-- ポータルタブ -->
-{% if page_mode == "index" %}{# and not is_iphone %} #}
+{% if page_mode == "index" or search %}
   {% include "pinterest/order_menu.html" %}
 {% endif %}
 
@@ -156,7 +156,7 @@
 
 <!-- タグサーチ -->
 
-{% if search %}
+{% if search and is_iphone %}
   <div class="message">
     {% include "pinterest/search.html" %}
   </div>
@@ -170,6 +170,11 @@
 
 <!-- Pinterest -->
 
+{% if search=="empty" %}
+  {% include "pinterest/recent_tag.html" %}
+{% endif %}
+
+{% if search!="empty" %}
 {% if not thread_list %}
 {% if not contents_only %}
 {% if illust_enable %}
@@ -178,6 +183,7 @@
 <div class="message">
 {% if is_english %}Illust not found{% else %}イラストは見つかりませんでした。{% endif %}
 </div>
+{% endif %}
 {% endif %}
 {% endif %}
 {% endif %}
@@ -199,11 +205,6 @@
      {% include "pinterest/corner_stamp.html" %}
     {% endif %}
   {% endif %}
-{#
-  {% if page_mode == "index" and is_iphone %}
-    {% include "pinterest/order_menu.html" %}
-  {% endif %}
-#}
   </div>
   {% include "pinterest/illust.html" %}
 </div>

@@ -218,7 +218,7 @@ h2,h3 {font-size:100%;color:#ea5376;}
 	float:left;
 	padding:2px;
 	{% if is_iphone %}
-		width:70px;
+		width:72px;
 	{% else %}
 		width:100px;
 	{% endif %}
