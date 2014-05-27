@@ -313,6 +313,9 @@ class Pinterest(webapp.RequestHandler):
 		thread_list=SearchThread.search(search,page,unit,BbsConst.SEARCH_THREAD_INDEX_NAME)
 		thread_list=ApiObject.create_thread_object_list(self,thread_list,"search")
 
+		if(search=="empty"):
+			thread_list=None
+
 		template_values['thread_list']=thread_list
 		template_values['next_query']="search="+urllib.quote_plus(str(search))
 		template_values['tag_list']=SearchTag.get_recent_tag(search_api)

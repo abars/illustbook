@@ -1,63 +1,46 @@
 <div id="order">
-  <div style="float:left;">
-    <a href="{{host}}{{redirect_api}}?order=new" class="order-button {%if order == "new"%}checked{%endif%}">{% if is_english %}New{%else%}新着{% endif %}</a>
-    <a href="{{host}}{{redirect_api}}?order=hot" class="order-button {%if order == "hot"%}checked{%endif%}">{% if is_english %}Hot{%else%}人気{% endif %}</a>
-    {% if not is_iphone %}
-      <a href="{{host}}{{redirect_api}}?order=moper" class="order-button {%if order == "moper"%}checked{%endif%}">{% if is_english %}Moper{%else %}動画{% endif %}</a>
-    {% endif %}
-    <a href="{{host}}{{redirect_api}}?order=monthly" class="order-button {%if order == "monthly"%}checked{%endif%}">{% if is_english %}Ranking{%else %}ランキング{% endif %}</a>
-{#
-    {% if is_iphone %}
-        <a href="javascript:show_search({% if is_english %}true{% else %}false{% endif %});" class="order-button id="search_button">
-          {% if is_english %}Search{% else %}検索{% endif %}
-        </a>
-    {% endif %}
-#}
-  </div>
+	<div style="float:left;">
+		<a href="{{host}}{{redirect_api}}?order=new" class="order-button {%if order == "new"%}checked{%endif%}">{% if is_english %}New{%else%}新着{% endif %}</a>
+		<a href="{{host}}{{redirect_api}}?order=hot" class="order-button {%if order == "hot"%}checked{%endif%}">{% if is_english %}Hot{%else%}人気{% endif %}</a>
+		{% if not is_iphone %}
+			<a href="{{host}}{{redirect_api}}?order=moper" class="order-button {%if order == "moper"%}checked{%endif%}">{% if is_english %}Moper{%else %}動画{% endif %}</a>
+		{% endif %}
+		<a href="{{host}}{{redirect_api}}?order=monthly" class="order-button {%if order == "monthly"%}checked{%endif%}">{% if is_english %}Ranking{%else %}ランキング{% endif %}</a>
+		{% if is_iphone and order!="monthly" %}
+				<a href="{{host}}?search=empty" class="order-button {%if search %}checked{%endif%}">
+					{% if is_english %}Search{% else %}検索{% endif %}
+				</a>
+		{% endif %}
+	</div>
 
 {% if order=="monthly" and ranking_month_list%}
-  <div style="float:left;margin-left:8px;">
-    <div class="g-button-group">
-      <a class="g-button dropdown-toggle menu_button" data-toggle="dropdown" href="#" style="background-image:none;background-color:#ea5376;color:#ffffff;border:none;text-shadow:none;">
-        {% for one_month in ranking_month_list %}
-          {% if one_month.query == month_query %}
-            {{one_month.str}}
-          {% endif %}
-        {% endfor %}
-        <span class="caret"></span>
-      </a>
+	<div style="float:left;margin-left:8px;">
+		<div class="g-button-group">
+			<a class="g-button dropdown-toggle menu_button" data-toggle="dropdown" href="#" style="background-image:none;background-color:#ea5376;color:#ffffff;border:none;text-shadow:none;">
+				{% for one_month in ranking_month_list %}
+					{% if one_month.query == month_query %}
+						{{one_month.str}}
+					{% endif %}
+				{% endfor %}
+				<span class="caret"></span>
+			</a>
 
-      <ul class="dropdown-menu menu_list">
-      {% for one_month in ranking_month_list %}
-      <li><a href="{{host}}{{redirect_api}}?order=monthly&amp;query={{one_month.query}}">{{one_month.str}}</a></li>
-      {% endfor %}
-      </ul>
-    </div>
-  </div>
+			<ul class="dropdown-menu menu_list">
+			{% for one_month in ranking_month_list %}
+			<li><a href="{{host}}{{redirect_api}}?order=monthly&amp;query={{one_month.query}}">{{one_month.str}}</a></li>
+			{% endfor %}
+			</ul>
+		</div>
+	</div>
 {% endif %}
 
-{% if order!="monthly" or not is_iphone %}
-  <div style="float:right;">
-    {% if is_iphone %}
-    {% else %}
-      <div style="float:right;">
-        {% include "pinterest/search.html" %}
-       </div>
-    {% endif %}
-  </div>
+{% if not is_iphone %}
+	<div style="float:right;">
+			<div style="float:right;">
+				{% include "pinterest/search.html" %}
+			 </div>
+	</div>
 {% endif %}
 
-  <br clear="all"/>
+	<br clear="all"/>
 </div>
-
-{% if is_iphone %}
-  <div id="search" style="background:none;padding:0px;margin:0px;">
-      <div class="message">
-        {% include "pinterest/search.html" %}
-      </div>
-      <br clear="all"/>
-      {% include "pinterest/hot_bbs.html" %}
-      {% include "pinterest/recent_tag.html" %}
-      <br clear="all"/>
-  </div>
-{% endif %}
