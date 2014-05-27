@@ -73,7 +73,7 @@
 		<div style="float:left;width:100%;">
 			<!-- info -->
 			<div style="float:right;width:100%;margin-left:-34px;">
-				<div style="float:left;margin-left:34px;margin-top:4px;">
+				<div class="item_info_author">
 				 {%if thread.user_id %}
 					<a href="{{host}}mypage?user_id={{thread.user_id}}" style="overflow:hidden;max-width:80%;">
 				 {% endif %}
@@ -82,14 +82,14 @@
 					 </a>
 				 {% endif %}
 				</div>
-				<div style="float:right;margin-top:4px;margin-right:4px;">
+				<div class="item_info_bookmark">
 					<small>
 					{%if thread.bookmark %}<a href="{{host}}show_bookmark?thread_key={{thread.key}}">{{thread.bookmark}}{% if is_english %}Bookmark{%else%}ブクマ{% endif %}</a><br/>{% endif %}
 					</small>
 				</div>
 				{% endif %}
 			 <br clear="all"/>
-				<div style="float:left;margin-left:34px;">
+				<div class="item_info_date">
 				 	{% if thread.create_date_original %}
 					<small>
 						 {% if is_english %}
@@ -100,7 +100,7 @@
 					</small>
 					{% endif %}
 				</div>
-				<div style="float:right;margin-right:4px;">
+				<div class="item_info_applause">
 					{%if thread.applause %}
 					<small>
 						{{thread.applause}}{% if is_english %}Like{% else %}拍手{% endif %}
