@@ -46,17 +46,19 @@
 {% endif %}
 
 <!-- タグ一覧 -->
-{% if not is_iphone %}
+{% if not is_iphone and not search %}
 	{% include "pinterest/recent_tag.html" %}
 {% endif %}
 
 <!-- 広告 -->
 {% if not is_iphone %}
-	{% if search %} {# page_mode == "index" #}
+	{% if search %}
+		{#
 		<br clear="all"/>
 		<div style="margin-top:5px;margin-left:auto;margin-right:auto;width:336px;">
 			{% include "adsense/adsense_top.html" %}
 		</div>
+		#}
 	{% else %}
 		{% if thread_list and not tag_list%}
 			{% include "adsense/adsense_top.html" %}
