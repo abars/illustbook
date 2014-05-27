@@ -61,6 +61,11 @@
 
 {% include "floating_menu.html" %}
 
+<!-- ポータルタブ -->
+{% if page_mode == "index" %}{# and not is_iphone %} #}
+  {% include "pinterest/order_menu.html" %}
+{% endif %}
+
 <!-- コンテンツ -->
 
 <div id="contents">
@@ -149,11 +154,6 @@
   </div>
 {% endif %}
 
-<!-- ポータルタブ -->
-{% if page_mode == "index" and not is_iphone %}
-  {% include "pinterest/order_menu.html" %}
-{% endif %}
-
 <!-- タグサーチ -->
 
 {% if search %}
@@ -199,9 +199,11 @@
      {% include "pinterest/corner_stamp.html" %}
     {% endif %}
   {% endif %}
+{#
   {% if page_mode == "index" and is_iphone %}
     {% include "pinterest/order_menu.html" %}
   {% endif %}
+#}
   </div>
   {% include "pinterest/illust.html" %}
 </div>

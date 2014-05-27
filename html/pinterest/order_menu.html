@@ -1,19 +1,24 @@
 <div id="order">
   <div style="float:left;">
-    <div class="g-button-group toggle-buttons">
-    <a href="{{host}}{{redirect_api}}?order=new" class="g-button {%if order == "new"%}checked{%endif%}">{% if is_english %}New{%else%}新着{% endif %}</a>
-    <a href="{{host}}{{redirect_api}}?order=hot" class="g-button {%if order == "hot"%}checked{%endif%}">{% if is_english %}Hot{%else%}人気{% endif %}</a>
-    <a href="{{host}}{{redirect_api}}?order=monthly" class="g-button {%if order == "monthly"%}checked{%endif%}">{% if is_english %}Ranking{%else %}ランキング{% endif %}</a>
+    <a href="{{host}}{{redirect_api}}?order=new" class="order-button {%if order == "new"%}checked{%endif%}">{% if is_english %}New{%else%}新着{% endif %}</a>
+    <a href="{{host}}{{redirect_api}}?order=hot" class="order-button {%if order == "hot"%}checked{%endif%}">{% if is_english %}Hot{%else%}人気{% endif %}</a>
     {% if not is_iphone %}
-      <a href="{{host}}{{redirect_api}}?order=moper" class="g-button {%if order == "moper"%}checked{%endif%}">{% if is_english %}Moper{%else %}動画{% endif %}</a>
+      <a href="{{host}}{{redirect_api}}?order=moper" class="order-button {%if order == "moper"%}checked{%endif%}">{% if is_english %}Moper{%else %}動画{% endif %}</a>
     {% endif %}
-    </div>
+    <a href="{{host}}{{redirect_api}}?order=monthly" class="order-button {%if order == "monthly"%}checked{%endif%}">{% if is_english %}Ranking{%else %}ランキング{% endif %}</a>
+{#
+    {% if is_iphone %}
+        <a href="javascript:show_search({% if is_english %}true{% else %}false{% endif %});" class="order-button id="search_button">
+          {% if is_english %}Search{% else %}検索{% endif %}
+        </a>
+    {% endif %}
+#}
   </div>
 
 {% if order=="monthly" and ranking_month_list%}
   <div style="float:left;margin-left:8px;">
     <div class="g-button-group">
-      <a class="g-button dropdown-toggle menu_button" data-toggle="dropdown" href="#">
+      <a class="g-button dropdown-toggle menu_button" data-toggle="dropdown" href="#" style="background-image:none;background-color:#ea5376;color:#ffffff;border:none;text-shadow:none;">
         {% for one_month in ranking_month_list %}
           {% if one_month.query == month_query %}
             {{one_month.str}}
@@ -34,11 +39,6 @@
 {% if order!="monthly" or not is_iphone %}
   <div style="float:right;">
     {% if is_iphone %}
-     <div class="g-button-group toggle-buttons">
-        <a href="javascript:show_search({% if is_english %}true{% else %}false{% endif %});" class="g-button no-text" id="search_button">
-          <i class="icon-search"></i>
-        </a>
-      </div>
     {% else %}
       <div style="float:right;">
         {% include "pinterest/search.html" %}
