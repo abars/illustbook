@@ -204,6 +204,7 @@ h2,h3 {font-size:100%;color:#ea5376;}
 
 #order{
 	margin:5px;
+	margin-bottom:0px;
 }
 
 {% if is_iphone %}
