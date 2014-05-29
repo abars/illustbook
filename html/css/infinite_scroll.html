@@ -1,45 +1,57 @@
 {# infinite scroll #}
 <style type="text/css">
 #back-top {
-  position: fixed;
-  bottom: 10px;
-  right: 5px;
-  margin-left: -100px;
-  background: #fff;
-  display:none;
-  text-align: center;
-  background: #fff;
+	position: fixed;
+	bottom: 10px;
+	right: 5px;
+	margin-left: -100px;
+	display:none;
+	text-align: center;
+}
+
+#back-top,.loading{
+	{% if bbs %}
+		background: #fff;
+	{% else %}
+		background: #ea5376;
+	{% endif %}
+	border-radius: 4px;
+}
+
+#back-top a ,#infscr-loading {
+	{% if bbs %}
+	color: #666;
+	{% else %}
+	color: #fff;
+	{% endif %}
 }
 
 #back-top a {
-  width: 40px;
-  height: 20px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  text-decoration: none;
-  color: #666;
-  display: block;
-  font-size: 14px;
+	width: 40px;
+	height: 20px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	text-decoration: none;
+	display: block;
+	font-size: 14px;
 }
 
 #back-top a:hover{
-  border-bottom: none;
+	border-bottom: none;
 }
 
 .loading{
-  z-index:2;
-  background: #fff;
+	z-index:2;
 }
 
 #infscr-loading {
-margin-left: -100px;
-width: 200px;
-position: fixed;
-left: 50%;
-bottom: 14px;
-text-align: center;
-font-size: 14px;
-color: #666;
+	margin-left: -100px;
+	width: 200px;
+	position: fixed;
+	left: 50%;
+	bottom: 14px;
+	text-align: center;
+	font-size: 14px;
 }
 
 </style>
