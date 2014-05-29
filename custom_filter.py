@@ -352,6 +352,10 @@ def auto_link(summary):
 	#フォントを変えた場合のdivも削ってしまってdivで閉じれなくなるので断念
 	#summary=summary.replace('<div>', '<br/>')
 	#summary=summary.replace('</div>', '')
+
+	#これならどうだろう？
+	summary=summary.replace('<div', '<p')
+	summary=summary.replace('</div', '</p')
 	
 	#改行コードの修正
 	summary=summary.replace('<br>', '<br/>')
