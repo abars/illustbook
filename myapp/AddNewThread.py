@@ -101,8 +101,10 @@ class AddNewThread(webapp.RequestHandler):
 		if(self.request.get('homepage_addr') and self.request.get('homepage_addr')!="http://"):
 			homepage_addr=self.request.get('homepage_addr')
 		
+		overwrite_mode=False
 		if(self.request.get("thread_key")):	#上書きモード
 			#上書きの場合
+			overwrite_mode=True
 			new_thread=db.get(self.request.get("thread_key"))
 			if(OwnerCheck.check(bbs,user)):
 				if((not user) or (not new_thread.user_id) or new_thread.user_id!=user.user_id()):
@@ -254,10 +256,11 @@ class AddNewThread(webapp.RequestHandler):
 			user=None
 		url=self.get_thread_url(bbs,new_thread)
 
-		try:
-			StackFeed.feed_new_thread(user,bbs,new_thread)
-		except:
-			logging.error("new thread stack feed add error")
+		if(not overwrite_mode):
+			try:
+				StackFeed.feed_new_thread(user,bbs,new_thread)
+			except:
+				logging.error("new thread stack feed add error")
 
 		#submit thread count
 		if(user):
