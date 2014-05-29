@@ -224,6 +224,12 @@ indexes:
   - name: bbs_key
   - name: illust_mode
   - name: create_date
+
+- kind: MesThread
+  properties:
+  - name: bbs_key
+  - name: illust_mode
+  - name: create_date
     direction: desc
 
 - kind: MesThread
