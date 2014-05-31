@@ -72,9 +72,7 @@
 					<li><a href="{{host}}{{redirect_api}}">{% if is_english %}Top{% else %}トップへ戻る{% endif %}</a></li>
 					{%if not bookmark.disable_rankwatch and not is_english%}
 					<li>
-						<a href="ranking?mode=user">ランキング
-							{% if user_rank %}{{user_rank}}位{% else %}-{% endif %}
-						</a>
+						<a href="ranking?mode=user">ランキング</a>
 					</li>
 					{%endif%}
 					{% if not view_mode %}
