@@ -560,13 +560,7 @@ class Pinterest(webapp.RequestHandler):
 		following=Pinterest.is_following(user,user_id,view_mode)
 		age=Pinterest.get_age(bookmark)
 
-		#ランキング
-		user_rank=0
-		if(bookmark):
-			rank=Ranking.get_by_key_name(BbsConst.THREAD_RANKING_KEY_NAME)
-			if(rank):
-				user_rank=rank.get_user_rank(bookmark.user_id)
-
+		#詳細情報の存在
 		detail_exist=False
 		if(bookmark):
 			if(bookmark.sex or age):
@@ -622,7 +616,6 @@ class Pinterest(webapp.RequestHandler):
 			'regist_finish': (request_page_mode==Pinterest.PAGE_MODE_REGIST),
 			'redirect_api': redirect_api,
 			'age': age,
-			'user_rank': user_rank,
 			'contents_only': contents_only,
 			'search': None,
 			'top_page': False,

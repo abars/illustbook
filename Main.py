@@ -208,17 +208,22 @@ class RankingPortal(webapp.RequestHandler):
 				obj=ApiObject.create_user_object(self,obj)
 				ranking_list.append(obj)
 
-		ranking_name="人気のユーザ"
+		user = users.get_current_user()
+		user_rank=0
+		if(user):
+			rank=Ranking.get_by_key_name(BbsConst.THREAD_RANKING_KEY_NAME)
+			if(rank):
+				user_rank=rank.get_user_rank(user.user_id())
 
 		template_values = {
 			'host': "./",
 			'is_iphone': is_iphone,
-			'user': users.get_current_user(),
+			'user': user,
+			'user_rank': user_rank,
 			'redirect_url': self.request.path,
 			'mode': "ranking",
 			'header_enable': False,
 			'ranking_list': ranking_list,
-			'ranking_name': ranking_name,
 			'ranking_mode': ranking_mode,
 			'page': page,
 			'page_unit': page_unit
