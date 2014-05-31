@@ -8,8 +8,7 @@
 
 {% if thread_list %}
 {% for thread in thread_list %}
-{% if (thread|regulation_check(user))%}
-{% if thread.thread_url or edit_mode == 1 %}
+{% if (thread|regulation_check(user)) and (thread.thread_url or edit_mode == 1) %}
 	
 <div class="item {% if not thread.thread_url %}item_deleted{% endif %}">
 	{# Image #}
@@ -20,16 +19,16 @@
 					<img src="{{thread.thumbnail2_url}}" width="{{thread|thumbnail2_width(is_iphone)}}px" height="{{thread|thumbnail2_height(is_iphone)}}px" alt="{{thread.title}}" class="item_radius_image"/>
 				</a>
 
-					{% if page_mode == "index" %}
-					 {% if next_page == 2 %}
-						{% if loop.index == 1 %}{% if order == "new" %}
+				{% if page_mode == "index" %}
+					{% if next_page == 2 %}
+						{% if loop.index == 1 and order == "new" %}
 							<p><span>Newest</span></p>
-						{% endif %}{% endif %}
-						{% if loop.index <= 3 %}{% if order == "hot" or order == "monthly" %}
+						{% endif %}
+						{% if loop.index <= 3 and (order == "hot" or order == "monthly") %}
 							<p><span>{{loop.index}}</span></p>
-						{% endif %}{% endif %}
-					 {% endif %}
+						{% endif %}
 					{% endif %}
+				{% endif %}
 			</div>
 		{% endif %}
 
@@ -46,12 +45,12 @@
 	{% if thread.title != "notitle" or thread.summary or thread.tag %}
 	<div class="illust_summary">
 		{% if thread.title %}
-		{% if thread.title != "notitle" %}
+			{% if thread.title != "notitle" %}
 			<a href="{{thread.thread_url}}" class="illust_title">
 				<b>{{thread|regulation_name}}{{thread.title}}</b>
 				<br/>
 			</a>
-		{% endif %}
+			{% endif %}
 		{% endif %}
 		{% if thread.tag %}
 			{% for tag in thread.tag %}
@@ -59,16 +58,15 @@
 					<small>{{tag}}</small>
 				</a>
 			{% endfor %}
-				<br clear="all"/>
+			<br clear="all"/>
 		{% endif %}
-			{{thread.summary|safe}}
+		{{thread.summary|safe}}
 	</div>
 	{% endif %}
 
 	{# Info #}
 	<div class="item_info">
 		{# author #}
-		{% if thread.author %}
 		<hr/>
 		<div style="float:left;width:100%;">
 			<!-- info -->
@@ -84,11 +82,14 @@
 				</div>
 				<div class="item_info_bookmark">
 					<small>
-					{%if thread.bookmark %}<a href="{{host}}show_bookmark?thread_key={{thread.key}}">{{thread.bookmark}}{% if is_english %}Bookmark{%else%}ブクマ{% endif %}</a><br/>{% endif %}
+					{%if thread.bookmark %}
+						<a href="{{host}}show_bookmark?thread_key={{thread.key}}">{{thread.bookmark}}{% if is_english %}Bookmark{%else%}ブクマ{% endif %}</a>
+					{% endif %}
 					</small>
 				</div>
-				{% endif %}
-			 <br clear="all"/>
+				
+				<br clear="all"/>
+				
 				<div class="item_info_date">
 				 	{% if thread.create_date_original %}
 					<small>
@@ -111,18 +112,19 @@
 
 			<!-- icon -->
 			<div style="float:left;margin:4px;width:26px;">
-				{%if thread.user_id %}<a href="{{host}}mypage?user_id={{thread.user_id}}">{% endif %}
 				{%if thread.user_id %}
+					<a href="{{host}}mypage?user_id={{thread.user_id}}">
 					<img src="{{host}}show_icon?key={{thread.user_id}}&amp;size=mini" width="26px" height="26px" alt="{{thread.user_id}}"/>
-				{%endif %}
-				{%if thread.user_id %}</a>{% endif %}
+					</a>
+				{% else %}
+					<div style="width:26px;height:26px;">&nbsp;</div>
+				{% endif %}
 			</div>
 		</div>
 
-
 		{# bbs #}
 		{% if thread.bbs_url %}
-		<hr/>  
+		<hr/>
 		<div class="item_info_bbs">
 			<a href="{{thread.bbs_url}}" style="display:block;"><small>{{thread.bbs_title}}</small></a>
 		</div>
@@ -138,7 +140,6 @@
 	</div>
 </div>
 
-{% endif %}
 {% endif %}
 {% endfor %}
 {% endif %}
