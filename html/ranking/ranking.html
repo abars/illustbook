@@ -1,6 +1,6 @@
 <div class="guide">
 	<h2>ユーザランキング</h2>
-	今日のランクは{{user_rank}}位でした。
+	今日のランクは{% if user_rank %}{{user_rank}}{% else %}-{% endif %}位でした。
 </div>
 
 {% set count = (page-1)*page_unit+1 %}
