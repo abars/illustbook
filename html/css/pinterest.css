@@ -432,7 +432,7 @@ h2,h3 {font-size:100%;color:#ea5376;}
 	position: absolute;
 	display: inline-block;
 	right: -25px;
-	box-shadow: 0px 0px 10px rgba(0,0,0,0.2), inset 0px 5px 30px rgba(255,255,255,0.2);
+	box-shadow: 0px 0px 10px rgba(0,0,0,0.2);{#, inset 0px 5px 30px rgba(255,255,255,0.2);#}
 	text-align: center;
 	text-transform: uppercase;
 	top: 22px;
