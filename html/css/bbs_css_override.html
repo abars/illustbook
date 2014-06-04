@@ -123,12 +123,13 @@
 			background-size: cover;
 		}
 
-		.mobile_ad {
-			margin-left:{% if template_path %}-6{% else %}-2{% endif %}px;
-			width:320px;
-			padding-left:0px;
-			padding-right:0px;
-			background: none;
+		@media screen and (max-width: 332px) {
+			.mobile_ad {
+				margin-left:{% if template_path %}-6{% else %}-2{% endif %}px;
+				padding-left:0px;
+				padding-right:0px;
+				width:320px;
+			}
 		}
 	{% endif %}
 
