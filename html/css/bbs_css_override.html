@@ -96,7 +96,7 @@
 	{% if is_iphone %}
 		{# 高解像度 Android 対応 #}
 		#container {
-			width:100%;
+			width:auto;
 		}
 
 		#contents-header {
@@ -124,7 +124,7 @@
 		}
 
 		.mobile_ad {
-			margin-left:-6px;
+			margin-left:{% if template_path %}-6{% else %}-2{% endif %}px;
 			width:320px;
 			padding-left:0px;
 			padding-right:0px;
