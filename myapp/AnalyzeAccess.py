@@ -9,6 +9,7 @@
 import os
 import re
 import datetime
+import logging
 
 import template_select
 
@@ -27,6 +28,11 @@ from myapp.AnalyticsGet import AnalyticsGet
 from myapp.OwnerCheck import OwnerCheck
 
 class AnalyzeAccess(webapp.RequestHandler):
+	def get_analytics(self,mode,bbs_id,start_date,end_date):
+		analytics=AnalyticsGet()
+		analytics.create_session()
+		return analytics.get(mode,bbs_id,start_date,end_date)
+
 	def get(self):
 		SetUtf8.set()
 
@@ -53,9 +59,6 @@ class AnalyzeAccess(webapp.RequestHandler):
 					user=None
 		
 			page_name=bbs.bbs_name;
-
-		analytics=AnalyticsGet()
-		analytics.create_session()
 
 		if(self.request.get("start_date")):
 			start_date=self.request.get("start_date")
@@ -85,14 +88,24 @@ class AnalyzeAccess(webapp.RequestHandler):
 			show_analyze=True
 		
 		if(show_analyze):
+			try:
+				result=self.get_analytics(mode,bbs_id,start_date,end_date)
+			except:
+				try:
+					result=self.get_analytics(mode,bbs_id,start_date,end_date)
+				except:
+					Alert.alert_msg_with_write(self,"Analytics APIへのアクセスに失敗しました。リロードして下さい")
+					logging.error("failed analytics api")
+					return
+
 			if(mode=="page"):
-				page_list=analytics.get("page",bbs_id,start_date,end_date)
+				page_list=result
 			if(mode=="ref"):
-				ref_list=analytics.get("ref",bbs_id,start_date,end_date)
+				ref_list=result
 			if(mode=="keyword"):
-				keyword_list=analytics.get("keyword",bbs_id,start_date,end_date)
+				keyword_list=result
 			if(mode=="access"):
-				access_list=analytics.get("access",bbs_id,start_date,end_date)
+				access_list=result
 
 		quota_error=(mode=="access" and not access_list)
 		
