@@ -35,7 +35,7 @@ function infinite_scroll_initialize(itemSelector,use_masonry,host,page,is_englis
       },
       loading: {
           finishedMsg: '<div class="loading">'+final_page+'</div>',
-          img: host+'static_files/loading2.gif',
+          img: host+'static_files/loading3.gif',
           msgText: '<div class="loading">'+loading_page+'</div>'
         }
       },
