@@ -17,6 +17,9 @@ from google.appengine.api.labs import taskqueue
 from myapp.BbsConst import BbsConst
 from myapp.ApiObject import ApiObject
 from myapp.MesThread import MesThread
+from myapp.AnalyticsGet import AnalyticsGet
+from myapp.MappingId import MappingId
+from myapp.MappingThreadId import MappingThreadId
 
 class Ranking(db.Model):
 	#カウンターの加算時と、拍手時、ブックマーク時にスレッドとユーザを追加する
@@ -50,26 +53,70 @@ class Ranking(db.Model):
 		key_list.append(key)
 	
 	@staticmethod
-	def add_rank_global(thread,score):	
-		if(thread.illust_mode==BbsConst.ILLUSTMODE_ILLUST):
-			headers={'X-AppEngine-FailFast' : 'true'} #新規インスタンスの作成の抑制
-			try:
-				taskqueue.add(url="/add_ranking_score",params={"thread":str(thread.key()),"user_id":str(thread.user_id),"score":score},queue_name="score",headers=headers)
-			except:
-				logging.warning("ranking score taskqueue add failed")
+	def add_rank_global(thread,score):
+		#Analytics APIを使ってランキングを作成するようになったので不要になった
+		return
+
+		#if(thread.illust_mode==BbsConst.ILLUSTMODE_ILLUST):
+		#	headers={'X-AppEngine-FailFast' : 'true'} #新規インスタンスの作成の抑制
+		#	try:
+		#		taskqueue.add(url="/add_ranking_score",params={"thread":str(thread.key()),"user_id":str(thread.user_id),"score":score},queue_name="score",headers=headers)
+		#	except:
+		#		logging.warning("ranking score taskqueue add failed")
 
 	def add_rank_from_taskqueue(self,thread_key,user_id,score):
-		for cnt in range(score):
-			self._add_rank_core(thread_key,self.thread_list,BbsConst.THREAD_RANKING_RECENT)
-			#self._add_rank_core(user_id,self.user_list,BbsConst.USER_RANKING_RECENT)
-			self.user_list=[]	#deleted
-		self.put()
+		#Analytics APIを使ってランキングを作成するようになったので不要になった
+		return
+
+		#for cnt in range(score):
+		#	self._add_rank_core(thread_key,self.thread_list,BbsConst.THREAD_RANKING_RECENT)
+		#	self.user_list=[]	#deleted
+		#self.put()
 
 	def get_sec(self,now):
 		return int(time.mktime(now.timetuple()))
 
+	def get_thread_list(self):
+		analytics=AnalyticsGet()
+		analytics.create_session()
+
+		start_date=str(datetime.date.today()+datetime.timedelta(days=-1))
+		end_date=str(datetime.date.today())
+		result=analytics.get("page","*",start_date,end_date)
+
+		thread_list=[]
+		for one in result:
+			url=one["ga:pagePath"]
+			count=int(one["ga:pageviews"])
+
+			data=url.split("/")
+			try:
+				bbs_name=str(data[1])
+				thread_name=str(data[2].split(".")[0])
+			except:
+				continue
+
+			#logging.error(""+url+" "+bbs_name+" "+thread_name+" "+str(count))
+
+			bbs_key=MappingId.mapping(bbs_name)
+			bbs=ApiObject.get_cached_object(bbs_key)
+			if(not bbs):
+				continue
+			thread = MappingThreadId.mapping(bbs,thread_name)
+			if(not thread):
+				continue
+
+			while(count>=1):
+				thread_list.append(thread.key())
+				count=count-1
+
+		return thread_list
+
 	def create_rank(self,req):
-		self._create_ranking_core()
+		#analytics apiから生成
+		thread_list=self.thread_list
+		thread_list=self.get_thread_list()
+		self._create_ranking_core(thread_list)
 		
 		#削除した要素
 		self.user_ranking_list=["empty"]
@@ -79,10 +126,10 @@ class Ranking(db.Model):
 		
 		self.put()
 	
-	def _create_ranking_core(self):
+	def _create_ranking_core(self,thread_list):
 		#ハッシュにthread_keyを入れていく
 		rank={}
-		for thread in self.thread_list:
+		for thread in thread_list:
 			if(rank.has_key(thread)):
 				rank[thread]=rank[thread]+1
 			else:
@@ -90,13 +137,14 @@ class Ranking(db.Model):
 		
 		#1次ランキングを作成
 		#（全てでthreadの実体を取得すると重いので）
-		first_ranking_list=[]
-		for k, v in sorted(rank.items(), key=lambda x:x[1], reverse=True):
-			if(v>=1):
-				first_ranking_list.append(k)
-				if(len(first_ranking_list)>=BbsConst.THREAD_RANKING_MAX*BbsConst.THREAD_RANKING_BEFORE_FILTER_MULT):
-					break
-		
+		#first_ranking_list=[]
+		#for k, v in sorted(rank.items(), key=lambda x:x[1], reverse=True):
+		#	if(v>=1):
+		#		first_ranking_list.append(k)
+		#		if(len(first_ranking_list)>=BbsConst.THREAD_RANKING_MAX*BbsConst.THREAD_RANKING_BEFORE_FILTER_MULT):
+		#			break
+		first_ranking_list=thread_list
+
 		#1次ランキングに出現したもののスコア補正
 		rank_bbs={}
 		rank_user={}
@@ -137,6 +185,7 @@ class Ranking(db.Model):
 		self.ranking_list=[]
 		for k, v in sorted(rank.items(), key=lambda x:x[1], reverse=True):
 			self.ranking_list.append(k)
+			#logging.error("key "+str(k))
 			if(len(self.ranking_list)>=BbsConst.THREAD_RANKING_MAX):
 				break
 

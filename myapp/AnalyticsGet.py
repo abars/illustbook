@@ -49,7 +49,10 @@ class AnalyticsGet():
   def get(self,mode,bbs_name,start_date,end_date):
     http=self.http
     service=self.service
+
     self.result_cnt=50
+    if(bbs_name=="*"):
+      self.result_cnt=200
 
     # Try to make a request to the API. Print the results or handle errors.
     try:
@@ -138,7 +141,7 @@ class AnalyticsGet():
         metrics='ga:pageviews',
         dimensions='ga:pageTitle,ga:pagePath',
         sort='-ga:pageviews',
-        filters='ga:pagePath=~/'+bbs_name+'/*',
+        filters='ga:pagePath=~/'+bbs_name+'/.*\.html',
         start_index='1',
         max_results=str(self.result_cnt)).execute(http=http)
 
