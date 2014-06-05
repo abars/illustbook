@@ -51,8 +51,8 @@ class AnalyticsGet():
     service=self.service
 
     self.result_cnt=50
-    if(bbs_name=="*"):
-      self.result_cnt=200
+    if(bbs_name==".*"):
+      self.result_cnt=400
 
     # Try to make a request to the API. Print the results or handle errors.
     try:

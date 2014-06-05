@@ -82,7 +82,7 @@ class Ranking(db.Model):
 
 		start_date=str(datetime.date.today()+datetime.timedelta(days=-1))
 		end_date=str(datetime.date.today())
-		result=analytics.get("page","*",start_date,end_date)
+		result=analytics.get("page",".*",start_date,end_date)
 
 		thread_list=[]
 		for one in result:
@@ -180,6 +180,10 @@ class Ranking(db.Model):
 					if(not rank_user.has_key(user_id)):
 						rank_user[user_id]=0
 					rank_user[user_id]=rank_user[user_id]+rank[k]
+
+			#非表示スレッドのランクを落とす
+			if(thread and bbs_main and bbs_main.disable_news):
+				rank[k]=0
 			
 		#スレッドランキング作成
 		self.ranking_list=[]
