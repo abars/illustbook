@@ -10,6 +10,7 @@ import datetime;
 import time;
 import json;
 import logging;
+import os;
 
 from google.appengine.ext import db
 from google.appengine.api.labs import taskqueue
@@ -114,11 +115,14 @@ class Ranking(db.Model):
 
 	def create_rank(self,req):
 		#analytics apiから生成
-		thread_list=self.thread_list
 		thread_list=self.get_thread_list()
+		if os.environ["SERVER_SOFTWARE"].find("Development")!=-1:
+			thread_list=db.Query(MesThread,keys_only=True).order("-create_date").fetch(limit=100)
 		self._create_ranking_core(thread_list)
-		
+
 		#削除した要素
+		self.thread_list=[]
+		self.user_list=[]
 		self.user_ranking_list=["empty"]
 		self.owner_list = ["empty"]
 		self.owner_ranking_list = ["empty"]
@@ -129,12 +133,14 @@ class Ranking(db.Model):
 	def _create_ranking_core(self,thread_list):
 		#ハッシュにthread_keyを入れていく
 		rank={}
+		first_ranking_list=[]
 		for thread in thread_list:
 			if(rank.has_key(thread)):
 				rank[thread]=rank[thread]+1
 			else:
 				rank[thread]=1
-		
+				first_ranking_list.append(thread)
+
 		#1次ランキングを作成
 		#（全てでthreadの実体を取得すると重いので）
 		#first_ranking_list=[]
@@ -143,7 +149,6 @@ class Ranking(db.Model):
 		#		first_ranking_list.append(k)
 		#		if(len(first_ranking_list)>=BbsConst.THREAD_RANKING_MAX*BbsConst.THREAD_RANKING_BEFORE_FILTER_MULT):
 		#			break
-		first_ranking_list=thread_list
 
 		#1次ランキングに出現したもののスコア補正
 		rank_bbs={}
@@ -157,14 +162,7 @@ class Ranking(db.Model):
 				rank[k]=0
 				continue
 			
-			#経過日数で補正
-			day_left=(self.get_sec(datetime.datetime.now())-self.get_sec(thread.create_date))/60/60/24
-			day_left=day_left/7+1	#1週間で1/2
-			#rank[k]=rank[k]/day_left
-			#if(rank[k]<1):
-			#	rank[k]=1
-		
-			#BBSランクを加算
+			#BBSランクを加算(純粋PV)
 			if(thread):
 				bbs=thread.cached_bbs_key
 				bbs_main=ApiObject.get_cached_object(bbs)
@@ -173,13 +171,22 @@ class Ranking(db.Model):
 						rank_bbs[bbs]=0
 					rank_bbs[bbs]=rank_bbs[bbs]+rank[k]
 
-			#USERランクを加算
+			#USERランクを加算(純粋PV)
 			if(thread):
 				user_id=thread.user_id
 				if(user_id):
 					if(not rank_user.has_key(user_id)):
 						rank_user[user_id]=0
 					rank_user[user_id]=rank_user[user_id]+rank[k]
+
+			#経過日数と付加情報で補正
+			day_left=(self.get_sec(datetime.datetime.now())-self.get_sec(thread.create_date))*1.0/60/60/24
+			score=0
+			if(thread.bookmark_count):
+				score=score+thread.bookmark_count*5
+			if(thread.applause):
+				score=score+thread.applause
+			rank[k]=(rank[k]+score)/(day_left+1)
 
 			#非表示スレッドのランクを落とす
 			if(thread and bbs_main and bbs_main.disable_news):
@@ -189,7 +196,6 @@ class Ranking(db.Model):
 		self.ranking_list=[]
 		for k, v in sorted(rank.items(), key=lambda x:x[1], reverse=True):
 			self.ranking_list.append(k)
-			#logging.error("key "+str(k))
 			if(len(self.ranking_list)>=BbsConst.THREAD_RANKING_MAX):
 				break
 
