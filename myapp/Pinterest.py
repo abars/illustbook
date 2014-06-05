@@ -326,7 +326,8 @@ class Pinterest(webapp.RequestHandler):
 		if(search=="empty"):
 			thread_list=None
 
-		template_values['thread_list']=thread_list
+		if(thread_list):	#thread_listがNoneの場合はTagSearchの結果を使う場合がある
+			template_values['thread_list']=thread_list
 		template_values['next_query']="search="+urllib.quote_plus(str(search))
 		template_values['tag_list']=SearchTag.get_recent_tag(search_api)
 		template_values['page_mode']="search"
