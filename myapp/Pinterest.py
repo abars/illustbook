@@ -310,7 +310,7 @@ class Pinterest(webapp.RequestHandler):
 		Pinterest._render_page(self,template_values)
 
 	@staticmethod
-	def _text_search(self,search,user,user_id,page,request_page_mode,redirect_api,contents_only):
+	def _text_search(self,search,user,user_id,page,request_page_mode,redirect_api,contents_only,tag_search_result=None):
 		template_values=Pinterest.initialize_template_value(self,user,user_id,page,request_page_mode,redirect_api,contents_only)
 
 		search_api="search_tag"
@@ -326,8 +326,12 @@ class Pinterest(webapp.RequestHandler):
 		if(search=="empty"):
 			thread_list=None
 
-		if(thread_list):	#thread_listがNoneの場合はTagSearchの結果を使う場合がある
-			template_values['thread_list']=thread_list
+		if(search_api_error and tag_search_result):
+			#例外が起きた場合はTagSearchの結果を使う場合がある
+			thread_list=tag_search_result
+			search_api_error=False
+
+		template_values['thread_list']=thread_list
 		template_values['next_query']="search="+urllib.quote_plus(str(search))
 		template_values['tag_list']=SearchTag.get_recent_tag(search_api)
 		template_values['page_mode']="search"
@@ -353,7 +357,7 @@ class Pinterest(webapp.RequestHandler):
 
 		#Pinterest._render_page(self,template_values)
 
-		Pinterest._text_search(self,tag,user,user_id,page,request_page_mode,redirect_api,contents_only)
+		Pinterest._text_search(self,tag,user,user_id,page,request_page_mode,redirect_api,contents_only,dic["thread_list"])
 
 	@staticmethod
 	def _login_require(self,user,user_id,page,request_page_mode,redirect_api,contents_only):
