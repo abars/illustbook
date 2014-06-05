@@ -226,6 +226,9 @@ class AddBookmark(webapp.RequestHandler):
 		if(mode=="add_user" or mode=="del_user"):
 			url=url+"?user_id="+add_user_key
 
-		self.redirect(str(url))
+		if(mode=="add" or mode=="add_bbs"):
+			Alert.alert_msg_with_write(self,"success");
+		else:
+			self.redirect(str(url))
 		
 

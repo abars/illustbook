@@ -36,9 +36,24 @@ function bbs_add_bookmark(bbs_name,bbs_key,host,is_english){
 	if(is_english){
 		msg="Are you bookmark this BBS?"
 	}
-	if(confirm(msg)){
-		window.location.href=host+"add_bookmark?mode=add_bbs&bbs_key="+bbs_key;
-	}
+
+	var title=is_english ? "Bookmark":"ブックマーク";
+
+	jConfirm(msg,title,function(r){
+		if(r){
+			msg=is_english ? "processing":"ブックマークしています。";
+			jAlert(msg,title);
+			$('#popup_ok').hide();
+
+			url=host+"add_bookmark?mode=add_bbs&bbs_key="+bbs_key;
+
+			//window.location.href=url;
+			$.get(url, function(data){
+				var msg=is_english ? "success":"ブックマークに成功しました。";
+				jAlert(msg,title);
+			});
+		}
+	});
 }
 
 function bbs_open_ipad_canvas_size(){

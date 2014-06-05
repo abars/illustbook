@@ -127,7 +127,18 @@ var isFlashInstalled=function(){if(navigator.plugins["Shockwave Flash"]){return 
 					if(comment==null){
 						return;
 					}
-					window.location.href=host+'add_bookmark?mode=add&thread_key='+thread_key+'&comment='+comment;
+					url=host+'add_bookmark?mode=add&thread_key='+thread_key+'&comment='+comment;
+
+					msg=is_english ? "processing":"ブックマークしています。";
+					jAlert(msg,title);
+					$('#popup_ok').hide();
+
+					//window.location.href=url;
+
+					$.get(url, function(data){
+						var msg=is_english ? "success":"ブックマークに成功しました。";
+						jAlert(msg,title);
+					});
 				}
 			);
 		}
