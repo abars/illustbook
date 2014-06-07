@@ -360,25 +360,6 @@ indexes:
   - name: create_date
     direction: desc
 
-- kind: RankingScore
-  properties:
-  - name: illust_mode
-  - name: today_score
-    direction: desc
-
-- kind: RankingScore
-  properties:
-  - name: illust_mode
-  - name: yesterday_date
-  - name: yesterday_score
-    direction: desc
-
-- kind: RankingScore
-  properties:
-  - name: illust_mode
-  - name: yesterday_score
-    direction: desc
-
 - kind: StackFeedData
   properties:
   - name: to_user_id
