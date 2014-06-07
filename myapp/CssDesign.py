@@ -77,7 +77,7 @@ class CssDesign (webapp.RequestHandler):
 			return 1
 		if(main.request.get("is_iphone")):
 			if(main.request.get("is_iphone")=="1"):
-				return 1
+				return 2
 		return 0
 
 	@staticmethod
