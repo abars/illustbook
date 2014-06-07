@@ -10,6 +10,7 @@ import os
 import re
 import datetime
 import logging
+import time
 
 import template_select
 
@@ -91,6 +92,7 @@ class AnalyzeAccess(webapp.RequestHandler):
 			try:
 				result=self.get_analytics(mode,bbs_id,start_date,end_date)
 			except:
+				time.sleep(1)
 				try:
 					result=self.get_analytics(mode,bbs_id,start_date,end_date)
 				except:

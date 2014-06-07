@@ -38,7 +38,7 @@ class AnalyticsGet():
                         scope=SCOPES)
    
     http = httplib2.Http()
-    httplib2.debuglevel = True
+    #httplib2.debuglevel = True
     http = credentials.authorize(http)
 
     service = build('analytics', 'v3', http=httplib2.Http(memcache))
