@@ -136,11 +136,15 @@ class AddEntry(webapp.RequestHandler):
 			entry.homepage_addr=""
 
 		checkcode=SpamCheck.get_check_code()
-		if(SpamCheck.check(entry.content,checkcode)):		
-			if(is_flash):
-				self.write_status(is_flash,BbsConst.SPAM_CHECKED);
+		if(SpamCheck.check(entry.content,checkcode)):
+			if(is_english):
+				spam_mes=BbsConst.SPAM_CHECKED_ENGLISH
 			else:
-				Alert.alert_spam(self,entry.content,BbsConst.SPAM_CHECKED);
+				spam_mes=BbsConst.SPAM_CHECKED
+			if(is_flash):
+				self.write_status(is_flash,spam_mes);
+			else:
+				Alert.alert_spam(self,entry.content,spam_mes);
 			return
 
 		thread=db.Key(self.request.get("thread_key"))

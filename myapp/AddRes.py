@@ -39,14 +39,16 @@ from myapp.StackFeed import StackFeed
 from myapp.Ranking import Ranking
 from myapp.EscapeComment import EscapeComment
 from myapp.SetUtf8 import SetUtf8
+from myapp.CssDesign import CssDesign
 
 class AddRes(webapp.RequestHandler):
 	def post(self):
 		SetUtf8.set()
+		is_english=CssDesign.is_english(self)
 
 		entry=None
 		try:
-			entry = db.get(self.request.get("entry_key"))	
+			entry = db.get(self.request.get("entry_key"))
 		except:
 			entry=None
 		if(not entry):
@@ -88,7 +90,11 @@ class AddRes(webapp.RequestHandler):
 
 		checkcode=SpamCheck.get_check_code()
 		if(SpamCheck.check(response.content,checkcode)):
-			Alert.alert_spam(self,response.content,BbsConst.SPAM_CHECKED)
+			if(is_english):
+				spam_mes=BbsConst.SPAM_CHECKED_ENGLISH
+			else:
+				spam_mes=BbsConst.SPAM_CHECKED
+			Alert.alert_spam(self,response.content,spam_mes)
 			return
 		
 		response.content=EscapeComment.escape_br(response.content)
@@ -102,7 +108,10 @@ class AddRes(webapp.RequestHandler):
 				return
 		else:
 			response.editor = "no_name"
-			Alert.alert_msg_with_write(self,"名前を入力して下さい。");
+			if(is_english):
+				Alert.alert_msg_with_write(self,"Please input name");
+			else:
+				Alert.alert_msg_with_write(self,"名前を入力して下さい。");
 			return
 
 		#プロフィールにリンクするか

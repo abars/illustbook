@@ -94,7 +94,11 @@ class AddNewThread(webapp.RequestHandler):
 
 		checkcode=SpamCheck.get_check_code()
 		if(SpamCheck.check(self.request.get('thread_title'),checkcode)):
-			self.write_status(is_flash,BbsConst.SPAM_CHECKED);
+			if(is_english):
+				spam_mes=BbsConst.SPAM_CHECKED_ENGLISH
+			else:
+				spam_mes=BbsConst.SPAM_CHECKED
+			self.write_status(is_flash,spam_mes)
 			return
 
 		homepage_addr=""

@@ -27,7 +27,8 @@ class BbsConst:
 	APP_SUPPORT_BBS_ID="app_support"
 	
 	#スパム時のメッセージ
-	SPAM_CHECKED ="スパムと判定されました。コメントを修正して再投稿して下さい。コマントにURLや禁止ワードを含む場合にスパム判定されやすくなります。"
+	SPAM_CHECKED = "スパムと判定されました。コメントを修正して再投稿して下さい。コマントにURLや禁止ワードを含む場合にスパム判定されやすくなります。"
+	SPAM_CHECKED_ENGLISH = "Classified as spam. Please remove URL from your comment."
 	
 	#memcacheコントロール
 	OBJECT_CACHE_HEADER="ocache75_"	#この値を変更することで全てのキャッシュが無効になる
