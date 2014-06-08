@@ -34,7 +34,7 @@ function bbs_select_change(order_value,url_base){
 function bbs_add_bookmark(bbs_name,bbs_key,host,is_english){
 	var msg='「'+bbs_name+'」をブックマークしますか？';
 	if(is_english){
-		msg="Are you bookmark this BBS?"
+		msg="Add this BBS to your bookmark?"
 	}
 
 	var title=is_english ? "Bookmark":"ブックマーク";

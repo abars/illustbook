@@ -56,12 +56,12 @@
 			{% if bbs and not thread %}
 				{% if order!="new" %}
 					<li><a href="javascript:bbs_select_change('new','{{page_url_order_base}}');">
-						<i class="icon-align-left"></i>{% if is_english %}New{% else %}新着順{% endif %}
+						<i class="icon-align-left"></i>{% if is_english %}Latest{% else %}新着順{% endif %}
 					</a></li>
 				{% endif %}
 				{% if order!="update" %}
 					<li><a href="javascript:bbs_select_change('update','{{page_url_order_base}}');">
-						<i class="icon-align-left"></i>{% if is_english %}Update{% else %}更新順{% endif %}
+						<i class="icon-align-left"></i>{% if is_english %}Updated{% else %}更新順{% endif %}
 					</a></li>
 				{% endif %}
 				{% if order!="thumbnail" %}
