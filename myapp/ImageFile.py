@@ -83,6 +83,8 @@ class ImageFile (webapp.RequestHandler):
 		tag="icon"
 
 		serve=ImageFile.is_serve(p_self,content_key,content_date,tag)
+		if(p_self.request.get("force")):
+			serve=True
 		ImageFile.output_content(p_self,content_date,content_key,content_header,content_blob, serve, tag)
 
 	@staticmethod
