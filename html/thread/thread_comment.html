@@ -1,144 +1,142 @@
 {% if com_list %}
-<div style="width:100%;word-break:break-all;">
 {% for entry in com_list %}
 	{% if entry.com.del_flag %}
-<!-- 基本情報 -->
+
+	<div class="entry-res">
 		<hr/>
-		<div class="actions g-button-container">
-		{% if is_english %}Name{% else %}投稿者{% endif %}：
-		{{entry.com|author_name_comment(host)|safe}}
-		　{% if is_english %}Date{% else %}投稿日{% endif %}：{% if entry.com.create_date %}
-			{% if is_english %}
-				{{entry.com.create_date|time_UTC_progress}}
-			{% else %}
-				{{entry.com.create_date|time_JST_progress}}
-			{% endif %}
-		{%else%}{{entry.com.date|time_JST_progress}}{%endif%}
-		{% if entry.com.comment_no %}　{% if is_english %}No{% else %}投稿番号{% endif %}：{{entry.com.comment_no}}{%endif%}
-		{% if bbs.show_remote_addr_id %}　ID：{{entry.com.remote_addr|ip_hash}}{% endif %}
-		
-		<div class="g-button-group" style="float:right;">
-		{%if comment_edit %}
-
-			{# コメントの削除　#}
-			{%if (is_admin or edit_flag) or (user and user.user_id() == entry.com.user_id) %}
-				{% if entry.com.illust_reply %}
-					<input type="button" value="{% if is_english %}Edit{% else %}編集{% endif %}"  class="g-button" onclick="open_draw('{{entry.image_key}}',1,'{{host}}','{{entry.com.key()}}','{{thread.key()}}','{{bbs.key()}}',{{thread.illust_mode}})"/>
+		<!-- 基本情報 -->
+		<div class="actions g-button-container entry-res-info">
+			{% if is_english %}Name{% else %}投稿者{% endif %}：
+			{{entry.com|author_name_comment(host)|safe}}
+			　{% if is_english %}Date{% else %}投稿日{% endif %}：{% if entry.com.create_date %}
+				{% if is_english %}
+					{{entry.com.create_date|time_UTC_progress}}
 				{% else %}
-					<input type="button" value="{% if is_english %}Edit{% else %}編集{% endif %}"  class="g-button" onclick="window.location.href='{{host}}edit_thread?bbs_key={{bbs.key()}}&entry_key={{entry.com.key()}}'"/>
+					{{entry.com.create_date|time_JST_progress}}
 				{% endif %}
-				<input type="button" value="{% if is_english %}Delete{% else %}削除{% endif %}"  class="g-button" onclick="confirm_action_comment('{{host}}del_ent?entry_key={{entry.com.key()}}&amp;bbs_key={{bbs_key}}&amp;thread_key={{thread.key()}}',{% if is_english %}true{% else %}false{% endif %});"/>
-			{% endif %}
+			{%else%}{{entry.com.date|time_JST_progress}}{%endif%}
+			{% if entry.com.comment_no %}　{% if is_english %}No{% else %}投稿番号{% endif %}：{{entry.com.comment_no}}{%endif%}
+			{% if bbs.show_remote_addr_id %}　ID：{{entry.com.remote_addr|ip_hash}}{% endif %}
+		
+			<div class="g-button-group" style="float:right;">
+			{%if comment_edit %}
+				{# コメントの削除　#}
+				{%if (is_admin or edit_flag) or (user and user.user_id() == entry.com.user_id) %}
+					{% if entry.com.illust_reply %}
+						<input type="button" value="{% if is_english %}Edit{% else %}編集{% endif %}"  class="g-button" onclick="open_draw('{{entry.image_key}}',1,'{{host}}','{{entry.com.key()}}','{{thread.key()}}','{{bbs.key()}}',{{thread.illust_mode}})"/>
+					{% else %}
+						<input type="button" value="{% if is_english %}Edit{% else %}編集{% endif %}"  class="g-button" onclick="window.location.href='{{host}}edit_thread?bbs_key={{bbs.key()}}&entry_key={{entry.com.key()}}'"/>
+					{% endif %}
+					<input type="button" value="{% if is_english %}Delete{% else %}削除{% endif %}"  class="g-button" onclick="confirm_action_comment('{{host}}del_ent?entry_key={{entry.com.key()}}&amp;bbs_key={{bbs_key}}&amp;thread_key={{thread.key()}}',{% if is_english %}true{% else %}false{% endif %});"/>
+				{% endif %}
 
-			{# 管理　#}
-			{%if is_admin or edit_flag %}			
-				{% if is_admin and entry.com.illust_reply %}
-					<input type="button" value="{% if is_english %}Terms{% else %}規約{% endif %}"  class="g-button" onclick="confirm_action_term('{{host}}violation?entry_key={{entry.com.key()}}&amp;bbs_key={{bbs_key}}&amp;thread_key={{thread.key()}}',{% if is_english %}true{% else %}false{% endif %});"/>
-				{% endif %}
-				{% if bbs.comment_hidden_button %}
-					<input type="button" value="{% if entry.com.hidden_flag %}{% if is_english %}Visible{% else %}表示{% endif %}{%else%}{% if is_english %}Hidden{% else %}非表示{% endif %}{% endif %}"  class="g-button" onclick="window.location.href='{{host}}vis_ent?entry_key={{entry.com.key()}}&amp;bbs_key={{bbs_key}}&amp;thread_key={{thread.key()}}';"/>
+				{# 管理　#}
+				{%if is_admin or edit_flag %}
+					{% if is_admin and entry.com.illust_reply %}
+						<input type="button" value="{% if is_english %}Terms{% else %}規約{% endif %}"  class="g-button" onclick="confirm_action_term('{{host}}violation?entry_key={{entry.com.key()}}&amp;bbs_key={{bbs_key}}&amp;thread_key={{thread.key()}}',{% if is_english %}true{% else %}false{% endif %});"/>
+					{% endif %}
+					{% if bbs.comment_hidden_button %}
+						<input type="button" value="{% if entry.com.hidden_flag %}{% if is_english %}Visible{% else %}表示{% endif %}{%else%}{% if is_english %}Hidden{% else %}非表示{% endif %}{% endif %}"  class="g-button" onclick="window.location.href='{{host}}vis_ent?entry_key={{entry.com.key()}}&amp;bbs_key={{bbs_key}}&amp;thread_key={{thread.key()}}';"/>
+					{% endif %}
+				{%endif%}
+			{%endif%}
+
+			{%if bbs.disable_normal_reply == 1 %}
+			{%else%}
+				{%if show_comment_form %}
+					{% if not entry.res_list %}
+						<input type="button" value="{% if is_english %}Reply{% else %}返信{% endif %}" class="g-button" onclick="show('{{ entry.com.key() }}');"/>
+					{% endif %}
 				{% endif %}
 			{%endif%}
-		{%endif%}
-
-		{%if bbs.disable_normal_reply == 1 %}
-		{%else%}
-			{%if show_comment_form %}
-				{% if not entry.res_list %}
-					<input type="button" value="{% if is_english %}Reply{% else %}返信{% endif %}" class="g-button" onclick="show('{{ entry.com.key() }}');"/>
-				{% endif %}
-			{% endif %}
-		{%endif%}
-		</div>
-		</div>
-
-<br/>
-<!-- 絵で返信 -->
-{% if entry.com.illust_reply %}
-	{% if entry.com.violate_terms %}
-		[大変申し訳ありませんが、ご利用規約の制約からイラストが非表示になっています]<br/>
-		[ご利用規約は <a href="http://www.illustbook.net/terms">http://www.illustbook.net/terms</a> からご確認頂けます]<br/><br/>
-	{% else %}
-		{% if not(entry.com|regulation_check(user)) %}
-			[年齢制限付きイラスト]
-		{% else %}
-			<a href="{{host}}img/{{entry.image_key}}.jpg" class="imagelink">
-			<img src="{{host}}img/{{entry.image_key}}.jpg" border="0" {% if is_iphone %} style="max-width:100%;"{%endif%}/>
-			</a>
-			<br/>
-			{{entry.com|regulation_name}}
-		{% endif %}
-	{% endif %}
-{% endif %}
-
-<!-- 通常コメント -->
-<div class="entry-res">
-{% if entry.com.hidden_flag %}
-	このコメントは非表示に設定されています。
-{% else %}
-	{{entry.com.content|safe}}
-{% endif %}
-</div>
-
-<!-- レス -->
-{% if not entry.com.hidden_flag %}
-{% for res in entry.res_list %}
-	<div style="margin:16px 2px 16px 40px;">
-		<hr/>
-		<div class="actions g-button-container">
-		{% if is_english %}Name{% else %}投稿者{% endif %}：{{res|author_name_comment(host)|safe}}　
-		{% if is_english %}Date{% else %}投稿日{% endif %}：{% if is_english %}{{res.date|time_UTC_progress}}{% else %}{{res.date|time_JST_progress}}{% endif %}
-		{% if res.comment_no %}　{% if is_english %}NO{%else %}投稿番号{% endif %}：{{res.comment_no}}{%endif%}
-		{% if bbs.show_remote_addr_id %}　ID：{{res.remote_addr|ip_hash}}{% endif %}
-			<div class="g-button-group" style="float:right;">
-			{% if loop.first and is_admin and comment_edit%}
-				<input type="button" value="一括" class="g-button" onclick="confirm_action_comment('{{host}}del_res?entry_key={{entry.com.key()}}&amp;res_key=all',{% if is_english %}true{% else %}false{% endif %});"/>
-			{% endif %}
-			
-			{% if comment_edit %}
-				{%if (is_admin or edit_flag) or (user and user.user_id() == res.user_id ) %}
-					<input type="button" value="{% if is_english %}Edit{% else %}編集{% endif %}"  class="g-button" onclick="window.location.href='{{host}}edit_thread?bbs_key={{bbs.key()}}&res_key={{res.key()}}&res_entry_key={{entry.com.key()}}'"/>
-					<input type="button" value="{% if is_english %}Delete{% else %}削除{% endif %}" class="g-button" onclick="confirm_action_comment('{{host}}del_res?entry_key={{entry.com.key()}}&amp;res_key={{res.key()}}',{% if is_english %}true{% else %}false{% endif %});"/>
-				{% endif %}
-			{% endif %}
-
-			{% if loop.last %}
-				{%if show_comment_form %}
-					<input type="button" value="{% if is_english %}Reply{% else %}返信{% endif %}" class="g-button" onclick="show('{{ entry.com.key() }}');"/>
-				{%endif%}
-			{% endif %}
 			</div>
 		</div>
 		
-		<div class="entry-res">
-		{{res.content|safe}}
+		<br/>
+
+		<!-- 絵で返信 -->
+		{% if entry.com.illust_reply %}
+			{% if entry.com.violate_terms %}
+				[大変申し訳ありませんが、ご利用規約の制約からイラストが非表示になっています]<br/>
+				[ご利用規約は <a href="http://www.illustbook.net/terms">http://www.illustbook.net/terms</a> からご確認頂けます]<br/><br/>
+			{% else %}
+				{% if not(entry.com|regulation_check(user)) %}
+					[年齢制限付きイラスト]
+				{% else %}
+					<a href="{{host}}img/{{entry.image_key}}.jpg" class="imagelink">
+					<img src="{{host}}img/{{entry.image_key}}.jpg" border="0" {% if is_iphone %} style="max-width:100%;"{%endif%}/>
+					</a>
+					<br/>
+					{{entry.com|regulation_name}}
+				{% endif %}
+			{% endif %}
+		{% endif %}
+
+		<!-- 通常コメント -->
+		{% if entry.com.hidden_flag %}
+			このコメントは非表示に設定されています。
+		{% else %}
+			{{entry.com.content|safe}}
+		{% endif %}
+
+		<!-- レス -->
+		{% if not entry.com.hidden_flag %}
+		{% for res in entry.res_list %}
+			<div class="entry-res-rep">
+				<hr/>
+				<div class="actions g-button-container entry-res-info">
+				{% if is_english %}Name{% else %}投稿者{% endif %}：{{res|author_name_comment(host)|safe}}　
+				{% if is_english %}Date{% else %}投稿日{% endif %}：{% if is_english %}{{res.date|time_UTC_progress}}{% else %}{{res.date|time_JST_progress}}{% endif %}
+				{% if res.comment_no %}　{% if is_english %}NO{%else %}投稿番号{% endif %}：{{res.comment_no}}{%endif%}
+				{% if bbs.show_remote_addr_id %}　ID：{{res.remote_addr|ip_hash}}{% endif %}
+					<div class="g-button-group" style="float:right;">
+					{% if loop.first and is_admin and comment_edit%}
+						<input type="button" value="一括" class="g-button" onclick="confirm_action_comment('{{host}}del_res?entry_key={{entry.com.key()}}&amp;res_key=all',{% if is_english %}true{% else %}false{% endif %});"/>
+					{% endif %}
+					
+					{% if comment_edit %}
+						{%if (is_admin or edit_flag) or (user and user.user_id() == res.user_id ) %}
+							<input type="button" value="{% if is_english %}Edit{% else %}編集{% endif %}"  class="g-button" onclick="window.location.href='{{host}}edit_thread?bbs_key={{bbs.key()}}&res_key={{res.key()}}&res_entry_key={{entry.com.key()}}'"/>
+							<input type="button" value="{% if is_english %}Delete{% else %}削除{% endif %}" class="g-button" onclick="confirm_action_comment('{{host}}del_res?entry_key={{entry.com.key()}}&amp;res_key={{res.key()}}',{% if is_english %}true{% else %}false{% endif %});"/>
+						{% endif %}
+					{% endif %}
+
+					{% if loop.last %}
+						{%if show_comment_form %}
+							<input type="button" value="{% if is_english %}Reply{% else %}返信{% endif %}" class="g-button" onclick="show('{{ entry.com.key() }}');"/>
+						{%endif%}
+					{% endif %}
+					</div>
+				</div>
+				
+				{{res.content|safe}}
+			</div>
+		{% endfor %}
+		{% endif %}
+
+		<!-- コメントフォーム -->
+		<div id="layer_{{ entry.com.key() }}" style="display:none;position:relative;margin-right:2px;" class="close">
+		<br/>
+			<form action='http://localhost/' enctype="multipart/form-data" method="post" onsubmit="this.action='{{host}}add_res?entry_key={{ entry.com.key() }}&amp;seed={{0|set_seed}}';">
+				<table class="table_color">
+				<tr><td>{% if is_english %}Name (MUST){% else %}名前（必須）{% endif %}</td>
+				<td><input type="text" name="author" maxlength="50" value="{{user_name}}"/>
+				{% if is_iphone %}<br/>{% endif %}
+				{% if logined %}
+					<input name="link_to_profile" type="checkbox" checked="checked"/>{% if is_english %}Link to mypage{% else %}マイページにリンク{% endif %}
+				{% endif %}
+				</td>
+				</tr>
+				<tr><td>{% if is_english %}Comment (MUST){% else %}コメント（必須）{% endif %}</td>
+				<td><textarea name="comment" rows="10" cols="40" style="width:100%;"></textarea></td></tr>
+				<tr><td></td><td>
+					<input type="hidden" name="redirect_url" value="{{redirect_url}}"/>
+					<input type="submit" value="{% if is_english %}Submit{% else %}コメントを投稿する{% endif %}"  class="g-button"/>
+				</td></tr>
+				</table>
+			</form>
 		</div>
 	</div>
+	{% endif %}
 {% endfor %}
-{% endif %}
-
-<div id="layer_{{ entry.com.key() }}" style="display:none;position:relative;margin-right:2px;" class="close">
-<br/>
-<form action='http://localhost/' enctype="multipart/form-data" method="post" onsubmit="this.action='{{host}}add_res?entry_key={{ entry.com.key() }}&amp;seed={{0|set_seed}}';">
-<table class="table_color">
-<tr><td>{% if is_english %}Name (MUST){% else %}名前（必須）{% endif %}</td>
-<td><input type="text" name="author" maxlength="50" value="{{user_name}}"/>
-{% if is_iphone %}<br/>{% endif %}
-{% if logined %}
-	<input name="link_to_profile" type="checkbox" checked="checked"/>{% if is_english %}Link to mypage{% else %}マイページにリンク{% endif %}
-{% endif %}
-</td>
-</tr>
-<tr><td>{% if is_english %}Comment (MUST){% else %}コメント（必須）{% endif %}</td>
-<td><textarea name="comment" rows="10" cols="40" style="width:100%;"></textarea></td></tr>
-<tr><td></td><td>
-	<input type="hidden" name="redirect_url" value="{{redirect_url}}"/>
-	<input type="submit" value="{% if is_english %}Submit{% else %}コメントを投稿する{% endif %}"  class="g-button"/>
-</td></tr>
-</table>
-</form>
-</div>
-{% endif %}
-{% endfor %}
-</div>
 {% endif %}

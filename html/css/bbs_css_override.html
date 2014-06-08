@@ -34,23 +34,47 @@
 	}
 {% endif %}
 
-	/* 投稿者名 */
+	/* スレッド情報 */
 	.entry-info-tag {
 		{% if is_iphone and (not template_path or is_english) %}
 			width:64px;
 		{% endif %}
 		float:left;
+		line-height: 22px;
 	}
 
 	.entry-info-data {
 		float:left;
 		margin-right:16px;
+		line-height: 22px;
+	}
+
+	/* レス */
+	.entry-res-container {
+		margin-left:40px;
+	}
+
+	.entry-res-info {
+		line-height: 23px;
+	}
+
+	.entry-res {
+		width:100%;
+		word-break:break-all;
+	}
+
+	.entry-res-rep {
+		margin:16px 2px 16px 40px;
 	}
 
 	/* レイアウトの微調整 */
 	.entry-name img{
 		margin-bottom:2px;
 		vertical-align:middle;
+	}
+
+	.entry-comment {
+		word-break:break-all;
 	}
 
 	.twitter-share-button {
