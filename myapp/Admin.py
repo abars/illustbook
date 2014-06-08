@@ -165,6 +165,9 @@ class Admin(webapp.RequestHandler):
 			new_user_count=0
 			weekly=0
 			monthly=0
+
+		if os.environ["SERVER_SOFTWARE"].find("Development")!=-1:
+			new_moper=[]
 			
 		host_url ="./"
 		template_values = {

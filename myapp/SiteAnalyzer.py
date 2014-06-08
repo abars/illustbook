@@ -64,14 +64,14 @@ class SiteAnalyzer(webapp.RequestHandler):
 		cache=SiteAnalyzer.get_cache_from_db();
 
 		#1日単位で習得
-		force=False
-		if(self.request.get("force")):
-			force=True
-		if(cache.date and len(cache.day_list)>=1 and not force):
+		#force=False
+		#if(self.request.get("force")):
+		#	force=True
+		if(cache.date and len(cache.day_list)>=1):# and not force):
 			day1_str=NicoTracker.get_day_string(cache.date)
 			day2_str=NicoTracker.get_day_string(datetime.datetime.today())
 			if(day1_str==day2_str):
-				Alert.alert_msg_with_write(self,"まだ1日が経過していません。")
+				Alert.alert_msg_with_write(self,"ランキングを更新しました。統計情報はまだ1日が経過していないので計測していません。")
 				return
 		
 		#コメント数と再生数を取得

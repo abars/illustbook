@@ -155,13 +155,24 @@ class NicoTracker(webapp.RequestHandler):
 	def create_graph(day_list,play_cnt_list):
 		play_cnt_graph=""
 		day_list_len=len(day_list)
+		
+		before_day=""
+		cnt=0
+
 		for i in range(0,day_list_len):
-			day_str="data.setValue("+str(i)+",0,'"+day_list[day_list_len-1-i]+"');\n";
+			now_day=day_list[day_list_len-1-i]
+			if(before_day==now_day):
+				continue
+			before_day=now_day
+
+			day_str="data.setValue("+str(cnt)+",0,'"+now_day+"');\n";
 				
 			play_cnt_graph+=day_str
-			play_cnt_graph+="data.setValue("+str(i)+",1,"+str(play_cnt_list[day_list_len-1-i])+");\n";
-				
-		play_cnt_graph="data.addRows("+str(day_list_len)+");\n"+play_cnt_graph
+			play_cnt_graph+="data.setValue("+str(cnt)+",1,"+str(play_cnt_list[day_list_len-1-i])+");\n";
+
+			cnt=cnt+1
+			
+		play_cnt_graph="data.addRows("+str(cnt)+");\n"+play_cnt_graph
 		return play_cnt_graph
 
 #--------------------------------------------------------
