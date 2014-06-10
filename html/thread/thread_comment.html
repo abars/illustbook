@@ -52,10 +52,9 @@
 			</div>
 		</div>
 		
-		<br/>
-
 		<!-- 絵で返信 -->
 		{% if entry.com.illust_reply %}
+			<div class="entry-res-content">
 			{% if entry.com.violate_terms %}
 				[大変申し訳ありませんが、ご利用規約の制約からイラストが非表示になっています]<br/>
 				[ご利用規約は <a href="http://www.illustbook.net/terms">http://www.illustbook.net/terms</a> からご確認頂けます]<br/><br/>
@@ -66,18 +65,19 @@
 					<a href="{{host}}img/{{entry.image_key}}.jpg" class="imagelink">
 					<img src="{{host}}img/{{entry.image_key}}.jpg" border="0" {% if is_iphone %} style="max-width:100%;"{%endif%}/>
 					</a>
-					<br/>
-					{{entry.com|regulation_name}}
 				{% endif %}
 			{% endif %}
+			</div>
 		{% endif %}
 
 		<!-- 通常コメント -->
+		<div class="entry-res-content">
 		{% if entry.com.hidden_flag %}
 			このコメントは非表示に設定されています。
 		{% else %}
 			{{entry.com.content|safe}}
 		{% endif %}
+		</div>
 
 		<!-- レス -->
 		{% if not entry.com.hidden_flag %}
@@ -109,9 +109,9 @@
 					</div>
 				</div>
 
-				<br/>
-				
-				{{res.content|safe}}
+				<div class="entry-res-content">
+					{{res.content|safe}}
+				</div>
 			</div>
 		{% endfor %}
 		{% endif %}
