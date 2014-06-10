@@ -10,9 +10,11 @@
 	text-align: left;
 
 	{% set border_enable = 1 %}
+{#
 	{% if template_path and template_base_color!="536566" %}
 		{% set border_enable = 0 %}
 	{% endif %}
+#}
 
 	{% if bbs and border_enable %}
 		border-bottom: 1px solid #dcdcdc;
