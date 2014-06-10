@@ -149,7 +149,7 @@ class ApiFeed(webapp.RequestHandler):
 			cache_enable=1
 		
 		#キャッシュ取得
-		cache_id=BbsConst.OBJECT_BBS_RANKING_HEADER
+		cache_id=BbsConst.OBJECT_CACHE_HEADER+BbsConst.OBJECT_BBS_RANKING_HEADER
 		if(cache_enable):
 			data=memcache.get(cache_id)
 		else:

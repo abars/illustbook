@@ -31,7 +31,7 @@ class BbsConst:
 	SPAM_CHECKED_ENGLISH = "Classified as spam. Please remove URL from your comment."
 	
 	#memcacheコントロール
-	OBJECT_CACHE_HEADER="ocache75_"	#この値を変更することで全てのキャッシュが無効になる
+	OBJECT_CACHE_HEADER="ocache78_"	#この値を変更することで全てのキャッシュが無効になる
 	OBJECT_BOOKMARK_CACHE_HEADER="bookmark_"
 	OBJECT_ENTRY_CACHE_HEADER="entry_"
 	OBJECT_THREAD_CACHE_HEADER="thread_"

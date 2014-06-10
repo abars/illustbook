@@ -347,6 +347,7 @@ h2,h3 {font-size:100%;color:#ea5376;}
 
 .hot_bbs a{
 	color:#258FB8;
+	font-weight: bold;
 }
 
 /* portal modern menu */
@@ -390,11 +391,6 @@ h2,h3 {font-size:100%;color:#ea5376;}
 #}
 
 /* bbs page */
-.bbs_thumbnail{
-	float:left;
-	margin:4px;
-}
-
 .bbs_button{
 	float:right;
 }
@@ -404,9 +400,28 @@ h2,h3 {font-size:100%;color:#ea5376;}
 	margin:4px;
 }
 
+.bbs_thumbnail{
+	float:left;
+	margin:4px;
+}
+
+.bbs_info{
+	float:right;
+	width:100%;
+	margin-left:-62px;
+	margin-bottom:8px;
+}
+
+.bbs_info_contents{
+	margin-left: 62px;
+}
+
 .bbs_list{
-	width:308px;
-	padding:0px;
+	{% if is_iphone %}
+	width:300px;
+	{% else %}
+	width:404px;
+	{% endif %}
 }
 
 .bbs_hr{

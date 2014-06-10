@@ -1,11 +1,28 @@
 {% if bbs_list %}
 <div class="message hot_bbs" {% if not is_iphone %}style="width:350px;margin-left:0px;margin-right:0px;margin-top:0px;"{% endif %}>
-  <p>{% if is_english %}Hot BBS{% else %}人気の掲示板{% endif %}</p>
-{% for bbs in bbs_list %}
-  <a href="{{bbs.bbs_url}}">
-  {{bbs.title}}
-  </a>
-  <br/>
-{% endfor %}
+	<p>{% if is_english %}Hot BBS{% else %}人気の掲示板{% endif %}</p>
+
+	{% for bbs in bbs_list %}
+
+	<div class="bbs_info"><div class="bbs_info_contents">
+		<a href="{{bbs.bbs_url}}">
+		{{bbs.title}}
+		</a>
+		<br/>
+		{{bbs.summary}}
+	</div></div>
+
+	<div class="bbs_thumbnail">
+		<a href="{{bbs.bbs_url}}">
+		{% if bbs.thumbnail_url %}
+			<img src="{{bbs.thumbnail_url}}" width="50px" height="50px" alt="{{bbs.title}}"/>
+		{%else%}
+			<img src="{{host}}static_files/empty_user.png" width="50px" height="50px" alt="{{bbs.title}}"/>
+		{% endif %}
+		</a>
+	</div>
+
+	<br clear="all"/>
+	{% endfor %}
 </div>
 {% endif %}

@@ -418,7 +418,10 @@ class ApiObject(webapp.RequestHandler):
 		thumbnail_url=""
 		if(bbs.cached_thumbnail_key and not bbs.del_flag):
 			thumbnail_url="http://"+req.request.host+"/thumbnail/"+bbs.cached_thumbnail_key+".jpg"
-		one_dic={"title":bbs.bbs_name,"bbs_url":bbs_url,"bookmark":bookmark_cnt,"key":str(bbs.key()),"thumbnail_url":thumbnail_url,"mode":bbs.bbs_mode}
+
+		summary=ApiObject.truncate_html(bbs.summary,20)
+
+		one_dic={"title":bbs.bbs_name,"summary":summary,"bbs_url":bbs_url,"bookmark":bookmark_cnt,"key":str(bbs.key()),"thumbnail_url":thumbnail_url,"mode":bbs.bbs_mode}
 		return one_dic
 
 #-------------------------------------------------------------------
@@ -532,14 +535,13 @@ class ApiObject(webapp.RequestHandler):
 		return dic
 
 	@staticmethod
-	def truncate_html(message):
+	def truncate_html(message,split_length=40):
 		TAG_RE = re.compile(r'<[^>]+>')
 		message=TAG_RE.sub('', message)
 
 		TAG_SP = re.compile(r'&nbsp;')
 		message=TAG_SP.sub(' ', message)
 
-		split_length=40
 		if(len(message)>=split_length):
 			message=message[0:split_length]
 			message=""+message+"..."

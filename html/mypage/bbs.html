@@ -1,81 +1,87 @@
 {% if not contents_only %}
 
-<!-- レンタル -->
-{% if rental_bbs_list %}
-<div class="message bbs_list">
-  <div class="bbs_title">
-  {% if is_english %}My BBS{% else %}レンタルしている{% endif %}
-  </div>
-  <br clear="all"/>
-  {% for bbs in rental_bbs_list %}
-  <hr class="bbs_hr"/>
-  <div class="bbs_thumbnail">
-  <a href="{{bbs.bbs_url}}">
-  {% if bbs.thumbnail_url %}<img src="{{bbs.thumbnail_url}}" width="50px" height="50px" alt="{{bbs.title}}"/>{%else%}<img src="{{host}}static_files/empty_user.png" width="50px" height="50px" alt="{{bbs.title}}"/>{% endif %}
-  </a>
-  </div>
+	<!-- レンタル -->
+	{% if rental_bbs_list %}
+	<div class="message bbs_list hot_bbs">
+		<div class="bbs_title">
+		{% if is_english %}My BBS{% else %}レンタルしている{% endif %}
+		</div>
+		<br clear="all"/>
 
-  <div class="bbs_title">
-  <a href="{{bbs.bbs_url}}">
-  {{bbs.title}}
-  </a>
-  {% if bbs.bookmark %}
-    <br/>
-    <a href='show_bookmark?bbs_key={{bbs.key}}'>{{bbs.bookmark}}{% if is_english %}Bookmark{% else %}ブクマ{% endif %}</a>
-  {% endif %}
-  </div>
+		{% for bbs in rental_bbs_list %}
+			<div class="bbs_info">
+				<div class="bbs_info_contents">
+					<a href="{{bbs.bbs_url}}">
+					{{bbs.title}}
+					</a>
+					<br/>{{bbs.summary}}
+					{% if bbs.bookmark %}
+						&nbsp;
+						<a href='show_bookmark?bbs_key={{bbs.key}}'>{{bbs.bookmark}}{% if is_english %}Bookmark{% else %}ブクマ{% endif %}</a>
+					{% endif %}
+				</div>
+			</div>
 
-  <div class="bbs_button">
-  {% if edit_mode == 1 %}
-    <a href="javascript:confirm_action_bbs('del_bbs?bbs_key={{bbs.key}}','{{bbs.title}}',{% if is_english %}true{%else%}false{% endif %});" class="g-button no-text"><i class="icon-remove"></i></a>
-  {% endif %}
-  </div>
+			<div class="bbs_thumbnail">
+				<a href="{{bbs.bbs_url}}">
+				{% if bbs.thumbnail_url %}<img src="{{bbs.thumbnail_url}}" width="50px" height="50px" alt="{{bbs.title}}"/>{%else%}<img src="{{host}}static_files/empty_user.png" width="50px" height="50px" alt="{{bbs.title}}"/>{% endif %}
+				</a>
+			</div>
 
-  <br clear="all"/>
-  {% endfor %}
-</div>
-{% endif %}
+			<div class="bbs_button">
+				{% if edit_mode == 1 %}
+					<a href="javascript:confirm_action_bbs('del_bbs?bbs_key={{bbs.key}}','{{bbs.title}}',{% if is_english %}true{%else%}false{% endif %});" class="g-button no-text"><i class="icon-remove"></i></a>
+				{% endif %}
+			</div>
 
-<!-- ブックマーク -->
-{% if bookmark_bbs_list %}
-<div class="message bbs_list">
-  <div class="bbs_title">
-  {% if is_english %}Bookmark BBS{% else %}ブックマークしている{% endif %}
-  </div>
-  <br clear="all"/>
-  {% for bbs in bookmark_bbs_list %}
-  <hr class="bbs_hr"/>
-  <div class="bbs_thumbnail">
-  <a href="{{bbs.bbs_url}}">
-  {% if bbs.thumbnail_url %}<img src="{{bbs.thumbnail_url}}" width="50px" height="50px" alt="{{bbs.title}}"/>{%else%}<img src="{{host}}static_files/empty_user.png" width="50px" height="50px" alt="{{bbs.title}}"/>{% endif %}
-  </a>
-  </div>
+			<br clear="all"/>
+		{% endfor %}
+	</div>
+	{% endif %}
 
-  <div class="bbs_title">
-  <a href="{{bbs.bbs_url}}">
-  {{bbs.title}}
-  </a>
-      {% if bbs.bookmark %}
-    <br/><a href='show_bookmark?bbs_key={{bbs.key}}'>{{bbs.bookmark}}{% if is_english %}Bookmark{% else %}ブクマ{% endif %}</a>
-  {% endif %}
+	<!-- ブックマーク -->
+	{% if bookmark_bbs_list %}
+	<div class="message bbs_list hot_bbs">
+		<div class="bbs_title">
+			{% if is_english %}Bookmark BBS{% else %}ブックマークしている{% endif %}
+		</div>
+		<br clear="all"/>
 
-  </div>
+		{% for bbs in bookmark_bbs_list %}
+			<div class="bbs_info">
+				<div class="bbs_info_contents">
+					{% if bbs.bbs_url %}<a href="{{bbs.bbs_url}}">{% endif %}
+					{{bbs.title}}
+					{% if bbs.bbs_url %}</a>{% endif %}
+					<br/>
+					{{bbs.summary}}
+							{% if bbs.bookmark %}
+						&nbsp;<a href='show_bookmark?bbs_key={{bbs.key}}'>{{bbs.bookmark}}{% if is_english %}Bookmark{% else %}ブクマ{% endif %}</a>
+					{% endif %}
+			</div>
+		</div>
 
-  <div class="bbs_button">
-  {% if edit_mode == 2 %}
-    <a href="javascript:confirm_delete('del_bbs&bbs_key={{bbs.key}}','ブックマーク','{{bbs.title}}',{% if is_english %}true{%else%}false{% endif %});" class="g-button no-text"><i class="icon-remove"></i></a>
-  {% endif %}
-  </div>
+		<div class="bbs_thumbnail">
+			<a href="{{bbs.bbs_url}}">
+			{% if bbs.thumbnail_url %}<img src="{{bbs.thumbnail_url}}" width="50px" height="50px" alt="{{bbs.title}}"/>{%else%}<img src="{{host}}static_files/empty_user.png" width="50px" height="50px" alt="{{bbs.title}}"/>{% endif %}
+			</a>
+		</div>
 
-  <br clear="all"/>
-  {% endfor %}
-</div>
-{% endif %}
+		<div class="bbs_button">
+			{% if edit_mode == 1 %}
+				<a href="javascript:confirm_delete('del_bbs&bbs_key={{bbs.key}}','ブックマーク','{{bbs.title}}',{% if is_english %}true{%else%}false{% endif %});" class="g-button no-text"><i class="icon-remove"></i></a>
+			{% endif %}
+		</div>
 
-{% if not view_mode %}
-  <div class="message">
-    {%include "mypage/rental.html" %}
-  </div> 
-{% endif %}
+		<br clear="all"/>
+		{% endfor %}
+	</div>
+	{% endif %}
+
+	{% if not view_mode %}
+		<div class="message bbs_list">
+			{%include "mypage/rental.html" %}
+		</div> 
+	{% endif %}
 
 {% endif %}

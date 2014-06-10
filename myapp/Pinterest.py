@@ -292,7 +292,7 @@ class Pinterest(webapp.RequestHandler):
 		else:
 			thread_list=ApiFeed.feed_get_thread_list(self,order,(page-1)*unit,unit)
 		
-		bbs_list=ApiFeed.feed_get_bbs_list(self,"hot",0,10)
+		bbs_list=ApiFeed.feed_get_bbs_list(self,"hot",0,8)
 
 		template_values=Pinterest.initialize_template_value(self,user,user_id,page,request_page_mode,redirect_api,contents_only)
 		template_values['thread_list']=thread_list
