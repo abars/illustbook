@@ -70,9 +70,7 @@ class SearchTag(webapp.RequestHandler):
 			one_tag+='">'
 			
 			size=int(score)+1
-			size=round(math.log(size,10)+1)
-			if(size<2):
-				size=2
+			size=round(math.log(size,7)+1)
 			
 			one_tag+='<font size="'+str(size)+'">'
 			one_tag+=tag2
