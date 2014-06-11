@@ -21,6 +21,9 @@ from myapp.MesThread import MesThread
 from myapp.AnalyticsGet import AnalyticsGet
 from myapp.MappingId import MappingId
 from myapp.MappingThreadId import MappingThreadId
+from myapp.SearchThread import SearchThread
+from myapp.RecentTag import RecentTag
+from google.appengine.api import memcache
 
 class Ranking(db.Model):
 	#カウンターの加算時と、拍手時、ブックマーク時にスレッドとユーザを追加する
@@ -77,10 +80,33 @@ class Ranking(db.Model):
 	def get_sec(self,now):
 		return int(time.mktime(now.timetuple()))
 
-	def get_thread_list(self):
-		analytics=AnalyticsGet()
-		analytics.create_session()
+	def get_tag_list(self,analytics):
+		start_date=str(datetime.date.today()+datetime.timedelta(days=-1))
+		end_date=str(datetime.date.today())
+		result=analytics.get("tag","",start_date,end_date)
 
+		recent_tag=RecentTag.get_or_insert(BbsConst.RECENT_TAG_KEY_NAME)
+		recent_tag.tag_list=[]
+		recent_tag.score_list=[]
+		
+		for one in result:
+			logging.error(one)
+			url=one["ga:pagePath"]
+			data=url.split("=")
+			count=int(one["ga:pageviews"])
+			query=data[1]
+			
+			search_found=SearchThread.get_count(query)
+
+			recent_tag.tag_list.append(query)
+			recent_tag.score_list.append(str(search_found))
+
+			#logging.error("tag:"+query+" pv:"+str(count)+" search_result:"+str(search_found))
+
+		recent_tag.put()
+		memcache.delete(BbsConst.RECENT_TAG_CACHE_HEADER)
+
+	def get_thread_list(self,analytics):
 		start_date=str(datetime.date.today()+datetime.timedelta(days=-1))
 		end_date=str(datetime.date.today())
 		result=analytics.get("page",".*",start_date,end_date)
@@ -115,7 +141,13 @@ class Ranking(db.Model):
 
 	def create_rank(self,req):
 		#analytics apiから生成
-		thread_list=self.get_thread_list()
+
+		analytics=AnalyticsGet()
+		analytics.create_session()
+
+		tag_list=self.get_tag_list(analytics)
+		
+		thread_list=self.get_thread_list(analytics)
 		if os.environ["SERVER_SOFTWARE"].find("Development")!=-1:
 			thread_list=db.Query(MesThread,keys_only=True).order("-create_date").fetch(limit=100)
 		self._create_ranking_core(thread_list)

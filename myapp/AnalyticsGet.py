@@ -69,6 +69,8 @@ class AnalyticsGet():
           results = self.get_ref(service, first_profile_id, http, bbs_name , start_date , end_date)
         if(mode=="keyword"):
           results = self.get_keywords(service, first_profile_id, http, bbs_name , start_date , end_date)
+        if(mode=="tag"):
+          results = self.get_tag(service, first_profile_id, http, bbs_name , start_date , end_date)
         result_json = self.get_results(results)
         return result_json
 
@@ -117,9 +119,21 @@ class AnalyticsGet():
         metrics='ga:pageviews',
         dimensions='ga:date',
         sort='ga:date',
-        filters='ga:pagePath=~/'+bbs_name+'/*',
+        filters='ga:pagePath=~/'+bbs_name+'/.*',
         start_index='1',
         max_results='1000').execute(http=http)
+
+  def get_tag(self,service, profile_id, http, bbs_name, start_date, end_date):
+    return service.data().ga().get(
+        ids='ga:' + profile_id,
+        start_date=start_date,
+        end_date=end_date,
+        metrics='ga:pageviews',
+        dimensions='ga:date,ga:pagePath',
+        sort='-ga:pageviews',
+        filters='ga:pagePath=~/search_tag\?tag=.*',
+        start_index='1',
+        max_results='100').execute(http=http)
 
   def get_keywords(self,service, profile_id, http, bbs_name, start_date, end_date):
     return service.data().ga().get(

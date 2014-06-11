@@ -167,5 +167,17 @@ class SearchThread(webapp.RequestHandler):
 			key_list.append(db.Key(encoded=str(doc.doc_id)))
 		return key_list
 
+	@staticmethod
+	def get_count(query):
+		try:
+			query=search.Query(query_string=query)
+		except:
+			return 0
+		index = search.Index(name=BbsConst.SEARCH_THREAD_INDEX_NAME)
+		try:
+			results=index.search(query)
+		except:
+			return 0
+		return results.number_found
 
 

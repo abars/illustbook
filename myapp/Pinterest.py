@@ -310,7 +310,7 @@ class Pinterest(webapp.RequestHandler):
 		Pinterest._render_page(self,template_values)
 
 	@staticmethod
-	def _text_search(self,search,user,user_id,page,request_page_mode,redirect_api,contents_only,tag_search_result=None):
+	def _text_search(self,search,user,user_id,page,request_page_mode,redirect_api,contents_only):
 		template_values=Pinterest.initialize_template_value(self,user,user_id,page,request_page_mode,redirect_api,contents_only)
 
 		search_api="search_tag"
@@ -326,10 +326,11 @@ class Pinterest(webapp.RequestHandler):
 		if(search=="empty"):
 			thread_list=None
 
-		if(search_api_error and tag_search_result):
+		if(search_api_error):
 			#例外が起きた場合はTagSearchの結果を使う場合がある
-			thread_list=tag_search_result
-			search_api_error=False
+			thread_list=Pinterest.get_tag_image(self,tag,page,unit)["thread_list"]
+			if(thread_list):
+				search_api_error=False
 
 		template_values['thread_list']=thread_list
 		template_values['next_query']="search="+urllib.quote_plus(str(search))
@@ -343,21 +344,21 @@ class Pinterest(webapp.RequestHandler):
 
 	@staticmethod
 	def _tag_search(self,tag,user,user_id,page,request_page_mode,redirect_api,contents_only):
-		template_values=Pinterest.initialize_template_value(self,user,user_id,page,request_page_mode,redirect_api,contents_only)
+		#template_values=Pinterest.initialize_template_value(self,user,user_id,page,request_page_mode,redirect_api,contents_only)
 
-		search_api="search_tag"
-		unit=BbsConst.PINTEREST_PAGE_UNIT
-		dic=Pinterest.get_tag_image(self,tag,page,unit)
-		template_values['thread_list']=dic["thread_list"]
-		template_values['tag_list']=SearchTag.update_recent_tag(tag,dic["cnt"],search_api)
-		template_values['next_query']="tag="+urllib.quote_plus(str(tag))
-		template_values['page_mode']="tag"
-		template_values['illust_enable']=True
-		template_values['search']=tag
+		#search_api="search_tag"
+		#unit=BbsConst.PINTEREST_PAGE_UNIT
+		#dic=Pinterest.get_tag_image(self,tag,page,unit)
+		#template_values['thread_list']=dic["thread_list"]
+		#template_values['tag_list']=SearchTag.update_recent_tag(tag,dic["cnt"],search_api)
+		#template_values['next_query']="tag="+urllib.quote_plus(str(tag))
+		#template_values['page_mode']="tag"
+		#template_values['illust_enable']=True
+		#template_values['search']=tag
 
 		#Pinterest._render_page(self,template_values)
 
-		Pinterest._text_search(self,tag,user,user_id,page,request_page_mode,redirect_api,contents_only,dic["thread_list"])
+		Pinterest._text_search(self,tag,user,user_id,page,request_page_mode,redirect_api,contents_only)
 
 	@staticmethod
 	def _login_require(self,user,user_id,page,request_page_mode,redirect_api,contents_only):
