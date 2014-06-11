@@ -1,6 +1,7 @@
 {% if not contents_only %}
 
-	<!-- レンタル -->
+<div style="float:left">
+	<!-- レンタルしている -->
 	{% if rental_bbs_list %}
 	<div class="message bbs_list hot_bbs">
 		<div class="bbs_title">
@@ -38,6 +39,12 @@
 		{% endfor %}
 	</div>
 	{% endif %}
+
+	<!-- 新規レンタル -->
+	{% if not is_iphone %}
+		{%include "mypage/rental.html" %}
+	{% endif %}
+</div>
 
 	<!-- ブックマーク -->
 	{% if bookmark_bbs_list %}
@@ -78,10 +85,9 @@
 	</div>
 	{% endif %}
 
-	{% if not view_mode %}
-		<div class="message bbs_list">
-			{%include "mypage/rental.html" %}
-		</div> 
+	<!-- 新規レンタル -->
+	{% if is_iphone %}
+		{%include "mypage/rental.html" %}
 	{% endif %}
 
 {% endif %}
