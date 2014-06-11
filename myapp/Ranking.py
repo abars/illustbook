@@ -90,7 +90,7 @@ class Ranking(db.Model):
 		recent_tag.score_list=[]
 		
 		for one in result:
-			logging.error(one)
+			#logging.error(one)
 			url=one["ga:pagePath"]
 			data=url.split("=")
 			count=int(one["ga:pageviews"])
