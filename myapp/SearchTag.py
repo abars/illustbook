@@ -43,7 +43,7 @@ from myapp.OwnerCheck import OwnerCheck
 class SearchTag(webapp.RequestHandler):
 	@staticmethod
 	def get_recent_tag(api):
-		data=None#memcache.get(BbsConst.RECENT_TAG_CACHE_HEADER)
+		data=memcache.get(BbsConst.RECENT_TAG_CACHE_HEADER)
 		if(not data):
 			recent_tag=None
 			try:

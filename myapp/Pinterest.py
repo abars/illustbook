@@ -328,7 +328,7 @@ class Pinterest(webapp.RequestHandler):
 
 		if(search_api_error):
 			#例外が起きた場合はTagSearchの結果を使う場合がある
-			thread_list=Pinterest.get_tag_image(self,tag,page,unit)["thread_list"]
+			thread_list=Pinterest.get_tag_image(self,search,page,unit)["thread_list"]
 			if(thread_list):
 				search_api_error=False
 
