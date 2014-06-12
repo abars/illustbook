@@ -34,6 +34,9 @@ class AnalyzeAccess(webapp.RequestHandler):
 		analytics.create_session()
 		return analytics.get(mode,bbs_id,start_date,end_date)
 
+	def validate_date(self,date_string):
+		return re.match(r"[0-9]{4}-[0-9]{2}-[0-9]{2}",date_string)
+
 	def get(self):
 		SetUtf8.set()
 
@@ -63,13 +66,25 @@ class AnalyzeAccess(webapp.RequestHandler):
 
 		if(self.request.get("start_date")):
 			start_date=self.request.get("start_date")
+			if(not self.validate_date(start_date)):
+				Alert.alert_msg_with_write(self,"日付指定は0000-00-00形式である必要があります。")
+				return
 		else:
 			start_date=str(datetime.date.today()+datetime.timedelta(days=-31))
 
 		if(self.request.get("end_date")):
 			end_date=self.request.get("end_date")
+			if(not self.validate_date(end_date)):
+				Alert.alert_msg_with_write(self,"日付指定は0000-00-00形式である必要があります。")
+				return
 		else:
 			end_date=str(datetime.date.today()+datetime.timedelta(days=-1))
+
+		start_day=datetime.datetime.strptime(start_date,"%Y-%m-%d")
+		end_day=datetime.datetime.strptime(end_date,"%Y-%m-%d")
+		if(start_day>end_day):
+			Alert.alert_msg_with_write(self,"終了日よりも開始日の方が大きくなっています。")
+			return
 
 		bbs_id=bbs.short
 		is_admin=OwnerCheck.is_admin(user)
