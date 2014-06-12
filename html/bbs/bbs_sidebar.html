@@ -77,6 +77,9 @@
 		{% if not is_english %}一昨日：{{bbs.counter.yesterday_yesterday_cnt}}<br/>{% endif %}
 		{% if is_english %}TOTAL{% else %}合計{% endif %}：{{bbs.counter.total_cnt}}<br/>
 		</p>
+		{% if count_up_comment %}
+			<p>{{count_up_comment}}</p>
+		{% endif %}
 	{%endif%}
 	
 	{%if one == "menu" %}

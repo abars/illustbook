@@ -51,32 +51,16 @@ class CounterWorker(webapp.RequestHandler):
 		if(Counter.is_same_ip(remote_addr,bbs)):
 			return
 
-		#オーナーをカウントしないモードの判定
-		dont_count=0
+		#オーナーをカウントしない場合は弾く
 		if(bbs.dont_count_owner and owner):
-			dont_count=1
-
-		#リファラを取得
-		url=req.request.url
-		referer=Analyze.get_request_referer(req.request)
-
-		#スレッドのKeyを取得
-		thread_key=""
-		if(thread):
-			thread_key=str(thread.key())
+			return
 
 		#カウンターを進める
 		headers={'X-AppEngine-FailFast' : 'true'} #新規インスタンスの作成の抑制
 
-		#add_async
-		#まだ使えない？
-		#que=taskqueue.Queue("counter")
-		#task=taskqueue.Task(url="/counter_worker",params={"bbs":str(bbs.key()),"thread":thread_key,"dont_count":str(dont_count),"referer":referer,"url":url,"remote_addr":remote_addr},headers=headers)
-		#que.add_async(task)
-
 		#add sync
 		try:
-			taskqueue.add(url="/counter_worker",params={"bbs":str(bbs.key()),"thread":thread_key,"dont_count":str(dont_count),"referer":referer,"url":url,"remote_addr":remote_addr},queue_name="counter",headers=headers)
+			taskqueue.add(url="/counter_worker",params={"bbs":str(bbs.key())},queue_name="counter",headers=headers)
 		except:
 			logging.warning("counter taskqueue add failed")
 
@@ -89,53 +73,8 @@ class CounterWorker(webapp.RequestHandler):
 		if(not bbs):
 			return
 		
-		#スレッド情報を取得（タイトル取得用）
-		thread_key=self.request.get("thread")
-		thread=None
-		if(thread_key):
-			thread=ApiObject.get_cached_object(str(thread_key))
-
-		#カウントしないモードかどうか
-		dont_count=int(self.request.get("dont_count"))
-
-		#リファラを取得
-		referer=self.request.get("referer")
-		url=self.request.get("url")
-		remote_addr=self.request.get("remote_addr")
-
 		#カウンタを更新
 		counter=bbs.counter
-		counter.update_counter(remote_addr,dont_count)
+		counter.update_counter()
 
-		#オーナーをカウントしないモードでオーナーだった場合は終了
-		if(dont_count):
-			return
-
-		#ランキング用のPVをカウント
-		if(thread):
-			AddRankingScore.add_rank_direct(thread.key(),str(thread.user_id),BbsConst.SCORE_PV)
-
-		#アクセス解析はAnalyticsに移行
-		return
-
-		#アクセス解析で表示する名前
-		analyze_name=bbs.bbs_name
-		if(thread):
-			analyze_name=thread.title
-
-		#アクセス解析インスタンスが存在しなかったら作成
-		if(not bbs.analyze):
-			#キャッシュされていないBBSを取得
-			bbs=db.get(bbs_key)
-			
-			#インスタンス作成
-			analyze=Analyze()
-			analyze.init_analyze(bbs)
-			analyze.put()
-			bbs.analyze=analyze
-			bbs.put()
-		
-		#アクセス解析更新
-		analyze=bbs.analyze
-		analyze.add_referer(referer,url,analyze_name)
 

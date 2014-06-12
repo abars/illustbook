@@ -26,56 +26,25 @@ from myapp.RecentTag import RecentTag
 from google.appengine.api import memcache
 
 class Ranking(db.Model):
-	#カウンターの加算時と、拍手時、ブックマーク時にスレッドとユーザを追加する
-	thread_list = db.ListProperty(db.Key,indexed=False)
-	user_list = db.StringListProperty(indexed=False)
-	
 	#イラストのランキング結果と、ユーザのランキング結果を格納
 	#ランキングの更新はcronで行う
 	ranking_list = db.ListProperty(db.Key,indexed=False)
 	bbs_ranking_list = db.StringListProperty(indexed=False)
 	user_id_ranking_list = db.StringListProperty(indexed=False)
 
-	#以下のランキングは廃止
-	user_ranking_list = db.StringListProperty(indexed=False)
-	owner_list = db.StringListProperty(indexed=False)
-	owner_ranking_list = db.StringListProperty(indexed=False)
-	owner_id_ranking_list = db.StringListProperty(indexed=False)
-
 	date = db.DateTimeProperty(auto_now=True,indexed=False)
 	
 	def reset(self):
-		self.thread_list=[]
-	
-	def _add_rank_core(self,key,key_list,n):
-		if(not key):
-			return
-		content_len=len(key_list)
-		while(content_len>=n):
-			key_list.pop(0)
-			content_len=content_len-1
-		key_list.append(key)
+		self.ranking_list=[]
 	
 	@staticmethod
 	def add_rank_global(thread,score):
 		#Analytics APIを使ってランキングを作成するようになったので不要になった
 		return
 
-		#if(thread.illust_mode==BbsConst.ILLUSTMODE_ILLUST):
-		#	headers={'X-AppEngine-FailFast' : 'true'} #新規インスタンスの作成の抑制
-		#	try:
-		#		taskqueue.add(url="/add_ranking_score",params={"thread":str(thread.key()),"user_id":str(thread.user_id),"score":score},queue_name="score",headers=headers)
-		#	except:
-		#		logging.warning("ranking score taskqueue add failed")
-
 	def add_rank_from_taskqueue(self,thread_key,user_id,score):
 		#Analytics APIを使ってランキングを作成するようになったので不要になった
 		return
-
-		#for cnt in range(score):
-		#	self._add_rank_core(thread_key,self.thread_list,BbsConst.THREAD_RANKING_RECENT)
-		#	self.user_list=[]	#deleted
-		#self.put()
 
 	def get_sec(self,now):
 		return int(time.mktime(now.timetuple()))
@@ -90,7 +59,6 @@ class Ranking(db.Model):
 		recent_tag.score_list=[]
 		
 		for one in result:
-			#logging.error(one)
 			url=one["ga:pagePath"]
 			data=url.split("=")
 			count=int(one["ga:pageviews"])
@@ -100,8 +68,6 @@ class Ranking(db.Model):
 
 			recent_tag.tag_list.append(query)
 			recent_tag.score_list.append(str(search_found))
-
-			#logging.error("tag:"+query+" pv:"+str(count)+" search_result:"+str(search_found))
 
 		recent_tag.put()
 		memcache.delete(BbsConst.RECENT_TAG_CACHE_HEADER)
@@ -122,8 +88,6 @@ class Ranking(db.Model):
 				thread_name=str(data[2].split(".")[0])
 			except:
 				continue
-
-			#logging.error(""+url+" "+bbs_name+" "+thread_name+" "+str(count))
 
 			bbs_key=MappingId.mapping(bbs_name)
 			bbs=ApiObject.get_cached_object(bbs_key)
@@ -152,14 +116,6 @@ class Ranking(db.Model):
 			thread_list=db.Query(MesThread,keys_only=True).order("-create_date").fetch(limit=100)
 		self._create_ranking_core(thread_list)
 
-		#削除した要素
-		self.thread_list=[]
-		self.user_list=[]
-		self.user_ranking_list=["empty"]
-		self.owner_list = ["empty"]
-		self.owner_ranking_list = ["empty"]
-		self.owner_id_ranking_list = ["empty"]
-		
 		self.put()
 	
 	def _create_ranking_core(self,thread_list):
@@ -172,15 +128,6 @@ class Ranking(db.Model):
 			else:
 				rank[thread]=1
 				first_ranking_list.append(thread)
-
-		#1次ランキングを作成
-		#（全てでthreadの実体を取得すると重いので）
-		#first_ranking_list=[]
-		#for k, v in sorted(rank.items(), key=lambda x:x[1], reverse=True):
-		#	if(v>=1):
-		#		first_ranking_list.append(k)
-		#		if(len(first_ranking_list)>=BbsConst.THREAD_RANKING_MAX*BbsConst.THREAD_RANKING_BEFORE_FILTER_MULT):
-		#			break
 
 		#1次ランキングに出現したもののスコア補正
 		rank_bbs={}

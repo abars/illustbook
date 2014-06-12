@@ -199,6 +199,16 @@ class ShowBbs(webapp.RequestHandler):
 		#英語版かどうか
 		is_english=CssDesign.is_english(self)
 
+		#カウントアップコメント
+		if(bbs.counter):
+			bbs.counter.new_day_update()
+		count_up_comment=None
+		if(bbs.dont_count_owner):
+			if(owner):
+				count_up_comment="管理人"
+			else:
+				count_up_comment="ユーザ"
+
 		#レンダリング
 		template_values = {
 			'host': host_url,
@@ -240,7 +250,8 @@ class ShowBbs(webapp.RequestHandler):
 			'infinite_scroll_selecter': ".entry",
 			'contents_only': contents_only,
 			'message': message,
-			'is_english': is_english
+			'is_english': is_english,
+			'count_up_comment': count_up_comment
 		}
 
 		path = "/html/"+design["base_name"]

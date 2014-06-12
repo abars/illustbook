@@ -23,7 +23,6 @@ class Counter(db.Model):
 	
 	#カウンター更新判定用
 	today_date=db.IntegerProperty(indexed=False)
-	#ip = db.StringProperty(indexed=False)
 	
 	#最後に更新された日
 	update_date = db.DateProperty(auto_now=True,indexed=False)
@@ -47,9 +46,8 @@ class Counter(db.Model):
 	def reset_ip(bbs):
 		cache_id=BbsConst.OBJECT_COUNTER_IP_HEADER+str(bbs.key())
 		memcache.delete(cache_id)
-		
-	def update_counter(self,remote_addr,dont_count_owner):
-		#1日を超えていた場合
+
+	def new_day_update(self):
 		now = datetime.datetime.today()+datetime.timedelta(hours=9)
 		now_date=now.day+now.month*12+now.year*365
 		if(now_date!=self.today_date):
@@ -59,11 +57,16 @@ class Counter(db.Model):
 			self.today_date=now_date
 			self.total_cnt=self.total_cnt+1
 			self.put()
+			return True
+		return False
+		
+	def update_counter(self):
+		#1日を超えていた場合
+		if(self.new_day_update()):
 			return
 
 		#カウンターを更新
-		if(not dont_count_owner):
-			self.total_cnt=self.total_cnt+1
-			self.today_cnt=self.today_cnt+1
-			self.put()
+		self.total_cnt=self.total_cnt+1
+		self.today_cnt=self.today_cnt+1
+		self.put()
 
