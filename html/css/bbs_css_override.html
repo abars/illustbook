@@ -1,6 +1,18 @@
 <!-- デフォルトのtempformとtemplateを上書きする -->
 
 <style type="text/css">
+
+	/* window size adaptive */
+	@media screen and (min-width: 1024px) {
+		#container{
+			min-width: 1000px;
+		}
+
+		#main{
+			min-width: 700px;
+		}
+	}
+
 	/* スレッド一覧 */
 {% if bbs.bbs_mode == 3 %}
 	.square_thread_list {
@@ -121,26 +133,16 @@
 	}
 	{% endif %}
 
-	/* floating menu overwrap */
-{#
-	{% if not is_iphone %}
-	@media screen and (max-width: 1100px) {
-		#container {
-			margin-top:46px;
-		}
+	#contents-header , #contents-footer {
+		background-repeat: no-repeat;
+		background-size: cover;
 	}
-	{% endif %}
-#}
 
 	/* iPhone用 */
 	{% if is_iphone %}
 		{# 高解像度 Android 対応 #}
 		#container {
 			width:auto;
-		}
-
-		#contents-header {
-			background-size:cover;
 		}
 
 		#contents-header-edit{
@@ -156,11 +158,6 @@
 		{% else %}
 			padding:8px;
 		{% endif %}
-		}
-
-		#contents-footer {
-			background-repeat: no-repeat;
-			background-size: cover;
 		}
 
 		@media screen and (max-width: 332px) {
