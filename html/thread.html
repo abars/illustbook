@@ -73,8 +73,8 @@
 					{% else %}
 						{{comment}}
 					{% endif %}
-					<p>&nbsp;</p>
 					{% if comment %}
+						<p>&nbsp;</p>
 						{% include "thread/thread_comment_order.html" %}
 					{% endif %}
 					{% if bbs.bbs_mode != 3 %}
