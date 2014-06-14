@@ -53,3 +53,9 @@
 {% endif %}
 
 </div>
+
+	{%if not bbs.tweet_disable %}
+		<div style="float:right;margin:4px;">
+		{% include "bbs_thread/tweet.html" %}
+		</div>
+	{%endif%}

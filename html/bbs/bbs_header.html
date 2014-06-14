@@ -1,15 +1,19 @@
 <!--掲示板のタイトル-->
 
 {% if template_path %}
-	<h1><a href="{{page_url}}">{{bbs.bbs_name}}</a></h1>
-	<h2>{{bbs.summary|safe}}</h2>
+	<h1><a href="{{usrhost}}">{{bbs.bbs_name}}</a></h1>
+	{% if not thread %}
+		<h2>{{bbs.summary|safe}}</h2>
+	{% endif %}
 {% else %}
 		{% if bbs.bottom_image %}
 			<div id="bbs_logo">
-				<a href="{{page_url}}" class="imagelink"><img src="{{bbs.bottom_image}}"/></a><br/>
+				<a href="{{usrhost}}" class="imagelink"><img src="{{bbs.bottom_image}}"/></a><br/>
 			</div>
 		{% else %}
-			<h3><a href="{{page_url}}" class="decnone">{{bbs.bbs_name}}</a></h3>
+			<h2><a href="{{usrhost}}" class="decnone">{{bbs.bbs_name}}</a></h2>
 		{% endif %}
-		{% if bbs.summary %}{{bbs.summary|safe}}<br/>{% endif %}
+		{% if not thread %}
+			{% if bbs.summary %}{{bbs.summary|safe}}<br/>{% endif %}
+		{% endif %}
 {% endif %}
