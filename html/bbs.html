@@ -179,6 +179,11 @@ $(function(){
 		var visibleBottom = scrollTop + windowHeight;
 		var targetBottom = targetPosition.top + targetHeight;
 
+		var footerBottom = $("#contents-footer").position().top;
+		if(visibleBottom>footerBottom){
+			visibleBottom=footerBottom;
+		}
+
 		if(targetHeight<windowHeight){
 			if(targetPosition.top<scrollTop+margin_px){
 				target.css({position:"fixed", left:targetPosition.left, top: margin_px});
@@ -187,7 +192,7 @@ $(function(){
 			}
 		 }else{
 		 	if(targetBottom<=visibleBottom){
-				target.css({position:"fixed", left:targetPosition.left, top: windowHeight-targetHeight});
+				target.css({position:"fixed", left:targetPosition.left, top: visibleBottom-scrollTop-targetHeight});
 			} else {
 				target.css({position:"static", left: "auto", bottom: "auto"});
 			}
