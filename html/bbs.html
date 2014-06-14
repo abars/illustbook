@@ -171,6 +171,8 @@ $(function(){
 	var targetPosition = target.position();
 	$(window).resize(function(){
 		windowHeight = $(this).height();
+		target.css({position:"static", left: "auto", bottom: "auto"});
+		targetPosition = target.position();
 	});
 	$(window).scroll(function(){
 		var scrollTop = $(this).scrollTop();
