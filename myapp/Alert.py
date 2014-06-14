@@ -58,9 +58,6 @@ class Alert(webapp.RequestHandler):
 		if(is_english):
 			msg="Bbs not found"
 		else:
-			msg="掲示板が見つかりません。掲示板のURLが間違っているか、変更もしくは削除された可能性があります。"
-			msg+="urlがhttp://www.illustbook.net/usr/で始まっている掲示板は、AppEngineのHRDデータストアへの移行に伴い2011年11月1日からURLが変更になっています。"
-			msg+="マイページからログインして頂ければ、新しいURLを確認頂けます。"
-			msg+="また、デザインの設定から、変更されない固定のURLを割り当てることができますのでご利用頂ければと思います。ご迷惑をおかけします。"
+			msg="掲示板が見つかりません。掲示板のURLが間違っている可能性があります。"
 		Alert.alert_msg_with_write(req,msg)
 

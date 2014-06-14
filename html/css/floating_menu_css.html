@@ -8,21 +8,26 @@
 	min-height:28px;
 	{% endif %}
 	text-align: left;
-
-	{% set border_enable = 1 %}
-{#
-	{% if template_path and template_base_color!="536566" %}
-		{% set border_enable = 0 %}
-	{% endif %}
-#}
-
-	{% if bbs and border_enable %}
-		border-bottom: 1px solid #dcdcdc;
-	{% endif %}
 	background-color:#ffffff;
 	color: #444;
 	font-family: "ＭＳ Ｐゴシック", "Arial", "Osaka", "ヒラギノ角ゴPro W3";
 	font-size: 12px;
+}
+
+.fleft{
+	position:fixed;
+	left:0px;
+	top:0px;
+	float:left;
+	border-radius: 0px 0px 8px 0px;
+}
+
+.fright{
+	position:fixed;
+	right:0px;
+	top:0px;
+	float:right;
+	border-radius: 0px 0px 0px 8px;
 }
 
 #floating_menu a{

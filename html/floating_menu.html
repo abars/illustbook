@@ -1,9 +1,16 @@
+{% if user %}
+	{% set my_new_feed_count = user|new_feed_count %}
+{% endif %}
+
+{% if bbs %}
+<div id="floating_menu" class="fleft">
+{% else %}
 <div id="floating_menu">
+{% endif %}
 	<!-- icon -->
 	{% if user %}
 	<div class="user_icon">
 		<a href="{{host}}mypage"><img src="{{host}}show_icon?key={{user.user_id()}}&size=mini" width="{% if is_iphone or is_tablet %}30px{% else %}24px{% endif %}" height="{% if is_iphone or is_tablet %}30px{% else %}24px{% endif %}" alt="icon"/></a>
-		{% set my_new_feed_count = user|new_feed_count %}
 		{% if my_new_feed_count %}
 			<b>{{my_new_feed_count}}</b>
 		{% endif %}
@@ -21,10 +28,14 @@
 		{% endif %}
 
 		<a href="{{host}}">
-			<img src="{{host}}static_files/logo{% if is_iphone %}_mobile{%else%}_pc{%endif%}.png" alt="ロゴ"/>
+			<img src="{{host}}static_files/logo{% if is_iphone or bbs %}_mobile{%else%}_pc{%endif%}.png" alt="ロゴ"/>
 		</a>
 	</div>
 
+{% if bbs %}
+</div>
+<div id="floating_menu" class="fright">
+{% endif %}
 	<!-- menu -->
 	<div class="main_menu">
 		<div class="g-button-group">
