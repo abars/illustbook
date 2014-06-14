@@ -122,11 +122,13 @@
 	{% endif %}
 
 	/* floating menu overwrap */
+	{% if not is_iphone %}
 	@media screen and (max-width: 1100px) {
 		#container {
-			margin-top:40px;
+			margin-top:46px;
 		}
 	}
+	{% endif %}
 
 	/* iPhone用 */
 	{% if is_iphone %}

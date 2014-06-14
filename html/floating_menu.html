@@ -2,7 +2,7 @@
 	{% set my_new_feed_count = user|new_feed_count %}
 {% endif %}
 
-{% if bbs %}
+{% if bbs and not is_iphone %}
 <div id="floating_menu" class="fleft">
 {% else %}
 <div id="floating_menu">
@@ -32,7 +32,7 @@
 		</a>
 	</div>
 
-{% if bbs %}
+{% if bbs and not is_iphone %}
 </div>
 <div id="floating_menu" class="fright">
 {% endif %}

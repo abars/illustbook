@@ -29,12 +29,16 @@
 		<!--画像が存在する場合-->
 		{% if thread.cached_image_key %}
 		<div class="entry-illust">
-			<a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key()}}{%endif%}.html' class="imagelink">
+			{% if not thread.violate_terms %}
+				<a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key()}}{%endif%}.html' class="imagelink">
+			{% endif %}
 			{% include "bbs_thread/image.html" %}
 			{% if thread.illust_mode == 2 %}
 			<br/>[クリックで再生]
 			{%endif%}
-			</a>
+			{% if not thread.violate_terms %}
+				</a>
+			{% endif %}
 		</div>
 		{% else %}
 			{% if template_path %}
