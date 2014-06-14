@@ -38,14 +38,12 @@ body {
 
 /* メインコンテナ */
 #container {
+{%if bbs.content_width and not is_tablet %}
+	width:{{bbs.content_width}}px;
+{%else%}
 	width:800px;
+{%endif%}
 	margin:0px auto 0px auto;
-}
-
-@media screen and (min-width: 1024px) {
-	#container {
-		width:1000px;
-	}
 }
 
 /* 掲示板タイトルとロゴ */
@@ -96,14 +94,12 @@ body {
 /* イラスト一覧 */
 #main_2col {
 	float:left;
+{%if bbs.content_width and not is_tablet %}
+	width:{{bbs.content_width-240}}px;
+{%else%}
 	width:560px;
+{%endif%}
 	margin-right: 10px;
-}
-
-@media screen and (min-width: 1024px) {
-	#main_2col{
-		width:760px;
-	}
 }
 
 #main_1col {
