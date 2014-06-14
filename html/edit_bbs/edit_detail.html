@@ -111,6 +111,7 @@
 
 			<TR><TH>{% if is_english %}Draw comment{% else %}絵でコメント{% endif %}</TH><TD>
 			<select name="enable_illust_reply">
+				<option value="2" {% if bbs.enable_illust_reply == 2 %}selected="selected"{% endif %}>{% if is_english %}Only Owner Enable{% else %}管理人のみ有効{% endif %}</option>
 				<option value="1" {% if bbs.enable_illust_reply == 1 %}selected="selected"{% endif %}>{% if is_english %}Enable{% else %}有効{% endif %}</option>
 				<option value="0" {% if not bbs.enable_illust_reply %}selected="selected"{% endif %}>{% if is_english %}Disable{% else %}無効{% endif %}</option>
 			</select></TD></TR>
