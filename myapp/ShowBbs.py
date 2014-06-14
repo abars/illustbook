@@ -203,11 +203,11 @@ class ShowBbs(webapp.RequestHandler):
 		if(bbs.counter):
 			bbs.counter.new_day_update()
 		count_up_comment=None
-		if(bbs.dont_count_owner):
-			if(owner):
-				count_up_comment="管理人"
-			else:
-				count_up_comment="ユーザ"
+		#if(bbs.dont_count_owner):
+		#	if(owner):
+		#		count_up_comment="管理人"
+		#	else:
+		#		count_up_comment="ユーザ"
 
 		#レンダリング
 		template_values = {
