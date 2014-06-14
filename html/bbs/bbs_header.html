@@ -11,7 +11,7 @@
 				<a href="{{usrhost}}" class="imagelink"><img src="{{bbs.bottom_image}}"/></a><br/>
 			</div>
 		{% else %}
-			<h2><a href="{{usrhost}}" class="decnone">{{bbs.bbs_name}}</a></h2>
+			<h3><a href="{{usrhost}}" class="decnone">{{bbs.bbs_name}}</a></h3>
 		{% endif %}
 		{% if not thread %}
 			{% if bbs.summary %}{{bbs.summary|safe}}<br/>{% endif %}
