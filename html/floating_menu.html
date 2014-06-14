@@ -2,11 +2,7 @@
 	{% set my_new_feed_count = user|new_feed_count %}
 {% endif %}
 
-{% if bbs and not is_iphone and False %}
-<div id="floating_menu" class="fleft">
-{% else %}
 <div id="floating_menu">
-{% endif %}
 	<!-- icon -->
 	{% if user %}
 	<div class="user_icon">
@@ -32,10 +28,6 @@
 		</a>
 	</div>
 
-{% if bbs and not is_iphone and False %}
-</div>
-<div id="floating_menu" class="fright">
-{% endif %}
 	<!-- menu -->
 	<div class="main_menu">
 		<div class="g-button-group">
