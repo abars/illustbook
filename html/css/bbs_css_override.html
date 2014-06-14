@@ -51,7 +51,7 @@
 
 	/* レス */
 	.entry-res-container {
-		margin-left:60px;
+		margin-left:40px;
 	}
 
 	.entry-res-info {
@@ -169,9 +169,9 @@
 		.related {
 			width:100%;
 			{% if is_tablet %}
-				height:100px;
+				height:104px;
 			{% else %}
-				height:70px;
+				height:74px;
 			{% endif %}
 			overflow-y:hidden;
 			overflow-x:scroll;
@@ -183,5 +183,6 @@
 	.related_image{
 		width:{% if is_iphone %}70px{% else %}100px{% endif %};
 		height:{% if is_iphone %}70px{% else %}100px{% endif %};
+		margin:2px;
 	}
 </style>

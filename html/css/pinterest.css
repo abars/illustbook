@@ -409,10 +409,10 @@ h2,h3 {font-size:100%;color:#ea5376;}
 	float:right;
 	width:100%;
 	margin-left:-62px;
-	margin-bottom:8px;
 }
 
 .bbs_info_contents{
+	margin: 4px;
 	margin-left: 62px;
 }
 
