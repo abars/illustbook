@@ -169,9 +169,9 @@
 		.related {
 			width:100%;
 			{% if is_tablet %}
-				height:104px;
+				height:100px;
 			{% else %}
-				height:74px;
+				height:70px;
 			{% endif %}
 			overflow-y:hidden;
 			overflow-x:scroll;
@@ -183,6 +183,5 @@
 	.related_image{
 		width:{% if is_iphone %}70px{% else %}100px{% endif %};
 		height:{% if is_iphone %}70px{% else %}100px{% endif %};
-		margin:2px;
 	}
 </style>
