@@ -10,9 +10,11 @@
 {% include "floating_menu.html" %}
 	<div id="container">
 		<!-- ヘッダ -->
+		{% if template_path %}
 		<div id="header">
 			{% include "bbs/bbs_header.html" %}
 		</div>
+		{% endif %}
 		
 		<!-- コンテンツ -->
 		{% include 'thread/thread_top_menu.html' %}

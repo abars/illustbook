@@ -2,7 +2,7 @@
 	{% set my_new_feed_count = user|new_feed_count %}
 {% endif %}
 
-{% if bbs and not is_iphone %}
+{% if bbs and not is_iphone and False %}
 <div id="floating_menu" class="fleft">
 {% else %}
 <div id="floating_menu">
@@ -28,11 +28,11 @@
 		{% endif %}
 
 		<a href="{{host}}">
-			<img src="{{host}}static_files/logo{% if is_iphone or bbs %}_mobile{%else%}_pc{%endif%}.png" alt="ロゴ"/>
+			<img src="{{host}}static_files/logo{% if is_iphone %}_mobile{%else%}_pc{%endif%}.png" alt="ロゴ"/>
 		</a>
 	</div>
 
-{% if bbs and not is_iphone %}
+{% if bbs and not is_iphone and False %}
 </div>
 <div id="floating_menu" class="fright">
 {% endif %}
