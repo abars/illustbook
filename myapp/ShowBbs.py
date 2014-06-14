@@ -48,6 +48,10 @@ class ShowBbs(webapp.RequestHandler):
 	def get(self,bbs_key):
 		#日本語対応
 		SetUtf8.set()
+
+		#英語版かどうか
+		is_english=CssDesign.is_english(self)
+
 		
 		#メンテナンス中かどうか
 		is_maintenance=0
@@ -61,7 +65,10 @@ class ShowBbs(webapp.RequestHandler):
 
 		#掲示板削除チェック
 		if(bbs.del_flag) :
-			Alert.alert_msg_with_write(self,"この掲示板は削除されました。")
+			if(is_english):
+				Alert.alert_msg_with_write(self,"This bbs was deleted.")
+			else:
+				Alert.alert_msg_with_write(self,"この掲示板は削除されました。")
 			return
 
 		#ページ取得
@@ -195,9 +202,6 @@ class ShowBbs(webapp.RequestHandler):
 
 		#メッセージ
 		message=memcache.get(BbsConst.OBJECT_BBS_MESSAGE_HEADER+str(bbs.key()))
-
-		#英語版かどうか
-		is_english=CssDesign.is_english(self)
 
 		#カウントアップコメント
 		if(bbs.counter):

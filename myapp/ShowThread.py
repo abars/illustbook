@@ -45,6 +45,9 @@ class ShowThread(webapp.RequestHandler):
 	def get(self,bbs_key,thread_key):
 		SetUtf8.set()
 
+		#英語版かどうか
+		is_english=CssDesign.is_english(self)
+
 		#BBSを取得
 		bbs_key=MappingId.mapping(bbs_key)
 		bbs=ApiObject.get_cached_object(bbs_key)
@@ -54,7 +57,10 @@ class ShowThread(webapp.RequestHandler):
 
 		#BBSが削除されていた場合
 		if(bbs.del_flag) :
-			Alert.alert_msg_with_write(self,"このBBSは削除されました。")
+			if(is_english):
+				Alert.alert_msg_with_write(self,"This bbs was deleted.")
+			else:
+				Alert.alert_msg_with_write(self,"このBBSは削除されました。")
 			return
 		
 		#ページ番号を取得
@@ -157,9 +163,6 @@ class ShowThread(webapp.RequestHandler):
 
 		#メッセージ
 		message=memcache.get(BbsConst.OBJECT_THREAD_MESSAGE_HEADER+str(thread.key()))
-
-		#英語版かどうか
-		is_english=CssDesign.is_english(self)
 
 		#関連イラスト
 		related=self._get_related(bbs,thread,design["is_iphone"],design["is_tablet"])

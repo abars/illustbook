@@ -11,6 +11,7 @@ import os
 
 import template_select
 
+from google.appengine.api import users
 from google.appengine.ext import webapp
 from google.appengine.api import memcache
 
@@ -39,11 +40,14 @@ class Alert(webapp.RequestHandler):
 	@staticmethod
 	def alert_msg_core(msg,host,is_iphone,is_english):
 		host_url="http://"+MappingId.mapping_host(host)+"/";
+		user=users.get_current_user()
 		template_values = {
 		'host': host_url,
 		'alert_msg': msg,
 		'is_iphone': is_iphone,
-		'is_english': is_english
+		'is_english': is_english,
+		'user':user,
+		'redirect_url': host_url
 		}
 		path = '/html/alert.html'
 		return template_select.render(path, template_values)
