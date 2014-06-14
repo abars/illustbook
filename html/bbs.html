@@ -158,5 +158,43 @@
 	{% endif %}
 {% endif %}
 
+<!-- fix sidevbar -->
+{% if not contents_only and not bbs.in_frame_mode and not is_iphone %}
+
+<script type="text/javascript">
+$(function(){
+	var margin_px=4;
+	var contentHeight = $("html, body").height();
+	var windowHeight = $(window).height();
+	var target = $("#side");
+	var targetHeight = target.outerHeight() + margin_px;
+	var targetPosition = target.position();
+	$(window).resize(function(){
+		windowHeight = $(this).height();
+	});
+	$(window).scroll(function(){
+		var scrollTop = $(this).scrollTop();
+		var visibleBottom = scrollTop + windowHeight;
+		var targetBottom = targetPosition.top + targetHeight;
+
+		if(targetHeight<windowHeight){
+			if(targetPosition.top<scrollTop+margin_px){
+				target.css({position:"fixed", left:targetPosition.left, top: margin_px});
+			} else {
+				target.css({position:"static", left: "auto", bottom: "auto"});
+			}
+		 }else{
+		 	if(targetBottom<=visibleBottom){
+				target.css({position:"fixed", left:targetPosition.left, top: windowHeight-targetHeight});
+			} else {
+				target.css({position:"static", left: "auto", bottom: "auto"});
+			}
+		 }
+	});
+});
+</script>
+
+{% endif %}
+
 </body>
 </html>
