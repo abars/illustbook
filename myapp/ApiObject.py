@@ -53,10 +53,10 @@ class ApiObject(webapp.RequestHandler):
 
 	@staticmethod
 	def create_user_object(req,one):
-		if(one.icon):
-			icon_url="http://"+req.request.host+"/show_icon?key="+one.user_id
-		else:
-			icon_url="http://"+req.request.host+"/static_files/empty_user.png"
+		#if(one.icon):
+		icon_url="http://"+req.request.host+"/show_icon?key="+one.user_id
+		#else:
+		#	icon_url="http://"+req.request.host+"/static_files/empty_user.png"
 		profile_url="http://"+req.request.host+"/mypage?user_id="+one.user_id
 		name=one.name
 		if(not name):
