@@ -7,10 +7,10 @@
 {% if template_path %}
 	@media screen and (min-width: 1024px) {
 		#container{
-			width: 1000px;
+			min-width: 900px;
 		}
 		#main{
-			width: 700px;
+			min-width: 600px;
 		}
 	}
 {% endif %}
@@ -142,8 +142,6 @@
 	}
 
 	.mobile_ad {
-		border:none;
-		background:none;
 		text-align:center;
 	}
 
@@ -171,6 +169,8 @@
 
 		@media screen and (max-width: 332px) {
 			.mobile_ad {
+				border:none;
+				background:none;
 				margin-left:{% if template_path %}-6{% else %}-2{% endif %}px;
 				padding-left:0px;
 				padding-right:0px;
