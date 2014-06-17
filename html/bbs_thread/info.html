@@ -46,6 +46,15 @@
 	{% if is_iphone %}<br clear="all"/>{% endif %}
 {% endif %}
 
+{% if bbs.show_remote_addr_id %}
+	<div class="entry-info-tag">
+		ID：
+	</div>
+	<div class="entry-info-data">
+		{{thread.remote_addr|ip_hash}}
+	</div>
+{% endif %}
+
 {% if not is_iphone %}
 <br clear="all"/>
 {% endif %}
