@@ -601,11 +601,13 @@ class ApiObject(webapp.RequestHandler):
 		
 		#コメントを取得
 		message=feed.message
+		entry=[]
 		if(feed.feed_mode=="new_comment_thread"):
 			message=ApiObject._get_entry_comment(feed,object_hash)
+			entry={"key":str(StackFeedData.entry_key.get_value_for_datastore(feed))}
 
 		#オブジェクトを返す
-		one_dic={"mode":feed.feed_mode,"from_user":from_user,"to_user":to_user,"follow_user":follow_user,"bbs":bbs,"thread":thread,"message":message,"create_date":create_date,"key":str(feed.key())}
+		one_dic={"mode":feed.feed_mode,"from_user":from_user,"to_user":to_user,"follow_user":follow_user,"bbs":bbs,"thread":thread,"entry":entry,"message":message,"create_date":create_date,"key":str(feed.key())}
 		return one_dic
 
 	@staticmethod

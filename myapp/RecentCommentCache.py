@@ -137,6 +137,7 @@ class RecentCommentCache():
 			mee={'short': str(bbs.short),
 					'bbs_key' : str(bbs.key()),
 					'thread_key':thread_short,
+					'entry_key': str(entry.key()),
 					'thread_title':thread_title,
 					'editor':editor,
 					'date':entry.date}

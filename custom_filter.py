@@ -110,7 +110,9 @@ def comment_with_except_core(entry,host,no_hour,is_english):
 			ret+="usr/"+str(entry["bbs_key"])
 		ret+="/"
 		ret+=str(entry["thread_key"])
-		ret+=".html' class='decnone'>"
+		ret+=".html";
+		ret+="#"+str(entry["entry_key"])
+		ret+="' class='decnone'>"
 		title=str(entry["thread_title"])
 		ret+=title
 		ret+="("+entry["editor"]+")"
