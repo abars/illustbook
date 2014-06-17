@@ -50,7 +50,7 @@ class Ranking(db.Model):
 		return int(time.mktime(now.timetuple()))
 
 	def get_tag_list(self,analytics):
-		start_date=str(datetime.date.today()+datetime.timedelta(days=-1))
+		start_date=str(datetime.date.today()+datetime.timedelta(days=-7))
 		end_date=str(datetime.date.today())
 		result=analytics.get("tag","",start_date,end_date)
 
