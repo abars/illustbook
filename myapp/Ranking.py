@@ -58,14 +58,20 @@ class Ranking(db.Model):
 		recent_tag.tag_list=[]
 		recent_tag.score_list=[]
 		
+		rank={}
 		for one in result:
 			url=one["ga:pagePath"]
 			data=url.split("=")
 			count=int(one["ga:pageviews"])
 			query=data[1]
-			
-			search_found=SearchThread.get_count(query)
+			if(rank.has_key(query)):
+				rank[query]=rank[query]+count
+			else:
+				rank[query]=count
 
+		for k, v in sorted(rank.items(), key=lambda x:x[1], reverse=True):
+			query=k
+			search_found=SearchThread.get_count(query)
 			recent_tag.tag_list.append(query)
 			recent_tag.score_list.append(str(search_found))
 
