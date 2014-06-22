@@ -163,11 +163,12 @@
 
 <script type="text/javascript">
 $(function(){
-	var margin_px=4;
+	var margin_top_px=4;
+	var margin_bottom_px=32;
 	var contentHeight = $("html, body").height();
 	var windowHeight = $(window).height();
 	var target = $("#side");
-	var targetHeight = target.outerHeight() + margin_px;
+	var targetHeight = target.outerHeight() + margin_bottom_px;
 	var targetPosition = target.position();
 	$(window).resize(function(){
 		windowHeight = $(this).height();
@@ -185,8 +186,8 @@ $(function(){
 		}
 
 		if(targetHeight<windowHeight){
-			if(targetPosition.top<scrollTop+margin_px){
-				target.css({position:"fixed", left:targetPosition.left, top: margin_px});
+			if(targetPosition.top<scrollTop+margin_top_px){
+				target.css({position:"fixed", left:targetPosition.left, top: margin_top_px});
 			} else {
 				target.css({position:"static", left: "auto", bottom: "auto"});
 			}
