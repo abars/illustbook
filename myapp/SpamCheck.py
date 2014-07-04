@@ -121,6 +121,8 @@ class SpamCheck(webapp.RequestHandler):
 			return True
 		if(re.search(u"キモい",content)):
 			return True
+		if(re.search(u"www2\.tbb\.t-com\.ne\.jp/hapine/",content)):
+			return True
 		return False;
 	
 	@staticmethod
