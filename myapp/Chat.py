@@ -16,6 +16,7 @@ import random
 import logging
 import base64
 import urllib
+import pickle
 
 import template_select
 
@@ -204,7 +205,10 @@ class Chat(webapp.RequestHandler):
 		for client in room.channel_client_list:
 			channel.send_message( client , "update" )
 
-		return sys.getsizeof(room.command_list)+sys.getsizeof(room)
+		len1=len(db.model_to_protobuf(room).Encode())
+		#len2=sys.getsizeof(room.command_list)+sys.getsizeof(room)
+
+		return len1
 
 	#スナップショットを取得する
 	def get_snap_shot(self):
