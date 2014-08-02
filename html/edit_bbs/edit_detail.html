@@ -186,6 +186,14 @@
 				<option value="1" {% if bbs.delete_when_upload_success == 1 %}selected="selected"{% endif %}>{% if is_english %}Enable{% else %}有効{% endif %}</option>
 			</select>
 			</TD></TR>
+
+			<TR><TH>{% if is_english %}Image import{% else %}画像のインポート{% endif %}</TH><TD>
+			<select name="disable_import_image">
+				<option value="0" {% if not bbs.disable_import_image %}selected="selected"{% endif %}>{% if is_english %}Enable{% else %}有効{% endif %}</option>
+				<option value="1" {% if bbs.disable_import_image == 1 %}selected="selected"{% endif %}>{% if is_english %}Disable{% else %}無効{% endif %}</option>
+			</select>
+			</TD></TR>
+			
 	 </TABLE>
 </div>
  

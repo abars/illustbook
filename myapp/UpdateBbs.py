@@ -325,6 +325,7 @@ class UpdateBbs(webapp.RequestHandler):
 		bbs.show_only_movie=int(self.request.get("show_only_movie"))
 		#bbs.dont_permit_app=int(self.request.get("dont_permit_app"))
 		bbs.delete_when_upload_success=int(self.request.get("delete_when_upload_success"))
+		bbs.disable_import_image=int(self.request.get("disable_import_image"))
 		
 		bbs.tool_bg_color=self.request.get("tool_bg_color")
 		if(bbs.tool_bg_color=="None"):
