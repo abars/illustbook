@@ -151,7 +151,7 @@ class UpdateThread(webapp.RequestHandler):
 			if(res and user.user_id()==res.user_id):
 				thread_owner=True
 
-		if(not bbs_owner and not thread_owner):
+		if(not bbs_owner and not thread_owner and not OwnerCheck.is_admin(user)):
 			Alert.alert_msg_with_write(self,"更新する権限がありません。");
 			return
 
