@@ -53,6 +53,7 @@
 	<div class="entry-info-data">
 		{{thread.remote_addr|ip_hash}}
 	</div>
+	{% if is_iphone %}<br clear="all"/>{% endif %}
 {% endif %}
 
 {% if not is_iphone %}
