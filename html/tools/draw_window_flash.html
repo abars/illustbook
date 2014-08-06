@@ -80,10 +80,10 @@ object, embed {
 			{% if version == "10" %}
 				force_version10=true;
 			{% endif %}
-			if(force_version10 || playerVersion.major<=10 || (playerVersion.major==11 && playerVersion.minor<2)){
+			if(force_version10 || playerVersion.major<=10 || (playerVersion.major==11 && playerVersion.minor<9)){
 				swfobject.embedSWF("flash/IllustBook10.swf","fromJavaScript","100%","100%","10.0.0",null,flashvars,params);
 			}else{
-				swfobject.embedSWF("flash/IllustBook.swf","fromJavaScript","100%","100%","11.2.0",null,flashvars,params);
+				swfobject.embedSWF("flash/IllustBook.swf","fromJavaScript","100%","100%","11.9.0",null,flashvars,params);
 			}
 		{% endif %}
 		
