@@ -20,7 +20,7 @@
 	}
 
 	function start_chat(key,viewmode,pass,name){
-		window.location.href="./chat?mode=tool&amp;key="+key+"&amp;viewmode="+viewmode+"&amp;name="+name+"&amp;pass="+pass
+		window.location.href="./chat?mode=tool&amp;key="+key+"&amp;viewmode="+viewmode+"&amp;name="+encodeURI(name)+"&amp;pass="+pass
 	}
 
 	function join_chat(key,viewmode,pass){
