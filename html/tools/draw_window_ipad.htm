@@ -304,7 +304,7 @@
 				{% endif %}
 			</td></tr>
 			{% endif %}
-			{% if not chat %}
+			{% if not chat and not bbs.disable_import_image %}
 			<tr><td>{% if is_english %}Import{% else %}画像を読込{% endif %}</td><td><input type="file" id="import" onchange="ipad_import();"/></td></tr>
 			{% endif %}
 		</table>
