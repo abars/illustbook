@@ -33,14 +33,14 @@
 			{% if feed.mode != "deleted" %}
 				<b>
 				{% if feed.from_user %}
-					<a href="{{feed.from_user.profile_url}}">
+					<a href="{{feed.from_user.profile_url}}&tab=feed">
 						{{feed.from_user.name}}
 					</a>
 				{% else %}
 					匿名ユーザ
 				{% endif %}
 				{% if feed.to_user %}
-				　->　<a href="{{feed.to_user.profile_url}}">
+				　->　<a href="{{feed.to_user.profile_url}}&tab=feed">
 					{{feed.to_user.name}}
 				</a>
 				{% endif %}
@@ -104,7 +104,7 @@
 			{% endif %}
 
 			{% if feed.mode == "new_follow" %}
-				<a href="{{feed.follow_user.profile_url}}">
+				<a href="{{feed.follow_user.profile_url}}&tab=timeline">
 					{% if is_english %}Follow {% endif %}{{feed.follow_user.name}}{% if not is_english %}をフォローしました。{% endif %}
 				</a>
 			{% endif %}
@@ -168,7 +168,7 @@
 			{% endif %}
 
 			{% if feed.mode == "new_follow" %}
-				<a href="{{feed.follow_user.profile_url}}">
+				<a href="{{feed.follow_user.profile_url}}&tab=feed">
 					<img src="{{feed.follow_user.icon_url}}&amp;size=mini" width="50px" height="50px" alt="{{feed.follow_user.name}}"/>
 				</a>
 			{% endif %}
@@ -199,7 +199,7 @@
 		<!-- アイコン -->
 		<div style="float:left;width:58px;text-align:center;margin:auto;">
 		{% if feed.from_user and feed.mode != "deleted" %}
-			<a href="{{feed.from_user.profile_url}}">
+			<a href="{{feed.from_user.profile_url}}&tab=feed">
 				<img src="{{feed.from_user.icon_url}}&amp;size=mini" width="50px" height="50px" alt="{{feed.from_user.name}}"/>
 			</a>
 		{% else %}
