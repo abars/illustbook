@@ -1,5 +1,5 @@
 {% if tag_list %}
-<div class="message recent_tag" {% if not is_iphone %}style="width:350px;margin-left:0px;margin-right:0px;"{% endif %}>
+<div class="message recent_tag">
   <p>{% if is_english %}Hot Tag{% else %}人気のタグ{% endif %}</p>
 {% for tag2 in tag_list %}
     {% if loop.index <= tag_display_n %}

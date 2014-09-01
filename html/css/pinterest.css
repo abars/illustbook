@@ -30,7 +30,7 @@ h2,h3 {font-size:100%;color:#ea5376;}
 		width: 320px;
 	{% else %}
 		{% if not bookmark %}
-			width: 362px;
+{#			width: 362px;#}
 		{% endif %}
 		{# padding:1px; #}
 		margin:5px;
@@ -52,7 +52,9 @@ h2,h3 {font-size:100%;color:#ea5376;}
 	{% if is_iphone %}
 		min-width:320px;
 	{% else %}
-		min-width:848px;
+		{% if bookmark %}
+			min-width:848px;
+		{% endif %}
 	{% endif %}
 	{% if not is_iphone %}
 		display:none;
@@ -341,8 +343,25 @@ h2,h3 {font-size:100%;color:#ea5376;}
 	background:#F2F0F0;
 }
 
+.recent_tag{
+	{% if not is_iphone %}
+	width:400px;
+	margin-left:0px;
+	margin-right:0px;
+	{% endif %}
+}
+
 .recent_tag a{
 	color:#258FB8;
+}
+
+.hot_bbs{
+	{% if not is_iphone %}
+	width:400px;
+	margin-left:0px;
+	margin-right:0px;
+	margin-top:0px;
+	{% endif %}
 }
 
 .hot_bbs a{

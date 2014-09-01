@@ -1,5 +1,5 @@
 {% if bbs_list %}
-<div class="message hot_bbs" {% if not is_iphone %}style="width:350px;margin-left:0px;margin-right:0px;margin-top:0px;"{% endif %}>
+<div class="message hot_bbs">
 	<p>{% if is_english %}Hot BBS{% else %}人気の掲示板{% endif %}</p>
 
 	{% for bbs in bbs_list %}
@@ -25,4 +25,5 @@
 	<br clear="all"/>
 	{% endfor %}
 </div>
+<br clear="all"/>
 {% endif %}
