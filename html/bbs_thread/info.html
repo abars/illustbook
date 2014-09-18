@@ -21,7 +21,7 @@
 	{% endif%}
 	</div>
 	<div class="entry-info-data">
-		<a href="{{usrhost}}?category={{thread.category|iriencode}}" class="g-button mini">{{thread.category}}</a>
+		<a href="{{usrhost}}?category={{thread.category|iriencode}}" class="g-button mini">{{thread.category|truncate_category}}</a>
 	</div>
 	{% if is_iphone %}<br clear="all"/>{% endif %}
 {%endif%}

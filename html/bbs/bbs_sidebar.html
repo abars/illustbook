@@ -28,7 +28,7 @@
 		{% for category in category_list %}
 			{% if category.category == "" %}
 			{% else %}
-			<a href="{{page_url_category_base}}{{category.category|iriencode}}" class="decnone">{{category.category}}({{category.count}})</a><br/>
+			<a href="{{page_url_category_base}}{{category.category|iriencode}}" class="decnone">{{category.category|truncate_category}}({{category.count}})</a><br/>
 			{% endif %}
 		{% endfor %}
 		</p>

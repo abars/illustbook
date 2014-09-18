@@ -431,3 +431,14 @@ def ip_hash(text):
 		return "-"
 	return hashlib.sha1(text).hexdigest()[0:8]
 
+#-----------------------------------------------------------------
+#カテゴリの縮退
+#-----------------------------------------------------------------
+
+def truncate_category(message):
+	split_length=20
+	if(len(message)>=split_length):
+		message=message[0:split_length]
+		message=""+message+"..."
+	return message
+

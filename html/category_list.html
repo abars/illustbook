@@ -3,7 +3,7 @@
 	<option value="" {% if not selecting_category %}selected="selected"{% endif %}>{% if is_english %}-{% else %}設定しない{% endif %}</option>
 	{% for category in category_list %}
 		{% if category.category == "" %}{% else %}
-			<option value="{{category.category}}" {% if selecting_category == category.category %}selected="selected"{% endif %}>{{category.category}}</option>
+			<option value="{{category.category}}" {% if selecting_category == category.category %}selected="selected"{% endif %}>{{category.category|truncate_category}}</option>
 		{% endif %}{% endfor %}
 	<option value="add" onselcted="">{% if is_english %}Add Category{% else %}カテゴリの追加{% endif %}</option>
 	</select>
