@@ -199,4 +199,13 @@
 		width:{% if is_iphone %}70px{% else %}100px{% endif %};
 		height:{% if is_iphone %}70px{% else %}100px{% endif %};
 	}
+
+	/* 年齢制限 */
+	.regulation_image {
+		-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=1)"; /* IE */
+		filter: alpha(opacity=1); /* IE */
+		-moz-opacity:0.01; /* Firefox(old) */
+		-khtml-opacity: 0.01; /* Safari(old) */
+		opacity: 0.01;
+	}
 </style>

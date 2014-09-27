@@ -8,6 +8,9 @@
 	</div>
 	<div class="entry-info-data">
 	{{thread|author_name_thread(host)|safe}}
+	{% if bbs.show_remote_addr_id and not thread.user_id %}
+		(ID:{{thread.remote_addr|ip_hash}})
+	{% endif %}
 	</div>
 	{% if is_iphone %}<br clear="all"/>{% endif %}
 {% endif %}
@@ -43,16 +46,6 @@
 			{% endif %}
 		</div>
 	{% endif %}
-	{% if is_iphone %}<br clear="all"/>{% endif %}
-{% endif %}
-
-{% if bbs.show_remote_addr_id %}
-	<div class="entry-info-tag">
-		ID：
-	</div>
-	<div class="entry-info-data">
-		{{thread.remote_addr|ip_hash}}
-	</div>
 	{% if is_iphone %}<br clear="all"/>{% endif %}
 {% endif %}
 
