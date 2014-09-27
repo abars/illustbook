@@ -62,11 +62,13 @@
 				[ご利用規約は <a href="http://www.illustbook.net/terms">http://www.illustbook.net/terms</a> からご確認頂けます]<br/><br/>
 			{% else %}
 				{% if not(entry.com|regulation_check(user)) %}
-					[年齢制限付きイラスト]
-				{% else %}
-					<a href="{{host}}img/{{entry.image_key}}.jpg" class="imagelink">
-					<img src="{{host}}img/{{entry.image_key}}.jpg" border="0" {% if is_iphone %} style="max-width:100%;"{%endif%}/>
-					</a>
+					<div class="regulation_image">
+				{% endif %}
+				<a href="{{host}}img/{{entry.image_key}}.jpg" class="imagelink">
+				<img src="{{host}}img/{{entry.image_key}}.jpg" border="0" {% if is_iphone %} style="max-width:100%;"{%endif%}/>
+				</a>
+				{% if not(entry.com|regulation_check(user)) %}
+					</div>
 				{% endif %}
 			{% endif %}
 			</div>
