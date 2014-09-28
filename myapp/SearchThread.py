@@ -140,10 +140,17 @@ class SearchThread(webapp.RequestHandler):
 		else:
 			reduct='/(1+('+str(now_sec)+'-sec)/(3600*24*30))'	#1ヶ月で半分のスコアにする
 
-		sort_options = search.SortOptions(
-			expressions=[
-				search.SortExpression(expression='(applause+bookmark*5)'+reduct, direction=search.SortExpression.DESCENDING, default_value=0)
-			],limit=10000)	#10000が最大
+		if(index==BbsConst.SEARCH_ENTRY_INDEX_NAME):
+			sort_options = search.SortOptions(
+				expressions=[
+					search.SortExpression(expression='date', direction=search.SortExpression.DESCENDING, default_value=0)
+				],limit=10000)	#10000が最大
+		else:
+			sort_options = search.SortOptions(
+				expressions=[
+					search.SortExpression(expression='(applause+bookmark*5)'+reduct, direction=search.SortExpression.DESCENDING, default_value=0)
+				],limit=10000)	#10000が最大
+
 		options = search.QueryOptions(
 			limit=unit,
 			offset=(page-1)*unit,
