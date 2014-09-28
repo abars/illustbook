@@ -33,6 +33,9 @@
 				<a href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key()}}{%endif%}.html' class="imagelink">
 			{% endif %}
 			{% include "bbs_thread/image.html" %}
+			{% if not(thread|regulation_check(user)) %}
+			[年齢制限付きイラスト]<br/>
+			{% endif %}
 			{% if thread.illust_mode == 2 %}
 			<br/>[クリックで再生]
 			{%endif%}

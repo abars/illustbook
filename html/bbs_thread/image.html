@@ -12,7 +12,7 @@
 		<img src="{{host}}img/{{thread.cached_image_key}}{% if thread.is_png %}.png{%else%}.jpg{%endif%}" border="0" alt="{{thread.title}}" {% if is_iphone%} style="max-width:100%;"{%endif%}/>
 		
 		{% if not(thread|regulation_check(user)) %}
-		</div>
+			</div>
 		{% endif %}
 	{% endif %}
 {% endif %}

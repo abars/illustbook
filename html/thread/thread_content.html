@@ -16,10 +16,13 @@
 		{% if thread.illust_mode == 2 %}
 			<script type="text/javascript" src="{{host}}moper_player?bbs_key={{bbs_key}}&amp;thread_key={{thread.key()}}{% if is_iphone %}&amp;is_iphone=1{% endif %}"></script><br/>
 		{%else%}
-			{% if not thread.violate_terms and not not(thread|regulation_check(user)) %}
+			{% if not thread.violate_terms %}
 				<a href='{{host}}img/{{thread.cached_image_key}}{% if thread.is_png %}.png{%else%}.jpg{%endif%}' class="imagelink">
 			{% endif %}
 				{% include "bbs_thread/image.html" %}
+			{% if not(thread|regulation_check(user)) %}
+				[年齢制限付きイラストです。クリックで閲覧することができます。]<br/>
+			{% endif %}
 			{% if not thread.violate_terms %}
 				</a>
 			{% endif %}
@@ -40,10 +43,6 @@
 <p>{{thread.postscript|auto_link|safe}}</p>
 {% endif%}
 </div>
-
-{% if not(thread|regulation_check(user)) %}
-(年齢制限付きイラストです。半透明表示を解除するにはログイン後、マイページの閲覧設定を変更して下さい。)<br/>
-{% endif %}
 
 {% include "thread/thread_drawtime.html" %}
 
