@@ -46,7 +46,11 @@ function masonry_exec(){
       isFitWidth: true,
       cornerStampSelector: '.corner-stamp'
     });
-    $('#index').width($container.width())
+
+    if(!$('#index').is(':visible')){
+      $('#index').width($container.width())
+    }
+
     $('#index').show();
     $('#pinterest_footer').show();
 }
