@@ -441,6 +441,7 @@ h2,h3 {font-size:100%;color:#ea5376;}
 	{% else %}
 	width:404px;
 	{% endif %}
+	margin: 4px;
 }
 
 .bbs_hr{

@@ -6,9 +6,18 @@
 	<div class="message bbs_list hot_bbs">
 		<div class="bbs_title">
 		{% if is_english %}My BBS{% else %}レンタルしている{% endif %}
+		{% if bookmark.privacy_rental_bbs %}
+			<br/>
+			{% if is_english %}
+			not open to the public
+			{% else %}
+			非公開に設定されています
+			{% endif %}
+		{% endif %}
 		</div>
-		<br clear="all"/>
 
+		<br clear="all"/>
+		{% if not bookmark.privacy_rental_bbs or not view_mode %}
 		{% for bbs in rental_bbs_list %}
 			<div class="bbs_info">
 				<div class="bbs_info_contents">
@@ -37,6 +46,7 @@
 
 			<br clear="all"/>
 		{% endfor %}
+		{% endif %}
 	</div>
 	{% endif %}
 

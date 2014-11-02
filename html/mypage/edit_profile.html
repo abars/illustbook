@@ -28,6 +28,9 @@
 					<input type="checkbox" name="regulation_r15_bl" value="regulation_r15_bl" {% if bookmark.regulation and (bookmark.regulation//2)%2 == 1 %} checked{% endif %} />R15(BL)&nbsp;
 					<input type="checkbox" name="regulation_r15_gl" value="regulation_r15_gl" {% if bookmark.regulation and (bookmark.regulation//4)%2 == 1 %} checked{% endif %} />R15(GL)<br/>
 				</td></tr>
+				<tr><td>{% if is_english %}Privacy{% else %}公開設定{% endif %}</td><td>　</td><td>
+					<input type="checkbox" name="privacy_rental_bbs" value="privacy_rental_bbs" {% if not bookmark.privacy_rental_bbs %} checked{% endif %} />{% if is_english %}BBS{% else %}レンタルしている掲示板{% endif %}
+				</td></tr>
 				<tr><td>{% if is_english %}Comment{% else %}コメント{% endif %}</td><td>　</td><td><textarea name="profile" rows="8" cols="40" style="width:90%;">{% if edit_profile %}{{edit_profile}}{% endif %}</textarea></td></tr>
 				<tr><td>{% if is_english %}Homepage{% else %}ホームページ{% endif %}</td><td>　</td><td><input name="homepage" type="text" value="{% if bookmark.homepage %}{{bookmark.homepage}}{% endif %}" style="width:90%;"></td></tr>
 				<tr><td>{% if is_english %}Mail{% else %}メール{% endif %}</td><td>　</td><td><input name="mail" type="text" value="{% if bookmark.mail %}{{bookmark.mail}}{% endif %}" style="width:90%;"></td></tr>

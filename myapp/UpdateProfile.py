@@ -58,6 +58,10 @@ class UpdateProfile(webapp.RequestHandler):
 		if(self.request.get("regulation_r15_gl")):
 			regulation+=4
 
+		privacy_rental_bbs=1
+		if(self.request.get("privacy_rental_bbs")):
+			privacy_rental_bbs=0
+
 		is_english=CssDesign.is_english(self)
 
 		if(name==""):
@@ -100,6 +104,7 @@ class UpdateProfile(webapp.RequestHandler):
 		bookmark.owner=user
 		bookmark.disable_rankwatch=disable_rankwatch
 		bookmark.regulation=regulation
+		bookmark.privacy_rental_bbs=privacy_rental_bbs
 		
 		bookmark.sex=int(self.request.get("sex"))
 
