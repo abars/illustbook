@@ -6,8 +6,9 @@
 {% if ipad %}
 	<meta name="viewport" content="width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0">
 {% else %}
-	{# user-scalable=noを使うとAndroid2.3で動作しない #}
-	<meta name="viewport" content="width=480,minimum-scale=0.667,maximum-scale=0.667,initial-scale=0.667">
+	{# user-scalable=noを使うとAndroid2.3で動作しないがNexus5のために断念 #}
+	<meta name="viewport" content="width=480,user-scalable=no">
+	{#,minimum-scale=0.667,maximum-scale=0.667,initial-scale=0.667">#}
 {% endif %}
 
 {% if chat %}
@@ -191,7 +192,24 @@
 {% endif %}
 </head>
 
-<body onload="loadCookie();{% if chat %}chat_init('{{chat}}','{{user_id}}','{{user_name}}',{{server_time}},{{viewmode}},'{{token}}','{{client_id}}');{% else %}chat_init('local','','',0);{% endif %}ipad_init({{canvas_width}},{{canvas_height}},'{{canvas_url}}',{% if is_english %}true{% else %}false{% endif %});" onselectstart="return false;">
+<script type="text/javascript">
+	function initialize(){
+		//initialize_core();
+		setTimeout(initialize_core,100);	//Androidで起動直後はinnerHeightが正常に取得できないので
+	}
+
+	function initialize_core(){
+		loadCookie();
+		{% if chat %}
+			chat_init('{{chat}}','{{user_id}}','{{user_name}}',{{server_time}},{{viewmode}},'{{token}}','{{client_id}}');
+		{% else %}
+			chat_init('local','','',0);
+		{% endif %}
+		ipad_init({{canvas_width}},{{canvas_height}},'{{canvas_url}}',{% if is_english %}true{% else %}false{% endif %});
+	}
+</script>
+
+<body onload="initialize();" onselectstart="return false;">
 
 <div style="width:100%;height:100%;">
 	<div id="bottom_tool">
@@ -321,7 +339,7 @@
 	</div>
 
 	<!-- Canvas外でもイベントを取るためにサイズを64拡張する -->
-	<div id="canvas_event" style="width:100%;height:10%;">
+	<div id="canvas_event" style="width:100%;height:100%;overflow:hidden;">
 		<div id="canvas_div" style="position:relative;width:{{canvas_width+64}}px;height:{{canvas_height+64}}px; top: 0; left: 0;">
 			<canvas id="canvas_background" width="{{canvas_width}}px" height="{{canvas_height}}px" style="position: absolute; top: 32px; left: 32px;background-color:#ffffff;z-index: 0;"></canvas>
 		</div>
