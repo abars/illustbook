@@ -341,7 +341,7 @@
 	<!-- Canvas外でもイベントを取るためにサイズを64拡張する -->
 	<div id="canvas_event" style="width:100%;height:100%;overflow:hidden;">
 		<div id="canvas_div" style="position:relative;width:{{canvas_width+64}}px;height:{{canvas_height+64}}px; top: 0; left: 0;">
-			<canvas id="canvas_background" width="{{canvas_width}}px" height="{{canvas_height}}px" style="position: absolute; top: 32px; left: 32px;background-color:#ffffff;z-index: 0;"></canvas>
+			<canvas id="canvas_background" width="{{canvas_width}}px" height="{{canvas_height}}px" style="position: absolute; top: 32px; left: 32px;background-color:#ffffff;z-index: 0; display: none;"></canvas>
 		</div>
 		<div id="cursor" style="position:absolute;top:0px;left:0px;z-index: 1;"></div>
 	</div>
