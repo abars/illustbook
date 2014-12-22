@@ -223,6 +223,13 @@
 </div>
 
 <div class="example">
+	<p>{% if is_english %}Script{% else %}スクリプト{% endif %}</p>
+	<TABLE BORDER=0 class="g-table">
+			<TR><TH>{% if is_english %}between HEAD to /HEAD{% else %}HEAD〜/HEADに記述するスクリプト{% endif %}</TH><TD><textarea name="script_head" rows="8" cols="40" style="width:95%;">{% if bbs.script_head %}{{bbs.script_head}}{% endif %}</textarea></TD></TR>
+	 </TABLE>
+</div>
+
+<div class="example">
 	<p>{% if is_english %}Counter{% else %}カウンター{% endif %}</p>
 			<TABLE BORDER=0 class="g-table">
 			<TR><TH>{% if is_english %}Show counter{% else %}カウンター表示{% endif %}</TH><TD>

@@ -280,6 +280,8 @@ class UpdateBbs(webapp.RequestHandler):
 		bbs.amazon_title = amazon_title
 		bbs.freearea_title = freearea_title
 		
+		bbs.script_head = self.request.get("script_head")
+
 		bbs.bg_color=bg_color
 		bbs.font_color=font_color
 		bbs.hr_color=hr_color

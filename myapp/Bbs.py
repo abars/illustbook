@@ -128,6 +128,7 @@ class Bbs(CachedDbModel):
 	show_remote_addr_id=db.IntegerProperty()					#投稿者のIDを表示するか
 	disable_title=db.IntegerProperty()							#タイトルを非表示にするか
 	disable_import_image = db.IntegerProperty()					#画像の読み込みを禁止するか
+	script_head = db.TextProperty()								#Headに埋め込むスクリプト
 	
 	cached_thumbnail_key = db.StringProperty()					#サムネイルへのKey
 	cached_threads_num = db.IntegerProperty()					#スレッド数

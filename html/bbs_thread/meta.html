@@ -11,6 +11,9 @@
 {% include "viewport.html" %}
 <meta name="google-site-verification" content="tDxCTlHc4ZiHH3ufegQflliprI4XMLpK6OsChsk5FCA" />
 {%if bbs %}
+{%if bbs.script_head %}
+{{bbs.script_head}}
+{% endif %}
 {%if bbs.short == "moper"%}
 <script type="text/javascript">
 window.google_analytics_uacct = "UA-8633292-7";
