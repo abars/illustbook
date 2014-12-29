@@ -136,7 +136,7 @@ class AddEntry(webapp.RequestHandler):
 			entry.homepage_addr=""
 
 		checkcode=SpamCheck.get_check_code()
-		if(SpamCheck.check(entry.content,checkcode)):
+		if(SpamCheck.check(entry.content,checkcode) or SpamCheck.is_spam_ip(self.request.remote_addr)):
 			if(is_english):
 				spam_mes=BbsConst.SPAM_CHECKED_ENGLISH
 			else:

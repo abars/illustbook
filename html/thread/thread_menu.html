@@ -48,6 +48,7 @@
 			<li><a href="{{host}}violation?bbs_key={{bbs.key()}}&amp;thread_key={{thread.key()}}&amp;mode=photo">ポータルに非表示{% if thread.violate_photo %}(適用中){% endif %}</a></li>
 			<li><a href="#">メール：{{bbs.owner.email()}}</a></li>
 			<li><a href="#">ユーザID：{{bbs.user_id}}</a></li>
+			<li><a href="#">IP：{{thread.remote_addr}}</a></li>
 		</ul>
 	</div>
 {% endif %}

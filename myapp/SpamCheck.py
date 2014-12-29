@@ -7,6 +7,7 @@
 #---------------------------------------------------
 
 import re
+import logging
 
 from google.appengine.ext import webapp
 from google.appengine.api import memcache
@@ -133,3 +134,10 @@ class SpamCheck(webapp.RequestHandler):
 		if(len(checkcode)<8):
 			checkcode="	no check code exist"
 		return checkcode
+
+	@staticmethod
+	def is_spam_ip(ip_addr):
+		if(ip_addr=="36.52.86.119"):
+			logging.error("Spam ip addr detected")
+			return True
+		return False
