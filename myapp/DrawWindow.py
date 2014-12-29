@@ -21,6 +21,7 @@ from myapp.Alert import Alert
 from myapp.ReeditEscape import ReeditEscape
 from myapp.CssDesign import CssDesign
 from myapp.CategoryList import CategoryList
+from myapp.EventList import EventList
 
 class DrawWindow(webapp.RequestHandler):
 	def get_thread_comment(self,template_values,thread_key,entry_key,is_reply):
@@ -77,6 +78,7 @@ class DrawWindow(webapp.RequestHandler):
 		entry_key=self.request.get("entry_key")
 
 		category_list=CategoryList.get_category_list(bbs)
+		event_list=EventList.get_event_list()
 
 		user = users.get_current_user()
 		logined=0
@@ -121,7 +123,8 @@ class DrawWindow(webapp.RequestHandler):
 		'version': self.request.get("version"),
 		'wacom2': wacom2,
 		'selecting_category': None,
-		'is_english': is_english
+		'is_english': is_english,
+		'event_list': event_list
 		}
 
 		#上書き時のコメントの初期値を設定

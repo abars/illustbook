@@ -1,0 +1,9 @@
+<div style="float:left">
+	<select id="event_id" style="margin-bottom:0px;">
+	<option value="" selected="selected">{% if is_english %}-{% else %}参加しない{% endif %}</option>
+	{% for event in event_list %}}
+		<option value="{{event.id}}">{{event.title}}</option>
+	{% endfor %}
+	</select>
+</div>
+<br clear="all"/>

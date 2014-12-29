@@ -156,6 +156,9 @@ class AddNewThread(webapp.RequestHandler):
 			new_thread.category=self.request.get("category")
 			CategoryList.add_new_category(bbs,new_thread.category)
 
+		if(self.request.get("event_id")):
+			new_thread.event_id=self.request.get("event_id")
+
 		if(self.request.get("regulation")):
 			new_thread.adult=int(self.request.get("regulation"))
 

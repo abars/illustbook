@@ -1,0 +1,41 @@
+<div class="message hot_bbs">
+	<p>開催中のイベント</p>
+	{% if not event_list %}
+		開催中のイベントはありません。<br/>
+	{% else %}
+		{% for event in event_list %}
+			<a href="{{host}}?order=event&event_id={{event.id}}">{{event.title}}</a>（{{event.start_date|time_JST_format(1)}}〜{{event.end_date|time_JST_format(1)}}）<br/>
+		{% endfor %}
+	{% endif %}
+	<br clear="all"/>
+	<p>イベントへの参加方法</p>
+	イラストの投稿時に参加するイベントを設定して下さい。
+	イベントへの投稿は期間内のみ行うことができます。
+	<br clear="all"/>
+	<br clear="all"/>
+
+	<p>開催予定のイベント</p>
+
+	{% if not all_event_list %}
+		開催予定のイベントはありません。<br/>
+	{% else %}
+		{% for event in all_event_list %}
+			<a href="{{host}}?order=event&event_id={{event.id}}">{{event.title}}</a>（{{event.start_date|time_JST_format(1)}}〜{{event.end_date|time_JST_format(1)}}）<br/>
+		{% endfor %}
+	{% endif %}
+	<br/>
+
+{% if is_admin %}
+	<p>イベントの追加（管理者）</p>
+
+	<form action="./event_add" enctype="multipart/form-data" method="get" name="event_frm">
+		ID　　<input name="id" type="text" value=""><br/>
+		タイトル<input name="title" type="text" value=""><br/>
+		説明　<input name="summary" type="text" value=""><br/>
+		開始日<input name="start_date" type="text" value="2014-01-01"><br/>
+		終了日<input name="end_date" type="text" value="2014-02-01"><br/>
+		<a href="javascript:document.event_frm.submit();" class="g-button">登録</a>
+	</form>
+	{% endif %}
+</div>
+<br clear="all"/>

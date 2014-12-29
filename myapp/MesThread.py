@@ -52,6 +52,8 @@ class MesThread(CachedDbModel):
 	user_id = db.StringProperty()	#Submitter
 	is_ipad = db.IntegerProperty()
 
+	event_id = db.StringProperty()	#Event Id
+
 	cached_image_key = db.StringProperty() #For object cache
 	cached_bbs_key = db.StringProperty() #For object cache
 	cached_entry_key = db.ListProperty(db.Key) #For object cache

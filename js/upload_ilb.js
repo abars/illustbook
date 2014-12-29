@@ -16,6 +16,7 @@
 		if(ret.category=="add"){
 			ret.category=document.getElementById("category_new").value
 		}
+		ret.event_id=document.getElementById("event_id").value
 		ret.regulation=document.getElementById("regulation").value;
 		ret.delete_key=document.getElementById("delete_key").value;
 		ret.no_illust=document.getElementById("no_illust").checked;

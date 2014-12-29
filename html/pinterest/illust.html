@@ -52,12 +52,17 @@
 			</a>
 			{% endif %}
 		{% endif %}
+		{% if thread.event_id %}
+			<a href="{{host}}?order=event&event_id={{thread.event_id}}" class="tag">{{thread.event_id}}</a>
+		{% endif %}
 		{% if thread.tag %}
 			{% for tag in thread.tag %}
 				<a href="{{host}}{{search_api}}?tag={{tag}}" class="tag">
 					<small>{{tag}}</small>
 				</a>
 			{% endfor %}
+		{% endif %}
+		{% if thread.event_id or thread.event_id %}
 			<br clear="all"/>
 		{% endif %}
 		{{thread.summary|safe}}

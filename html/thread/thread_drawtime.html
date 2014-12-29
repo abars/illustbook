@@ -19,6 +19,10 @@
 			#}
 		{%endif%}
 
+		{% if thread.event_id %}
+			(イベント <a href="{{host}}?order=event&event_id={{thread.event_id}}">{{thread.event_id}}</a> への投稿)
+		{% endif %}
+
 {#
 		{% if admin_user %}
 		(Search ver：{{thread.search_index_version}})

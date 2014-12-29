@@ -35,6 +35,20 @@
 {% endif %}
 #}
 
+{% if order == "event" %}
+
+<!-- イベント -->
+{% if not is_iphone %}
+	{% include "pinterest/event.html" %}
+{% endif %}
+
+{% else %}
+
+<!-- お知らせ -->
+{% if not is_iphone and order=="new" %}
+	{% include "pinterest/announce.html" %}
+{% endif %}
+
 <!-- 人気のBBS -->
 {% if not is_iphone %}
 	{% include "pinterest/hot_bbs.html" %}
@@ -48,6 +62,8 @@
 <!-- タグ一覧 -->
 {% if not is_iphone and not search %}
 	{% include "pinterest/recent_tag.html" %}
+{% endif %}
+
 {% endif %}
 
 <!-- 広告 -->

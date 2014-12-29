@@ -371,6 +371,10 @@ class ApiObject(webapp.RequestHandler):
 		if(thread.tag_list):
 			tag_list=thread.tag_list
 
+		event_id=""
+		if(thread.event_id):
+			event_id=thread.event_id
+
 		bookmark_cnt=0
 		if(thread.bookmark_count):
 			bookmark_cnt=thread.bookmark_count
@@ -384,7 +388,7 @@ class ApiObject(webapp.RequestHandler):
 		"applause":app,"bookmark":bookmark_cnt,"comment":comment_cnt,"key":str(thread.key()),
 		"disable_news":disable_news,"tag":tag_list,"width":thread.width,"height":thread.height,
 		"version":thread.thumbnail2_version,"violate_terms":violate_terms,"create_date_original":thread.create_date,
-		"bbs_title":bbs_title,"bbs_url":bbs_url,"adult":adult}
+		"bbs_title":bbs_title,"bbs_url":bbs_url,"adult":adult,"event_id":event_id}
 		
 		return one_dic
 

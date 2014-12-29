@@ -44,6 +44,9 @@
 					<tr><td><p>{% if is_english %}Category{% else %}カテゴリ{% endif %}</p></td><td>
 					{% include "category_list.html" %}
 					</td></tr>
+					<tr><td><p>{% if is_english %}Event{% else %}開催中のイベント{% endif %}</p></td><td>
+					{% include "event_list.html" %}
+					</td></tr>
 					<tr><td><p>{% if is_english %}Regulation{% else %}年齢制限{% endif %}</p></td><td>
 					{% include "regulation_list.html" %}
 					</td></tr>

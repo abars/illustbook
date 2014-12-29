@@ -11,6 +11,9 @@
 					{% if is_english %}Search{% else %}検索{% endif %}
 				</a>
 		{% endif %}
+		{% if not is_iphone %}
+			<a href="{{host}}{{redirect_api}}?order=event" class="order-button {%if order == "event"%}checked{%endif%}">{% if is_english %}Event{%else %}イベント{% endif %}</a>
+		{% endif %}
 	</div>
 
 {% if order=="monthly" and ranking_month_list%}

@@ -34,6 +34,7 @@ from myapp.Bookmark import Bookmark
 from myapp.AddBookmark import AddBookmark
 from myapp.ApiObject import ApiObject
 from myapp.Ranking import Ranking
+from myapp.EventList import EventList
 
 class ApiFeed(webapp.RequestHandler):
 
@@ -59,7 +60,7 @@ class ApiFeed(webapp.RequestHandler):
 		return BbsConst.OBJECT_CACHE_HEADER+"_"+order+"_"+bbs_id+"_"+str(offset)+"_"+str(limit)
 	
 	@staticmethod
-	def _get_query(order):
+	def _get_query(order,event_id):
 		query=db.Query(MesThread,keys_only=True)
 		if(order=="bookmark"):
 			query.order("-bookmark_count")
@@ -78,6 +79,14 @@ class ApiFeed(webapp.RequestHandler):
 			query.order("-create_date")
 			query.filter("create_date <",date)
 			query.filter("illust_mode =",BbsConst.ILLUSTMODE_ILLUST)
+		if(order=="event"):
+			if(not event_id):
+				event_list=EventList.get_event_list()
+				if(event_list):
+					event_id=event_list[0].id
+			query.order("-create_date")
+			query.filter("illust_mode =",BbsConst.ILLUSTMODE_ILLUST)
+			query.filter("event_id =",event_id)
 		if(not order):
 			query.order("-create_date")
 			query.filter("illust_mode =",BbsConst.ILLUSTMODE_ILLUST)
@@ -116,7 +125,7 @@ class ApiFeed(webapp.RequestHandler):
 			thread_list=rank.get_rank(offset,limit)
 			bbs_id=None
 		else:
-			query=ApiFeed._get_query(order)
+			query=ApiFeed._get_query(order,req.request.get("event_id"))
 
 			bbs_id=None
 			if(req.request.get("bbs_id")):

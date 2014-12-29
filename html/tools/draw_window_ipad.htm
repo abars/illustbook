@@ -312,6 +312,9 @@
 			<tr><td>{% if is_english %}Category{% else %}カテゴリ{% endif %}</td><td>
 			{% include "category_list.html" %}
 			</td></tr>
+			<tr><td>{% if is_english %}Event{% else %}開催中のイベント{% endif %}</td><td>
+			{% include "event_list.html" %}
+			</td></tr>
 			<tr><td>{% if is_english %}Delete key{% else %}削除キー{% endif %}</td><td><input id="delete_key"></td></tr>
 			{% if chat %}
 			<tr><td>{% if is_english %}Submit destination{% else %}投稿先{% endif %}</td><td>

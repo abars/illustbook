@@ -51,6 +51,7 @@ from myapp.UTC import UTC
 from myapp.JST import JST
 from myapp.Ranking import Ranking
 from myapp.SearchThread import SearchThread
+from myapp.EventList import EventList
 
 class Pinterest(webapp.RequestHandler):
 	@staticmethod
@@ -294,6 +295,19 @@ class Pinterest(webapp.RequestHandler):
 		
 		bbs_list=ApiFeed.feed_get_bbs_list(self,"hot",0,8)
 
+		event_list=None
+		all_event_list=None
+		now_event=None
+
+		if(order=="event"):
+			event_list=EventList.get_event_list()
+			all_event_list=EventList.get_all_event_list()
+			if(self.request.get("event_id")):
+				now_event=EventList.get_event(self.request.get("event_id"))
+			else:
+				if(event_list):
+					now_event=event_list[0]
+
 		template_values=Pinterest.initialize_template_value(self,user,user_id,page,request_page_mode,redirect_api,contents_only)
 		template_values['thread_list']=thread_list
 		template_values['next_query']="order="+order+"&amp;query="+month_query
@@ -306,6 +320,12 @@ class Pinterest(webapp.RequestHandler):
 		template_values['ranking_month_list']=ranking_month_list
 		template_values['month_query']=month_query
 		template_values['search_api_error']=search_api_error
+
+		template_values['event_list']=event_list
+		template_values['all_event_list']=all_event_list
+		template_values['now_event']=now_event
+
+		template_values['is_admin']=OwnerCheck.is_admin(user)
 
 		Pinterest._render_page(self,template_values)
 

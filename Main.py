@@ -112,6 +112,7 @@ from myapp.SearchTag import SearchTag
 from myapp.AddRankingScore import AddRankingScore
 from myapp.UploadTemp import UploadTemp
 from myapp.AnalyticsGet import AnalyticsGet
+from myapp.EventList import EventList
 
 #-----------------------------------------------------------------
 #ポータル
@@ -340,6 +341,7 @@ application = webapp.WSGIApplication(
 	('/ad_goto',AdGoto),
 	('/dropbox',DropBox),
 	('/dropbox_blog',DropBox),
+	('/event_(.*)',EventList),
 	],debug=False)
 
 if __name__ == "__main__":
