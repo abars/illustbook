@@ -135,8 +135,10 @@ class AddEntry(webapp.RequestHandler):
 		else:
 			entry.homepage_addr=""
 
+		user = users.get_current_user()
+
 		checkcode=SpamCheck.get_check_code()
-		if(SpamCheck.check(entry.content,checkcode) or SpamCheck.is_spam_ip(self.request.remote_addr)):
+		if(SpamCheck.check(entry.content,checkcode) or SpamCheck.is_spam_ip(self.request.remote_addr,user)):
 			if(is_english):
 				spam_mes=BbsConst.SPAM_CHECKED_ENGLISH
 			else:
@@ -165,7 +167,6 @@ class AddEntry(webapp.RequestHandler):
 			return
 		
 		#書き込み権限確認
-		user = users.get_current_user()
 		if(bbs.comment_login_require):
 			if(not(user)):
 				self.write_status(is_flash,"この掲示板ではコメントする際にログインが必須です。");

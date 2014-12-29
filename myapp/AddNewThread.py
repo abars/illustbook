@@ -93,7 +93,7 @@ class AddNewThread(webapp.RequestHandler):
 					return
 
 		checkcode=SpamCheck.get_check_code()
-		if(SpamCheck.check(self.request.get('thread_title'),checkcode) or SpamCheck.is_spam_ip(self.request.remote_addr)):
+		if(SpamCheck.check(self.request.get('thread_title'),checkcode) or SpamCheck.is_spam_ip(self.request.remote_addr,user)):
 			if(is_english):
 				spam_mes=BbsConst.SPAM_CHECKED_ENGLISH
 			else:

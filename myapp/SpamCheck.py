@@ -136,8 +136,10 @@ class SpamCheck(webapp.RequestHandler):
 		return checkcode
 
 	@staticmethod
-	def is_spam_ip(ip_addr):
-		if(ip_addr=="36.52.86.119"):
-			logging.error("Spam ip addr detected")
+	def is_spam_ip(ip_addr,user):
+		if(user):
+			return False
+		if(re.search("36.52.85.",ip_addr) or re.search("36.52.86.",ip_addr)):
+			logging.error("Spam ip addr detected "+ip_addr)
 			return True
 		return False
