@@ -46,7 +46,9 @@ class EventList(webapp.RequestHandler):
 
 	@staticmethod
 	def get_all_event_list():
+		now_date=datetime.datetime.today()
 		event_query=Event.all()
+		event_query.filter("start_date >",now_date)
 		return event_query.fetch(offset=0,limit=100)
 
 	@staticmethod

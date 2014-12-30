@@ -159,11 +159,19 @@
 				{% if feed.thread.thumbnail_url %}
 					{% if feed.thread|regulation_check(user)%}
 						<a href="{{feed.thread.thread_url}}{% if feed.entry %}#{{feed.entry.key}}{% endif %}">
-							<img src="{{feed.thread.thumbnail_url}}" width="100px" height="100px" alt="{{feed.thread.title}}"/>
+							<img src="{{feed.thread.thumbnail2_url}}" alt="{{feed.thread.title}}"/>
 						</a>
 					{% else %}
 						[年齢制限付きイラスト]
 					{% endif %}
+				{% endif %}
+			{% endif %}
+
+			{% if feed.entry %}
+				{% if feed.entry.thumbnail_url %}
+					<a href="{{feed.thread.thread_url}}{% if feed.entry %}#{{feed.entry.key}}{% endif %}">
+						<img src="{{feed.entry.thumbnail_url}}" alt="{{feed.thread.title}}"/>
+					</a>
 				{% endif %}
 			{% endif %}
 
