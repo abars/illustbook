@@ -308,6 +308,10 @@ class Pinterest(webapp.RequestHandler):
 				if(event_list):
 					now_event=event_list[0]
 
+		my_color_bookmark=None
+		if(user):
+			my_color_bookmark=ApiObject.get_bookmark_of_user_id(user.user_id())
+
 		template_values=Pinterest.initialize_template_value(self,user,user_id,page,request_page_mode,redirect_api,contents_only)
 		template_values['thread_list']=thread_list
 		template_values['next_query']="order="+order+"&amp;query="+month_query
@@ -324,6 +328,8 @@ class Pinterest(webapp.RequestHandler):
 		template_values['event_list']=event_list
 		template_values['all_event_list']=all_event_list
 		template_values['now_event']=now_event
+
+		template_values['bookmark']=my_color_bookmark
 
 		template_values['is_admin']=OwnerCheck.is_admin(user)
 

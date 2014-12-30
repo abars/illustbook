@@ -64,7 +64,7 @@
 		{% if link_count %}
 			<p>{% if is_english %}Complete.{% else %}{{link_count}}件のリンクを変更しました。{% endif %}</p>
 		{% endif %}
-		<p>{% if is_english %}You can delete multiple illust.{% else %}イラストの管理では、イラストの削除とカテゴリの変更が行えます。{% endif %}</p>
+		<p>{% if is_english %}You can delete multiple illust.{% else %}イラストの管理では、イラストの削除{% if not is_iphone %}とカテゴリの変更{% endif %}が行えます。{% endif %}</p>
 
 		<div class="g-button-group">
 			<a class="g-button dropdown-toggle" data-toggle="dropdown" href="#">
@@ -85,8 +85,6 @@
 
 			<a href="{{host}}edit_thread_list?bbs_key={{bbs.key()}}&amp;page={{page-1}}&amp;order={{order}}" class="g-button no-text {%if page == 1%}disabled2{%endif%}">{% if is_english %}Previous{% else %}前のページ{% endif %}</a>
 			<a href="{{host}}edit_thread_list?bbs_key={{bbs.key()}}&amp;page={{page+1}}&amp;order={{order}}" class="g-button no-text">{% if is_english %}Next{% else %}次のページ{% endif %}</a>
-
-			<a href="{{host}}{{bbs.short}}/" class="g-button">{% if is_english %}Back to BBS{% else %}掲示板に戻る{% endif %}</a>
 		</div>
 
 		<p>&nbsp;</p>
@@ -96,7 +94,11 @@
 		<input type="hidden" name="page" value="{{page}}"/>
 		<input type="hidden" name="order" value="{{order}}"/>
 		<table class="g-table">
-			<tr><th>{% if is_english %}Title{% else %}タイトル{% endif %}</th><th>{% if is_english %}Thumbnail{% else %}サムネイル{% endif %}</th><th>{% if is_english %}Author{%else %}投稿者{% endif %}</th><th>{% if is_english %}Date{% else %}投稿日{% endif %}</th><th>{% if is_english %}Category{% else %}カテゴリ{% endif %}</th><th>{% if is_english %}Mypage{%else %}マイページ{% endif %}</th><th>{% if is_english %}Delete{% else %}削除{% endif %}</th></tr>
+			<tr><th>{% if is_english %}Title{% else %}タイトル{% endif %}</th><th>{% if is_english %}Thumbnail{% else %}サムネイル{% endif %}</th><th>{% if is_english %}Author{%else %}投稿者{% endif %}</th><th>{% if is_english %}Link{%else %}リンク{% endif %}</th><th>{% if is_english %}Date{% else %}投稿日{% endif %}</th>
+			{% if not is_iphone %}
+				<th>{% if is_english %}Category{% else %}カテゴリ{% endif %}</th>
+			{% endif %}
+			<th>{% if is_english %}Delete{% else %}削除{% endif %}</th></tr>
 		{% for thread in thread_list %}
 		<tr><td>
 			<a href="{{host}}{{bbs.short}}/{{thread.key()}}.html" target="_blank">
@@ -110,18 +112,20 @@
 		{% endif %}
 		</td>
 		<td>{{thread.author}}</td>
+		<td><input type="checkbox" value="{{thread.key()}}" {%if thread.user_id %}checked{% endif %} onchange="link_change('{{thread.key()}}',this.checked);"/></td>
 		<td>{% if is_english %}{{thread.create_date|time_UTC_progress}}{% else %}{{thread.create_date|time_JST_progress}}{% endif %}</td>
+	{% if not is_iphone %}
 		<td>
 			<select style="margin-bottom:0px;" onchange="category_change('{{thread.key()}}',this.value);">
 				<option value="" {% if not thread.category %}selected="selected"{% endif %}>{% if is_english %}-{% else %}設定しない{% endif %}</option>
 				{% for category in category_list %}
 					{% if category.category == "" %}{% else %}
-						<option value="{{category.category}}" {% if thread.category == category.category %}selected="selected"{% endif %}>{{category.category}}</option>
+						<option value="{{category.category}}" {% if thread.category == category.category %}selected="selected"{% endif %}>{{category.category|truncate_category}}</option>
 					{% endif %}
 				{% endfor %}
 			</select>
 		</td>
-		<td><input type="checkbox" value="{{thread.key()}}" {%if thread.user_id %}checked{% endif %} onchange="link_change('{{thread.key()}}',this.checked);"/></td>
+	{% endif %}
 		<td><input type="checkbox" name="thread_list" value="{{thread.key()}}" onchange="delete_change();"/></td></tr>
 		{% endfor %}
 		</table>
