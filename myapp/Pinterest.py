@@ -312,9 +312,8 @@ class Pinterest(webapp.RequestHandler):
 		if(user):
 			my_color_bookmark=ApiObject.get_bookmark_of_user_id(user.user_id())
 
-		mute_bbs_list=None
-		if(my_color_bookmark):
-			mute_bbs_list=[]
+		mute_bbs_list=[]
+		if(my_color_bookmark and my_color_bookmark.mute_bbs_key_list):
 			for bbs in my_color_bookmark.mute_bbs_key_list:
 				mute_bbs_list.append(str(bbs))
 
