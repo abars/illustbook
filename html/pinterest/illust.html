@@ -7,14 +7,11 @@
 {% endif %}
 
 {% if thread_list %}
+{% set at_least_one = 0 %}
 {% for thread in thread_list %}
 {% if (thread|regulation_check(user)) and (thread.thread_url or edit_mode == 1) %}
-{% if mute_bbs_list and thread.bbs_key in mute_bbs_list %}
-
-<div class="item" style="display:none;">
-</div>
-
-{% else %}
+{% if not (mute_bbs_list and thread.bbs_key in mute_bbs_list) %}
+{% set at_least_one = 1 %}
 
 <div class="item {% if not thread.thread_url %}item_deleted{% endif %}">
 	{# Image #}
@@ -154,4 +151,8 @@
 {% endif %}
 {% endif %}
 {% endfor %}
+{% if at_least_one == 0 %}
+<div class="item" style="display:none;">
+</div>
+{% endif %}
 {% endif %}
