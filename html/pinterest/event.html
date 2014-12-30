@@ -5,16 +5,25 @@
 	{% else %}
 		{% for event in event_list %}
 			<a href="{{host}}?order=event&event_id={{event.id}}">{{event.title}}</a>（{{event.start_date|time_JST_format(1)}}〜{{event.end_date|time_JST_format(1)}}）<br/>
+			{{event.summary}}<br/>
 		{% endfor %}
 	{% endif %}
-	<br clear="all"/>
+</div>
+<br clear="all"/>
+
+<div class="message hot_bbs">
+	<div style="float:left;width:110px;">
+		<img src="static_files/banner_360.png" width="100px" height="100px" alt="ロゴ"/>
+	</div>
+	<div style="float:right:width:300px;">
 	<p>イベントへの参加方法</p>
 	イラストの投稿時に参加するイベントを設定して下さい。
 	イベントへの投稿は期間内のみ行うことができます。
-	投稿したイラストはこのページにもまとめられます。
-	<br clear="all"/>
-	<br clear="all"/>
+	</div>
+</div>
+<br clear="all"/>
 
+<div class="message hot_bbs">
 	<p>開催予定のイベント</p>
 
 	{% if not all_event_list %}
@@ -25,8 +34,11 @@
 		{% endfor %}
 	{% endif %}
 	<br/>
+</div>
+<br clear="all"/>
 
 {% if is_admin %}
+<div class="message hot_bbs">
 	<p>イベントの追加（管理者）</p>
 
 	<form action="./event_add" enctype="multipart/form-data" method="get" name="event_frm">
@@ -37,6 +49,6 @@
 		終了日<input name="end_date" type="text" value="2014-02-01"><br/>
 		<a href="javascript:document.event_frm.submit();" class="g-button">登録</a>
 	</form>
-	{% endif %}
 </div>
 <br clear="all"/>
+{% endif %}
