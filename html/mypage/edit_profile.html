@@ -35,6 +35,7 @@
 				<tr><td>{% if is_english %}Homepage{% else %}ホームページ{% endif %}</td><td>　</td><td><input name="homepage" type="text" value="{% if bookmark.homepage %}{{bookmark.homepage}}{% endif %}" style="width:90%;"></td></tr>
 				<tr><td>{% if is_english %}Mail{% else %}メール{% endif %}</td><td>　</td><td><input name="mail" type="text" value="{% if bookmark.mail %}{{bookmark.mail}}{% endif %}" style="width:90%;"></td></tr>
 				<tr><td>TwitterID</td><td>　</td><td><input name="twitter" type="text" value="{% if bookmark.twitter_id %}{{bookmark.twitter_id}}{% endif %}" style="width:90%;"></td></tr>
+				<tr><td>マイカラー（β）</td><td>　</td><td><input name="my_color" type="text" value="{% if bookmark.my_color %}{{bookmark.my_color}}{% else %}#f2f2f2{% endif %}" style="width:90%;"></td></tr>
 				<tr><td>{% if is_english %}Icon{% else %}アイコン{% endif %}</td><td>　</td><td>{% if not is_iphone %}<input type="file" name="icon">{% endif %}</td></tr>
 				</table>
 				{% if is_iphone %}

@@ -105,6 +105,11 @@ class UpdateProfile(webapp.RequestHandler):
 		bookmark.disable_rankwatch=disable_rankwatch
 		bookmark.regulation=regulation
 		bookmark.privacy_rental_bbs=privacy_rental_bbs
+
+		if(self.request.get("my_color")=="" or self.request.get("my_color")=="#f2f2f2"):
+			bookmark.my_color=None
+		else:
+			bookmark.my_color=self.request.get("my_color")
 		
 		bookmark.sex=int(self.request.get("sex"))
 

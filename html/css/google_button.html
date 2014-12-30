@@ -1,4 +1,8 @@
+{% if True %}
+<link rel="stylesheet" type="text/css" media="screen,print" href="{{host}}js/buttons/google-buttons-flat.css" />
+{% else %}
 <link rel="stylesheet" type="text/css" media="screen,print" href="{{host}}static_files/google_buttons/css/google-buttons.css" />
+{% endif %}
 {% if bbs %}
     <link rel="stylesheet" type="text/css" media="screen,print" href="{{host}}js/jquery/jquery.alerts.css" />
 {% endif %}

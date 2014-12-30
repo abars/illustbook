@@ -1,8 +1,18 @@
 <style type="text/css">
 
+{% if bookmark and bookmark.my_color %}
+{% set white_bg = "background-color: rgba( 255,255,255,0.7);" %}
+{% else %}
+{% set white_bg = "background: #ffffff;" %}
+{% endif %}
+
 /* main */
 body{
+{% if bookmark and bookmark.my_color %}
+	background:{{bookmark.my_color}};
+{% else %}
 	background:#f2f2f2;
+{% endif %}
 	margin: 0px;
 	font-size: 13px;
 	overflow-y:scroll;
@@ -84,7 +94,7 @@ h2,h3 {font-size:100%;color:#ea5376;}
 	margin: 5px;
 {% endif %}
 	float: left;
-	background: #fff;
+	{{white_bg}}
 	word-break:break-all;
 	color: #333;
 	font-size:11px;
@@ -101,8 +111,6 @@ h2,h3 {font-size:100%;color:#ea5376;}
 }
 
 .item_info,.item_deleted {
-	background:#F2F0F0;
-	background:#FFFFFF;
 	border-radius: 0px 0px {{radius_r}}px {{radius_r}}px;
 }
 
@@ -158,7 +166,7 @@ h2,h3 {font-size:100%;color:#ea5376;}
 	margin: 5px;
 	padding: 5px;
 	float: left;
-	background: #ffffff;
+	{{white_bg}}
 	color:#333;
 }
 
@@ -192,7 +200,7 @@ h2,h3 {font-size:100%;color:#ea5376;}
 	right:0px;
 	bottom:20px;
 	text-align:left;
-	background-color:#ffffff;
+	{{white_bg}}
 	font-size:13px;
 	color:#333;
 	width:100%;
@@ -206,7 +214,7 @@ h2,h3 {font-size:100%;color:#ea5376;}
 #pinterest_footer{
 	text-align: center;
 	font-size:12px;
-	background-color:#ffffff;
+	{{white_bg}}
 	{% if not is_iphone %}
 		display:none;
 	{% endif %}
@@ -278,7 +286,7 @@ h2,h3 {font-size:100%;color:#ea5376;}
 .timeline {
 	margin: 5px;
 	margin-top: 10px;
-	background-color: #ffffff;
+	{{white_bg}}
 	padding: 5px;
 	color:#333;
 	word-break:break-all;
