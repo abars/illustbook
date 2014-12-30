@@ -122,6 +122,8 @@ class SpamCheck(webapp.RequestHandler):
 			return True
 		if(re.search(u"キモい",content)):
 			return True
+		if(re.search(u"ちんもくん",content)):
+			return True
 		if(re.search(u"www2\.tbb\.t-com\.ne\.jp/hapine/",content)):
 			return True
 		return False;
@@ -139,7 +141,7 @@ class SpamCheck(webapp.RequestHandler):
 	def is_spam_ip(ip_addr,user):
 		if(user):
 			return False
-		if(re.search("36.52.85.",ip_addr) or re.search("36.52.86.",ip_addr)):
+		if(re.search("49.242.200.235",ip_addr)):
 			logging.error("Spam ip addr detected "+ip_addr)
 			return True
 		return False

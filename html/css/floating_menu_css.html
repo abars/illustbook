@@ -43,11 +43,23 @@
 	margin-top:{% if is_iphone or is_tablet %}6px{% else %}3px{% endif %};
 }
 
+#floating_menu .ilb_logo_text_margin {
+	margin-left:8px;
+	{% if is_iphone %}
+		padding-top:3px;
+	{% else %}
+		padding-top:2px;
+	{% endif %}
+}
 #floating_menu .ilb_logo_text {
 	color:#da5376;
 	font-size:11px;
 	text-decoration:none;
+	{% if is_iphone %}
+	letter-spacing:1.0em;
+	{% else %}
 	letter-spacing:2.8em;
+	{% endif %}
 	line-height:12px;
 }
 
