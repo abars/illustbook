@@ -114,11 +114,22 @@ class ApiBookmark(webapp.RequestHandler):
 
 	@staticmethod
 	def bookmark_get_bbs_list(req,user_id):
+		return ApiBookmark._bookmark_get_bbs_list_core(req,user_id,False)
+
+	@staticmethod
+	def bookmark_get_mute_bbs_list(req,user_id):
+		return ApiBookmark._bookmark_get_bbs_list_core(req,user_id,True)
+
+	@staticmethod
+	def _bookmark_get_bbs_list_core(req,user_id,mute):
 		bookmark=ApiObject.get_bookmark_of_user_id(user_id)
 		if(bookmark==None):
 			return []
 		dic=[]
-		bbs_key_list=bookmark.bbs_key_list
+		if(mute):
+			bbs_key_list=bookmark.mute_bbs_key_list
+		else:
+			bbs_key_list=bookmark.bbs_key_list
 		bbs_list=ApiObject.get_cached_object_list(bbs_key_list)
 		for bbs in bbs_list:
 			one_dic=ApiObject.create_bbs_object(req,bbs)

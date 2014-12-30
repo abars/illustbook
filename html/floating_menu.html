@@ -92,6 +92,7 @@
 				{% if bbs %}
 					<li><a href="{{host}}mypage?user_id={{bbs.user_id}}"><i class="icon-user"></i>{% if is_english %}Owner{% else %}オーナー{% endif %}</a></li>
 					<li>{{bbs|add_bookmark_bbs(host,is_iphone,is_english,user)|safe}}</li>
+					<li><a href="{{host}}add_bookmark?mode=add_mute_bbs&bbs_key={{bbs.key()}}"><i class="icon-remove"></i>{% if is_english %}Mute{% else %}ミュート{% endif %}</li>
 				{% endif %}
 			{% endif %}
 			{% endif %}

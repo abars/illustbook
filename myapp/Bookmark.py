@@ -28,6 +28,9 @@ class Bookmark(db.Model):
 	profile = db.TextProperty()
 	regulation = db.IntegerProperty()	#閲覧モード(1:男性向けマスク、2:女性向けマスク)
 
+	#ミュート
+	mute_bbs_key_list = db.ListProperty(db.Key)
+
 	#投稿したイラスト数、投稿時に0クリア
 	submit_thread_count = db.IntegerProperty()
 	submit_moper_count  = db.IntegerProperty()

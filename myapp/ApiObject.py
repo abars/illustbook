@@ -381,6 +381,9 @@ class ApiObject(webapp.RequestHandler):
 
 		bbs_title=bbs.bbs_name
 		bbs_url=ApiObject._get_bbs_url(req,bbs)
+		bbs_key=""
+		if(bbs):
+			bbs_key=str(bbs.key())
 
 		one_dic={"title":thread.title,"summary":summary,"author":thread.author,
 		"user_id":user_id,"thumbnail_url":thumbnail_url,"thumbnail2_url":thumbnail2_url,
@@ -388,7 +391,7 @@ class ApiObject(webapp.RequestHandler):
 		"applause":app,"bookmark":bookmark_cnt,"comment":comment_cnt,"key":str(thread.key()),
 		"disable_news":disable_news,"tag":tag_list,"width":thread.width,"height":thread.height,
 		"version":thread.thumbnail2_version,"violate_terms":violate_terms,"create_date_original":thread.create_date,
-		"bbs_title":bbs_title,"bbs_url":bbs_url,"adult":adult,"event_id":event_id}
+		"bbs_title":bbs_title,"bbs_url":bbs_url,"bbs_key":bbs_key,"adult":adult,"event_id":event_id}
 		
 		return one_dic
 

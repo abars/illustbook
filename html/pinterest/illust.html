@@ -9,7 +9,13 @@
 {% if thread_list %}
 {% for thread in thread_list %}
 {% if (thread|regulation_check(user)) and (thread.thread_url or edit_mode == 1) %}
-	
+{% if mute_bbs_list and thread.bbs_key in mute_bbs_list %}
+
+<div class="item" style="display:none;">
+</div>
+
+{% else %}
+
 <div class="item {% if not thread.thread_url %}item_deleted{% endif %}">
 	{# Image #}
 	<div class="deletable">
@@ -145,6 +151,7 @@
 	</div>
 </div>
 
+{% endif %}
 {% endif %}
 {% endfor %}
 {% endif %}

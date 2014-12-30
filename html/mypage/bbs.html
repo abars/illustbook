@@ -95,6 +95,42 @@
 	</div>
 	{% endif %}
 
+	<!-- ミュート -->
+	{% if bookmark_mute_bbs_list %}
+	<div class="message bbs_list hot_bbs">
+		<div class="bbs_title">
+			{% if is_english %}Mute BBS{% else %}ミュートしている{% endif %}
+		</div>
+		<br clear="all"/>
+
+		{% for bbs in bookmark_mute_bbs_list %}
+			<div class="bbs_info">
+				<div class="bbs_info_contents">
+					{% if bbs.bbs_url %}<a href="{{bbs.bbs_url}}">{% endif %}
+					{{bbs.title}}
+					{% if bbs.bbs_url %}</a>{% endif %}
+					<br/>
+					{{bbs.summary}}
+			</div>
+		</div>
+
+		<div class="bbs_thumbnail">
+			<a href="{{bbs.bbs_url}}">
+			{% if bbs.thumbnail_url %}<img src="{{bbs.thumbnail_url}}" width="50px" height="50px" alt="{{bbs.title}}"/>{%else%}<img src="{{host}}static_files/empty_user.png" width="50px" height="50px" alt="{{bbs.title}}"/>{% endif %}
+			</a>
+		</div>
+
+		<div class="bbs_button">
+			{% if edit_mode == 1 %}
+				<a href="javascript:confirm_delete('del_mute_bbs&bbs_key={{bbs.key}}','ブックマーク','{{bbs.title}}',{% if is_english %}true{%else%}false{% endif %});" class="g-button no-text"><i class="icon-remove"></i></a>
+			{% endif %}
+		</div>
+
+		<br clear="all"/>
+		{% endfor %}
+	</div>
+	{% endif %}
+
 	<!-- 新規レンタル -->
 	{% if is_iphone %}
 		{%include "mypage/rental.html" %}

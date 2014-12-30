@@ -312,6 +312,12 @@ class Pinterest(webapp.RequestHandler):
 		if(user):
 			my_color_bookmark=ApiObject.get_bookmark_of_user_id(user.user_id())
 
+		mute_bbs_list=None
+		if(my_color_bookmark):
+			mute_bbs_list=[]
+			for bbs in my_color_bookmark.mute_bbs_key_list:
+				mute_bbs_list.append(str(bbs))
+
 		template_values=Pinterest.initialize_template_value(self,user,user_id,page,request_page_mode,redirect_api,contents_only)
 		template_values['thread_list']=thread_list
 		template_values['next_query']="order="+order+"&amp;query="+month_query
@@ -330,6 +336,7 @@ class Pinterest(webapp.RequestHandler):
 		template_values['now_event']=now_event
 
 		template_values['bookmark']=my_color_bookmark
+		template_values['mute_bbs_list']=mute_bbs_list
 
 		template_values['is_admin']=OwnerCheck.is_admin(user)
 
@@ -521,10 +528,12 @@ class Pinterest(webapp.RequestHandler):
 
 		bookmark_bbs_list=None
 		rental_bbs_list=None
+		bookmark_mute_bbs_list=None
 		if(tab=="bbs"):
 			thread_list=None
 			illust_enable=False
 			bookmark_bbs_list=ApiBookmark.bookmark_get_bbs_list(self,user_id)
+			bookmark_mute_bbs_list=ApiBookmark.bookmark_get_mute_bbs_list(self,user_id)
 			rental_bbs_list=ApiUser.user_get_bbs_list(self,user_id)
 		
 		timeline=None
@@ -636,6 +645,7 @@ class Pinterest(webapp.RequestHandler):
 			'is_timeline_enable': is_timeline_enable,
 			'following':following,
 			'bookmark_bbs_list': bookmark_bbs_list,
+			'bookmark_mute_bbs_list': bookmark_mute_bbs_list,
 			'rental_bbs_list': rental_bbs_list,
 			'illust_enable': illust_enable,
 			'edit_profile': edit_profile,

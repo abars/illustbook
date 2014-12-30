@@ -65,15 +65,16 @@ class AddBookmark(webapp.RequestHandler):
 		#thread.put()	#add_oneでputする
 
 	@staticmethod
-	def add_one(thread_key_list,add_thread_key,thread):
+	def add_one(thread_key_list,add_thread_key,thread,update_count):
 		if(thread_key_list.count(add_thread_key)==0):
 			#ブックマークに追加
 			thread_key_list.insert(0,add_thread_key)
 
 			#格納
-			thread.bookmark_count=AddBookmark.get_bookmark_count(thread,add_thread_key)+1
-			thread.search_index_version=0
-			thread.put()
+			if(update_count):
+				thread.bookmark_count=AddBookmark.get_bookmark_count(thread,add_thread_key)+1
+				thread.search_index_version=0
+				thread.put()
 			return True
 		else:
 			#ブックマークをソート
@@ -81,17 +82,18 @@ class AddBookmark(webapp.RequestHandler):
 			thread_key_list.insert(0,add_thread_key)
 
 			#現在のブックマーク数で更新
-			thread.bookmark_count=AddBookmark.get_bookmark_count(thread,add_thread_key)
-			thread.search_index_version=0
-			thread.put()
+			if(update_count):
+				thread.bookmark_count=AddBookmark.get_bookmark_count(thread,add_thread_key)
+				thread.search_index_version=0
+				thread.put()
 			
 			return False
 	
 	@staticmethod
-	def del_one(thread_key_list,add_thread_key,thread):
+	def del_one(thread_key_list,add_thread_key,thread,update_count):
 		if(thread_key_list.count(add_thread_key)>=1):
 			thread_key_list.remove(add_thread_key)
-			if(thread):
+			if(thread and update_count):
 				thread.bookmark_count=AddBookmark.get_bookmark_count(thread,add_thread_key)-1
 				thread.put()
 
@@ -179,21 +181,25 @@ class AddBookmark(webapp.RequestHandler):
 		feed_enable=False
 		if(mode=="add"):
 			AddBookmark.add_comment(thread,user.user_id(),comment)
-			feed_enable=AddBookmark.add_one(bookmark.thread_key_list,add_thread_key,thread)
+			feed_enable=AddBookmark.add_one(bookmark.thread_key_list,add_thread_key,thread,True)
 		if(mode=="add_bbs"):
-			feed_enable=AddBookmark.add_one(bookmark.bbs_key_list,add_bbs_key,bbs)
+			feed_enable=AddBookmark.add_one(bookmark.bbs_key_list,add_bbs_key,bbs,True)
+		if(mode=="add_mute_bbs"):
+			feed_enable=AddBookmark.add_one(bookmark.mute_bbs_key_list,add_bbs_key,bbs,False)
 		if(mode=="add_app"):
-			AddBookmark.add_one(bookmark.app_key_list,add_app_key,app)
+			AddBookmark.add_one(bookmark.app_key_list,add_app_key,app,True)
 		if(mode=="add_user"):
 			feed_enable=AddBookmark.add_user(bookmark.user_list,add_user_key)
 		
 		#del bookmark
 		if(mode=="del"):
-			AddBookmark.del_one(bookmark.thread_key_list,add_thread_key,thread)
+			AddBookmark.del_one(bookmark.thread_key_list,add_thread_key,thread,True)
 		if(mode=="del_bbs"):
-			AddBookmark.del_one(bookmark.bbs_key_list,add_bbs_key,bbs)
+			AddBookmark.del_one(bookmark.bbs_key_list,add_bbs_key,bbs,True)
+		if(mode=="del_mute_bbs"):
+			AddBookmark.del_one(bookmark.mute_bbs_key_list,add_bbs_key,bbs,False)
 		if(mode=="del_app"):
-			AddBookmark.del_one(bookmark.app_key_list,add_app_key,app)
+			AddBookmark.del_one(bookmark.app_key_list,add_app_key,app,True)
 		if(mode=="del_user"):
 			if(add_user_key in bookmark.user_list):
 				bookmark.user_list.remove(add_user_key)
@@ -222,6 +228,8 @@ class AddBookmark(webapp.RequestHandler):
 		if(mode=="del" or mode=="add"):
 			url=url+"?tab=bookmark"
 		if(mode=="del_bbs" or mode=="add_bbs"):
+			url=url+"?tab=bbs"
+		if(mode=="del_mute_bbs" or mode=="add_mute_bbs"):
 			url=url+"?tab=bbs"
 		if(mode=="add_user" or mode=="del_user"):
 			url=url+"?user_id="+add_user_key
