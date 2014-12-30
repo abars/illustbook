@@ -95,7 +95,7 @@ class EditThreadList(webapp.RequestHandler):
 			return
 
 		user = users.get_current_user()
-		if(OwnerCheck.check(bbs,user)):
+		if(OwnerCheck.check(bbs,user) and not OwnerCheck.is_admin(user)):
 			Alert.alert_msg_with_write(self,"削除する権限がありません。")
 			return
 
@@ -118,7 +118,7 @@ class EditThreadList(webapp.RequestHandler):
 			return
 
 		user = users.get_current_user()
-		if(OwnerCheck.check(bbs,user)):
+		if(OwnerCheck.check(bbs,user) and not OwnerCheck.is_admin(user)):
 			Alert.alert_msg_with_write(self,"削除する権限がありません。")
 			return
 

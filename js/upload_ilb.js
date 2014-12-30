@@ -28,6 +28,8 @@
 		}else{
 			ret.link_to_profile=false;
 		}
+
+		ret.remote_host=g_remote_host;
 		
 		var resize_width=document.getElementById("resize_width");
 		if(resize_width && resize_width.checked){

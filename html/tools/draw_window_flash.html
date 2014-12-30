@@ -139,7 +139,17 @@ object, embed {
 		get_flex_object().height="100%";
 		document.getElementById("submit_window").style.display="none";
 	}
+
+	//ホスト名の取得
+	var g_remote_host="";
+	
+	function get_host(remote_host){
+		g_remote_host=remote_host;
+	}
 --></script>
+
+<script type="application/javascript" src="http://www.abars.biz/remote_host/remote_host.php?callback=get_host"> </script>
+
 </head>
 
 <body bgcolor=#ffffff onload="init();">
