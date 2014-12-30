@@ -93,11 +93,18 @@ class AddNewThread(webapp.RequestHandler):
 					return
 
 		checkcode=SpamCheck.get_check_code()
-		if(SpamCheck.check(self.request.get('thread_title'),checkcode) or SpamCheck.check(self.request.get('comment'),checkcode) or SpamCheck.is_spam_ip(self.request.get("remote_host"),user)):
-			if(is_english):
-				spam_mes=BbsConst.SPAM_CHECKED_ENGLISH
+		spam_host=SpamCheck.is_spam_ip(self.request.get("remote_host"),user)
+		if(SpamCheck.check(self.request.get('thread_title'),checkcode) or spam_host):
+			if(spam_host):
+				if(is_english):
+					spam_mes=BbsConst.SPAM_HOST_CHECKED_ENGLISH
+				else:
+					spam_mes=BbsConst.SPAM_HOST_CHECKED
 			else:
-				spam_mes=BbsConst.SPAM_CHECKED
+				if(is_english):
+					spam_mes=BbsConst.SPAM_CHECKED_ENGLISH
+				else:
+					spam_mes=BbsConst.SPAM_CHECKED
 			self.write_status(is_flash,spam_mes)
 			return
 

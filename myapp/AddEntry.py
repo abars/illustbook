@@ -138,11 +138,18 @@ class AddEntry(webapp.RequestHandler):
 		user = users.get_current_user()
 
 		checkcode=SpamCheck.get_check_code()
-		if(SpamCheck.check(entry.content,checkcode) or SpamCheck.is_spam_ip(self.request.get("remote_host"),user)):
-			if(is_english):
-				spam_mes=BbsConst.SPAM_CHECKED_ENGLISH
+		spam_host=SpamCheck.is_spam_ip(self.request.get("remote_host"),user)
+		if(SpamCheck.check(entry.content,checkcode) or spam_host):
+			if(spam_host):
+				if(is_english):
+					spam_mes=BbsConst.SPAM_HOST_CHECKED_ENGLISH
+				else:
+					spam_mes=BbsConst.SPAM_HOST_CHECKED
 			else:
-				spam_mes=BbsConst.SPAM_CHECKED
+				if(is_english):
+					spam_mes=BbsConst.SPAM_CHECKED_ENGLISH
+				else:
+					spam_mes=BbsConst.SPAM_CHECKED
 			if(is_flash):
 				self.write_status(is_flash,spam_mes);
 			else:
