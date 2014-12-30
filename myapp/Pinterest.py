@@ -111,9 +111,11 @@ class Pinterest(webapp.RequestHandler):
 		if(user and bookmark):
 			if(not view_mode):
 				if(bookmark.new_feed_count or bookmark.new_my_feed_count):
+					bookmark=ApiObject.get_bookmark_of_user_id_for_write(user.user_id())
 					bookmark.new_feed_count=0
 					bookmark.new_my_feed_count=0
 					bookmark.put()
+		return bookmark
 
 	@staticmethod
 	def get_tag_image(self,tag,page,unit):
@@ -313,8 +315,9 @@ class Pinterest(webapp.RequestHandler):
 			my_color_bookmark=ApiObject.get_bookmark_of_user_id(user.user_id())
 
 		mute_bbs_list=[]
-		if(my_color_bookmark and my_color_bookmark.mute_bbs_key_list):
-			for bbs in my_color_bookmark.mute_bbs_key_list:
+		if(my_color_bookmark and my_color_bookmark.mute_bbs_packed_str_list):
+			mute_bbs_split_list=my_color_bookmark.mute_bbs_packed_str_list.split("#")
+			for bbs in mute_bbs_split_list:
 				mute_bbs_list.append(str(bbs))
 
 		template_values=Pinterest.initialize_template_value(self,user,user_id,page,request_page_mode,redirect_api,contents_only)
@@ -515,7 +518,7 @@ class Pinterest(webapp.RequestHandler):
 		new_feed_count=Pinterest._get_new_feed_count(user,view_mode,bookmark)
 		new_my_feed_count=Pinterest._get_new_my_feed_count(user,view_mode,bookmark)
 		if(tab=="feed"):
-			Pinterest._consume_feed(user,view_mode,bookmark)
+			bookmark=Pinterest._consume_feed(user,view_mode,bookmark)
 
 		#プロフィールを編集
 		edit_profile=Pinterest.get_profile_for_edit(bookmark,view_mode)

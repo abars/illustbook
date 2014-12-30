@@ -127,7 +127,7 @@ class ApiBookmark(webapp.RequestHandler):
 			return []
 		dic=[]
 		if(mute):
-			bbs_key_list=bookmark.mute_bbs_key_list
+			bbs_key_list=bookmark.get_mute_bbs_list()
 		else:
 			bbs_key_list=bookmark.bbs_key_list
 		bbs_list=ApiObject.get_cached_object_list(bbs_key_list)

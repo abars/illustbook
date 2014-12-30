@@ -29,7 +29,9 @@ class Bookmark(db.Model):
 	regulation = db.IntegerProperty()	#閲覧モード(1:男性向けマスク、2:女性向けマスク)
 
 	#ミュート
-	mute_bbs_key_list = db.ListProperty(db.Key)
+	#mute_bbs_key_list = db.ListProperty(db.Key)	#AppEngineのbugで追加するとfetchがbad_value_errorになる
+	#mute_bbs_str_list = db.StringListProperty()
+	mute_bbs_packed_str_list = db.TextProperty()	#Listが追加できないので苦肉の策
 
 	#投稿したイラスト数、投稿時に0クリア
 	submit_thread_count = db.IntegerProperty()
@@ -71,6 +73,18 @@ class Bookmark(db.Model):
 
 	sand = db.StringProperty()
 	date = db.DateTimeProperty(auto_now=True)
+
+	#mute listのunpack
+	def get_mute_bbs_list(self):
+		if(not self.mute_bbs_packed_str_list):
+			return []
+		mute_bbs_list=self.mute_bbs_packed_str_list.split("#")
+		ret=[]
+		for bbs in mute_bbs_list:
+			if(bbs==""):
+				continue
+			ret.append(bbs)
+		return ret
 
 	#ユーザIDベースでキャッシュする
 	def put(self,**kwargs):

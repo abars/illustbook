@@ -158,6 +158,9 @@ class SchemeUpdate(webapp.RequestHandler):
 		while(offset<offset_to):
 			list=query.fetch(limit=1000,offset=offset)
 			for bookmark in list:
+				#強い整合性の保証
+				bookmark=db.get(bookmark.key())
+
 				total_cnt=total_cnt+1
 				
 				update_require=0
@@ -173,19 +176,23 @@ class SchemeUpdate(webapp.RequestHandler):
 				#	for bbs in bookmark.bbs_list:
 				#		bookmark.bbs_key_list.append(db.Key(bbs))
 				#	update_require=1
-				
-				if(bookmark.follower_list_enable==None or bookmark.follower_list==None):
-					bookmark.follower_list=[]
-					bookmark.follower_list_enable=0
-					update_require=1
+
+				#if(bookmark.mute_bbs_key_list==None):
+				#	bookmark.mute_bbs_key_list=[]
+				#	update_require=1
+
+				#if(bookmark.follower_list_enable==None or bookmark.follower_list==None):
+				#	bookmark.follower_list=[]
+				#	bookmark.follower_list_enable=0
+				#	update_require=1
 				
 				if(update_require):
 					bookmark.put()
 					update_cnt=update_cnt+1
-					if(update_cnt>=100):
+					if(update_cnt>=50):
 						break
 			offset=offset+1000
-			if(update_cnt>=100):
+			if(update_cnt>=50):
 				break
 		
 		main.response.out.write("total"+str(total_cnt)+" update"+str(update_cnt))

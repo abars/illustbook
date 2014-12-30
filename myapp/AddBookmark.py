@@ -177,6 +177,9 @@ class AddBookmark(webapp.RequestHandler):
 		if(self.request.get("comment")):
 			comment=self.request.get("comment")
 
+		#unpack mute_bbs_list
+		mute_bbs_list=bookmark.get_mute_bbs_list()
+
 		#add bookmark
 		feed_enable=False
 		if(mode=="add"):
@@ -185,7 +188,7 @@ class AddBookmark(webapp.RequestHandler):
 		if(mode=="add_bbs"):
 			feed_enable=AddBookmark.add_one(bookmark.bbs_key_list,add_bbs_key,bbs,True)
 		if(mode=="add_mute_bbs"):
-			feed_enable=AddBookmark.add_one(bookmark.mute_bbs_key_list,add_bbs_key,bbs,False)
+			feed_enable=AddBookmark.add_one(mute_bbs_list,str(add_bbs_key),bbs,False)
 		if(mode=="add_app"):
 			AddBookmark.add_one(bookmark.app_key_list,add_app_key,app,True)
 		if(mode=="add_user"):
@@ -197,12 +200,17 @@ class AddBookmark(webapp.RequestHandler):
 		if(mode=="del_bbs"):
 			AddBookmark.del_one(bookmark.bbs_key_list,add_bbs_key,bbs,True)
 		if(mode=="del_mute_bbs"):
-			AddBookmark.del_one(bookmark.mute_bbs_key_list,add_bbs_key,bbs,False)
+			AddBookmark.del_one(mute_bbs_list,str(add_bbs_key),bbs,False)
 		if(mode=="del_app"):
 			AddBookmark.del_one(bookmark.app_key_list,add_app_key,app,True)
 		if(mode=="del_user"):
 			if(add_user_key in bookmark.user_list):
 				bookmark.user_list.remove(add_user_key)
+
+		#pack mute_bbs_list
+		bookmark.mute_bbs_packed_str_list=""
+		for bbs in mute_bbs_list:
+			bookmark.mute_bbs_packed_str_list+=str(bbs)+"#"
 
 		#フォロー先のユーザのフォロワーを更新するようにリクエスト
 		if(mode=="add_user" or mode=="del_user"):
