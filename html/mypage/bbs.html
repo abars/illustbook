@@ -96,7 +96,7 @@
 	{% endif %}
 
 	<!-- ミュート -->
-	{% if bookmark_mute_bbs_list %}
+	{% if bookmark_mute_bbs_list and not view_mode %}
 	<div class="message bbs_list hot_bbs">
 		<div class="bbs_title">
 			{% if is_english %}Mute BBS{% else %}ミュートしている{% endif %}
