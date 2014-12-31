@@ -569,6 +569,8 @@ class Pinterest(webapp.RequestHandler):
 				max_page_src=submit_moper_count
 			max_page=(max_page_src+BbsConst.PINTEREST_MYPAGE_PAGE_UNIT-1)/BbsConst.PINTEREST_MYPAGE_PAGE_UNIT
 			thread_list=[]
+
+			original_page=page
 			while(page<=max_page):
 				limit=BbsConst.PINTEREST_MYPAGE_PAGE_UNIT
 				offset=limit*(page-1)
@@ -584,6 +586,9 @@ class Pinterest(webapp.RequestHandler):
 				only_one_page=True
 
 			submit_illust_list=thread_list
+
+			if(len(thread_list)==0 and original_page==1):
+				ApiUser.invalidate_thread_count(user_id)	#削除した場合に0になったことを考慮
 			
 		page_mode="user"
 		view_user=ApiUser.user_get_user(self,user_id,bookmark)
