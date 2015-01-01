@@ -1,5 +1,5 @@
       <form method="get" action="./search_tag?" id="search_form">
-        <input name="tag" style="-webkit-appearance:none;float:left;width:200px;margin-top:5px;margin-right:2px;border:1px solid #dcdcdc;" value="{% if search and search!="empty" %}{{search}}{% endif %}"/>
+        <input name="tag" style="-webkit-appearance:none;float:left;width:200px;{% if is_tablet %}margin-top:3px;{% else %}margin-top:5px;{% endif %}margin-right:2px;border:1px solid #dcdcdc;" value="{% if search and search!="empty" %}{{search}}{% endif %}"/>
 	        <a href="javascript:document.getElementById('search_form').submit();" class="order-button" style="width:60px;">
 	        	検索</a>
       </form>

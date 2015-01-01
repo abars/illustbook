@@ -3,7 +3,7 @@
 		<a href="{{host}}{{redirect_api}}?order=new" class="order-button {%if order == "new"%}checked{%endif%}">{% if is_english %}New{%else%}新着{% endif %}</a>
 		<a href="{{host}}{{redirect_api}}?order=hot" class="order-button {%if order == "hot"%}checked{%endif%}">{% if is_english %}Hot{%else%}人気{% endif %}</a>
 		<a href="{{host}}{{redirect_api}}?order=monthly" class="order-button {%if order == "monthly"%}checked{%endif%}">{% if is_english %}Ranking{%else %}ランキング{% endif %}</a>
-		{% if (is_iphone and order!="monthly") or search %}
+		{% if (is_iphone and order!="monthly") %}
 				<a href="{{host}}?search=empty" class="order-button {%if search %}checked{%endif%}">
 					{% if is_english %}Search{% else %}検索{% endif %}
 				</a>
