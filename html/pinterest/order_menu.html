@@ -10,14 +10,14 @@
 		{% endif %}
 		{% if not is_iphone %}
 			<a href="{{host}}{{redirect_api}}?order=event" class="order-button {%if order == "event"%}checked{%endif%}">{% if is_english %}Event{%else %}イベント{% endif %}</a>
-			<a href="{{host}}{{redirect_api}}?order=lecture" class="order-button {%if order == "lecture"%}checked{%endif%}">{% if is_english %}Event{%else %}講座{% endif %}</a>
+			<a href="{{host}}{{redirect_api}}?order=lecture" class="order-button {%if order == "lecture"%}checked{%endif%}">{% if is_english %}Lecture{%else %}講座{% endif %}</a>
 		{% endif %}
-		{% if not is_iphone %}
+		{% if not is_iphone and not is_tablet %}
 			<a href="{{host}}{{redirect_api}}?order=moper" class="order-button {%if order == "moper"%}checked{%endif%}">{% if is_english %}Moper{%else %}動画{% endif %}</a>
 		{% endif %}
 	</div>
 
-{% if order=="monthly" and ranking_month_list%}
+{% if order=="monthly" and ranking_month_list %}
 	<div style="float:left;margin-left:8px;">
 		<div class="g-button-group">
 			<a class="g-button dropdown-toggle menu_button" data-toggle="dropdown" href="#" style="background-image:none;background-color:#ea5376;color:#ffffff;border:none;text-shadow:none;">
@@ -38,7 +38,7 @@
 	</div>
 {% endif %}
 
-{% if not is_iphone %}
+{% if not is_iphone and not (is_tablet and order=="monthly") %}
 	<div style="float:right;">
 		<div style="float:right;">
 			{% include "pinterest/search.html" %}
