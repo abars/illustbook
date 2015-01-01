@@ -290,10 +290,18 @@ class Pinterest(webapp.RequestHandler):
 				search_api_error=False
 			else:
 				search_api_error=True
-
-			#ranking_month_list.reverse()
 		else:
-			thread_list=ApiFeed.feed_get_thread_list(self,order,(page-1)*unit,unit)
+			if(order=="lecture"):
+				search_str="tag = 講座 OR category = 講座"
+				no_reduct=False	#日付における重み付けを外すか
+				thread_list=SearchThread.search(search_str,page,unit,BbsConst.SEARCH_THREAD_INDEX_NAME,no_reduct)
+				if(thread_list!=None):
+					thread_list=ApiObject.create_thread_object_list(self,thread_list,"search")
+					search_api_error=False
+				else:
+					search_api_error=True
+			else:
+				thread_list=ApiFeed.feed_get_thread_list(self,order,(page-1)*unit,unit)
 		
 		bbs_list=ApiFeed.feed_get_bbs_list(self,"hot",0,8)
 

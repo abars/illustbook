@@ -87,10 +87,6 @@ class ApiFeed(webapp.RequestHandler):
 			query.order("-create_date")
 			query.filter("illust_mode =",BbsConst.ILLUSTMODE_ILLUST)
 			query.filter("event_id =",event_id)
-		if(order=="lecture"):
-			query.order("-create_date")
-			query.filter("illust_mode =",BbsConst.ILLUSTMODE_ILLUST)
-			query.filter("category =","講座")
 		if(not order):
 			query.order("-create_date")
 			query.filter("illust_mode =",BbsConst.ILLUSTMODE_ILLUST)
