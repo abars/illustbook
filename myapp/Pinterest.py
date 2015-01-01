@@ -318,6 +318,13 @@ class Pinterest(webapp.RequestHandler):
 				if(event_list):
 					now_event=event_list[0]
 
+		event_thread_list=None
+		if(order=="new"):
+			event_list=EventList.get_event_list()
+			if(event_list):
+				now_event=event_list[0]
+				event_thread_list=ApiFeed.feed_get_thread_list(self,"event",0,8)
+
 		my_color_bookmark=None
 		if(user):
 			my_color_bookmark=ApiObject.get_bookmark_of_user_id(user.user_id())
@@ -344,6 +351,7 @@ class Pinterest(webapp.RequestHandler):
 		template_values['event_list']=event_list
 		template_values['all_event_list']=all_event_list
 		template_values['now_event']=now_event
+		template_values['event_thread_list']=event_thread_list
 
 		template_values['bookmark']=my_color_bookmark
 		template_values['mute_bbs_list']=mute_bbs_list
