@@ -35,6 +35,15 @@
 {% endif %}
 #}
 
+{% if order == "monthly" %}
+
+<!-- ランキング -->
+{% if not is_iphone %}
+	{% include "pinterest/ranking.html" %}
+{% endif %}
+
+{% else %}
+
 {% if order == "lecture" %}
 
 <!-- イベント -->
@@ -73,6 +82,7 @@
 	{% include "pinterest/recent_tag.html" %}
 {% endif %}
 
+{% endif %}
 {% endif %}
 {% endif %}
 
