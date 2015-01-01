@@ -18,7 +18,7 @@
 	</div>
 
 {% if order=="monthly" and ranking_month_list %}
-	<div style="float:left;margin-left:8px;">
+	<div style="float:left;margin-left:{% if is_iphone %}4px;{% else %}8px;{% endif %}">
 		<div class="g-button-group">
 			<a class="g-button dropdown-toggle menu_button" data-toggle="dropdown" href="#" style="background-image:none;background-color:#ea5376;color:#ffffff;border:none;text-shadow:none;">
 				{% for one_month in ranking_month_list %}
