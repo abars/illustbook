@@ -35,6 +35,15 @@
 {% endif %}
 #}
 
+{% if order == "lecture" %}
+
+<!-- イベント -->
+{% if not is_iphone %}
+	{% include "pinterest/lecture.html" %}
+{% endif %}
+
+{% else %}
+
 {% if order == "event" %}
 
 <!-- イベント -->
@@ -64,6 +73,7 @@
 	{% include "pinterest/recent_tag.html" %}
 {% endif %}
 
+{% endif %}
 {% endif %}
 
 <!-- 広告 -->

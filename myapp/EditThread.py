@@ -25,6 +25,7 @@ from myapp.Alert import Alert
 from myapp.CssDesign import CssDesign
 from myapp.ReeditEscape import ReeditEscape
 from myapp.CategoryList import CategoryList
+from myapp.EventList import EventList
 
 class EditThread(webapp.RequestHandler):
 	def get(self):
@@ -91,7 +92,8 @@ class EditThread(webapp.RequestHandler):
 		host_url="./"
 		design=CssDesign.get_design_object(self,bbs,host_url,1)
 		category_list=CategoryList.get_category_list(bbs)
-		
+		event_list=EventList.get_event_list()
+
 		template_values = {
 			'host': './',
 			'bbs': bbs,
@@ -109,6 +111,7 @@ class EditThread(webapp.RequestHandler):
 			'redirect_url': self.request.path,
 			'edit_thread': True,
 			'category_list': category_list,
+			'event_list': event_list,
 			'selecting_category': category,
 			'res_entry_key': self.request.get("res_entry_key"),
 			'is_english': CssDesign.is_english(self)

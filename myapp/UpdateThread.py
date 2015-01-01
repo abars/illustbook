@@ -69,6 +69,9 @@ class UpdateThread(webapp.RequestHandler):
 		thread.category=category
 		CategoryList.add_new_category(bbs,category)
 
+		event_id = self.request.get("event_id")
+		thread.event_id=event_id
+
 		summary = self.request.get('thread_summary')
 		summary = compiled_line.sub(r'', summary)
 		thread.summary = summary

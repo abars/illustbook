@@ -256,6 +256,13 @@ indexes:
 
 - kind: MesThread
   properties:
+  - name: category
+  - name: illust_mode
+  - name: create_date
+    direction: desc
+
+- kind: MesThread
+  properties:
   - name: event_id
   - name: create_date
     direction: desc

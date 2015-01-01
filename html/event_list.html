@@ -1,6 +1,9 @@
 <div style="float:left">
-	<select id="event_id" style="margin-bottom:0px;">
-	<option value="" selected="selected">{% if is_english %}-{% else %}参加しない{% endif %}</option>
+	<select id="event_id" name="event_id" style="margin-bottom:0px;">
+	{% if thread and thread.event_id %}
+		<option value="{{thread.event_id}}" selected="selected">{{thread.event_id}}</option>
+	{% endif %}
+	<option value="" {% if thread and thread.event_id %}{% else %}selected="selected"{% endif %}>{% if is_english %}-{% else %}参加しない{% endif %}</option>
 	{% for event in event_list %}}
 		<option value="{{event.id}}">{{event.title}}</option>
 	{% endfor %}
