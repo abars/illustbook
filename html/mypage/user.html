@@ -51,7 +51,7 @@
 			<div class="g-button-group">
 			{% if view_mode %}
 			 {% if following %}
-				 <a href="javascript:confirm_unfollow('{{view_user.user_id}}','{{view_user.name}}',{% if is_english %}true{%else%}false{% endif %});" class="g-button">{% if is_english %}Following{%else%}フォロー中{% endif %}</a>
+				 <a href="javascript:confirm_unfollow('{{view_user.user_id}}','{{view_user.name}}',{% if is_english %}true{%else%}false{% endif %});" class="g-button">{% if not is_iphone %}<i class="icon-ok"></i>{% endif %}{% if is_english %}Following{%else%}フォロー中{% endif %}</a>
 			 {% else %}
 				 <a href="javascript:confirm_follow('{{view_user.user_id}}','{{view_user.name}}',{% if is_english %}true{%else%}false{% endif %});" class="g-button"><i class="icon-plus"></i>{% if is_english %}Follow{%else%}フォロー{% endif %}</a>
 			 {% endif %}
