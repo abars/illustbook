@@ -1,4 +1,3 @@
-<div style="float:left">
 	<select id="event_id" name="event_id" style="margin-bottom:0px;">
 	{% if thread and thread.event_id %}
 		<option value="{{thread.event_id}}" selected="selected">{{thread.event_id}}</option>
@@ -8,5 +7,3 @@
 		<option value="{{event.id}}">{{event.title}}</option>
 	{% endfor %}
 	</select>
-</div>
-<br clear="all"/>

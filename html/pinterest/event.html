@@ -11,6 +11,8 @@
 </div>
 <br clear="all"/>
 
+{% if not is_iphone %}
+
 <div class="message hot_bbs">
 	<p>イベントへの参加方法</p>
 	イラストの投稿時に参加するイベントを設定して下さい。
@@ -46,4 +48,6 @@
 	</form>
 </div>
 <br clear="all"/>
+{% endif %}
+
 {% endif %}

@@ -49,6 +49,9 @@
 				<li><a href="{{host}}mypage"><i class="icon-check"></i>{% if is_english %}Regist{% else %}レンタル{% endif %}</a></li>
 				<li><a href="{{host}}support/"><i class="icon-user"></i>{% if is_english %}Support{% else %}サポート{% endif %}</a></li>
 				<li><a href="{{host}}chat"><i class="icon-retweet"></i>{% if is_english %}Chat{% else %}チャット{% endif %}</a></li>
+				{% if is_iphone %}
+					<li><a href="{{host}}?search=empty"><i class="icon-search"></i>{% if is_english %}Search{% else %}検索{% endif %}</a></li>
+				{% endif %}
 				{% if not user %}
 					<li><a href="{{redirect_url|login_url|escape}}"><i class="icon-off"></i>{% if is_english %}Login{%else%}ログイン{% endif %}</a></li>
 				{% else %}
