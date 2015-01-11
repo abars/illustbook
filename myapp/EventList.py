@@ -52,6 +52,22 @@ class EventList(webapp.RequestHandler):
 		return event_query.fetch(offset=0,limit=100)
 
 	@staticmethod
+	def get_old_event_list():
+		now_date=datetime.datetime.today()
+		event_query=Event.all()
+		event_query.filter("end_date <",now_date)
+		return event_query.fetch(offset=0,limit=100)
+
+	@staticmethod
+	def is_old_event(event):
+		if(not event):
+			return False
+		now_date=datetime.datetime.today()
+		if(event.end_date<now_date):
+			return True
+		return False
+
+	@staticmethod
 	def get_event(event_id):
 		event_list=Event.all().filter("id =",event_id).fetch(offset=0,limit=1)
 		if(event_list):

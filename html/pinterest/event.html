@@ -34,6 +34,20 @@
 </div>
 <br clear="all"/>
 
+<div class="message hot_bbs">
+	<p>開催されたイベント</p>
+
+	{% if not all_event_list %}
+		開催されたイベントはありません。<br/>
+	{% else %}
+		{% for event in old_event_list %}
+			<a href="{{host}}?order=event&event_id={{event.id}}">{{event.title}}</a>（{{event.start_date|time_JST_format(1)}}〜{{event.end_date|time_JST_format(1)}}）<br/>
+		{% endfor %}
+	{% endif %}
+	<br/>
+</div>
+<br clear="all"/>
+
 {% if is_admin %}
 <div class="message hot_bbs">
 	<p>イベントの追加（管理者）</p>

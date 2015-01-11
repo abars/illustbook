@@ -307,11 +307,13 @@ class Pinterest(webapp.RequestHandler):
 
 		event_list=None
 		all_event_list=None
+		old_event_list=None
 		now_event=None
 
 		if(order=="event"):
 			event_list=EventList.get_event_list()
 			all_event_list=EventList.get_all_event_list()
+			old_event_list=EventList.get_old_event_list()
 			if(self.request.get("event_id")):
 				now_event=EventList.get_event(self.request.get("event_id"))
 			else:
@@ -350,7 +352,9 @@ class Pinterest(webapp.RequestHandler):
 
 		template_values['event_list']=event_list
 		template_values['all_event_list']=all_event_list
+		template_values['old_event_list']=old_event_list
 		template_values['now_event']=now_event
+		template_values['is_old_event']=EventList.is_old_event(now_event)
 		template_values['event_thread_list']=event_thread_list
 
 		template_values['bookmark']=my_color_bookmark

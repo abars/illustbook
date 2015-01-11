@@ -86,7 +86,9 @@ class ApiFeed(webapp.RequestHandler):
 					event_id=event_list[0].id
 				else:
 					event_id="no_event_opened"
-			query.order("-create_date")
+				query.order("-create_date")
+			else:
+				query.order("-applause")
 			query.filter("illust_mode =",BbsConst.ILLUSTMODE_ILLUST)
 			query.filter("event_id =",event_id)
 		if(not order):
