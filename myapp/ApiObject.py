@@ -356,6 +356,8 @@ class ApiObject(webapp.RequestHandler):
 		app=0
 		if(thread.applause):
 			app=thread.applause
+		if(bbs.disable_applause):
+			app=0
 
 		comment_cnt=0
 		if(thread.comment_cnt):
