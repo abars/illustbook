@@ -1,3 +1,4 @@
+<!--
 <div class="message hot_bbs">
 	<div style="float:left;width:300px;">
 		<p>{% if is_english %}Announce{% else %}運営からのお知らせ{% endif %}</p>
@@ -7,6 +8,14 @@
 	<div style="float:right:width:110px;">
 		<img src="static_files/banner_360b.png" width="100px" height="100px" alt="ロゴ"/>
 	</div>
+</div>
+<br clear="all"/>
+-->
+
+<div class="message hot_bbs">
+		<p>{% if is_english %}Regulated host{% else %}アクセス規制について{% endif %}</p>
+		掲示板への迷惑行為の対策として、ap.yournet.ne.jpからの書き込みを規制しています。
+		ログインして投稿する場合は規制対象外になりますので、該当されるユーザ様はログインをお願い致します。
 </div>
 <br clear="all"/>
 
@@ -25,9 +34,3 @@
 </div>
 <br clear="all"/>
 
-<div class="message hot_bbs">
-		<p>{% if is_english %}Regulated host{% else %}アクセス規制について{% endif %}</p>
-		掲示板への迷惑行為の対策として、ap.yournet.ne.jpからの書き込みを規制しています。
-		ログインして投稿する場合は規制対象外になりますので、該当されるユーザ様はログインをお願い致します。
-</div>
-<br clear="all"/>

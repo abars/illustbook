@@ -10,7 +10,7 @@
 		<div style="{% if is_iphone %}margin-left:78px;{% else %}margin-left:164px;{% endif %}">
 			{% if view_user.name %}
 				{% if not is_iphone %}<p>{% endif %}<b>{{view_user.name}}</b>{% if not is_iphone %}</p>{% endif %}
-				<p>{% if view_user_profile.profile and view_user_profile.profile!="None" %}{{view_user_profile.profile|safe}}{% else %}&nbsp;{% endif %}</p>
+				<p>{% if view_user_profile.profile and view_user_profile.profile!="None" %}{{view_user_profile.profile|auto_link}}{% else %}&nbsp;{% endif %}</p>
 			{% else %}
 				<p>
 				{% if is_english %}
