@@ -144,3 +144,44 @@ class SpamCheck(webapp.RequestHandler):
 				logging.error("Spam host detected "+remote_host)
 				return True
 		return False
+
+	@staticmethod
+	def is_deny_host(remote_host,deny_host_list):
+		if(not deny_host_list):
+			return False
+		host_list=deny_host_list.split(",")
+		for host in host_list:
+			if(host==""):
+				continue
+			if(re.search(host,remote_host)):
+				logging.error("Spam host detected "+remote_host)
+				return True
+		return False
+
+	@staticmethod
+	def check_all(req,content,remote_host,user,bbs,is_flash,is_english):
+		checkcode=SpamCheck.get_check_code()
+		spam_host=SpamCheck.is_spam_ip(remote_host,user)
+		if(not spam_host):
+			spam_host=SpamCheck.is_deny_host(remote_host,bbs.deny_host_list)
+		if(SpamCheck.check(content,checkcode) or spam_host):
+			if(spam_host):
+				if(is_english):
+					spam_mes=BbsConst.SPAM_HOST_CHECKED_ENGLISH+remote_host
+				else:
+					spam_mes=BbsConst.SPAM_HOST_CHECKED+remote_host
+			else:
+				if(is_english):
+					spam_mes=BbsConst.SPAM_CHECKED_ENGLISH
+				else:
+					spam_mes=BbsConst.SPAM_CHECKED
+			req.write_status(is_flash,spam_mes)
+			return True
+		return False
+
+
+
+
+
+
+

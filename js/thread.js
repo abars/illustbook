@@ -153,6 +153,25 @@ var isFlashInstalled=function(){if(navigator.plugins["Shockwave Flash"]){return 
 			document.getElementById('tag_form_button_'+id).style.display='none';
 		}
 
+		var g_request_thread_key="";
+		var g_remote_host="";
+
+		function get_host(remote_host){
+			g_remote_host=remote_host;
+			document.getElementById("remote_host_"+g_request_thread_key).value=remote_host;
+		}
+
+		function request_host(thread_key){
+			g_request_thread_key=thread_key;
+			if(g_remote_host!=""){
+				get_host(g_remote_host);
+				return;
+			}
+			var script = document.createElement('script');
+			script.src = 'http://www.abars.biz/remote_host/remote_host.php?callback=get_host';
+			document.body.appendChild(script);
+		}
+
 		function display_comment_tab(type,thread_key){
 			if($(".comment_tab_"+thread_key+"_"+type).hasClass("checked")){
 				$(".comment_tab_"+thread_key).removeClass("checked");
@@ -165,6 +184,8 @@ var isFlashInstalled=function(){if(navigator.plugins["Shockwave Flash"]){return 
 
 			$(".comment_tab_"+thread_key+"_body").hide();
 			$(".comment_tab_"+thread_key+"_body_"+type).show();
+
+			request_host(thread_key)
 		}
 
 		function applause(host,bbs_key,thread_key,mode,order,page){

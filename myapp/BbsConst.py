@@ -30,8 +30,8 @@ class BbsConst:
 	SPAM_CHECKED = "スパムと判定されました。コメントを修正して再投稿して下さい。コマントにURLや禁止ワードを含む場合にスパム判定されやすくなります。"
 	SPAM_CHECKED_ENGLISH = "Classified as spam. Please remove URL from your comment."
 
-	SPAM_HOST_CHECKED = "投稿規制されています。思い当たる点がない場合は、abarsceo@gmail.comまでご連絡下さい。"
-	SPAM_HOST_CHECKED_ENGLISH = "Classified as spam host."
+	SPAM_HOST_CHECKED = "ホスト規制されています。規制解除につきましてはabarsceo@gmail.comまでご連絡下さい。ホスト："
+	SPAM_HOST_CHECKED_ENGLISH = "Classified as deny host. Host:"
 	
 	#memcacheコントロール
 	OBJECT_CACHE_HEADER="ocache80_"	#この値を変更することで全てのキャッシュが無効になる

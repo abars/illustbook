@@ -12,19 +12,8 @@
 			{%if thread.is_ipad %}
 			({% if is_english %}from HTML5 version{% else %}HTML5版から投稿{% endif %})
 			{% endif %}
-			{#
-			{% if bbs.show_remote_addr_id %}
-			(ID：{{thread.remote_addr|ip_hash}})
-			{% endif %}
-			#}
 		{%endif%}
 
 		{% if thread.event_id %}
 			(イベント <a href="{{host}}?order=event&event_id={{thread.event_id}}">{{thread.event_id}}</a> への投稿)
 		{% endif %}
-
-{#
-		{% if admin_user %}
-		(Search ver：{{thread.search_index_version}})
-		{% endif %}
-#}

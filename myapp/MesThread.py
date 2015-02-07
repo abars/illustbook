@@ -71,5 +71,6 @@ class MesThread(CachedDbModel):
 
 	bookmark_comment = db.BlobProperty()
 	remote_addr = db.StringProperty()
+	remote_host = db.StringProperty()
 
 	sand = db.StringProperty()

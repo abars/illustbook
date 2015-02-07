@@ -35,6 +35,7 @@ class Entry(CachedDbModel):
 	hidden_flag = db.IntegerProperty()	#HiddenComment
 	violate_terms = db.IntegerProperty()
 	remote_addr = db.StringProperty()
+	remote_host = db.StringProperty()
 	comment_no = db.IntegerProperty()
 	search_index_version= db.IntegerProperty()
 	adult = db.IntegerProperty()

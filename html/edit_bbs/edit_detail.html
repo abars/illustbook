@@ -277,10 +277,8 @@
 </div>
 
 <div class="example">
-	<p>{% if is_english %}Category{% else %}カテゴリ{% endif %}</p>
-	<p>{% if is_english %}Now Category (comma splitter){% else %}現在のカテゴリ(カンマ区切り){% endif %}</p>
+	<p>{% if is_english %}Category List{% else %}カテゴリリスト(カンマ区切り){% endif %}</p>
 	<textarea name="category_list" id="category_list" rows="8" cols="40" style="width:80%;">{%if bbs.category_list %}{{bbs.category_list}}{%endif%}</textarea>
-	<p>{% if is_english %}Add Category{% else %}カテゴリを追加する{% endif %}</p>
 	<table><tr><td>
 	<input type="text" id="category_add" value="">
 	</td><td>
@@ -288,3 +286,12 @@
 	</td></tr></table>
 </div>
 
+<div class="example">
+	<p>{% if is_english %}Deny Host List (Example:ap.yournet.ne.jp){% else %}ホスト規制リスト(カンマ区切り)(ap.yournet.ne.jpなど){% endif %}</p>
+	<textarea name="deny_host_list" id="deny_host_list" rows="8" cols="40" style="width:80%;">{%if bbs.deny_host_list %}{{bbs.deny_host_list}}{%endif%}</textarea>
+	<table><tr><td>
+	<input type="text" id="deny_add" value="">
+	</td><td>
+	<input type="button" value="{% if is_english %}Add{% else %}追加{% endif %}" class="g-button" onclick="document.getElementById('deny_host_list').value+=','+document.getElementById('deny_add').value" style="font-size:85%">
+	</td></tr></table>
+</div>

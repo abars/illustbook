@@ -59,6 +59,7 @@ class AddEntry(webapp.RequestHandler):
 		#コメント番号を設定
 		entry.comment_no=thread.comment_cnt+1
 		entry.remote_addr=self.request.remote_addr
+		entry.remote_host=self.request.get("remote_host")
 
 	def update_thread_and_bbs_information(self,thread,bbs,entry):
 		#スレッドのコメント数を更新
@@ -137,27 +138,11 @@ class AddEntry(webapp.RequestHandler):
 
 		user = users.get_current_user()
 
-		checkcode=SpamCheck.get_check_code()
-		spam_host=SpamCheck.is_spam_ip(self.request.get("remote_host"),user)
-		if(SpamCheck.check(entry.content,checkcode) or spam_host):
-			if(spam_host):
-				if(is_english):
-					spam_mes=BbsConst.SPAM_HOST_CHECKED_ENGLISH
-				else:
-					spam_mes=BbsConst.SPAM_HOST_CHECKED
-			else:
-				if(is_english):
-					spam_mes=BbsConst.SPAM_CHECKED_ENGLISH
-				else:
-					spam_mes=BbsConst.SPAM_CHECKED
-			if(is_flash):
-				self.write_status(is_flash,spam_mes);
-			else:
-				Alert.alert_spam(self,entry.content,spam_mes);
-			return
-
 		thread=db.Key(self.request.get("thread_key"))
 		bbs = db.get(self.request.get("bbs_key"))
+
+		if(SpamCheck.check_all(self,entry.content,self.request.get("remote_host"),user,bbs,is_flash,is_english)):
+			return
 
 		#二重投稿ブロック
 		if(entry.content!="" and memcache.get("add_entry_double_block")==entry.content):

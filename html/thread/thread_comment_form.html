@@ -57,6 +57,7 @@
 				<textarea name="comment" rows="10" cols="60" style="width:100%;"></textarea>
 			</td></tr>
 			<tr><td></td><td>
+			<input type="hidden" name="remote_host" id="remote_host_{{thread.key()}}" value=""/>
 			<input type="hidden" name="redirect_url" value="{{redirect_url}}"/>
 			<input type="submit" value="{% if is_english %}Submit{% else %}コメントを書き込む{% endif %}" class="g-button"/>
 			</td></tr>

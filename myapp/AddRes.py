@@ -88,15 +88,10 @@ class AddRes(webapp.RequestHandler):
 			self.redirect(str(url))
 			return
 
-		checkcode=SpamCheck.get_check_code()
-		if(SpamCheck.check(response.content,checkcode)):
-			if(is_english):
-				spam_mes=BbsConst.SPAM_CHECKED_ENGLISH
-			else:
-				spam_mes=BbsConst.SPAM_CHECKED
-			Alert.alert_spam(self,response.content,spam_mes)
+		is_flash=False
+		if(SpamCheck.check_all(self,response.content,self.request.get("remote_host"),user,bbs_key,is_flash,is_english)):
 			return
-		
+
 		response.content=EscapeComment.escape_br(response.content)
 		response.content=EscapeComment.auto_link(response.content)
 		
@@ -122,6 +117,7 @@ class AddRes(webapp.RequestHandler):
 		#コメント番号を設定
 		response.comment_no=thread_key.comment_cnt+1
 		response.remote_addr=self.request.remote_addr
+		response.remote_host=self.request.get("remote_host")
 
 		#レスを書き込み
 		response.put()

@@ -33,6 +33,10 @@
 				<li><a href="#" onclick='prompt_action_thread("{{thread.key()}}", "{{bbs.key()}}", "{{host}}",{% if is_english %}true{% else %}false{% endif %})' style="color:#333;">{% if is_english %}Delete thread with key{% else %}スレッドの削除（削除キー）{% endif %}</a></li>
 			{% endif %}
 		{% endif %}
+
+		{% if owner %}
+			<li><a href="{{page_url_base}}{{page}}&amp;show_ip=1">{% if is_english %}Show IP and HOST{% else %}IPとホストを表示{% endif %}</a></li>
+		{% endif %}
 		</ul>
 	</div>
 

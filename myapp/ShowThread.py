@@ -151,9 +151,14 @@ class ShowThread(webapp.RequestHandler):
 		my_illust=False
 		if(user and thread.user_id==user.user_id()):
 			my_illust=True
-		
+
+		#IPを表示するかどうか
+		show_ip=False
+		if(self.request.get("show_ip") and owner):
+			show_ip=True
+
 		#コメントのレンダリング
-		comment=ShowEntry.render_comment(self,host_url,bbs,thread,com_list_,edit_flag,bbs_key,logined,show_comment_form,admin_user,user_name,user)
+		comment=ShowEntry.render_comment(self,host_url,bbs,thread,com_list_,edit_flag,bbs_key,logined,show_comment_form,admin_user,user_name,user,show_ip)
 		
 		#凍結されているか
 		frozen=ApiObject.is_frozen_thread(thread)
@@ -203,7 +208,8 @@ class ShowThread(webapp.RequestHandler):
 			'applause_enable': applause_enable,
 			'message': message,
 			'is_english': is_english,
-			'related': related
+			'related': related,
+			'show_ip': show_ip
 			}
 
 		path = "/html/"+design["base_name"]

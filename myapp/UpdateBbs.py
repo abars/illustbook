@@ -309,6 +309,7 @@ class UpdateBbs(webapp.RequestHandler):
 		bbs.bbs_mode=int(self.request.get("mode"))
 		bbs.comment_rule_enable=int(self.request.get("comment_rule_enable"))
 		bbs.category_list=self.request.get("category_list")
+		bbs.deny_host_list=self.request.get("deny_host_list")
 		bbs.enable_continue_draw=int(self.request.get("enable_continue_draw"))
 		bbs.enable_illust_reply=int(self.request.get("enable_illust_reply"))
 		bbs.enable_illust_reply_continue=int(self.request.get("enable_illust_reply_continue"))

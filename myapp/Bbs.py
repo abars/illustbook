@@ -107,6 +107,7 @@ class Bbs(CachedDbModel):
 	disable_analyze=db.IntegerProperty()
 	
 	category_list=db.TextProperty()
+	deny_host_list=db.TextProperty()
 	design_template_no=db.IntegerProperty()
 	
 	disable_content_image=db.IntegerProperty()

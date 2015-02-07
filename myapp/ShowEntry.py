@@ -85,7 +85,7 @@ class ShowEntry(webapp.RequestHandler):
 		return ApiObject.get_cached_object_hash(res_id_list)
 
 	@staticmethod
-	def _render_comment_core(req,host_url,bbs,thread,com_list_,edit_flag,bbs_key,logined,show_comment_form,is_admin,user_name,user,res_hash):
+	def _render_comment_core(req,host_url,bbs,thread,com_list_,edit_flag,bbs_key,logined,show_comment_form,is_admin,user_name,user,res_hash,show_ip):
 		#レスを取得
 		com_list=ShowEntry._get_response(com_list_,res_hash,thread,bbs)
 
@@ -114,7 +114,8 @@ class ShowEntry(webapp.RequestHandler):
 			'redirect_url': req.request.path,
 			'comment_edit': comment_edit,
 			'is_iphone': is_iphone,
-			'is_english': is_english
+			'is_english': is_english,
+			'show_ip': show_ip
 			}
 
 		path = "/html/thread/thread_comment.html"
@@ -122,14 +123,16 @@ class ShowEntry(webapp.RequestHandler):
 
 	#コメントを一つレンダリング
 	@staticmethod
-	def render_comment(req,host_url,bbs,thread,com_list_,edit_flag,bbs_key,logined,show_comment_form,is_admin,user_name,user):
+	def render_comment(req,host_url,bbs,thread,com_list_,edit_flag,bbs_key,logined,show_comment_form,is_admin,user_name,user,show_ip):
 		res_hash=ShowEntry._get_entry_res(com_list_)
-		return ShowEntry._render_comment_core(req,host_url,bbs,thread,com_list_,edit_flag,bbs_key,logined,show_comment_form,is_admin,user_name,user,res_hash)
+		return ShowEntry._render_comment_core(req,host_url,bbs,thread,com_list_,edit_flag,bbs_key,logined,show_comment_form,is_admin,user_name,user,res_hash,show_ip)
 
 	#コメントをまとめてレンダリング
 	@staticmethod
 	def render_comment_list(req,all_threads_cached,host_url,bbs,show_comment_form,logined,is_admin,user_name,user):
 		edit_flag=False
+		show_ip=False
+		
 		bbs_key=bbs.key()
 
 		#コメントとレスを先行して全て取得
@@ -150,6 +153,6 @@ class ShowEntry(webapp.RequestHandler):
 			for entry in thread.cached_entry_key:
 				one_entry=entry_hash[entry]
 				entry_list.append(one_entry)
-			thread.cached_render_comment=ShowEntry._render_comment_core(req,host_url,bbs,thread,entry_list,edit_flag,bbs_key,logined,show_comment_form,is_admin,user_name,user,res_hash)
+			thread.cached_render_comment=ShowEntry._render_comment_core(req,host_url,bbs,thread,entry_list,edit_flag,bbs_key,logined,show_comment_form,is_admin,user_name,user,res_hash,show_ip)
 		
 

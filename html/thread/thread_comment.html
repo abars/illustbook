@@ -9,6 +9,7 @@
 		<div class="actions g-button-container entry-res-info">
 			{% if is_english %}Name{% else %}投稿者{% endif %}：
 			{{entry.com|author_name_comment(host)|safe}}
+			{% if show_ip %}(IP:{{entry.com.remote_addr}}) (HOST:{{entry.com.remote_host}}) {% endif %}
 			{% if bbs.show_remote_addr_id and not entry.com.user_id %}(ID:{{entry.com.remote_addr|ip_hash}}){% endif %}
 			&nbsp;
 			{% if is_english %}Date{% else %}投稿日{% endif %}：{% if entry.com.create_date %}
@@ -90,6 +91,7 @@
 				<hr/>
 				<div class="actions g-button-container entry-res-info">
 				{% if is_english %}Name{% else %}投稿者{% endif %}：{{res|author_name_comment(host)|safe}}
+				{% if show_ip %}(IP:{{res.remote_addr}}) (HOST:{{res.remote_host}}) {% endif %}
 				{% if bbs.show_remote_addr_id and not res.user_id %}(ID:{{res.remote_addr|ip_hash}}){% endif %}
 				&nbsp;
 				{% if is_english %}Date{% else %}投稿日{% endif %}：{% if is_english %}{{res.date|time_UTC_progress}}{% else %}{{res.date|time_JST_progress}}{% endif %}

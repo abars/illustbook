@@ -92,20 +92,7 @@ class AddNewThread(webapp.RequestHandler):
 					self.write_status(is_flash,permission_error_str);
 					return
 
-		checkcode=SpamCheck.get_check_code()
-		spam_host=SpamCheck.is_spam_ip(self.request.get("remote_host"),user)
-		if(SpamCheck.check(self.request.get('thread_title'),checkcode) or spam_host):
-			if(spam_host):
-				if(is_english):
-					spam_mes=BbsConst.SPAM_HOST_CHECKED_ENGLISH
-				else:
-					spam_mes=BbsConst.SPAM_HOST_CHECKED
-			else:
-				if(is_english):
-					spam_mes=BbsConst.SPAM_CHECKED_ENGLISH
-				else:
-					spam_mes=BbsConst.SPAM_CHECKED
-			self.write_status(is_flash,spam_mes)
+		if(SpamCheck.check_all(self,self.request.get('thread_title'),self.request.get("remote_host"),user,bbs,is_flash,is_english)):
 			return
 
 		homepage_addr=""
@@ -242,6 +229,7 @@ class AddNewThread(webapp.RequestHandler):
 		
 		#IPアドレスを書き込み
 		new_thread.remote_addr=self.request.remote_addr
+		new_thread.remote_host=self.request.get("remote_host")
 		new_thread.thumbnail2_version=0
 		new_thread.search_index_version=0
 
