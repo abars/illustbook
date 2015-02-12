@@ -316,9 +316,9 @@ class Pinterest(webapp.RequestHandler):
 			old_event_list=EventList.get_old_event_list()
 			if(self.request.get("event_id")):
 				now_event=EventList.get_event(self.request.get("event_id"))
-			else:
-				if(event_list):
-					now_event=event_list[0]
+			#else:
+			#	if(event_list):
+			#		now_event=event_list[0]
 
 		event_thread_list=None
 		if(order=="new"):

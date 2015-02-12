@@ -37,7 +37,7 @@
 <div class="message hot_bbs">
 	<p>開催されたイベント</p>
 
-	{% if not all_event_list %}
+	{% if not old_event_list %}
 		開催されたイベントはありません。<br/>
 	{% else %}
 		{% for event in old_event_list %}
