@@ -33,6 +33,11 @@ class AddTag(webapp.RequestHandler):
 	def get(self):
 		SetUtf8.set()
 
+		user = users.get_current_user()
+		if(not user):
+			self.response.out.write(Alert.alert_msg("ログインしている必要があります。",self.request.host));
+			return;
+
 		thread=None
 		try:
 			thread = db.get(self.request.get("thread_key"))	
@@ -59,6 +64,8 @@ class AddTag(webapp.RequestHandler):
 				thread.tag_list.insert(0,tag)
 			else:
 				thread.tag_list.insert(0,tag)
+				tag_info="[Add Tag] "+tag+" "+str(user.user_id())+" "+user.email()
+				logging.info(tag_info)
 		else:
 			try:
 				thread.tag_list.remove(tag)
