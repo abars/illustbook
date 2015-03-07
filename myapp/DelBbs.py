@@ -114,5 +114,5 @@ class DelBbs(webapp.RequestHandler):
 
 		ApiFeed.invalidate_cache()
 
-		self.redirect(str('./mypage'))
+		self.redirect(str('./mypage?tab=bbs'))
 
