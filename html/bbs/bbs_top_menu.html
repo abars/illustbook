@@ -27,21 +27,27 @@
 
 		{% if bbs.bbs_mode != 3 %}
 			{% if can_create_new_image %}
-				{% if not bbs.disable_create_new_illust %}
-					{%if template_path and not is_english%}
-						<a href="javascript:bbs_open_draw('','{{bbs.key()}}','{{host}}');"><img src="{{template_path}}images/header_edit1.jpg" alt="イラストを描く" width="103" height="28"/></a>
-					{% else %}
-						<input type="button" value="{% if is_english %}Draw new{% else %}イラストを描く{% endif %}"  class="g-button" onclick="bbs_open_draw('','{{bbs.key()}}','{{host}}');"/>
-					{% endif %}
-				{%endif%}
-		
-				{% if bbs.enable_moper and not is_english and not is_iphone %}
-					{%if template_path %}
-						<a href="javascript:bbs_open_moper('','{{bbs.key()}}','{{host}}');"><img src="{{template_path}}images/header_edit2.jpg" alt="動画を描く" width="103" height="28"/></a>
-					{% else %}
-						<input type="button" value="動画を描く"  class="g-button" onclick="bbs_open_moper('','{{bbs.key()}}','{{host}}');"/>
+				{% if user %}
+					{% if not bbs.disable_create_new_illust %}
+						{%if template_path and not is_english%}
+							<a href="javascript:bbs_open_draw('','{{bbs.key()}}','{{host}}');"><img src="{{template_path}}images/header_edit1.jpg" alt="イラストを描く" width="103" height="28"/></a>
+						{% else %}
+							<input type="button" value="{% if is_english %}Draw new{% else %}イラストを描く{% endif %}"  class="g-button" onclick="bbs_open_draw('','{{bbs.key()}}','{{host}}');"/>
+						{% endif %}
 					{%endif%}
-				{%endif%}
+			
+					{% if bbs.enable_moper and not is_english and not is_iphone %}
+						{%if template_path %}
+							<a href="javascript:bbs_open_moper('','{{bbs.key()}}','{{host}}');"><img src="{{template_path}}images/header_edit2.jpg" alt="動画を描く" width="103" height="28"/></a>
+						{% else %}
+							<input type="button" value="動画を描く"  class="g-button" onclick="bbs_open_moper('','{{bbs.key()}}','{{host}}');"/>
+						{%endif%}
+					{%endif%}
+				{% else %}
+					{%if template_path %}<p>{%endif%}
+					{% if is_english %}You must login to submit{% else %}イラストの投稿にはログインが必要です{% endif %}
+					{%if template_path %}</p>{%endif%}
+				{% endif %}
 			{% else %}
 				{%if template_path %}<p>{%endif%}
 				{% if is_english %}Only allowing owner to edit{% else %}管理人のみ投稿可能{% endif %}
