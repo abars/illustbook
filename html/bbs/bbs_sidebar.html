@@ -18,20 +18,7 @@
 	{%endif%}
 
 	{%if one == "category" %}
-		<h4>
-		{% if is_english %}Category{% else %}カテゴリ{% endif %}
-		</h4>
-		<p>
-		{% if now_category %}
-		<a href="{{page_url_category_base}}" class="decnone">全て</a><br/>
-		{% endif%}
-		{% for category in category_list %}
-			{% if category.category == "" %}
-			{% else %}
-			<a href="{{page_url_category_base}}{{category.category|iriencode}}" class="decnone">{{category.category|truncate_category}}({{category.count}})</a><br/>
-			{% endif %}
-		{% endfor %}
-		</p>
+		{% include "bbs/bbs_category_list.html" %}
 	{%endif%}
 
 	{%if one == "affiliate" %}

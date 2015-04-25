@@ -69,7 +69,13 @@
 			<div id="infinite-scroll-container" class="transitions-enabled infinite-scroll clearfix">
 			{% endif %}
 
+			<!-- カテゴリリスト -->
+			{% if show_category_list %}
+				{% include "bbs/bbs_category_list.html" %}
+			{% endif %}
+
 			<!--イラストループ-->
+			{% if not show_category_list %}
 			{% if order == "thumbnail" %}
 				<!-- サムネイル -->
 				{% include 'bbs/bbs_show_thumbnail.html' %}
@@ -101,8 +107,8 @@
 					<br clear="all"/>
 					</div>
 				{% endif %}
-
 			{% endif%}
+			{% endif %}
 
 			{% if infinite_scroll %}
 			</div>

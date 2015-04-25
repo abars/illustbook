@@ -31,6 +31,22 @@ function bbs_select_change(order_value,url_base){
 	window.location.href=''+url_base+order;
 }
 
+function bbs_mute(bbs_key,host,is_english){
+	var msg="この掲示板をミュートして新着に表示されないようにしますか？";
+	if(is_english){
+		msg="Mute this BBS?";
+	}
+
+	var title=is_english ? "Mute":"ミュート";
+
+	jConfirm(msg,title,function(r){
+		if(r){
+			url=host+"add_bookmark?mode=add_mute_bbs&bbs_key="+bbs_key;
+			window.location.href=url;
+		}
+	});
+}
+
 function bbs_add_bookmark(bbs_name,bbs_key,host,is_english){
 	var msg='「'+bbs_name+'」をブックマークしますか？';
 	if(is_english){

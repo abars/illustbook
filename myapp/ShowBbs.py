@@ -213,6 +213,11 @@ class ShowBbs(webapp.RequestHandler):
 		#	else:
 		#		count_up_comment="ユーザ"
 
+		#カテゴリリスト
+		show_category_list=False
+		if(self.request.get("show_category_list")=="1"):
+			show_category_list=True
+
 		#レンダリング
 		template_values = {
 			'host': host_url,
@@ -255,7 +260,8 @@ class ShowBbs(webapp.RequestHandler):
 			'contents_only': contents_only,
 			'message': message,
 			'is_english': is_english,
-			'count_up_comment': count_up_comment
+			'count_up_comment': count_up_comment,
+			'show_category_list': show_category_list
 		}
 
 		path = "/html/"+design["base_name"]

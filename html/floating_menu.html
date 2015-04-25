@@ -63,7 +63,7 @@
 
 			<!-- order -->
 			{% if bbs and not thread %}
-				{% if order!="new" %}
+				{% if order!="new" or show_category_list%}
 					<li><a href="javascript:bbs_select_change('new','{{page_url_order_base}}');">
 						<i class="icon-align-left"></i>{% if is_english %}Latest{% else %}新着順{% endif %}
 					</a></li>
@@ -76,6 +76,12 @@
 				{% if order!="thumbnail" %}
 					<li><a href="javascript:bbs_select_change('thumbnail','{{page_url_order_base}}');">
 						<i class="icon-th"></i>{% if is_english %}Thumbnail{% else %}サムネイル{% endif %}
+					</a></li>
+				{% endif %}
+				{% if is_iphone %}
+					<li><a href="?show_category_list=1">
+						<i class="icon-list"></i>
+						{% if is_english %}Category List{% else %}カテゴリ一覧{% endif %}
 					</a></li>
 				{% endif %}
 			{% endif %}
@@ -95,7 +101,7 @@
 				{% if bbs %}
 					<li><a href="{{host}}mypage?user_id={{bbs.user_id}}"><i class="icon-user"></i>{% if is_english %}Owner{% else %}オーナー{% endif %}</a></li>
 					<li>{{bbs|add_bookmark_bbs(host,is_iphone,is_english,user)|safe}}</li>
-					<li><a href="{{host}}add_bookmark?mode=add_mute_bbs&bbs_key={{bbs.key()}}"><i class="icon-remove"></i>{% if is_english %}Mute{% else %}ミュート{% endif %}</li>
+					<li><a href="javascript:bbs_mute('{{bbs.key()}}','{{host}}',{% if is_english %}1{% else %}0{% endif %});"><i class="icon-remove"></i>{% if is_english %}Mute{% else %}ミュート{% endif %}</li>
 				{% endif %}
 			{% endif %}
 			{% endif %}
@@ -107,6 +113,15 @@
 			{% else %}
 				<li><a href="{{redirect_url|login_url|escape}}"><i class="icon-off"></i>{% if is_english %}Login{% else %}ログイン{% endif %}</a></li>
 			{% endif %}
+
+			{% if bbs and not thread and is_iphone %}
+				<li><a href="#">
+					<i class="icon-user"></i>
+					{% if is_english %}TODAY{% else %}今日{% endif %}：{{bbs.counter.today_cnt}}<br/>
+					{% if is_english %}TOTAL{% else %}合計{% endif %}：{{bbs.counter.total_cnt}}<br/>
+				</a></li>
+			{% endif %}
+
 			</ul>
 		{% endif %}
 		</div>
