@@ -11,9 +11,7 @@
 			<a href="{{page_url_category_base}}{{category.category|iriencode}}" class="{% if is_iphone %}g-button{% else %}decnone{% endif %}">
 				{{category.category|truncate_category}}({{category.count}})
 			</a>
-			{% if not is_iphone %}
 			<br/>
-			{% endif %}
 			{% endif %}
 		{% endfor %}
 		</p>

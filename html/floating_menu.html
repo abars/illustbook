@@ -78,7 +78,7 @@
 						<i class="icon-th"></i>{% if is_english %}Thumbnail{% else %}サムネイル{% endif %}
 					</a></li>
 				{% endif %}
-				{% if is_iphone %}
+				{% if is_iphone and category_list %}
 					<li><a href="?show_category_list=1">
 						<i class="icon-list"></i>
 						{% if is_english %}Category List{% else %}カテゴリ一覧{% endif %}
