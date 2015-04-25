@@ -277,6 +277,19 @@
 </div>
 
 <div class="example">
+	<p>{% if is_english %}Category{% else %}カテゴリ{% endif %}</p>
+
+	<table border=0 class="g-table">
+	<tr><th>{% if is_english %}Category Sort{% else %}カテゴリのソート{% endif %}</th><td>
+	<select name="disable_category_sort">
+		<option value="0" {% if not bbs.disable_category_sort %}selected="selected"{% endif %}>{% if is_english %}Enable{% else %}行う{% endif %}</option>
+		<option value="1" {% if bbs.disable_category_sort == 1 %}selected="selected"{% endif %}>{% if is_english %}Disable{% else %}行わない{% endif %}</option>
+	</select>
+	</td></tr>
+	</table>
+</div>
+
+<div class="example">
 	<p>{% if is_english %}Category List{% else %}カテゴリリスト(カンマ区切り){% endif %}</p>
 	<textarea name="category_list" id="category_list" rows="8" cols="40" style="width:80%;">{%if bbs.category_list %}{{bbs.category_list}}{%endif%}</textarea>
 	<table><tr><td>

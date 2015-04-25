@@ -69,7 +69,10 @@ class CategoryList(webapp.RequestHandler):
 			if(count==-1):
 				count=MesThread.all().filter("bbs_key =",bbs).filter("category =",name).count(limit=1000)
 				updated=True
-				dic.insert(0,{"category":name,"count":count})
+				if(bbs.disable_category_sort):
+					dic.append({"category":name,"count":count})
+				else:
+					dic.insert(0,{"category":name,"count":count})
 			else:
 				dic.append({"category":name,"count":count})
 		
