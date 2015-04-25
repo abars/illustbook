@@ -65,6 +65,8 @@ class AddTag(webapp.RequestHandler):
 			else:
 				thread.tag_list.insert(0,tag)
 				tag_info="[Add Tag] "+tag+" "+str(user.user_id())+" "+user.email()
+				thread.tag_last_edit=tag
+				thread.tag_last_edit_user_id=str(user.user_id())
 				logging.info(tag_info)
 		else:
 			try:

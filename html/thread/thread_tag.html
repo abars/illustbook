@@ -19,7 +19,8 @@
 
 		<div id="tag_form_{{ thread.key() }}" style="display:none;">
 			<p>&nbsp;</p>
-			{% if is_english %}{% else %}追加もしくは削除するタグの名前を入力してボタンを押して下さい。{% endif %}<br/>
+			{% if is_english %}{% else %}追加もしくは削除するタグの名前を入力してボタンを押して下さい。{% endif %}
+			<br/>
 			<div style="float:left;margin:4px;">
 				<input type="text" id="tag" maxlength="10"/>
 			</div>
@@ -27,6 +28,15 @@
 				<a href="javascript:AddTag('{{host}}','{{ bbs_key }}','{{ thread.key()}}');" class="g-button">{% if is_english %}Add{% else %}タグの追加{% endif %}</a>
 				<a href="javascript:DelTag('{{host}}','{{ bbs_key }}','{{ thread.key()}}');" class="g-button">{% if is_english %}Remove{% else %}タグの削除{% endif %}</a>
 			</div>
+			<br clear="all"/>
+			{% if thread.tag_last_edit or thread.tag_last_edit_user %}
+				<div align="right">
+					{% if is_english %}Last Edit{% else %}最終更新{% endif %} : 
+					<a href="{{host}}mypage?user_id={{thread.tag_last_edit_user_id}}">
+						{{thread.tag_last_edit}}
+					</a>
+				</a>
+			{% endif %}
 			<br clear="all"/>
 		</div>
 		

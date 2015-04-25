@@ -48,6 +48,8 @@ class MesThread(CachedDbModel):
 	short = db.StringProperty()
 	is_png = db.IntegerProperty()
 	tag_list = db.StringListProperty()
+	tag_last_edit = db.StringProperty()
+	tag_last_edit_user_id = db.StringProperty()
 	bookmark_count = db.IntegerProperty()
 	user_id = db.StringProperty()	#Submitter
 	is_ipad = db.IntegerProperty()

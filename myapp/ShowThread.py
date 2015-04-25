@@ -154,7 +154,7 @@ class ShowThread(webapp.RequestHandler):
 
 		#IPを表示するかどうか
 		show_ip=False
-		if(self.request.get("show_ip") and owner):
+		if(self.request.get("show_ip") and (owner or admin_user)):
 			show_ip=True
 
 		#コメントのレンダリング
