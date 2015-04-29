@@ -301,14 +301,19 @@
 		{% else %}
 			<tr><td>{% if is_english %}Title{% else %}タイトル{% endif %}</td><td><input id="title" value="{{title}}"/></td></tr>
 		{% endif %}
-			<tr><td>{% if is_english %}Author (MUST){% else %}投稿者名（必須）{% endif %}</td><td><input id="name" value="{{author}}"/></td></tr>
-			<tr><td>{% if is_english %}Mypage{% else %}マイページ{%endif%}</td><td>
+			<tr><td>{% if is_english %}Author (MUST){% else %}投稿者名（必須）{% endif %}</td><td><input id="name" value="{{author}}"/>
+			<div style="display:none;">
 		{% if logined %}
 			<input id="link_to_profile" name="link_to_profile" type="checkbox" checked>{% if is_english %}Link{%else%}リンクする{% endif %}
 		{% else %}
 			{% if is_english %}login require{% else %}リンクするにはログインが必要です{% endif %}
 		{% endif %}
+			</div>
+			{#
 			</td></tr>
+			<tr><td>{% if is_english %}Mypage{% else %}マイページ{%endif%}</td><td>
+			</td></tr>
+			#}
 			<tr><td>{% if is_english %}Category{% else %}カテゴリ{% endif %}</td><td>
 			{% include "category_list.html" %}
 			</td></tr>

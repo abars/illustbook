@@ -137,12 +137,12 @@ class SpamCheck(webapp.RequestHandler):
 
 	@staticmethod
 	def is_spam_ip(remote_host,user):
-		if(user):
-			return False
-		if(remote_host):
-			if(re.search("ap\.yournet\.ne\.jp",remote_host)):
-				logging.error("Spam host detected "+remote_host)
-				return True
+		#if(user):
+		#	return False
+		#if(remote_host):
+		#	if(re.search("ap\.yournet\.ne\.jp",remote_host)):
+		#		logging.error("Spam host detected "+remote_host)
+		#		return True
 		return False
 
 	@staticmethod
