@@ -123,23 +123,23 @@
 			<br clear="all"/>
 		{% endif %}
 
+		{% if follower %}
+			{% if is_english %}Follower{%else%}フォローされている{% endif %}<br/>
+			{% for user in follower %}
+				<a href="{{redirect_api}}?user_id={{user.user_id}}"><img src="{{user.icon_url}}&amp;size=mini" width="50px" height="50px" alt='{{user.name}}'/></a>
+			{% endfor %}
+			<br clear="all"/>
+		{% endif %}
+
 		{% if muting %}
 			{% if is_english %}Mute{%else%}ミュートしている{% endif %}<br/>
 			{% for user_id in muting %}
 				<div class="deletable" style="float:left;">
 					<a href="{{redirect_api}}?user_id={{user_id}}"><img src="{{host}}show_icon?key={{user_id}}&amp;size=mini" width="50px" height="50px" alt='ミュート'/></a>
 					{% if edit_mode %}
-						<a href="javascript:confirm_delete('del_mute_user&user_key={{user_id}}','ミュート','ユーザ',{% if is_english %}true{%else%}false{% endif %});" class="g-button no-text delete_button"><i class="icon-remove"></i></a>
+						<a href="javascript:confirm_delete('del_mute_user&user_key={{user_id}}','ミュートリスト','ユーザ',{% if is_english %}true{%else%}false{% endif %});" class="g-button no-text delete_button"><i class="icon-remove"></i></a>
 					{% endif %}
 				</div>
-			{% endfor %}
-			<br clear="all"/>
-		{% endif %}
-
-		{% if follower %}
-			{% if is_english %}Follower{%else%}フォローされている{% endif %}<br/>
-			{% for user in follower %}
-				<a href="{{redirect_api}}?user_id={{user.user_id}}"><img src="{{user.icon_url}}&amp;size=mini" width="50px" height="50px" alt='{{user.name}}'/></a>
 			{% endfor %}
 			<br clear="all"/>
 		{% endif %}

@@ -99,7 +99,7 @@
 	{% if bookmark_mute_bbs_list and not view_mode %}
 	<div class="message bbs_list hot_bbs">
 		<div class="bbs_title">
-			{% if is_english %}Mute BBS{% else %}ミュートしている（β）{% endif %}
+			{% if is_english %}Mute BBS{% else %}ミュートしている{% endif %}
 		</div>
 		<br clear="all"/>
 
@@ -122,7 +122,7 @@
 
 		<div class="bbs_button">
 			{% if edit_mode == 1 %}
-				<a href="javascript:confirm_delete('del_mute_bbs&bbs_key={{bbs.key}}','ブックマーク','{{bbs.title}}',{% if is_english %}true{%else%}false{% endif %});" class="g-button no-text"><i class="icon-remove"></i></a>
+				<a href="javascript:confirm_delete('del_mute_bbs&bbs_key={{bbs.key}}','ミュートリスト','{{bbs.title}}',{% if is_english %}true{%else%}false{% endif %});" class="g-button no-text"><i class="icon-remove"></i></a>
 			{% endif %}
 		</div>
 

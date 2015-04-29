@@ -1,5 +1,5 @@
 function confirm_delete(url,prefix,title,is_english){
-	var msg=""+prefix+"から「"+title+"」を削除してもいいですか？";
+	var msg=""+prefix+"から"+title+"を削除してもいいですか？";
 	if(is_english){
 		msg="Are you sure you want to remove "+title+"?"
 	}
