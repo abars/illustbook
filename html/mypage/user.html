@@ -55,6 +55,7 @@
 			 {% else %}
 				 <a href="javascript:confirm_follow('{{view_user.user_id}}','{{view_user.name}}',{% if is_english %}true{%else%}false{% endif %});" class="g-button"><i class="icon-plus"></i>{% if is_english %}Follow{%else%}フォロー{% endif %}</a>
 			 {% endif %}
+			 <a href="javascript:confirm_mute('{{view_user.user_id}}','{{view_user.name}}',{% if is_english %}true{%else%}false{% endif %});" class="g-button"><i class="icon-remove"></i>{% if is_english %}Mute{%else%}ミュート{% endif %}</a>
 			{% endif %}
 			{% if detail_exist %}
 				<a id="profile_button" href="javascript:show_profile({% if is_english %}true{% else %}false{% endif %});" class="g-button">{% if is_english %}Detail{%else%}詳細{% endif %}</a>
@@ -100,33 +101,57 @@
 
 {% if follow or follower %}
 <div class="message">
-		<div id="follower_button">
-			{% if is_english %}Follow{%else%}フォロー{% endif %}{{follow|length}}　{% if is_english %}Follower{%else%}フォロワー{% endif %}{{follower|length}}
-			<a href="javascript:show_follower();" class="g-button mini">{% if is_english %}Detail{%else%}詳細{% endif %}</a>
-		</div>
-		<div id="follower">
-			{% if follow %}
-		 {% if is_english %}Follow{%else%}フォローしている{% endif %}<br/>
-		 {% for user in follow %}
-		 <div class="deletable" style="float:left;">
-			 <a href="{{redirect_api}}?user_id={{user.user_id}}"><img src="{{user.icon_url}}&amp;size=mini" width="50px" height="50px" alt='{{user.name}}'/></a>
-			 {% if edit_mode %}
-			 <a href="javascript:confirm_delete('del_user&user_key={{user.user_id}}','フォロー','{{user.name}}',{% if is_english %}true{%else%}false{% endif %});" class="g-button no-text delete_button"><i class="icon-remove"></i></a>
-			 {% endif %}
-		 </div>
-		 {% endfor %}
-		 <br clear="all"/>
-		 {% endif %}
-		 {% if follower %}
-		 {% if is_english %}Follower{%else%}フォローされている{% endif %}<br/>
-		 {% for user in follower %}
-		 <a href="{{redirect_api}}?user_id={{user.user_id}}"><img src="{{user.icon_url}}&amp;size=mini" width="50px" height="50px" alt='{{user.name}}'/></a>
-		 {% endfor %}
-		 {% endif %}
-		 <!--
-			<br/><a href="javascript:show_follower();" class="g-button mini">閉じる</a>
-		-->
+	<div id="follower_button">
+		{% if is_english %}Follow{%else%}フォロー{% endif %}{{follow|length}}　{% if is_english %}Follower{%else%}フォロワー{% endif %}{{follower|length}}
+		{% if muting and not view_mode %}
+		&nbsp;{% if is_english %}Mute{%else%}ミュート{% endif %}{{muting|length}}
+		{% endif %}
+		<a href="javascript:show_follower();" class="g-button mini">{% if is_english %}Detail{%else%}詳細{% endif %}</a>
+	</div>
+
+	<div id="follower">
+		{% if follow %}
+			{% if is_english %}Follow{%else%}フォローしている{% endif %}<br/>
+			{% for user in follow %}
+				<div class="deletable" style="float:left;">
+					<a href="{{redirect_api}}?user_id={{user.user_id}}"><img src="{{user.icon_url}}&amp;size=mini" width="50px" height="50px" alt='{{user.name}}'/></a>
+					{% if edit_mode %}
+						<a href="javascript:confirm_delete('del_user&user_key={{user.user_id}}','フォロー','{{user.name}}',{% if is_english %}true{%else%}false{% endif %});" class="g-button no-text delete_button"><i class="icon-remove"></i></a>
+					{% endif %}
+				</div>
+		 	{% endfor %}
+			<br clear="all"/>
+		{% endif %}
+
+		{% if muting %}
+			{% if is_english %}Mute{%else%}ミュートしている{% endif %}<br/>
+			{% for user_id in muting %}
+				<div class="deletable" style="float:left;">
+					<a href="{{redirect_api}}?user_id={{user_id}}"><img src="{{host}}show_icon?key={{user_id}}&amp;size=mini" width="50px" height="50px" alt='ミュート'/></a>
+					{% if edit_mode %}
+						<a href="javascript:confirm_delete('del_mute_user&user_key={{user_id}}','ミュート','ユーザ',{% if is_english %}true{%else%}false{% endif %});" class="g-button no-text delete_button"><i class="icon-remove"></i></a>
+					{% endif %}
+				</div>
+			{% endfor %}
+			<br clear="all"/>
+		{% endif %}
+
+		{% if follower %}
+			{% if is_english %}Follower{%else%}フォローされている{% endif %}<br/>
+			{% for user in follower %}
+				<a href="{{redirect_api}}?user_id={{user.user_id}}"><img src="{{user.icon_url}}&amp;size=mini" width="50px" height="50px" alt='{{user.name}}'/></a>
+			{% endfor %}
+			<br clear="all"/>
+		{% endif %}
+
+		{% if not view_mode %}
+			<br clear="all"/>
+			<a href="{{host}}{{redirect_api}}?tab={{tab}}&edit=2" class="g-button mini">{% if is_english %}Edit{%else%}編集{% endif %}</a>
+		{% endif %}
 	 </div>
+	 <!--
+		<br/><a href="javascript:show_follower();" class="g-button mini">閉じる</a>
+	-->
 </div>
 {% endif %}
 

@@ -332,10 +332,10 @@ class Pinterest(webapp.RequestHandler):
 			my_color_bookmark=ApiObject.get_bookmark_of_user_id(user.user_id())
 
 		mute_bbs_list=[]
-		if(my_color_bookmark and my_color_bookmark.mute_bbs_packed_str_list):
-			mute_bbs_split_list=my_color_bookmark.mute_bbs_packed_str_list.split("#")
-			for bbs in mute_bbs_split_list:
-				mute_bbs_list.append(str(bbs))
+		mute_user_list=[]
+		if(my_color_bookmark):
+			mute_bbs_list=my_color_bookmark.get_mute_bbs_list()
+			mute_user_list=my_color_bookmark.get_mute_user_list()
 
 		template_values=Pinterest.initialize_template_value(self,user,user_id,page,request_page_mode,redirect_api,contents_only)
 		template_values['thread_list']=thread_list
@@ -359,6 +359,7 @@ class Pinterest(webapp.RequestHandler):
 
 		template_values['bookmark']=my_color_bookmark
 		template_values['mute_bbs_list']=mute_bbs_list
+		template_values['mute_user_list']=mute_user_list
 
 		template_values['is_admin']=OwnerCheck.is_admin(user)
 
@@ -626,6 +627,7 @@ class Pinterest(webapp.RequestHandler):
 		follow=ApiUser.user_get_follow(self,user_id,only_icon,bookmark)
 		follower=ApiUser.user_get_follower(self,user_id,only_icon)
 		following=Pinterest.is_following(user,user_id,view_mode)
+		muting=bookmark.get_mute_user_list()
 		age=Pinterest.get_age(bookmark)
 
 		#詳細情報の存在
@@ -665,6 +667,7 @@ class Pinterest(webapp.RequestHandler):
 			'user_id': user_id,
 			'follow': follow,
 			'follower': follower,
+			'muting': muting,
 			'view_mode': view_mode,
 			'edit_mode': edit_mode,
 			'tab': tab,

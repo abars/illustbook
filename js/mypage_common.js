@@ -69,6 +69,16 @@ function confirm_unfollow(user_key,name,is_english){
 	}
 }
 
+function confirm_mute(user_key,name,is_english){
+	var msg=""+name+"をミュートしますか？";
+	if(is_english){
+		msg="Are you sure you want to mute "+name+"?";
+	}
+	if(confirm(msg)){
+		location.href="add_bookmark?mode=add_mute_user&user_key="+user_key
+	}
+}
+
 function confirm_remove_tweet_list(is_english){
 	var msg='選択したツイートもしくはフィードを削除してもよろしいですか？';
 	if(is_english){

@@ -11,6 +11,7 @@
 {% for thread in thread_list %}
 {% if (thread|regulation_check(user)) and (thread.thread_url or edit_mode == 1) %}
 {% if not (mute_bbs_list and thread.bbs_key in mute_bbs_list) %}
+{% if not (mute_user_list and thread.user_id in mute_user_list) %}
 {% set at_least_one = 1 %}
 
 <div class="item {% if not thread.thread_url %}item_deleted{% endif %}">
@@ -148,6 +149,7 @@
 	</div>
 </div>
 
+{% endif %}
 {% endif %}
 {% endif %}
 {% endfor %}

@@ -179,6 +179,7 @@ class AddBookmark(webapp.RequestHandler):
 
 		#unpack mute_bbs_list
 		mute_bbs_list=bookmark.get_mute_bbs_list()
+		mute_user_list=bookmark.get_mute_user_list()
 
 		#add bookmark
 		feed_enable=False
@@ -193,6 +194,8 @@ class AddBookmark(webapp.RequestHandler):
 			AddBookmark.add_one(bookmark.app_key_list,add_app_key,app,True)
 		if(mode=="add_user"):
 			feed_enable=AddBookmark.add_user(bookmark.user_list,add_user_key)
+		if(mode=="add_mute_user"):
+			feed_enable=AddBookmark.add_user(mute_user_list,add_user_key)
 		
 		#del bookmark
 		if(mode=="del"):
@@ -206,11 +209,17 @@ class AddBookmark(webapp.RequestHandler):
 		if(mode=="del_user"):
 			if(add_user_key in bookmark.user_list):
 				bookmark.user_list.remove(add_user_key)
-
+		if(mode=="del_mute_user"):
+			if(add_user_key in mute_user_list):
+				mute_user_list.remove(add_user_key)
+	
 		#pack mute_bbs_list
 		bookmark.mute_bbs_packed_str_list=""
 		for bbs in mute_bbs_list:
 			bookmark.mute_bbs_packed_str_list+=str(bbs)+"#"
+		bookmark.mute_user_packed_str_list=""
+		for m_user in mute_user_list:
+			bookmark.mute_user_packed_str_list+=str(m_user)+"#"
 
 		#フォロー先のユーザのフォロワーを更新するようにリクエスト
 		if(mode=="add_user" or mode=="del_user"):

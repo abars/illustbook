@@ -32,6 +32,7 @@ class Bookmark(db.Model):
 	#mute_bbs_key_list = db.ListProperty(db.Key)	#AppEngineのbugで追加するとfetchがbad_value_errorになる
 	#mute_bbs_str_list = db.StringListProperty()
 	mute_bbs_packed_str_list = db.TextProperty()	#Listが追加できないので苦肉の策
+	mute_user_packed_str_list = db.TextProperty()
 
 	#投稿したイラスト数、投稿時に0クリア
 	submit_thread_count = db.IntegerProperty()
@@ -75,16 +76,24 @@ class Bookmark(db.Model):
 	date = db.DateTimeProperty(auto_now=True)
 
 	#mute listのunpack
-	def get_mute_bbs_list(self):
-		if(not self.mute_bbs_packed_str_list):
-			return []
-		mute_bbs_list=self.mute_bbs_packed_str_list.split("#")
+	def _get_mute_core(self,packed_str_list):
+		mute_bbs_list=packed_str_list.split("#")
 		ret=[]
 		for bbs in mute_bbs_list:
 			if(bbs==""):
 				continue
 			ret.append(bbs)
 		return ret
+
+	def get_mute_bbs_list(self):
+		if(not self.mute_bbs_packed_str_list):
+			return []
+		return self._get_mute_core(self.mute_bbs_packed_str_list)
+
+	def get_mute_user_list(self):
+		if(not self.mute_user_packed_str_list):
+			return []
+		return self._get_mute_core(self.mute_user_packed_str_list)
 
 	#ユーザIDベースでキャッシュする
 	def put(self,**kwargs):
