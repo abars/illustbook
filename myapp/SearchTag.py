@@ -69,14 +69,16 @@ class SearchTag(webapp.RequestHandler):
 			one_tag+=urllib.quote_plus(tag2.encode('utf8'))
 			one_tag+='">'
 			
-			size=int(score)+1
-			size=round(math.log(size,7)+1)
+			if(int(score)!=0):
+				size=int(score)+1
+				size=round(math.log(size,7)+1)
 			
-			one_tag+='<font size="'+str(size)+'">'
-			one_tag+=tag2
-			one_tag+='</font></a>'
+				one_tag+='<font size="'+str(size)+'">'
+				one_tag+=tag2
+				one_tag+='</font></a>'
 			
-			tag_list.append(one_tag)
+				tag_list.append(one_tag)
+
 			cnt=cnt+1
 		
 		memcache.set(BbsConst.RECENT_TAG_CACHE_HEADER,tag_list,BbsConst.RECENT_TAG_CACHE_TIME)
