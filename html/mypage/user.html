@@ -55,7 +55,6 @@
 			 {% else %}
 				 <a href="javascript:confirm_follow('{{view_user.user_id}}','{{view_user.name}}',{% if is_english %}true{%else%}false{% endif %});" class="g-button"><i class="icon-plus"></i>{% if is_english %}Follow{%else%}フォロー{% endif %}</a>
 			 {% endif %}
-			 <a href="javascript:confirm_mute('{{view_user.user_id}}','{{view_user.name}}',{% if is_english %}true{%else%}false{% endif %});" class="g-button"><i class="icon-remove"></i>{% if is_english %}Mute{%else%}ミュート{% endif %}</a>
 			{% endif %}
 			{% if detail_exist %}
 				<a id="profile_button" href="javascript:show_profile({% if is_english %}true{% else %}false{% endif %});" class="g-button">{% if is_english %}Detail{%else%}詳細{% endif %}</a>
@@ -64,14 +63,20 @@
 				 <a href="{{host}}{{redirect_api}}?tab={{tab}}&edit=2" class="g-button">{% if is_english %}Edit{%else%}編集{% endif %}</a>
 			{% endif %}
 
-			{% if not view_mode or is_admin %}
-				<a class="g-button dropdown-toggle" data-toggle="dropdown" href="#">
-				{% if is_english %}Others{%else%}その他{% endif %} <span class="caret"></span>
-				</a>
+			<a class="g-button dropdown-toggle" data-toggle="dropdown" href="#">
+			{% if is_english %}Others{%else%}その他{% endif %} <span class="caret"></span>
+			</a>
 
 				<ul class="dropdown-menu">
+					{#
 					<li><a href="{{host}}{{redirect_api}}">{% if is_english %}Top{% else %}トップへ戻る{% endif %}</a></li>
-					{%if not bookmark.disable_rankwatch and not is_english%}
+					#}
+					{% if view_mode %}
+					<li>
+						<a href="javascript:confirm_mute('{{view_user.user_id}}','{{view_user.name}}',{% if is_english %}true{%else%}false{% endif %});">{% if is_english %}Mute{%else%}ミュート{% endif %}</a>
+					</li>
+					{% endif %}
+					{%if not bookmark.disable_rankwatch and not is_english and not view_mode%}
 					<li>
 						<a href="ranking?mode=user">ランキング</a>
 					</li>
@@ -79,7 +84,9 @@
 					{% if not view_mode %}
 						<li><a href="./mypage?tab=timeline">{% if is_english %}My Timeline{% else %}マイタイムライン{% endif %}</a></li>
 					{% endif %}
+					{#
 					<li><a href="{{redirect_url|logout_url}}">{% if is_english %}Logout{% else %}ログアウト{% endif %}</a></li>
+					#}
 					{% if is_admin %}
 					<li><a href="javascript:if(confirm('アイコンを凍結しますか？')){ window.location.href='{{host}}violation?user_id={{bookmark.user_id}}' }">アイコン凍結（＊管理モード）</a></li>
 					<li><a href="javascript:if(confirm('アカウントを凍結しますか？')){ window.location.href='{{host}}mypage?freez=1&user_id={{bookmark.user_id}}' }">アカウント凍結（＊管理モード）</a></li>
@@ -91,7 +98,6 @@
 					<li><a href="javascript:confirm_withdraw('mypage?withdraw=go&user_id={{bookmark.user_id}}',{% if is_english %}true{%else%}false{% endif %})">{% if is_english %}Withdraw{% else %}退会する{% endif %}</a></li>
 					{% endif %}
 				</ul>
-			{% endif %}
 			</div>
 		</div>
 		</div>
