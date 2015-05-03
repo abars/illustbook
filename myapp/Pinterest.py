@@ -627,8 +627,11 @@ class Pinterest(webapp.RequestHandler):
 		follow=ApiUser.user_get_follow(self,user_id,only_icon,bookmark)
 		follower=ApiUser.user_get_follower(self,user_id,only_icon)
 		following=Pinterest.is_following(user,user_id,view_mode)
-		muting=bookmark.get_mute_user_list()
 		age=Pinterest.get_age(bookmark)
+
+		muting=[]
+		if(bookmark):
+			muting=bookmark.get_mute_user_list()
 
 		#詳細情報の存在
 		detail_exist=False
