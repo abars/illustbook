@@ -42,6 +42,13 @@ from myapp.SetUtf8 import SetUtf8
 from myapp.CssDesign import CssDesign
 
 class AddRes(webapp.RequestHandler):
+	def write_status(self,is_flash,msg):
+		if(is_flash):
+			self.response.headers ['Content-type'] = "text/html;charset=utf-8";
+			self.response.out.write(msg);
+		else:
+			Alert.alert_msg_with_write(self,msg);
+
 	def post(self):
 		SetUtf8.set()
 		is_english=CssDesign.is_english(self)
