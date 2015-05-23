@@ -24,9 +24,8 @@
 		{% endif %}
 
 		<div class="ilb_logo_text_margin">
-		<a href="{{host}}" class="ilb_logo_text">
+		<a href="{{host}}" class="ilb_logo_text" {% if is_iphone and my_new_feed_count and my_new_feed_count >= 10 %}style="letter-spacing: 0.75em;"{% endif %}>
 			ILLUSTBOOK
-<!--			<img src="{{host}}static_files/logo{% if is_iphone %}_mobile{%else%}_pc{%endif%}.png" alt="ロゴ"/> -->
 		</a>
 		</div>
 	</div>
