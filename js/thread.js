@@ -127,6 +127,7 @@ var isFlashInstalled=function(){if(navigator.plugins["Shockwave Flash"]){return 
 					if(comment==null){
 						return;
 					}
+					comment=encodeURI(comment);
 					url=host+'add_bookmark?mode=add&thread_key='+thread_key+'&comment='+comment;
 
 					msg=is_english ? "processing":"ブックマークしています。";
