@@ -5,6 +5,9 @@ api_version: 1
 default_expiration: "1m"
 threadsafe: yes
 
+automatic_scaling:
+  max_idle_instances: 1
+
 libraries:
 - name: jinja2
   version: latest
