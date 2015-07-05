@@ -113,6 +113,7 @@ from myapp.AddRankingScore import AddRankingScore
 from myapp.UploadTemp import UploadTemp
 from myapp.AnalyticsGet import AnalyticsGet
 from myapp.EventList import EventList
+from myapp.RankingPortal import RankingPortal
 
 #-----------------------------------------------------------------
 #ポータル
@@ -189,50 +190,6 @@ class Portal(webapp.RequestHandler):
 		path = '/html/portal.html'
 		req.response.out.write(template_select.render(path, template_values))
 
-class RankingPortal(webapp.RequestHandler):
-	def get(self):
-		is_iphone=CssDesign.is_iphone(self)
-
-		page=1
-		page_unit=20
-		if(self.request.get("page")):
-			page=int(self.request.get("page"))
-		
-		rank=Ranking.get_or_insert(BbsConst.THREAD_RANKING_KEY_NAME)
-		ranking_mode=self.request.get("mode")
-		
-		ranking_id_list=rank.user_id_ranking_list[(page-1)*page_unit:page*page_unit]
-		ranking_list=[]
-		for user_id in ranking_id_list:
-			obj=ApiObject.get_bookmark_of_user_id(user_id)
-			if(obj):
-				obj=ApiObject.create_user_object(self,obj)
-				ranking_list.append(obj)
-
-		user = users.get_current_user()
-		user_rank=0
-		if(user):
-			rank=Ranking.get_by_key_name(BbsConst.THREAD_RANKING_KEY_NAME)
-			if(rank):
-				user_rank=rank.get_user_rank(user.user_id())
-
-		template_values = {
-			'host': "./",
-			'is_iphone': is_iphone,
-			'user': user,
-			'user_rank': user_rank,
-			'redirect_url': self.request.path,
-			'mode': "ranking",
-			'header_enable': False,
-			'ranking_list': ranking_list,
-			'ranking_mode': ranking_mode,
-			'page': page,
-			'page_unit': page_unit
-		}
-
-		path = '/html/portal.html'
-		self.response.out.write(template_select.render(path, template_values))
-	
 class Terms(webapp.RequestHandler):
 	def get(self):
 		Portal.get(self,"terms",False)

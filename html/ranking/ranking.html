@@ -6,10 +6,14 @@
 {% set count = (page-1)*page_unit+1 %}
 {% for user in ranking_list %}
 	<div class="item">
+		{% if not user %}
+		<h2>{{count}}位&nbsp;非表示設定ユーザ</h2>
+		{% else %}
 		<a href="{{user.profile_url}}">
 		<h2>{{count}}位&nbsp;{{user.name}}</h2>
 		<img src="{{user.icon_url}}" width=50px height=50px />　
 		</a>
+		{% endif %}
 		{% set count = count + 1 %}
 	</div>
 {% endfor %}
