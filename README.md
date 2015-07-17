@@ -1,30 +1,21 @@
-お絵かき掲示板システム of illustbook.net
-=============
+# illustbook
+Illustration SNS for Google App Engine / py
 
-概要
--------
+#概要
 
-GoogleAppEngineで動く掲示板システムです。
-公開しているソースコードはMITライセンスです。
-
-実際に
-http://www.illustbook.net/
-で運用しています。
-
-お絵かきツールを公開する予定はないため、動作させることはできません。
+GoogleAppEngineで動くSNSシステムです。
+http://www.illustbook.net/ で運用しています。
 実装の参考にご利用下さい。
 
-動作環境
--------
+#動作環境
 
-GoogleAppEngine1.7
+GAE/py
 
 Python2.7(concurrent)
 
 Jinja2
 
-フォルダ構成
--------
+#フォルダ構成
 
 myapp　サーバサイドのPythonコード
 
