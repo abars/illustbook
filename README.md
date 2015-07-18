@@ -1,6 +1,8 @@
 # illustbook
 Illustration SNS for Google App Engine / py
 
+![illustbook logo](https://github.com/abars/illustbook/blob/master/static_files/banner_360b.png)
+
 #概要
 
 GoogleAppEngineで動くSNSシステムです。
