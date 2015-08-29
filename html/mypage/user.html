@@ -137,7 +137,7 @@
 			<br clear="all"/>
 		{% endif %}
 
-		{% if muting %}
+		{% if muting and not view_mode %}
 			{% if is_english %}Mute{%else%}ミュートしている{% endif %}<br/>
 			{% for user_id in muting %}
 				<div class="deletable" style="float:left;">
