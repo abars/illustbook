@@ -105,20 +105,20 @@
 			{% endif %}
 			{% endif %}
 
+			{% if bbs and not thread and (is_iphone or bbs.in_frame_mode) and not bbs.disable_counter %}
+				<li><a href="#">
+					<i class="icon-user"></i>
+					{% if is_english %}TODAY{% else %}今日{% endif %}：{{bbs.counter.today_cnt}}<br/>
+					{% if is_english %}TOTAL{% else %}合計{% endif %}：{{bbs.counter.total_cnt}}<br/>
+				</a></li>
+			{% endif %}
+
 			{% if user %}
 				{% if not is_iphone or mypage %}
 					<li><a href="{{redirect_url|logout_url|escape}}"><i class="icon-off"></i>{% if is_english %}Logout{%else%}ログアウト{% endif %}</a></li>
 				{% endif %}
 			{% else %}
 				<li><a href="{{redirect_url|login_url|escape}}"><i class="icon-off"></i>{% if is_english %}Login{% else %}ログイン{% endif %}</a></li>
-			{% endif %}
-
-			{% if bbs and not thread and is_iphone and not bbs.disable_counter %}
-				<li><a href="#">
-					<i class="icon-user"></i>
-					{% if is_english %}TODAY{% else %}今日{% endif %}：{{bbs.counter.today_cnt}}<br/>
-					{% if is_english %}TOTAL{% else %}合計{% endif %}：{{bbs.counter.total_cnt}}<br/>
-				</a></li>
 			{% endif %}
 
 			</ul>
