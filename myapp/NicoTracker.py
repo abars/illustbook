@@ -80,6 +80,7 @@ class NicoTracker(webapp.RequestHandler):
 		try:
 			result = urlfetch.fetch("http://www.nicovideo.jp/watch/"+rec.id)
 		except:
+			logging.warning("niconico access failed")
 			return rec
 
 		#コメント数と再生数を取得
@@ -88,12 +89,12 @@ class NicoTracker(webapp.RequestHandler):
 		title=""
 		
 		if result.status_code == 200:
-			m = re.search(r"再生数：<strong>([0-9,]*)</strong>", result.content)
+			m = re.search(r"再生数：<span>([0-9,]*)</span>", result.content)
 			if(m):
 				play_n=m.group(1)
 				play_n=play_n.replace(",","");
 
-			m = re.search(r"コメント数：<strong>([0-9,]*)</strong>", result.content)
+			m = re.search(r"コメント数：<span>([0-9,]*)</span>", result.content)
 			if(m):
 				comment_n=m.group(1)
 				comment_n=comment_n.replace(",","");
@@ -104,6 +105,7 @@ class NicoTracker(webapp.RequestHandler):
 		
 		#取得失敗
 		if(play_n=="" or comment_n=="" or title==""):
+			logging.warning("failed to get comment count")
 			return None
 		
 		#書き込み
