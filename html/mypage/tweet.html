@@ -9,7 +9,7 @@
 			<input type="hidden" name="to_user_id" id="to_user_id" value="{{bookmark.user_id}}">
 		{% endif %}
 		&nbsp;
-		<a href="javascript:document.frm.submit();" class="g-button mini"><i class="icon-comment"></i>
+		<a href="javascript:document.frm.submit();" class="g-button"><i class="icon-comment"></i>
 		{% if view_mode %}
 			{% if is_english %}Tweet to {% endif %}{{bookmark.name}}{% if not is_english %}へ{% endif %}
 		{% else %}

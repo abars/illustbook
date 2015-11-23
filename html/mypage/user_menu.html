@@ -24,7 +24,7 @@
 				 </a>
 				{% endif %}
 			{% else %}
-			 <a href="{{host}}{{redirect_api}}?user_id={{user_id}}&amp;tab={{tab}}&amp;edit=1" class="g-button {% if is_iphone %}no-text{% endif %}">{% if is_iphone %}<i class="icon-list"></i>{% else %}{% if is_english %}Edit{% else %}編集{% endif %}{% endif %}</a>
+			 <a href="{{host}}{{redirect_api}}?user_id={{user_id}}&amp;tab={{tab}}&amp;edit=1" class="g-button {% if is_iphone %}no-text{% endif %}">{% if is_iphone %}<i class="icon-cog"></i>{% else %}{% if is_english %}Edit{% else %}編集{% endif %}{% endif %}</a>
 			{% endif %}
 	{% endif %}
 	</div>

@@ -160,8 +160,12 @@ h2,h3 {font-size:100%;color:#ea5376;}
 }
 
 .message {
+{#
 	{% if is_iphone %}
+	width: -webkit-calc(100% - 20px);
+	width: calc(100% - 20px);
 	{% endif %}
+#}
 	margin: 5px;
 	padding: 5px;
 	float: left;
@@ -397,12 +401,22 @@ h2,h3 {font-size:100%;color:#ea5376;}
 	margin-left: 62px;
 }
 
+.bbs_list_left{
+	{% if is_iphone %}
+	width:100%;
+	{% endif %}
+	float:left;
+}
+
 .bbs_list{
 	{% if is_iphone %}
+	width:-webkit-calc(100% - 20px);
+	width:calc(100% - 20px);
+	margin: 5px;
 	{% else %}
 	width:404px;
-	{% endif %}
 	margin: 4px;
+	{% endif %}
 }
 
 .bbs_hr{
