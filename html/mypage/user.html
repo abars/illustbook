@@ -150,9 +150,13 @@
 			<br clear="all"/>
 		{% endif %}
 
-		{% if not view_mode and edit_mode!=3 %}
+		{% if not view_mode %}
 			<br clear="all"/>
-			<a href="{{host}}{{redirect_api}}?tab={{tab}}&edit=3" class="g-button mini">{% if is_english %}Edit{%else%}編集{% endif %}</a>
+			{% if edit_mode!=3 %}
+			<a href="{{host}}{{redirect_api}}?tab={{tab}}&edit=3" class="g-button">{% if is_english %}Edit{%else%}編集{% endif %}</a>
+			{% else %}
+			<a href="{{host}}{{redirect_api}}?tab={{tab}}" class="g-button">{% if is_english %}Close{%else%}閉じる{% endif %}</a>
+			{% endif %}
 		{% endif %}
 	 </div>
 	 <!--
