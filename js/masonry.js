@@ -56,12 +56,26 @@ function masonry_exec(){
 }
 
 $(document).ready(function(){
+  var $container = $('#infinite-scroll-container'); 
+  masonry_fit_image_size($container);
   masonry_exec(); //corner stampに対応
 });
 
 $( window ).resize(function(){
   masonry_exec();
 });
+
+function masonry_fit_image_size($newElems){
+  var new_width=Math.floor(document.body.clientWidth/2-8);
+  var LP_IPHONE_IMG_WIDTH=152;
+  var finded=$newElems.find("img");
+  for(var i=0;i<finded.length;i++){
+    if(finded[i].width==LP_IPHONE_IMG_WIDTH){ //iPhoneの場合のみ
+      finded[i].height=Math.floor(new_width/finded[i].width*finded[i].height);
+      finded[i].width=new_width;
+    }
+  }
+}
 
 //re layout
 

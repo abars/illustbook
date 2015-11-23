@@ -250,14 +250,14 @@
 {% if not contents_only %}
   {% include "jquery.html" %}
   {% if use_masonry %}
-    <script language="javascript" src="js/masonry.js" type="text/javascript"></script>
+    <script language="javascript" src="{{host|host_for_js}}js/masonry.js" type="text/javascript"></script>
   {% endif %}
 {% endif %}
 
 <!-- load javascript -->
 {% if not contents_only %}
-  <script language="javascript" src="js/mypage_common.js" type="text/javascript"></script>
-  <script language="javascript" src="{{host}}js/infinite_scroll.js" type="text/javascript"></script>
+  <script language="javascript" src="{{host|host_for_js}}js/mypage_common.js" type="text/javascript"></script>
+  <script language="javascript" src="{{host|host_for_js}}js/infinite_scroll.js" type="text/javascript"></script>
   <script type="text/javascript">
   $(document).ready(function(){
    infinite_scroll_initialize('{{infinite_scroll_selecter}}',"{{use_masonry}}"=="True","{{host}}",{{page}},{% if is_english %}true{% else %}false{% endif %});

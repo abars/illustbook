@@ -43,6 +43,11 @@ function infinite_scroll_initialize(itemSelector,use_masonry,host,page,is_englis
       function( newElements ) {
         if(use_masonry){
           var $newElems = $( newElements );
+          
+          //ブラウザの解像度に合わせて画像サイズをフィットさせる
+          masonry_fit_image_size($newElems);
+
+          //メイン
           $newElems.css({ opacity: 0 });
           $container.masonry( 'appended', $newElems, true ); 
           $newElems.animate({ opacity: 1 });

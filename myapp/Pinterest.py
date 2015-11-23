@@ -712,7 +712,8 @@ class Pinterest(webapp.RequestHandler):
 
 	@staticmethod
 	def _render_page(self,template_values):
-		template_values['host']="./"
+		host="http://"+MappingId.mapping_host(self.request.host)+"/";
+		template_values['host']=host
 		template_values['is_iphone']=CssDesign.is_iphone(self)
 		template_values['is_tablet']=CssDesign.is_tablet(self)
 		template_values['tag_display_n']=40

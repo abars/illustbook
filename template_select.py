@@ -52,6 +52,7 @@ def set_jinja_filter(jinja_environment):
 			'regulation_name': custom_filter.regulation_name,
 			'ip_hash': custom_filter.ip_hash,
 			'truncate_category': custom_filter.truncate_category,
+			'host_for_js': custom_filter.host_for_js,
 	})
 
 jinja_environment_html = jinja2.Environment(loader=jinja2.FileSystemLoader("html/"))

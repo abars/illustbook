@@ -58,15 +58,13 @@ h2,h3 {font-size:100%;color:#ea5376;}
 #infinite-scroll-container {
 	margin:auto;
 	{% if is_iphone %}
-		width:320px;
+		width:100%;
 	{% else %}
 		{% if bookmark %}
 			min-width:848px;
 		{% endif %}
 	{% endif %}
-	{% if not is_iphone %}
-		display:none;
-	{% endif %}
+	display:none;
 }
 {% endif %}
 
@@ -87,7 +85,8 @@ h2,h3 {font-size:100%;color:#ea5376;}
 
 .item {
 {% if is_iphone %}
-	width:152px;
+	width: -webkit-calc(50% - 8px);
+	width: calc(50% - 8px);
 	margin: 4px;
 {% else %}
 	width:200px;
@@ -215,9 +214,7 @@ h2,h3 {font-size:100%;color:#ea5376;}
 	text-align: center;
 	font-size:12px;
 	{{white_bg}}
-	{% if not is_iphone %}
-		display:none;
-	{% endif %}
+	display:none;
 }
 
 #pinterest_footer a{
