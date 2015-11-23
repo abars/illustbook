@@ -629,9 +629,11 @@ class Pinterest(webapp.RequestHandler):
 		following=Pinterest.is_following(user,user_id,view_mode)
 		age=Pinterest.get_age(bookmark)
 
-		muting=[]
+		mute_user_list=[]
+		mute_bbs_list=[]
 		if(bookmark):
-			muting=bookmark.get_mute_user_list()
+			mute_user_list=bookmark.get_mute_user_list()
+			mute_bbs_list=bookmark.get_mute_bbs_list()
 
 		#詳細情報の存在
 		detail_exist=False
@@ -670,7 +672,9 @@ class Pinterest(webapp.RequestHandler):
 			'user_id': user_id,
 			'follow': follow,
 			'follower': follower,
-			'muting': muting,
+			'muting': mute_user_list,
+			'mute_user_list': mute_user_list,
+			'mute_bbs_list': mute_bbs_list,
 			'view_mode': view_mode,
 			'edit_mode': edit_mode,
 			'tab': tab,

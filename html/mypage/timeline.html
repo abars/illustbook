@@ -23,10 +23,13 @@
 
 	<!-- ミュートしている場合は表示しない -->
 	{% if not view_mode %}
-		{% if muting and feed.from_user and feed.from_user.user_id in muting %}
+		{% if mute_user_list and feed.from_user and feed.from_user.user_id in mute_user_list %}
 			{% if not feed.to_user or feed.to_user.user_id != bookmark.user_id %}
 				{% set deleted = True %}
 			{% endif %}
+		{% endif %}
+		{% if mute_bbs_list and feed.bbs and feed.bbs.key in mute_bbs_list %}
+			{% set deleted = True %}
 		{% endif %}
 	{% endif %}
 

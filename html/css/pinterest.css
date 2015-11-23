@@ -314,7 +314,7 @@ h2,h3 {font-size:100%;color:#ea5376;}
 }
 
 #follower{
-{% if edit_mode == 2 %}
+{% if edit_mode == 3 %}
 	display:block;
 {% else %}
 	display:none;
@@ -322,7 +322,7 @@ h2,h3 {font-size:100%;color:#ea5376;}
 }
 
 #follower_button{
-{% if edit_mode == 2 %}
+{% if edit_mode == 3 %}
 	display:none;
 {% else %}
 	display:block;

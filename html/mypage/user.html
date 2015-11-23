@@ -121,7 +121,7 @@
 			{% for user in follow %}
 				<div class="deletable" style="float:left;">
 					<a href="{{redirect_api}}?user_id={{user.user_id}}"><img src="{{user.icon_url}}&amp;size=mini" width="50px" height="50px" alt='{{user.name}}'/></a>
-					{% if edit_mode %}
+					{% if edit_mode == 3 %}
 						<a href="javascript:confirm_delete('del_user&user_key={{user.user_id}}','フォロー','{{user.name}}',{% if is_english %}true{%else%}false{% endif %});" class="g-button no-text delete_button"><i class="icon-remove"></i></a>
 					{% endif %}
 				</div>
@@ -142,7 +142,7 @@
 			{% for user_id in muting %}
 				<div class="deletable" style="float:left;">
 					<a href="{{redirect_api}}?user_id={{user_id}}"><img src="{{host}}show_icon?key={{user_id}}&amp;size=mini" width="50px" height="50px" alt='ミュート'/></a>
-					{% if edit_mode %}
+					{% if edit_mode == 3 %}
 						<a href="javascript:confirm_delete('del_mute_user&user_key={{user_id}}','ミュートリスト','ユーザ',{% if is_english %}true{%else%}false{% endif %});" class="g-button no-text delete_button"><i class="icon-remove"></i></a>
 					{% endif %}
 				</div>
@@ -150,9 +150,9 @@
 			<br clear="all"/>
 		{% endif %}
 
-		{% if not view_mode %}
+		{% if not view_mode and edit_mode!=3 %}
 			<br clear="all"/>
-			<a href="{{host}}{{redirect_api}}?tab={{tab}}&edit=2" class="g-button mini">{% if is_english %}Edit{%else%}編集{% endif %}</a>
+			<a href="{{host}}{{redirect_api}}?tab={{tab}}&edit=3" class="g-button mini">{% if is_english %}Edit{%else%}編集{% endif %}</a>
 		{% endif %}
 	 </div>
 	 <!--
