@@ -215,8 +215,8 @@ class AddBookmark(webapp.RequestHandler):
 	
 		#pack mute_bbs_list
 		bookmark.mute_bbs_packed_str_list=""
-		for bbs in mute_bbs_list:
-			bookmark.mute_bbs_packed_str_list+=str(bbs)+"#"
+		for one_bbs in mute_bbs_list:
+			bookmark.mute_bbs_packed_str_list+=str(one_bbs)+"#"
 		bookmark.mute_user_packed_str_list=""
 		for m_user in mute_user_list:
 			bookmark.mute_user_packed_str_list+=str(m_user)+"#"
