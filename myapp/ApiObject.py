@@ -614,6 +614,7 @@ class ApiObject(webapp.RequestHandler):
 		if(feed.feed_mode=="new_comment_thread"):
 			entry_mes_obj=ApiObject._get_entry_comment(feed,object_hash)
 			message=entry_mes_obj["message"]
+			author=entry_mes_obj["author"]
 			image_key=entry_mes_obj["image_key"]
 			thumbnail_url=None
 			thumbnail2_url=None
@@ -624,7 +625,7 @@ class ApiObject(webapp.RequestHandler):
 					url_header="."
 				thumbnail_url=url_header+"/thumbnail/"+str(image_key)+".jpg"
 				thumbnail2_url=url_header+"/thumbnail2/"+str(image_key)+".jpg"
-			entry={"key":str(StackFeedData.entry_key.get_value_for_datastore(feed)),"thumbnail_url":thumbnail_url,"thumbnail2_url":thumbnail2_url}
+			entry={"key":str(StackFeedData.entry_key.get_value_for_datastore(feed)),"author":author,"thumbnail_url":thumbnail_url,"thumbnail2_url":thumbnail2_url}
 
 		#オブジェクトを返す
 		one_dic={"mode":feed.feed_mode,"from_user":from_user,"to_user":to_user,"follow_user":follow_user,"bbs":bbs,"thread":thread,"entry":entry,"message":message,"create_date":create_date,"key":str(feed.key())}
@@ -651,14 +652,18 @@ class ApiObject(webapp.RequestHandler):
 				comment_deleted=True
 
 		message=""
+		message_author=""
 		if(comment_deleted):
 			message="deleted"
+			message_author=""
 		else:
 			if(res):
 				message=res.content
+				message_author=res.editor
 			else:
 				if(entry):
 					message=entry.content
+					message_author=entry.editor
 
 		message=ApiObject.truncate_html(message)
 		
@@ -670,7 +675,7 @@ class ApiObject(webapp.RequestHandler):
 					image_key=Entry.illust_reply_image_key.get_value_for_datastore(entry)
 					#message="<img src='/thumbnail2/"+str(image_key)+".jpg'/><br/>"+message
 
-		return {"message":message,"image_key":image_key}
+		return {"message":message,"author":message_author,"image_key":image_key}
 
 #-------------------------------------------------------------------
 #Access over capacity

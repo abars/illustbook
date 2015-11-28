@@ -50,7 +50,15 @@
 						{{feed.from_user.name}}
 					</a>
 				{% else %}
-					匿名ユーザ
+					{% if feed.mode == "bbs_new_illust" %}
+						{{feed.thread.author}}
+					{% else %}
+						{% if feed.mode == "new_comment_thread" %}
+							{{feed.entry.author}}
+						{% else %}
+							匿名ユーザ
+						{% endif %}
+					{% endif %}
 				{% endif %}
 				{% if feed.to_user %}
 				　->　<a href="{{feed.to_user.profile_url}}&tab=feed">

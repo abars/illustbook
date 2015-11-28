@@ -532,6 +532,11 @@ class Pinterest(webapp.RequestHandler):
 			if(user_id==user.user_id()):
 				view_mode=0
 
+		#管理モード
+		if(self.request.get("admin")):
+			if(OwnerCheck.is_admin(user)):
+				view_mode=0
+
 		#タブ
 		tab=Pinterest._decide_default_tab(self,bookmark_illust_exist,submit_illust_exist,submit_moper_exist,view_mode,bookmark,user,request_page_mode)
 
