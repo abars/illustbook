@@ -1,3 +1,5 @@
+{% if not is_iphone or (not now_event) %}
+
 <div class="message hot_bbs">
 	<p>開催中のイベント</p>
 	{% if not event_list %}
@@ -11,6 +13,8 @@
 </div>
 <br clear="all"/>
 
+{% endif %}
+
 {% if not is_iphone %}
 
 <div class="message hot_bbs">
@@ -22,7 +26,7 @@
 
 {% endif %}
 
-{% if not is_iphone or not event_list %}
+{% if not is_iphone or (not event_list and not now_event) %}
 
 <div class="message hot_bbs">
 	<p>開催予定のイベント</p>

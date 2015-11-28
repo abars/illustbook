@@ -366,6 +366,10 @@ h2,h3 {font-size:100%;color:#ea5376;}
 	margin-left:0px;
 	margin-right:0px;
 	margin-top:0px;
+	{% else %}
+	width:-webkit-calc(100% - 20px);
+	width:calc(100% - 20px);
+	margin: 5px;
 	{% endif %}
 }
 
