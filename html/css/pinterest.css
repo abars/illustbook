@@ -85,8 +85,7 @@ h2,h3 {font-size:100%;color:#ea5376;}
 
 .item {
 {% if is_iphone %}
-	width: -webkit-calc(50% - 8px);
-	width: calc(50% - 8px);
+	width: 152px;
 	margin: 4px;
 {% else %}
 	width:200px;

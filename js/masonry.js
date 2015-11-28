@@ -69,10 +69,23 @@ function masonry_fit_image_size($newElems){
   var new_width=Math.floor(document.body.clientWidth/2-8);
   var LP_IPHONE_IMG_WIDTH=152;
   var finded=$newElems.find("img");
+
+  var is_iphone=false;
   for(var i=0;i<finded.length;i++){
     if(finded[i].width==LP_IPHONE_IMG_WIDTH){ //iPhoneの場合のみ
       finded[i].height=Math.floor(new_width/finded[i].width*finded[i].height);
       finded[i].width=new_width;
+      is_iphone=true;
+    }
+  }
+
+  if(is_iphone){
+    var finded=$newElems.find(".item");
+    if(finded.length==0){
+      finded=$newElems; //二周目はjQueryが扱える型ではない
+    }
+    for(var i=0;i<finded.length;i++){
+      finded[i].style.width=""+new_width+"px";
     }
   }
 }
