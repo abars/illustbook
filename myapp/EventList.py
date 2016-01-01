@@ -55,7 +55,7 @@ class EventList(webapp.RequestHandler):
 	def get_old_event_list():
 		now_date=datetime.datetime.today()
 		event_query=Event.all()
-		event_query.filter("end_date <",now_date)
+		event_query.filter("end_date <",now_date).order("-end_date")
 		return event_query.fetch(offset=0,limit=100)
 
 	@staticmethod
