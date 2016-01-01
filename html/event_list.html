@@ -2,7 +2,13 @@
 	{% if thread and thread.event_id %}
 		<option value="{{thread.event_id}}" selected="selected">{{thread.event_id}}</option>
 	{% endif %}
-	<option value="" {% if thread and thread.event_id %}{% else %}selected="selected"{% endif %}>{% if is_english %}-{% else %}参加しない{% endif %}</option>
+	<option value="" {% if thread and thread.event_id %}{% else %}selected="selected"{% endif %}>{% if is_english %}-{% else %}
+		{% if not event_list %}
+			開催中のイベントはありません
+		{% else %}
+			参加しない
+		{% endif %}
+	{% endif %}</option>
 	{% for event in event_list %}}
 		<option value="{{event.id}}">{{event.title}}</option>
 	{% endfor %}
