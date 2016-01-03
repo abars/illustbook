@@ -1,0 +1,45 @@
+<script type="text/javascript">
+	function require_password(key,viewmode,pass){
+		jPrompt("{% if is_english %}Put room password{% else %}ルームのパスワードを入力して下さい{% endif %}","","{% if is_english %}Password{% else %}パスワードの入力{% endif %}",function(pass){
+			if(pass){
+				require_username(key,viewmode,pass);
+			}
+		});
+	}
+
+	function require_username(key,viewmode,pass){
+		{% if not bookmark %}
+			jPrompt("{% if is_english %}Put your name{% else %}チャットで使用する名前を入力して下さい{% endif %}","{{bookmark.name}}","{% if is_english %}Name{% else %}名前の入力{% endif %}",function(name){
+				if(name){
+					start_chat(key,viewmode,pass,name);
+				}
+			});
+		{% else %}
+			start_chat(key,viewmode,pass,"{{bookmark.name}}");
+		{% endif %}
+	}
+
+	function start_chat(key,viewmode,pass,name){
+		window.location.href="./chat?mode=tool&amp;key="+key+"&amp;viewmode="+viewmode+"&amp;name="+encodeURI(name)+"&amp;pass="+pass
+	}
+
+	function join_chat(key,viewmode,pass){
+		if(pass!=""){
+			require_password(key,viewmode,pass);
+		}else{
+			require_username(key,viewmode,pass);
+		}
+	}
+
+	function delete_room(url){
+		if(confirm("{% if is_english %}This room will delete. Is this OK?{% else %}ルームを削除してもよろしいですか？{% endif %}")){
+			window.location.href=url;
+		}
+	}
+
+	function create_new_room(){
+		$("#new_room").hide();
+		$("#new_room_exec").show();
+		document.new_room_form.submit();
+	}
+</script>

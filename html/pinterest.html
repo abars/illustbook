@@ -34,7 +34,25 @@
 {% if page_mode == "guide" %}
 <title>{% if is_english %}How to use ILLUSTBOOK - ILLUSTBOOK{% else %}イラストブックの使い方 - イラストブック{% endif %}</title>
 {% else %}
-<title>{% if is_english %}ILLUSTBOOK - the BBS network of Manga{% else %}イラストブック - 無料レンタルお絵かき掲示板{% endif %}</title>
+<title>{% if is_english %}ILLUSTBOOK - the BBS network of Manga{% else %}
+  {% if order == "chat" %}
+  お絵かきチャット - イラストブック
+  {% else %}
+  {% if order == "hot" %}
+  人気のイラスト - イラストブック
+  {% else %}
+  {% if order == "monthly" %}
+  ランキング - イラストブック
+  {% else %}
+  {% if order == "event" %}
+  イベント - イラストブック
+  {% else %}
+  イラストブック - 無料レンタルお絵かき掲示板
+  {% endif %}
+  {% endif %}
+  {% endif %}
+  {% endif %}
+{% endif %}</title>
 {% if not is_english %}
 <meta name="Keywords" content="お絵かき掲示板,お絵かきブログ,無料,お絵かき,レンタル" />
 <meta name="Description" content="イラストブックはお絵かきツールがなくてもすぐに描ける完全無料のレンタルお絵かき掲示板サービスです。" />
@@ -220,7 +238,12 @@
     {% endif %}
   {% endif %}
   </div>
-  {% include "pinterest/illust.html" %}
+  {% if order == "chat" %}
+    {% include "chat/room_js.html" %}
+    {% include "chat/room_list.html" %}
+  {% else %}
+    {% include "pinterest/illust.html" %}
+  {% endif %}
 </div>
 
 {% if next_query %}

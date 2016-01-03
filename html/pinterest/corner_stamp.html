@@ -84,6 +84,23 @@
 {% endif %}
 {% endif %}
 
+<!-- イラブチャット -->
+{% if order == "chat" %}
+	<div class="message hot_bbs">
+		<img src="./static_files/chat/logo.png" alt="logo"/>
+		<p>{% if is_english %}
+			ilbchat is illust chat for PC and iPad.
+			{% else %}
+			イラブチャットはPCとiPadで楽しめるお絵かきチャットです。
+			{% endif %}</p>
+	</div>
+	<br clear="all"/>
+	<div class="message hot_bbs">
+		{% include "chat/room_create.html" %}
+	</div>
+	<br clear="all"/>
+{% endif %}
+
 <!-- 広告 -->
 {% if not is_iphone %}
 	{% if search %}

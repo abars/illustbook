@@ -302,7 +302,8 @@ class Pinterest(webapp.RequestHandler):
 				else:
 					search_api_error=True
 			else:
-				thread_list=ApiFeed.feed_get_thread_list(self,order,(page-1)*unit,unit)
+				if(order!="chat"):
+					thread_list=ApiFeed.feed_get_thread_list(self,order,(page-1)*unit,unit)
 		
 		bbs_list=ApiFeed.feed_get_bbs_list(self,"hot",0,8)
 
@@ -328,9 +329,20 @@ class Pinterest(webapp.RequestHandler):
 				now_event=event_list[0]
 				event_thread_list=ApiFeed.feed_get_thread_list(self,"event",0,8)
 
+		recent_tag=SearchTag.get_recent_tag(search_api)
+
 		room_list=None
 		if(order=="new"):
 			room_list=Chat.get_room_list()
+
+		if(order=="chat"):
+			thread_list=None
+			if(page==1):
+				room_list=Chat.get_room_object_list()
+			else:
+				room_list=[]
+			bbs_list=None
+			recent_tag=None
 
 		my_color_bookmark=None
 		if(user):
@@ -345,7 +357,7 @@ class Pinterest(webapp.RequestHandler):
 		template_values=Pinterest.initialize_template_value(self,user,user_id,page,request_page_mode,redirect_api,contents_only)
 		template_values['thread_list']=thread_list
 		template_values['next_query']="order="+order+"&amp;query="+month_query
-		template_values['tag_list']=SearchTag.get_recent_tag(search_api)
+		template_values['tag_list']=recent_tag
 		template_values['top_page']=True
 		template_values['order']=order
 		template_values['page_mode']="index"

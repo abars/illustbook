@@ -314,11 +314,8 @@ class Chat(webapp.RequestHandler):
 		memcache.set(cache_id,show_room,BbsConst.OBJECT_CHAT_ROOM_CACHE_TIME)
 		return show_room
 
-	#ポータル
-	def show_portal(self,user):
-		is_iphone=CssDesign.is_iphone(self)
-		is_tablet=CssDesign.is_tablet(self)
-
+	@staticmethod
+	def get_room_object_list():
 		room_list2=Chat._get_room_list_core()
 
 		show_room=[]
@@ -331,24 +328,40 @@ class Chat(webapp.RequestHandler):
 				if(room.from_last_update>=1 and room.user_count>=1):
 					room.user_count=0
 				show_room.append(room)
-		
+
+		return show_room
+
+	#ポータル
+	def show_portal(self,user):
+		self.redirect("./?order=chat")
+		return
+
+		is_iphone=CssDesign.is_iphone(self)
+		is_tablet=CssDesign.is_tablet(self)
+
+		show_room=Chat.get_room_object_list()
+	
 		is_admin=False
 		if(OwnerCheck.is_admin(user)):
 			is_admin=True
 
-		user_name=self.get_user_name(user)
+		#user_name=self.get_user_name(user)
+
+		bookmark=None
+		if(user):
+			bookmark=ApiObject.get_bookmark_of_user_id(user.user_id())
 
 		template_values = {
 			'host': "./",
 			'is_iphone': is_iphone,
 			'is_tablet': is_tablet,
-			'user': user,
+			'bookmark': bookmark,
 			'redirect_url': self.request.path,
 			'mode': "chat",
 			'header_enable': False,
 			'room_list': show_room,
 			'is_admin':is_admin,
-			'user_name': user_name,
+			#'user_name': user_name,
 			'is_english':CssDesign.is_english(self)
 		}
 		path = '/html/portal.html'
