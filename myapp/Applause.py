@@ -50,7 +50,9 @@ class Applause(webapp.RequestHandler):
 			Alert.alert_msg_with_write(self,"拍手対象のスレッドが見つかりません。");
 			return
 		
-		if(self.request.remote_addr!=thread.applause_ip and self.request.remote_addr!=thread.applause_ip2 and self.request.remote_addr!=thread.applause_ip3 and self.request.remote_addr!=thread.applause_ip4):
+		not_spam=(self.request.remote_addr!=thread.applause_ip and self.request.remote_addr!=thread.applause_ip2 and self.request.remote_addr!=thread.applause_ip3 and self.request.remote_addr!=thread.applause_ip4)
+
+		if(not_spam or self.request.get("comment")):
 			if thread.applause:
 				thread.applause=thread.applause+1
 			else:

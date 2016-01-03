@@ -190,7 +190,7 @@ var isFlashInstalled=function(){if(navigator.plugins["Shockwave Flash"]){return 
 		}
 
 		function applause(host,bbs_key,thread_key,mode,order,page){
-			applause_core(host,bbs_key,thread_key,mode,order,page,"");
+			applause_core(host,bbs_key,thread_key,mode,order,page,"","",false);
 		}
 
 		function applause_with_comment(host,bbs_key,thread_key,mode,order,page,is_english){
@@ -205,15 +205,15 @@ var isFlashInstalled=function(){if(navigator.plugins["Shockwave Flash"]){return 
 					if(comment==null){
 						return;
 					}
-					applause_core(host,bbs_key,thread_key,mode,order,page,comment);
+					applause_core(host,bbs_key,thread_key,mode,order,page,comment,title,is_english);
 				}
 			);
 		}
 
 		var applause_finish=new Object();
 
-		function applause_core(host,bbs_key,thread_key,mode,order,page,comment){
-			if(applause_finish[thread_key]){
+		function applause_core(host,bbs_key,thread_key,mode,order,page,comment,title,is_english){
+			if(applause_finish[thread_key] && comment==""){
 				return;
 			}
 
@@ -234,11 +234,20 @@ var isFlashInstalled=function(){if(navigator.plugins["Shockwave Flash"]){return 
 			}
 
 			//コメント付き拍手はページ遷移、そうでなければ非同期
-			if(comment!=""){
-				window.location.href=url
+			if(comment==""){
+				//window.location.href=url
+				//非同期
 			}else{
+				//同期
+				msg=is_english ? "processing":"拍手しています。";
+				jAlert(msg,title);
+				$('#popup_ok').hide();
+
 				$.get(url, function(data){
-					//alert("Applause Success: " + data);
+					var msg=is_english ? "success":"拍手に成功しました。";
+					jAlert(msg,title,function(){
+						window.location.href=url
+					});
 				});
 			}
 		}
