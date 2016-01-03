@@ -45,7 +45,7 @@
 </script>
 
 <!-- container -->
-<div class="message">
+<div class="message" style="width:100%;margin-left:0px;margin-right:0px;padding:0px;">
 	<div style="float:left;margin-right:10px;">
 		<img src="./static_files/chat/logo.png" alt="logo"/>
 	</div>
@@ -59,20 +59,33 @@
 	ご利用にはHTML5に対応したブラウザが必要です。
 			{% endif %}</p>
 		<a href="javascript:join_chat('always',false,false);" class="g-button">{% if is_english %}Trial{% else %}まずはお試し{% endif %}</a>&nbsp;
+
+{#
 		<a href="https://twitter.com/share" class="twitter-share-button" data-lang="ja" data-hashtags="ilbchat">ツイート</a>
 		<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+#}
 	</div>
 </div>
 
+{#
 <div class="message">
 <img src="./static_files/chat/ipad.png" alt="ipad"/>
 <img src="./static_files/chat/bbs.png" alt="submitable"/>
 </div>
+#}
 
-<div class="message">
+<div class="message" style="width:100%;margin-left:0px;margin-right:0px;padding:0px;">
+	<div style="margin:5px;padding:5px;">
 	<h1>{% if is_english %}Room{% else %}稼働中のルーム{% endif %}</h1>
-	{% if room_list %}
+
+	{% if not room_list %}
+		<p>{% if is_english %}No room exist{% else %}稼働中のルームはありません。{% endif %}</p>
+	{% endif %}
+	</div>
+</div>
+
 	{% for room in room_list %}
+	<div class="message">
 		<div style="float:left;">
 			<a href="javascript:join_chat('{{room.key()}}',false,{% if room.password %}true{%else%}false{%endif%});" class="declink">
 				{% if room.password %}
@@ -84,34 +97,37 @@
 		</div>
 		<div style="float:left;margin:4px;{% if is_iphone %}width:170px;{% endif %}">
 			<h2>{{room.name}}{# {% if room.is_always %}（常時稼動ルーム）{% endif %} #}
-			{% if room.password %}
-				（{% if is_english %}Password{% else %}パスワード{% endif %}）{% if user %}{% if user.user_id == room.user_id %}（{{room.password}}）{% endif %}{% endif %}　
-			{% else %}
-				（{% if is_english %}Everybody{% else %}誰でも{% endif %}）
-			{% endif %}
 			</h2>
 			<p>
 				{% if is_english %}by {% else %}作成者：{% endif %}<a href="./mypage?user_id={{room.user_id}}" style="text-decoration:none;color:#333;">
-					<img src="{{host}}show_icon?key={{room.user_id}}&amp;size=mini" width="24px" height="24px" alt="{{room.user_name}}"/>
+					{#<img src="{{host}}show_icon?key={{room.user_id}}&amp;size=mini" width="24px" height="24px" alt="{{room.user_name}}"/>#}
 					{{room.user_name}}
 				</a><br/>
+				{% if not is_english %}参加者：{% endif %}{{room.user_count}}{% if is_english %} Person{% else %}人{% endif %}<br/>
+				{% if not is_english %}
+					種別：
+				{% endif %}
+				{% if room.password %}
+					{% if is_english %}Password{% else %}パスワード{% endif %}
+					{% if user %}{% if user.user_id == room.user_id %}（{{room.password}}）{% endif %}{% endif %}　
+				{% else %}
+					{% if is_english %}Everybody{% else %}誰でも{% endif %}
+				{% endif %}
+				<br/>
 				{% if is_english %}{% else %}最終更新から{% endif %}{{room.from_last_update}}{% if is_english %} minutes ago{% else %}分経過{% endif %}<br/>
 			</p>
 			<div class="actions g-button-container">
 				<div class="g-button-group">
-					<a href="javascript:join_chat('{{room.key()}}',false,{% if room.password %}true{%else%}false{%endif%});" class="g-button">{% if not is_iphone %}{% endif %}{% if is_english %}Join{% else %}参加{% endif %}（{{room.user_count}}人）</a>
+					<a href="javascript:join_chat('{{room.key()}}',false,{% if room.password %}true{%else%}false{%endif%});" class="g-button">{% if not is_iphone %}{% endif %}{% if is_english %}Join{% else %}参加{% endif %}</a>
 					{% if user %}{% if user.user_id() == room.user_id %}<a href="javascript:delete_room('./chat?mode=delete&amp;key={{room.key()}}');" class="g-button">{% if is_english %}Delete{% else %}削除{% endif %}</a>{% endif %}{% endif %}
 				</div>
 			</div>
 		</div>
-		<br clear="all"/>
+	</div>
 	{% endfor %}
-	{% else %}
-		<p>{% if is_english %}No room exist{% else %}稼働中のルームはありません。{% endif %}</p>
-	{% endif %}
-</div>
 
-<div class="message">
+<div class="message" style="width:100%;margin-left:0px;margin-right:0px;padding:0px;">
+	<div style="margin:5px;padding:5px;">
 	<h1>{% if is_english %}Create room{% else %}ルームの作成{% endif %}</h1>
 
 	<div id="new_room_exec" style="display:none;">
@@ -133,6 +149,8 @@
 			{% if not is_english %}<br/>パスワードを設定しない場合は誰でも参加可能{% endif %}</td></tr>
 			<tr><th>{% if is_english %}Canvas size{% else %}キャンバスサイズ{% endif %}</th><td>
 				<select name="canvas_size">
+				<option value="1024x1024">1024x1024px</option>
+				<option value="1920x1080">1920x1080px</option>
 				<option value="600x600">600x600px</option>
 				<option value="800x600">800x600px</option>
 				</select>
@@ -148,6 +166,7 @@
 		{% if is_admin %}管理者向け：パスワードにalwaysと入れると常時稼動ルームになります<br/>{% endif %}
 		</p>
 		{% endif %}
+	</div>
 	</div>
 </div>
 
