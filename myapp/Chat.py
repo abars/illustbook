@@ -313,7 +313,7 @@ class Chat(webapp.RequestHandler):
 			return cache
 		show_room=[]
 		for room in room_list:
-			if(room.is_always):
+			if(room.is_always and room.user_count==0):
 				continue
 			url="./chat"
 			thumb="./chat?mode=thumbnail&amp;key="+str(room.key())
