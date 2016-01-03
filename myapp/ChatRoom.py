@@ -18,11 +18,12 @@ from myapp.AppCode import AppCode
 import pickle
 import StringIO
 import logging
+import datetime
 
 class ChatChunk(db.Model): 
 	data = db.BlobProperty() 
 	index = db.IntegerProperty()
-	date = db.DateTimeProperty(auto_now=True)
+	date = db.DateTimeProperty()
 
 class ChatRoom(db.Model):
 	name = db.StringProperty(indexed=False)
@@ -45,7 +46,7 @@ class ChatRoom(db.Model):
 	heart_beat_blob=db.BlobProperty()
 	is_always=db.IntegerProperty()	#for always room search
 	create_date = db.DateTimeProperty(auto_now=False)
-	date = db.DateTimeProperty(auto_now=True)
+	date = db.DateTimeProperty()
 	sand = db.StringProperty()
 
 	chunk_list = db.ListProperty(db.Key)
@@ -64,6 +65,8 @@ class ChatRoom(db.Model):
 	def put(self):
 		chunk_size = 500000	#500KBで分割する
 
+		self.date=datetime.datetime.now()
+
 		cnt=0
 		if(self.command_list!=""):
 			data=db.Blob(pickle.dumps(self.command_list))
@@ -74,11 +77,13 @@ class ChatRoom(db.Model):
 				if(i<len(self.chunk_list)):
 					chunk=db.get(self.chunk_list[i])
 					chunk.data=chunk_data
+					chunk.date=self.date
 					chunk.put()
 				else:
 					chunk = ChatChunk(parent=self)
 					chunk.data=chunk_data
 					chunk.index=i;
+					chunk.date=self.date
 					chunk.put()
 					self.chunk_list.append(db.Key(str(chunk.key())))
 
@@ -98,6 +103,8 @@ class ChatRoom(db.Model):
 			for i in xrange(cnt):
 				chunk=self.chunk_list[i]
 				chunk_data=db.get(chunk)
+				if(chunk_data.date!=self.date):
+					raise Excetion,"chunk missmatch" 
 				chunk_data=chunk_data.data
 				data.write(chunk_data)
 			self.command_list=pickle.loads(data.getvalue())
