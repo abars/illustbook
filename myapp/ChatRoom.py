@@ -104,7 +104,7 @@ class ChatRoom(db.Model):
 				chunk=self.chunk_list[i]
 				chunk_data=db.get(chunk)
 				if(chunk_data.date!=self.date):
-					raise Excetion,"chunk missmatch" 
+					raise Exception,"chunk missmatch" 
 				chunk_data=chunk_data.data
 				data.write(chunk_data)
 			self.command_list=pickle.loads(data.getvalue())

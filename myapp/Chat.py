@@ -231,10 +231,14 @@ class Chat(webapp.RequestHandler):
 	
 	#ユーザリストを取得する
 	def get_user_list(self):
-		room=ChatRoom.get(self.request.get("key"))#db.get(str(self.request.get("key")))
+		try:
+			room=ChatRoom.get(self.request.get("key"))#db.get(str(self.request.get("key")))
+		except:
+			ApiObject.write_json_core(self,{"status":"failed"})
+			return
 
 		if(room==None):
-			ApiObject.write_json_core(self,{"status":"failed"})
+			ApiObject.write_json_core(self,{"status":"not_found"})
 			return
 
 		dic={}
@@ -252,8 +256,12 @@ class Chat(webapp.RequestHandler):
 
 	#コマンドを取得する
 	def get_command(self):
-		room=ChatRoom.get(self.request.get("key"))#db.get(str(self.request.get("key")))
-		
+		try:
+			room=ChatRoom.get(self.request.get("key"))#db.get(str(self.request.get("key")))
+		except:
+			ApiObject.write_json_core(self,{"status":"failed"})
+			return
+
 		if(room==None):
 			ApiObject.write_json_core(self,{"status":"not_found"})
 			return
