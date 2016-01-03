@@ -46,17 +46,14 @@
 
 <!-- container -->
 <div class="message" style="width:100%;margin-left:0px;margin-right:0px;padding:0px;">
-	<div style="float:left;margin-right:10px;">
+	<div style="float:left;">
 		<img src="./static_files/chat/logo.png" alt="logo"/>
 	</div>
-	<div style="float:left;">
-		<h1>{% if is_english %}What's ilbchat{% else %}イラブチャットとは{% endif %}</h1>
+	<div style="float:left;margin-left:5px;">
 		<p>{% if is_english %}
 			ilbchat is illust chat for PC and iPad.
 			{% else %}
-			イラブチャット（β）はPCとiPadで楽しめるお絵かきチャットです。<br/>
-	作成したイラストはイラストブックに投稿することができます。<br/>
-	ご利用にはHTML5に対応したブラウザが必要です。
+			イラブチャットはPCとiPadで楽しめるお絵かきチャットです。
 			{% endif %}</p>
 		<a href="javascript:join_chat('always',false,false);" class="g-button">{% if is_english %}Trial{% else %}まずはお試し{% endif %}</a>&nbsp;
 
@@ -64,6 +61,7 @@
 		<a href="https://twitter.com/share" class="twitter-share-button" data-lang="ja" data-hashtags="ilbchat">ツイート</a>
 		<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 #}
+		<br/><br/>
 	</div>
 </div>
 
@@ -144,10 +142,10 @@
 		<form action="./chat" enctype="multipart/form-data" method="GET" name="new_room_form">
 			<input type="hidden" name="mode" value="create">
 			<table class="g-table">
-			<tr><th>{% if is_english %}Room name (MUST){% else %}ルーム名（必須）{% endif %}</th><td><input type="text" name="name" style="width:200px"></td></tr>
-			<tr><th>{% if is_english %}Password{% else %}パスワード{% endif %}</th><td><input type="text" name="pass" style="width:200px">
-			{% if not is_english %}<br/>パスワードを設定しない場合は誰でも参加可能{% endif %}</td></tr>
-			<tr><th>{% if is_english %}Canvas size{% else %}キャンバスサイズ{% endif %}</th><td>
+			<tr><td>{% if is_english %}Room name (MUST){% else %}ルーム名（必須）{% endif %}</td><td><input type="text" name="name" style="width:200px"></td></tr>
+			<tr><td>{% if is_english %}Password{% else %}パスワード{% endif %}<br/>&nbsp;</td><td><input type="text" name="pass" style="width:200px">
+			{% if not is_english %}<br/>パスワードを設定しない場合は誰でも参加可{% endif %}</td></tr>
+			<tr><td>{% if is_english %}Canvas size{% else %}キャンバスサイズ{% endif %}</td><td>
 				<select name="canvas_size">
 				<option value="1024x1024">1024x1024px</option>
 				<option value="1920x1080">1920x1080px</option>
@@ -157,7 +155,7 @@
 			</td></tr>
 			</table>
 			<br/>
-			<a href="javascript:create_new_room();" class="g-button">{% if is_english %}Create{% else %}ルームを作成{% endif %}</a>
+			<a href="javascript:create_new_room();" class="g-button">{% if is_english %}Create{% else %}作成{% endif %}</a>
 		</form>
 		{% endif %}
 
