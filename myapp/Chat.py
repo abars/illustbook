@@ -301,10 +301,12 @@ class Chat(webapp.RequestHandler):
 		room_list=Chat._get_room_list_core()
 		cache_id=BbsConst.OBJECT_CACHE_HEADER+BbsConst.OBJECT_CHAT_ROOM_HEADER
 		cache=memcache.get(cache_id)
-		#if(cache):
-		#	return cache
+		if(cache):
+			return cache
 		show_room=[]
 		for room in room_list:
+			if(room.is_always):
+				continue
 			url="./chat"
 			thumb="./chat?mode=thumbnail&amp;key="+str(room.key())
 			user_cnt=room.user_count
