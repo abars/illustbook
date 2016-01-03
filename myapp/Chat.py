@@ -37,6 +37,7 @@ from myapp.ApiObject import ApiObject
 from myapp.Bbs import Bbs
 from myapp.OwnerCheck import OwnerCheck
 from myapp.SyncPut import SyncPut
+from myapp.BbsConst import BbsConst
 
 class Chat(webapp.RequestHandler):
 	#エラー定数
@@ -94,7 +95,7 @@ class Chat(webapp.RequestHandler):
 	#ルームを終了する
 	def close_room(self,user):
 		try:
-			room=db.get(self.request.get("key"))
+			room=ChatRoom.get(self.request.get("key"))#db.get(self.request.get("key"))
 		except:
 			room=None
 		if(not room):
@@ -155,7 +156,7 @@ class Chat(webapp.RequestHandler):
 	@staticmethod
 	def post_snapshot_core(key,snap_shot_0,snap_shot_1,snap_range,thumbnail):
 		#スナップショットを格納
-		room=db.get(key)
+		room=ChatRoom.get(key)#db.get(key)
 		
 		#既にスナップショットが作成されている
 		if(room.snap_range>=snap_range):
@@ -187,7 +188,7 @@ class Chat(webapp.RequestHandler):
 	
 	@staticmethod
 	def post_command_core(key,cmd,cmd_count,user_count,client_id):
-		room=db.get(key)
+		room=ChatRoom.get(key)#db.get(key)
 		if(room==None):
 			return Chat.ERROR_NO_ROOM
 		if(not(client_id in room.channel_client_list)):
@@ -212,7 +213,7 @@ class Chat(webapp.RequestHandler):
 
 	#スナップショットを取得する
 	def get_snap_shot(self):
-		room=db.get(str(self.request.get("key")))
+		room=ChatRoom.get(self.request.get("key"))#db.get(str(self.request.get("key")))
 
 		if(room==None):
 			ApiObject.write_json_core(self,{"status":"failed"})
@@ -222,7 +223,7 @@ class Chat(webapp.RequestHandler):
 	
 	#ユーザリストを取得する
 	def get_user_list(self):
-		room=db.get(str(self.request.get("key")))
+		room=ChatRoom.get(self.request.get("key"))#db.get(str(self.request.get("key")))
 
 		if(room==None):
 			ApiObject.write_json_core(self,{"status":"failed"})
@@ -243,7 +244,7 @@ class Chat(webapp.RequestHandler):
 
 	#コマンドを取得する
 	def get_command(self):
-		room=db.get(str(self.request.get("key")))
+		room=ChatRoom.get(self.request.get("key"))#db.get(str(self.request.get("key")))
 		
 		if(room==None):
 			ApiObject.write_json_core(self,{"status":"not_found"})
@@ -280,21 +281,46 @@ class Chat(webapp.RequestHandler):
 		
 		ApiObject.write_json_core(self,{"status":"success","offset":offset,"count":limit,"command_list":command_list})
 	
+	#チャットリストの表示
+	@staticmethod
+	def _get_room_list_core():
+		room_list=db.Query(ChatRoom,keys_only=True).order("-create_date").fetch(limit=100)
+		room_list2=[]
+		for room_key in room_list:
+			try:
+				room=ChatRoom.get(room_key)#db.get(room_key)	#削除のインデックスの反映が遅延するため再取得
+			except:
+				room=None
+			if(not room):
+				continue
+			room_list2.append(room)
+		return room_list2
+
+	@staticmethod
+	def get_room_list():
+		room_list=Chat._get_room_list_core()
+		cache_id=BbsConst.OBJECT_CACHE_HEADER+BbsConst.OBJECT_CHAT_ROOM_HEADER
+		cache=memcache.get(cache_id)
+		#if(cache):
+		#	return cache
+		show_room=[]
+		for room in room_list:
+			url="./chat"
+			thumb="./chat?mode=thumbnail&amp;key="+str(room.key())
+			user_cnt=room.user_count
+			show_room.append({"title":room.name,"url":url,"thumbnail_url":thumb,"user_count":user_cnt,"key":str(room.key)})
+		memcache.set(cache_id,show_room,BbsConst.OBJECT_CHAT_ROOM_CACHE_TIME)
+		return show_room
+
 	#ポータル
 	def show_portal(self,user):
 		is_iphone=CssDesign.is_iphone(self)
 		is_tablet=CssDesign.is_tablet(self)
 
-		room_list=db.Query(ChatRoom,keys_only=True).order("-create_date").fetch(limit=100)
-		
+		room_list2=Chat._get_room_list_core()
+
 		show_room=[]
-		for room_key in room_list:
-			try:
-				room=db.get(room_key)	#削除のインデックスの反映が遅延するため再取得
-			except:
-				room=None
-			if(not room):
-				continue
+		for room in room_list2:
 			room.from_last_update=(Chat.get_sec(datetime.datetime.now())-Chat.get_sec(room.date))/60
 			room.from_created=(Chat.get_sec(datetime.datetime.now())-Chat.get_sec(room.create_date))/60
 			if(room.from_last_update>=10 and (not room.is_always)):
@@ -333,7 +359,7 @@ class Chat(webapp.RequestHandler):
 	
 	#サムネイル取得
 	def thumbnail(self):
-		room=db.get(str(self.request.get("key")))
+		room=ChatRoom.get(self.request.get("key"))#db.get(str(self.request.get("key")))
 		if(not room) or (not room.thumbnail):
 			self.redirect("./static_files/empty_user.png")
 			return
@@ -344,12 +370,12 @@ class Chat(webapp.RequestHandler):
 	@staticmethod
 	def add_user(room_key,client_id):
 		db.run_in_transaction(Chat.add_user_core,room_key,client_id)
-		room=db.get(room_key)
+		room=ChatRoom.get(room_key)#db.get(room_key)
 		Chat.user_update_notify(room)
 
 	@staticmethod
 	def add_user_core(room_key,client_id):
-		room=db.get(room_key)
+		room=ChatRoom.get(room_key)#db.get(room_key)
 
 		#ユーザの追加
 		if(not room.channel_client_list):
@@ -366,12 +392,12 @@ class Chat(webapp.RequestHandler):
 	@staticmethod
 	def remove_user(room_key,client_id):
 		db.run_in_transaction(Chat.remove_user_core,room_key,client_id)
-		room=db.get(room_key)
+		room=ChatRoom.get(room_key)#db.get(room_key)
 		Chat.user_update_notify(room)
 
 	@staticmethod
 	def remove_user_core(room_key,client_id):
-		room=db.get(room_key)
+		room=ChatRoom.get(room_key)#db.get(room_key)
 
 		#対象者を削除
 		if(room.channel_client_list.count(client_id)):
@@ -420,7 +446,7 @@ class Chat(webapp.RequestHandler):
 		password=self.request.get("pass")
 
 		try:
-			room=db.get(room_key)
+			room=ChatRoom.get(room_key)#db.get(room_key)
 		except:
 			room=None
 

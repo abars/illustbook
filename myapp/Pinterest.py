@@ -52,6 +52,7 @@ from myapp.JST import JST
 from myapp.Ranking import Ranking
 from myapp.SearchThread import SearchThread
 from myapp.EventList import EventList
+from myapp.Chat import Chat
 
 class Pinterest(webapp.RequestHandler):
 	@staticmethod
@@ -327,6 +328,10 @@ class Pinterest(webapp.RequestHandler):
 				now_event=event_list[0]
 				event_thread_list=ApiFeed.feed_get_thread_list(self,"event",0,8)
 
+		room_list=None
+		if(order=="new"):
+			room_list=Chat.get_room_list()
+
 		my_color_bookmark=None
 		if(user):
 			my_color_bookmark=ApiObject.get_bookmark_of_user_id(user.user_id())
@@ -361,6 +366,8 @@ class Pinterest(webapp.RequestHandler):
 		template_values['mute_bbs_list']=mute_bbs_list
 		template_values['mute_user_list']=mute_user_list
 
+		template_values['room_list']=room_list
+		
 		template_values['is_admin']=OwnerCheck.is_admin(user)
 
 		Pinterest._render_page(self,template_values)

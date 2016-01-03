@@ -15,6 +15,15 @@ from myapp.Counter import Counter
 from myapp.BbsConst import BbsConst
 from myapp.AppCode import AppCode
 
+import pickle
+import StringIO
+import logging
+
+class ChatChunk(db.Model): 
+	data = db.BlobProperty() 
+	index = db.IntegerProperty()
+	date = db.DateTimeProperty(auto_now=True)
+
 class ChatRoom(db.Model):
 	name = db.StringProperty(indexed=False)
 	password = db.StringProperty(indexed=False)
@@ -37,3 +46,61 @@ class ChatRoom(db.Model):
 	create_date = db.DateTimeProperty(auto_now=False)
 	date = db.DateTimeProperty(auto_now=True)
 	sand = db.StringProperty()
+
+	chunk_list = db.ListProperty(db.Key)
+	chunk_cnt = db.IntegerProperty()
+
+	def delete(self):
+		for chunk in self.chunk_list:
+			try:
+				db.delete(db.get(chunk))
+			except:
+				ok=True
+		db.Model.delete(self)
+	
+	def put(self):
+		chunk_size = 500000	#500KBで分割する
+
+		cnt=0
+		if(self.command_list!=""):
+			data=db.Blob(pickle.dumps(self.command_list))
+			cnt = int(len(data)/chunk_size)+1
+			for i in xrange(cnt):
+				chunk_data = data[i*chunk_size:(i+1)*chunk_size]
+
+				if(i<len(self.chunk_list)):
+					chunk=db.get(self.chunk_list[i])
+					chunk.data=chunk_data
+					chunk.put()
+				else:
+					chunk = ChatChunk(parent=self)
+					chunk.data=chunk_data
+					chunk.index=i;
+					chunk.put()
+					self.chunk_list.append(db.Key(str(chunk.key())))
+
+		self.command_list=""
+		self.chunk_cnt=cnt
+
+		db.Model.put(self)
+	
+	def download(self):
+		cnt=self.chunk_cnt
+		if(cnt==0):
+			self.command_list=""
+		else:
+			data=StringIO.StringIO()
+			for i in xrange(cnt):
+				chunk=self.chunk_list[i]
+				chunk_data=db.get(chunk)
+				chunk_data=chunk_data.data
+				data.write(chunk_data)
+			self.command_list=pickle.loads(data.getvalue())
+
+	@staticmethod
+	def get(key):
+		room=db.get(key)
+		if(not room):
+			return None
+		room.download()
+		return room
