@@ -66,7 +66,7 @@
 {% endif %}
 
 <!-- 人気のBBS -->
-{% if not is_iphone %}
+{% if not is_iphone and order!="new"%}
 	{% include "pinterest/hot_bbs.html" %}
 {% endif %}
 
@@ -76,7 +76,7 @@
 {% endif %}
 
 <!-- タグ一覧 -->
-{% if not is_iphone and not search %}
+{% if not is_iphone and not search and order!="new" %}
 	{% include "pinterest/recent_tag.html" %}
 {% endif %}
 
