@@ -82,47 +82,87 @@
 	</div>
 </div>
 
-	{% for room in room_list %}
-	<div class="message">
-		<div style="float:left;">
+{% for room in room_list %}
+	<div class="item">
+		<div class="deletable">
+			<div class="side-corner-tag" style="width:100%;">
 			<a href="javascript:join_chat('{{room.key()}}',false,{% if room.password %}true{%else%}false{%endif%});" class="declink">
 				{% if room.password %}
-					<div style="width:120px;height:120px;"></div>
+					<img src="./static_files/empty_user.png" alt="room thumbnail" class="item_radius_image" style="width:100%;"/>
 				{% else %}
-					<img src="./chat?mode=thumbnail&amp;key={{room.key()}}" width="120px" height="120px" alt="room thumbnail"/>
+					<img src="./chat?mode=thumbnail&amp;key={{room.key()}}" alt="room thumbnail" class="item_radius_image" style="width:100%;"/>
 				{% endif %}
 			</a>
+			<p><span>
+				{% if not is_english %}{% endif %}{{room.user_count}}{% if is_english %} Person{% else %}人参加中{% endif %}<br/>
+			</span></p>
+			</div>
 		</div>
-		<div style="float:left;margin:4px;{% if is_iphone %}width:170px;{% endif %}">
+		<div class="illust_summary">
 			<h2>{{room.name}}{# {% if room.is_always %}（常時稼動ルーム）{% endif %} #}
 			</h2>
-			<p>
-				{% if is_english %}by {% else %}作成者：{% endif %}<a href="./mypage?user_id={{room.user_id}}" style="text-decoration:none;color:#333;">
-					{#<img src="{{host}}show_icon?key={{room.user_id}}&amp;size=mini" width="24px" height="24px" alt="{{room.user_name}}"/>#}
-					{{room.user_name}}
-				</a><br/>
-				{% if not is_english %}参加者：{% endif %}{{room.user_count}}{% if is_english %} Person{% else %}人{% endif %}<br/>
-				{% if not is_english %}
-					種別：
-				{% endif %}
-				{% if room.password %}
-					{% if is_english %}Password{% else %}パスワード{% endif %}
-					{% if user %}{% if user.user_id == room.user_id %}（{{room.password}}）{% endif %}{% endif %}　
-				{% else %}
-					{% if is_english %}Everybody{% else %}誰でも{% endif %}
-				{% endif %}
-				<br/>
-				{% if is_english %}{% else %}最終更新から{% endif %}{{room.from_last_update}}{% if is_english %} minutes ago{% else %}分経過{% endif %}<br/>
-			</p>
-			<div class="actions g-button-container">
+
+			<div class="actions g-button-container" style="margin:2px;">
 				<div class="g-button-group">
 					<a href="javascript:join_chat('{{room.key()}}',false,{% if room.password %}true{%else%}false{%endif%});" class="g-button">{% if not is_iphone %}{% endif %}{% if is_english %}Join{% else %}参加{% endif %}</a>
 					{% if user %}{% if user.user_id() == room.user_id %}<a href="javascript:delete_room('./chat?mode=delete&amp;key={{room.key()}}');" class="g-button">{% if is_english %}Delete{% else %}削除{% endif %}</a>{% endif %}{% endif %}
 				</div>
 			</div>
+
+		</div>
+		<div class="item_info" style="margin:4px;">
+
+		<div style="float:left;margin:4px;{% if is_iphone %}width:170px;{% endif %}">
+		</div>
+
+		<div style="float:left;width:100%;">
+			<!-- info -->
+			<hr/>
+			<div style="float:right;width:100%;margin-left:-34px;">
+				<div class="item_info_author">
+				 {%if room.user_id %}
+					<a href="{{host}}mypage?user_id={{room.user_id}}" style="overflow:hidden;max-width:80%;">
+				 {% endif %}
+					<small>{{room.user_name}}</small>
+				 {%if room.user_id %}
+					 </a>
+				 {% endif %}
+				</div>
+				<div class="item_info_bookmark">
+				</div>
+				
+				<br clear="all"/>
+				
+				<div class="item_info_date">
+					{% if is_english %}{% else %}最終更新から{% endif %}{{room.from_last_update}}{% if is_english %} minutes ago{% else %}分経過{% endif %}<br/>
+				</div>
+				<div class="item_info_applause">
+				</div>
+			</div>
+
+			<!-- icon -->
+			<div style="float:left;margin:4px;width:26px;">
+				{%if room.user_id %}
+					<a href="{{host}}mypage?user_id={{room.user_id}}">
+					<img src="{{host}}show_icon?key={{room.user_id}}&amp;size=mini" width="26px" height="26px" alt="{{room.user_id}}"/>
+					</a>
+				{% else %}
+					<div style="width:26px;height:26px;">&nbsp;</div>
+				{% endif %}
+			</div>
+		</div>
+			<hr/>
+				{% if room.password %}
+					{% if is_english %}Password Locked{% else %}パスワードが必要{% endif %}
+					{% if user %}{% if user.user_id == room.user_id %}（{{room.password}}）{% endif %}{% endif %}　
+				{% else %}
+					{% if is_english %}Everybody{% else %}誰でも参加可能{% endif %}
+				{% endif %}
+
+
 		</div>
 	</div>
-	{% endfor %}
+{% endfor %}
 
 <div class="message" style="width:100%;margin-left:0px;margin-right:0px;padding:0px;">
 	<div style="margin:5px;padding:5px;">
