@@ -42,6 +42,7 @@ class ChatRoom(db.Model):
 	canvas_height=db.IntegerProperty(indexed=False)
 	channel_client_list=db.StringListProperty()
 	channel_client_list_for_reconnect=db.StringListProperty()
+	heart_beat_blob=db.BlobProperty()
 	is_always=db.IntegerProperty()	#for always room search
 	create_date = db.DateTimeProperty(auto_now=False)
 	date = db.DateTimeProperty(auto_now=True)
@@ -49,6 +50,8 @@ class ChatRoom(db.Model):
 
 	chunk_list = db.ListProperty(db.Key)
 	chunk_cnt = db.IntegerProperty()
+
+	heart_beat = {}
 
 	def delete(self):
 		for chunk in self.chunk_list:
@@ -82,6 +85,8 @@ class ChatRoom(db.Model):
 		self.command_list=""
 		self.chunk_cnt=cnt
 
+		self.heart_beat_blob=db.Blob(pickle.dumps(self.heart_beat))
+
 		db.Model.put(self)
 	
 	def download(self):
@@ -97,6 +102,8 @@ class ChatRoom(db.Model):
 				data.write(chunk_data)
 			self.command_list=pickle.loads(data.getvalue())
 
+		self.heart_beat=pickle.loads(self.heart_beat_blob)
+		
 	@staticmethod
 	def get(key):
 		room=db.get(key)

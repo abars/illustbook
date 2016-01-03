@@ -84,7 +84,7 @@ class Chat(webapp.RequestHandler):
 		room.canvas_height=canvas_height
 		room.password=self.request.get("pass")
 		room.is_always=0
-		
+
 		if(room.password=="always"):
 			room.is_always=1
 			room.password=""
@@ -124,9 +124,9 @@ class Chat(webapp.RequestHandler):
 			if(i!=cmd_count-1):
 				cmd_list=cmd_list+" , "
 		
-		if(not cmd_list):
-			ApiObject.write_json_core(self,{"status":"failed"})
-			return
+		#if(not cmd_list):
+		#	ApiObject.write_json_core(self,{"status":"failed"})
+		#	return
 
 		try:
 			size=db.run_in_transaction(Chat.post_command_core,key,cmd_list,cmd_count,user_count,client_id)	#排他制御を行う
@@ -188,6 +188,8 @@ class Chat(webapp.RequestHandler):
 	
 	@staticmethod
 	def post_command_core(key,cmd,cmd_count,user_count,client_id):
+		#Heart beatだけの場合はcmd_count==0
+
 		room=ChatRoom.get(key)#db.get(key)
 		if(room==None):
 			return Chat.ERROR_NO_ROOM
@@ -199,12 +201,18 @@ class Chat(webapp.RequestHandler):
 		if(room.command_list==""):
 			room.command_list=cmd
 		else:
-			room.command_list=room.command_list+" , "+cmd
+			if(cmd!=""):
+				room.command_list=room.command_list+" , "+cmd
 		room.command_cnt=room.command_cnt+cmd_count
+		room.heart_beat[client_id]=Chat.get_sec(datetime.datetime.now())
+		auto_logout=Chat.auto_logout(room)
 		room.put()
 
 		for client in room.channel_client_list:
-			channel.send_message( client , "update" )
+			if(cmd_count!=0):
+				channel.send_message( client , "update" )
+			if(auto_logout):
+				channel.send_message( client , "update_user" )
 
 		len1=len(db.model_to_protobuf(room).Encode())
 		#len2=sys.getsizeof(room.command_list)+sys.getsizeof(room)
@@ -397,8 +405,13 @@ class Chat(webapp.RequestHandler):
 			room.channel_client_list=[]	#ログイン中
 		if(not room.channel_client_list_for_reconnect):
 			room.channel_client_list_for_reconnect=[]	#再接続
+		if(not room.heart_beat):
+			room.heart_beat={}
+
 		room.channel_client_list.append(client_id)
 		room.channel_client_list_for_reconnect.append(client_id)
+
+		room.heart_beat[client_id]=Chat.get_sec(datetime.datetime.now())
 
 		#ユーザ数を変更
 		room.user_count=len(room.channel_client_list)
@@ -418,18 +431,36 @@ class Chat(webapp.RequestHandler):
 		if(room.channel_client_list.count(client_id)):
 			room.channel_client_list.remove(client_id)
 
-		#2時間経過したユーザも削除（トークンの有効期限が2時間なので）
-		server_time=Chat.get_sec(datetime.datetime.now())
-		for one_user in room.channel_client_list:
-			past=server_time-int(one_user.split("_")[1])
-			if(past>=60*60*2):
-				room.channel_client_list.remove(one_user)
-				logging.info("### timeout user "+str(past)+"[sec]")
+		#自動ログアウト
+		auto_logout=Chat.auto_logout(room)
 
 		#ユーザ数を変更
 		room.user_count=len(room.channel_client_list)
 
 		room.put()
+
+	@staticmethod
+	def auto_logout(room):
+		#クライアントからは60秒単位でHeartBeatが届く
+		#ChatDisconnectが来ない場合をケア
+
+		#昔は：2時間経過したユーザも削除（トークンの有効期限が2時間なので）
+
+		update_exist=False
+
+		server_time=Chat.get_sec(datetime.datetime.now())
+		for one_user in room.channel_client_list:
+			#past=server_time-int(one_user.split("_")[1])	#2時間で削除
+			#if(past>=60*60*2):
+			
+			past=server_time-room.heart_beat[one_user]
+			if(past>=5*60):	#5分で削除
+				room.channel_client_list.remove(one_user)
+				logging.info("### timeout user "+str(past)+"[sec]")
+
+				update_exist=True
+
+		return update_exist
 
 	@staticmethod
 	def user_update_notify(room):
