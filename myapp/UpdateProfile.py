@@ -49,6 +49,11 @@ class UpdateProfile(webapp.RequestHandler):
 		birthday_month = self.request.get("birthday_month")
 		birthday_day = self.request.get("birthday_day")
 		disable_rankwatch =int(self.request.get("disable_rankwatch"))
+		disable_global_tweet =int(self.request.get("disable_global_tweet"))
+
+		if(disable_global_tweet):
+			cache_id=BbsConst.OBJECT_CACHE_HEADER+BbsConst.OBJECT_TWEET_LIST_HEADER
+			memcache.delete(cache_id)
 		
 		regulation=0
 		if(self.request.get("regulation_r15_nl")):

@@ -52,6 +52,7 @@ def set_jinja_filter(jinja_environment):
 			'regulation_name': custom_filter.regulation_name,
 			'ip_hash': custom_filter.ip_hash,
 			'truncate_category': custom_filter.truncate_category,
+			'truncate_tweet': custom_filter.truncate_tweet,
 			'host_for_js': custom_filter.host_for_js,
 	})
 

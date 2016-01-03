@@ -53,6 +53,7 @@ from myapp.Ranking import Ranking
 from myapp.SearchThread import SearchThread
 from myapp.EventList import EventList
 from myapp.Chat import Chat
+from myapp.StackFeedData import StackFeedData
 
 class Pinterest(webapp.RequestHandler):
 	@staticmethod
@@ -232,6 +233,35 @@ class Pinterest(webapp.RequestHandler):
 		return template_values
 
 	@staticmethod
+	def _get_tweet_list(page):
+		cache_id=BbsConst.OBJECT_CACHE_HEADER+BbsConst.OBJECT_TWEET_LIST_HEADER
+		if(page==1):
+			cache=memcache.get(cache_id)
+			if(cache):
+				return cache
+
+		unit=10
+
+		query=db.Query(StackFeedData,keys_only=False).filter("feed_mode = ","message").order("-create_date")
+
+		try:
+			tweet_list=query.fetch(limit=unit,offset=unit*(page-1))
+		except:
+			tweet_list=None
+
+		tweet_list_removed=[]
+		for tweet in tweet_list:
+			bookmark=ApiObject.get_bookmark_of_user_id(tweet.from_user_id)
+			if(bookmark):
+				if(not bookmark.disable_global_tweet):
+					tweet_list_removed.append(tweet)
+
+		if(page==1):
+			memcache.set(cache_id,tweet_list_removed,BbsConst.OBJECT_TWEET_LIST_CACHE_TIME)
+
+		return tweet_list_removed
+
+	@staticmethod
 	def _index(self,user,user_id,page,request_page_mode,redirect_api,contents_only):
 		unit=BbsConst.PINTEREST_PAGE_UNIT
 
@@ -335,6 +365,13 @@ class Pinterest(webapp.RequestHandler):
 		if(order=="new"):
 			room_list=Chat.get_room_list()
 
+		tweet_list=None
+		tweet_page=1
+		if(order=="new"):
+			if(self.request.get("tweet_page")):
+				tweet_page=int(self.request.get("tweet_page"))
+			tweet_list=Pinterest._get_tweet_list(tweet_page)
+
 		if(order=="chat"):
 			thread_list=None
 			if(page==1):
@@ -379,6 +416,8 @@ class Pinterest(webapp.RequestHandler):
 		template_values['mute_user_list']=mute_user_list
 
 		template_values['room_list']=room_list
+		template_values['tweet_list']=tweet_list
+		template_values['tweet_page']=tweet_page
 		
 		template_values['is_admin']=OwnerCheck.is_admin(user)
 

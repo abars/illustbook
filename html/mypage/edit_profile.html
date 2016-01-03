@@ -23,6 +23,12 @@
 					<option value="1" {% if bookmark.disable_rankwatch %} selected="selected" {% endif%}>{% if is_english %}not Join{% else %}参加しない{% endif %}</option>
 				</select><br/>
 				</td></tr>
+				<tr><td>{% if is_english %}Show tweet{% else %}ポータルにツイートを表示{% endif %}</td><td>　</td><td>
+				<select name="disable_global_tweet" id="disable_global_tweet">
+					<option value="0" {% if not bookmark.disable_global_tweet %} selected="selected" {% endif %}>{% if is_english %}Show{% else %}表示する{% endif %}</option>
+					<option value="1" {% if bookmark.disable_global_tweet %} selected="selected" {% endif%}>{% if is_english %}not Show{% else %}表示しない{% endif %}</option>
+				</select><br/>
+				</td></tr>
 				<tr><td>{% if is_english %}Regulation{% else %}年齢制限付きコンテンツ{% endif %}</td><td>　</td><td>
 					<input type="checkbox" name="regulation_r15_nl" value="regulation_r15_nl" {% if bookmark.regulation and bookmark.regulation%2 == 1 %} checked{% endif %} />R15(NL)&nbsp;
 					<input type="checkbox" name="regulation_r15_bl" value="regulation_r15_bl" {% if bookmark.regulation and (bookmark.regulation//2)%2 == 1 %} checked{% endif %} />R15(BL)&nbsp;

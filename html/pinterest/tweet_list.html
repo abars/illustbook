@@ -1,0 +1,33 @@
+<div class="message hot_bbs">
+	<p>{% if is_english %}Tweet{% else %}最近のツイート{% endif %}</p>
+
+{% if tweet_list %}
+	{% for tweet in tweet_list %}
+
+	<div class="bbs_info" style="margin-left:-32px;">
+		<div class="bbs_info_contents" style="margin-left:32px;">
+		{{tweet.message|truncate_tweet}}
+		</div>
+	</div>
+
+	<div class="bbs_thumbnail">
+		<a href="{{host}}mypage?user_id={{tweet.from_user_id}}">
+		<img src="{{host}}show_icon?key={{tweet.from_user_id}}" width="20px" height="20px" alt="{{tweet.title}}"/>
+		</a>
+	</div>
+
+	<br clear="all"/>
+	{% endfor %}
+{% else %}
+	{% if is_english %}No tweet exist{% else %}ツイートはありません。{% endif %}
+	<br clear="all"/>
+{% endif %}
+
+	{% if tweet_page!=1 %}
+	<a href="?tweet_page={{tweet_page-1}}">Prev</a>&nbsp;
+	{% endif %}
+	Page.{{tweet_page}}&nbsp;
+	<a href="?tweet_page={{tweet_page+1}}">Next</a>&nbsp;
+	<a href="mypage?tab=feed">Tweet</a>
+</div>
+<br clear="all"/>

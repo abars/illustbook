@@ -455,3 +455,13 @@ def truncate_category(message):
 		message=""+message+"..."
 	return message
 
+#-----------------------------------------------------------------
+#ツイートの縮退
+#-----------------------------------------------------------------
+
+def truncate_tweet(message):
+	split_length=50
+	if(len(message)>=split_length):
+		message=message[0:split_length]
+		message=""+message+"..."
+	return message
