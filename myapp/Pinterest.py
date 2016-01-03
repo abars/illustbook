@@ -240,12 +240,17 @@ class Pinterest(webapp.RequestHandler):
 			if(cache):
 				return cache
 
-		unit=10
+		if(page==1):
+			unit=10
+			offset=0
+		else:
+			unit=50
+			offset=unit*(page-2)+10
 
 		query=db.Query(StackFeedData,keys_only=False).filter("feed_mode = ","message").order("-create_date")
 
 		try:
-			tweet_list=query.fetch(limit=unit,offset=unit*(page-1))
+			tweet_list=query.fetch(limit=unit,offset=offset)
 		except:
 			tweet_list=None
 
