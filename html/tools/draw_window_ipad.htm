@@ -150,8 +150,25 @@
 		font-size:13px;
 	}
 
+	#comment_form{
+		margin:2px;
+	}
+
 	#comment{
+		width:50%;
 		font-size:13px;
+	}
+
+	#comment_submit{
+		font-size:11px;
+		margin-left:2px;
+		visibility:hidden;
+	}
+
+	#comment_submit,#comment,#comment_list{
+		background:#494949;
+		color:#efefef;
+		border: 1px solid #888888;
 	}
 
 	#chat_status{
@@ -229,14 +246,19 @@
 			</div>
 			<div id="status">
 			</div>
+			{#
 			<div id="twitter">
 				<a href="https://twitter.com/share" class="twitter-share-button" data-lang="ja" data-count="none" data-hashtags="ilbchat">ツイート</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 			</div>
+			#}
 		</div>
 		<br clear="all"/>
 		{% if viewmode == "false" %}
-			<form action="javascript:return false;" onsubmit="javascript:g_chat.comment();return false;" style="margin-left:2px;margin-bottom:2px;"><input id="comment" type="text" style="width:50%;"></input><input type="submit" value="発言" class="g-button" style="margin-left:2px;margin-top:1px;"></input></form>
+			<form action="javascript:return false;" onsubmit="javascript:g_chat.comment();return false;" id="comment_form">
+				<input id="comment" type="text"></input>
+				<input id="comment_submit" type="submit" value="Say"></input>
+			</form>
 		{% endif %}
 	{% endif %}
 	</div>
