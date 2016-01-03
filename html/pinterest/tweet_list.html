@@ -3,20 +3,21 @@
 
 {% if tweet_list %}
 	{% for tweet in tweet_list %}
+		{% if bookmark and tweet.from_user_id in mute_user_list %}
+		{% else %}
+			<div class="bbs_info" style="margin-left:-32px;">
+				<div class="bbs_info_contents" style="margin-left:32px;">
+				{{tweet.message|truncate_tweet}}
+				</div>
+			</div>
 
-	<div class="bbs_info" style="margin-left:-32px;">
-		<div class="bbs_info_contents" style="margin-left:32px;">
-		{{tweet.message|truncate_tweet}}
-		</div>
-	</div>
-
-	<div class="bbs_thumbnail">
-		<a href="{{host}}mypage?user_id={{tweet.from_user_id}}">
-		<img src="{{host}}show_icon?key={{tweet.from_user_id}}" width="20px" height="20px" alt="{{tweet.title}}"/>
-		</a>
-	</div>
-
-	<br clear="all"/>
+			<div class="bbs_thumbnail">
+				<a href="{{host}}mypage?user_id={{tweet.from_user_id}}">
+				<img src="{{host}}show_icon?key={{tweet.from_user_id}}" width="20px" height="20px" alt="{{tweet.title}}"/>
+				</a>
+			</div>
+			<br clear="all"/>
+		{% endif %}
 	{% endfor %}
 {% else %}
 	{% if is_english %}No tweet exist{% else %}ツイートはありません。{% endif %}
