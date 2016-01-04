@@ -104,21 +104,34 @@ class StackFeedTweet(webapp.RequestHandler):
 			self.response.out.write(Alert.alert_msg("ユーザデータが見つかりません。",self.request.host));
 			return False
 
-		tweeet_list=StackFeedData.all().filter("from_user_id =",user.user_id()).fetch(limit=1000)
+		tweeet_list=StackFeedData.all().filter("from_user_id =",user.user_id()).filter("feed_mode =","message").fetch(limit=1000)
+
+		delete_limit=100
+
+		del_cnt=0
 		for tweet in tweeet_list:
 			if(tweet.from_user_id==user.user_id()):
 				self.del_from_bookmark(bookmark,str(tweet.key()))
 				tweet.delete()
+				del_cnt=del_cnt+1
+				if(del_cnt>=delete_limit):
+					break
 
-		if(len(bookmark.my_timeline)>=1):
-			self.response.out.write(Alert.alert_msg("ツイートを削除しきることができませんでした。",self.request.host));
+		if(del_cnt>=delete_limit):#len(bookmark.my_timeline)>=1):
+			self.response.out.write(Alert.alert_msg(str(del_cnt)+"件のツイートを削除しましたが、ツイートを削除しきることができませんでした。リロードして下さい。",self.request.host));
+			return False
+		if(del_cnt==0):
+			self.response.out.write(Alert.alert_msg("削除するツイートが見つかりませんでした。",self.request.host));
 			return False
 
 		#bookmark.stack_feed_list=[]
 		#bookmark.my_timeline=[]
-
 		bookmark.put()
-		return True
+
+		self.response.out.write(Alert.alert_msg(str(del_cnt)+"件のツイートを削除しました。",self.request.host));
+		return False
+
+		#return True
 
 	#def del_feed(self,user):
 	#	bookmark=ApiObject.get_bookmark_of_user_id_for_write(user.user_id())

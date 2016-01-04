@@ -90,14 +90,14 @@ function confirm_remove_tweet_list(is_english){
 }
 
 function confirm_remove_tweet_all(user_id,is_english){
-	var msg="全てのツイートとフィードを削除しますか？";
+	var msg="全てのツイートを削除しますか？";
 	if(is_english){
-		msg="Are you sure you want to withdraw from illustbook?"
+		msg="Are you sure you want to clear everything tweet from illustbook?"
 	}
 	if (confirm(msg)){
-		msg="ツイートとフィードは全て削除され復帰できません。本当に削除してもよろしいですか？";
+		msg="ツイートは全て削除され復帰できません。本当に削除してもよろしいですか？";
 		if(is_english){
-			msg="Are you sure you want to clear everything tweet and feed (this operation cannot be undone)?"
+			msg="Are you sure you want to clear everything tweet (this operation cannot be undone)?"
 		}
 		if (confirm(msg)){
 			location.href = 'feed_tweet?mode=del_tweet_all&user_id='+user_id; 
