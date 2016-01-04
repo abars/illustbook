@@ -5,7 +5,7 @@
 <div id="floating_menu">
 	<!-- icon -->
 	{% if user %}
-	<div class="user_icon">
+	<div class="user_icon" id="user_icon">
 		<a href="{{host}}mypage"><img src="{{host}}show_icon?key={{user.user_id()}}&size=mini" width="{% if is_iphone or is_tablet %}30px{% else %}24px{% endif %}" height="{% if is_iphone or is_tablet %}30px{% else %}24px{% endif %}" alt="icon"/></a>
 		{% if my_new_feed_count %}
 			<b>{{my_new_feed_count}}</b>
@@ -14,7 +14,7 @@
 	{% endif %}
 
 	<!-- logo -->
-	<div class="ilb_logo">
+	<div class="ilb_logo" id="ilb_logo">
 		{% set show_link_detail = 0 %}
 
 		{% if not(is_iphone and thread and thread.user_id and thread.bookmark_count) %}
@@ -131,6 +131,9 @@
 <!-- ifframe判定 -->
 <script>
 	if(window!=parent){
-		document.getElementById("floating_menu").style.display="none";
+		document.getElementById("floating_menu").style.backgroundColor="transparent";
+		document.getElementById("floating_menu").style.borderColor="transparent";
+		document.getElementById("ilb_logo").style.display="none";
+		document.getElementById("user_icon").style.display="none";
 	}
 </script>
