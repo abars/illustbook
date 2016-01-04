@@ -109,6 +109,7 @@ class UpdateProfile(webapp.RequestHandler):
 		bookmark.homepage=homepage
 		bookmark.owner=user
 		bookmark.disable_rankwatch=disable_rankwatch
+		bookmark.disable_global_tweet=disable_global_tweet
 		bookmark.regulation=regulation
 		bookmark.privacy_rental_bbs=privacy_rental_bbs
 
