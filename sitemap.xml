@@ -15,10 +15,6 @@
   <priority>0.90</priority>
 </url>
 <url>
-  <loc>http://www.illustbook.net/commu/</loc>
-  <priority>0.90</priority>
-</url>
-<url>
   <loc>http://www.illustbook.net/support/</loc>
   <priority>0.90</priority>
 </url>
@@ -32,14 +28,6 @@
 </url>
 <url>
   <loc>http://www.illustbook.net/sample/</loc>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>http://www.illustbook.net/anything/</loc>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>http://www.illustbook.net/moper/</loc>
   <priority>0.80</priority>
 </url>
 </urlset>
