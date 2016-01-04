@@ -25,8 +25,6 @@ from google.appengine.ext import db
 from google.appengine.api import images
 from google.appengine.api import memcache
 
-#from django.utils.html import strip_spaces_between_tags
-
 from myapp.Bbs import Bbs
 from myapp.Counter import Counter
 from myapp.Alert import Alert
@@ -267,6 +265,48 @@ class Pinterest(webapp.RequestHandler):
 		return tweet_list_removed
 
 	@staticmethod
+	def _get_ranking_month_list(today,is_english):
+		ranking_month_list=[]
+
+		days_str="直近30日"
+		if(is_english):
+			days_str="30 Days"
+		ranking_month_list.append({"query":"","str":days_str})
+
+		year=today.year
+		month=today.month
+		for i in range(0,10):
+			dare_str=datetime.datetime(year,month,1).strftime('%Y-%m-%d')
+			ranking_month_list.append({"query":dare_str,"str":str(year)+"-"+str(month)})
+			month=month-1
+			if(month<=0):
+				year=year-1
+				month=12
+		return ranking_month_list
+
+	@staticmethod
+	def _get_ranking_thread_list(month_query,page,unit):
+		#日付の範囲を決定
+		if(month_query==""):
+			from_month=datetime.date.today()+datetime.timedelta(days=-30)
+			next_month=datetime.date.today()
+			no_reduct=False
+		else:
+			today=datetime.datetime.strptime(month_query,"%Y-%m-%d")
+			from_month=datetime.datetime(today.year,today.month,today.day).strftime('%Y-%m-%d')
+			if(today.month==12):
+				next_month=datetime.datetime(today.year+1,1,today.day).strftime('%Y-%m-%d')
+			else:
+				next_month=datetime.datetime(today.year,today.month+1,today.day).strftime('%Y-%m-%d')
+			no_reduct=True
+
+		#検索範囲を絞らなければ正常にソートできないので、できるだけ絞る
+		search_str="(bookmark >= 1 OR applause >= 3) AND date > "+str(from_month)+" AND date < "+str(next_month)
+		thread_list=SearchThread.search(search_str,page,unit,BbsConst.SEARCH_THREAD_INDEX_NAME,no_reduct)
+
+		return thread_list
+
+	@staticmethod
 	def _index(self,user,user_id,page,request_page_mode,redirect_api,contents_only):
 		unit=BbsConst.PINTEREST_PAGE_UNIT
 
@@ -283,44 +323,14 @@ class Pinterest(webapp.RequestHandler):
 		search_api_error=False
 
 		if(order=="monthly"):
-			#直近
-			days_str="直近30日"
-			if(CssDesign.is_english(self)):
-				days_str="30 Days"
-			ranking_month_list.append({"query":"","str":days_str})
-
-			#日付のリストを作成
 			if(month_query):
 				today=datetime.datetime.strptime(month_query,"%Y-%m-%d")
 			else:
 				today=datetime.date.today()
-			year=today.year
-			month=today.month
-			for i in range(0,10):
-				dare_str=datetime.datetime(year,month,1).strftime('%Y-%m-%d')
-				ranking_month_list.append({"query":dare_str,"str":str(year)+"-"+str(month)})
-				month=month-1
-				if(month<=0):
-					year=year-1
-					month=12
 
-			#日付の範囲を決定
-			if(month_query==""):
-				from_month=datetime.date.today()+datetime.timedelta(days=-30)
-				next_month=datetime.date.today()
-				no_reduct=False
-			else:
-				today=datetime.datetime.strptime(month_query,"%Y-%m-%d")
-				from_month=datetime.datetime(today.year,today.month,today.day).strftime('%Y-%m-%d')
-				if(today.month==12):
-					next_month=datetime.datetime(today.year+1,1,today.day).strftime('%Y-%m-%d')
-				else:
-					next_month=datetime.datetime(today.year,today.month+1,today.day).strftime('%Y-%m-%d')
-				no_reduct=True
+			ranking_month_list=Pinterest._get_ranking_month_list(today,CssDesign.is_english(self))
+			thread_list=Pinterest._get_ranking_thread_list(month_query,page,unit)
 
-			#検索範囲を絞らなければ正常にソートできないので、できるだけ絞る
-			search_str="(bookmark >= 1 OR applause >= 3) AND date > "+str(from_month)+" AND date < "+str(next_month)
-			thread_list=SearchThread.search(search_str,page,unit,BbsConst.SEARCH_THREAD_INDEX_NAME,no_reduct)
 			if(thread_list!=None):
 				thread_list=ApiObject.create_thread_object_list(self,thread_list,"search")
 				search_api_error=False
@@ -337,54 +347,18 @@ class Pinterest(webapp.RequestHandler):
 				else:
 					search_api_error=True
 			else:
-				if(order!="chat"):
+				if(order=="chat"):
+					thread_list=None
+				else:
 					thread_list=ApiFeed.feed_get_thread_list(self,order,(page-1)*unit,unit)
 		
-		bbs_list=ApiFeed.feed_get_bbs_list(self,"hot",0,8)
+		bbs_list=None
+		if(order=="hot" and not contents_only):
+			bbs_list=ApiFeed.feed_get_bbs_list(self,"hot",0,8)
 
-		event_list=None
-		all_event_list=None
-		old_event_list=None
-		now_event=None
-
-		if(order=="event"):
-			event_list=EventList.get_event_list()
-			all_event_list=EventList.get_all_event_list()
-			old_event_list=EventList.get_old_event_list()
-			if(self.request.get("event_id")):
-				now_event=EventList.get_event(self.request.get("event_id"))
-			#else:
-			#	if(event_list):
-			#		now_event=event_list[0]
-
-		event_thread_list=None
-		if(order=="new"):
-			event_list=EventList.get_event_list()
-			if(event_list):
-				now_event=event_list[0]
-				event_thread_list=ApiFeed.feed_get_thread_list(self,"event",0,8)
-
-		recent_tag=SearchTag.get_recent_tag(search_api)
-
-		room_list=None
-		if(order=="new"):
-			room_list=Chat.get_room_list()
-
-		tweet_list=None
-		tweet_page=1
-		if(order=="new"):
-			if(self.request.get("tweet_page")):
-				tweet_page=int(self.request.get("tweet_page"))
-			tweet_list=Pinterest._get_tweet_list(tweet_page)
-
-		if(order=="chat"):
-			thread_list=None
-			if(page==1):
-				room_list=Chat.get_room_object_list()
-			else:
-				room_list=[]
-			bbs_list=None
-			recent_tag=None
+		recent_tag=None
+		if(order=="hot" and not contents_only):
+			recent_tag=SearchTag.get_recent_tag(search_api)
 
 		my_color_bookmark=None
 		if(user):
@@ -409,6 +383,39 @@ class Pinterest(webapp.RequestHandler):
 		template_values['month_query']=month_query
 		template_values['search_api_error']=search_api_error
 
+		template_values['bookmark']=my_color_bookmark
+		template_values['mute_bbs_list']=mute_bbs_list
+		template_values['mute_user_list']=mute_user_list
+
+		Pinterest._update_event_list(self,template_values,order,contents_only)
+		Pinterest._update_room_list(self,template_values,order,contents_only)
+		Pinterest._update_tweet_list(self,template_values,order,contents_only)
+		
+		template_values['is_admin']=OwnerCheck.is_admin(user)
+
+		Pinterest._render_page(self,template_values)
+
+	@staticmethod
+	def _update_event_list(self,template_values,order,contents_only):
+		event_list=None
+		all_event_list=None
+		old_event_list=None
+		now_event=None
+
+		if(order=="event" and not contents_only):
+			event_list=EventList.get_event_list()
+			all_event_list=EventList.get_all_event_list()
+			old_event_list=EventList.get_old_event_list()
+			if(self.request.get("event_id")):
+				now_event=EventList.get_event(self.request.get("event_id"))
+
+		event_thread_list=None
+		if(order=="new" and not contents_only):
+			event_list=EventList.get_event_list()
+			if(event_list):
+				now_event=event_list[0]
+				event_thread_list=ApiFeed.feed_get_thread_list(self,"event",0,8)
+
 		template_values['event_list']=event_list
 		template_values['all_event_list']=all_event_list
 		template_values['old_event_list']=old_event_list
@@ -416,17 +423,31 @@ class Pinterest(webapp.RequestHandler):
 		template_values['is_old_event']=EventList.is_old_event(now_event)
 		template_values['event_thread_list']=event_thread_list
 
-		template_values['bookmark']=my_color_bookmark
-		template_values['mute_bbs_list']=mute_bbs_list
-		template_values['mute_user_list']=mute_user_list
+	@staticmethod
+	def _update_room_list(self,template_values,order,contents_only):
+		room_list=None
+		if(order=="new" and not contents_only):
+			room_list=Chat.get_room_list()
+
+		if(order=="chat"):
+			if(contents_only):
+				room_list=[]
+			else:
+				room_list=Chat.get_room_object_list()
 
 		template_values['room_list']=room_list
+
+	@staticmethod
+	def _update_tweet_list(self,template_values,order,contents_only):
+		tweet_list=None
+		tweet_page=1
+		if(order=="new" and not contents_only):
+			if(self.request.get("tweet_page")):
+				tweet_page=int(self.request.get("tweet_page"))
+			tweet_list=Pinterest._get_tweet_list(tweet_page)
+
 		template_values['tweet_list']=tweet_list
 		template_values['tweet_page']=tweet_page
-		
-		template_values['is_admin']=OwnerCheck.is_admin(user)
-
-		Pinterest._render_page(self,template_values)
 
 	@staticmethod
 	def _text_search(self,search,user,user_id,page,request_page_mode,redirect_api,contents_only):
@@ -463,20 +484,6 @@ class Pinterest(webapp.RequestHandler):
 
 	@staticmethod
 	def _tag_search(self,tag,user,user_id,page,request_page_mode,redirect_api,contents_only):
-		#template_values=Pinterest.initialize_template_value(self,user,user_id,page,request_page_mode,redirect_api,contents_only)
-
-		#search_api="search_tag"
-		#unit=BbsConst.PINTEREST_PAGE_UNIT
-		#dic=Pinterest.get_tag_image(self,tag,page,unit)
-		#template_values['thread_list']=dic["thread_list"]
-		#template_values['tag_list']=SearchTag.update_recent_tag(tag,dic["cnt"],search_api)
-		#template_values['next_query']="tag="+urllib.quote_plus(str(tag))
-		#template_values['page_mode']="tag"
-		#template_values['illust_enable']=True
-		#template_values['search']=tag
-
-		#Pinterest._render_page(self,template_values)
-
 		Pinterest._text_search(self,tag,user,user_id,page,request_page_mode,redirect_api,contents_only)
 
 	@staticmethod
