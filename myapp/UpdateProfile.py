@@ -32,6 +32,7 @@ from myapp.Bookmark import Bookmark
 from myapp.ApiObject import ApiObject
 from myapp.Pinterest import Pinterest
 from myapp.CssDesign import CssDesign
+from myapp.BbsConst import BbsConst
 
 from myapp.SyncPut import SyncPut
 
