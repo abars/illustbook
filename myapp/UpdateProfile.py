@@ -49,13 +49,7 @@ class UpdateProfile(webapp.RequestHandler):
 		birthday_year = self.request.get("birthday_year")
 		birthday_month = self.request.get("birthday_month")
 		birthday_day = self.request.get("birthday_day")
-		disable_rankwatch =int(self.request.get("disable_rankwatch"))
-		disable_global_tweet =int(self.request.get("disable_global_tweet"))
 
-		if(disable_global_tweet):
-			cache_id=BbsConst.OBJECT_CACHE_HEADER+BbsConst.OBJECT_TWEET_LIST_HEADER
-			memcache.delete(cache_id)
-		
 		regulation=0
 		if(self.request.get("regulation_r15_nl")):
 			regulation+=1
@@ -67,6 +61,18 @@ class UpdateProfile(webapp.RequestHandler):
 		privacy_rental_bbs=1
 		if(self.request.get("privacy_rental_bbs")):
 			privacy_rental_bbs=0
+
+		disable_global_tweet=1
+		if(self.request.get("privacy_tweet")):
+			disable_global_tweet=0
+
+		disable_rankwatch=1
+		if(self.request.get("privacy_user_ranking")):
+			disable_rankwatch=0
+
+		if(disable_global_tweet):
+			cache_id=BbsConst.OBJECT_CACHE_HEADER+BbsConst.OBJECT_TWEET_LIST_HEADER
+			memcache.delete(cache_id)
 
 		is_english=CssDesign.is_english(self)
 

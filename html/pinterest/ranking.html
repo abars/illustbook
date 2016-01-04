@@ -1,17 +1,5 @@
-{% if order=="monthly" %}
-
 <div class="message hot_bbs">
 	<p>{% if is_english %}Ranking{% else %}ランキング{% endif %}</p>
-	毎月の人気のイラストを表示しています。
+	{% if is_english %}We rate images on their popularity.{% else %}毎月の人気のイラストを表示しています。{% endif %}
 </div>
 <br clear="all"/>
-
-{% else %}
-
-<div class="message hot_bbs">
-	<p>{% if is_english %}Hot{% else %}人気{% endif %}</p>
-	デイリーの話題のイラストを表示しています。
-</div>
-<br clear="all"/>
-
-{% endif %}

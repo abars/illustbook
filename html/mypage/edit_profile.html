@@ -11,31 +11,21 @@
 				</select>
 				</td></tr>
 				<tr><td>{% if is_english %}Birth Year{% else %}生まれた年(西暦){% endif %}</td><td>　</td><td>
-				<input name="birthday_year" type="text" value="{% if bookmark.birthday_year %}{{bookmark.birthday_year}}{% endif %}" style="width:80px;">{% if not is_english %}年<br/>何も書かなければ非公開になります{% endif %}
+				<input name="birthday_year" type="text" value="{% if bookmark.birthday_year %}{{bookmark.birthday_year}}{% endif %}" style="width:80px;">{% if not is_english %}年（空白で非公開）{% endif %}
 				</td></tr>
 				<tr><td>{% if is_english %}Birth Day{% else %}誕生日（半角）{% endif %}</td><td>　</td><td>
 				<input name="birthday_month" type="text" value="{% if bookmark.birthday_month %}{{bookmark.birthday_month}}{%endif%}" style="width:40px;">{% if is_english %}/{% else %}月{% endif %}
-				<input name="birthday_day" type="text" value="{% if bookmark.birthday_day %}{{bookmark.birthday_day}}{% endif %}" style="width:40px;">{% if not is_english %}日<br/>何も書かなければ非公開になります{% endif %}
+				<input name="birthday_day" type="text" value="{% if bookmark.birthday_day %}{{bookmark.birthday_day}}{% endif %}" style="width:40px;">{% if not is_english %}日（空白で非公開）{% endif %}
 				</td></tr>
-				<tr><td>{% if is_english %}User Ranking{% else %}ユーザランキング{% endif %}</td><td>　</td><td>
-				<select name="disable_rankwatch" id="disable_rankwatch">
-					<option value="0" {% if not bookmark.disable_rankwatch %} selected="selected" {% endif %}>{% if is_english %}Join{% else %}参加する{% endif %}</option>
-					<option value="1" {% if bookmark.disable_rankwatch %} selected="selected" {% endif%}>{% if is_english %}not Join{% else %}参加しない{% endif %}</option>
-				</select><br/>
-				</td></tr>
-				<tr><td>{% if is_english %}Show tweet{% else %}ポータルにツイートを表示{% endif %}</td><td>　</td><td>
-				<select name="disable_global_tweet" id="disable_global_tweet">
-					<option value="0" {% if not bookmark.disable_global_tweet %} selected="selected" {% endif %}>{% if is_english %}Show{% else %}表示する{% endif %}</option>
-					<option value="1" {% if bookmark.disable_global_tweet %} selected="selected" {% endif%}>{% if is_english %}not Show{% else %}表示しない{% endif %}</option>
-				</select><br/>
+				<tr><td>{% if is_english %}Publicity{% else %}公開設定{% endif %}</td><td>　</td><td>
+					<input type="checkbox" name="privacy_rental_bbs" value="privacy_rental_bbs" {% if not bookmark.privacy_rental_bbs %} checked{% endif %} />{% if is_english %}BBS{% else %}レンタルしている掲示板{% endif %}<br/>
+					<input type="checkbox" name="privacy_user_ranking" value="privacy_user_ranking" {% if not bookmark.disable_rankwatch %} checked{% endif %} />{% if is_english %}User Ranking{% else %}ユーザランキング{% endif %}<br/>
+					<input type="checkbox" name="privacy_tweet" value="privacy_tweet" {% if not bookmark.disable_global_tweet %} checked{% endif %} />{% if is_english %}Tweet{% else %}ツイート（ポータル）{% endif %}
 				</td></tr>
 				<tr><td>{% if is_english %}Regulation{% else %}年齢制限付きコンテンツ{% endif %}</td><td>　</td><td>
 					<input type="checkbox" name="regulation_r15_nl" value="regulation_r15_nl" {% if bookmark.regulation and bookmark.regulation%2 == 1 %} checked{% endif %} />R15(NL)&nbsp;
 					<input type="checkbox" name="regulation_r15_bl" value="regulation_r15_bl" {% if bookmark.regulation and (bookmark.regulation//2)%2 == 1 %} checked{% endif %} />R15(BL)&nbsp;
 					<input type="checkbox" name="regulation_r15_gl" value="regulation_r15_gl" {% if bookmark.regulation and (bookmark.regulation//4)%2 == 1 %} checked{% endif %} />R15(GL)<br/>
-				</td></tr>
-				<tr><td>{% if is_english %}Privacy{% else %}公開設定{% endif %}</td><td>　</td><td>
-					<input type="checkbox" name="privacy_rental_bbs" value="privacy_rental_bbs" {% if not bookmark.privacy_rental_bbs %} checked{% endif %} />{% if is_english %}BBS{% else %}レンタルしている掲示板{% endif %}
 				</td></tr>
 				<tr><td>{% if is_english %}Comment{% else %}コメント{% endif %}</td><td>　</td><td><textarea name="profile" rows="8" cols="40" style="width:90%;">{% if edit_profile %}{{edit_profile}}{% endif %}</textarea></td></tr>
 				<tr><td>{% if is_english %}Homepage{% else %}ホームページ{% endif %}</td><td>　</td><td><input name="homepage" type="text" value="{% if bookmark.homepage %}{{bookmark.homepage}}{% endif %}" style="width:90%;"></td></tr>

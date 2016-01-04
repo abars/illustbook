@@ -30,7 +30,7 @@
 {% endif %}
 
 <!-- 人気のBBS -->
-{% if not is_iphone and order!="new"%}
+{% if not is_iphone and order=="hot"%}
 	{% include "pinterest/hot_bbs.html" %}
 {% endif %}
 
