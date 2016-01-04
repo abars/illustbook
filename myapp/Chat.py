@@ -221,10 +221,14 @@ class Chat(webapp.RequestHandler):
 
 	#スナップショットを取得する
 	def get_snap_shot(self):
-		room=ChatRoom.get(self.request.get("key"))#db.get(str(self.request.get("key")))
+		try:
+			room=ChatRoom.get(self.request.get("key"))#db.get(str(self.request.get("key")))
+		except:
+			ApiObject.write_json_core(self,{"status":"failed"})
+			return
 
 		if(room==None):
-			ApiObject.write_json_core(self,{"status":"failed"})
+			ApiObject.write_json_core(self,{"status":"not_found"})
 			return
 			
 		ApiObject.write_json_core(self,{"status":"success","snap_shot_0":room.snap_shot_0,"snap_shot_1":room.snap_shot_1,"snap_range":room.snap_range})
@@ -390,7 +394,12 @@ class Chat(webapp.RequestHandler):
 	
 	#サムネイル取得
 	def thumbnail(self):
-		room=ChatRoom.get(self.request.get("key"))#db.get(str(self.request.get("key")))
+		try:
+			room=ChatRoom.get(self.request.get("key"))#db.get(str(self.request.get("key")))
+		except:
+			self.error(500)
+			return
+
 		if(not room) or (not room.thumbnail):
 			self.redirect("./static_files/empty_user.png")
 			return
