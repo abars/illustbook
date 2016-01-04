@@ -88,7 +88,7 @@ from myapp.ApiPacked import ApiPacked
 import template_select
 
 class DelBbs(webapp.RequestHandler):
-	def get(self):
+	def post(self):
 		bbs=None
 		try:
 			bbs = db.get(self.request.get("bbs_key"))

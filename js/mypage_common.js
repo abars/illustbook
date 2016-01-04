@@ -29,7 +29,7 @@ function confirm_action_bbs2(url,is_english) {
 		msg="This operation cannot be undone.Are you sure you want to delete this BBS?"
 	}
 	if (confirm(msg)){
-		location.href = url; 
+		post_from_url(url)
 	}	 
 }
 		
@@ -89,6 +89,28 @@ function confirm_remove_tweet_list(is_english){
 	}
 }
 
+function post_exec(url,data){
+	var $form = $('<form/>', {'action': url, 'method': 'post'});
+	for(var key in data) {
+		$form.append($('<input/>', {'type': 'hidden', 'name': key, 'value': data[key]}));
+	}
+	$form.appendTo(document.body);
+	$form.submit();
+}
+
+function post_from_url(get_url){
+	var lst=get_url.split("?");
+	var url=lst[0];
+	lst=lst[1].split("&");
+	var data={};
+	for(var i=0;i<lst.length;i++){
+		var value=lst[i];
+		keys=value.split("=")
+		data[keys[0]]=keys[1]
+	}
+	post_exec(url,data);
+}
+
 function confirm_remove_tweet_all(user_id,is_english){
 	var msg="全てのツイートを削除しますか？";
 	if(is_english){
@@ -102,13 +124,7 @@ function confirm_remove_tweet_all(user_id,is_english){
 		if (confirm(msg)){
 			url = 'feed_tweet';
 			data={"mode":"del_tweet_all","user_id":user_id} ;
-
-			var $form = $('<form/>', {'action': url, 'method': 'post'});
-			for(var key in data) {
-				$form.append($('<input/>', {'type': 'hidden', 'name': key, 'value': data[key]}));
-			}
-			$form.appendTo(document.body);
-			$form.submit();
+			post_exec(url,data);
 		}
 	}
 }
