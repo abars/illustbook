@@ -75,11 +75,14 @@ class EventList(webapp.RequestHandler):
 			return event_list[0]
 		return None
 
-	def _update(self,event,user):
+	def _update(self,event,user,validate_all):
 		event.title=self.request.get("title")
 		event.summary=self.request.get("summary")
 		
 		event.id=self.request.get("id")
+		if(event.id==""):
+			Alert.alert_msg_with_write(self,"IDを入力する必要があります。")
+			return False
 		if(MappingId.key_format_check(event.id)):
 			Alert.alert_msg_with_write(self,"IDは半角英数で16文字以下である必要があります。")
 			return False
@@ -90,12 +93,49 @@ class EventList(webapp.RequestHandler):
 		except:
 			Alert.alert_msg_with_write(self,"日付の変換に失敗しました。")
 			return False
-		if(event.title=="" or event.id==""):
-			Alert.alert_msg_with_write(self,"タイトルとIDを入力して下さい。")
+
+		if(event.end_date <= event.start_date):
+			Alert.alert_msg_with_write(self,"終了日の方が開始日より早くなっています。")
 			return False
+
+		event_list=Event.all().filter("start_date <=",event.end_date).order("-start_date").fetch(limit=1)	#既存のDBが重複していないと仮定すると最新の1つだけチェックすればよい
+		for e in event_list:
+			if(e.id==event.id):
+				continue
+			err=False
+			if(e.start_date.replace(tzinfo=UTC()).astimezone(UTC()) <= event.start_date):
+				if(e.end_date.replace(tzinfo=UTC()).astimezone(UTC()) > event.start_date):
+					err=True
+			if(e.start_date.replace(tzinfo=UTC()).astimezone(UTC()) < event.end_date):
+				if(e.end_date.replace(tzinfo=UTC()).astimezone(UTC()) > event.end_date):
+					err=True
+			if(err):
+				mes ="今回のイベント&nbsp;"+str(event.start_date.replace(tzinfo=UTC()).astimezone(JST()).strftime('%Y/%m/%d'))+"〜"+str(event.end_date.replace(tzinfo=UTC()).astimezone(JST()).strftime('%Y/%m/%d'))+"<br/>";
+				mes+="他のイベント&nbsp;"+str(e.start_date.replace(tzinfo=UTC()).astimezone(JST()).strftime('%Y/%m/%d'))+"〜"+str(e.end_date.replace(tzinfo=UTC()).astimezone(JST()).strftime('%Y/%m/%d'))+"<br/>";
+				Alert.alert_msg_with_write(self,"日程が他のイベントと重複しています。<br/>"+mes)
+				return False
+
+		if(event.end_date - event.start_date > datetime.timedelta(days=7)):
+			Alert.alert_msg_with_write(self,"日程が一週間を超えています。")
+			return False
+
+		if(validate_all):
+			if(event.title=="" or event.id==""):
+				Alert.alert_msg_with_write(self,"タイトルとIDを入力して下さい。")
+				return False
 		event.user_id=user.user_id()
 		event.author=self.request.get("author")
 		return True
+
+	def get(self,mode_url):
+		if(Event.all().filter("id =",self.request.get("id")).count()>=1):
+			Alert.alert_msg_with_write(self,"このIDは既に使われています")
+			return False
+		user = users.get_current_user()
+		event=Event()
+		if(not self._update(event,user,False)):
+			return
+		Alert.alert_msg_with_write(self,"このイベントは作成可能です")
 
 	def post(self,mode_url):
 		mode=self.request.get("mode")
@@ -113,7 +153,7 @@ class EventList(webapp.RequestHandler):
 				return False
 			
 			event=Event()
-			if(not self._update(event,user)):
+			if(not self._update(event,user,True)):
 				return
 			event.put()
 
@@ -126,7 +166,7 @@ class EventList(webapp.RequestHandler):
 				Alert.alert_msg_with_write(self,"イベントが重複しています")
 				return
 			event=event[0]
-			if(not self._update(event,user)):
+			if(not self._update(event,user,True)):
 				return
 			event.put()
 
