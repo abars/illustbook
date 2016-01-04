@@ -6,7 +6,7 @@
 		{% if bookmark and tweet.from_user_id in mute_user_list %}
 		{% else %}
 			<div class="bbs_info" style="margin-left:-32px;">
-				<div class="bbs_info_contents" style="margin-left:32px;">
+				<div class="bbs_info_contents" style="margin-left:32px;" onclick="window.location.href='{{host}}mypage?user_id={{tweet.from_user_id}}&tab=feed'">
 				{{tweet.message|truncate_tweet}}
 				</div>
 			</div>
