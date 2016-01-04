@@ -71,14 +71,13 @@
 			<p>イベントの編集</p>
 			{% else %}
 			<p>イベントの追加（β）</p>
-			{% endif %}
-
 			イベントを主催してみませんか？<br/><br/>
+			{% endif %}
 
 			<form action="{{host}}event_add" enctype="multipart/form-data" method="post" name="event_frm">
 				<table>
 				{% if not event_owner %}
-					<tr><td>ID(半角英数)</td><td><input name="id" type="text" value=""/></td></tr>
+					<tr><td>イベントID</td><td><input name="id" type="text" value=""/>(半角英数)</td></tr>
 				{% endif %}
 				</td></tr>
 
@@ -97,10 +96,12 @@
 					<input name="mode" type="hidden" value="add"/><br/>
 				{% endif %}
 				<input name="author" type="hidden" value="{{bookmark.name}}"/>
+				<div class="g-button-group toggle-buttons">
 				<a href="javascript:document.event_frm.submit();" class="g-button">{% if event_owner %}更新{% else %}登録{% endif %}</a>
 				{% if event_owner %}
 					<a href="javascript:confirm_delete_event('{{host}}event_add?mode=del&id={{now_event.id}}',{% if is_english %}True{% else %}false{% endif %});" class="g-button">削除</a>
 				{% endif %}
+				</div>
 			</form>
 		</div>
 		<br clear="all"/>
