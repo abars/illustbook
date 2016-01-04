@@ -100,18 +100,26 @@ function confirm_remove_tweet_all(user_id,is_english){
 			msg="Are you sure you want to clear everything tweet (this operation cannot be undone)?"
 		}
 		if (confirm(msg)){
-			location.href = 'feed_tweet?mode=del_tweet_all&user_id='+user_id; 
+			url = 'feed_tweet';
+			data={"mode":"del_tweet_all","user_id":user_id} ;
+
+			var $form = $('<form/>', {'action': url, 'method': 'post'});
+			for(var key in data) {
+				$form.append($('<input/>', {'type': 'hidden', 'name': key, 'value': data[key]}));
+			}
+			$form.appendTo(document.body);
+			$form.submit();
 		}
 	}
 }
 
 function show_follower(){
   if($('#follower').is(':visible')){
-    $('#follower').hide();
-    $('#follower_button').show();  
+	$('#follower').hide();
+	$('#follower_button').show();  
   }else{
-    $('#follower').show();
-    $('#follower_button').hide();  
+	$('#follower').show();
+	$('#follower_button').hide();  
   }
 }
 
@@ -119,14 +127,14 @@ function show_profile(is_english){
   var detail="詳細";
   var close="閉じる";
   if(is_english){
-  	detail="Detail";
-  	close="Close";
+	detail="Detail";
+	close="Close";
   }
   if($('#profile').is(':visible')){
-    $('#profile').hide();
-    $('#profile_button').text(detail);
+	$('#profile').hide();
+	$('#profile_button').text(detail);
   }else{
    $('#profile').show();  
-    $('#profile_button').text(close);
+	$('#profile_button').text(close);
   }
 }

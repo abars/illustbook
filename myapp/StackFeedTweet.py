@@ -235,9 +235,9 @@ class StackFeedTweet(webapp.RequestHandler):
 		if(not user):
 			self.response.out.write(Alert.alert_msg("ログインが必要です。",self.request.host));
 			return
-		if(self.request.get("mode")=="del_tweet_all"):
-			if(self.del_message_all(user)):
-				self.redirect_main()
+		#if(self.request.get("mode")=="del_tweet_all"):
+		#	if(self.del_message_all(user)):
+		#		self.redirect_main()
 		#if(self.request.get("mode")=="del_tweet"):
 		#	if(self.del_message(user)):
 		#		self.redirect_main()
@@ -255,5 +255,8 @@ class StackFeedTweet(webapp.RequestHandler):
 				self.redirect_main()
 		if(self.request.get("mode")=="del_tweet_list"):
 			if(self.del_message_list(user)):
+				self.redirect_main()
+		if(self.request.get("mode")=="del_tweet_all"):
+			if(self.del_message_all(user)):
 				self.redirect_main()
 		
