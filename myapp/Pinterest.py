@@ -401,6 +401,12 @@ class Pinterest(webapp.RequestHandler):
 		all_event_list=None
 		old_event_list=None
 		now_event=None
+		
+		now_event_start_date="2014/01/01"
+		now_event_end_date="2014/02/01"
+
+		now_event_start_date=datetime.datetime.today().replace(tzinfo=UTC()).astimezone(JST()).strftime('%Y/%m/%d')
+		now_event_end_date=(datetime.datetime.today()+datetime.timedelta(days=7)).replace(tzinfo=UTC()).astimezone(JST()).strftime('%Y/%m/%d')
 
 		if(order=="event" and not contents_only):
 			event_list=EventList.get_event_list()
@@ -408,6 +414,8 @@ class Pinterest(webapp.RequestHandler):
 			old_event_list=EventList.get_old_event_list()
 			if(self.request.get("event_id")):
 				now_event=EventList.get_event(self.request.get("event_id"))
+				now_event_start_date=now_event.start_date.replace(tzinfo=UTC()).astimezone(JST()).strftime('%Y/%m/%d')
+				now_event_end_date=now_event.end_date.replace(tzinfo=UTC()).astimezone(JST()).strftime('%Y/%m/%d')
 
 		event_thread_list=None
 		if(order=="new" and not contents_only):
@@ -420,6 +428,8 @@ class Pinterest(webapp.RequestHandler):
 		template_values['all_event_list']=all_event_list
 		template_values['old_event_list']=old_event_list
 		template_values['now_event']=now_event
+		template_values['now_event_start_date']=now_event_start_date
+		template_values['now_event_end_date']=now_event_end_date
 		template_values['is_old_event']=EventList.is_old_event(now_event)
 		template_values['event_thread_list']=event_thread_list
 

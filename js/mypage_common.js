@@ -8,6 +8,16 @@ function confirm_delete(url,prefix,title,is_english){
 	}
 }
 
+function confirm_delete_event(url,is_english){
+	var msg="イベントを削除してもいいですか？";
+	if(is_english){
+		msg="Are you sure you want to remove this event?"
+	}
+	if(confirm(msg)){
+		post_from_url(url);
+	}
+}
+
 function check_id(host){
 	var id=document.getElementById("check_short").value;
 	window.open(""+host+"check_id?id="+id);

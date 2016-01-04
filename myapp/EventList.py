@@ -30,6 +30,7 @@ from myapp.Event import Event
 from myapp.Alert import Alert
 from myapp.UTC import UTC
 from myapp.JST import JST
+from myapp.MappingId import MappingId
 
 class EventList(webapp.RequestHandler):
 	@staticmethod
@@ -74,18 +75,75 @@ class EventList(webapp.RequestHandler):
 			return event_list[0]
 		return None
 
-	def get(self,mode):
+	def _update(self,event,user):
+		event.title=self.request.get("title")
+		event.summary=self.request.get("summary")
+		
+		event.id=self.request.get("id")
+		if(MappingId.key_format_check(event.id)):
+			Alert.alert_msg_with_write(self,"IDは半角英数で16文字以下である必要があります。")
+			return False
+
+		try:
+			event.start_date=datetime.datetime.strptime(self.request.get("start_date"), '%Y/%m/%d').replace(tzinfo=JST()).astimezone(UTC())
+			event.end_date=datetime.datetime.strptime(self.request.get("end_date"), '%Y/%m/%d').replace(tzinfo=JST()).astimezone(UTC())
+		except:
+			Alert.alert_msg_with_write(self,"日付の変換に失敗しました。")
+			return False
+		if(event.title=="" or event.id==""):
+			Alert.alert_msg_with_write(self,"タイトルとIDを入力して下さい。")
+			return False
+		event.user_id=user.user_id()
+		event.author=self.request.get("author")
+		return True
+
+	def post(self,mode_url):
+		mode=self.request.get("mode")
+
+		user = users.get_current_user()
+		if(not user):
+			Alert.alert_msg_with_write(self,"ログインが必要です。")
+			return
+
+		msg=""
+
 		if(mode=="add"):
+			if(Event.all().filter("id =",self.request.get("id")).count()>=1):
+				Alert.alert_msg_with_write(self,"このIDのイベントは既に存在しています")
+				return False
+			
 			event=Event()
-			event.title=self.request.get("title")
-			event.summary=self.request.get("summary")
-			event.id=self.request.get("id")
-			event.start_date=datetime.datetime.strptime(self.request.get("start_date"), '%Y-%m-%d').replace(tzinfo=JST()).astimezone(UTC())
-			event.end_date=datetime.datetime.strptime(self.request.get("end_date"), '%Y-%m-%d').replace(tzinfo=JST()).astimezone(UTC())
-			if(event.title=="" or event.id==""):
-				Alert.alert_msg_with_write(self,"タイトルとIDを入力して下さい。")
+			if(not self._update(event,user)):
 				return
 			event.put()
-			Alert.alert_msg_with_write(self,"イベントを登録しました。")
+
+		if(mode=="edit"):
+			event=Event.all().filter("id =",self.request.get("id")).fetch(limit=2)
+			if(not event or len(event)==0):
+				Alert.alert_msg_with_write(self,"イベントが存在しません")
+				return
+			if(len(event)>=2):
+				Alert.alert_msg_with_write(self,"イベントが重複しています")
+				return
+			event=event[0]
+			if(not self._update(event,user)):
+				return
+			event.put()
+
+		if(mode=="del"):
+			event=Event.all().filter("id =",self.request.get("id")).fetch(limit=2)
+			if(not event or len(event)==0):
+				Alert.alert_msg_with_write(self,"イベントが存在しません")
+				return
+			event[0].delete()
+
+		host="http://"+self.request.host+"/"
+
+		if(mode=="del"):
+			self.redirect(str(host+"?order=event"))
+		else:
+			self.redirect(str(host+"?order=event&event_id="+event.id))
+
+
 
 

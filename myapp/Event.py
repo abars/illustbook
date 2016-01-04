@@ -17,5 +17,7 @@ class Event(CachedDbModel):
 	id = db.StringProperty()
 	title = db.TextProperty()
 	summary = db.TextProperty()
+	user_id = db.StringProperty()
+	author = db.StringProperty()
 	start_date = db.DateTimeProperty()
 	end_date = db.DateTimeProperty()
