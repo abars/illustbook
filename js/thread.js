@@ -235,8 +235,9 @@ var isFlashInstalled=function(){if(navigator.plugins["Shockwave Flash"]){return 
 
 			//コメント付き拍手はページ遷移、そうでなければ非同期
 			if(comment==""){
-				//window.location.href=url
 				//非同期
+				$.get(url, function(data){
+				});
 			}else{
 				//同期
 				msg=is_english ? "processing":"拍手しています。";
