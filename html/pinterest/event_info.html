@@ -1,0 +1,6 @@
+  <div class="message">
+    イベント名：{{now_event.title}}{% if is_old_event %}（イベントは終了しました）{% endif %}<br/>
+    イベント概要：{{now_event.summary}}<br/>
+    開催期間：{{now_event.start_date|time_JST_format(1)}}〜{{now_event.end_date|time_JST_format(1)}}<br/>
+  </div>
+  <br clear="all"/>

@@ -1,86 +1,33 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
 <head>
+
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="msapplication-TileImage" content="/static_files/tile144.png"/>
-<link rel="apple-touch-icon" href="/static_files/tile144.png"/>
-{% include "viewport.html" %}
-
-{% if page_mode == "bookmark" %}
-  <title>
-  {% if is_english %}
-  Bookmark User
-  {% else %}
-  {% if search_app %}{{search_app.app_name}}{%endif %}
-  {% if search_thread %}{{search_thread.title}}{% endif%}
-  {% if search_bbs %}{{search_bbs.bbs_name}}{% endif %}
-  をブックマークしているユーザ
-  {% endif %}
-  </title>
-{%else%}
-{% if search %}
-<title>{{search}}{% if not is_english %}の検索結果{% endif %} - {% if is_english %}ILLUSTBOOK{% else %}イラストブック{% endif %}</title>
-{% else %}
-{% if tag %}
-<title>{{tag}}{% if not is_english %}の検索結果{% endif %} - {% if is_english %}ILLUSTBOOK{% else %}イラストブック{% endif %}</title>
-{% else %}
-{% if page_mode == "user" %}
-{% if not view_user.name %}
-<title>{% if is_english %}Unknown User - ILLUSTBOOK{% else %}未登録ユーザ - イラストブック{% endif %}</title>
-{% else %}
-<title>{{view_user.name}} - {% if is_english %}ILLUSTBOOK{% else %}イラストブック{% endif %}</title>
-{% endif %}
-{% else %}
-{% if page_mode == "guide" %}
-<title>{% if is_english %}How to use ILLUSTBOOK - ILLUSTBOOK{% else %}イラストブックの使い方 - イラストブック{% endif %}</title>
-{% else %}
-<title>{% if is_english %}ILLUSTBOOK - the BBS network of Manga{% else %}
-  {% if order == "chat" %}
-  お絵かきチャット - イラストブック
-  {% else %}
-  {% if order == "hot" %}
-  人気のイラスト - イラストブック
-  {% else %}
-  {% if order == "monthly" %}
-  ランキング - イラストブック
-  {% else %}
-  {% if order == "event" %}
-  イベント - イラストブック
-  {% else %}
-  イラストブック - 無料レンタルお絵かき掲示板
-  {% endif %}
-  {% endif %}
-  {% endif %}
-  {% endif %}
-{% endif %}</title>
-{% if not is_english %}
-<meta name="Keywords" content="お絵かき掲示板,お絵かきブログ,無料,お絵かき,レンタル" />
-<meta name="Description" content="イラストブックはお絵かきツールがなくてもすぐに描ける完全無料のレンタルお絵かき掲示板サービスです。" />
-{% endif %}
-{% endif %}
-{% endif %}
-{% endif %}
-{% endif %}
-{% endif %}
-
-{%include "meta.html" %}
 <meta http-equiv="Content-Script-Type" content="text/javascript" />
 <meta http-equiv="Content-Style-Type" content="text/css" />
 <meta name="Copyright" content="Copyright: ABARS" />
 
+<meta name="msapplication-TileImage" content="/static_files/tile144.png"/>
+<link rel="apple-touch-icon" href="/static_files/tile144.png"/>
+
+<!-- Page title -->
+{% include "pinterest/title.html" %}
+
+<!-- Basic Meta tag -->
+{% include "viewport.html" %}
+{% include "meta.html" %}
+
+<!-- スクリプト -->
 {% if not contents_only %}
   {% include "css/floating_menu_css.html" %}
   {% include "css/google_button.html" %}
   {% include "css/pinterest.css" %}
 {% endif %}
 
-{% if order == "chat" %}
-<link rel="stylesheet" type="text/css" media="screen,print" href="{{host}}js/jquery/jquery.alerts.css" />
-{% endif %}
-
 </head>
 <body>
 
+<!-- Top menu -->
 {% include "floating_menu.html" %}
 
 <!-- ポータルタブ -->
@@ -187,12 +134,7 @@
 
 <!-- イベント -->
 {% if now_event and order=="event" %}
-  <div class="message">
-    イベント名：{{now_event.title}}{% if is_old_event %}（イベントは終了しました）{% endif %}<br/>
-    イベント概要：{{now_event.summary}}<br/>
-    開催期間：{{now_event.start_date|time_JST_format(1)}}〜{{now_event.end_date|time_JST_format(1)}}<br/>
-  </div>
-  <br clear="all"/>
+  {% include "pinterest/event_info.html" %}
 {% endif %}
 
 <!-- index終了 -->
@@ -206,12 +148,8 @@
   {% include "pinterest/recent_tag.html" %}
 {% endif %}
 
-{% if search!="empty" %}
-{% if not thread_list %}
-{% if not contents_only %}
-{% if illust_enable %}
-{% if page_mode != "guide" and page_mode != "index" %}
-{% if page_mode != "login_require" %}
+{% if search!="empty" and (not thread_list) and (not contents_only) and illust_enable %}
+{% if page_mode != "guide" and page_mode != "index" and page_mode != "login_require"%}
 <div class="message">
 {% if search_api_error %}
   {% if is_english %}Search api error{% else %}サーチAPIの呼び出しに失敗しました。リロードして下さい。{% endif %}
@@ -221,14 +159,9 @@
 </div>
 {% endif %}
 {% endif %}
-{% endif %}
-{% endif %}
-{% endif %}
-{% endif %}
 
 {% if is_iphone and top_page %}
   {% if not contents_only %}
-    {% include "pinterest/about_iphone.html" %}
     {% include "pinterest/corner_stamp.html" %}
   {% endif %}
 {% endif %}
@@ -270,15 +203,12 @@
 </div>
 
 <div id="pinterest_footer">
-<a href="{{host}}">{% if is_english %}ILLUSTBOOK{% else %}イラストブック{% endif %}</a>{% if is_iphone %}<br>{%else%} {%endif%}&copy; 2010-2016 <a href="http://www.abars.biz">ABARS</a> all rights reserved.{% if not is_iphone %} {% if is_english %}artwork:{% else %}カバーイラスト：{% endif %}<a href="http://pochigoya0423.blog.shinobi.jp/">{% if is_english %}POCHI{% else %}飯田のぎ{% endif %}</a>{%endif%}
+  {% include "pinterest/footer.html" %}
 </div>
 
 <!-- masonry script -->
 {% if not contents_only %}
   {% include "jquery.html" %}
-  {% if order == "chat" %}
-    <script language="javascript" src="{{host}}js/jquery/jquery.alerts.js" type="text/javascript"></script>
-  {% endif %}
   {% if use_masonry %}
     <script language="javascript" src="{{host|host_for_js}}js/masonry.js" type="text/javascript"></script>
   {% endif %}

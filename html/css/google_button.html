@@ -3,7 +3,7 @@
 {% else %}
 <link rel="stylesheet" type="text/css" media="screen,print" href="{{host}}static_files/google_buttons/css/google-buttons.css" />
 {% endif %}
-{% if bbs %}
+{% if bbs or order=="chat" %}
     <link rel="stylesheet" type="text/css" media="screen,print" href="{{host}}js/jquery/jquery.alerts.css" />
 {% endif %}
 {% include "css/infinite_scroll.html" %}

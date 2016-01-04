@@ -1,68 +1,32 @@
 <!-- 2ページ目以降はコンテンツだけでよい -->
 
-<!-- タグサーチ -->
-
-{#
-{% if search and not is_iphone %}
-	<div style="float:right;margin:4px;">
-		{% include "pinterest/search.html" %}
-	</div>
-{% endif %}
-#}
-
-<!-- ロゴ -->
-{#
-
-{% if page_mode == "index" and not is_iphone %}
-	<div class="logo">
-	{% if is_iphone %}
-	 <img src="static_files/banner_360b.png" width="180px" height="180px" alt="ロゴ"/>
-	{% else %}
-	 <img src="static_files/banner_360b.png" alt="ロゴ"/>
-	{% endif %}
-	 <div id="logo_fotter">
-			{% include "pinterest/about.html" %}
-	 </div>
-	</div>
-{% endif %}
-
-<!-- メニュー -->
-{% if page_mode == "index" %}
-{% if not is_iphone %}
-	{% include "pinterest/menulist.html" %}
-	<br clear="all"/>
-{% endif %}
-{% endif %}
-#}
-
-{% if order == "monthly" %}
+<!-- ランキングページ -->
 
 <!-- ランキング -->
-{% if not is_iphone %}
+{% if not is_iphone and order == "monthly" %}
 	{% include "pinterest/ranking.html" %}
 {% endif %}
 
-{% else %}
-
-{% if order == "lecture" %}
-
-<!-- イベント -->
-{% if not is_iphone %}
+<!-- 講座 -->
+{% if not is_iphone and order == "lecture" %}
 	{% include "pinterest/lecture.html" %}
 {% endif %}
 
-{% else %}
-
-{% if order == "event" %}
-
 <!-- イベント -->
-{% include "pinterest/event.html" %}
-
-{% else %}
+{% if order == "event" %}
+	{% include "pinterest/event.html" %}
+{% endif %}
 
 <!-- お知らせ -->
 {% if not is_iphone and order=="new" %}
 	{% include "pinterest/announce.html" %}
+{% endif %}
+
+<!-- 新着リスト -->
+{% if not is_iphone and order=="new" %}
+	{% include "pinterest/event_list.html" %}
+	{% include "pinterest/chat_list.html" %}
+	{% include "pinterest/tweet_list.html" %}
 {% endif %}
 
 <!-- 人気のBBS -->
@@ -80,40 +44,15 @@
 	{% include "pinterest/recent_tag.html" %}
 {% endif %}
 
-{% endif %}
-{% endif %}
-{% endif %}
-
 <!-- イラブチャット -->
 {% if order == "chat" %}
-	<div class="message hot_bbs">
-		<img src="./static_files/chat/logo.png" alt="logo"/>
-		<p>{% if is_english %}
-			ilbchat is illust chat for PC and iPad.
-			{% else %}
-			イラブチャットはPCとiPadで楽しめるお絵かきチャットです。
-			{% endif %}</p>
-	</div>
-	<br clear="all"/>
-	<div class="message hot_bbs">
-		{% include "chat/room_create.html" %}
-	</div>
-	<br clear="all"/>
+	{% include "pinterest/chat.html" %}
 {% endif %}
 
 <!-- 広告 -->
-{% if not is_iphone %}
-	{% if search %}
-		{#
-		<br clear="all"/>
-		<div style="margin-top:5px;margin-left:auto;margin-right:auto;width:336px;">
-			{% include "adsense/adsense_top.html" %}
-		</div>
-		#}
-	{% else %}
-		{% if thread_list and not tag_list%}
-			{% include "adsense/adsense_top.html" %}
-		{% endif %}
+{% if (not is_iphone) and (not search) %}
+	{% if thread_list and not tag_list %}
+		{% include "adsense/adsense_top.html" %}
 	{% endif %}
 {% endif %}
 

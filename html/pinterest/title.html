@@ -1,0 +1,56 @@
+{% if page_mode == "bookmark" %}
+  <title>
+  {% if is_english %}
+  Bookmark User
+  {% else %}
+  {% if search_app %}{{search_app.app_name}}{%endif %}
+  {% if search_thread %}{{search_thread.title}}{% endif%}
+  {% if search_bbs %}{{search_bbs.bbs_name}}{% endif %}
+  をブックマークしているユーザ
+  {% endif %}
+  </title>
+{%else%}
+{% if search %}
+<title>{{search}}{% if not is_english %}の検索結果{% endif %} - {% if is_english %}ILLUSTBOOK{% else %}イラストブック{% endif %}</title>
+{% else %}
+{% if tag %}
+<title>{{tag}}{% if not is_english %}の検索結果{% endif %} - {% if is_english %}ILLUSTBOOK{% else %}イラストブック{% endif %}</title>
+{% else %}
+{% if page_mode == "user" %}
+{% if not view_user.name %}
+<title>{% if is_english %}Unknown User - ILLUSTBOOK{% else %}未登録ユーザ - イラストブック{% endif %}</title>
+{% else %}
+<title>{{view_user.name}} - {% if is_english %}ILLUSTBOOK{% else %}イラストブック{% endif %}</title>
+{% endif %}
+{% else %}
+{% if page_mode == "guide" %}
+<title>{% if is_english %}How to use ILLUSTBOOK - ILLUSTBOOK{% else %}イラストブックの使い方 - イラストブック{% endif %}</title>
+{% else %}
+<title>{% if is_english %}ILLUSTBOOK - the BBS network of Manga{% else %}
+  {% if order == "chat" %}
+  お絵かきチャット - イラストブック
+  {% else %}
+  {% if order == "hot" %}
+  人気のイラスト - イラストブック
+  {% else %}
+  {% if order == "monthly" %}
+  ランキング - イラストブック
+  {% else %}
+  {% if order == "event" %}
+  イベント - イラストブック
+  {% else %}
+  イラストブック - 無料レンタルお絵かき掲示板
+  {% endif %}
+  {% endif %}
+  {% endif %}
+  {% endif %}
+{% endif %}</title>
+{% if not is_english %}
+<meta name="Keywords" content="お絵かき掲示板,お絵かきブログ,無料,お絵かき,レンタル" />
+<meta name="Description" content="イラストブックはお絵かきツールがなくてもすぐに描ける完全無料のレンタルお絵かき掲示板サービスです。" />
+{% endif %}
+{% endif %}
+{% endif %}
+{% endif %}
+{% endif %}
+{% endif %}

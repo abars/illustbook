@@ -1,19 +1,5 @@
 <!--
 <div class="message hot_bbs">
-	<div style="float:left;width:300px;">
-		<p>{% if is_english %}Announce{% else %}運営からのお知らせ{% endif %}</p>
-		<a href="{{host}}?order=event&event_id=akeome2015">イベント</a>への参加、どうもありがとうございました！
-		2015年もイラストブックをよろしくお願い致します。
-	</div>
-	<div style="float:right:width:110px;">
-		<img src="static_files/banner_360b.png" width="100px" height="100px" alt="ロゴ"/>
-	</div>
-</div>
-<br clear="all"/>
--->
-
-<!--
-<div class="message hot_bbs">
 		<p>{% if is_english %}Require Login{% else %}イラスト投稿へのログイン要求について{% endif %}</p>
 		運営コストの低減のため、イラストの新規投稿にログインが必要になりました。
 		コメントについては従来どおり、ログイン不要でご利用頂けます。
@@ -31,6 +17,3 @@
 <br clear="all"/>
 -->
 
-{% include "pinterest/event_list.html" %}
-{% include "pinterest/chat_list.html" %}
-{% include "pinterest/tweet_list.html" %}
