@@ -343,7 +343,7 @@ class Chat(webapp.RequestHandler):
 		for room in room_list2:
 			room.from_last_update=(Chat.get_sec(datetime.datetime.now())-Chat.get_sec(room.date))/60
 			room.from_created=(Chat.get_sec(datetime.datetime.now())-Chat.get_sec(room.create_date))/60
-			if(room.from_last_update>=10 and (not room.is_always)):
+			if(room.from_last_update>=30 and (not room.is_always)):
 				room.delete()
 			else:
 				if(room.from_last_update>=1 and room.user_count>=1):
@@ -598,7 +598,12 @@ class Chat(webapp.RequestHandler):
 		if(mode=="post_snapshot"):
 			self.post_snapshot()
 			return
-		
+		if(mode=="tool"):
+			SetUtf8.set()
+			user=users.get_current_user()
+			self.tool(user)
+			return
+
 	def get(self):
 		SetUtf8.set()
 
@@ -617,7 +622,10 @@ class Chat(webapp.RequestHandler):
 			self.close_room(user)
 			return
 		if(mode=="tool"):
-			self.tool(user)
+			self.redirect(str("http://"+self.request.host+"/?order=chat&room_key="+self.request.get("key")))
+			#self.show_portal(user)
+			#login require
+			#self.tool(user)
 			return
 		if(mode=="thumbnail"):
 			self.thumbnail()

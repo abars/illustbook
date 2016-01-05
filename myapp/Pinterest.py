@@ -443,13 +443,27 @@ class Pinterest(webapp.RequestHandler):
 		if(order=="new" and not contents_only):
 			room_list=Chat.get_room_list()
 
+		invited=False
+
 		if(order=="chat"):
 			if(contents_only):
 				room_list=[]
 			else:
 				room_list=Chat.get_room_object_list()
 
+			if(self.request.get("room_key")):
+				room_list=[]
+				room_key=self.request.get("room_key")
+				try:
+					room=db.get(self.request.get("room_key"))
+				except:
+					room=None
+				if(room):
+					room_list.append(room)
+				invited=True
+
 		template_values['room_list']=room_list
+		template_values['room_invited']=invited
 
 	@staticmethod
 	def _update_tweet_list(self,template_values,order,contents_only):

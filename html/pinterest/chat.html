@@ -1,3 +1,22 @@
+{% if room_invited %}
+	<div class="message hot_bbs">
+		{% if is_english %}
+			You were invited.
+			{% if not room_list %}
+				But the chat was closed.
+			{% endif %}
+		{% else %}
+			{% if not room_list %}
+			チャットに招待されましたが、チャットは既に終了しました。
+			{% else %}
+			チャットに招待されました。
+			ルームリストから参加することができます。
+			{% endif %}
+		{% endif %}
+	</div>
+	<br clear="all"/>
+{% endif %}
+
 	<div class="message hot_bbs">
 		<img src="./static_files/chat/logo.png" alt="logo"/>
 		<p>{% if is_english %}
@@ -7,7 +26,18 @@
 			{% endif %}</p>
 	</div>
 	<br clear="all"/>
+
+{% if not room_invited %}
 	<div class="message hot_bbs">
 		{% include "chat/room_create.html" %}
 	</div>
 	<br clear="all"/>
+
+	{% if not is_english %}
+	<div class="message hot_bbs">
+		<h2>ルームへの招待</h2>
+		<p>チャット画面のURLを伝えることで、ルームに招待することができます。</p>
+	</div>
+	<br clear="all"/>
+	{% endif %}
+{% endif %}
