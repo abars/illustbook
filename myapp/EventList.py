@@ -31,6 +31,7 @@ from myapp.Alert import Alert
 from myapp.UTC import UTC
 from myapp.JST import JST
 from myapp.MappingId import MappingId
+from myapp.EscapeComment import EscapeComment
 
 class EventList(webapp.RequestHandler):
 	@staticmethod
@@ -78,7 +79,10 @@ class EventList(webapp.RequestHandler):
 	def _update(self,event,user,validate_all):
 		event.title=self.request.get("title")
 		event.summary=self.request.get("summary")
-		
+
+		event.summary=EscapeComment.escape_br(event.summary)
+		event.summary=EscapeComment.auto_link(event.summary)
+
 		event.id=self.request.get("id")
 		if(event.id==""):
 			Alert.alert_msg_with_write(self,"IDを入力する必要があります。")

@@ -32,6 +32,12 @@ class EscapeComment(webapp.RequestHandler):
 		compiled_line = re.compile("<P>|</P>")
 		summary = compiled_line.sub(r'', summary)
 
+		compiled_line = re.compile("<script.*?>")
+		summary = compiled_line.sub(r'&lt;script&gt;', summary)
+
+		compiled_line = re.compile("</script.*?>")
+		summary = compiled_line.sub(r'&lt;/script&gt;', summary)
+
 		return summary
 
 	@staticmethod
