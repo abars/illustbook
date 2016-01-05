@@ -206,6 +206,10 @@ class Chat(webapp.RequestHandler):
 		room.command_cnt=room.command_cnt+cmd_count
 		room.heart_beat[client_id]=Chat.get_sec(datetime.datetime.now())
 		auto_logout=Chat.auto_logout(room)
+
+		#room_size=len(db.model_to_protobuf(room).Encode())
+		room_size=sys.getsizeof(room.command_list)
+
 		room.put()
 
 		for client in room.channel_client_list:
@@ -214,10 +218,7 @@ class Chat(webapp.RequestHandler):
 			if(auto_logout):
 				channel.send_message( client , "update_user" )
 
-		len1=len(db.model_to_protobuf(room).Encode())
-		#len2=sys.getsizeof(room.command_list)+sys.getsizeof(room)
-
-		return len1
+		return room_size
 
 	#スナップショットを取得する
 	def get_snap_shot(self):
