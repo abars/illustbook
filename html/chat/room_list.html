@@ -4,9 +4,9 @@
 			<div class="side-corner-tag" style="width:100%;">
 				<a href="javascript:join_chat('{{room.key()}}',false,{% if room.password %}true{%else%}false{%endif%});" class="declink">
 				{% if room.password %}
-					<img src="./static_files/empty_user.png" alt="room thumbnail" class="item_radius_image" style="width:100%;"/>
+					<img src="./static_files/empty_user.png" alt="room thumbnail" class="item_radius_image" width="{{room|thumbnail2_width(is_iphone)}}px" height="{{room|thumbnail2_width(is_iphone)}}px"/>
 				{% else %}
-					<img src="./chat?mode=thumbnail&amp;key={{room.key()}}" alt="room thumbnail" class="item_radius_image" style="width:100%;"/>
+					<img src="./chat?mode=thumbnail&amp;key={{room.key()}}" alt="room thumbnail" class="item_radius_image" width="{{room|thumbnail2_width(is_iphone)}}px" height="{{room|thumbnail2_width(is_iphone)}}px"/>
 				{% endif %}
 				</a>
 				<p><span>

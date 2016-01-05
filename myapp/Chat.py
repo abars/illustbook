@@ -328,8 +328,8 @@ class Chat(webapp.RequestHandler):
 		for room in room_list:
 			if(room.is_always and room.user_count==0):
 				continue
-			url="./chat"
-			thumb="./chat?mode=thumbnail&amp;key="+str(room.key())
+			url="./?order=chat&room_key="+str(room.key())
+			thumb="./chat?mode=thumbnail&key="+str(room.key())
 			user_cnt=room.user_count
 			show_room.append({"title":room.name,"url":url,"thumbnail_url":thumb,"user_count":user_cnt,"key":str(room.key)})
 		memcache.set(cache_id,show_room,BbsConst.OBJECT_CHAT_ROOM_CACHE_TIME)
