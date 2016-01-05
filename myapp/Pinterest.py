@@ -459,6 +459,7 @@ class Pinterest(webapp.RequestHandler):
 				except:
 					room=None
 				if(room):
+					Chat.update_room_info(room)
 					room_list.append(room)
 				invited=True
 

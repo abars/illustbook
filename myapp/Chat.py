@@ -341,8 +341,7 @@ class Chat(webapp.RequestHandler):
 
 		show_room=[]
 		for room in room_list2:
-			room.from_last_update=(Chat.get_sec(datetime.datetime.now())-Chat.get_sec(room.date))/60
-			room.from_created=(Chat.get_sec(datetime.datetime.now())-Chat.get_sec(room.create_date))/60
+			Chat.update_room_info(room)
 			if(room.from_last_update>=30 and (not room.is_always)):
 				room.delete()
 			else:
@@ -351,6 +350,11 @@ class Chat(webapp.RequestHandler):
 				show_room.append(room)
 
 		return show_room
+
+	@staticmethod
+	def update_room_info(room):
+		room.from_last_update=(Chat.get_sec(datetime.datetime.now())-Chat.get_sec(room.date))/60
+		room.from_created=(Chat.get_sec(datetime.datetime.now())-Chat.get_sec(room.create_date))/60
 
 	#ポータル
 	def show_portal(self,user):
