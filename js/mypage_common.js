@@ -22,7 +22,8 @@ function event_frm_validate(host){
 	var sd=document.getElementById("event_start_date").value;
 	var ed=document.getElementById("event_end_date").value;
 	var id=document.getElementById("event_id").value;
-	window.open(""+host+"event_add?id="+id+"&start_date="+sd+"&end_date="+ed);
+	var md=document.getElementById("event_mode").value;
+	window.open(""+host+"event_add?id="+id+"&start_date="+sd+"&end_date="+ed+"&mode="+md);
 }
 
 function check_id(host){

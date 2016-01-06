@@ -132,9 +132,18 @@ class EventList(webapp.RequestHandler):
 		return True
 
 	def get(self,mode_url):
-		if(Event.all().filter("id =",self.request.get("id")).count()>=1):
-			Alert.alert_msg_with_write(self,"このIDは既に使われています")
-			return False
+		mode=self.request.get("mode")
+
+		if(mode=="edit"):
+			event=Event.all().filter("id =",self.request.get("id")).fetch(limit=2)
+			if(not event or len(event)==0):
+				Alert.alert_msg_with_write(self,"イベントが存在しません")
+				return
+		else:
+			if(Event.all().filter("id =",self.request.get("id")).count()>=1):
+				Alert.alert_msg_with_write(self,"このIDは既に使われています")
+				return
+
 		user = users.get_current_user()
 		event=Event()
 		if(not self._update(event,user,False)):
@@ -154,7 +163,7 @@ class EventList(webapp.RequestHandler):
 		if(mode=="add"):
 			if(Event.all().filter("id =",self.request.get("id")).count()>=1):
 				Alert.alert_msg_with_write(self,"このIDのイベントは既に存在しています")
-				return False
+				return
 			
 			event=Event()
 			if(not self._update(event,user,True)):

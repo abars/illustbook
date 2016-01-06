@@ -91,9 +91,9 @@
 
 				{% if event_owner %}
 					<input name="id" id="event_id" type="hidden" value="{{now_event.id}}"/>
-					<input name="mode" type="hidden" value="edit"/><br/>
+					<input name="mode" id="event_mode" type="hidden" value="edit"/><br/>
 				{% else %}
-					<input name="mode" type="hidden" value="add"/><br/>
+					<input name="mode" id="event_mode" type="hidden" value="add"/><br/>
 				{% endif %}
 				<input name="author" type="hidden" value="{{bookmark.name}}"/>
 				<div class="g-button-group toggle-buttons">
