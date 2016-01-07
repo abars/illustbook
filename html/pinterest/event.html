@@ -57,7 +57,7 @@
 <br clear="all"/>
 {% endif %}
 
-{% if is_admin and not is_iphone %}
+{% if bookmark and not is_iphone %}
 
 	{% set event_owner = 0 %}
 	{% if now_event and (now_event.user_id==bookmark.user_id or is_admin) %}
