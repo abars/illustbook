@@ -1,0 +1,49 @@
+
+	{% set event_owner = 0 %}
+	{% if now_event and (now_event.user_id==bookmark.user_id or is_admin) %}
+		{% set event_owner = 1 %}
+	{% endif %}
+
+	{% if not now_event or event_owner %}
+		<div class="message hot_bbs">
+
+			{% if event_owner %}
+			<p>イベントの編集</p>
+			{% else %}
+			<p>イベントの追加（β）</p>
+			イベントを主催してみませんか？<br/><br/>
+			{% endif %}
+
+			<form action="{{host}}event_add" enctype="multipart/form-data" method="post" name="event_frm">
+				<table>
+				{% if not event_owner %}
+					<tr><td>イベントID</td><td><input name="id" id="event_id" type="text" value=""/>{% if is_iphone %}<br/>{% endif %}(半角英数)</td></tr>
+				{% endif %}
+				</td></tr>
+
+				<tr><td>タイトル</td><td><input name="title" id="event_title" type="text" value="{% if event_owner %}{{now_event.title}}{% endif %}"/></td></tr>
+				<tr><td>開始日</td><td><input name="start_date" id="event_start_date" type="text" value="{{now_event_start_date}}"/></td></tr>
+				<tr><td>終了日</td><td><input name="end_date" id="event_end_date" type="text" value="{{now_event_end_date}}"/>{% if is_iphone %}<br/>{% endif %}（最大1週間）</td></tr>
+
+				<tr><td>説明</td><td><textarea name="summary" id="event_summary" {% if is_iphone %}cols=28{% else %}cols=40{% endif %} rows=10>{% if event_owner %}{{now_event.summary}}{% endif %}</textarea></td></tr>
+				
+				</table>
+
+				{% if event_owner %}
+					<input name="id" id="event_id" type="hidden" value="{{now_event.id}}"/>
+					<input name="mode" id="event_mode" type="hidden" value="edit"/><br/>
+				{% else %}
+					<input name="mode" id="event_mode" type="hidden" value="add"/><br/>
+				{% endif %}
+				<input name="author" type="hidden" value="{{bookmark.name}}"/>
+				<div class="g-button-group toggle-buttons">
+				<a href="javascript:event_frm_validate('{{host}}');" class="g-button">入力値の確認</a>
+				<a href="javascript:document.event_frm.submit();" class="g-button">{% if event_owner %}更新{% else %}登録{% endif %}</a>
+				{% if event_owner %}
+					<a href="javascript:confirm_delete_event('{{host}}event_add?mode=del&id={{now_event.id}}',{% if is_english %}True{% else %}false{% endif %});" class="g-button">削除</a>
+				{% endif %}
+				</div>
+			</form>
+		</div>
+		<br clear="all"/>
+	{% endif %}

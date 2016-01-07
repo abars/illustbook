@@ -2,13 +2,34 @@
 
 <!-- ランキングページ -->
 
+{% if is_iphone and (order == "new" or order=="hot" or order=="event" or order=="chat") %}
+	<div class="message hot_bbs" style="cursor:pointer;" id="iphone_information_button" onclick="var info=document.getElementById('iphone_information');if(info.style.display=='block') { info.style.display='none'; } else { info.style.display='block'; }">
+		&gt;&gt;
+		{% if order == "new" %}
+			開催中のイベント、チャット、新着ツイート
+		{% endif %}
+		{% if order == "hot" %}
+			人気の掲示板、タグ
+		{% endif %}
+		{% if order == "event" %}
+			開催中のイベント、イベントの作成
+		{% endif %}
+		{% if order == "chat" %}
+			チャットの管理
+		{% endif %}
+		<br/>
+	</div>
+	<br clear="all"/>
+	<div style="display:none;" id="iphone_information">
+{% endif %}
+
 <!-- ランキング -->
-{% if not is_iphone and order == "monthly" %}
+{% if order == "monthly" %}
 	{% include "pinterest/ranking.html" %}
 {% endif %}
 
 <!-- 講座 -->
-{% if not is_iphone and order == "lecture" %}
+{% if order == "lecture" %}
 	{% include "pinterest/lecture.html" %}
 {% endif %}
 
@@ -18,29 +39,29 @@
 {% endif %}
 
 <!-- お知らせ -->
-{% if not is_iphone and order=="new" %}
+{% if order=="new" %}
 	{% include "pinterest/announce.html" %}
 {% endif %}
 
 <!-- 新着リスト -->
-{% if not is_iphone and order=="new" %}
+{% if order=="new" %}
 	{% include "pinterest/event_list.html" %}
 	{% include "pinterest/chat_list.html" %}
 	{% include "pinterest/tweet_list.html" %}
 {% endif %}
 
 <!-- 人気のBBS -->
-{% if not is_iphone and order=="hot"%}
+{% if order=="hot"%}
 	{% include "pinterest/hot_bbs.html" %}
 {% endif %}
 
 <!-- 検索オプション -->
-{% if not is_iphone and search %}
+{% if search %}
 	{% include "pinterest/search_option.html" %}
 {% endif %}
 
 <!-- タグ一覧 -->
-{% if not is_iphone and not search and order!="new" %}
+{% if not search and order!="new" %}
 	{% include "pinterest/recent_tag.html" %}
 {% endif %}
 
@@ -54,5 +75,9 @@
 	{% if thread_list and not tag_list %}
 		{% include "adsense/adsense_top.html" %}
 	{% endif %}
+{% endif %}
+
+{% if is_iphone and (order == "new" or order=="hot" or order=="event" or order=="chat") %}
+	</div>
 {% endif %}
 
