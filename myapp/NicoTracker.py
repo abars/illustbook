@@ -13,6 +13,7 @@ import urllib
 import re
 import datetime
 import logging
+import gc
 
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
@@ -152,6 +153,8 @@ class NicoTracker(webapp.RequestHandler):
 				logging.info("update nico_tracker "+str(cnt))
 
 		logging.info("updated "+str(update_cnt)+" of "+str(cnt))
+
+		gc.collect()
 
 	@staticmethod
 	def create_graph(day_list,play_cnt_list):

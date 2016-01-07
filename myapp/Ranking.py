@@ -11,6 +11,7 @@ import time;
 import json;
 import logging;
 import os;
+import gc;
 
 from google.appengine.ext import db
 from google.appengine.api.labs import taskqueue
@@ -124,6 +125,8 @@ class Ranking(db.Model):
 
 		self.put()
 	
+		gc.collect()
+
 	def _create_ranking_core(self,thread_list):
 		#ハッシュにthread_keyを入れていく
 		rank={}
