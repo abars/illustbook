@@ -2,20 +2,27 @@
 
 <!-- ランキングページ -->
 
-{% if is_iphone and (order == "new" or order=="hot" or order=="event" or order=="chat") %}
+{% if is_iphone and (order == "new" or order=="hot" or order=="event" or order=="chat" or order=="monthly") %}
 	<div class="message hot_bbs" style="cursor:pointer;" id="iphone_information_button" onclick="var info=document.getElementById('iphone_information');if(info.style.display=='block') { info.style.display='none'; } else { info.style.display='block'; }">
-		&gt;&gt;
-		{% if order == "new" %}
-			開催中のイベント、チャット、新着ツイート
-		{% endif %}
-		{% if order == "hot" %}
-			人気の掲示板、タグ
-		{% endif %}
-		{% if order == "event" %}
-			開催中のイベント、イベントの作成
-		{% endif %}
-		{% if order == "chat" %}
-			チャットの管理
+		&gt;
+		{% if is_english %}
+			Additional Information
+		{% else %}
+			{% if order == "new" %}
+				開催中のイベント、チャット、新着ツイート
+			{% endif %}
+			{% if order == "hot" %}
+				人気の掲示板、タグ
+			{% endif %}
+			{% if order == "monthly" %}
+				詳細
+			{% endif %}
+			{% if order == "event" %}
+				開催中のイベント、イベントの作成
+			{% endif %}
+			{% if order == "chat" %}
+				チャットの管理
+			{% endif %}
 		{% endif %}
 		<br/>
 	</div>
@@ -77,7 +84,7 @@
 	{% endif %}
 {% endif %}
 
-{% if is_iphone and (order == "new" or order=="hot" or order=="event" or order=="chat") %}
+{% if is_iphone and (order == "new" or order=="hot" or order=="event" or order=="chat" or order=="monthly") %}
 	</div>
 {% endif %}
 
