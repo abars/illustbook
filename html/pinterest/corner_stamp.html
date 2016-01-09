@@ -2,14 +2,14 @@
 
 <!-- ランキングページ -->
 
-{% if is_iphone and (order == "new" or order=="hot" or order=="event" or order=="chat" or order=="monthly") %}
+{% if is_iphone and (order == "new" or order=="hot" or order=="event" or order=="chat" or order=="monthly" or search) %}
 	<div class="message hot_bbs" style="cursor:pointer;" id="iphone_information_button" onclick="var info=document.getElementById('iphone_information');if(info.style.display=='block') { info.style.display='none'; } else { info.style.display='block'; }">
 		&gt;
 		{% if is_english %}
 			Additional Information
 		{% else %}
 			{% if order == "new" %}
-				開催中のイベント、チャット、新着ツイート
+				開催中のイベント、チャット、最近のツイート
 			{% endif %}
 			{% if order == "hot" %}
 				人気の掲示板、タグ
@@ -22,6 +22,9 @@
 			{% endif %}
 			{% if order == "chat" %}
 				チャットの管理
+			{% endif %}
+			{% if search %}
+				検索オプション
 			{% endif %}
 		{% endif %}
 		<br/>
@@ -84,7 +87,7 @@
 	{% endif %}
 {% endif %}
 
-{% if is_iphone and (order == "new" or order=="hot" or order=="event" or order=="chat" or order=="monthly") %}
+{% if is_iphone and (order == "new" or order=="hot" or order=="event" or order=="chat" or order=="monthly" or search) %}
 	</div>
 {% endif %}
 
