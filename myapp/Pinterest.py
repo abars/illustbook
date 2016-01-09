@@ -508,6 +508,7 @@ class Pinterest(webapp.RequestHandler):
 		template_values['illust_enable']=True
 		template_values['search']=search
 		template_values['search_api_error']=search_api_error
+		template_values['top_page']=True
 
 		Pinterest._render_page(self,template_values)
 

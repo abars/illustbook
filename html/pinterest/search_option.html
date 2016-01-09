@@ -1,9 +1,10 @@
 {% if not is_english %}
 
-<div class="message recent_tag" {% if not is_iphone %}style="width:350px;margin-top:0px;margin-left:0px;margin-right:0px;"{% endif %}>
+<div class="message hot_bbs" {% if not is_iphone %}style="width:350px;margin-top:0px;margin-left:0px;margin-right:0px;"{% endif %}>
 <p>{% if is_english %}External Search{% else %}他のサイトで検索{% endif %}</p>
 <a href="http://dic.pixiv.net/a/{{search}}" target="_BLANK">Pixiv百科事典</a>&nbsp;
 <a href="http://dic.nicovideo.jp/s/al/t/{{search}}" target="_BLANK">ニコニコ大百科</a>
 </div>
+<br clear="all"/>
 
 {% endif %}
