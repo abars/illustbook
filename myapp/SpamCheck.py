@@ -153,9 +153,12 @@ class SpamCheck(webapp.RequestHandler):
 		for host in host_list:
 			if(host==""):
 				continue
-			if(re.search(host,remote_host)):
-				logging.error("Spam host detected "+remote_host)
-				return True
+			try:
+				if(re.search(host,remote_host)):
+					logging.error("Spam host detected "+remote_host)
+					return True
+			except:
+				logging.error("Deny host exception detected host:"+host+" remote_host:"+remote_host)
 		return False
 
 	@staticmethod
