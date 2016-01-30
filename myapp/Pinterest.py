@@ -238,12 +238,14 @@ class Pinterest(webapp.RequestHandler):
 			if(cache):
 				return cache
 
+		first_page_show_n=10
+
 		if(page==1):
-			unit=10
+			unit=50	#非表示ユーザもいるので多めにとってくる
 			offset=0
 		else:
 			unit=50
-			offset=unit*(page-2)+10
+			offset=unit*(page-2)+first_page_show_n
 
 		query=db.Query(StackFeedData,keys_only=False).filter("feed_mode = ","message").order("-create_date")
 
@@ -252,12 +254,17 @@ class Pinterest(webapp.RequestHandler):
 		except:
 			tweet_list=None
 
+		cnt=0
+
 		tweet_list_removed=[]
 		for tweet in tweet_list:
 			bookmark=ApiObject.get_bookmark_of_user_id(tweet.from_user_id)
 			if(bookmark):
 				if(not bookmark.disable_global_tweet):
 					tweet_list_removed.append(tweet)
+					cnt=cnt+1
+			if(page==1 and cnt>=first_page_show_n):
+				break
 
 		if(page==1):
 			memcache.set(cache_id,tweet_list_removed,BbsConst.OBJECT_TWEET_LIST_CACHE_TIME)
