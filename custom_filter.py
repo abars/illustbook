@@ -388,13 +388,15 @@ def auto_link(summary):
 #サムネイルのサイズ
 #-----------------------------------------------------------------
 
-def thumbnail2_width(thread,is_iphone):
+def thumbnail2_width(thread,is_iphone,is_tablet):
 	if(is_iphone):
 		return 152
+	if(is_tablet):
+		return 180
 	return 200
 
-def thumbnail2_height(thread,is_iphone):
-	width=thumbnail2_width(thread,is_iphone)
+def thumbnail2_height(thread,is_iphone,is_tablet):
+	width=thumbnail2_width(thread,is_iphone,is_tablet)
 	try:
 		return thread["height"]*width/thread["width"]
 	except:

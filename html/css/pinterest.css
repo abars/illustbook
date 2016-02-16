@@ -29,7 +29,7 @@ h2,h3 {font-size:100%;color:#ea5376;}
 		box-sizing:border-box;
 	{% else %}
 		{% if not thread_list %}
-			width:848px;
+			width:756px;
 		{% endif %}
 	{% endif %}
 	margin:0 auto;
@@ -61,7 +61,7 @@ h2,h3 {font-size:100%;color:#ea5376;}
 		width:100%;
 	{% else %}
 		{% if bookmark %}
-			min-width:848px;
+			min-width:756px;
 		{% endif %}
 	{% endif %}
 	display:none;
@@ -88,8 +88,13 @@ h2,h3 {font-size:100%;color:#ea5376;}
 	width: 152px;
 	margin: 4px;
 {% else %}
+{% if is_tablet %}
+	width: 180px;
+	margin: 5px;
+{% else %}
 	width:200px;
 	margin: 5px;
+{% endif %}
 {% endif %}
 	float: left;
 	{{white_bg}}
@@ -362,7 +367,11 @@ h2,h3 {font-size:100%;color:#ea5376;}
 
 .hot_bbs{
 	{% if not is_iphone %}
+	{% if is_tablet %}
+	width:336px;
+	{% else %}
 	width:400px;
+	{% endif %}
 	margin-left:0px;
 	margin-right:0px;
 	margin-top:0px;
@@ -417,7 +426,7 @@ h2,h3 {font-size:100%;color:#ea5376;}
 	width:calc(100% - 20px);
 	margin: 5px;
 	{% else %}
-	width:404px;
+	width:358px;
 	margin: 4px;
 	{% endif %}
 }

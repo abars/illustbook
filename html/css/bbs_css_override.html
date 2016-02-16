@@ -2,19 +2,36 @@
 
 <style type="text/css">
 
-	/* window size adaptive */
-{#
-{% if template_path %}
-	@media screen and (min-width: 1024px) {
+	/* ipad size adaptive (cssは800でiPadは768なので差分を埋める) */
+{% if is_tablet %}
+	@media screen and (max-width: 800px) {
 		#container{
-			min-width: 900px;
+			width: calc(100% - 10px);
 		}
+{% if template_path %}
+		#contents-header , #contents-footer {
+			background-repeat: no-repeat;
+			background-size: cover;
+		}
+		{% if bbs.in_frame_mode or thread %}
 		#main{
-			min-width: 600px;
 		}
+		{% else %}
+		#main{
+			width: 100%;
+			margin-right: -270px;
+		}
+		#side{
+			width: 230px;
+			margin-left: 40px;
+		}
+		#infinite-scroll-container{
+			margin-right: 270px;
+		}
+		{% endif %}
+{% endif %}
 	}
 {% endif %}
-#}
 
 	/* スレッド一覧 */
 {% if bbs.bbs_mode == 3 %}
