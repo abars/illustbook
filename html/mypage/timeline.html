@@ -17,7 +17,7 @@
 	{% if feed.mode == "new_bookmark_bbs" and not feed.bbs.title %}
 		{% set deleted = True %}
 	{% endif %}
-	{% if message and message == "deleted" %}
+	{% if feed.message and feed.message == "deleted" %}
 		{% set deleted = True %}
 	{% endif %}
 
