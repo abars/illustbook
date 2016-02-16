@@ -355,7 +355,11 @@ h2,h3 {font-size:100%;color:#ea5376;}
 
 .recent_tag{
 	{% if not is_iphone %}
+	{% if is_tablet %}
+	width:336px;
+	{% else %}
 	width:400px;
+	{% endif %}
 	margin-left:0px;
 	margin-right:0px;
 	{% endif %}
