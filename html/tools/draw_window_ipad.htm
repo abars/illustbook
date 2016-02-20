@@ -278,6 +278,17 @@
 		<table class="upload_innner">
 		<tr>
 		<td>
+		{% if is_english %}Pressure{% else %}筆圧{% endif %}&nbsp;
+		</td>
+		<td>
+		<select id="pressure_enable" onchange="javascript:g_draw_canvas.on_change_pressure_enable(this.value);">
+		<option value="enable" selected>{% if is_english %}Enable{% else %}有効{% endif %}</option>
+		<option value="disable">{% if is_english %}Disable{% else %}無効{% endif %}</option>
+		</select>
+		</td>
+		</tr>
+		<tr>
+		<td>
 		{% if is_english %}Canvas size{% else %}キャンバスサイズ{% endif %}&nbsp;
 		</td>
 		<td>
