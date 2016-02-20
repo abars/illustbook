@@ -8,28 +8,32 @@
 		#container{
 			width: calc(100% - 10px);
 		}
-{% if template_path %}
+
+	{% if template_path %}
 		#contents-header , #contents-footer {
 			background-repeat: no-repeat;
 			background-size: cover;
 		}
-		{% if bbs.in_frame_mode or thread %}
+	{% endif %}
+
+	{% if bbs.in_frame_mode or thread %}
+	{% else %}
+		{% if template_path %}
 		#main{
-		}
 		{% else %}
-		#main{
+		#main_2col{
+		{% endif %}
 			width: 100%;
 			margin-right: -270px;
 		}
 		#side{
-			width: 230px;
+			{# width: 230px; #}
 			margin-left: 40px;
 		}
 		#infinite-scroll-container{
 			margin-right: 270px;
 		}
-		{% endif %}
-{% endif %}
+	{% endif %}
 	}
 {% endif %}
 
