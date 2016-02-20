@@ -37,6 +37,8 @@ $(function(){
 				side.css({position:"static", left: "auto", bottom: "auto"});
 			}
 		 }
+
+		side.css("transform","translateZ(0)");	//repaint for ipad
 	}
 
 	$(window).resize(function(){
