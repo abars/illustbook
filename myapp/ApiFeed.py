@@ -44,12 +44,13 @@ class ApiFeed(webapp.RequestHandler):
 
 	@staticmethod
 	def invalidate_cache():
-		offset=0
-		mode=["bookmark","new","moper","hot","applause"]
-		count=[16,18,BbsConst.PINTEREST_PAGE_UNIT]
-		for m in mode:
-			for c in count:
-				memcache.delete(ApiFeed._get_cache_id(m,None,offset,c))
+		offset=BbsConst.PINTEREST_CACHE_OFFSET #0
+		mode=BbsConst.PINTEREST_CACHE_MDOE #["bookmark","new","moper","hot","applause"]
+		count=[BbsConst.PINTEREST_PAGE_UNIT] #[16,18,BbsConst.PINTEREST_PAGE_UNIT]
+		for o in offset:
+			for m in mode:
+				for c in count:
+					memcache.delete(ApiFeed._get_cache_id(m,None,o,c))
 	
 	@staticmethod
 	def _get_cache_id(order,bbs_id,offset,limit):
@@ -104,12 +105,13 @@ class ApiFeed(webapp.RequestHandler):
 
 		#キャッシュが有効かどうか
 		cache_enable=0
-		if(offset==0):
-			cache_enable=1
-		
+		if(offset in BbsConst.PINTEREST_CACHE_OFFSET):#==0):
+			if(limit==BbsConst.PINTEREST_PAGE_UNIT):
+				cache_enable=1
+
 		#更新されたときにページ間で不整合が発生するために無効化
 		if(order):
-			if(not(order=="new" or order=="hot")):
+			if(not(order in BbsConst.PINTEREST_CACHE_MDOE)):#order=="new" or order=="hot")):
 				cache_enable=0
 
 		#キャッシュ取得
