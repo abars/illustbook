@@ -20,6 +20,11 @@ builtins:
 inbound_services:
 - channel_presence
 
+skip_files:
+- skip_files/.*
+- js/ipad/.git/.*
+- .*DS_Store
+
 handlers:
 - url: /flash
   static_dir: flash
