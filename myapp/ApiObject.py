@@ -29,6 +29,7 @@ from myapp.MappingId import MappingId
 from myapp.Bbs import Bbs
 from myapp.BbsConst import BbsConst
 from myapp.Bookmark import Bookmark
+from myapp.Bookmark import BookmarkMapper
 from myapp.StackFeedData import StackFeedData
 from myapp.UTC import UTC
 from myapp.JST import JST
@@ -85,19 +86,36 @@ class ApiObject(webapp.RequestHandler):
 	
 	@staticmethod
 	def get_bookmark_from_datastore(user_id):
-		#データストアから読込
-		query=db.Query(Bookmark,keys_only=True).filter("user_id =",user_id)
 		target_bookmark=None
 
-		#count=query.count(limit=2)
-		#if(count>=2):
-		#	logging.error("bookmark duplicate error user_id="+str(user_id))
+		#ブックマークへのマップ
+		mapper=BookmarkMapper.get_by_key_name(BbsConst.KEY_NAME_BOOKMARK+user_id)
+		if(mapper and mapper.bookmark):
+			#マッパーが見つかった
+			try:
+				target_bookmark=mapper.bookmark
+			except:
+				target_bookmark=None
+		else:
+			#データストアから読込
+			query=db.Query(Bookmark,keys_only=True).filter("user_id =",user_id)
 
-		try:
-			target_bookmark=db.get(query.fetch(1)[0])	#強い整合性を保証
-		except:
-			target_bookmark=None
+			#count=query.count(limit=2)
+			#if(count>=2):
+			#	logging.error("bookmark duplicate error user_id="+str(user_id))
+
+			try:
+				target_bookmark=db.get(query.fetch(1)[0])	#強い整合性を保証
+			except:
+				target_bookmark=None
 		
+			#マッパーの保存
+			if(target_bookmark):
+				mapper=BookmarkMapper(key_name=BbsConst.KEY_NAME_BOOKMARK+user_id)
+				mapper.user_id=str(user_id)
+				mapper.bookmark=target_bookmark.key()
+				mapper.put()
+
 		#サムネイル作成
 		ApiObject.create_user_thumbnail(target_bookmark)
 		

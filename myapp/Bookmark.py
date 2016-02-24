@@ -107,3 +107,9 @@ class Bookmark(db.Model):
 	def delete(self,**kwargs):
 		memcache.delete(BbsConst.OBJECT_CACHE_HEADER+BbsConst.OBJECT_BOOKMARK_CACHE_HEADER+self.user_id)
 		super(Bookmark, self).delete(**kwargs)
+
+#kay_nameからbookmarkを引く
+class BookmarkMapper(db.Model):
+	bookmark=db.ReferenceProperty(Bookmark)
+	user_id = db.StringProperty()
+
