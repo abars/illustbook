@@ -309,7 +309,7 @@ class Chat(webapp.RequestHandler):
 		room_list2=[]
 		for room_key in room_list:
 			try:
-				room=ChatRoom.get(room_key)#db.get(room_key)	#削除のインデックスの反映が遅延するため再取得
+				room=ChatRoom.get_light(room_key)#db.get(room_key)	#削除のインデックスの反映が遅延するため再取得
 			except:
 				room=None
 			if(not room):
@@ -319,11 +319,11 @@ class Chat(webapp.RequestHandler):
 
 	@staticmethod
 	def get_room_list():
-		room_list=Chat._get_room_list_core()
 		cache_id=BbsConst.OBJECT_CACHE_HEADER+BbsConst.OBJECT_CHAT_ROOM_HEADER
 		cache=memcache.get(cache_id)
 		if(cache):
 			return cache
+		room_list=Chat._get_room_list_core()
 		show_room=[]
 		for room in room_list:
 			if(room.is_always and room.user_count==0):
@@ -400,7 +400,7 @@ class Chat(webapp.RequestHandler):
 	#サムネイル取得
 	def thumbnail(self):
 		try:
-			room=ChatRoom.get(self.request.get("key"))#db.get(str(self.request.get("key")))
+			room=ChatRoom.get_light(self.request.get("key"))#db.get(str(self.request.get("key")))
 		except:
 			self.error(500)
 			return

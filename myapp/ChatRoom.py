@@ -53,6 +53,7 @@ class ChatRoom(db.Model):
 	chunk_cnt = db.IntegerProperty()
 
 	heart_beat = {}
+	read_only = False
 
 	def delete(self):
 		for chunk in self.chunk_list:
@@ -63,6 +64,9 @@ class ChatRoom(db.Model):
 		db.Model.delete(self)
 	
 	def put(self):
+		if(self.read_only):
+			raise Exception,"read only object" 
+
 		chunk_size = 500000	#500KBで分割する
 
 		self.date=datetime.datetime.now()
@@ -117,4 +121,12 @@ class ChatRoom(db.Model):
 		if(not room):
 			return None
 		room.download()
+		return room
+
+	@staticmethod
+	def get_light(key):
+		room=db.get(key)
+		if(not room):
+			return None
+		room.read_only=True
 		return room
