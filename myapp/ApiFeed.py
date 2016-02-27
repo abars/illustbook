@@ -35,6 +35,7 @@ from myapp.AddBookmark import AddBookmark
 from myapp.ApiObject import ApiObject
 from myapp.Ranking import Ranking
 from myapp.EventList import EventList
+from myapp.SearchThread import SearchThread
 
 class ApiFeed(webapp.RequestHandler):
 
@@ -98,12 +99,47 @@ class ApiFeed(webapp.RequestHandler):
 		return query
 		
 	@staticmethod
-	def feed_get_thread_list(req,order,offset,limit):
-		#最大取得数
-		if(limit>100):
-			limit=100
+	def feed_get_ranking_thread_list(month_query,page,unit):
+		#日付の範囲を決定
+		if(month_query==""):
+			from_month=datetime.date.today()+datetime.timedelta(days=-30)
+			next_month=datetime.date.today()
+			no_reduct=False
+		else:
+			today=datetime.datetime.strptime(month_query,"%Y-%m-%d")
+			from_month=datetime.datetime(today.year,today.month,today.day).strftime('%Y-%m-%d')
+			if(today.month==12):
+				next_month=datetime.datetime(today.year+1,1,today.day).strftime('%Y-%m-%d')
+			else:
+				next_month=datetime.datetime(today.year,today.month+1,today.day).strftime('%Y-%m-%d')
+			no_reduct=True
 
-		#キャッシュが有効かどうか
+		#キャッシュ取得
+		order="monthly"
+		offset=(page-1)*unit
+		if(month_query==""):
+			cache_enable=ApiFeed._is_cache_enable(offset,unit,order)
+		else:
+			cache_enable=False
+		cache_id=ApiFeed._get_cache_id(order,None,offset,unit)
+		if(cache_enable):
+			data=memcache.get(cache_id)
+			if(data):
+				return data
+
+		#検索範囲を絞らなければ正常にソートできないので、できるだけ絞る
+		search_str="(bookmark >= 1 OR applause >= 3) AND date > "+str(from_month)+" AND date < "+str(next_month)
+		thread_list=SearchThread.search(search_str,page,unit,BbsConst.SEARCH_THREAD_INDEX_NAME,no_reduct)
+
+		#キャッシュに乗せる
+		if(cache_enable):
+			memcache.set(cache_id,thread_list,BbsConst.TOPPAGE_FEED_CACHE_TIME)
+
+		return thread_list
+
+	@staticmethod
+	def _is_cache_enable(offset,limit,order):
+		#キャッシュの有効フラグ
 		cache_enable=0
 		if(offset in BbsConst.PINTEREST_CACHE_OFFSET):#==0):
 			if(limit==BbsConst.PINTEREST_PAGE_UNIT):
@@ -111,17 +147,26 @@ class ApiFeed(webapp.RequestHandler):
 
 		#更新されたときにページ間で不整合が発生するために無効化
 		if(order):
-			if(not(order in BbsConst.PINTEREST_CACHE_MDOE)):#order=="new" or order=="hot")):
+			if(not(order in BbsConst.PINTEREST_CACHE_MDOE)):
 				cache_enable=0
+
+		return cache_enable
+
+	@staticmethod
+	def feed_get_thread_list(req,order,offset,limit):
+		#最大取得数
+		if(limit>100):
+			limit=100
+
+		#キャッシュが有効かどうか
+		cache_enable=ApiFeed._is_cache_enable(offset,limit,order)
 
 		#キャッシュ取得
 		cache_id=ApiFeed._get_cache_id(order,req.request.get("bbs_id"),offset,limit)
 		if(cache_enable):
 			data=memcache.get(cache_id)
-		else:
-			data=None
-		if(data and cache_enable):
-			return data
+			if(data):
+				return data
 		
 		#スレッド一覧取得
 		if(order=="hot"):

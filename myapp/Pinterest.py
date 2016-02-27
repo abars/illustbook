@@ -292,28 +292,6 @@ class Pinterest(webapp.RequestHandler):
 		return ranking_month_list
 
 	@staticmethod
-	def _get_ranking_thread_list(month_query,page,unit):
-		#日付の範囲を決定
-		if(month_query==""):
-			from_month=datetime.date.today()+datetime.timedelta(days=-30)
-			next_month=datetime.date.today()
-			no_reduct=False
-		else:
-			today=datetime.datetime.strptime(month_query,"%Y-%m-%d")
-			from_month=datetime.datetime(today.year,today.month,today.day).strftime('%Y-%m-%d')
-			if(today.month==12):
-				next_month=datetime.datetime(today.year+1,1,today.day).strftime('%Y-%m-%d')
-			else:
-				next_month=datetime.datetime(today.year,today.month+1,today.day).strftime('%Y-%m-%d')
-			no_reduct=True
-
-		#検索範囲を絞らなければ正常にソートできないので、できるだけ絞る
-		search_str="(bookmark >= 1 OR applause >= 3) AND date > "+str(from_month)+" AND date < "+str(next_month)
-		thread_list=SearchThread.search(search_str,page,unit,BbsConst.SEARCH_THREAD_INDEX_NAME,no_reduct)
-
-		return thread_list
-
-	@staticmethod
 	def _index(self,user,user_id,page,request_page_mode,redirect_api,contents_only):
 		unit=BbsConst.PINTEREST_PAGE_UNIT
 
@@ -336,7 +314,7 @@ class Pinterest(webapp.RequestHandler):
 				today=datetime.date.today()
 
 			ranking_month_list=Pinterest._get_ranking_month_list(today,CssDesign.is_english(self))
-			thread_list=Pinterest._get_ranking_thread_list(month_query,page,unit)
+			thread_list=ApiFeed.feed_get_ranking_thread_list(month_query,page,unit)
 
 			if(thread_list!=None):
 				thread_list=ApiObject.create_thread_object_list(self,thread_list,"search")
