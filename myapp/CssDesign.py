@@ -61,11 +61,17 @@ class CssDesign (webapp.RequestHandler):
 		if(css == 4):
 			return "536566"
 		return ""
+
+	@staticmethod
+	def _get_user_agent(main):
+		key_name='User-Agent'
+		if(key_name in main.request.headers):
+			return str(main.request.headers[key_name])
+		return ""
 	
 	@staticmethod
 	def is_iphone(main):
-		#return 1
-		agent=str(main.request.headers['User-Agent'])
+		agent=CssDesign._get_user_agent(main)
 		p = re.compile('iPhone')
 		if(p.search(agent)):
 			return 1
@@ -82,8 +88,8 @@ class CssDesign (webapp.RequestHandler):
 
 	@staticmethod
 	def is_tablet(main):
-		agent=str(main.request.headers['User-Agent'])
-
+		agent=CssDesign._get_user_agent(main)
+		
 		p = re.compile('iPad')
 		if(p.search(agent)):
 			return 1
