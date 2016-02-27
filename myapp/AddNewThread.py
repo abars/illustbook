@@ -76,8 +76,17 @@ class AddNewThread(webapp.RequestHandler):
 		if(is_english):
 			permission_error_str="Permission denied"
 
+		login_require="ログインが必要です。"
+		if(is_english):
+			login_require="Login require"
+
 		bbs = db.get(self.request.get("bbs_key"))
 		user = users.get_current_user()
+
+		if(not user and self.request.get('mode')=="illust_all"):
+			self.write_status(is_flash,login_require);
+			return
+
 		if(bbs.bbs_mode==BbsConst.BBS_MODE_ONLY_ADMIN):
 			if(OwnerCheck.check(bbs,user)):
 				self.write_status(is_flash,permission_error_str);
