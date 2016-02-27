@@ -28,7 +28,7 @@ h2,h3 {font-size:100%;color:#ea5376;}
 		width:100%;
 		box-sizing:border-box;
 	{% else %}
-		{% if not thread_list %}
+		{% if not thread_list and not room_list %}
 			width:756px;
 		{% endif %}
 	{% endif %}
@@ -47,7 +47,7 @@ h2,h3 {font-size:100%;color:#ea5376;}
 
 #index{
 	margin:auto;
-	{% if thread_list %}
+	{% if thread_list or room_list %}
 		{% if not is_iphone %}
 			display:none;
 		{% endif %}
