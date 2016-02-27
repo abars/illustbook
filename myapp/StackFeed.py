@@ -164,12 +164,6 @@ class StackFeed(webapp.RequestHandler):
 			return
 		bookmark=ApiObject.get_bookmark_of_user_id_for_write(user_id)
 		if(bookmark):
-			#確保
-			if(not bookmark.stack_feed_list):
-				bookmark.stack_feed_list=[]
-			if(not bookmark.my_timeline):
-				bookmark.my_timeline=[]
-			
 			#ホームタイムラインに追加
 			if(bookmark.stack_feed_list.count(data.key())==0):
 				bookmark.stack_feed_list.insert(0,data.key())
@@ -243,6 +237,11 @@ class StackFeed(webapp.RequestHandler):
 	def feed_new_follow(user,add_user_key):
 		user_id=user.user_id()
 		taskqueue.add(url="/stack_feed_worker",params={"mode":"new_follow","user_id":user_id,"follow_user_id":add_user_key},queue_name="feed")
+
+	@staticmethod
+	def feed_unfollow(user,add_user_key):
+		user_id=user.user_id()
+		taskqueue.add(url="/stack_feed_worker",params={"mode":"unfollow","user_id":user_id,"follow_user_id":add_user_key},queue_name="feed")
 	
 	@staticmethod
 	def feed_new_message(user,data):
@@ -432,6 +431,10 @@ class StackFeed(webapp.RequestHandler):
 		if(mode=="new_follow"):
 			add_user_key=self.request.get("follow_user_id")
 			StackFeed._feed_new_follow_core(user_id,add_user_key)
+			ApiObject.update_follower_list(add_user_key)
+		if(mode=="unfollow"):
+			add_user_key=self.request.get("follow_user_id")
+			ApiObject.update_follower_list(add_user_key)
 		if(mode=="new_message"):
 			data=db.get(self.request.get("data"))
 			if(not data):

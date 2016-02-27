@@ -23,7 +23,11 @@ class Bookmark(db.Model):
 	thread_key_list = db.ListProperty(db.Key)
 	bbs_key_list = db.ListProperty(db.Key)
 	app_key_list = db.ListProperty(db.Key)
+
 	user_list = db.StringListProperty()	#follow user list
+	follower_list = db.StringListProperty()
+	follower_list_enable = db.IntegerProperty()
+
 	name = db.StringProperty()
 	profile = db.TextProperty()
 	regulation = db.IntegerProperty()	#閲覧モード(1:男性向けマスク、2:女性向けマスク)

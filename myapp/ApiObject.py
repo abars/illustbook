@@ -164,21 +164,44 @@ class ApiObject(webapp.RequestHandler):
 
 		if(not bookmark.user_list):
 			bookmark.user_list=[]
+		if(not bookmark.follower_list):
+			bookmark.follower_list=[]
+		if(not bookmark.follower_list_enable):
+			bookmark.follower_list_enable=0
+
+		if(not bookmark.stack_feed_list):
+			bookmark.stack_feed_list=[]
+		if(not bookmark.my_timeline):
+			bookmark.my_timeline=[]
 
 		return bookmark;
 
 	@staticmethod
 	def get_follower_list(user_id):
-		follower_string=memcache.get(BbsConst.OBJECT_CACHE_HEADER+BbsConst.OBJECT_FOLLOWER_HEADER+user_id)
-		if(not follower_string):
-			query=Bookmark.all().filter("user_list =",user_id)
-			follower=query.fetch(limit=1000)
-			follower_string=[]
-			for one_user in follower:
-				follower_string.append(one_user.user_id)
-			memcache.set(BbsConst.OBJECT_CACHE_HEADER+BbsConst.OBJECT_FOLLOWER_HEADER+user_id,follower_string,BbsConst.OBJECT_CACHE_TIME)
-		return follower_string
+		bookmark=ApiObject.get_bookmark_of_user_id(user_id)
+		if(bookmark):
+			if(not bookmark.follower_list_enable):
+				return ApiObject.update_follower_list(user_id)
+			return bookmark.follower_list
+		return []
 	
+	@staticmethod
+	def update_follower_list(user_id):
+		if(not user_id):
+			return []
+		bookmark=ApiObject.get_bookmark_of_user_id_for_write(user_id)
+		if(not bookmark):
+			return []
+		query=Bookmark.all().filter("user_list =",user_id)
+		follower=query.fetch(limit=1000)
+		follower_string=[]
+		for one_user in follower:
+			follower_string.append(one_user.user_id)
+		bookmark.follower_list=follower_string
+		bookmark.follower_list_enable=1
+		bookmark.put()
+		return bookmark.follower_list
+
 	@staticmethod
 	def invalidate_follower_list(user_id):
 		memcache.delete(BbsConst.OBJECT_CACHE_HEADER+BbsConst.OBJECT_FOLLOWER_HEADER+user_id)

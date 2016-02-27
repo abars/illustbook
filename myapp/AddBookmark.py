@@ -239,6 +239,8 @@ class AddBookmark(webapp.RequestHandler):
 		if(mode=="add_user"):
 			if(feed_enable):
 				StackFeed.feed_new_follow(user,add_user_key)
+		if(mode=="del_user"):
+			StackFeed.feed_unfollow(user,add_user_key)
 
 		#redirect
 		url="./mypage"
