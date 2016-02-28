@@ -331,7 +331,7 @@ class Chat(webapp.RequestHandler):
 			url="./?order=chat&room_key="+str(room.key())
 			thumb="./chat?mode=thumbnail&key="+str(room.key())
 			user_cnt=room.user_count
-			show_room.append({"title":room.name,"url":url,"thumbnail_url":thumb,"user_count":user_cnt,"key":str(room.key)})
+			show_room.append({"title":room.name,"url":url,"thumbnail_url":thumb,"user_count":user_cnt,"password":room.password,"key":str(room.key)})
 		memcache.set(cache_id,show_room,BbsConst.OBJECT_CHAT_ROOM_CACHE_TIME)
 		return show_room
 
