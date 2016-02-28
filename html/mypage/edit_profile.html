@@ -2,7 +2,7 @@
 				<input type="hidden" name="mode" value="profile">
 				
 				<table>
-				<tr><td>{% if is_english %}Name(MUST){% else %}ユーザ名（必須）{% endif %}</td><td>　</td><td><input name="name" type="text" value="{% if bookmark.name %}{{bookmark.name}}{% endif %}" style="width:90%;"></td></tr>
+				<tr><td>{% if is_english %}Name{% else %}ユーザ名{% endif %}</td><td>　</td><td><input name="name" type="text" value="{% if bookmark.name %}{{bookmark.name}}{% endif %}" style="width:90%;"></td></tr>
 				<tr><td>{% if is_english %}Sex{% else %}性別{% endif %}</td><td>　</td><td>
 				<select name="sex" id="sex">
 					<option value="0" {% if bookmark.sex == 0 %} selected="selected" {% endif%}>{% if is_english %}-{% else %}非公開{% endif %}</option>

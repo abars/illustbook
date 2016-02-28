@@ -28,18 +28,18 @@
 		<input type="hidden" name="redirect" value="./regist">
 		<table width="100%">
 			<tr>
-				<td>{% if is_english %}Title(MUST){% else %}タイトル（必須）{% endif %}<br/></td>
+				<td>{% if is_english %}Title{% else %}タイトル{% endif %}<br/></td>
 				<td><input type="text" name="bbs_title" size="38" style="width:90%;"><br/></td>
 			</tr>
 			
 			<tr>
-				<td>{% if is_english %}Summary(MUST){% else %}概要（必須）{% endif %}</td>
+				<td>{% if is_english %}Summary{% else %}概要{% endif %}</td>
 				<td><textarea name="bbs_summary" rows="3" cols="40" style="width:90%;"></textarea></td>
 			</tr>
 			
 			<tr>
 				<td>
-					{% if is_english %}ID(MUST){% else %}希望するID（必須）{% endif %}
+					{% if is_english %}ID{% else %}希望するID{% endif %}
 				</td>
 				<td>
 					<input type="text" id="check_short" name="short" value="" maxlength="16">{% if is_english %}(16 characters or less){% else %}(半角英数16文字以下){% endif %}
