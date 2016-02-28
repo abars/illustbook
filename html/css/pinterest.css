@@ -391,6 +391,22 @@ h2,h3 {font-size:100%;color:#ea5376;}
 	font-weight: bold;
 }
 
+.search_box{
+	-webkit-appearance:none;
+	float:left;
+	width:200px;
+	margin-top:5px;
+	margin-right:2px;
+	border:1px solid #dcdcdc;
+}
+
+@media screen and (max-width: 900px) {
+	.search_box{
+		width:100px;
+		margin-top:3px;
+	}
+}
+
 /* bbs page */
 .bbs_button{
 	float:right;
