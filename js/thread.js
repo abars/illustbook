@@ -247,7 +247,6 @@ var isFlashInstalled=function(){if(navigator.plugins["Shockwave Flash"]){return 
 				$.get(url, function(data){
 					var msg=is_english ? "success":"拍手に成功しました。";
 					jAlert(msg,title,function(){
-						window.location.href=url
 					});
 				});
 			}
