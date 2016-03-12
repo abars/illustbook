@@ -82,7 +82,7 @@
 
 <!-- 広告 -->
 {% if (not is_iphone) and (not search) %}
-	{% if thread_list and not tag_list %}
+	{% if thread_list %}
 		{% include "adsense/adsense_top.html" %}
 	{% endif %}
 {% endif %}
