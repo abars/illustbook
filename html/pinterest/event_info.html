@@ -1,11 +1,11 @@
   <div class="message">
 	<table>
-	<tr><td>イベント名</td><td>{{now_event.title}}{% if is_old_event %}（イベントは終了しました）{% endif %}</td></tr>
-	<tr><td>概要</td><td>{{now_event.summary}}</td></tr>
+	<tr><td>{% if is_english %}Title{% else %}イベント名{% endif %}</td><td>{{now_event.title}}{% if is_old_event %}（イベントは終了しました）{% endif %}</td></tr>
+	<tr><td>{% if is_english %}Description{% else %}概要{% endif %}</td><td>{{now_event.summary}}</td></tr>
 	<tr><td>ID</td><td>{{now_event.id}}</td></tr>
-	<tr><td>開催期間</td><td>{{now_event.start_date|time_JST_format(1)}}〜{{now_event.end_date|time_JST_format(1)}}</td></tr>
+	<tr><td>{% if is_english %}Date{% else %}開催期間{% endif %}</td><td>{{now_event.start_date|time_JST_format(1)}}〜{{now_event.end_date|time_JST_format(1)}}</td></tr>
 	{% if now_event.user_id %}
-	<tr><td>主催者</td><td>
+	<tr><td>{% if is_english %}Author{% else %}主催者{% endif %}</td><td>
 		<a href="{{host}}mypage?user_id={{now_event.user_id}}">
 			<img src="{{host}}show_icon?key={{now_event.user_id}}&size=mini" width="20" height="20"/>{{now_event.author}}
 		</a></td></tr>
