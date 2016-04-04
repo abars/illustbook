@@ -32,6 +32,7 @@ from myapp.UTC import UTC
 from myapp.JST import JST
 from myapp.MappingId import MappingId
 from myapp.EscapeComment import EscapeComment
+from myapp.BbsConst import BbsConst
 
 class EventList(webapp.RequestHandler):
 	@staticmethod
@@ -120,8 +121,8 @@ class EventList(webapp.RequestHandler):
 				Alert.alert_msg_with_write(self,"日程が他のイベントと重複しています。<br/>"+mes)
 				return False
 
-		if(event.end_date - event.start_date > datetime.timedelta(days=7)):
-			Alert.alert_msg_with_write(self,"日程が一週間を超えています。")
+		if(event.end_date - event.start_date > datetime.timedelta(days=BbsConst.EVENT_MAX_DAYS)):
+			Alert.alert_msg_with_write(self,"日程が2週間を超えています。")
 			return False
 
 		if(validate_all):

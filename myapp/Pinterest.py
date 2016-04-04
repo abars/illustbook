@@ -411,7 +411,7 @@ class Pinterest(webapp.RequestHandler):
 			if(event_list):
 				start_day=event_list[0].end_date
 			now_event_start_date=start_day.replace(tzinfo=UTC()).astimezone(JST()).strftime('%Y/%m/%d')
-			now_event_end_date=(start_day+datetime.timedelta(days=7)).replace(tzinfo=UTC()).astimezone(JST()).strftime('%Y/%m/%d')
+			now_event_end_date=(start_day+datetime.timedelta(days=BbsConst.EVENT_MAX_DAYS)).replace(tzinfo=UTC()).astimezone(JST()).strftime('%Y/%m/%d')
 
 		template_values['event_list']=event_list
 		template_values['all_event_list']=all_event_list

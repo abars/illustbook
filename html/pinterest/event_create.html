@@ -23,7 +23,7 @@
 
 				<tr><td>タイトル</td><td><input name="title" id="event_title" type="text" value="{% if event_owner %}{{now_event.title}}{% endif %}"/></td></tr>
 				<tr><td>開始日</td><td><input name="start_date" id="event_start_date" type="text" value="{{now_event_start_date}}"/></td></tr>
-				<tr><td>終了日</td><td><input name="end_date" id="event_end_date" type="text" value="{{now_event_end_date}}"/>{% if is_iphone %}<br/>{% endif %}（最大1週間）</td></tr>
+				<tr><td>終了日</td><td><input name="end_date" id="event_end_date" type="text" value="{{now_event_end_date}}"/>{% if is_iphone %}<br/>{% endif %}（最大2週間）</td></tr>
 
 				<tr><td>説明</td><td><textarea name="summary" id="event_summary" {% if is_iphone %}cols=28{% else %}cols=40{% endif %} rows=10>{% if event_owner %}{{now_event.summary}}{% endif %}</textarea></td></tr>
 				
