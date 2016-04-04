@@ -77,11 +77,11 @@ class EventList(webapp.RequestHandler):
 			return event_list[0]
 		return None
 
-	def _update(self,event,user,validate_all,auto_link):
+	def _update(self,event,user,validate_all,is_create):
 		event.title=self.request.get("title")
 		event.summary=self.request.get("summary")
 
-		if(auto_link):
+		if(is_create):
 			event.summary=EscapeComment.escape_br(event.summary)
 			event.summary=EscapeComment.auto_link(event.summary)
 
@@ -129,8 +129,10 @@ class EventList(webapp.RequestHandler):
 			if(event.title=="" or event.id==""):
 				Alert.alert_msg_with_write(self,"タイトルとIDを入力して下さい。")
 				return False
-		event.user_id=user.user_id()
-		event.author=self.request.get("author")
+		if(is_create):
+			event.user_id=user.user_id()
+		if(is_create or event.user_id==user.user_id()):
+			event.author=self.request.get("author")
 		return True
 
 	def get(self,mode_url):
