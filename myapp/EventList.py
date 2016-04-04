@@ -76,12 +76,13 @@ class EventList(webapp.RequestHandler):
 			return event_list[0]
 		return None
 
-	def _update(self,event,user,validate_all):
+	def _update(self,event,user,validate_all,auto_link):
 		event.title=self.request.get("title")
 		event.summary=self.request.get("summary")
 
-		event.summary=EscapeComment.escape_br(event.summary)
-		event.summary=EscapeComment.auto_link(event.summary)
+		if(auto_link):
+			event.summary=EscapeComment.escape_br(event.summary)
+			event.summary=EscapeComment.auto_link(event.summary)
 
 		event.id=self.request.get("id")
 		if(event.id==""):
@@ -146,7 +147,7 @@ class EventList(webapp.RequestHandler):
 
 		user = users.get_current_user()
 		event=Event()
-		if(not self._update(event,user,False)):
+		if(not self._update(event,user,False,False)):
 			return
 		Alert.alert_msg_with_write(self,"このイベントは作成可能です")
 
@@ -166,7 +167,7 @@ class EventList(webapp.RequestHandler):
 				return
 			
 			event=Event()
-			if(not self._update(event,user,True)):
+			if(not self._update(event,user,True,True)):
 				return
 			event.put()
 
@@ -179,7 +180,7 @@ class EventList(webapp.RequestHandler):
 				Alert.alert_msg_with_write(self,"イベントが重複しています")
 				return
 			event=event[0]
-			if(not self._update(event,user,True)):
+			if(not self._update(event,user,True,False)):
 				return
 			event.put()
 
