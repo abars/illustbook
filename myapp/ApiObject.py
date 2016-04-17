@@ -90,13 +90,15 @@ class ApiObject(webapp.RequestHandler):
 
 		#ブックマークへのマップ
 		mapper=BookmarkMapper.get_by_key_name(BbsConst.KEY_NAME_BOOKMARK+user_id)
-		if(mapper and mapper.bookmark):
+		if(mapper):
 			#マッパーが見つかった
 			try:
 				target_bookmark=mapper.bookmark
 			except:
 				target_bookmark=None
-		else:
+
+		#マッパー失敗
+		if(target_bookmark==None):
 			#データストアから読込
 			query=db.Query(Bookmark,keys_only=True).filter("user_id =",user_id)
 
