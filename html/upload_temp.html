@@ -13,23 +13,18 @@
 </head>
 <body>
 
-{% include "floating_menu.html" %}
+	<p>&nbsp</p>
 
 <div id="container">
 	<p>&nbsp</p>
 	<div id="contents">
-		{% if not temp_key %}
-			<p>投稿画像が見つかりません。</p>
-			<p>アプリから再度、投稿して下さい。</p>
-		{% else %}
-		{% if not user %}
-			<h1>ログインが必要です</h1>
-			<p>イラストを投稿するには<a href="{{host}}" target="_BLANK" class="declink">イラストブック</a>にログインする必要があります。</p>
-			<p>右上のログインボタンからGoogleアカウントでログインして下さい。</p>
-		{% else %}
 			<h1>イラストの投稿</h1>
-			<p>イラストは、レンタルしている掲示板か、ブックマークしている掲示板に投稿することができます。</p>
-			<p>次のフォームに必要な情報を入力し、投稿ボタンを押して下さい。</p>
+			<p>アップロードしたイラストは、レンタルしている掲示板か、ブックマークしている掲示板に投稿することができます。</p>
+			{% if not user %}
+				<p>投稿にはログインが必要です。</p>
+			{% else %}
+				<p>次のフォームに必要な情報を入力し、投稿ボタンを押して下さい。</p>
+			{% endif %}
 
 			<form action='http://localhost/' enctype="multipart/form-data" method="post" onSubmit="this.action='{{host}}add_thread';">
 			<input type="hidden" name="illust_mode" value="1"/>
@@ -37,6 +32,13 @@
 			<input type="hidden" name="temp_illust_key" value="{{temp_key}}"/>
 
 			<table class="g-table">
+				<tr>
+					<td>アップロードしたイラスト</td>
+					<td>
+						<img src="./img/{{temp_key}}.jpg?force=1" width="300px"/>
+					</td>
+				</tr>
+			{% if user %}
 				<tr>
 					<td>投稿先</td>
 					<td>
@@ -57,22 +59,22 @@
 				</tr>
 				<tr>
 					<td>コメント</td>
-					<td><textarea name="comment" rows="4" cols="40" style="width:90%;"></textarea></td>
+					<td><textarea name="comment" rows="8" cols="40"></textarea></td>
 				</tr>
-				<tr>
-					<td>イラスト</td>
-					<td>
-						<img src="./img/{{temp_key}}.jpg?force=1" width="200px"/>
-					</td>
-				</tr>
+			{% endif %}
 			</table>
 			<br/>
-			<input type="submit" value="イラストを投稿する" class="g-button"/>
-
+			{% if not user %}
+				<a href="{{redirect_url|login_url|escape}}" class="g-button">ログインして投稿</a>
+			{% else %}
+				<input type="submit" value="イラストを投稿する" class="g-button"/>
+			{% endif %}
+			<a href="{{host}}guide" class="g-button" target="_blank">イラストブックとは？</a>
 		</form>
-		{% endif %}
-		{% endif %}
 	</div>
 </div>
+
+	<p>&nbsp</p>
+
 </body>
 </html>
