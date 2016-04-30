@@ -395,7 +395,11 @@ h2,h3 {font-size:100%;color:#ea5376;}
 	-webkit-appearance:none;
 	float:left;
 	width:200px;
+{% if is_tablet %}
+	margin-top:3px;
+{% else %}
 	margin-top:5px;
+{% endif %}
 	margin-right:2px;
 	border:1px solid #dcdcdc;
 }
