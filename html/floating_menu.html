@@ -6,7 +6,7 @@
 	<!-- icon -->
 	{% if user %}
 	<div class="user_icon" id="user_icon">
-		<a href="{{host}}mypage"><img src="{{host}}show_icon?key={{user.user_id()}}&size=mini" width="{% if is_iphone or is_tablet %}30px{% else %}24px{% endif %}" height="{% if is_iphone or is_tablet %}30px{% else %}24px{% endif %}" alt="icon"/></a>
+		<a href="{{host}}mypage"><img src="{{host}}show_icon?key={{user.user_id()}}&size=mini" width="{% if is_iphone %}30px{% else %}24px{% endif %}" height="{% if is_iphone %}30px{% else %}24px{% endif %}" alt="icon"/></a>
 		{% if my_new_feed_count %}
 			<b>{{my_new_feed_count}}</b>
 		{% endif %}
@@ -99,6 +99,9 @@
 			{% else %}
 				{% if bbs %}
 					<li><a href="{{host}}mypage?user_id={{bbs.user_id}}"><i class="icon-user"></i>{% if is_english %}Owner{% else %}オーナー{% endif %}</a></li>
+					{% if is_tablet and not is_english and can_create_new_image and bbs %}
+						<li><a href="ilbpaint://bbs_key={{bbs.key()}}"><i class="icon-plus"></i>アプリから投稿</li>
+					{% endif %}
 					<li>{{bbs|add_bookmark_bbs(host,is_iphone,is_english,user)|safe}}</li>
 					<li><a href="javascript:bbs_mute('{{bbs.key()}}','{{host}}',{% if is_english %}1{% else %}0{% endif %});"><i class="icon-remove"></i>{% if is_english %}Mute{% else %}ミュート{% endif %}</li>
 				{% endif %}

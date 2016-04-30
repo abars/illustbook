@@ -2,7 +2,7 @@
 
 #floating_menu{
 	padding: 1px;
-	{% if is_iphone or is_tablet %}
+	{% if is_iphone %}
 	min-height:34px;
 	{% else %}
 	min-height:28px;
@@ -40,7 +40,7 @@
 	padding-top:3px;
 	padding-right:2px;
 	font-weight:600;
-	margin-top:{% if is_iphone or is_tablet %}6px{% else %}3px{% endif %};
+	margin-top:{% if is_iphone %}6px{% else %}3px{% endif %};
 }
 
 #floating_menu .ilb_logo_text_margin {
@@ -64,7 +64,7 @@
 }
 
 #floating_menu .main_menu {
-	{% if is_iphone or is_tablet %}
+	{% if is_iphone %}
 		float:right;
 		padding-left:3px;
 		padding-top:3px;
@@ -80,7 +80,7 @@
 }
 
 #floating_menu .menu_button {
-	{% if is_iphone or is_tablet %}
+	{% if is_iphone %}
 		background:none;
 		border:none;
 	{% else %}

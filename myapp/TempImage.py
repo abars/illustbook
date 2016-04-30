@@ -12,4 +12,5 @@ from google.appengine.api import users
 class TempImage(db.Model):
 	image = db.BlobProperty()
 	thumbnail = db.BlobProperty()
+	args = db.StringProperty()
 	date = db.DateTimeProperty(auto_now=True)

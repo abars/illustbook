@@ -71,6 +71,11 @@ class UploadTemp(webapp.RequestHandler):
 		timage.image=db.Blob(self.request.get("image"))
 		timage.thumbnail=db.Blob(self.request.get("thumbnail"))
 		timage.date=datetime.datetime.today()
+		if(self.request.get("args")):
+			timage.args=self.request.get("args")
+		else:
+			timage.args=None
+
 		timage.put()
 
 		self.response.headers ['Content-type'] = "text/html;charset=utf-8";
@@ -79,6 +84,23 @@ class UploadTemp(webapp.RequestHandler):
 
 		#logging.error(return_code)
 	
+	def get_target_bbs(self,args):
+		#args="ilbpaint://bbs_key=ahNkZXZ-aWxsdXN0LWJvb2staHJkchALEgNCYnMYgICAgODhtAkM"
+		if(not args):
+			return None
+		list=args.split("bbs_key=")
+		if(len(list)>=2):
+			bbs_key=list[1]
+			bbs=db.get(bbs_key)
+			target_bbs={
+			"title":bbs.bbs_name,
+			"key":bbs_key
+			}
+			bbs_list=[]
+			bbs_list.append(target_bbs)
+			return bbs_list
+		return None
+
 	def get(self):
 		user = users.get_current_user()
 		user_name=ShowEntry.get_user_name(user)
@@ -104,6 +126,16 @@ class UploadTemp(webapp.RequestHandler):
 
 		temp_key=self.request.get("temp_key")
 
+		args=None
+		if(temp_key):
+			temp=db.get(temp_key)
+			if(temp.args):
+				args=temp.args
+
+		target_bbs=self.get_target_bbs(args);
+		if(target_bbs):
+			bbs_list=target_bbs
+
 		template_values={
 		'host':"./",
 		'is_iphone':CssDesign.is_iphone(self),
@@ -112,6 +144,7 @@ class UploadTemp(webapp.RequestHandler):
 		'redirect_url':self.request.path+"?temp_key="+temp_key,
 		'user':user,
 		'bbs_list':bbs_list,
+		'args':args,
 		'user_name':user_name
 		}
 		render=template_select.render("/html/upload_temp.html", template_values)
