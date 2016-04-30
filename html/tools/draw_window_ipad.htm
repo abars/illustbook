@@ -332,7 +332,7 @@
 		{% else %}
 			<tr><td>{% if is_english %}Title{% else %}タイトル{% endif %}</td><td><input id="title" value="{{title}}"/></td></tr>
 		{% endif %}
-			<tr><td>{% if is_english %}Author (MUST){% else %}投稿者名（必須）{% endif %}</td><td><input id="name" value="{{author}}"/>
+			<tr><td>{% if is_english %}Author{% else %}投稿者名{% endif %}</td><td><input id="name" value="{{author}}"/>
 			<div style="display:none;">
 		{% if logined %}
 			<input id="link_to_profile" name="link_to_profile" type="checkbox" checked>{% if is_english %}Link{%else%}リンクする{% endif %}

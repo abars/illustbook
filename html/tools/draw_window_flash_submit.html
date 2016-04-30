@@ -13,8 +13,7 @@
 {% endif%}
 		<div id="contents-header">
 			<div style="padding-top:6px;">
-				<input class="g-button" type="button" onclick="close_submit_window();" value="{% if is_english %}Back to Tool{% else %}お絵かきツールに戻る{% endif %}"/>
-				<input class="g-button" type="button" onclick="window.open('{{host}}guide');" value="{% if is_english %}How to{% else %}イラストブックの使い方{% endif %}"/>
+					<p>{% if is_english %}Submit Illust{% else %}イラストを掲示板に投稿します。イラストの情報を入力して、投稿ボタンを押して下さい。{% endif %}</p>
 			</div>
 		</div>
 		<div id="contents">
@@ -25,16 +24,14 @@
 			<div id="main_1col">
 {% endif %}
 				<div class="entry">
-					<p>{% if is_english %}Submit Illust{% else %}イラストを掲示板に投稿します。イラストの情報を入力して、投稿ボタンを押して下さい。{% endif %}</p>
-
-					<p>&nbsp</p>
+					<input id="homepage_addr" value="http://" style="display:none;"/>
 
 					<table class="g-table" style="width:100%;">
 					{% if reply == "1" %}
 					{% else %}
 					<tr><td><p>{% if is_english %}Title{% else %}タイトル{% endif %}</p></td><td><input id="title" style="width:100%;"/></td></tr>
 					{% endif %}
-					<tr><td><p>{% if is_english %}Author (MUST){% else %}投稿者名（必須）{% endif %}</p></td><td><input id="name" style="width:30%;"/>
+					<tr><td><p>{% if is_english %}Author{% else %}投稿者名{% endif %}</p></td><td><input id="name" style="width:30%;"/>
 						{% if logined %}
 							&nbsp;
 							<div style="display:none;">
@@ -42,7 +39,9 @@
 							</div>
 						{% endif %}
 					</td></tr>
+					{#
 					<tr><td><p>{% if is_english %}Homepage URL{% else %}ホームページ{% endif %}</p></td><td><input id="homepage_addr" value="http://" style="width:100%;"/></td></tr>
+					#}
 					<tr><td><p>{% if is_english %}Delete key{% else %}削除キー{% endif %}</p></td><td><input id="delete_key" style="width:100%;"/></td></tr>
 					<tr><td><p>{% if is_english %}Category{% else %}カテゴリ{% endif %}</p></td><td>
 					{% include "category_list.html" %}
@@ -94,8 +93,9 @@
 					<p>&nbsp</p>
 
 					<input id="normalsubmit" class="g-button" type="button" onclick="close_submit_window();uploadImage(0);" value="{% if is_english %}Submit{% else %}イラストを投稿する{% endif %}">
+					<input class="g-button" type="button" onclick="close_submit_window();" value="{% if is_english %}Back to Tool{% else %}お絵かきツールに戻る{% endif %}"/>
+					<input class="g-button" type="button" onclick="window.open('{{host}}guide');" value="{% if is_english %}How to{% else %}イラストブックの使い方{% endif %}"/>
 					<input id="overwrite" class="g-button" type="button" onclick="close_submit_window();uploadImage(1);" value="{% if is_english %}Overwrite{% else %}イラストを上書き投稿する{% endif %}" style="visibility:hidden;">
-
 				</div>
 			</div>
 		</div>
