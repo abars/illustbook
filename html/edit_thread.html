@@ -37,8 +37,13 @@
 	
 {% if template_path %}
 	<div id="header"></div>
-	<div id="contents-header"></div>
 {% endif%}
+
+	<div id="contents-header">
+		<div style="padding-top:6px;">
+			<p>{% if is_english %}Edit posting information{% else %}投稿を編集するには下記項目を編集してから”投稿を更新する”ボタンを押して下さい。{% endif %}</p>
+		</div>
+	</div>
 
 	<div id="contents">
 	{% if template_path %}
@@ -49,13 +54,9 @@
 	{% endif %}
 
 			<div class="entry">
-			{% if is_english %}Edit article{% else %}投稿の編集{% endif %}<HR><br/>
-			{% if not is_english %}投稿を編集するには下記項目を編集してから”投稿を更新する”ボタンを押して下さい。<br/>{% endif %}
-			<br/>
-
 			{% if thread %}
 				<form id="submit_form" action="./update_thread?bbs_key={{bbs.key()}}&thread_key={{thread.key()}}" enctype="multipart/form-data" method="post">
-				<table>
+				<table class="g-table" >
 					<tr><td>{% if is_english %}Title{% else %}タイトル{% endif %}</td><td><input type="text" name="thread_title" value="{{thread.title}}" size=60></td></tr>
 					<tr><td>{% if is_english %}Author{% else %}投稿者名{% endif %}</td><td><input type="text" name="thread_author" value="{{thread.author}}"><input type="checkbox" name="link_profile" value="link_profile" {% if thread.user_id %}checked{% endif %}>{% if is_english %}Link to Mypage{% else %}マイページにリンク{% endif %}</td></tr>
 					<tr><td>{% if is_english %}Category{% else %}カテゴリ{% endif %}</td><td>
