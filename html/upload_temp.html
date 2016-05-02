@@ -18,12 +18,30 @@
 <div id="container">
 	<p>&nbsp</p>
 	<div id="contents">
-			<h1>イラストの投稿</h1>
-			<p>アップロードしたイラストは、レンタルしている掲示板か、ブックマークしている掲示板に投稿することができます。</p>
+			<h1>{% if is_english %}Submit the uploaded image{% else %}イラストの投稿{% endif %}</h1>
+			<p>
+				{% if is_english %}
+				You can submit the uploaded image to the selected BBS.
+				{% else %}
+				アップロードしたイラストは、レンタルしている掲示板か、ブックマークしている掲示板に投稿することができます。
+				{% endif %}
+			</p>
 			{% if not user %}
-				<p>投稿にはログインが必要です。</p>
+				<p>
+					{% if is_english %}
+					Please login to the ILLUSTBOOK.
+					{% else %}
+					投稿にはログインが必要です。
+					{% endif %}
+				</p>
 			{% else %}
-				<p>次のフォームに必要な情報を入力し、投稿ボタンを押して下さい。</p>
+			<p>
+				{% if is_english %}
+				Please enter the following information.
+				{% else %}
+				次のフォームに必要な情報を入力し、投稿ボタンを押して下さい。
+				{% endif %}
+			</p>
 			{% endif %}
 
 			<form action='http://localhost/' enctype="multipart/form-data" method="post" onSubmit="this.action='{{host}}add_thread';">
@@ -33,20 +51,22 @@
 
 			<table class="g-table">
 				<tr>
-					<td>アップロードしたイラスト</td>
+					<td>{% if is_english %}Uploaded image{% else %}アップロードしたイラスト{% endif %}</td>
 					<td>
 						<img src="./img/{{temp_key}}.jpg?force=1" width="300px"/>
 					</td>
 				</tr>
+{#
 				<tr>
 					<td>引数</td>
 					<td>
 						{{args}}
 					</td>
 				</tr>
+#}
 			{% if user %}
 				<tr>
-					<td>投稿先</td>
+					<td>{% if is_english %}Submit to{% else %}投稿先{% endif %}</td>
 					<td>
 						<select name="bbs_key">
 						{% for bbs in bbs_list %}
@@ -56,26 +76,26 @@
 					</td>
 				</tr>
 				<tr>
-					<td>タイトル</td>
+					<td>{% if is_english %}Title{% else %}タイトル{% endif %}</td>
 					<td><input name="thread_title"/></td>
 				</tr>
 				<tr>
-					<td>投稿者(必須)</td>
-					<td><input name="author" value="{{user_name}}"/><input name="link_to_profile" type="checkbox" checked/>マイページにリンク</td>
+					<td>{% if is_english %}Author{% else %}投稿者(必須){% endif %}</td>
+					<td><input name="author" value="{{user_name}}"/><input name="link_to_profile" type="checkbox" checked/>{% if is_english %}Link to mypage{% else %}マイページにリンク{% endif %}</td>
 				</tr>
 				<tr>
-					<td>コメント</td>
+					<td>{% if is_english %}Comment{% else %}コメント{% endif %}</td>
 					<td><textarea name="comment" rows="8" cols="40"></textarea></td>
 				</tr>
 			{% endif %}
 			</table>
 			<br/>
 			{% if not user %}
-				<a href="{{redirect_url|login_url|escape}}" class="g-button">ログインして投稿</a>
+				<a href="{{redirect_url|login_url|escape}}" class="g-button">{% if is_english %}Login and Submit{% else %}ログインして投稿{% endif %}</a>
 			{% else %}
-				<input type="submit" value="イラストを投稿する" class="g-button"/>
+				<input type="submit" value="{% if is_english %}Submit{% else %}イラストを投稿する{% endif %}" class="g-button"/>
 			{% endif %}
-			<a href="{{host}}guide" class="g-button" target="_blank">イラストブックとは？</a>
+			<a href="{{host}}guide" class="g-button" target="_blank">{% if is_english %}About ILLUSTBOOK{% else %}イラストブックとは？{% endif %}</a>
 		</form>
 	</div>
 </div>

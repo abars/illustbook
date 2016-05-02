@@ -140,6 +140,7 @@ class UploadTemp(webapp.RequestHandler):
 		'host':"./",
 		'is_iphone':CssDesign.is_iphone(self),
 		'is_tablet':CssDesign.is_tablet(self),
+		'is_english':CssDesign.is_english(self),
 		'temp_key':temp_key,
 		'redirect_url':self.request.path+"?temp_key="+temp_key,
 		'user':user,
