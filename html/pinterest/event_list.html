@@ -1,5 +1,5 @@
 <div class="message hot_bbs">
-	<p>{% if is_english %}Event beging held{% else %}開催中のイベント{% endif %}</p>
+	<p>{% if is_english %}Event being held{% else %}開催中のイベント{% endif %}</p>
 	{% if now_event %}
 		<a href="{{host}}?order=event&event_id={{now_event.id}}">{{now_event.title}}</a>（{{now_event.start_date|time_JST_format(1)}}〜{{now_event.end_date|time_JST_format(1)}}）<br/>
 		{% for thread in event_thread_list %}
