@@ -27,9 +27,9 @@
 		{# <p>&nbsp</p> #}
 		<form action='http://localhost/' enctype="multipart/form-data" method="post" onSubmit="this.action='{{host}}add_thread?bbs_key={{bbs.key()}}';">
 		<input type="hidden" name="illust_mode" value="0">
-		<table class="table_color"><tr><td>{% if is_english %}Title (MUST){% else %}タイトル（必須）{% endif %}</td>
+		<table class="table_color"><tr><td>{% if is_english %}Title{% else %}タイトル{% endif %}</td>
 		<td><textarea name="thread_title" rows="1" cols="40" style="width:90%;"></textarea></td></tr>
-		<tr><td>{% if is_english %}Name (MUST){% else %}作成者（必須）{% endif %}</td>
+		<tr><td>{% if is_english %}Name{% else %}作成者{% endif %}</td>
 		<td>
 			<input type="text" name="author" maxlength="50" value="{{user_name}}"/>
 			{% if is_iphone %}
@@ -40,10 +40,12 @@
 			{% endif %}
 		</td></tr>
 		{% if not logined %}
+	{#
 		<tr><td>{% if is_english %}Homepage URL{% else %}ホームページアドレス{% endif %}</td><td><input name="homepage_addr" maxlength="40" value="http://"></td></tr>
+	#}
 		<tr><td>{% if is_english %}Delete key{% else %}削除キー{% endif %}</td><td><input name="delete_key" maxlength="40" value=""></td></tr>
 		{% endif %}
-		<tr><td>{% if is_english %}Summary{% else %}スレッド概要{% endif %}</td><td><textarea name="comment" rows="4" cols="40" style="width:90%;"></textarea></td></tr>
+		<tr><td>{% if is_english %}Summary{% else %}概要{% endif %}</td><td><textarea name="comment" rows="4" cols="40" style="width:90%;"></textarea></td></tr>
 		<tr><td></td><td>
 		<input type="submit" value="{% if is_english %}Create{% else %}スレッドを作成する{% endif %}" class="g-button">
 		</td></tr></table></form>
