@@ -442,7 +442,7 @@ def regulation_name(thread):
 #-----------------------------------------------------------------
 
 def escape_single_quotation(text):
-	return text.replace("'","&#39;")
+	return text.replace("'","")
 
 #-----------------------------------------------------------------
 #IPハッシュ
