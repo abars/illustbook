@@ -54,6 +54,7 @@ def set_jinja_filter(jinja_environment):
 			'truncate_category': custom_filter.truncate_category,
 			'truncate_tweet': custom_filter.truncate_tweet,
 			'host_for_js': custom_filter.host_for_js,
+			"escape_single_quotation": custom_filter.escape_single_quotation
 	})
 
 jinja_environment_html = jinja2.Environment(loader=jinja2.FileSystemLoader("html/"))
