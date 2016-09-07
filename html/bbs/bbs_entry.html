@@ -5,11 +5,11 @@
 {% endif %}
 
 {% if bbs.bbs_mode == 3 %}
-	<!--スレッド式掲示板-->
+	<!--スレッド式ボード-->
 	{% include "bbs/bbs_thread_list.html" %}
 {% else %}
 	{% if thread.illust_mode and not bbs.disable_content_image %}
-		<!--イラスト掲示板-->
+		<!--イラストボード-->
 		{% if not bbs.disable_title or not bbs.disable_applause %}
 		<div class="entry-title">
 			<!-- タイトル -->

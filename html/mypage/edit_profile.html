@@ -18,7 +18,7 @@
 				<input name="birthday_day" type="text" value="{% if bookmark.birthday_day %}{{bookmark.birthday_day}}{% endif %}" style="width:40px;">{% if not is_english %}日（空白で非公開）{% endif %}
 				</td></tr>
 				<tr><td>{% if is_english %}Publicity{% else %}公開設定{% endif %}</td><td>　</td><td>
-					<input type="checkbox" name="privacy_rental_bbs" value="privacy_rental_bbs" {% if not bookmark.privacy_rental_bbs %} checked{% endif %} />{% if is_english %}BBS{% else %}レンタルしている掲示板{% endif %}<br/>
+					<input type="checkbox" name="privacy_rental_bbs" value="privacy_rental_bbs" {% if not bookmark.privacy_rental_bbs %} checked{% endif %} />{% if is_english %}BBS{% else %}自分のボード{% endif %}<br/>
 					<input type="checkbox" name="privacy_user_ranking" value="privacy_user_ranking" {% if not bookmark.disable_rankwatch %} checked{% endif %} />{% if is_english %}User Ranking{% else %}ユーザランキング{% endif %}<br/>
 					<input type="checkbox" name="privacy_tweet" value="privacy_tweet" {% if not bookmark.disable_global_tweet %} checked{% endif %} />{% if is_english %}Tweet{% else %}ツイート（ポータル）{% endif %}
 				</td></tr>

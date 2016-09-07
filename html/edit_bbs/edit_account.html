@@ -1,7 +1,7 @@
-	<p>{% if is_english %}Account Setting{% else %}掲示板のIDの変更とアカウントの移行を行います。{% endif %}</p>
+	<p>{% if is_english %}Account Setting{% else %}ボードのIDの変更とアカウントの移行を行います。{% endif %}</p>
 
 	<div class="example">
-			<p>{% if is_english %}BBS URL is {% else %}この掲示板のURLは{% endif %}</p>
+			<p>{% if is_english %}BBS URL is {% else %}このボードのURLは{% endif %}</p>
 			{% if bbs.short %}
 			<blockquote>
 			<A HREF="{{host}}{{bbs.short}}/" TARGET=_BLANK><p>http://www.illustbook.net/{{bbs.short}}/</p></A>

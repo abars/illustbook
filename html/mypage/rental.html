@@ -15,13 +15,13 @@
 	{% if is_english %}
 	BBS Creating...
 	{% else %}
-	掲示板を作成しています。<br/>
+	ボードを作成しています。<br/>
 	しばらくお待ち下さい。
 	{% endif %}
 </div>
 
 <div id="rental">
-    {% if is_english %}Create new BBS{% else %}新しい掲示板をレンタルする{% endif %}
+    {% if is_english %}Create new BBS{% else %}新しいボードを作成する{% endif %}
 	
 	<form action="./add_bbs" enctype="multipart/form-data" method="post" name="rental_frm">
 		<input type="hidden" name="official" value="0">
@@ -50,9 +50,9 @@
 				<td>{% if is_english %}Mode{% else %}モード{% endif %}</td>
 				<td>
 					<select name="mode">
-						<option value="1">{% if is_english %}BBS{% else %}お絵かき掲示板{% endif %}{% if not is_iphone and not is_english%}（誰でも投稿可能）{% endif %}
-						<option value="2">{% if is_english %}BLOG{% else %}お絵かきブログ{% endif %}{% if not is_iphone and not is_english %}（管理人だけ投稿可能）{% endif %}
-						<option value="3">{% if is_english %}FORUM{% else %}スレッド式掲示板{% endif %}{% if not is_iphone and not is_english %}（イラストなし）{% endif %}
+						<option value="1">{% if is_english %}BBS{% else %}{% endif %}{% if not is_iphone and not is_english%}誰でも投稿可能{% endif %}
+						<option value="2">{% if is_english %}BLOG{% else %}{% endif %}{% if not is_iphone and not is_english %}管理人だけ投稿可能{% endif %}
+						<option value="3">{% if is_english %}FORUM{% else %}{% endif %}{% if not is_iphone and not is_english %}フォーラム{% endif %}
 					</select>
 				</td>
 			</tr>
@@ -68,7 +68,7 @@
 
 					<div style="float:left;">
 						<div class="g-button-group">
-						<a href="javascript:create_new_bbs();" class="g-button"><i class="icon-plus"></i>{% if is_english %}Create{% else %}レンタルを実行{% endif %}</a>
+						<a href="javascript:create_new_bbs();" class="g-button"><i class="icon-plus"></i>{% if is_english %}Create{% else %}作成{% endif %}</a>
 						</div>
 					</div>
 				</td>

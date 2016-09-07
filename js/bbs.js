@@ -1,5 +1,5 @@
 //--------------------------------------------------------
-//掲示板スクリプト
+//ボードスクリプト
 //copyright 2010-2012 ABARS all rights reserved.
 //--------------------------------------------------------
 
@@ -32,7 +32,7 @@ function bbs_select_change(order_value,url_base){
 }
 
 function bbs_mute(bbs_key,host,is_english){
-	var msg="この掲示板をミュートして新着に表示されないようにしますか？";
+	var msg="このボードをミュートして新着に表示されないようにしますか？";
 	if(is_english){
 		msg="Mute this BBS?";
 	}

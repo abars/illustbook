@@ -321,7 +321,7 @@
 	<div id="upload_finish" class="upload_form">
 		<div class="upload_innner">
 			{% if is_english %}Upload success{% else %}アップロードが完了しました。
-			尚、同じイラストを複数の掲示板に投稿する行為は避けて下さい。{% endif %}
+			尚、同じイラストを複数のボードに投稿する行為は避けて下さい。{% endif %}
 		</div>
 	</div>
 
@@ -357,7 +357,7 @@
 				{% if bbs_list %}
 				<select id="bbs_list">{% for bbs in bbs_list %}<option value="{{bbs.key()}}">{{bbs.bbs_name}}</option>{% endfor %}</select>
 				{% else %}
-					{% if is_english %}BBS not found{% else %}投稿先が見つかりません。マイページから掲示板を作成して下さい。{% endif %}
+					{% if is_english %}BBS not found{% else %}投稿先が見つかりません。マイページからボードを作成して下さい。{% endif %}
 				{% endif %}
 			</td></tr>
 			{% endif %}

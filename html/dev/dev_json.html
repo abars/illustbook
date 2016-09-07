@@ -67,7 +67,7 @@ function test_callback(oj){
 <TABLE BORDER=1 WIDTH=100%>
 <TR><TD>オブジェクト</TD><TD>役割</TD></TR>
 <TR><TD><a href="#thread_object">thread</a></TD><TD>イラスト情報</TD></TR>
-<TR><TD><a href="#bbs_object">bbs</a></TD><TD>掲示板情報</TD></TR>
+<TR><TD><a href="#bbs_object">bbs</a></TD><TD>ボード情報</TD></TR>
 <TR><TD><a href="#app_object">app</a></TD><TD>アプリ情報</TD></TR>
 <TR><TD><a href="#feed_object">feed</a></TD><TD>フィード情報</TD></TR>
 <TR><TD><a href="#user_object">user</a></TD><TD>ユーザ情報</TD></TR>
@@ -107,7 +107,7 @@ function feed_callback(oj){
 <TR><TD>getThreadList</TD>
 <TD>スレッドリストの取得</TD>
 <TD>
-bbs_id：掲示板のID　省略時は全ての掲示板<BR>
+bbs_id：ボードのID　省略時は全てのボード<BR>
 offset：開始オフセット<BR>
 limit：取得する数(最大100)<BR>
 order：並び順(new/applause/bookmark/moper)<BR>
@@ -170,7 +170,7 @@ offsetは非公開ユーザを含めて指定します。<BR>
 
 <TR>
 	<TD>getBbsList</TD>
-	<TD>ユーザのレンタルしている掲示板のリストを取得</TD>
+	<TD>ユーザのレンタルしているボードのリストを取得</TD>
 	<TD>user_id:ユーザID</TD>
 	<TD>bbsオブジェクトのリスト
 	</TD>
@@ -243,7 +243,7 @@ offsetは非公開ユーザを含めて指定します。<BR>
 
 <TR>
 	<TD>getBbsList</TD>
-	<TD>ブックマークしている掲示板を取得</TD>
+	<TD>ブックマークしているボードを取得</TD>
 	<TD>user_id:ユーザID</TD>
 	<TD>bbsオブジェクトのリスト</TD>
 </TR>
@@ -257,8 +257,8 @@ offsetは非公開ユーザを含めて指定します。<BR>
 
 <TR>
 	<TD>getBbsUserList</TD>
-	<TD>掲示板をブックマークしているユーザのリストを取得</TD>
-	<TD>bbs_key:掲示板のkey</TD>
+	<TD>ボードをブックマークしているユーザのリストを取得</TD>
+	<TD>bbs_key:ボードのkey</TD>
 	<TD>userオブジェクトのリスト</TD>
 </TR>
 
@@ -386,7 +386,7 @@ function get_data_callback(oj){
 <a name="bbs_object"><H2><p>bbsオブジェクト</p></H2></a>
 <HR>
 
-<p>bbsオブジェクトには掲示板の情報が入ります。</p>
+<p>bbsオブジェクトにはボードの情報が入ります。</p>
 
 <TABLE BORDER=1 WIDTH=100%>
 <TR><TD>プロパティ</TD><TD>詳細</TD></TR>
@@ -430,7 +430,7 @@ function get_data_callback(oj){
 
 <TABLE BORDER=1 WIDTH=100%>
 <TR><TD>プロパティ</TD><TD>詳細</TD></TR>
-<TR><TD>mode</TD><TD>フィードの内容に応じて次の値が入ります。<BR>bbs_new_illust：新規イラストの投稿<BR>new_bookmark_thread：イラストのブックマーク<BR>new_follow：ユーザをフォロー<BR>new_comment_thread：イラストへのコメント<BR>new_bookmark_bbs：掲示板のブックマーク<BR>message：ツイート<BR></TD></TR>
+<TR><TD>mode</TD><TD>フィードの内容に応じて次の値が入ります。<BR>bbs_new_illust：新規イラストの投稿<BR>new_bookmark_thread：イラストのブックマーク<BR>new_follow：ユーザをフォロー<BR>new_comment_thread：イラストへのコメント<BR>new_bookmark_bbs：ボードのブックマーク<BR>message：ツイート<BR></TD></TR>
 <TR><TD>from_user</TD><TD>フィード発信者のuserオブジェクト</TD></TR>
 <TR><TD>to_user</TD><TD>フィード受信者のuserオブジェクト</TD></TR>
 <TR><TD>follow_user</TD><TD>フォローしたユーザのuserオブジェクト</TD></TR>

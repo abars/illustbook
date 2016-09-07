@@ -5,7 +5,7 @@
 	{% if rental_bbs_list %}
 	<div class="message bbs_list hot_bbs">
 		<div class="bbs_title">
-		{% if is_english %}My BBS{% else %}レンタルしている{% endif %}
+		{% if is_english %}My BBS{% else %}作成済み{% endif %}
 		{% if bookmark.privacy_rental_bbs %}
 			<br/>
 			{% if is_english %}
@@ -50,7 +50,7 @@
 	</div>
 	{% endif %}
 
-	<!-- 新規レンタル -->
+	<!-- 新規作成 -->
 	{% if not is_iphone %}
 		{%include "mypage/rental.html" %}
 	{% endif %}

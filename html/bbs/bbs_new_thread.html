@@ -10,12 +10,12 @@
 	{% else %}
 		{% if not is_english %}
 			{% if not bbs.disable_create_new_thread %}
-				この掲示板は誰でもスレッドが作成可能です。<br/>
+				このボードは誰でもスレッドが作成可能です。<br/>
 			{% else%}
 				{% if bbs.disable_create_new_thread == 1 %}
-					この掲示板は管理人のみスレッドが作成可能です。<br/>
+					このボードは管理人のみスレッドが作成可能です。<br/>
 				{% else %}
-					この掲示板はログインしていれば誰でもスレッドが作成可能です。<br/>
+					このボードはログインしていれば誰でもスレッドが作成可能です。<br/>
 				{% endif %}
 			{% endif %}
 		{% endif %}

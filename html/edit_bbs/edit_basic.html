@@ -1,4 +1,4 @@
-	<p>{% if is_english %}Basic information{% else %}掲示板の基本情報を設定します。{% endif %}</p>
+	<p>{% if is_english %}Basic information{% else %}ボードの基本情報を設定します。{% endif %}</p>
 
 <script type="text/javascript">
 	function css_preview(){
@@ -19,16 +19,16 @@
 
 <div class="example">
 			<TABLE BORDER=0 class="g-table">
-			<TR><TH>{% if is_english %}Title{% else %}掲示板のタイトル{% endif %}</TH><TD><input type="text" name="title" value="{{bbs.bbs_name}}" style="width:95%;"></TD></TR>
-			<TR><TH>{% if is_english %}Summary{% else %}掲示板の概要{% endif %}</TH><TD><textarea name="bbs_summary"	rows="8" style="width:95%;">{{bbs.summary}}</textarea></TD></TR>
-			<TR><TH>{% if is_english %}Mode{% else %}掲示板のモード{% endif %}</TH><TD>
+			<TR><TH>{% if is_english %}Title{% else %}ボードのタイトル{% endif %}</TH><TD><input type="text" name="title" value="{{bbs.bbs_name}}" style="width:95%;"></TD></TR>
+			<TR><TH>{% if is_english %}Summary{% else %}ボードの概要{% endif %}</TH><TD><textarea name="bbs_summary"	rows="8" style="width:95%;">{{bbs.summary}}</textarea></TD></TR>
+			<TR><TH>{% if is_english %}Mode{% else %}ボードのモード{% endif %}</TH><TD>
 			<select name="mode">
-				<option value="1" {% if bbs.bbs_mode == 1 %}selected="selected"{% endif %}>{% if is_english %}BBS{% else %}{% if is_iphone %}誰でも投稿可能{%else%}お絵描き掲示板（誰でも投稿可能）{% endif %}{% endif %}</option>
-				<option value="2" {% if bbs.bbs_mode == 2 %}selected="selected"{% endif %}>{% if is_english %}BLOG{% else %}{% if is_iphone %}管理人だけ投稿可能{%else%}お絵かきブログ（管理人だけ投稿可能）{% endif %}{% endif %}</option>
-				<option value="3" {% if bbs.bbs_mode == 3 %}selected="selected"{% endif %}>{% if is_english %}FORUM{% else %}{% if is_iphone %}スレッド式{%else%}スレッド式掲示板（イラストなし）{% endif %}{% endif %}</option>
+				<option value="1" {% if bbs.bbs_mode == 1 %}selected="selected"{% endif %}>{% if is_english %}BBS{% else %}{% if is_iphone %}誰でも投稿可能{%else%}誰でも投稿可能{% endif %}{% endif %}</option>
+				<option value="2" {% if bbs.bbs_mode == 2 %}selected="selected"{% endif %}>{% if is_english %}BLOG{% else %}{% if is_iphone %}管理人だけ投稿可能{%else%}管理人だけ投稿可能{% endif %}{% endif %}</option>
+				<option value="3" {% if bbs.bbs_mode == 3 %}selected="selected"{% endif %}>{% if is_english %}FORUM{% else %}{% if is_iphone %}フォーラム{%else%}フォーラム{% endif %}{% endif %}</option>
 			</select></TD></TR>
 
-			<TR><TH>{% if is_english %}Create new thread{% else %}新規スレッドの作成（スレッド式掲示板の場合）{% endif %}</TH><TD>
+			<TR><TH>{% if is_english %}Create new thread{% else %}新規スレッドの作成{% endif %}</TH><TD>
 			<select name="disable_create_new_thread">	
 			
 			<option value="1" {%if bbs.disable_create_new_thread == 1 %}selected="selected"{%endif%}>{% if is_english %}Owner{% else %}管理人のみ作成可能{% endif %}</option>

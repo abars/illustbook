@@ -10,7 +10,7 @@
 		{% if bookmark_illust_exist %}
 			<a href="{{host}}{{redirect_api}}?{% if bookmark %}user_id={{user_id}}&amp;{% endif %}tab=bookmark" class="g-button {%if tab == "bookmark"%}checked{%endif%}">{% if is_english %}Bookmark{% else %}{% if is_iphone %}ブクマ{%else%}ブックマーク{%endif%}{% endif %}</a>
 		{% endif %}
-		<a href="{{host}}{{redirect_api}}?{% if bookmark %}user_id={{user_id}}&amp;{% endif %}tab=bbs" class="g-button {%if tab == "bbs"%}checked{%endif%}">{% if is_english %}BBS{% else %}掲示板{% endif %}</a>
+		<a href="{{host}}{{redirect_api}}?{% if bookmark %}user_id={{user_id}}&amp;{% endif %}tab=bbs" class="g-button {%if tab == "bbs"%}checked{%endif%}">{% if is_english %}BBS{% else %}ボード{% endif %}</a>
 		<a href="{{host}}{{redirect_api}}?{% if bookmark %}user_id={{user_id}}&amp;{% endif %}tab=feed" class="g-button {%if tab == "feed" or tab=="timeline" %}checked{%endif%}">{% if is_iphone or is_english %}TL{%else%}タイムライン{% if not view_mode %}{% if new_feed_count %}({{new_feed_count}}){% endif %}{% endif %}{% endif %}</a>
 	</div>
 	</div>

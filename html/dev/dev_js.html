@@ -276,7 +276,7 @@ MyApp.prototype.onTouchEnd=function(x,y){
 <a name="user_class"><H2><p>userクラス</p></H2></a>
 <HR>
 
-<p>userクラスでは、レンタルしている掲示板やフォロワーなど、ユーザに関連した情報を取得します。また、ログインしていたり、アプリを所有していたりするユーザのIDを取得することができます。</p>
+<p>userクラスでは、管理しているボードやフォロワーなど、ユーザに関連した情報を取得します。また、ログインしていたり、アプリを所有していたりするユーザのIDを取得することができます。</p>
 <p>&nbsp</p>
 
 <p>次の例では、offset番目からlimit個のデータを取得して、結果をcallback関数に通知しています。callback関数に通知されるデータについては、JSON APIを参照して下さい。</p>
@@ -322,12 +322,12 @@ MyApp.prototype.onTouchEnd=function(x,y){
 		<TD>アプリを所有しているユーザを取得</TD>
 		<TD>なし</TD>
 		<TD>ユーザID(String)</TD>
-		<TD>他人の掲示板を見ている場合は掲示板の所有者が返ります。</TD>
+		<TD>他人のボードを見ている場合はボードの所有者が返ります。</TD>
 	</TR>
 
 	<TR>
 		<TD>getBbsList</TD>
-		<TD>レンタルしている掲示板の一覧を取得</TD>
+		<TD>レンタルしているボードの一覧を取得</TD>
 		<TD>user_id,offset,limit,order,callback</TD>
 		<TD>Bbsオブジェクトのリスト</TD>
 		<TD></TD>
@@ -383,9 +383,9 @@ MyApp.prototype.onTouchEnd=function(x,y){
 <a name="feed_class"><H2><p>feedクラス</p></H2></a>
 <HR>
 
-<p>feedクラスでは、イラストブックの最新情報を取得することができます。現在は、掲示板に投稿されたイラストの一覧のみ取得が可能です。</p>
+<p>feedクラスでは、イラストブックの最新情報を取得することができます。現在は、ボードに投稿されたイラストの一覧のみ取得が可能です。</p>
 <p>&nbsp</p>
-<p>次の例では、掲示板(sample)に最近投稿されたイラストの一覧を、offset番目からlimit個、取得しています。bbs_idにnullを設定すると、全ての掲示板から取得します。callback関数に通知されるデータについては、JSON APIを参照して下さい。</p>
+<p>次の例では、ボード(sample)に最近投稿されたイラストの一覧を、offset番目からlimit個、取得しています。bbs_idにnullを設定すると、全てのボードから取得します。callback関数に通知されるデータについては、JSON APIを参照して下さい。</p>
 <p>&nbsp</p>
 
 <pre class="brush: jscript;">
@@ -414,10 +414,10 @@ MyApp.prototype.onTouchEnd=function(x,y){
 
 	<TR>
 		<TD>getThreadList</TD>
-		<TD>掲示板のスレッドの一覧を取得</TD>
+		<TD>ボードのスレッドの一覧を取得</TD>
 		<TD>bbs_id,offset,limit,order,callback</TD>
 		<TD>Threadオブジェクトのリスト</TD>
-		<TD>orderにはORDER_NEW/ORDER_MOPER/ORDER_APPLAUSEを指定します。bbs_idを省略した場合は全ての掲示板から取得します。</TD>
+		<TD>orderにはORDER_NEW/ORDER_MOPER/ORDER_APPLAUSEを指定します。bbs_idを省略した場合は全てのボードから取得します。</TD>
 	</TR>
 </TABLE>
 
@@ -430,9 +430,9 @@ MyApp.prototype.onTouchEnd=function(x,y){
 <a name="bookmark_class"><H2><p>bookmarkクラス</p></H2></a>
 <HR>
 
-<p>bookmarkクラスでは、ユーザIDをキーに、ブックマークしているスレッドや掲示板の情報を取得することができます。</p>
+<p>bookmarkクラスでは、ユーザIDをキーに、ブックマークしているスレッドやボードの情報を取得することができます。</p>
 <p>&nbsp</p>
-<p>次の例では、ユーザ(user_id)のブックマークしているスレッドと掲示板の一覧を、offset番目からlimit個、取得しています。callback関数に通知されるデータについては、JSON APIを参照して下さい。</p>
+<p>次の例では、ユーザ(user_id)のブックマークしているスレッドとボードの一覧を、offset番目からlimit個、取得しています。callback関数に通知されるデータについては、JSON APIを参照して下さい。</p>
 <p>&nbsp</p>
 
 <pre class="brush: jscript;">
@@ -468,10 +468,10 @@ MyApp.prototype.onTouchEnd=function(x,y){
 
 	<TR>
 		<TD>getBbsList</TD>
-		<TD>ブックマークしている掲示板の一覧を取得</TD>
+		<TD>ブックマークしているボードの一覧を取得</TD>
 		<TD>user_id,offset,limit,order,callback</TD>
 		<TD>Bbsオブジェクトのリスト</TD>
-		<TD>あるユーザのブックマークしている掲示板の一覧を取得します。orderにはORDER_NONEを指定します。</TD>
+		<TD>あるユーザのブックマークしているボードの一覧を取得します。orderにはORDER_NONEを指定します。</TD>
 	</TR>
 
 	<TR>
@@ -535,7 +535,7 @@ MyApp.prototype.onTouchEnd=function(x,y){
 
 	<TR>
 		<TD>putData</TD>
-		<TD>ブックマークしている掲示板の一覧を取得</TD>
+		<TD>ブックマークしているボードの一覧を取得</TD>
 		<TD>data_key,int_data,text_data,callback</TD>
 		<TD>成功通知オブジェクト</TD>
 		<TD>現在プレイしているユーザのdata_keyにデータを保存します。</TD>

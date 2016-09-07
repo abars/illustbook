@@ -1,4 +1,4 @@
-	<!--スレッド式掲示板-->
+	<!--スレッド式ボード-->
 	<div class="square_thread_list" onclick="location.href='{{usrhost}}{% if thread.short %}{{thread.short}}{%else%}{{thread.key()}}{%endif%}.html'" style="background-image:url('{% if thread.cached_entry_image_key %}{{host}}thumbnail/{{thread.cached_entry_image_key}}.jpg{% else %}{% if thread.cached_image_key %}{{host}}thumbnail/{{thread.cached_image_key}}.jpg{% else %}none{% endif %}{% endif %}');background-size:cover;">
 
 	<div class="square_thread_list_comment_cnt">

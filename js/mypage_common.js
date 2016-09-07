@@ -32,7 +32,7 @@ function check_id(host){
 }
 
 function confirm_action_bbs(url,title,is_english) {
-	var msg="お絵かき掲示板「"+title+"」を削除してもよろしいですか?";
+	var msg="ボード「"+title+"」を削除してもよろしいですか?";
 	if(is_english){
 		msg="Are you sure you want to remove "+title+"?"
 	}
@@ -42,7 +42,7 @@ function confirm_action_bbs(url,title,is_english) {
 }	 
 
 function confirm_action_bbs2(url,is_english) {
-	var msg="お絵かき掲示板を一度削除すると復活はできません。本当に削除してもよろしいですか?";
+	var msg="ボードを一度削除すると復活はできません。本当に削除してもよろしいですか?";
 	if(is_english){
 		msg="This operation cannot be undone.Are you sure you want to delete this BBS?"
 	}

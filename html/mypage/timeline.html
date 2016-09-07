@@ -156,7 +156,7 @@
 			{% if feed.mode == "new_bookmark_bbs" %}
 				<a href="{{feed.bbs.bbs_url}}">
 					{% if not feed.bbs.title %}
-						{{deleted_style_header}}ブックマークした掲示板は削除されました。{{deleted_style_footer}}
+						{{deleted_style_header}}ブックマークしたボードは削除されました。{{deleted_style_footer}}
 					{% else %}
 						{% if is_english %}Bookmark {% endif %}{{feed.bbs.title}}{% if not is_english %}をブックマークしました。{% endif %}
 					{% endif %}
