@@ -11,7 +11,11 @@ body{
 {% if bookmark and bookmark.my_color %}
 	background:{{bookmark.my_color}};
 {% else %}
+	{% if is_iphone %}
+	background:#ffffff;
+	{% else %}
 	background:#f2f2f2;
+	{% endif %}
 {% endif %}
 	margin: 0px;
 	font-size: 13px;
@@ -86,7 +90,7 @@ h2,h3 {font-size:100%;color:#ea5376;}
 .item {
 {% if is_iphone %}
 	width: 152px;
-	margin: 4px;
+	margin: 4px 4px 24px 4px;
 {% else %}
 {% if is_tablet %}
 	width: 180px;
@@ -107,6 +111,9 @@ h2,h3 {font-size:100%;color:#ea5376;}
 .item_info hr{
 	margin:0px;
 	clear:both;
+	{% if True %}
+	border-top:0px;
+	{% endif %}
 }
 
 .item_radius_image{
