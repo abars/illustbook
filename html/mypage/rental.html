@@ -50,9 +50,9 @@
 				<td>{% if is_english %}Mode{% else %}モード{% endif %}</td>
 				<td>
 					<select name="mode">
-						<option value="1">{% if is_english %}BBS{% else %}{% endif %}{% if not is_iphone and not is_english%}誰でも投稿可能{% endif %}
-						<option value="2">{% if is_english %}BLOG{% else %}{% endif %}{% if not is_iphone and not is_english %}管理人だけ投稿可能{% endif %}
-						<option value="3">{% if is_english %}FORUM{% else %}{% endif %}{% if not is_iphone and not is_english %}フォーラム{% endif %}
+						<option value="1">{% if is_english %}BBS{% else %}誰でも投稿可能{% endif %}
+						<option value="2">{% if is_english %}BLOG{% else %}管理人だけ投稿可能{% endif %}
+						<option value="3">{% if is_english %}FORUM{% else %}フォーラム{% endif %}
 					</select>
 				</td>
 			</tr>
