@@ -137,8 +137,8 @@ class NicoTracker(webapp.RequestHandler):
 	def auto_update(self):
 		query=NicoTrackerRec().all()#db.Query(NicoTrackerRec,keys_only=True)
 		query=query.order("date")	#古い順
-		update_unit=200	#out of timeにならない範囲で取得
-						#200*24times=4800件が毎日更新できるリミット
+		update_unit=100	#out of timeにならない範囲で取得
+						#100*24times=2400件が毎日更新できるリミット
 
 		rec_list=query.fetch(limit=update_unit)
 		#rec_list=db.get(rec_list)
