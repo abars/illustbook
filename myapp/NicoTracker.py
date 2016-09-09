@@ -66,10 +66,11 @@ class NicoTracker(webapp.RequestHandler):
 		#初期設定
 		rec.url=url
 		rec.id=id
+		rec.title=""
 		
-		return self.update_core(rec,False)
+		return self.update_core(rec,False,False)
 	
-	def update_core(self,rec,force):
+	def update_core(self,rec,force,batch):
 		#1日単位で習得
 		if(rec.date and len(rec.day_list)>=1 and not force):
 			day1_str=NicoTracker.get_day_string(rec.date)
@@ -81,7 +82,7 @@ class NicoTracker(webapp.RequestHandler):
 		try:
 			result = urlfetch.fetch("http://www.nicovideo.jp/watch/"+rec.id)
 		except:
-			logging.warning("niconico access failed")
+			logging.warning("niconico access failed", exc_info=True)
 			return rec
 
 		#コメント数と再生数を取得
@@ -123,8 +124,10 @@ class NicoTracker(webapp.RequestHandler):
 			rec.comment_cnt_now=int(comment_n)
 		except:
 			a=None
-		
-		rec.put()
+	
+		#バッチputでない場合
+		if(not batch):
+			rec.put()
 
 		#更新を通知
 		rec.updated=1
@@ -132,25 +135,40 @@ class NicoTracker(webapp.RequestHandler):
 		return rec
 	
 	def auto_update(self):
-		query=db.Query(NicoTrackerRec,keys_only=True)
+		query=NicoTrackerRec().all()#db.Query(NicoTrackerRec,keys_only=True)
 		query=query.order("date")	#古い順
-		update_unit=400	#out of timeにならない範囲で取得
-						#400*12times=4800件が毎日更新できるリミット
+		update_unit=200	#out of timeにならない範囲で取得
+						#200*24times=4800件が毎日更新できるリミット
+
 		rec_list=query.fetch(limit=update_unit)
+		#rec_list=db.get(rec_list)
+
 		cnt=0
 		update_cnt=0
-		for rec_key in rec_list:
+		update_list=[]
+		for rec in rec_list:
 			#get and update
-			rec=db.get(rec_key)
-			rec=self.update_core(rec,False)
+			rec=self.update_core(rec,False,True)
 			if(rec and rec.updated):
 				update_cnt=update_cnt+1
-			rec=None #release memory
+				update_list.append(rec)
+			#rec=None #release memory
 
 			#next
+			if(len(update_list)>=20):
+				db.put(update_list)
+				update_list=[]	#release memory
+
 			cnt=cnt+1
-			if(cnt%100==0):
-				logging.info("update nico_tracker "+str(cnt))
+			#if(cnt%100==0):
+			#	logging.info("update nico_tracker "+str(cnt))
+
+		if(len(update_list)>=1):
+			db.put(update_list)
+			update_list=[]
+
+		#if(update_cnt):
+		#	db.put(rec_list)
 
 		logging.info("updated "+str(update_cnt)+" of "+str(cnt))
 
