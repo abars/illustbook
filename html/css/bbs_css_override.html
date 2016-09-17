@@ -37,6 +37,13 @@
 	}
 {% endif %}
 
+	{# floating menu #}
+{% if is_iphone %}
+	#container{
+		padding-bottom:64px;
+	}
+{% endif %}
+
 	/* スレッド一覧 */
 {% if bbs.bbs_mode == 3 %}
 	.square_thread_list {
