@@ -135,13 +135,11 @@
 
 <!-- Pinterest -->
 
-{#
-{% if is_iphone and top_page %}
+{% if is_iphone and top_page and (order=="event" or order=="chat") %}
   {% if not contents_only %}
     {% include "pinterest/corner_stamp.html" %}
   {% endif %}
 {% endif %}
-#}
 
 {% if search!="empty" and (not thread_list) and (not contents_only) and illust_enable %}
 {% if page_mode != "guide" and page_mode != "index" and page_mode != "login_require"%}

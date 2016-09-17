@@ -30,5 +30,9 @@
 	{% if is_english %}No chat room exist{% else %}開催中のチャットはありません。{% endif %}
 {% endif %}
 
+	{% if is_iphone %}
+		<br/><a href="{{host}}?order=chat">{% if is_engslih %}Create chat{% else %}チャットの管理{% endif %}</a>
+	{% endif %}
+
 </div>
 <br clear="all"/>

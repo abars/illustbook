@@ -25,10 +25,10 @@
 {% endif %}
 
 	{% if tweet_page!=1 %}
-	<a href="?tweet_page={{tweet_page-1}}">Prev</a>&nbsp;
+	<a href="?tweet_page={{tweet_page-1}}{% if search %}&search={{search}}{% endif %}">Prev</a>&nbsp;
 	{% endif %}
 	Page.{{tweet_page}}&nbsp;
-	<a href="?tweet_page={{tweet_page+1}}">Next</a>&nbsp;
+	<a href="?tweet_page={{tweet_page+1}}{% if search %}&search={{search}}{% endif %}">Next</a>&nbsp;
 	<a href="mypage?tab=feed">Tweet</a>
 </div>
 <br clear="all"/>

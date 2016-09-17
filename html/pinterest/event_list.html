@@ -10,6 +10,9 @@
 	{% else %}
 		{% if is_english %}No event exist{% else %}開催中のイベントはありません。{% endif %}
 	{% endif %}
+	{% if is_iphone %}
+		<br/><a href="{{host}}?order=event">{% if is_engslih %}Create event{% else %}イベントの管理{% endif %}</a>
+	{% endif %}
 </div>
 <br clear="all"/>
 

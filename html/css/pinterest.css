@@ -55,6 +55,9 @@ h2,h3 {font-size:100%;color:#ea5376;}
 		{% if not is_iphone %}
 			display:none;
 		{% endif %}
+		{% if is_iphone %}
+			margin-top:4px;
+		{% endif %}
 	{% endif %}
 }
 
