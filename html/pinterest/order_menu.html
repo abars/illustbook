@@ -21,20 +21,7 @@
 {% if order=="monthly" and ranking_month_list %}
 	<div style="float:left;margin-left:{% if is_iphone %}4px;{% else %}8px;{% endif %}">
 		<div class="g-button-group">
-			<a class="g-button dropdown-toggle menu_button" data-toggle="dropdown" href="#" style="background-image:none;background-color:#ea5376;color:#ffffff;border:none;text-shadow:none;">
-				{% for one_month in ranking_month_list %}
-					{% if one_month.query == month_query %}
-						{{one_month.str}}
-					{% endif %}
-				{% endfor %}
-				<span class="caret"></span>
-			</a>
-
-			<ul class="dropdown-menu menu_list">
-			{% for one_month in ranking_month_list %}
-			<li><a href="{{host}}{{redirect_api}}?order=monthly&amp;query={{one_month.query}}">{{one_month.str}}</a></li>
-			{% endfor %}
-			</ul>
+			{% include "pinterest/ranking_list.html" %}
 		</div>
 	</div>
 {% endif %}

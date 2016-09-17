@@ -15,7 +15,34 @@
 	{% if bbs %}
 		border-bottom: 1px solid #dcdcdc;
 	{% endif %}
+	{% if is_iphone %}
+		border-top: 1px solid #dcdcdc;
+		position:fixed;
+		bottom: 0px;
+		z-index: 1;
+		width:100%;
+	{% endif %}
 }
+
+{% if is_iphone %}
+#iconf-container{
+	margin-left: auto;
+	margin-right: auto;
+	width:280px;
+}
+
+.iconf-list2{
+	font-size: 32px;
+	width:32px;
+	height:32px;
+	color: #ea5376;
+	margin: 8px;
+	margin-left: 12px;
+	margin-right: 12px;
+	display:block;
+	float:left;
+}
+{% endif %}
 
 #floating_menu a{
 	color: #444;

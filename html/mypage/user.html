@@ -3,11 +3,11 @@
 		{% if is_english %}Edit profile{% else %}プロフィールを編集{% endif %}<br/>
 		{%include "mypage/edit_profile.html"%}
 	{% else %}
-		<div style="float:left;{% if is_iphone %}width:78px;{% else %}width:164px{% endif %}">
-			<img src="{{view_user.icon_url}}" {% if is_iphone %}width="74px" height="74px"{%else%}width="160px" height="160px"{% endif %} alt="{{view_user.name}}"/>
+		<div style="float:left;{% if is_iphone %}width:98px;{% else %}width:164px{% endif %}">
+			<img src="{{view_user.icon_url}}" {% if is_iphone %}width="94px" height="94px"{%else%}width="160px" height="160px"{% endif %} alt="{{view_user.name}}"/>
 		</div>
-		<div style="float:right;word-break:break-all;width:100%;{% if is_iphone %}margin-left:-78px;{% else %}margin-left:-164px;{% endif %}">
-		<div style="{% if is_iphone %}margin-left:78px;{% else %}margin-left:164px;{% endif %}">
+		<div style="float:right;word-break:break-all;width:100%;{% if is_iphone %}margin-left:-98px;{% else %}margin-left:-164px;{% endif %}">
+		<div style="{% if is_iphone %}margin-left:98px;{% else %}margin-left:164px;{% endif %}">
 			{% if view_user.name %}
 				{% if not is_iphone %}<p>{% endif %}<b>{{view_user.name}}</b>{% if not is_iphone %}</p>{% endif %}
 				<p>{% if view_user_profile.profile and view_user_profile.profile!="None" %}{{view_user_profile.profile|auto_link}}{% else %}&nbsp;{% endif %}</p>
@@ -84,9 +84,7 @@
 					{% if not view_mode %}
 						<li><a href="./mypage?tab=timeline">{% if is_english %}My Timeline{% else %}マイタイムライン{% endif %}</a></li>
 					{% endif %}
-					{#
 					<li><a href="{{redirect_url|logout_url}}">{% if is_english %}Logout{% else %}ログアウト{% endif %}</a></li>
-					#}
 					{% if is_admin %}
 					<li><a href="javascript:if(confirm('アイコンを凍結しますか？')){ window.location.href='{{host}}violation?user_id={{bookmark.user_id}}' }">アイコン凍結（＊管理モード）</a></li>
 					<li><a href="javascript:if(confirm('アカウントを凍結しますか？')){ window.location.href='{{host}}mypage?freez=1&user_id={{bookmark.user_id}}' }">アカウント凍結（＊管理モード）</a></li>

@@ -486,6 +486,9 @@ class Pinterest(webapp.RequestHandler):
 			if(thread_list):
 				search_api_error=False
 
+		today=datetime.date.today()
+		ranking_month_list=Pinterest._get_ranking_month_list(today,CssDesign.is_english(self))
+
 		template_values['thread_list']=thread_list
 		template_values['next_query']="search="+urllib.quote_plus(str(search))
 		template_values['tag_list']=SearchTag.get_recent_tag(search_api)
@@ -494,6 +497,8 @@ class Pinterest(webapp.RequestHandler):
 		template_values['search']=search
 		template_values['search_api_error']=search_api_error
 		template_values['top_page']=True
+		template_values['ranking_month_list']=ranking_month_list
+		template_values['month_query']=""
 
 		Pinterest._render_page(self,template_values)
 

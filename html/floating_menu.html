@@ -3,6 +3,36 @@
 {% endif %}
 
 <div id="floating_menu">
+{% if is_iphone %}
+	<div id="iconf-container">
+          <a href="{{host}}">
+          	<div class="iconf-list2"><i class="iconf-check-empty"></i></div>
+          </a>
+          <a href="{{host}}?order=hot">
+          <div class="iconf-list2"><i class="iconf-star2"></i></div>
+          </a>
+          <a href="{{host}}?search=empty">
+          <div class="iconf-list2"><i class="iconf-search2"></i></div>
+          </a>
+          <a href="{{host}}mypage">
+          <div class="iconf-list2"><i class="iconf-user-1"></i>
+          	{% if my_new_feed_count %}
+          	<div style="margin-top:-32px;font-size:8px;">
+          		{{my_new_feed_count}}
+          	</div>
+          	{% endif %}
+          </div>
+          </a>
+          {#
+          <a href="{{host}}?order=event">
+          <div class="iconf-list2"><i class="iconf-calendar-empty"></i></div>
+	      </a>
+	      #}
+          <a href="{{host}}guide">
+          <div class="iconf-list2"><i class="iconf-menu"></i></div>
+	      </a>
+    </div>
+{% else %}
 	<!-- icon -->
 	{% if user %}
 	<div class="user_icon" id="user_icon">
@@ -128,6 +158,7 @@
 		{% endif %}
 		</div>
 	</div>
+{% endif %}
 <br clear="all"/>
 </div>
 

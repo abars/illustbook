@@ -1,4 +1,4 @@
-{% if not is_english %}
+{% if not is_english and not is_iphone %}
 
 <div class="message hot_bbs" {% if not is_iphone %}style="width:350px;margin-top:0px;margin-left:0px;margin-right:0px;"{% endif %}>
 <p>{% if is_english %}External Search{% else %}他のサイトで検索{% endif %}</p>

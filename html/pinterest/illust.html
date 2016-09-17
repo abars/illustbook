@@ -23,7 +23,7 @@
 					<img src="{{thread.thumbnail2_url}}" width="{{thread|thumbnail2_width(is_iphone,is_tablet)}}px" height="{{thread|thumbnail2_height(is_iphone,is_tablet)}}px" alt="{{thread.title}}" class="item_radius_image"/>
 				</a>
 
-				{% if page_mode == "index" %}
+				{% if page_mode == "index" and not is_iphone %}
 					{% if next_page == 2 %}
 						{% if loop.index == 1 and order == "new" %}
 							<p><span>Newest</span></p>

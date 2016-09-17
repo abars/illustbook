@@ -2,7 +2,11 @@
 <style type="text/css">
 #back-top {
 	position: fixed;
+{% if is_iphone %}
+	bottom: 58px;
+{% else %}
 	bottom: 10px;
+{% endif %}
 	right: 5px;
 	margin-left: -100px;
 	display:none;
@@ -50,7 +54,11 @@
 	width: 200px;
 	position: fixed;
 	left: 50%;
+{% if is_iphone %}
+	bottom: 62px;
+{% else %}
 	bottom: 14px;
+{% endif %}
 	text-align: center;
 	font-size: 14px;
 	line-height: 20px;
