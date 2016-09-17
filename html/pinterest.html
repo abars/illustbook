@@ -123,18 +123,6 @@
   </div>
 {% endif %}
 
-<!-- タグサーチ -->
-
-{% if search and is_iphone %}
-  <div class="message hot_bbs">
-    {% if search=="empty" %}
-    <p>{% if is_english %}Query{% else %}検索したい単語を入力{% endif %}</p>
-    {% endif %}
-    {% include "pinterest/search.html" %}
-  </div>
-  <br clear="all"/>
-{% endif %}
-
 <!-- イベント -->
 {% if now_event and order=="event" %}
   {% include "pinterest/event_info.html" %}
@@ -147,15 +135,10 @@
 
 <!-- Pinterest -->
 
-{% if search=="empty" %}
-  {% include "pinterest/recent_tag.html" %}
-  <div class="message hot_bbs">
-  <p>{% if is_english %}Ranking{% else %}ランキング{% endif %}</p>
-  <div class="g-button-group">
-  {% include "pinterest/ranking_list.html" %}
-  <a href="{{host}}{{redirect_api}}?order=monthly" class="order-button">表示</a>
-  </div>
-  </div>
+{% if is_iphone and top_page %}
+  {% if not contents_only %}
+    {% include "pinterest/corner_stamp.html" %}
+  {% endif %}
 {% endif %}
 
 {% if search!="empty" and (not thread_list) and (not contents_only) and illust_enable %}
@@ -170,10 +153,25 @@
 {% endif %}
 {% endif %}
 
-{% if is_iphone and top_page %}
-  {% if not contents_only %}
-    {% include "pinterest/corner_stamp.html" %}
-  {% endif %}
+{% if search and is_iphone %}
+  <div class="message hot_bbs">
+    {% if search=="empty" %}
+    <p>{% if is_english %}Query{% else %}ワード検索{% endif %}</p>
+    {% endif %}
+    {% include "pinterest/search.html" %}
+  </div>
+  <br clear="all"/>
+{% endif %}
+
+{% if search=="empty" %}
+  {% include "pinterest/recent_tag.html" %}
+  <div class="message hot_bbs">
+  <p>{% if is_english %}Ranking{% else %}ランキング{% endif %}</p>
+  <div class="g-button-group">
+  {% include "pinterest/ranking_list.html" %}
+  <a href="{{host}}{{redirect_api}}?order=monthly" class="order-button">表示</a>
+  </div>
+  </div>
 {% endif %}
 
 {% if not is_timeline_enable and page_mode !="guide" %}

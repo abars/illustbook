@@ -6,16 +6,16 @@
 {% if is_iphone %}
 	<div id="iconf-container">
           <a href="{{host}}">
-          	<div class="iconf-list2"><i class="iconf-check-empty"></i></div>
+          	<div class="iconf-list2"><i class="ficon-docs"></i></div>
           </a>
           <a href="{{host}}?order=hot">
-          <div class="iconf-list2"><i class="iconf-star2"></i></div>
+          <div class="iconf-list2"><i class="ficon-chart-line"></i></div>
           </a>
           <a href="{{host}}?search=empty">
-          <div class="iconf-list2"><i class="iconf-search2"></i></div>
+          <div class="iconf-list2"><i class="ficon-search"></i></div>
           </a>
           <a href="{{host}}mypage">
-          <div class="iconf-list2"><i class="iconf-user-1"></i>
+          <div class="iconf-list2"><i class="ficon-user-1"></i>
           	{% if my_new_feed_count %}
           	<div style="margin-top:-32px;font-size:8px;">
           		{{my_new_feed_count}}
@@ -25,11 +25,11 @@
           </a>
           {#
           <a href="{{host}}?order=event">
-          <div class="iconf-list2"><i class="iconf-calendar-empty"></i></div>
+          <div class="iconf-list2"><i class="ficon-calendar-empty"></i></div>
 	      </a>
 	      #}
           <a href="{{host}}guide">
-          <div class="iconf-list2"><i class="iconf-menu"></i></div>
+          <div class="iconf-list2"><i class="ficon-help"></i></div>
 	      </a>
     </div>
 {% else %}
