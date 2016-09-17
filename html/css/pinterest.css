@@ -228,7 +228,7 @@ h2,h3 {font-size:100%;color:#ea5376;}
 #pinterest_footer{
 	text-align: center;
 	font-size:12px;
-	{{white_bg}}
+{#	{{white_bg}} #}
 	display:none;
 }
 

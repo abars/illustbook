@@ -3,7 +3,7 @@
 <!-- ランキングページ -->
 
 {% if is_iphone and (order == "new" or order=="hot" or order=="event" or order=="chat" or order=="monthly" or search) %}
-	<div class="message hot_bbs" style="cursor:pointer;width:100%;" id="iphone_information_button" onclick="var info=document.getElementById('iphone_information');if(info.style.display=='block') { info.style.display='none'; } else { info.style.display='block'; }">
+	<div class="message hot_bbs" style="cursor:pointer;" id="iphone_information_button" onclick="var info=document.getElementById('iphone_information');if(info.style.display=='block') { info.style.display='none'; } else { info.style.display='block'; }">
 		{% if is_english %}
 			Additional Information
 		{% else %}
