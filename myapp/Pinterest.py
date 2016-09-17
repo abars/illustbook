@@ -500,6 +500,13 @@ class Pinterest(webapp.RequestHandler):
 		template_values['ranking_month_list']=ranking_month_list
 		template_values['month_query']=""
 
+		if(search=="empty"):
+			order="new"
+			Pinterest._update_event_list(self,template_values,order,contents_only)
+			Pinterest._update_room_list(self,template_values,order,contents_only)
+			Pinterest._update_tweet_list(self,template_values,order,contents_only)
+			template_values["bbs_list"]=ApiFeed.feed_get_bbs_list(self,"hot",0,8)
+
 		Pinterest._render_page(self,template_values)
 
 	@staticmethod

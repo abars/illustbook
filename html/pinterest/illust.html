@@ -23,12 +23,15 @@
 					<img src="{{thread.thumbnail2_url}}" width="{{thread|thumbnail2_width(is_iphone,is_tablet)}}px" height="{{thread|thumbnail2_height(is_iphone,is_tablet)}}px" alt="{{thread.title}}" class="item_radius_image"/>
 				</a>
 
-				{% if page_mode == "index" and not is_iphone %}
+				{% if page_mode == "index" %}
 					{% if next_page == 2 %}
 						{% if loop.index == 1 and order == "new" %}
-							<p><span>Newest</span></p>
+							<p><span>New</span></p>
 						{% endif %}
-						{% if loop.index <= 3 and (order == "hot" or order == "monthly" or (order =="event" and now_event)) %}
+						{% if loop.index == 1 and order == "hot" %}
+							<p><span>Hot</span></p>
+						{% endif %}
+						{% if loop.index <= 3 and (order == "monthly" or (order =="event" and now_event)) %}
 							<p><span>{{loop.index}}</span></p>
 						{% endif %}
 					{% endif %}

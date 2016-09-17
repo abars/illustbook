@@ -135,11 +135,13 @@
 
 <!-- Pinterest -->
 
+{#
 {% if is_iphone and top_page %}
   {% if not contents_only %}
     {% include "pinterest/corner_stamp.html" %}
   {% endif %}
 {% endif %}
+#}
 
 {% if search!="empty" and (not thread_list) and (not contents_only) and illust_enable %}
 {% if page_mode != "guide" and page_mode != "index" and page_mode != "login_require"%}
@@ -165,6 +167,7 @@
 
 {% if search=="empty" %}
   {% include "pinterest/recent_tag.html" %}
+
   <div class="message hot_bbs">
   <p>{% if is_english %}Ranking{% else %}ランキング{% endif %}</p>
   <div class="g-button-group">
@@ -172,6 +175,11 @@
   <a href="{{host}}{{redirect_api}}?order=monthly" class="order-button">表示</a>
   </div>
   </div>
+
+  {% include "pinterest/hot_bbs.html" %}
+  {% include "pinterest/event_list.html" %}
+  {% include "pinterest/chat_list.html" %}
+  {% include "pinterest/tweet_list.html" %}
 {% endif %}
 
 {% if not is_timeline_enable and page_mode !="guide" %}
