@@ -157,6 +157,10 @@ class ApiObject(webapp.RequestHandler):
 			bookmark=bookmark.fetch(1)
 			bookmark=db.get(bookmark[0])	#強い整合性を保証
 		
+		return ApiObject.set_list_if_empty(bookmark);
+
+	@staticmethod
+	def set_list_if_empty(bookmark):
 		if(not bookmark.thread_key_list):
 			bookmark.thread_key_list=[]
 		if(not bookmark.bbs_key_list):
@@ -176,7 +180,7 @@ class ApiObject(webapp.RequestHandler):
 		if(not bookmark.my_timeline):
 			bookmark.my_timeline=[]
 
-		return bookmark;
+		return bookmark
 
 	@staticmethod
 	def get_follower_list(user_id):

@@ -157,36 +157,78 @@ class StackFeed(webapp.RequestHandler):
 		data.create_date=datetime.datetime.today()
 		data.put()
 		return data
-	
+
+	@staticmethod
+	def _append_list(data,bookmark_list):
+		#20件ごとにバッチ処理する
+		bookmark_key_list=[]
+		for bookmark in bookmark_list:
+			if(bookmark):
+				bookmark_key_list.append(bookmark.key())
+				if(len(bookmark_key_list)>=20):
+					StackFeed._append_list_core(data,bookmark_key_list)
+					bookmark_key_list=[]
+
+		if(len(bookmark_key_list)>=1):
+			StackFeed._append_list_core(data,bookmark_key_list)
+			bookmark_key_list=[]
+		
+	@staticmethod
+	def _append_list_core(data,bookmark_key_list):
+		#batch get
+		bookmark_list=db.get(bookmark_key_list)
+
+		#update and put
+		put_bookmark_list=[]
+		for bookmark in bookmark_list:
+			if(bookmark):
+				bookmark=ApiObject.set_list_if_empty(bookmark)
+				if(StackFeed._append_one_core(data,bookmark)):
+					put_bookmark_list.append(bookmark)
+		
+		#batch put
+		if(len(put_bookmark_list)>=1):
+			db.put(put_bookmark_list)
+			put_bookmark_list=[]
+
 	@staticmethod
 	def _append_one(data,user_id):
 		if(not user_id):
 			return
 		bookmark=ApiObject.get_bookmark_of_user_id_for_write(user_id)
 		if(bookmark):
-			#ホームタイムラインに追加
-			if(bookmark.stack_feed_list.count(data.key())==0):
-				bookmark.stack_feed_list.insert(0,data.key())
-				bookmark.stack_feed_list=bookmark.stack_feed_list[:256]
-				if(bookmark.user_id!=data.from_user_id):
-					if(not bookmark.new_feed_count):
-						bookmark.new_feed_count=1
-					else:
-						bookmark.new_feed_count=bookmark.new_feed_count+1
-				else:
-					if(not bookmark.new_my_feed_count):
-						bookmark.new_my_feed_count=1
-					else:
-						bookmark.new_my_feed_count=bookmark.new_my_feed_count+1
-
-			#自分の投稿の場合はセルフタイムラインにも追加する
-			if(bookmark.user_id==data.from_user_id):
-				if(bookmark.my_timeline.count(data.key())==0):
-					bookmark.my_timeline.insert(0,data.key())
-					bookmark.my_timeline=bookmark.my_timeline[:256]
-
-			bookmark.put()
+			if(StackFeed._append_one_core(data,bookmark)):
+				bookmark.put()
 	
+	@staticmethod
+	def _append_one_core(data,bookmark):
+		updated=False
+
+		#ホームタイムラインに追加
+		if(bookmark.stack_feed_list.count(data.key())==0):
+			bookmark.stack_feed_list.insert(0,data.key())
+			bookmark.stack_feed_list=bookmark.stack_feed_list[:256]
+			if(bookmark.user_id!=data.from_user_id):
+				if(not bookmark.new_feed_count):
+					bookmark.new_feed_count=1
+				else:
+					bookmark.new_feed_count=bookmark.new_feed_count+1
+			else:
+				if(not bookmark.new_my_feed_count):
+					bookmark.new_my_feed_count=1
+				else:
+					bookmark.new_my_feed_count=bookmark.new_my_feed_count+1
+			updated=True
+
+		#自分の投稿の場合はセルフタイムラインにも追加する
+		if(bookmark.user_id==data.from_user_id):
+			if(bookmark.my_timeline.count(data.key())==0):
+				bookmark.my_timeline.insert(0,data.key())
+				bookmark.my_timeline=bookmark.my_timeline[:256]
+				updated=True
+
+		return updated
+
 	#-----------------------------------------------
 	#ユーザからフィード要求を受ける最上位
 	#-----------------------------------------------
@@ -271,8 +313,9 @@ class StackFeed(webapp.RequestHandler):
 		#フォロワーに送信
 		follow_list=StackFeed._get_follow_list(user_id)
 		if(follow_list):
-			for bookmark in follow_list:
-				StackFeed._append_one(data,bookmark.user_id)	#重複は_append_oneで検出
+			StackFeed._append_list(data,follow_list)
+			#for bookmark in follow_list:
+			#	StackFeed._append_one(data,bookmark.user_id)	#重複は_append_oneで検出
 
 	@staticmethod
 	def _feed_new_thread_core(user_id,bbs,thread):
@@ -289,8 +332,9 @@ class StackFeed(webapp.RequestHandler):
 
 		query_bbs_bookmark=Bookmark.all().filter("bbs_key_list = ",db.Key(str(bbs.key())))
 		bookmark_list=query_bbs_bookmark.fetch(limit=100)
-		for bookmark in bookmark_list:
-			StackFeed._append_one(data,bookmark.user_id)
+		StackFeed._append_list(data,bookmark_list)
+		#for bookmark in bookmark_list:
+		#	StackFeed._append_one(data,bookmark.user_id)
 	
 		StackFeed._feed_to_follower(data,user_id)
 		StackFeed._feed_to_mine(data,user_id)
@@ -370,8 +414,9 @@ class StackFeed(webapp.RequestHandler):
 		query_bbs_bookmark=Bookmark.all().filter("bbs_key_list = ",db.Key(str(bbs.key())))
 		bookmark_list=query_bbs_bookmark.fetch(limit=100)
 
-		for bookmark in bookmark_list:
-			StackFeed._append_one(data,bookmark.user_id)
+		StackFeed._append_list(data,bookmark_list)
+		#for bookmark in bookmark_list:
+		#	StackFeed._append_one(data,bookmark.user_id)
 
 		StackFeed._feed_to_mine(data,user_id)
 
