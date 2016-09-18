@@ -37,6 +37,7 @@ You can create own BBS, and you can communicate using illust or comment.</p>
 {% if is_english %}
 
 </div>
+
 <div class="guide">
 
 <h1>These articles are Japanese version only.</h1>
@@ -56,6 +57,15 @@ You can create own BBS, and you can communicate using illust or comment.</p>
 <img src="./static_files/comic/banar2.png" alt="コミック"/>
 <br/>{% if is_english %}Read manga{% else %}まことじさんによる紹介漫画を読む{% endif %}
 </a>
+
+</div>
+
+<div class="guide">
+
+<h1>{% if is_english %}Support{% else %}ユーザサポート{% endif %}</h1>
+
+<a href="{{host}}support/">{% if is_english %}Support Forum{% else %}サポートフォーラム{% endif %}</a><br/>
+{#<a href="mailto:abarsceo@gmail.com">{% if is_english %}Mail{% else %}メールサポート{% endif %}</a><br/>#}
 
 </div>
 
