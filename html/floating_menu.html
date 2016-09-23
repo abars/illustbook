@@ -5,17 +5,17 @@
 <div id="floating_menu">
 {% if is_iphone %}
 	<div id="iconf-container">
-          <a href="{{host}}">
-          	<div class="iconf-list2 {% if page_mode == 'index' and order == 'new' %}iconf-list2-selected{% endif %}"><i class="ficon-docs"></i></div>
+          <a href="{{host}}" ontouchstart="javascript:$('.iconf-list2').removeClass('iconf-list2-selected');$('.iconf-list2-new').addClass('iconf-list2-selected');return true;">
+          	<div class="iconf-list2 iconf-list2-new {% if page_mode == 'index' and order == 'new' %}iconf-list2-selected{% endif %}"><i class="ficon-docs"></i></div>
           </a>
-          <a href="{{host}}?order=hot">
-          <div class="iconf-list2 {% if order == 'monthly' or order == 'hot' %}iconf-list2-selected{% endif %}"><i class="ficon-star"></i></div>
+          <a href="{{host}}?order=hot" ontouchstart="javascript:$('.iconf-list2').removeClass('iconf-list2-selected');$('.iconf-list2-hot').addClass('iconf-list2-selected');return true;">
+          <div class="iconf-list2 iconf-list2-hot {% if order == 'hot' %}iconf-list2-selected{% endif %}"><i class="ficon-star"></i></div>
           </a>
-          <a href="{{host}}?search=empty">
-          <div class="iconf-list2 {% if search %}iconf-list2-selected{% endif %}"><i class="ficon-search"></i></div>
+          <a href="{{host}}?search=empty" ontouchstart="javascript:$('.iconf-list2').removeClass('iconf-list2-selected');$('.iconf-list2-search').addClass('iconf-list2-selected');return true;">
+          <div class="iconf-list2 iconf-list2-search {% if order == 'monthly' or search %}iconf-list2-selected{% endif %}"><i class="ficon-search"></i></div>
           </a>
-          <a href="{{host}}mypage">
-          <div class="iconf-list2 {% if page_mode == 'user' %}iconf-list2-selected{% endif %}"><i class="ficon-user-1"></i>
+          <a href="{{host}}mypage" ontouchstart="javascript:$('.iconf-list2').removeClass('iconf-list2-selected');$('.iconf-list2-mypage').addClass('iconf-list2-selected');return true;">
+          <div class="iconf-list2 iconf-list2-mypage {% if page_mode == 'user' %}iconf-list2-selected{% endif %}"><i class="ficon-user-1"></i>
           	{% if my_new_feed_count %}
           	<div style="margin-top:-32px;font-size:8px;">
           		{{my_new_feed_count}}
@@ -23,8 +23,8 @@
           	{% endif %}
           </div>
           </a>
-          <a href="{{host}}guide">
-          <div class="iconf-list2 {% if page_mode == 'guide' %}iconf-list2-selected{% endif %}"><i class="ficon-help"></i></div>
+          <a href="{{host}}guide" ontouchstart="javascript:$('.iconf-list2').removeClass('iconf-list2-selected');$('.iconf-list2-guide').addClass('iconf-list2-selected');return true;">
+          <div class="iconf-list2 iconf-list2-guide {% if page_mode == 'guide' %}iconf-list2-selected{% endif %}"><i class="ficon-help"></i></div>
 	      </a>
     </div>
 {% else %}
