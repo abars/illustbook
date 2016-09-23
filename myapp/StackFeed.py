@@ -51,7 +51,7 @@ class StackFeed(webapp.RequestHandler):
 	@staticmethod
 	def _get_follow_list(user_id):
 		if(user_id):
-			query_follow=Bookmark.all().filter("user_list =",user_id)
+			query_follow=db.Query(Bookmark,keys_only=True).filter("user_list =",user_id)
 			follow_list=query_follow.fetch(limit=100)
 			return follow_list
 		return None
@@ -159,12 +159,12 @@ class StackFeed(webapp.RequestHandler):
 		return data
 
 	@staticmethod
-	def _append_list(data,bookmark_list):
+	def _append_list(data,bookmark_key_list_in):
 		#20件ごとにバッチ処理する
 		bookmark_key_list=[]
-		for bookmark in bookmark_list:
-			if(bookmark):
-				bookmark_key_list.append(bookmark.key())
+		for bookmark_key in bookmark_key_list_in:
+			if(bookmark_key):
+				bookmark_key_list.append(bookmark_key)
 				if(len(bookmark_key_list)>=20):
 					StackFeed._append_list_core(data,bookmark_key_list)
 					bookmark_key_list=[]
@@ -330,7 +330,7 @@ class StackFeed(webapp.RequestHandler):
 		
 		data=StackFeed._create_new_thread(user_id,bbs,thread)
 
-		query_bbs_bookmark=Bookmark.all().filter("bbs_key_list = ",db.Key(str(bbs.key())))
+		query_bbs_bookmark=db.Query(Bookmark,keys_only=True).filter("bbs_key_list = ",db.Key(str(bbs.key())))
 		bookmark_list=query_bbs_bookmark.fetch(limit=100)
 		StackFeed._append_list(data,bookmark_list)
 		#for bookmark in bookmark_list:
@@ -411,7 +411,7 @@ class StackFeed(webapp.RequestHandler):
 		
 		bbs=thread.bbs_key
 
-		query_bbs_bookmark=Bookmark.all().filter("bbs_key_list = ",db.Key(str(bbs.key())))
+		query_bbs_bookmark=db.Query(Bookmark,keys_only=True).filter("bbs_key_list = ",db.Key(str(bbs.key())))
 		bookmark_list=query_bbs_bookmark.fetch(limit=100)
 
 		StackFeed._append_list(data,bookmark_list)
