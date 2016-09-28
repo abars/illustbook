@@ -49,8 +49,8 @@ handlers:
   upload: sitemap.xml
 
 - url: /favicon.ico
-  static_files: favicon.ico
-  upload: favicon.ico
+  static_files: favicon2.ico
+  upload: favicon2.ico
   expiration: "1d"
 
 - url: /.*
