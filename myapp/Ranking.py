@@ -54,6 +54,8 @@ class Ranking(db.Model):
 		start_date=str(datetime.date.today()+datetime.timedelta(days=-7))
 		end_date=str(datetime.date.today())
 		result=analytics.get("tag","",start_date,end_date)
+		if(len(result)<=0):	#Treat GA error
+			return
 
 		recent_tag=RecentTag.get_or_insert(BbsConst.RECENT_TAG_KEY_NAME)
 		recent_tag.tag_list=[]
@@ -116,14 +118,15 @@ class Ranking(db.Model):
 		analytics=AnalyticsGet()
 		analytics.create_session()
 
-		tag_list=self.get_tag_list(analytics)
+		self.get_tag_list(analytics)
 		
 		thread_list=self.get_thread_list(analytics)
 		if os.environ["SERVER_SOFTWARE"].find("Development")!=-1:
 			thread_list=db.Query(MesThread,keys_only=True).order("-create_date").fetch(limit=100)
 		self._create_ranking_core(thread_list)
 
-		self.put()
+		if(len(thread_list)>=1):	#Trear GA error
+			self.put()
 	
 		gc.collect()
 
