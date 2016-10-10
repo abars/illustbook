@@ -33,6 +33,7 @@
 				{% else %}
 					{%if template_path %}<p>{%endif%}
 					{% if is_english %}You must login to submit{% else %}イラストの投稿にはログインが必要{% endif %}
+					(<a href="{{redirect_url|login_url|escape}}">{% if is_english %}Login{% else %}ログイン{% endif %}</a>)
 					{% if bbs.short == "sample" %}
 					&nbsp;
 					<a href="javascript:bbs_open_draw('','{{bbs.key()}}','{{host}}');" style="text-decoration:underline;color:#666666;"/>
