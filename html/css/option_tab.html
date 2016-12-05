@@ -1,0 +1,114 @@
+<style type="text/css">
+
+.example {
+padding: 20px 0px 20px 0px;
+margin: 0px;
+background-color: #ffffff;
+}
+
+.example h2{
+font-size: 16px;
+font-weight: bold;
+color: #333;
+}
+
+.radius_image{
+	margin:1px;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
+
+.bar{
+	background-color:#DFEEC3;
+	width:97%;
+	font-size: 14px;
+	padding:4px;
+	padding-left: 2px;
+	height: 16px;
+	line-height: 16px;
+	margin-bottom: 4px;
+}
+
+.bar {
+	-moz-border-radius: 4px 4px 4px 4px;
+	-webkit-border-radius: 4px 4px 4px 4px;
+	padding: 5px;
+	background: -moz-linear-gradient(center left, #DFEEC3 0%,#ffffff 100%);
+	background: -webkit-gradient(linear, left bottom, right bottom, color-stop(0, #DFEEC3),color-stop(1, #ffffff));
+}
+
+#container p {
+	padding-bottom: 4px;
+}
+
+{% if is_iphone %}
+#footer {
+	padding:0px;
+}
+{% endif %}
+	
+td{
+	padding-left:2px;
+	padding-bottom: 2px;
+	padding-top: 2px;
+}
+	
+ul.tab {
+	margin: 0;
+	padding: 0;
+	border-bottom: 2px #DFEEC3 solid;
+}
+
+ul.tab li {
+	float: left;
+	margin: 0 0 0 5px;
+	position: relative;
+	bottom: -2px;
+	list-style-type: none;
+	border: 1px #DFEEC3 solid;
+	border-top: none;
+	border-bottom: 2px #DFEEC3 solid;
+}
+
+ul.tab li.none {
+	border-bottom: 2px #fff solid;
+	font-weight: bold;
+}
+
+ul.tab li a {
+	color: #000;
+	display: block;
+	padding: 3px 10px 5px;
+	text-decoration: none;
+	background: #fff;
+}
+
+ul.tab li a.green {
+	border-top: 2px #DFEEC3 solid;
+}
+
+ul.tab li a:hover {
+	position: relative;
+	bottom: 1px;
+}
+
+.clear:after {
+	content:"";
+	display:block;
+	overflow:hidden;
+}
+.clear:after {
+	clear:both;
+}
+.clear {
+	zoom:1;
+}
+
+.delete_button {
+	position:absolute;
+	top:0px;
+	left:0px;
+}
+
+</style>
