@@ -1,0 +1,4 @@
+		<p><h2>{% if is_english %}Login with Google Account OpenID{% else %}マイページへのログイン{% endif %}</h2></p>
+		<p>{% if is_english %}Sign in with your Google Account.{% else %}イラストの投稿を行うにはGoogleアカウントでログインする必要があります。{% endif %}</p>
+		<p><a href='{{redirect_url|login_url}}' class="g-button">{% if is_english %}Login with Google Account{% else %}Googleアカウントでログイン{% endif %}</a></p>
+		<p><a href="https://www.google.com/accounts/NewAccount?hl=ja" class="g-button" target="_BLANK">{% if is_english %}Create Google Account{% else %}Googleアカウントを新規作成{% endif %}</a></p>

@@ -1,0 +1,5 @@
+*.pyc
+.DS_store
+*.p12
+*.pem
+/skip_files/*
