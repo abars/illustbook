@@ -257,6 +257,12 @@ font-size: 62.5%;
 		margin:8px;
 		width:300px;
 	}
+
+	{# floating menu #}
+	#container{
+		padding-bottom:64px;
+	}
 </style>
 
 {% endif %}
+
