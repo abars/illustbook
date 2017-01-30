@@ -247,7 +247,7 @@ h2,h3 {font-size:100%;color:#ea5376;}
 	margin:0px;
 	padding:0px;
 	margin-bottom: 5px;
-	background-color: #ea5376;
+	background-color: #fff;
 	width:100%;
 	height:30px;
 	{% if is_iphone %}
@@ -257,7 +257,7 @@ h2,h3 {font-size:100%;color:#ea5376;}
 
 .order-button{
 	text-decoration: none;
-	color:#ffffff;
+	color:#444;
 	display: block;
 	float:left;
 	margin:5px;
@@ -273,12 +273,12 @@ h2,h3 {font-size:100%;color:#ea5376;}
 
 .order-button.checked{
 	margin:4px;
-	border: solid 1px #ffffff;
+	border: solid 1px #444;
 }
 
 .order-button:hover{
 	margin:3px;
-	border: solid 2px #ffffff;
+	border: solid 2px #444;
 }
 
 #user_menu{
