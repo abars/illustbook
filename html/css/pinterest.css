@@ -12,7 +12,7 @@ body{
 	background:{{bookmark.my_color}};
 {% else %}
 	{% if is_iphone %}
-	background:#ffffff;
+	background:#f2f2f2;
 	{% else %}
 	background:#f2f2f2;
 	{% endif %}
