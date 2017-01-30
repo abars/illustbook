@@ -266,22 +266,22 @@ h2,h3 {font-size:100%;color:#ea5376;}
 		width:68px;
 	{% else %}
 		width:100px;
-		background-color: #ea5376;
 	{% endif %}
 	text-align: left;
 	border-radius: 2px;
+	color:#aaa;
 }
 
 .order-button.checked{
 	margin:4px;
 	border: solid 1px #fff;
-	padding:2px;
+	color:#ea5376;
 }
 
 .order-button:hover{
 	margin:4px;
 	border: solid 1px #fff;
-	padding:2px;
+	color:#ea5376;
 }
 
 #user_menu{
