@@ -1,8 +1,8 @@
 <div id="order">
 	<div style="float:left;">
-		<a href="{{host}}{{redirect_api}}?order=new" class="order-button {%if order == "new"%}checked{%endif%}">{% if is_english %}New{%else%}新着{% endif %}</a>
-		<a href="{{host}}{{redirect_api}}?order=hot" class="order-button {%if order == "hot"%}checked{%endif%}">{% if is_english %}Hot{%else%}人気{% endif %}</a>
-		<a href="{{host}}{{redirect_api}}?order=monthly" class="order-button {%if order == "monthly"%}checked{%endif%}">{% if is_english %}Ranking{%else %}ランキング{% endif %}</a>
+		<a href="{{host}}{{redirect_api}}?order=new" class="order-button {%if order == "new"%}checked{%endif%}"><i class="ficon-docs"></i>{% if is_english %}New{%else%}新着{% endif %}</a>
+		<a href="{{host}}{{redirect_api}}?order=hot" class="order-button {%if order == "hot"%}checked{%endif%}"><i class="ficon-star-empty"></i>{% if is_english %}Hot{%else%}人気{% endif %}</a>
+		<a href="{{host}}{{redirect_api}}?order=monthly" class="order-button {%if order == "monthly"%}checked{%endif%}"><i class="ficon-chart-line"></i>{% if is_english %}Ranking{%else %}ランキング{% endif %}</a>
 	{#
 		{% if (is_iphone and order=="search") %}
 			<a href="{{host}}?search=empty" class="order-button {%if search %}checked{%endif%}">
@@ -11,10 +11,10 @@
 		{% endif %}
 	#}
 		{% if not is_iphone or (order!="monthly" and order!="chat")%}
-			<a href="{{host}}{{redirect_api}}?order=event" class="order-button {%if order == "event"%}checked{%endif%}">{% if is_english %}Event{%else %}イベント{% endif %}</a>
+			<a href="{{host}}{{redirect_api}}?order=event" class="order-button {%if order == "event"%}checked{%endif%}"><i class="ficon-calendar-empty"></i>{% if is_english %}Event{%else %}イベント{% endif %}</a>
 		{% endif %}
 		{% if not is_iphone or (order=="chat") %}
-			<a href="{{host}}{{redirect_api}}?order=chat" class="order-button {%if order == "chat"%}checked{%endif%}">{% if is_english %}Chat{%else %}チャット{% endif %}</a>
+			<a href="{{host}}{{redirect_api}}?order=chat" class="order-button {%if order == "chat"%}checked{%endif%}"><i class="ficon-comment"></i>{% if is_english %}Chat{%else %}チャット{% endif %}</a>
 		{% endif %}
 	</div>
 

@@ -1,6 +1,6 @@
 <form method="get" action="./search_tag?" id="search_form">
 	<input name="tag" class="search_box" value="{% if search and search!="empty" %}{{search}}{% endif %}"/>
 	<a href="javascript:document.getElementById('search_form').submit();" class="order-button" style="width:60px;">
-		{% if is_english %}Search{% else %}検索{% endif %}
+		<i class="ficon-search"></i>{% if is_english %}Search{% else %}検索{% endif %}
 	</a>
 </form>

@@ -24,7 +24,6 @@
 	{% endif %}
 }
 
-{% if is_iphone %}
 #iconf-container{
 	margin-left: auto;
 	margin-right: auto;
@@ -32,21 +31,31 @@
 }
 
 .iconf-list2{
-	font-size: 32px;
-	width:32px;
+	font-size: 24px;
+	width:48px;
 	height:32px;
 	color: #aaaaaa;
 	margin: 8px;
-	margin-left: 12px;
-	margin-right: 12px;
+	margin-left: 4px;
+	margin-right: 4px;
 	display:block;
+	text-align: center;
 	float:left;
+}
+
+.iconf-list2-info{
+	font-size: 8px;
+	text-align:center;
+}
+
+.iconf-list2-info-selected{
+	font-size: 8px;
+	text-align:center;
 }
 
 .iconf-list2-selected{
 	color: #ea5376;
 }
-{% endif %}
 
 #floating_menu a{
 	color: #444;

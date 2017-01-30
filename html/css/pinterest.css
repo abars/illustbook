@@ -257,7 +257,7 @@ h2,h3 {font-size:100%;color:#ea5376;}
 
 .order-button{
 	text-decoration: none;
-	color:#444;
+	color:#fff;
 	display: block;
 	float:left;
 	margin:5px;
@@ -266,19 +266,22 @@ h2,h3 {font-size:100%;color:#ea5376;}
 		width:68px;
 	{% else %}
 		width:100px;
+		background-color: #ea5376;
 	{% endif %}
-	text-align: center;
+	text-align: left;
 	border-radius: 2px;
 }
 
 .order-button.checked{
 	margin:4px;
-	border: solid 1px #444;
+	border: solid 1px #fff;
+	padding:2px;
 }
 
 .order-button:hover{
-	margin:3px;
-	border: solid 2px #444;
+	margin:4px;
+	border: solid 1px #fff;
+	padding:2px;
 }
 
 #user_menu{
