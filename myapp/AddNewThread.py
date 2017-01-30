@@ -83,8 +83,16 @@ class AddNewThread(webapp.RequestHandler):
 		bbs = db.get(self.request.get("bbs_key"))
 		user = users.get_current_user()
 
-		if(not user and self.request.get('mode')=="illust_all"):
-			self.write_status(is_flash,login_require);
+		#if(not user and self.request.get('mode')=="illust_all"):
+		#	self.write_status(is_flash,login_require);
+		#	return
+		
+		delete_key_require="削除キーが必要です。"
+		if(is_english):
+			delete_key_require="Delete key require"
+
+		if(not user and not self.request.get("delete_key")):
+			self.write_status(is_flash,delete_key_require);
 			return
 
 		if(bbs.bbs_mode==BbsConst.BBS_MODE_ONLY_ADMIN):
