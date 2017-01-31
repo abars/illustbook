@@ -1,9 +1,11 @@
+{% if not is_english %}
 <div class="message hot_bbs">
 		<p>{% if is_english %}Require Login{% else %}イラスト投稿へのログイン要求について{% endif %}</p>
 		削除キーを設定することで、ログイン不要でイラストの新規投稿ができる運営方式をトライアル中です。
 		ボードの管理人に連絡がつかない場合は、削除キーを使用して削除して下さい。
 </div>
 <br clear="all"/>
+{% endif %}
 
 <!--
 <div class="message hot_bbs">
