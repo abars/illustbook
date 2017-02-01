@@ -39,3 +39,9 @@ class StackFeedData(db.Model):
 	def delete(self,**kwargs):
 		memcache.delete(BbsConst.OBJECT_CACHE_HEADER+str(self.key()))
 		super(StackFeedData, self).delete(**kwargs)
+
+class StackFeedDataRecent(db.Model):
+	from_user_id       = db.StringProperty()
+	to_user_id         = db.StringProperty()
+	message            = db.TextProperty()
+	date               = db.DateTimeProperty(auto_now=True)

@@ -52,6 +52,7 @@ from myapp.SearchThread import SearchThread
 from myapp.EventList import EventList
 from myapp.Chat import Chat
 from myapp.StackFeedData import StackFeedData
+from myapp.StackFeedData import StackFeedDataRecent
 
 class Pinterest(webapp.RequestHandler):
 	@staticmethod
@@ -247,7 +248,7 @@ class Pinterest(webapp.RequestHandler):
 			unit=50
 			offset=unit*(page-2)+first_page_show_n
 
-		query=db.Query(StackFeedData,keys_only=False).filter("feed_mode = ","message").order("-create_date")
+		query=db.Query(StackFeedDataRecent,keys_only=False).order("-date")#filter("feed_mode = ","message").order("-create_date")
 
 		try:
 			tweet_list=query.fetch(limit=unit,offset=offset)

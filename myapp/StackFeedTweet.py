@@ -38,6 +38,7 @@ from myapp.ImageFile import ImageFile
 from myapp.MappingThreadId import MappingThreadId
 from myapp.Bookmark import Bookmark
 from myapp.StackFeedData import StackFeedData
+from myapp.StackFeedData import StackFeedDataRecent
 from myapp.StackFeed import StackFeed
 from myapp.ApiObject import ApiObject
 from myapp.MappingId import MappingId
@@ -200,6 +201,13 @@ class StackFeedTweet(webapp.RequestHandler):
 		#保存
 		data.put()
 		
+		#トップページ用ログ格納
+		recent=StackFeedDataRecent.get_or_insert(data.from_user_id)
+		recent.message=data.message
+		recent.from_user_id=data.from_user_id
+		recent.to_user_id=data.to_user_id
+		recent.put()
+
 		#自分と相手にフィード
 		StackFeed._append_one(data,user.user_id())
 		if(data.to_user_id):
