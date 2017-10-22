@@ -25,6 +25,12 @@ Jinja2
 
 If you require illustration tool for HTML5 , Please clone https://github.com/abars/illustbook_ipad and copy to js/ipad folder.
 
+# Google Analytics Connection
+
+illustbook use Google Analytics for ranking calculation.
+
+If your want to use ranking tab , You should rewrite SERVICE_ACCOUNT of app/AnalyticsGet.py and google_analytics_uacct of html/meta.html.
+
 # Directory description
 
 |folder|description|attribute|
