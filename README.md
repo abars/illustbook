@@ -27,7 +27,7 @@ If you require illustration tool for HTML5 , Please clone https://github.com/aba
 
 # Google Analytics Connection
 
-illustbook use Google Analytics for ranking calculation.
+Illustbook use Google Analytics for ranking calculation.
 
 If your want to use ranking tab , You should rewrite SERVICE_ACCOUNT of app/AnalyticsGet.py and google_analytics_uacct of html/meta.html.
 
@@ -42,7 +42,7 @@ If your want to use ranking tab , You should rewrite SERVICE_ACCOUNT of app/Anal
 |template|BBS design template|staticdir|
 |tempform|BBS form design template|staticdir|
 |flash|Illustration tool for FLASH|staticdir|
-|js/ipad|Illustration tool for HTML5|staticdir)|
+|js/ipad|Illustration tool for HTML5|staticdir|
 
 # LICENSE
 
