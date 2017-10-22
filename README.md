@@ -9,8 +9,6 @@ GoogleAppEngineで動くSNSシステムです。
 
 http://www.illustbook.net/ で運用しています。
 
-実装の参考にご利用下さい。
-
 #動作環境
 
 GAE/py
@@ -18,6 +16,14 @@ GAE/py
 Python2.7
 
 Jinja2
+
+#デプロイ方法
+
+(1) https://github.com/abars/illustbook をCloneします
+
+(2) https://github.com/abars/illustbook_ipad をCloneしてjs/ipadフォルダに配置します
+
+(3) GoogleAppEngineのStandardEnvironmentにdeployします
 
 #フォルダ構成
 
@@ -34,4 +40,6 @@ template　掲示板の標準デザインテンプレート(staticdir)
 tempform 掲示板のフォームデザインテンプレート
 
 flash お絵かきツールのバイナリ(staticdir)
+
+js/ipad お絵かきツール(HTML5版)(staticdir)
 
