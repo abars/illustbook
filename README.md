@@ -25,8 +25,10 @@ Jinja2
 
 If you require illustration tool for HTML5 , Please clone https://github.com/abars/illustbook_ipad and copy to js/ipad folder.
 
-# フォルダ構成
+# Directory
 
+|folder|description|attribute|
+|---|---|---|
 |myapp|Application code||
 |html|Html files for jinja2||
 |js|Client side javascript|staticdir|
@@ -39,3 +41,7 @@ If you require illustration tool for HTML5 , Please clone https://github.com/aba
 # LICENSE
 
 MIT license
+
+# SUPPORT
+
+@abars (abarsceo@gmail.com)
