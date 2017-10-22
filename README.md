@@ -3,47 +3,39 @@ Illustration SNS for Google App Engine / py
 
 ![illustbook logo](https://github.com/abars/illustbook/blob/master/static_files/banner_360b.png)
 
-# 概要
+# Demo
 
-GoogleAppEngineで動くSNSシステムです。
+http://www.illustbook.net/
 
-http://www.illustbook.net/ で運用しています。
+# Rquirement
 
-# 動作環境
-
-GAE/py
+GAE/py (StandardEnvironment)
 
 Python2.7
 
 Jinja2
 
-# デプロイ方法
+# How to deploy
 
-(1) https://github.com/abars/illustbook をCloneします
+(1) Clone https://github.com/abars/illustbook
 
-(2) app.yamlのapplication: illust-book-hrdを書き換えます
+(2) Rewrite application ID of app.yaml (application: illust-book-hrd -> your id)
 
-(3) GoogleAppEngineのStandardEnvironmentにdeployします
+(3) Deploy to Google App Engine
 
-iPad版のお絵かきツールが必要な場合は、 https://github.com/abars/illustbook_ipad をCloneしてjs/ipadフォルダに配置して下さい。
-
-PullRequestも受け付けています。
+If you require illustration tool for HTML5 , Please clone https://github.com/abars/illustbook_ipad and copy to js/ipad folder.
 
 # フォルダ構成
 
-myapp　サーバサイドのPythonコード
+|myapp|Application code||
+|html|Html files for jinja2||
+|js|Client side javascript|staticdir|
+|static_files|Static files|staticdir|
+|template|BBS design template|staticdir|
+|tempform|BBS form design template|staticdir|
+|flash|Illustration tool for FLASH|staticdir|
+|js/ipad|Illustration tool for HTML5|staticdir)|
 
-html　テンプレートエンジンに入力するhtmlファイル
+# LICENSE
 
-js　クライアントサイドのJavaScript(staticdir)
-
-static_files　各種静的ファイル(staticdir)
-
-template　掲示板の標準デザインテンプレート(staticdir)
-
-tempform 掲示板のフォームデザインテンプレート
-
-flash お絵かきツールのバイナリ(staticdir)
-
-js/ipad お絵かきツール(HTML5版)(staticdir)
-
+MIT license
