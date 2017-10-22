@@ -25,7 +25,7 @@ Jinja2
 
 If you require illustration tool for HTML5 , Please clone https://github.com/abars/illustbook_ipad and copy to js/ipad folder.
 
-# Directory
+# Directory description
 
 |folder|description|attribute|
 |---|---|---|
@@ -44,4 +44,5 @@ MIT license
 
 # SUPPORT
 
-@abars (abarsceo@gmail.com)
+https://twitter.com/abars
+abarsceo@gmail.com
