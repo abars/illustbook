@@ -13,9 +13,11 @@
 		{% if not is_iphone or (order!="monthly" and order!="chat")%}
 			<a href="{{host}}{{redirect_api}}?order=event" class="order-button {%if order == "event"%}checked{%endif%}"><i class="ficon-calendar-empty"></i>{% if is_english %}Event{%else %}イベント{% endif %}</a>
 		{% endif %}
+{#
 		{% if not is_iphone or (order=="chat") %}
 			<a href="{{host}}{{redirect_api}}?order=chat" class="order-button {%if order == "chat"%}checked{%endif%}"><i class="ficon-comment"></i>{% if is_english %}Chat{%else %}チャット{% endif %}</a>
 		{% endif %}
+#}
 	</div>
 
 {% if order=="monthly" and ranking_month_list %}
