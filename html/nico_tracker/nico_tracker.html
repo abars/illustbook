@@ -78,7 +78,9 @@
 <a href="nico_tracker"><img src="static_files/nicotra/banar.jpg" style="width:100%"></a>
 {% else %}
 <a href="nico_tracker"><img src="static_files/nicotra/top.jpg" style="width:100%"></a>
+ニコニコトラッカーのサービスは終了しました。ご利用、ありがとうございました。<br/>
 
+{#
 ニコニコトラッカーは、ニコニコ動画の再生数とコメント数を毎日自動的に記録して、再生数とコメント数の推移をグラフ化するクリエイター支援ツールです。現在{{rec_cnt}}件の動画をトラッキングしており、{{book_cnt}}人のユーザがブックマーク機能を利用しています。<BR>
 
 <BR>
@@ -90,9 +92,11 @@
 </form>
 <div align="right"><small>Example：http://www.nicovideo.jp/watch/sm16685464</small></div>
 </div>
+#}
 
 {% endif %}
 
+{#
 {% if url and not rec %}
 	{% if url == "update_all" %}
 		<H4>ステータス</H4>
@@ -280,7 +284,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 {% endif %}
 
 </div>
-
+#}
 
 <!----------------------------------------------------------------
 フッター

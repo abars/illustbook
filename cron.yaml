@@ -4,7 +4,7 @@ cron:
   schedule: every 6 hours
 #  target: backend1
 
-- description: daily nico update
-  url: /nico_tracker?url=update_all
-  schedule: every 1 hours
+#- description: daily nico update
+#  url: /nico_tracker?url=update_all
+#  schedule: every 1 hours
 #  target: backend1
