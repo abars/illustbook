@@ -25,6 +25,13 @@
 	{% endif %}
 }
 
+{% if is_iphone %}
+body{
+	padding-left: constant(safe-area-inset-left);
+	padding-right: constant(safe-area-inset-right);
+}
+{% endif %}
+
 #iconf-container{
 	margin-left: auto;
 	margin-right: auto;
