@@ -40,7 +40,7 @@
 	{# floating menu #}
 {% if is_iphone %}
 	#container{
-		padding-bottom: calc(constant(safe-area-inset-bottom) + 64px);
+		padding-bottom: calc(env(safe-area-inset-bottom) + 64px);
 	}
 {% endif %}
 
