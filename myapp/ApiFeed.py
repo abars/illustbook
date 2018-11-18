@@ -216,6 +216,9 @@ class ApiFeed(webapp.RequestHandler):
 		else:
 			data=None
 		if(data and cache_enable):
+			dic=[]
+			for bbs in data:
+				dic.append(ApiObject.create_bbs_object(req,bbs))
 			return data
 		
 		#BBS一覧取得
@@ -225,14 +228,16 @@ class ApiFeed(webapp.RequestHandler):
 		bbs_list=rank.get_bbs_rank(offset,limit)
 		
 		#リスト作成
-		dic=[]
 		bbs_list=ApiObject.get_cached_object_list(bbs_list)
-		for bbs in bbs_list:
-			dic.append(ApiObject.create_bbs_object(req,bbs))
 
 		#キャッシュに乗せる
 		if(cache_enable):
-			memcache.set(cache_id,dic,BbsConst.TOPPAGE_FEED_CACHE_TIME)
+			memcache.set(cache_id,bbs_list,BbsConst.TOPPAGE_FEED_CACHE_TIME)
+
+		#オブジェクト作成
+		dic=[]
+		for bbs in bbs_list:
+			dic.append(ApiObject.create_bbs_object(req,bbs))
 		
 		return dic
 

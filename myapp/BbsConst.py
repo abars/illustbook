@@ -34,7 +34,7 @@ class BbsConst:
 	SPAM_HOST_CHECKED_ENGLISH = "Classified as deny host. Host:"
 	
 	#memcacheコントロール
-	OBJECT_CACHE_HEADER="ocache81_"	#この値を変更することで全てのキャッシュが無効になる
+	OBJECT_CACHE_HEADER="ocache82_"	#この値を変更することで全てのキャッシュが無効になる
 	OBJECT_BOOKMARK_CACHE_HEADER="bookmark_"
 	OBJECT_ENTRY_CACHE_HEADER="entry_"
 	OBJECT_THREAD_CACHE_HEADER="thread_"
