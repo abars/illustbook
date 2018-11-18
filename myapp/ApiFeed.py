@@ -166,7 +166,8 @@ class ApiFeed(webapp.RequestHandler):
 		if(cache_enable):
 			data=memcache.get(cache_id)
 			if(data):
-				return data
+				dic=ApiObject.create_thread_object_list(req,data,req.request.get("bbs_id"))
+				return dic
 		
 		#スレッド一覧取得
 		if(order=="hot"):
@@ -188,13 +189,13 @@ class ApiFeed(webapp.RequestHandler):
 
 			thread_list=query.fetch(offset=offset,limit=limit)
 		
+		#キャッシュに乗せる
+		if(cache_enable):
+			memcache.set(cache_id,thread_list,BbsConst.TOPPAGE_FEED_CACHE_TIME)
+
 		#リスト作成
 		dic=ApiObject.create_thread_object_list(req,thread_list,bbs_id)
 
-		#キャッシュに乗せる
-		if(cache_enable):
-			memcache.set(cache_id,dic,BbsConst.TOPPAGE_FEED_CACHE_TIME)
-		
 		return dic
 
 	@staticmethod
