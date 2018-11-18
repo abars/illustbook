@@ -34,6 +34,7 @@ from myapp.Alert import Alert
 from myapp.OwnerCheck import OwnerCheck
 from myapp.RecentCommentCache import RecentCommentCache
 from myapp.ImageFile import ImageFile
+from myapp.MappingId import MappingId
 from myapp.MappingThreadId import MappingThreadId
 from myapp.Bookmark import Bookmark
 from myapp.UTC import UTC
