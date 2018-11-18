@@ -176,7 +176,20 @@ class StackFeed(webapp.RequestHandler):
 	@staticmethod
 	def _append_list_core(data,bookmark_key_list):
 		#batch get
-		bookmark_list=db.get(bookmark_key_list)
+		try:
+			bookmark_list=db.get(bookmark_key_list)
+		except db.BadValueError as e:
+			logging.error(e)
+			bookmark_list=None
+
+		#BadValueError: Property follower_list is requiredの対策
+		if(bookmark_list==None):
+			bookmark_list=[]
+			for bookmark_key in bookmark_key_list:
+				try:
+					bookmark_list.append(db.get(bookmark_key))
+				except db.BadValueError as e:
+					logging.error(e)
 
 		#update and put
 		put_bookmark_list=[]
