@@ -16,7 +16,7 @@ from myapp.CssDesign import CssDesign
 
 class MoperPlayer(webapp.RequestHandler):
 	def get(self):
-		host_url="http://"+MappingId.mapping_host(self.request.host)+"/"
+		host_url=MappingId.mapping_host_with_scheme(self.request)+"/"
 		bbs_key=self.request.get("bbs_key")
 		thread_key=self.request.get("thread_key")
 

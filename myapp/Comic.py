@@ -17,7 +17,7 @@ from myapp.MappingId import MappingId
 
 class Comic(webapp.RequestHandler):
 	def get(self):
-		host_url="http://"+MappingId.mapping_host(self.request.host)+"/"
+		host_url=MappingId.mapping_host_with_scheme(self.request)+"/"
 		page = 1
 		if(self.request.get("page")):
 			page=int(self.request.get("page"))

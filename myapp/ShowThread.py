@@ -114,7 +114,7 @@ class ShowThread(webapp.RequestHandler):
 		com_list_=ApiObject.get_cached_object_list(com_list_)
 
 		#現在のスレッドへのURLを取得
-		host_url="http://"+MappingId.mapping_host(self.request.host)+"/"
+		host_url=MappingId.mapping_host_with_scheme(self.request)+"/"
 		
 		#編集モードか
 		user = users.get_current_user()

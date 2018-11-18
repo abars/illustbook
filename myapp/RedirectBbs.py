@@ -37,9 +37,6 @@ class RedirectBbs(webapp.RequestHandler):
 		if(bbs==None):
 			Alert.alert_msg_notfound(self)
 			return			
-		host_name=self.request.host
-		if(host_name=="http://www.illust-book.appspot.com/"):
-			host_name="http://www.illustbook.net/";		
-		host_url="http://"+MappingId.mapping_host(host_name)+"/";
+		host_url=MappingId.mapping_host_with_scheme(self.request)+"/";
 		url=MappingId.get_usr_url(host_url,bbs)
 		self.redirect(str(url))

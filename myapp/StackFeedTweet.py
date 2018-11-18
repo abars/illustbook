@@ -220,7 +220,7 @@ class StackFeedTweet(webapp.RequestHandler):
 
 	def redirect_main(self):
 		#リダイレクト
-		host="http://"+MappingId.mapping_host(self.request.host)+"/";
+		host=MappingId.mapping_host_with_scheme(self.request)+"/";
 		redirect_url=host+"mypage?";
 
 		#リダイレクト先は必ず自分とする（他人のタイムラインには投稿は表示されないので）

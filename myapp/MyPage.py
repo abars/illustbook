@@ -136,7 +136,7 @@ class MyPage(webapp.RequestHandler):
 			view_mode=str(target_bookmark.key());
 		
 		#リダイレクトURL
-		host="http://"+MappingId.mapping_host(self.request.host)+"/";
+		host=MappingId.mapping_host_with_scheme(self.request)+"/";
 		redirect_url=host+"mypage";
 	
 		#編集モードか

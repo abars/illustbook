@@ -103,6 +103,12 @@ class MappingId():
 		return host+"usr/"+str(bbs.key())+"/"
 	
 	@staticmethod
+	def mapping_host_with_scheme(req):
+		if req.scheme.lower() != 'https':
+			return "http://"+MappingId.mapping_host(req.host)
+		return "https://"+MappingId.mapping_host(req.host)
+
+	@staticmethod
 	def mapping_host(host):
 		if(host=="illust-book.appspot.com"):
 			return "www.illustbook.net"

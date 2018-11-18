@@ -46,7 +46,7 @@ class ApiJs(webapp.RequestHandler):
 		is_mobile=is_iphone or CssDesign.is_tablet(self)
 		app_key=ApiPerpetuation.get_app_key(self)
 
-		host_url="http://"+MappingId.mapping_host(self.request.host)+"/";
+		host_url=MappingId.mapping_host_with_scheme(self.request)+"/";
 
 		template_values = {
 			'host': host_url,

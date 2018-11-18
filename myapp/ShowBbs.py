@@ -113,7 +113,7 @@ class ShowBbs(webapp.RequestHandler):
 		#	all_entries=all_entries["entry"]
 		
 		#ホストURLを取得
-		host_url="http://"+MappingId.mapping_host(self.request.host)+"/";
+		host_url=MappingId.mapping_host_with_scheme(self.request)+"/";
 		
 		#URLを作成
 		mapped_category=urllib.quote(category.encode('utf-8'))

@@ -30,10 +30,10 @@ from myapp.TimeProgress import TimeProgress
 def host_for_js(host):
 	#iOS9で同じドメインからjsを読むと30secのレイテンシがかかる
 	#そのため、jsは別ドメインにする必要がある
-	if(host=="http://illust-book.appspot.com/"):
-		return "http://www.illustbook.net/"
-	if(host=="http://www.illustbook.net/"):
-		return "http://illust-book.appspot.com/"
+	#if(host=="http://illust-book.appspot.com/"):
+	#	return "http://www.illustbook.net/"
+	#if(host=="http://www.illustbook.net/"):
+	#	return "http://illust-book.appspot.com/"
 	return host
 
 #-----------------------------------------------------------------

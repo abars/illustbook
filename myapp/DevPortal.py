@@ -302,7 +302,7 @@ class DevPortal(webapp.RequestHandler):
 		if(user):
 			logined=1
 
-		host_url="http://"+MappingId.mapping_host(req.request.host)+"/";
+		host_url=MappingId.mapping_host_with_scheme(req.request)+"/";
 		
 		template_values = {
 			'host': host_url,

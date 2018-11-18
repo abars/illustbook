@@ -23,14 +23,15 @@ class Alert(webapp.RequestHandler):
 	def alert_msg(msg,host):
 		is_iphone=0
 		is_english=0
-		return Alert.alert_msg_core(msg,host,is_iphone,is_english)
+		host_url="http://"+MappingId.mapping_host(host)+"/";
+		return Alert._alert_msg_core(msg,host_url,is_iphone,is_english)
 
 	@staticmethod
 	def alert_msg_with_write(req,msg):
 		is_iphone=CssDesign.is_iphone(req)
-		host=req.request.host
 		is_english=CssDesign.is_english(req)
-		req.response.out.write(Alert.alert_msg_core(msg,host,is_iphone,is_english))
+		host_url=MappingId.mapping_host_with_scheme(req.request)+"/";
+		req.response.out.write(Alert._alert_msg_core(msg,host_url,is_iphone,is_english))
 
 	@staticmethod
 	def alert_spam(req,content,msg):
@@ -38,8 +39,7 @@ class Alert(webapp.RequestHandler):
 		Alert.alert_msg_with_write(req,msg+content)
 
 	@staticmethod
-	def alert_msg_core(msg,host,is_iphone,is_english):
-		host_url="http://"+MappingId.mapping_host(host)+"/";
+	def _alert_msg_core(msg,host_url,is_iphone,is_english):
 		user=users.get_current_user()
 		template_values = {
 		'host': host_url,

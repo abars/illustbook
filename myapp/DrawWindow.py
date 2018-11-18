@@ -57,7 +57,7 @@ class DrawWindow(webapp.RequestHandler):
 
 	def get(self):
 		celsys=0
-		host_url="http://"+MappingId.mapping_host(self.request.host)+"/"
+		host_url=MappingId.mapping_host_with_scheme(self.request)+"/"
 
 		bbs=None
 		try:
