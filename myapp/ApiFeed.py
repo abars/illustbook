@@ -219,7 +219,7 @@ class ApiFeed(webapp.RequestHandler):
 			dic=[]
 			for bbs in data:
 				dic.append(ApiObject.create_bbs_object(req,bbs))
-			return data
+			return dic
 		
 		#BBS一覧取得
 		rank=Ranking.get_by_key_name(BbsConst.THREAD_RANKING_KEY_NAME)
