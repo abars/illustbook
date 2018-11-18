@@ -194,7 +194,7 @@ class EventList(webapp.RequestHandler):
 				return
 			event[0].delete()
 
-		host="http://"+self.request.host+"/"
+		host=MappingId.mapping_host_with_scheme(self.request)+"/"
 
 		if(mode=="del"):
 			self.redirect(str(host+"?order=event"))

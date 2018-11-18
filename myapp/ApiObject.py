@@ -47,18 +47,18 @@ class ApiObject(webapp.RequestHandler):
 
 	@staticmethod
 	def create_user_object_fast(req,user_id):
-		icon_url="http://"+req.request.host+"/show_icon?key="+user_id
-		profile_url="http://"+req.request.host+"/mypage?user_id="+user_id
+		icon_url=MappingId.mapping_host_with_scheme(req.request)+"/show_icon?key="+user_id
+		profile_url=MappingId.mapping_host_with_scheme(req.request)+"/mypage?user_id="+user_id
 		one_dic={"user_id":user_id,"name":"unknown","homepage":"unknown","icon_url":icon_url,"profile_url":profile_url}
 		return one_dic
 
 	@staticmethod
 	def create_user_object(req,one):
 		#if(one.icon):
-		icon_url="http://"+req.request.host+"/show_icon?key="+one.user_id
+		icon_url=MappingId.mapping_host_with_scheme(req.request)+"/show_icon?key="+one.user_id
 		#else:
-		#	icon_url="http://"+req.request.host+"/static_files/empty_user.png"
-		profile_url="http://"+req.request.host+"/mypage?user_id="+one.user_id
+		#	icon_url=MappingId.mapping_host_with_scheme(req.request)+"/static_files/empty_user.png"
+		profile_url=MappingId.mapping_host_with_scheme(req.request)+"/mypage?user_id="+one.user_id
 		name=one.name
 		if(not name):
 			name="noname"
@@ -357,7 +357,7 @@ class ApiObject(webapp.RequestHandler):
 			disable_news=1;
 
 		if(req):
-			url_header="http://"+req.request.host
+			url_header=MappingId.mapping_host_with_scheme(req.request)
 		else:
 			url_header="."
 
@@ -451,7 +451,7 @@ class ApiObject(webapp.RequestHandler):
 	@staticmethod
 	def _get_bbs_url(req,bbs):
 		if(req):
-			bbs_url="http://"+req.request.host+"/"
+			bbs_url=MappingId.mapping_host_with_scheme(req.request)+"/"
 		else:
 			bbs_url="."
 		if(bbs.short):
@@ -473,7 +473,7 @@ class ApiObject(webapp.RequestHandler):
 		
 		thumbnail_url=""
 		if(bbs.cached_thumbnail_key and not bbs.del_flag):
-			thumbnail_url="http://"+req.request.host+"/thumbnail/"+bbs.cached_thumbnail_key+".jpg"
+			thumbnail_url=MappingId.mapping_host_with_scheme(req.request)+"/thumbnail/"+bbs.cached_thumbnail_key+".jpg"
 
 		summary=ApiObject.truncate_html(bbs.summary,20)
 
@@ -486,8 +486,8 @@ class ApiObject(webapp.RequestHandler):
 
 	@staticmethod
 	def create_app_object(req,app):
-		icon_url="http://"+req.request.host+"/app?mode=icon&app_key="+str(app.key())
-		app_url="http://"+req.request.host+"/app?mode=play&app_key="+str(app.key())
+		icon_url=MappingId.mapping_host_with_scheme(req.request)+"/app?mode=icon&app_key="+str(app.key())
+		app_url=MappingId.mapping_host_with_scheme(req.request)+"/app?mode=play&app_key="+str(app.key())
 		one_dic={"app_id":app.app_id,"name":app.app_name,"icon_url":icon_url,"app_url":app_url,"key":str(app.key())}
 		return one_dic
 
@@ -667,7 +667,7 @@ class ApiObject(webapp.RequestHandler):
 			thumbnail2_url=None
 			if(image_key):
 				if(req):
-					url_header="http://"+req.request.host
+					url_header=MappingId.mapping_host_with_scheme(req.request)
 				else:
 					url_header="."
 				thumbnail_url=url_header+"/thumbnail/"+str(image_key)+".jpg"

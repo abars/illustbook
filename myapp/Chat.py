@@ -626,7 +626,7 @@ class Chat(webapp.RequestHandler):
 			self.close_room(user)
 			return
 		if(mode=="tool"):
-			self.redirect(str("http://"+self.request.host+"/?order=chat&room_key="+self.request.get("key")))
+			self.redirect(str(MappingId.mapping_host_with_scheme(self.request)+"/?order=chat&room_key="+self.request.get("key")))
 			#self.show_portal(user)
 			#login require
 			#self.tool(user)

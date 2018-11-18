@@ -292,7 +292,7 @@ class AddNewThread(webapp.RequestHandler):
 		RssFeed.invalidate_cache(str(bbs.key()))
 	
 	def get_thread_url(self,bbs,new_thread):
-		url="http://"+self.request.host+"/"
+		url=MappingId.mapping_host_with_scheme(self.request)+"/"
 		if(bbs.short):
 			url=url+bbs.short+"/";
 		else:
