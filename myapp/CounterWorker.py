@@ -41,7 +41,6 @@ from myapp.Entry import Entry
 from myapp.CssDesign import CssDesign
 from myapp.ApiObject import ApiObject
 from myapp.Ranking import Ranking
-from myapp.AddRankingScore import AddRankingScore
 
 class CounterWorker(webapp.RequestHandler):
 	@staticmethod

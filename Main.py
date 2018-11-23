@@ -98,8 +98,6 @@ from myapp.ChatDisconnected import ChatDisconnected
 from myapp.Ranking import Ranking
 from myapp.ApiPacked import ApiPacked
 from myapp.Pinterest import Pinterest
-from myapp.DropBox import DropBox
-from myapp.AdGoto import AdGoto
 from myapp.DelThread import DelThread
 from myapp.DelBbs import DelBbs
 from myapp.DelEn import DelEn
@@ -109,7 +107,6 @@ from myapp.RedirectThread import RedirectThread
 from myapp.VisibilityChangeEntry import VisibilityChangeEntry
 from myapp.EditThreadList import EditThreadList
 from myapp.SearchTag import SearchTag
-from myapp.AddRankingScore import AddRankingScore
 from myapp.UploadTemp import UploadTemp
 from myapp.AnalyticsGet import AnalyticsGet
 from myapp.EventList import EventList
@@ -294,10 +291,6 @@ application = webapp.WSGIApplication(
 	('/counter_worker',CounterWorker),
 	('/feed_tweet',StackFeedTweet),
 	('/ranking',RankingPortal),
-	('/add_ranking_score',AddRankingScore),
-	('/ad_goto',AdGoto),
-	('/dropbox',DropBox),
-	('/dropbox_blog',DropBox),
 	('/event_(.*)',EventList),
 	],debug=False)
 
