@@ -36,15 +36,7 @@ class ChunkManager ():
 	
 	@staticmethod
 	def download(out,chunk_list):
-		#data=None
+		#メモリ消費が激しいので直接書き出し
 		for chunk in chunk_list:
 			chunk_data=db.get(chunk).data
 			out.write(chunk_data)
-			
-			#メモリ消費が激しいので直接書くことにした
-			
-			#if(data==None):
-			#	data=chunk_data
-			#else:
-			#	data+=chunk_data
-		#return data
