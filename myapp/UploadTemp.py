@@ -54,13 +54,16 @@ from myapp.CssDesign import CssDesign
 from myapp.ApiBookmark import ApiBookmark
 from myapp.ShowEntry import ShowEntry
 from myapp.MappingId import MappingId
-from myapp.Chat import Chat
 
 class UploadTemp(webapp.RequestHandler):
+	@staticmethod
+	def get_sec(now):
+		return int(time.mktime(now.timetuple()))
+
 	def delete_old_temp_image(self):
 		temp_image_list=TempImage.all().order("-date").fetch(limit=10)		
 		for temp_image in temp_image_list:
-			from_last_update=(Chat.get_sec(datetime.datetime.now())-Chat.get_sec(temp_image.date))/60
+			from_last_update=(UploadTemp.get_sec(datetime.datetime.now())-UploadTemp.get_sec(temp_image.date))/60
 			if(from_last_update>=60):
 				temp_image.delete()
 

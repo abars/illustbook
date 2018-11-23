@@ -80,8 +80,6 @@ from myapp.ApiObject import ApiObject
 from myapp.CounterWorker import CounterWorker
 from myapp.ShowIcon import ShowIcon
 from myapp.CheckId import CheckId
-from myapp.ChatConnected import ChatConnected
-from myapp.ChatDisconnected import ChatDisconnected
 from myapp.Ranking import Ranking
 from myapp.ApiPacked import ApiPacked
 from myapp.ApiUser import ApiUser

@@ -92,9 +92,6 @@ from myapp.ApiObject import ApiObject
 from myapp.CounterWorker import CounterWorker
 from myapp.ShowIcon import ShowIcon
 from myapp.CheckId import CheckId
-from myapp.Chat import Chat
-from myapp.ChatConnected import ChatConnected
-from myapp.ChatDisconnected import ChatDisconnected
 from myapp.Ranking import Ranking
 from myapp.ApiPacked import ApiPacked
 from myapp.Pinterest import Pinterest
@@ -211,8 +208,6 @@ class ShowBookmark(webapp.RequestHandler):
 application = webapp.WSGIApplication(
 	[('/', MainPage),
 	('/pinterest', Pinterest),
-	('/_ah/channel/connected/',ChatConnected),
-	('/_ah/channel/disconnected/',ChatDisconnected),
 	(r'/usr/(.*)/(.*)\.html',ShowThread),
 	(r'/usr/(.*)/',ShowBbs),
 	(r'/usr/(.*)/index.xml',RssFeed),
@@ -220,7 +215,6 @@ application = webapp.WSGIApplication(
 	(r'/(.*)/',ShowBbs),
 	(r'/(.*)/index.xml',RssFeed),
 	('/guide', GuidePage),
-	('/chat',Chat),
 	('/bbs_index', RedirectBbs),
 	(r'/css/(.*)\.(css)',CssDesign), 
 	(r'/css/(.*)\.(key)',CssDesign), 
