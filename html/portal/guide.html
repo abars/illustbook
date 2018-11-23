@@ -28,26 +28,29 @@ You can create own BBS, and you can communicate using illust or comment.</p>
 
 <h1>{% if is_english %}How to use ILLUSTBOOK{% else %}イラストブックの使い方{% endif %}</h1>
 
-{#
-{% if not is_english %}
-<a href="{{host}}guide?contents=about">{% if is_english %}Features{% else %}イラストブックの特徴{% endif %}</a><br/>
-{% endif %}
-#}
-
 <a href="{{host}}guide?contents=pc">{% if is_english %}Draw tool tutorial (PC/App){% else %}イラブペイント(PC版/アプリ版)の使い方{% endif %}</a><br/>
-
-{% if is_english %}
+<a href="{{host}}guide?contents=mobile">{% if is_english %}Draw tool tutorial (Mobile){% else %}イラブペイント(モバイル版)の使い方{% endif %}</a><br/>
+<a href="{{host}}guide?contents=edit">{% if is_english %}Edit tutorial{% else %}投稿機能の使い方{% endif %}</a><br/>
+<a href="{{host}}guide?contents=sns">{% if is_english %}SNS tutorial{% else %}SNS機能の使い方{% endif %}</a><br/>
 
 </div>
 
 <div class="guide">
 
-<h1>These articles are Japanese version only.</h1>
-{% endif %}
+<h1>{% if is_english %}Extend ILLUSTBOOK{% else %}イラストブックの拡張{% endif %}</h1>
 
-<a href="{{host}}guide?contents=mobile">{% if is_english %}Draw tool tutorial (Mobile){% else %}イラブペイント(モバイル版)の使い方{% endif %}</a><br/>
-<a href="{{host}}guide?contents=edit">{% if is_english %}Edit tutorial{% else %}投稿機能の使い方{% endif %}</a><br/>
-<a href="{{host}}guide?contents=sns">{% if is_english %}SNS tutorial{% else %}SNS機能の使い方{% endif %}</a><br/>
+<a href="./app" class="declink">{% if is_english %}ILLUSTBOOK Market{% else %}イラストブックマーケット (β){% endif %}</a><br/>
+<a href="./dev" class="declink">{% if is_english %}Developer Portal{% else %}開発者向けサイト (β){% endif %}</a><br/>
+
+</div>
+
+
+<div class="guide">
+
+<h1>{% if is_english %}Support{% else %}ユーザサポート{% endif %}</h1>
+
+<a href="{{host}}support/">{% if is_english %}Support Forum{% else %}サポートフォーラム{% endif %}</a><br/>
+<a href="mailto:abarsceo@gmail.com">{% if is_english %}Mail{% else %}メールサポート{% endif %}</a><br/>
 
 </div>
 
@@ -64,20 +67,10 @@ You can create own BBS, and you can communicate using illust or comment.</p>
 
 <div class="guide">
 
-<h1>{% if is_english %}Support{% else %}ユーザサポート{% endif %}</h1>
-
-<a href="{{host}}support/">{% if is_english %}Support Forum{% else %}サポートフォーラム{% endif %}</a><br/>
-{#<a href="mailto:abarsceo@gmail.com">{% if is_english %}Mail{% else %}メールサポート{% endif %}</a><br/>#}
-
-</div>
-
-<div class="guide">
-
 <h1>{% if is_english %}Link{% else %}リンク{% endif %}</h1>
 
 <p>
 <a href="{{host}}terms" class="declink">{% if is_english %}Terms{% else %}利用規約{% endif %}</a><br/>
-<a href="./dev" class="declink">{% if is_english %}Developer site{% else %}開発者向けサイト{% endif %}</a><br/>
 <a href="./moper_guide" class="declink">{% if is_english %}Movie tool turotial{% else %}動画お絵かきツールの使い方{% endif %}</a><br/>
 <a href="http://www.kooss.com/" class="declink">{% if is_english %}Link{% else %}無料サイト集 Kooss.com{% endif %}</a><br/>
 </p>
