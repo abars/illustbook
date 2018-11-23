@@ -71,7 +71,6 @@ from myapp.DrawWindow import DrawWindow
 from myapp.AddTag import AddTag
 from myapp.Bookmark import Bookmark
 from myapp.AddBookmark import AddBookmark
-from myapp.NicoTracker import NicoTracker
 from myapp.UpdateProfile import UpdateProfile
 from myapp.MyPage import MyPage
 from myapp.Comic import Comic
@@ -267,7 +266,6 @@ application = webapp.WSGIApplication(
 	('/show_bookmark',ShowBookmark),
 	('/move_account',MoveAccount),
 	('/violation',ViolationTerms),
-	('/nico_tracker',NicoTracker),
 	('/update_profile',UpdateProfile),
 	('/show_icon',ShowIcon),
 	('/comic',Comic),

@@ -25,7 +25,6 @@ from myapp.SetUtf8 import SetUtf8
 from myapp.UTC import UTC
 from myapp.JST import JST
 from myapp.Alert import Alert
-from myapp.NicoTracker import NicoTracker
 from myapp.TopPageCache import TopPageCache
 from myapp.Bbs import Bbs
 from myapp.MesThread import MesThread
@@ -36,6 +35,39 @@ from myapp.BbsConst import BbsConst
 from myapp.ApiFeed import ApiFeed
 
 class SiteAnalyzer(webapp.RequestHandler):
+	@staticmethod
+	def get_day_string(tmp):
+		tmp=tmp.replace(tzinfo=UTC()).astimezone(JST())
+		day_str=""+str(tmp.year)+"年"+str(tmp.month)+"月"+str(tmp.day)+"日"
+		week=tmp.weekday()
+		week_jp=["月","火","水","木","金","土","日"]
+		day_str+="("+week_jp[week]+")"
+		return day_str
+
+	@staticmethod
+	def create_graph(day_list,play_cnt_list):
+		play_cnt_graph=""
+		day_list_len=len(day_list)
+		
+		before_day=""
+		cnt=0
+
+		for i in range(0,day_list_len):
+			now_day=day_list[day_list_len-1-i]
+			if(before_day==now_day):
+				continue
+			before_day=now_day
+
+			day_str="data.setValue("+str(cnt)+",0,'"+now_day+"');\n";
+				
+			play_cnt_graph+=day_str
+			play_cnt_graph+="data.setValue("+str(cnt)+",1,"+str(play_cnt_list[day_list_len-1-i])+");\n";
+
+			cnt=cnt+1
+			
+		play_cnt_graph="data.addRows("+str(cnt)+");\n"+play_cnt_graph
+		return play_cnt_graph
+
 	@staticmethod
 	def get_cache():
 		cache=memcache.get("top_bbs_and_illust_n")
@@ -68,8 +100,8 @@ class SiteAnalyzer(webapp.RequestHandler):
 		#if(self.request.get("force")):
 		#	force=True
 		if(cache.date and len(cache.day_list)>=1):# and not force):
-			day1_str=NicoTracker.get_day_string(cache.date)
-			day2_str=NicoTracker.get_day_string(datetime.datetime.today())
+			day1_str=SiteAnalyzer.get_day_string(cache.date)
+			day2_str=SiteAnalyzer.get_day_string(datetime.datetime.today())
 			if(day1_str==day2_str):
 				Alert.alert_msg_with_write(self,"ランキングを更新しました。統計情報はまだ1日が経過していないので計測していません。")
 				return
@@ -81,7 +113,7 @@ class SiteAnalyzer(webapp.RequestHandler):
 		user_cnt=Bookmark.all().count(limit=100000)
 
 		#書き込み
-		day_str=NicoTracker.get_day_string(datetime.datetime.today())
+		day_str=SiteAnalyzer.get_day_string(datetime.datetime.today())
 		
 		cache.entry_cnt_list.insert(0,entry_cnt)
 		cache.illust_cnt_list.insert(0,illust_cnt)
@@ -100,13 +132,13 @@ class SiteAnalyzer(webapp.RequestHandler):
 	def create_graph(self,no):
 		cache=SiteAnalyzer.get_cache_from_db()
 		if(no==0):
-			return NicoTracker.create_graph(cache.day_list,cache.bbs_cnt_list)
+			return SiteAnalyzer.create_graph(cache.day_list,cache.bbs_cnt_list)
 		if(no==1):
-			return NicoTracker.create_graph(cache.day_list,cache.illust_cnt_list)
+			return SiteAnalyzer.create_graph(cache.day_list,cache.illust_cnt_list)
 		if(no==2):
-			return NicoTracker.create_graph(cache.day_list,cache.entry_cnt_list)
+			return SiteAnalyzer.create_graph(cache.day_list,cache.entry_cnt_list)
 		if(no==3):
-			return NicoTracker.create_graph(cache.day_list,cache.user_cnt_list)
+			return SiteAnalyzer.create_graph(cache.day_list,cache.user_cnt_list)
 		return None
 
 

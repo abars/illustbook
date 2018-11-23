@@ -67,7 +67,6 @@ from myapp.MappingThreadId import MappingThreadId
 from myapp.DrawWindow import DrawWindow
 from myapp.Bookmark import Bookmark
 from myapp.AddBookmark import AddBookmark
-from myapp.NicoTracker import NicoTracker
 from myapp.UpdateProfile import UpdateProfile
 from myapp.Alert import Alert
 from myapp.StackFeedData import StackFeedData
