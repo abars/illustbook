@@ -61,7 +61,6 @@
 <!-- 新着リスト -->
 {% if order=="new" %}
 	{% include "pinterest/event_list.html" %}
-	{% include "pinterest/chat_list.html" %}
 	{% include "pinterest/tweet_list.html" %}
 {% endif %}
 
@@ -78,11 +77,6 @@
 <!-- タグ一覧 -->
 {% if not search and order!="new" %}
 	{% include "pinterest/recent_tag.html" %}
-{% endif %}
-
-<!-- イラブチャット -->
-{% if order == "chat" %}
-	{% include "pinterest/chat.html" %}
 {% endif %}
 
 <!-- 広告 -->

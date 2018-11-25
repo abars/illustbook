@@ -171,7 +171,6 @@
 
   {% include "pinterest/hot_bbs.html" %}
   {% include "pinterest/event_list.html" %}
-  {% include "pinterest/chat_list.html" %}
   {% include "pinterest/tweet_list.html" %}
 {% endif %}
 
@@ -184,12 +183,7 @@
     {% endif %}
   {% endif %}
   </div>
-  {% if order == "chat" %}
-    {% include "chat/room_js.html" %}
-    {% include "chat/room_list.html" %}
-  {% else %}
-    {% include "pinterest/illust.html" %}
-  {% endif %}
+  {% include "pinterest/illust.html" %}
 </div>
 
 {% if next_query %}
