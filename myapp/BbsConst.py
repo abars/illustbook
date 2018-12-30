@@ -130,5 +130,9 @@ class BbsConst:
 	#イベント
 	EVENT_MAX_DAYS=14
 
+	#スパム対策用にログイン必須にするか
+	FORCE_LOGIN_TO_CREATE_NEW_IMAGE=True
+
+
 
 

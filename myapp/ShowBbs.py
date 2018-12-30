@@ -218,6 +218,9 @@ class ShowBbs(webapp.RequestHandler):
 		if(self.request.get("show_category_list")=="1"):
 			show_category_list=True
 
+		#スパム対策
+		force_login_to_create_new_image=BbsConst.FORCE_LOGIN_TO_CREATE_NEW_IMAGE
+
 		#レンダリング
 		template_values = {
 			'host': host_url,
@@ -261,7 +264,8 @@ class ShowBbs(webapp.RequestHandler):
 			'message': message,
 			'is_english': is_english,
 			'count_up_comment': count_up_comment,
-			'show_category_list': show_category_list
+			'show_category_list': show_category_list,
+			'force_login_to_create_new_image': force_login_to_create_new_image
 		}
 
 		path = "/html/"+design["base_name"]
