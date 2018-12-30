@@ -174,6 +174,7 @@ class ShowThread(webapp.RequestHandler):
 
 		#スパム対策
 		force_login_to_create_new_image=BbsConst.FORCE_LOGIN_TO_CREATE_NEW_IMAGE
+		force_login_to_create_new_comment=BbsConst.FORCE_LOGIN_TO_CREATE_NEW_COMMENT
 
 		#描画
 		template_values = {
@@ -213,7 +214,8 @@ class ShowThread(webapp.RequestHandler):
 			'is_english': is_english,
 			'related': related,
 			'show_ip': show_ip,
-			'force_login_to_create_new_image': force_login_to_create_new_image
+			'force_login_to_create_new_image': force_login_to_create_new_image,
+			'force_login_to_create_new_comment': force_login_to_create_new_comment
 			}
 
 		path = "/html/"+design["base_name"]

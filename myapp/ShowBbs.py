@@ -220,6 +220,7 @@ class ShowBbs(webapp.RequestHandler):
 
 		#スパム対策
 		force_login_to_create_new_image=BbsConst.FORCE_LOGIN_TO_CREATE_NEW_IMAGE
+		force_login_to_create_new_comment=BbsConst.FORCE_LOGIN_TO_CREATE_NEW_COMMENT
 
 		#レンダリング
 		template_values = {
@@ -265,7 +266,8 @@ class ShowBbs(webapp.RequestHandler):
 			'is_english': is_english,
 			'count_up_comment': count_up_comment,
 			'show_category_list': show_category_list,
-			'force_login_to_create_new_image': force_login_to_create_new_image
+			'force_login_to_create_new_image': force_login_to_create_new_image,
+			'force_login_to_create_new_comment': force_login_to_create_new_comment
 		}
 
 		path = "/html/"+design["base_name"]

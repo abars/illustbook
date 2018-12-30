@@ -1,5 +1,5 @@
 {%if show_comment_form %}
-	{% if user or not force_login_to_create_new_image %}
+	{% if user or not force_login_to_create_new_comment %}
 	{% if (not bbs.disable_normal_reply) or bbs.enable_illust_reply %}
 		{% if bbs.bbs_mode != 3 %}
 			{% if template_path %}
