@@ -172,6 +172,9 @@ class ShowThread(webapp.RequestHandler):
 		#関連イラスト
 		related=self._get_related(bbs,thread,design["is_iphone"],design["is_tablet"])
 
+		#スパム対策
+		force_login_to_create_new_image=BbsConst.FORCE_LOGIN_TO_CREATE_NEW_IMAGE
+
 		#描画
 		template_values = {
 			'host': host_url,
@@ -209,7 +212,8 @@ class ShowThread(webapp.RequestHandler):
 			'message': message,
 			'is_english': is_english,
 			'related': related,
-			'show_ip': show_ip
+			'show_ip': show_ip,
+			'force_login_to_create_new_image': force_login_to_create_new_image
 			}
 
 		path = "/html/"+design["base_name"]

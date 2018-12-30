@@ -1,4 +1,5 @@
 {%if show_comment_form %}
+	{% if user or not force_login_to_create_new_image %}
 	{% if (not bbs.disable_normal_reply) or bbs.enable_illust_reply %}
 		{% if bbs.bbs_mode != 3 %}
 			{% if template_path %}
@@ -17,6 +18,20 @@
 		{%endif%}
 		</div>
 		<br/>
+	{% endif %}
+	{% else %}
+		{% if template_path %}
+			<p>&nbsp;</p>
+		{% else %}
+			<br clear="all"/>
+		{% endif %}
+		{% if template_path %}
+			<p>
+		{% endif %}
+		{% if is_english %}You should <a href="{{redirect_url|login_url|escape}}">login</a> to submit{% else %}現在、コメントの投稿には<a href="{{redirect_url|login_url|escape}}">ログイン</a>が必要です{% endif %}
+		{% if template_path %}
+			</p>
+		{% endif %}
 	{% endif %}
 {% endif %}
 
