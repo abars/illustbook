@@ -40,10 +40,16 @@ from myapp.CounterWorker import CounterWorker
 from myapp.ApiObject import ApiObject
 from myapp.ShowEntry import ShowEntry
 from myapp.SearchThread import SearchThread
+from myapp.SpamCheck import SpamCheck
 
 class ShowThread(webapp.RequestHandler):
 	def get(self,bbs_key,thread_key):
 		SetUtf8.set()
+
+		#ホストチェック
+		if SpamCheck.is_deny(self.request):
+			self.response.set_status(401)
+			return
 
 		#英語版かどうか
 		is_english=CssDesign.is_english(self)

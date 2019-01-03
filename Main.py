@@ -107,6 +107,7 @@ from myapp.UploadTemp import UploadTemp
 from myapp.AnalyticsGet import AnalyticsGet
 from myapp.EventList import EventList
 from myapp.RankingPortal import RankingPortal
+from myapp.SpamCheck import SpamCheck
 
 #-----------------------------------------------------------------
 #ポータル
@@ -120,6 +121,11 @@ class MainPage(webapp.RequestHandler):
 			return
 	
 		SetUtf8.set()
+
+		#ホストチェック
+		if SpamCheck.is_deny(self.request):
+			self.response.set_status(401)
+			return
 		
 		#メンテナンス画面
 		is_maintenance=0

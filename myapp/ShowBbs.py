@@ -43,15 +43,20 @@ from myapp.ApiObject import ApiObject
 from myapp.CounterWorker import CounterWorker
 from myapp.ShowEntry import ShowEntry
 from myapp.CategoryList import CategoryList
+from myapp.SpamCheck import SpamCheck
 
 class ShowBbs(webapp.RequestHandler):
 	def get(self,bbs_key):
 		#日本語対応
 		SetUtf8.set()
 
+		#ホストチェック
+		if SpamCheck.is_deny(self.request):
+			self.response.set_status(401)
+			return
+
 		#英語版かどうか
 		is_english=CssDesign.is_english(self)
-
 		
 		#メンテナンス中かどうか
 		is_maintenance=0

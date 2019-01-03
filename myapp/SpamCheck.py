@@ -182,6 +182,13 @@ class SpamCheck(webapp.RequestHandler):
 			return True
 		return False
 
+	@staticmethod
+	def is_deny(req):
+		if re.search("webmeup\-crawler",req.headers.get('User-Agent')):
+			return True
+		if re.search("opensiteexplorer",req.headers.get('User-Agent')):
+			return True
+		return False
 
 
 
