@@ -1,7 +1,7 @@
 cron:
 - description: daily ranking update
   url: /ajax_ranking_update
-  schedule: every 6 hours
+  schedule: every 3 hours
 #  target: backend1
 
 #- description: daily nico update
