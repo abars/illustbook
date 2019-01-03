@@ -295,7 +295,7 @@ class Pinterest(webapp.RequestHandler):
 	def _index(self,user,user_id,page,request_page_mode,redirect_api,contents_only):
 		unit=BbsConst.PINTEREST_PAGE_UNIT
 
-		order="new"
+		order="hot"
 		if(self.request.get("order")):
 			order=self.request.get("order")
 
@@ -400,7 +400,7 @@ class Pinterest(webapp.RequestHandler):
 				now_event_end_date=now_event.end_date.replace(tzinfo=UTC()).astimezone(JST()).strftime('%Y/%m/%d')
 
 		event_thread_list=None
-		if(order=="new" and not contents_only):
+		if((order=="new" or order=="hot") and not contents_only):
 			event_list=EventList.get_event_list()
 			if(event_list):
 				now_event=event_list[0]
@@ -455,7 +455,7 @@ class Pinterest(webapp.RequestHandler):
 	def _update_tweet_list(self,template_values,order,contents_only):
 		tweet_list=None
 		tweet_page=1
-		if(order=="new" and not contents_only):
+		if((order=="new" or order=="hot") and not contents_only):
 			if(self.request.get("tweet_page")):
 				tweet_page=int(self.request.get("tweet_page"))
 			tweet_list=Pinterest._get_tweet_list(tweet_page)

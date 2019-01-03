@@ -34,9 +34,11 @@
 #}
 
 <!-- ランキング -->
+{#
 {% if order == "monthly" %}
 	{% include "pinterest/ranking.html" %}
 {% endif %}
+#}
 
 <!-- 講座 -->
 {% if order == "lecture" %}
@@ -54,13 +56,17 @@
 {% endif %}
 
 <!-- お知らせ -->
-{% if order=="new" %}
+{% if order=="hot" %}
 	{% include "pinterest/announce.html" %}
 {% endif %}
 
-<!-- 新着リスト -->
-{% if order=="new" %}
+<!-- イベントリスト -->
+{% if order=="hot" %}
 	{% include "pinterest/event_list.html" %}
+{% endif %}
+
+<!-- 新着リスト -->
+{% if order=="hot" %}
 	{% include "pinterest/tweet_list.html" %}
 {% endif %}
 
