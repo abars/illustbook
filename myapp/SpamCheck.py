@@ -188,6 +188,8 @@ class SpamCheck(webapp.RequestHandler):
 			return True
 		if re.search("opensiteexplorer",req.headers.get('User-Agent')):
 			return True
+		if re.search("AhrefsBot",req.headers.get('User-Agent')):
+			return True
 		return False
 
 
