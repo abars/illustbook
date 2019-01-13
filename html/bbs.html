@@ -90,7 +90,9 @@
 					{% if loop.index == 2 and not contents_only %}
 						<!--広告を一つ目の記事の後に入れる-->
 						{% if bbs.bbs_mode != 3 %}
+						{#
 							{% include 'adsense/adsense_wide.html' %}
+						#}
 						{% endif %}
 					{%endif%}
 			
