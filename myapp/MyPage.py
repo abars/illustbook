@@ -179,7 +179,7 @@ class MyPage(webapp.RequestHandler):
 
 		#退会しているか
 		if bookmark and bookmark.del_flag:
-			Alert.alert_msg_with_write(self,"退会したユーザです。（"+user.user_id()+")");
+			Alert.alert_msg_with_write(self,"退会したユーザです。（"+bookmark.user_id+")");
 			return
 
 		#掲示板の新規作成が完了したか
