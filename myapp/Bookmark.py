@@ -77,6 +77,9 @@ class Bookmark(db.Model):
 	#アカウントの凍結
 	frozen = db.IntegerProperty()
 
+	#削除フラグ
+	del_flag = db.IntegerProperty()
+
 	sand = db.StringProperty()
 	date = db.DateTimeProperty(auto_now=True)
 

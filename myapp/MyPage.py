@@ -105,6 +105,12 @@ class MyPage(webapp.RequestHandler):
 		if(your_bbs_count==0):
 			#delete_user_thread(user.user_id())	#他人の掲示板に描いたイラストは慎重に削除する必要がある気がする
 			bookmark.delete()
+
+			bookmark=Bookmark(key_name=BbsConst.KEY_NAME_BOOKMARK+user_id)
+			bookmark.user_id=user_id
+			bookmark.del_flag=1	#拍手で復活するのを禁止
+			bookmark.put()
+			
 			msg="退会が完了しました。"
 			if(is_english):
 				msg="Complete"
@@ -170,6 +176,11 @@ class MyPage(webapp.RequestHandler):
 				bookmark=ApiObject.get_bookmark_of_user_id(user.user_id())
 			else:
 				bookmark=None
+
+		#退会しているか
+		if bookmark and bookmark.del_flag:
+			Alert.alert_msg_with_write(self,"退会したユーザです。（"+user.user_id()+")");
+			return
 
 		#掲示板の新規作成が完了したか
 		regist_finish=False
