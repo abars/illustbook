@@ -820,6 +820,7 @@ class Pinterest(webapp.RequestHandler):
 		template_values['is_tablet']=CssDesign.is_tablet(self)
 		template_values['tag_display_n']=40
 		template_values['is_maintenance']=MaintenanceCheck.is_appengine_maintenance()
+		template_values['force_login_to_create_new_image']=BbsConst.FORCE_LOGIN_TO_CREATE_NEW_IMAGE
 		if(template_values['user']):
 			template_values['login_flag']=1
 		else:

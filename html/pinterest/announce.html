@@ -1,23 +1,26 @@
 {% if not is_english %}
-{#
+
+{% if force_login_to_create_new_image %}
 <div class="message hot_bbs">
-		<p>イラブチャット　サービス終了のお知らせ</p>
-		Google App EngineのChannel APIの提供終了に伴い、イラブチャットのサービスを2017年10月31日をもちまして終了させて頂きます。
-		ご利用、ありがとうございました。
+	<p>荒らしへの対策について</p>
+	2020年03月22日より荒らしへの対策としてイラスト投稿時にログイン必須としています。
+	（<a href="https://support.google.com/accounts/answer/27441?hl=ja">Googleアカウントの作成方法）</a>
 </div>
-<br clear="all"/>
-#}
+{% else %}
 <div class="message hot_bbs">
 		<p>荒らしへの対策について</p>
 		2018年12月30日より荒らしへの対策としてイラスト投稿時にログイン必須としていましたが、2019年1月13日に解除しました。
 		<!--（<a href="https://support.google.com/accounts/answer/27441?hl=ja">Googleアカウントの作成方法</a>）-->
 </div>
+{% endif %}
 <br clear="all"/>
+{#
 <div class="message hot_bbs">
 		<p>httpsの有効化について</p>
 		2018年11月18日よりイラストブックのhttps対応を順次行っています。不具合を発見されましたら、お手数ですがabarsceo@gmail.comまでご連絡ください。（<a href="https://www.illustbook.net/">https版を表示</a>）
 </div>
 <br clear="all"/>
+#}
 <div class="message hot_bbs">
 		<p>Flashの有効化について</p>
 		Google ChromeでFlashが使用できない場合、モバイル版のイラブペイントが表示されます。
