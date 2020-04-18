@@ -43,6 +43,10 @@ class SearchThread(webapp.RequestHandler):
 	def _number_validate(value):
 		if(not value):
 			return 0
+		if(value>2147483647):	#limit for NumberField
+			return 2147483647
+		if(value<-2147483647):
+			return -2147483647
 		return value
 
 	@staticmethod
@@ -102,7 +106,7 @@ class SearchThread(webapp.RequestHandler):
 				search.TextField(name='bbs_key', value=bbs_key),
 				search.DateField(name='date', value=date),
 				search.NumberField(name='sec', value=SearchThread._get_sec(date)),
-				search.NumberField(name='comment_no', value=comment_no)
+				search.NumberField(name='comment_no', value=SearchThread._number_validate(comment_no))
 			])
 
 
