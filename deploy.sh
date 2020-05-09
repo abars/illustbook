@@ -1,2 +1,1 @@
-appcfg.py update .
-#appcfg.py backends . update
+gcloud app deploy --project illust-book-hrd --no-promote

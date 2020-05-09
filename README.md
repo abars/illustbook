@@ -9,19 +9,29 @@ http://www.illustbook.net/
 
 # Rquirement
 
-GAE/py (StandardEnvironment)
+GAE/py (Standard Environment)
 
 Python2.7
 
 Jinja2
 
-# How to deploy
+# Run local dev server
+
+```
+./serve.sh
+```
+
+# Deploy to GCP
 
 (1) Clone https://github.com/abars/illustbook
 
-(2) Rewrite application ID of app.yaml (application: illust-book-hrd -> your id)
+(2) Deploy to Google App Engine
 
-(3) Deploy to Google App Engine
+```
+gcloud auth login
+gcloud init
+./deploy.sh
+```
 
 If you require illustration tool for HTML5 , Please clone https://github.com/abars/illustbook_ipad and copy to js/ipad folder.
 
@@ -53,3 +63,15 @@ MIT license
 https://twitter.com/abars
 
 abarsceo@gmail.com
+
+# KNOWN ISSUES
+
+## ImportError: cannot import name SignedJwtAssertionCredentials
+
+Please install pycrypto
+
+```
+sudo pip install pycrypto
+```
+
+https://stackoverflow.com/questions/21793471/no-module-named-openssl-crypto-and-importerror-signedjwtassertioncredentials
