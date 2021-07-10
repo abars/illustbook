@@ -28,7 +28,9 @@ You can create own BBS, and you can communicate using illust or comment.</p>
 
 <h1>{% if is_english %}How to use ILLUSTBOOK{% else %}イラストブックの使い方{% endif %}</h1>
 
+{#
 <a href="{{host}}guide?contents=pc">{% if is_english %}Draw tool tutorial (PC/App){% else %}イラブペイント(PC版/アプリ版)の使い方{% endif %}</a><br/>
+#}
 <a href="{{host}}guide?contents=mobile">{% if is_english %}Draw tool tutorial (Mobile){% else %}イラブペイント(モバイル版)の使い方{% endif %}</a><br/>
 <a href="{{host}}guide?contents=edit">{% if is_english %}Edit tutorial{% else %}投稿機能の使い方{% endif %}</a><br/>
 <a href="{{host}}guide?contents=sns">{% if is_english %}SNS tutorial{% else %}SNS機能の使い方{% endif %}</a><br/>
@@ -72,7 +74,9 @@ You can create own BBS, and you can communicate using illust or comment.</p>
 
 <p>
 <a href="{{host}}terms" class="declink">{% if is_english %}Terms{% else %}利用規約{% endif %}</a><br/>
+{#
 <a href="./moper_guide" class="declink">{% if is_english %}Movie tool turotial{% else %}動画お絵かきツールの使い方{% endif %}</a><br/>
+#}
 <a href="http://www.kooss.com/" class="declink">{% if is_english %}Link{% else %}無料サイト集 Kooss.com{% endif %}</a><br/>
 </p>
 

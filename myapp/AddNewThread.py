@@ -84,9 +84,9 @@ class AddNewThread(webapp.RequestHandler):
 		bbs = db.get(self.request.get("bbs_key"))
 		user = users.get_current_user()
 
-		#if(not user and self.request.get('mode')=="illust_all"):
-		#	self.write_status(is_flash,login_require);
-		#	return
+		if(not user and BbsConst.FORCE_LOGIN_TO_CREATE_NEW_IMAGE):
+			self.write_status(is_flash,login_require);
+			return
 		
 		delete_key_require="削除キーが必要です。"
 		if(is_english):
