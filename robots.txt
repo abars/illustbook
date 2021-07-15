@@ -1,2 +1,4 @@
 User-agent: *
-Allow: /
+Disallow: /img/*
+Disallow: /thumbnail2/*
+Disallow: /show_icon?*
