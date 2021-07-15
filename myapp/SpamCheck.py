@@ -190,6 +190,12 @@ class SpamCheck(webapp.RequestHandler):
 			return True
 		if re.search("AhrefsBot",req.headers.get('User-Agent')):
 			return True
+		if re.search("SemrushBot",req.headers.get('User-Agent')):
+			return True
+		if re.search("Linespider",req.headers.get('User-Agent')):
+			return True
+		if re.search("GrapeshotCrawler",req.headers.get('User-Agent')):
+			return True
 		return False
 
 

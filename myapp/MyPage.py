@@ -127,6 +127,11 @@ class MyPage(webapp.RequestHandler):
 	def get(self,regist_mode):
 		SetUtf8.set()
 
+		#ホストチェック
+		if SpamCheck.is_deny(self.request):
+			self.response.set_status(401)
+			return
+
 		#表示モードかどうか
 		view_mode=None
 		if(self.request.get("user")):

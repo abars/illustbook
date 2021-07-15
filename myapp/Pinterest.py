@@ -52,6 +52,7 @@ from myapp.SearchThread import SearchThread
 from myapp.EventList import EventList
 from myapp.StackFeedData import StackFeedData
 from myapp.StackFeedData import StackFeedDataRecent
+from myapp.SpamCheck import SpamCheck
 
 class Pinterest(webapp.RequestHandler):
 	@staticmethod
@@ -140,6 +141,10 @@ class Pinterest(webapp.RequestHandler):
 	@staticmethod
 	def get_core(self,request_page_mode):
 		SetUtf8.set()
+
+		if SpamCheck.is_deny(self.request):
+			self.response.set_status(401)
+			return
 
 		unit=BbsConst.PINTEREST_PAGE_UNIT
 
