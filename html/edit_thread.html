@@ -58,7 +58,7 @@
 				<form id="submit_form" action="./update_thread?bbs_key={{bbs.key()}}&thread_key={{thread.key()}}" enctype="multipart/form-data" method="post">
 				<table class="g-table" >
 					<tr><td>{% if is_english %}Title{% else %}タイトル{% endif %}</td><td><input type="text" name="thread_title" value="{{thread.title}}" size=60></td></tr>
-					<tr><td>{% if is_english %}Author{% else %}投稿者名{% endif %}</td><td><input type="text" name="thread_author" value="{{thread.author}}"><input type="checkbox" name="link_profile" value="link_profile" {% if thread.user_id %}checked{% endif %}>{% if is_english %}Link to Mypage{% else %}マイページにリンク{% endif %}</td></tr>
+					<tr><td>{% if is_english %}Author{% else %}投稿者名{% endif %}</td><td><input type="text" name="thread_author" value="{{thread.author}}">{% if thread.user_id %} <input type="hidden" name="link_profile" value="link_profile" checked>{% else %}<input type="checkbox" name="link_profile" value="link_profile" {% if thread.user_id %}checked{% endif %}>{% if is_english %}Link to Mypage{% else %}マイページにリンク{% endif %}{% endif %}</td></tr>
 					<tr><td>{% if is_english %}Category{% else %}カテゴリ{% endif %}</td><td>
 					{% include "category_list.html" %}
 					</td></tr>
