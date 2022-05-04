@@ -77,7 +77,7 @@ class AddRes(webapp.RequestHandler):
 
 		#書き込み権限チェック
 		user = users.get_current_user()
-		if(bbs_key.comment_login_require):
+		if(bbs_key.comment_login_require or (not user and BbsConst.FORCE_LOGIN_TO_CREATE_NEW_COMMENT)):
 			if(not(user)):
 				Alert.alert_msg_with_write(self,"この掲示板ではコメントする際にログインが必須です。");
 				return

@@ -36,7 +36,11 @@
 				<br/>
 			{% endif %}
 			{% if logined %}
-				<input name="link_to_profile" type="checkbox" checked/>{% if is_english %}Link to mypage(MUST){% else %}マイページにリンク{% endif %}
+			{% if force_login_to_create_new_thread %}
+			<input name="link_to_profile" type="hidden" value="on"/>
+			{% else %}
+			<input name="link_to_profile" type="checkbox" checked/>{% if is_english %}Link to mypage(MUST){% else %}マイページにリンク{% endif %}
+			{% endif %}
 			{% endif %}
 		</td></tr>
 		{% if not logined %}

@@ -98,6 +98,10 @@ class ShowEntry(webapp.RequestHandler):
 		#英語版かどうか
 		is_english=CssDesign.is_english(req)
 		
+		#スパム対策
+		force_login_to_create_new_image=BbsConst.FORCE_LOGIN_TO_CREATE_NEW_IMAGE
+		force_login_to_create_new_comment=BbsConst.FORCE_LOGIN_TO_CREATE_NEW_COMMENT
+
 		#レンダリング
 		template_values = {
 			'host': host_url,
@@ -115,7 +119,9 @@ class ShowEntry(webapp.RequestHandler):
 			'comment_edit': comment_edit,
 			'is_iphone': is_iphone,
 			'is_english': is_english,
-			'show_ip': show_ip
+			'show_ip': show_ip,
+			'force_login_to_create_new_image': force_login_to_create_new_image,
+			'force_login_to_create_new_comment': force_login_to_create_new_comment
 			}
 
 		path = "/html/thread/thread_comment.html"

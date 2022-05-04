@@ -132,7 +132,11 @@
 				<td><input type="text" name="author" maxlength="50" value="{{user_name}}"/>
 				{% if is_iphone %}<br/>{% endif %}
 				{% if logined %}
-					<input name="link_to_profile" type="checkbox" checked="checked"/>{% if is_english %}Link to mypage{% else %}マイページにリンク{% endif %}
+				{% if force_login_to_create_new_comment %}
+				<input name="link_to_profile" type="hidden" value="on"/>
+				{% else %}
+				<input name="link_to_profile" type="checkbox" checked="checked"/>{% if is_english %}Link to mypage{% else %}マイページにリンク{% endif %}
+				{% endif %}
 				{% endif %}
 				</td>
 				</tr>

@@ -18,6 +18,7 @@ from google.appengine.api import memcache
 import re
 import os
 
+from myapp.BbsConst import BbsConst
 from myapp.Bbs import Bbs
 from myapp.MesThread import MesThread
 from myapp.OwnerCheck import OwnerCheck
@@ -94,6 +95,10 @@ class EditThread(webapp.RequestHandler):
 		category_list=CategoryList.get_category_list(bbs)
 		event_list=EventList.get_event_list()
 
+		#スパム対策
+		force_login_to_create_new_image=BbsConst.FORCE_LOGIN_TO_CREATE_NEW_IMAGE
+		force_login_to_create_new_comment=BbsConst.FORCE_LOGIN_TO_CREATE_NEW_COMMENT
+
 		template_values = {
 			'host': './',
 			'bbs': bbs,
@@ -114,7 +119,9 @@ class EditThread(webapp.RequestHandler):
 			'event_list': event_list,
 			'selecting_category': category,
 			'res_entry_key': self.request.get("res_entry_key"),
-			'is_english': CssDesign.is_english(self)
+			'is_english': CssDesign.is_english(self),
+			'force_login_to_create_new_image': force_login_to_create_new_image,
+			'force_login_to_create_new_comment': force_login_to_create_new_comment
 		}
 
 		path = '/html/edit_thread.html'

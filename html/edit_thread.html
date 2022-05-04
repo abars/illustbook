@@ -133,7 +133,16 @@
 			{% if entry %}
 				<form id="submit_form" action="./update_thread?bbs_key={{bbs.key()}}&entry_key={{entry.key()}}" enctype="multipart/form-data" method="post">
 				<table>
-					<tr><td>{% if is_english %}Name{% else %}投稿者名{% endif %}</td><td><input type="text" name="editor" value="{{entry.editor}}"><input type="checkbox" name="link_profile" value="link_profile" {% if entry.user_id %}checked{% endif %}>{% if is_english %}Link to Mypage{% else %}マイページにリンク{% endif %}</td></tr>
+					<tr><td>{% if is_english %}Name{% else %}投稿者名{% endif %}</td>
+					<td>
+						<input type="text" name="editor" value="{{entry.editor}}">
+						{% if force_login_to_create_new_comment and entry.user_id %}
+						<input name="link_profile" type="hidden" value="on"/>
+						{% else %}		
+						<input type="checkbox" name="link_profile" value="link_profile" {% if entry.user_id %}checked{% endif %}>{% if is_english %}Link to Mypage{% else %}マイページにリンク{% endif %}
+						{% endif %}
+					</td>
+					</tr>
 					<tr><td>{% if is_english %}Comment{% else %}コメント{% endif %}</td><td>
 						<textarea name="content" style="width:500px;height:200px;">{{entry.content.replace("<br/>","\n")}}</textarea>
 					</td></tr>
@@ -146,7 +155,13 @@
 			{% if res %}
 				<form id="submit_form" action="./update_thread?bbs_key={{bbs.key()}}&res_key={{res.key()}}&res_entry_key={{res_entry_key}}" enctype="multipart/form-data" method="post">
 				<table>
-					<tr><td>{% if is_english %}Name{% else %}投稿者名{% endif %}</td><td><input type="text" name="editor" value="{{res.editor}}"><input type="checkbox" name="link_profile" value="link_profile" {% if res.user_id %}checked{% endif %}>{% if is_english %}Link to Mypage{% else %}マイページにリンク{% endif %}</td></tr>
+					<tr><td>{% if is_english %}Name{% else %}投稿者名{% endif %}</td><td><input type="text" name="editor" value="{{res.editor}}">
+						{% if force_login_to_create_new_comment and res.user_id %}
+						<input name="link_profile" type="hidden" value="on"/>
+						{% else %}		
+						<input type="checkbox" name="link_profile" value="link_profile" {% if res.user_id %}checked{% endif %}>{% if is_english %}Link to Mypage{% else %}マイページにリンク{% endif %}
+						{% endif %}
+					</td></tr>
 					<tr><td>{% if is_english %}Comment{% else %}コメント{% endif %}</td><td>
 						<textarea name="content" style="width:500px;height:200px;">{{res.content.replace("<br/>","\n")}}</textarea>
 					</td></tr>
