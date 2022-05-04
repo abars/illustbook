@@ -17,8 +17,8 @@ libraries:
 builtins:
 - appstats: on
 
-inbound_services:
-- channel_presence
+#inbound_services:
+#- channel_presence
 
 skip_files:
 - skip_files/.*
