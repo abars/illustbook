@@ -77,7 +77,7 @@ class AddRes(webapp.RequestHandler):
 
 		#書き込み権限チェック
 		user = users.get_current_user()
-		if(bbs_key.comment_login_require or (not user and BbsConst.FORCE_LOGIN_TO_CREATE_NEW_COMMENT)):
+		if(bbs_key.comment_login_require or BbsConst.FORCE_LOGIN_TO_CREATE_NEW_COMMENT):
 			if(not(user)):
 				Alert.alert_msg_with_write(self,"この掲示板ではコメントする際にログインが必須です。");
 				return
@@ -118,7 +118,7 @@ class AddRes(webapp.RequestHandler):
 
 		#プロフィールにリンクするか
 		link_to_profile=StackFeed.is_link_to_profile(self)
-		if(link_to_profile and user):
+		if((link_to_profile or BbsConst.FORCE_LOGIN_TO_CREATE_NEW_COMMENT) and user):
 			response.user_id=user.user_id()
 
 		#コメント番号を設定

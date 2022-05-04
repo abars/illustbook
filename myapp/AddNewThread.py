@@ -184,7 +184,7 @@ class AddNewThread(webapp.RequestHandler):
 		
 		#プロフィールにリンクするか
 		link_to_profile=StackFeed.is_link_to_profile(self)
-		if(link_to_profile and user):
+		if((link_to_profile or BbsConst.FORCE_LOGIN_TO_CREATE_NEW_IMAGE) and user):
 			new_thread.user_id=user.user_id()
 		
 		#通常投稿モード(MOPER)
