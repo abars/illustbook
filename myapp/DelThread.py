@@ -68,7 +68,6 @@ from myapp.ApiBookmark import ApiBookmark
 from myapp.ApiFeed import ApiFeed
 from myapp.ApiJs import ApiJs
 from myapp.DevPortal import DevPortal
-from myapp.SchemeUpdate import SchemeUpdate
 from myapp.ApiPerpetuation import ApiPerpetuation
 from myapp.EditBbs import EditBbs
 from myapp.AppImage import AppImage

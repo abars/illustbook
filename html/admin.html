@@ -115,18 +115,6 @@
 {% if is_admin and not only_comment%}
 
 <div class="entry">
-<H1>新着モッパー一覧</H1>
-<blockquote>
-{% for thread in moper_threads %}
-{% if thread and thread.bbs_key %}
-<a href='{% if thread.bbs_key.short %}./{{thread.bbs_key.short}}/{%else%}./usr/{{thread.bbs_key.key()}}/{%endif%}{{thread.key()}}.html' class="imagelink"><IMG SRC="{{host}}thumbnail/{{thread.image_key.key()}}.gif" BORDER=0 ALT="{{thread.title}}"></A>
-{% endif %}
-{% endfor %}
-</blockquote>
-<p>&nbsp</p>
-</div>
-
-<div class="entry">
 <H1>統計情報</H1>
 <div id="new_bbs_count"></div>
 <div id="new_illust_count"></div>

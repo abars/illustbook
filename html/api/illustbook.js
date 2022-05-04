@@ -318,12 +318,6 @@ function illustbook_canvas(my_app,width,height){
 illustbook_canvas.prototype._init=function(my_app){
 	document.getElementById(this._app_id).innerHTML="<canvas id='canvas_"+this._app_id+"' width='"+this.width+"' height='"+this.height+"'></canvas>";
 	this._canvas=document.getElementById("canvas_"+this._app_id);
-	
-	//initializa flash canvas
-	if (typeof FlashCanvas != "undefined") {
-		FlashCanvas.initElement(this._canvas);
-	}
-
 	this._ctx = this._canvas.getContext('2d');
 }
 

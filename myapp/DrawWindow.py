@@ -133,10 +133,6 @@ class DrawWindow(webapp.RequestHandler):
 		if(not self.get_entry_comment(template_values,entry_key)):
 			return
 		
-		if(ipad or iphone):
-			path = '/html/tools/draw_window_ipad.htm'
-		else:
-			path = '/html/draw_window_flash_lapper.html'
-		
+		path = '/html/tools/draw_window_ipad.htm'
 		self.response.out.write(template_select.render(path, template_values))
 
