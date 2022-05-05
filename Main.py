@@ -53,12 +53,6 @@ from myapp.ShowThread import ShowThread
 from myapp.ShowBbs import ShowBbs
 from myapp.MoveAccount import MoveAccount
 from myapp.MaintenanceCheck import MaintenanceCheck
-from myapp.MoperUpload import MoperUpload
-from myapp.MoperImportRaster import MoperImportRaster
-from myapp.MoperGuide import MoperGuide
-from myapp.MoperLoad import MoperLoad
-from myapp.MoperPlayer import MoperPlayer
-from myapp.MoperDraw import MoperDraw
 from myapp.AnalyzeAccess import AnalyzeAccess
 from myapp.CssDesign import CssDesign
 from myapp.ImageFile import ImageFile
@@ -80,7 +74,6 @@ from myapp.ApiBookmark import ApiBookmark
 from myapp.ApiFeed import ApiFeed
 from myapp.ApiJs import ApiJs
 from myapp.DevPortal import DevPortal
-from myapp.SchemeUpdate import SchemeUpdate
 from myapp.ApiPerpetuation import ApiPerpetuation
 from myapp.EditBbs import EditBbs
 from myapp.AppImage import AppImage
@@ -258,12 +251,6 @@ application = webapp.WSGIApplication(
 	('/applause',Applause),
 	('/analyze',AnalyzeAccess),
 	('/check_id',CheckId),
-	('/draw_moper',MoperDraw),
-	('/upload_moper',MoperUpload),
-	('/moper_load',MoperLoad),
-	('/moper_player',MoperPlayer),
-	('/moper_import_raster',MoperImportRaster),
-	('/moper_guide',MoperGuide),
 	('/spam_check',SpamCheck),
 	('/spam_delete',SpamDelete),
 	('/admin',Admin),
@@ -275,7 +262,6 @@ application = webapp.WSGIApplication(
 	('/update_profile',UpdateProfile),
 	('/show_icon',ShowIcon),
 	('/comic',Comic),
-	('/scheme_update',SchemeUpdate),
 	('/app',AppPortal),
 	('/app/(.*)/img/(.*)',AppImage),
 	('/api_feed',ApiFeed),

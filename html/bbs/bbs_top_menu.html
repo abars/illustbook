@@ -21,15 +21,7 @@
 						{% else %}
 							<input type="button" value="{% if is_english %}Draw new{% else %}イラストを描く{% endif %}"  class="g-button" onclick="bbs_open_draw('','{{bbs.key()}}','{{host}}');"/>
 						{% endif %}
-					{%endif%}
-			
-					{% if bbs.enable_moper and not is_english and not is_iphone %}
-						{%if template_path %}
-							<a href="javascript:bbs_open_moper('','{{bbs.key()}}','{{host}}');"><img src="{{template_path}}images/header_edit2.jpg" alt="動画を描く" width="103" height="28"/></a>
-						{% else %}
-							<input type="button" value="動画を描く"  class="g-button" onclick="bbs_open_moper('','{{bbs.key()}}','{{host}}');"/>
-						{%endif%}
-					{%endif%}
+					{%endif%}			
 				{% else %}
 					{%if template_path %}<p>{%endif%}
 					{% if is_english %}You should <a href="{{redirect_url|login_url|escape}}">login</a> to submit{% else %}現在、イラストの投稿には<a href="{{redirect_url|login_url|escape}}">ログイン</a>が必要です{% endif %}

@@ -14,6 +14,12 @@ indexes:
     direction: desc
 - kind: "MesThread"
   properties:
+  - name: "event_id"
+  - name: "illust_mode"
+  - name: "create_date"
+    direction: desc
+- kind: "MesThread"
+  properties:
   - name: "illust_mode"
   - name: "user_id"
   - name: "create_date"
@@ -240,12 +246,6 @@ indexes:
   - name: "event_id"
   - name: "illust_mode"
   - name: "applause"
-    direction: desc
-- kind: "MesThread"
-  properties:
-  - name: "event_id"
-  - name: "illust_mode"
-  - name: "create_date"
     direction: desc
 - kind: "MesThread"
   properties:
