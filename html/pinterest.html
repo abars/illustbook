@@ -63,6 +63,13 @@
   <br clear="all"/>
 {% endif %}
 
+{% if is_iphone and page_mode == "index" %}
+<div class="message">
+  <a href="{{host}}?search=empty">イラストブックのサービス終了に関するお知らせ</a>
+</div>
+<br clear="all"/>
+{% endif %}
+
 <!-- ブックマークしているユーザ -->
 {% if page_mode == "bookmark" %}
   <script type="text/javascript" src="api_js"></script>
@@ -149,6 +156,7 @@
 {% endif %}
 
 {% if search and is_iphone %}
+  {% include "pinterest/announce.html" %}
   <div class="message hot_bbs">
     {% if search=="empty" %}
     <p>{% if is_english %}Query{% else %}ワード検索{% endif %}</p>

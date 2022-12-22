@@ -33,12 +33,6 @@ indexes:
     direction: desc
 - kind: "MesThread"
   properties:
-  - name: "illust_mode"
-  - name: "user_id"
-  - name: "create_date"
-    direction: desc
-- kind: "MesThread"
-  properties:
   - name: "bbs_key"
   - name: "create_date"
     direction: desc
@@ -47,6 +41,12 @@ indexes:
   - name: "bbs_key"
   - name: "del_flag"
   - name: "date"
+    direction: desc
+- kind: "MesThread"
+  properties:
+  - name: "illust_mode"
+  - name: "user_id"
+  - name: "create_date"
     direction: desc
 - kind: "MesThread"
   properties:
